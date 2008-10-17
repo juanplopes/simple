@@ -26,13 +26,18 @@ namespace Sample.BusinessServer.DataAccess
                        empresa e on (ef.id_empresa=e.id_empresa and ef.id_funcionario=:id_funcionario)
                   group by e.nome, e.id_empresa, e.version");
 
-            query.SetInt32("id_funcionario", 12868);
-            query.AddEntity(typeof(Empresa));
-            query.AddScalar("cnt", NHibernateUtil.Int32);
+            NewMethod(query);
             
             query.SetResultTransformer(SimpleTransformers.ByProperties<TestDTO>());
             query.List();
             return null;
+        }
+
+        private static void NewMethod(ISQLQuery query)
+        {
+            query.SetInt32("id_funcionario", 12868);
+            query.AddEntity(typeof(Empresa));
+            query.AddScalar("cnt", NHibernateUtil.Int32);
         }
 
         public IList<Empresa> GetAllWithSQLQuery()
