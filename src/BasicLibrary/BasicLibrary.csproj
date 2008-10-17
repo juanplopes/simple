@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BasicLibrary</RootNamespace>
+    <AssemblyName>BasicLibrary</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
+    <Compile Include="Configuration\ConfigFileElement.cs" />
+    <Compile Include="Configuration\ConfigFilesConfig.cs" />
+    <Compile Include="Configuration\ConfigFilesIgnoreAttribute.cs" />
+    <Compile Include="Configuration\ConfigGroupElement.cs" />
+    <Compile Include="Configuration\ConfigurationNotDefinedException.cs" />
+    <Compile Include="Configuration\FileConfigProvider.cs" />
+    <Compile Include="Configuration\IConfigProvider.cs" />
+    <Compile Include="Configuration\LocalizationProviderIgnoreAttribute.cs" />
+    <Compile Include="Configuration\PlainXmlConfigElement.cs" />
+    <Compile Include="Configuration\TypeHandlers\AttributeAbleTypeHandler.cs" />
+    <Compile Include="Configuration\TypeHandlers\BasicTypeHandler.cs" />
+    <Compile Include="Configuration\TypeHandlers\ByteArrayTypeHandler.cs" />
+    <Compile Include="Configuration\TypeHandlers\ChildTypeResolver.cs" />
+    <Compile Include="Configuration\TypeHandlers\ConfigTypeHandler.cs" />
+    <Compile Include="Configuration\TypeHandlers\ComplexTypeHandler.cs" />
+    <Compile Include="Configuration\TypeHandlers\DictionaryTypeHandler.cs" />
+    <Compile Include="Configuration\TypeHandlers\ElementTypeHandler.cs" />
+    <Compile Include="Configuration\TypeHandlers\EnumTypeHandler.cs" />
+    <Compile Include="Configuration\TypeHandlers\ListTypeHandler.cs" />
+    <Compile Include="Configuration\TypeHandlers\LoadConfiguration.cs" />
+    <Compile Include="Configuration\TypeHandlers\NullableTypeHandler.cs" />
+    <Compile Include="LibraryConfig\BasicLibraryConfig.cs" />
+    <Compile Include="LibraryConfig\Log4netConfig.cs" />
+    <Compile Include="LibraryConfig\SqlLockingElement.cs" />
+    <Compile Include="LibraryConfig\ThreadingConfig.cs" />
+    <Compile Include="Logging\IgnoreLoggerAttribute.cs" />
+    <Compile Include="Logging\MainLogger.cs" />
+    <Compile Include="Common\BusinessDays.cs" />
+    <Compile Include="Common\EnumTypeAttribute.cs" />
+    <Compile Include="Common\IBusinessDaysProvider.cs" />
+    <Compile Include="Common\ICastable.cs" />
+    <Compile Include="Common\StringUtils.cs" />
+    <Compile Include="Reflection\UltraCaster.cs" />
+    <Compile Include="Persistence\ExecutionContext.cs" />
+    <Compile Include="Reflection\GenericActivator.cs" />
+    <Compile Include="Common\IInitializable.cs" />
+    <Compile Include="Common\ListExtensor.cs" />
+    <Compile Include="Configuration\ConfigAcceptsParentAttribute.cs" />
+    <Compile Include="Configuration\ConfigDictionaryKeyNameAttribute.cs" />
+    <Compile Include="Configuration\ConfigElement.cs" />
+    <Compile Include="Configuration\ConfigElementAttribute.cs" />
+    <Compile Include="Configuration\ConfigRoot.cs" />
+    <Compile Include="Configuration\DefaultFileAttribute.cs" />
+    <Compile Include="Common\FileContentCache.cs" />
+    <Compile Include="Configuration\ILocalizationProvider.cs" />
+    <Compile Include="Configuration\LocalizationProviderAttribute.cs" />
+    <Compile Include="Configuration\NamedAttribute.cs" />
+    <Compile Include="Configuration\NopLocalizationProvider.cs" />
+    <Compile Include="Configuration\ThreadCultureLocalizationProvider.cs" />
+    <Compile Include="Persistence\GenericInstanceState.cs" />
+    <Compile Include="Persistence\PageController.cs" />
+    <Compile Include="Persistence\PersistedInstanceState.cs" />
+    <Compile Include="Persistence\SelfSerializableClass.cs" />
+    <Compile Include="Persistence\XmlSerializationHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\SafeDictionary.cs" />
+    <Compile Include="Reflection\CastingHelper.cs" />
+    <Compile Include="DefaultConfigResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DefaultConfigResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceModel\ErrorBehaviorExtension.cs" />
+    <Compile Include="ServiceModel\ErrorServiceBehavior.cs" />
+    <Compile Include="ServiceModel\HostingFactory.cs" />
+    <Compile Include="ServiceModel\IHostingHelper.cs" />
+    <Compile Include="ServiceModel\KnownTypesLister.cs" />
+    <Compile Include="ServiceModel\LoggerErrorHandler.cs" />
+    <Compile Include="ServiceModel\ServiceProcessInstallerExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ServiceModel\WCFHostingHelper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ServiceModel\WCFWindowsServiceInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Threading\BaseLockingProvider.cs" />
+    <Compile Include="Threading\CriticalRegion.cs" />
+    <Compile Include="Threading\DefaultLockingProvider.cs" />
+    <Compile Include="Threading\IDataStoreLockingProvider.cs" />
+    <Compile Include="Threading\IDataStoreLockToken.cs" />
+    <Compile Include="Threading\SqlLockToken.cs" />
+    <Compile Include="Threading\SqlLockingProvider.cs" />
+    <Compile Include="Threading\ILockToken.cs" />
+    <Compile Include="Threading\ILockingProvider.cs" />
+    <Compile Include="Threading\BaseLockToken.cs" />
+    <Compile Include="Threading\ThreadData.cs" />
+    <Compile Include="Threading\UnableToAcquireLockException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BasicLibrary.config">
+    </None>
+    <Content Include="ConfigFiles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DefaultConfigResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DefaultConfigResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
