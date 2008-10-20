@@ -121,15 +121,15 @@
     <value>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
 &lt;simpleLibrary&gt;
   &lt;business&gt;
-    &lt;interfaceAssembly&gt;BusinessInterface&lt;/interfaceAssembly&gt;
-    &lt;serverAssembly&gt;BusinessServer&lt;/serverAssembly&gt;
+    &lt;interfaceAssembly&gt;Sample.BusinessInterface&lt;/interfaceAssembly&gt;
+    &lt;serverAssembly&gt;Sample.BusinessServer&lt;/serverAssembly&gt;
   &lt;/business&gt;
   &lt;serviceModel&gt;
     &lt;defaultBaseAddress&gt;http://localhost:9001/&lt;/defaultBaseAddress&gt;
-    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.SingletonServiceConfigurator, SimpleLibraryBase"/&gt;
-    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.ErrorBehaviorServiceConfigurator, SimpleLibraryBase"/&gt;
-    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.DebugServiceConfigurator, SimpleLibraryBase" enabled="true"/&gt;
-    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.MetadataBehaviorServiceConfigurator, SimpleLibraryBase"&gt;
+    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.SingletonServiceConfigurator, SimpleLibraryCore"/&gt;
+    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.ErrorBehaviorServiceConfigurator, SimpleLibraryCore"/&gt;
+    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.DebugServiceConfigurator, SimpleLibraryCore" enabled="true"/&gt;
+    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.MetadataBehaviorServiceConfigurator, SimpleLibraryCore"&gt;
       &lt;address&gt;mex&lt;/address&gt;
       &lt;httpGetEnabled&gt;true&lt;/httpGetEnabled&gt;
     &lt;/serviceConfigurator&gt;
@@ -139,8 +139,8 @@
       &lt;bindingType&gt;System.ServiceModel.WSHttpBinding, System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&lt;/bindingType&gt;
       &lt;address&gt;&lt;/address&gt;
 
-      &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.DataContractConfigurator, SimpleLibraryBase"/&gt;
-      &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.DefaultFaultsConfigurator, SimpleLibraryBase"/&gt;
+      &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.DataContractConfigurator, SimpleLibraryCore"/&gt;
+      &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.DefaultFaultsConfigurator, SimpleLibraryCore"/&gt;
     &lt;/defaultEndpoint&gt;
 
     &lt;additionalEndpoints/&gt;
