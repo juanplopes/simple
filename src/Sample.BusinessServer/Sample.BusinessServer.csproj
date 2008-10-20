@@ -100,13 +100,13 @@
       <Project>{1FD053EF-EF04-4533-B61B-B7979DC20BDA}</Project>
       <Name>Sample.BusinessInterface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleLibraryBase\SimpleLibraryBase.csproj">
+    <ProjectReference Include="..\SimpleLibraryCore\SimpleLibraryCore.csproj">
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
-      <Name>SimpleLibraryBase</Name>
+      <Name>SimpleLibraryCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleLibrary\SimpleLibrary.csproj">
+    <ProjectReference Include="..\SimpleLibraryServer\SimpleLibraryServer.csproj">
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
-      <Name>SimpleLibrary</Name>
+      <Name>SimpleLibraryServer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

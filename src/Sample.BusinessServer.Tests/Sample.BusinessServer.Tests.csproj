@@ -73,17 +73,17 @@
       <Project>{F5222057-1199-4071-83E7-401BAC5D9485}</Project>
       <Name>Sample.BusinessServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleLibraryBase\SimpleLibraryBase.csproj">
+    <ProjectReference Include="..\SimpleLibraryCore\SimpleLibraryCore.csproj">
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
-      <Name>SimpleLibraryBase</Name>
+      <Name>SimpleLibraryCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleLibraryServer\SimpleLibraryServer.csproj">
+      <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
+      <Name>SimpleLibraryServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\SimpleLibraryTests\SimpleLibraryTests.csproj">
       <Project>{B244B1EF-812D-4BDC-8BB7-E5ECAD0AACB1}</Project>
       <Name>SimpleLibraryTests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SimpleLibrary\SimpleLibrary.csproj">
-      <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
-      <Name>SimpleLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

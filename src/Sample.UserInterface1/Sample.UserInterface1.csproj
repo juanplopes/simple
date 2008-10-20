@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SimpleLibraryBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\Build\SimpleLibraryBase.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -77,6 +73,10 @@
     <ProjectReference Include="..\Sample.BusinessInterface\Sample.BusinessInterface.csproj">
       <Project>{1FD053EF-EF04-4533-B61B-B7979DC20BDA}</Project>
       <Name>Sample.BusinessInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleLibraryCore\SimpleLibraryCore.csproj">
+      <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
+      <Name>SimpleLibraryCore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

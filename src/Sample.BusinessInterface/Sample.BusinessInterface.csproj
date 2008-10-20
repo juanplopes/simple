@@ -61,9 +61,9 @@
     <Compile Include="IEmpresaRules.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleLibraryBase\SimpleLibraryBase.csproj">
+    <ProjectReference Include="..\SimpleLibraryCore\SimpleLibraryCore.csproj">
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
-      <Name>SimpleLibraryBase</Name>
+      <Name>SimpleLibraryCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
