@@ -35,6 +35,15 @@ namespace BasicLibrary.Configuration
         public void Lock()
         {
             ConfigInfo.Lock();
+            foreach (PropertyInfo property in ConfigInfo.Attributes.Keys)
+            {
+                object value = property.GetValue(this, null);
+                if (value != null && value is ConfigElement)
+                {
+                    (value as ConfigElement).Lock();
+                }
+            }
+
         }
 
         public void LoadFromElement(ConfigElement element)

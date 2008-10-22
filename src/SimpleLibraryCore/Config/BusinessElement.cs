@@ -8,9 +8,11 @@ namespace SimpleLibrary.Config
 {
     public class BusinessElement : ConfigElement
     {
-        [ConfigElement("interfaceAssembly", Required=true)]
+        [ConfigElement("interfaceAssembly", Required = true)]
         public string InterfaceAssembly { get; set; }
         [ConfigElement("serverAssembly", Required = true)]
         public string ServerAssembly { get; set; }
+        [ConfigElement("rulesFactoryType", Default = InstanceType.New)]
+        public List<string> RulesFactories { get; set; }
     }
 }
