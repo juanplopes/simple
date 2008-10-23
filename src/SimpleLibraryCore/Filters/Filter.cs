@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace SimpleLibrary.Filters
 {
     [DataContract]
-    public class Filter
+    public abstract class Filter
     {
         public AndExpression And(Filter filter)
         {

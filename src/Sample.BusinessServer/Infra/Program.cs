@@ -13,6 +13,8 @@ using Sample.BusinessInterface.Domain;
 using Sample.BusinessServer.DataAccess;
 using NHibernate.Tool.hbm2ddl;
 using SimpleLibrary.DataAccess;
+using SimpleLibrary.Threading;
+using System.Threading;
 
 namespace Sample.BusinessServer.Infra
 {

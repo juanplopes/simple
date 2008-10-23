@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{35DBC634-E490-4239-9315-4E9210647C2A}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -101,10 +101,13 @@
     </Compile>
     <Compile Include="ServiceModel\DefaultExceptionHandler.cs" />
     <Compile Include="ServiceModel\ServiceEnableAttribute.cs" />
+    <Compile Include="Threading\NHLockId.cs" />
+    <Compile Include="Threading\NHLockingProvider.cs" />
+    <Compile Include="Threading\NHLockRow.cs" />
+    <Compile Include="Threading\NHLockToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DefaultBinding.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +119,9 @@
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
       <Name>SimpleLibraryBase</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NHLockEngine.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
