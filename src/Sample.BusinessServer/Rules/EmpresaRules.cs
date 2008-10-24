@@ -41,9 +41,8 @@ namespace Sample.BusinessServer.Rules
 
         public virtual Empresa GetOne()
         {
-            Empresa e = Load(3);
-            Pruner.PruneObject(e, typeof(Empresa), 100, 2);
-            return e;
+            SimpleContext.Get().CustomData["okok"] = "ok2";
+            return null;
         }
     }
 }

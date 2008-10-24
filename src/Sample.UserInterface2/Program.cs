@@ -24,15 +24,12 @@ namespace Sample.UserInterface2
             Thread.Sleep(4000);
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
 
-            Empresa.NomeProperty.Like("asdq", true);
+            IList<Empresa> list = rules.ListByFilter(Empresa.NomeProperty.Like("living", false), OrderBy.None());
 
             SimpleContext.Get().CustomData["teste"] = "oi";
 
-            Empresa e = new Empresa();
-            e.Nome = "Living";
-            rules.SaveOrUpdate(e);
+            rules.GetOne();
             
-            IList<Empresa> empresa = rules.ListByFilter(BooleanExpression.True, OrderBy.None());
         }
     }
 }
