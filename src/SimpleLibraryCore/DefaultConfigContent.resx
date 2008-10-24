@@ -139,6 +139,7 @@
 
       &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.DataContractConfigurator, SimpleLibraryCore"/&gt;
       &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.DefaultFaultsConfigurator, SimpleLibraryCore"/&gt;
+      &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.OperationContextConfigurator, SimpleLibraryCore"/&gt;
     &lt;/defaultEndpoint&gt;
 
     &lt;additionalEndpoints/&gt;

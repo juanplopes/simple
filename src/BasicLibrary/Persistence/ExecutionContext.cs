@@ -6,6 +6,7 @@ using System.Threading;
 
 namespace BasicLibrary.Persistence
 {
+    [Serializable]
     public class ExecutionContext<T> where T : ExecutionContext<T>, new()
     {
         public static T Get()
@@ -14,9 +15,17 @@ namespace BasicLibrary.Persistence
             if ((lobjT = (T)CallContext.GetData(typeof(T).GUID.ToString()))==null)
             {
                 lobjT = new T();
-                CallContext.SetData(typeof(T).GUID.ToString(), lobjT);
+                lobjT.Init();
+                Set(lobjT);
             }
             return lobjT;
         }
+
+        public static void Set(T obj)
+        {
+            CallContext.SetData(typeof(T).GUID.ToString(), obj);
+        }
+
+        public virtual void Init() { }
     }
 }

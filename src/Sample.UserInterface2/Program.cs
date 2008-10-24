@@ -13,6 +13,7 @@ using SimpleLibrary.Config;
 using System.Reflection;
 using System.ServiceModel;
 using BasicLibrary.Logging;
+using SimpleLibrary.ServiceModel;
 
 namespace Sample.UserInterface2
 {
@@ -22,6 +23,10 @@ namespace Sample.UserInterface2
         {
             Thread.Sleep(4000);
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
+
+            Empresa.NomeProperty.Like("asdq", true);
+
+            SimpleContext.Get().CustomData["teste"] = "oi";
 
             Empresa e = new Empresa();
             e.Nome = "Living";

@@ -9,9 +9,14 @@ namespace SimpleLibrary.Filters
     [DataContract]
     public class LikeExpression : PropertyExpression<string>
     {
-        public LikeExpression(string propertyName, string value) : base(propertyName, value)
+        public const bool DefaultIgnoreCase = false;
+
+        [DataMember]
+        public bool IgnoreCase { get; set; }
+
+        public LikeExpression(string propertyName, string value, bool ignoreCase) : base(propertyName, value)
         {
- 
+            this.IgnoreCase = ignoreCase;
         }
     }
 }

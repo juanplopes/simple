@@ -77,6 +77,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\GenericInterceptor.cs" />
+    <Compile Include="DataAccess\ISimpleInterceptor.cs" />
     <Compile Include="DataAccess\SimpleTransformers.cs" />
     <Compile Include="DataAccess\TimestampType.cs" />
     <Compile Include="DataAccess\TupleToConstrctorTransformer.cs" />

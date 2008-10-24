@@ -27,7 +27,7 @@ namespace SimpleLibrary.DataAccess
             else if (filter is Filters.LikeExpression)
             {
                 Filters.LikeExpression like = filter as Filters.LikeExpression;
-                return new LikeExpression(like.PropertyName, like.Value);
+                return new LikeExpression(like.PropertyName, like.Value, MatchMode.Exact, null, like.IgnoreCase);
             }
             else if (filter is Filters.ExampleFilter)
             {

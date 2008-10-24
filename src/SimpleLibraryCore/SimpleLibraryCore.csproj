@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Config\BusinessElement.cs" />
     <Compile Include="Config\ConfiguratorElement.cs" />
+    <Compile Include="Config\Constants.cs" />
     <Compile Include="Config\DataConfigElement.cs" />
     <Compile Include="Config\EndpointElement.cs" />
     <Compile Include="Config\ServiceModelElement.cs" />
@@ -105,7 +106,9 @@
     <Compile Include="ServiceModel\IServiceConfigurator.cs" />
     <Compile Include="ServiceModel\MainContractAttribute.cs" />
     <Compile Include="ServiceModel\MetadataBehaviorServiceConfigurator.cs" />
+    <Compile Include="ServiceModel\OperationContextConfigurator.cs" />
     <Compile Include="ServiceModel\ServiceRulesProvider.cs" />
+    <Compile Include="ServiceModel\SimpleContext.cs" />
     <Compile Include="ServiceModel\SingletonServiceConfigurator.cs" />
   </ItemGroup>
   <ItemGroup>

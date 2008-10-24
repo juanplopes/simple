@@ -45,11 +45,13 @@ namespace SimpleLibrary.DataAccess
 
             Config = new Configuration();
             Config.Configure(libConfig.DataConfig.NHibernateConfigFile);
+            Config.SetInterceptor(new GenericInterceptor());
             SessionFactory = Config.BuildSessionFactory();
+
             MyData = new ThreadData<SessionManager>();
         }
 
-        public static void HeartBeat() 
+        public static void HeartBeat()
         {
             GetSession();
         }

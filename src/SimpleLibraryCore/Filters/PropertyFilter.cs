@@ -29,19 +29,35 @@ namespace SimpleLibrary.Filters
         }
         public static LikeExpression Like(this PropertyName propertyName, string value)
         {
-            return Expression.Like(propertyName, value);
+            return Like(propertyName, value, LikeExpression.DefaultIgnoreCase);
+        }
+        public static LikeExpression Like(this PropertyName propertyName, string value, bool ignoreCase)
+        {
+            return Expression.Like(propertyName, value, ignoreCase);
         }
         public static LikeExpression Contains(this PropertyName propertyName, string value)
         {
-            return Expression.Contains(propertyName, value);
+            return Contains(propertyName, value, LikeExpression.DefaultIgnoreCase);
+        }
+        public static LikeExpression Contains(this PropertyName propertyName, string value, bool ignoreCase)
+        {
+            return Expression.Contains(propertyName, value, ignoreCase);
         }
         public static LikeExpression StartsWith(this PropertyName propertyName, string value)
         {
-            return Expression.StartsWith(propertyName, value);
+            return StartsWith(propertyName, value, LikeExpression.DefaultIgnoreCase);
+        }
+        public static LikeExpression StartsWith(this PropertyName propertyName, string value, bool ignoreCase)
+        {
+            return Expression.StartsWith(propertyName, value, ignoreCase);
         }
         public static LikeExpression EndsWith(this PropertyName propertyName, string value)
         {
-            return Expression.EndsWith(propertyName, value);
+            return EndsWith(propertyName, value, LikeExpression.DefaultIgnoreCase);
+        }
+        public static LikeExpression EndsWith(this PropertyName propertyName, string value, bool ignoreCase)
+        {
+            return Expression.EndsWith(propertyName, value, ignoreCase);
         }
         public static BetweenExpression Between(this PropertyName propertyName, object lo, object hi)
         {

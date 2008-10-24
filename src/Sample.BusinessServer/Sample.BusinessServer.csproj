@@ -86,6 +86,9 @@
     <None Include="NHibernate.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SimpleLibrary.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <EmbeddedResource Include="Infra\Mappings\EmpresaFuncionario.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
