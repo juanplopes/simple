@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AssemblyConfigElement.cs" />
     <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
     <Compile Include="Configuration\ConfigFileElement.cs" />
     <Compile Include="Configuration\ConfigFilesConfig.cs" />
@@ -61,8 +62,10 @@
     <Compile Include="Configuration\ConfigurationNotDefinedException.cs" />
     <Compile Include="Configuration\FileConfigProvider.cs" />
     <Compile Include="Configuration\IConfigProvider.cs" />
+    <Compile Include="Configuration\InvalidConfigurationException.cs" />
     <Compile Include="Configuration\LocalizationProviderIgnoreAttribute.cs" />
     <Compile Include="Configuration\PlainXmlConfigElement.cs" />
+    <Compile Include="Configuration\TypeConfigElement.cs" />
     <Compile Include="Configuration\TypeHandlers\AttributeAbleTypeHandler.cs" />
     <Compile Include="Configuration\TypeHandlers\BasicTypeHandler.cs" />
     <Compile Include="Configuration\TypeHandlers\ByteArrayTypeHandler.cs" />

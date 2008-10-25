@@ -13,7 +13,7 @@ namespace SimpleLibrary.ServiceModel
     {
         public static Binding CreateBinding(EndpointElement element)
         {
-            Type bindingType = Type.GetType(element.BindingType);
+            Type bindingType = element.BindingType.LoadType();
             Binding binding = (Binding)Activator.CreateInstance(bindingType, element.BindingNameRef);
             return binding;
         }
@@ -23,8 +23,8 @@ namespace SimpleLibrary.ServiceModel
             foreach (ConfiguratorElement opClassType in element.ServiceConfigurators)
             {
                 if (opClassType.RunOnlyAtServer && !isServer) continue;
-                
-                Type t = Type.GetType(opClassType.Type);
+
+                Type t = opClassType.LoadType();
                 if (!typeof(IServiceConfigurator).IsAssignableFrom(t)) throw new InvalidOperationException("Configurator must implement IServiceConfigurator: " + t.FullName);
 
                 IServiceConfigurator configurator = (IServiceConfigurator)Activator.CreateInstance(t);
@@ -38,7 +38,7 @@ namespace SimpleLibrary.ServiceModel
             {
                 if (opClassType.RunOnlyAtServer && !isServer) continue;
 
-                Type t = Type.GetType(opClassType.Type);
+                Type t = opClassType.LoadType();
                 if (!typeof(IEndpointConfigurator).IsAssignableFrom(t)) throw new InvalidOperationException("Configurator must implement IEndpointConfigurator: " + t.FullName);
 
                 IEndpointConfigurator configurator =  (IEndpointConfigurator)Activator.CreateInstance(t);

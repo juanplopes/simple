@@ -6,10 +6,8 @@ using BasicLibrary.Configuration;
 
 namespace SimpleLibrary.Config
 {
-    public class ConfiguratorElement : PlainXmlConfigElement
+    public class ConfiguratorElement : TypeConfigElement
     {
-        [ConfigElement("type", Required=true)]
-        public string Type { get; set; }
         [ConfigElement("runOnlyAtServer",Default=false)]
         public bool RunOnlyAtServer { get; set; }
     }

@@ -23,7 +23,7 @@ namespace BasicLibrary.Logging
         static MainLogger()
         {
             BasicLibraryConfig config = BasicLibraryConfig.Get();
-            XmlConfigurator.Configure(config.Log4net.MainXmlElement);
+            XmlConfigurator.Configure(config.Log4net.GetStream());
         }
 
         public static ILog Default

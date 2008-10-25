@@ -43,7 +43,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
             }
             else
             {
-                throw new ConfigurationErrorsException("invalid property type");
+                throw new InvalidConfigurationException("invalid property type");
             }
             
         }

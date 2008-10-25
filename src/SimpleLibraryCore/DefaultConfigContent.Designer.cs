@@ -64,13 +64,14 @@ namespace SimpleLibrary {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;simpleLibrary&gt;
         ///  &lt;business&gt;
-        ///    &lt;interfaceAssembly&gt;Sample.BusinessInterface&lt;/interfaceAssembly&gt;
-        ///    &lt;serverAssembly&gt;Sample.BusinessServer&lt;/serverAssembly&gt;
-        ///    &lt;rulesFactoryType&gt;SimpleLibrary.Rules.DefaultRulesProvider`1,SimpleLibraryServer&lt;/rulesFactoryType&gt;
-        ///    &lt;rulesFactoryType&gt;SimpleLibrary.ServiceModel.ServiceRulesProvider`1,SimpleLibraryCore&lt;/rulesFactoryType&gt;
+        ///    &lt;interfaceAssembly name=&quot;Sample.BusinessInterface&quot;/&gt;
+        ///    &lt;serverAssembly name=&quot;Sample.BusinessServer&quot;/&gt;
+        ///    &lt;rulesFactoryType name=&quot;SimpleLibrary.Rules.DefaultRulesProvider`1,SimpleLibraryServer&quot;/&gt;
+        ///    &lt;rulesFactoryType name=&quot;SimpleLibrary.ServiceModel.ServiceRulesProvider`1,SimpleLibraryCore&quot;/&gt;
         ///  &lt;/business&gt;
         ///  &lt;serviceModel&gt;
-        ///    &lt;defaultBaseAddress&gt;http://localhost:9001/&lt;/defaultBaseAddr [rest of string was truncated]&quot;;.
+        ///    &lt;defaultBaseAddress&gt;http://localhost:9001/&lt;/defaultBaseAddress&gt;
+        ///    &lt;serviceConfiguratorType name [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SimpleLibraryConfig {
             get {

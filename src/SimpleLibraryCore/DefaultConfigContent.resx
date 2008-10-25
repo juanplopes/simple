@@ -121,31 +121,33 @@
     <value>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
 &lt;simpleLibrary&gt;
   &lt;business&gt;
-    &lt;interfaceAssembly&gt;Sample.BusinessInterface&lt;/interfaceAssembly&gt;
-    &lt;serverAssembly&gt;Sample.BusinessServer&lt;/serverAssembly&gt;
-    &lt;rulesFactoryType&gt;SimpleLibrary.Rules.DefaultRulesProvider`1,SimpleLibraryServer&lt;/rulesFactoryType&gt;
-    &lt;rulesFactoryType&gt;SimpleLibrary.ServiceModel.ServiceRulesProvider`1,SimpleLibraryCore&lt;/rulesFactoryType&gt;
+    &lt;interfaceAssembly name="Sample.BusinessInterface"/&gt;
+    &lt;serverAssembly name="Sample.BusinessServer"/&gt;
+    &lt;rulesFactoryType name="SimpleLibrary.Rules.DefaultRulesProvider`1,SimpleLibraryServer"/&gt;
+    &lt;rulesFactoryType name="SimpleLibrary.ServiceModel.ServiceRulesProvider`1,SimpleLibraryCore"/&gt;
   &lt;/business&gt;
   &lt;serviceModel&gt;
     &lt;defaultBaseAddress&gt;http://localhost:9001/&lt;/defaultBaseAddress&gt;
-    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.SingletonServiceConfigurator, SimpleLibraryCore"/&gt;
-    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.ErrorBehaviorServiceConfigurator, SimpleLibraryCore"/&gt;
-    &lt;serviceConfigurator type="SimpleLibrary.ServiceModel.DebugServiceConfigurator, SimpleLibraryCore" enabled="true"/&gt;
+    &lt;serviceConfiguratorType name="SimpleLibrary.ServiceModel.SingletonServiceConfigurator, SimpleLibraryCore"/&gt;
+    &lt;serviceConfiguratorType name="SimpleLibrary.ServiceModel.ErrorBehaviorServiceConfigurator, SimpleLibraryCore"/&gt;
+    &lt;serviceConfiguratorType name="SimpleLibrary.ServiceModel.DebugServiceConfigurator, SimpleLibraryCore" enabled="true"/&gt;
 
     &lt;defaultEndpoint&gt;
       &lt;bindingNameRef&gt;_DefaultBinding&lt;/bindingNameRef&gt;
-      &lt;bindingType&gt;System.ServiceModel.WSHttpBinding, System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&lt;/bindingType&gt;
+      &lt;bindingType name="System.ServiceModel.WSHttpBinding, System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/&gt;
       &lt;address&gt;&lt;/address&gt;
 
-      &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.DataContractConfigurator, SimpleLibraryCore"/&gt;
-      &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.DefaultFaultsConfigurator, SimpleLibraryCore"/&gt;
-      &lt;endpointConfigurator type="SimpleLibrary.ServiceModel.OperationContextConfigurator, SimpleLibraryCore"/&gt;
+      &lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.DataContractConfigurator, SimpleLibraryCore"/&gt;
+      &lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.DefaultFaultsConfigurator, SimpleLibraryCore"/&gt;
+      &lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.OperationContextConfigurator, SimpleLibraryCore"/&gt;
     &lt;/defaultEndpoint&gt;
 
     &lt;additionalEndpoints/&gt;
   &lt;/serviceModel&gt;
   &lt;dataConfig&gt;
-    &lt;nhibernateConfigFile&gt;NHibernate.config&lt;/nhibernateConfigFile&gt;
+    &lt;defaultSessionFactory configFile="NHibernate.config"/&gt;
+
+    &lt;!--&lt;sessionFactory configFile="OtherSession.config" name="otherSession"/&gt;--&gt;
   &lt;/dataConfig&gt;
 &lt;/simpleLibrary&gt;</value>
   </data>

@@ -75,8 +75,8 @@
     <Compile Include="Rules\FuncionarioRules.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Infra\Mappings\Empresa.hbm.xml" />
-    <EmbeddedResource Include="Infra\Mappings\Funcionario.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Empresa.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Funcionario.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -89,7 +89,7 @@
     <None Include="SimpleLibrary.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <EmbeddedResource Include="Infra\Mappings\EmpresaFuncionario.hbm.xml" />
+    <EmbeddedResource Include="Mappings\EmpresaFuncionario.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
@@ -110,7 +110,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Infra\Mappings\NHLockEngine.hbm.xml" />
+    <EmbeddedResource Include="Mappings\NHLockEngine.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

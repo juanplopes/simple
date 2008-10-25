@@ -118,7 +118,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
         {
             if (HandledItems < Attributes.Count)
             {
-                throw new ConfigurationErrorsException("all properties must be handled");
+                throw new InvalidConfigurationException("all properties must be handled");
             }
         }
 

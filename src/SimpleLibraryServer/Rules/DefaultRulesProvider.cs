@@ -25,7 +25,7 @@ namespace SimpleLibrary.Rules
                 ProxyClass = RulesProxyBuilder.CreateProxy(ImplementerClass, typeof(T));
         }
 
-        public DefaultRulesProvider() : this(Assembly.Load(SimpleLibraryConfig.Get().Business.ServerAssembly))
+        public DefaultRulesProvider() : this(SimpleLibraryConfig.Get().Business.ServerAssembly.LoadAssembly())
         {
 
         }

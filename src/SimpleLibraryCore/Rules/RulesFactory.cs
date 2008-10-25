@@ -7,6 +7,7 @@ using System.ServiceModel;
 using SimpleLibrary.ServiceModel;
 using SimpleLibrary.Config;
 using BasicLibrary.Logging;
+using BasicLibrary.Configuration;
 
 namespace SimpleLibrary.Rules
 {
@@ -25,17 +26,17 @@ namespace SimpleLibrary.Rules
             }
             else
             {
-                foreach (string typeString in Config.Business.RulesFactories)
+                foreach (TypeConfigElement typeElement in Config.Business.RulesFactories)
                 {
                     try
                     {
-                        Type type = Type.GetType(typeString);
+                        Type type = typeElement.LoadType();
                         provider = (IRulesProvider<T>)Activator.CreateInstance(type.MakeGenericType(typeof(T)));
                         break;
                     }
                     catch (Exception e)
                     {
-                        MainLogger.Default.Warn("Couldn't load provider type " + typeString, e);
+                        MainLogger.Default.Warn("Couldn't load provider type " + typeElement.Name, e);
                     }
                 }
 

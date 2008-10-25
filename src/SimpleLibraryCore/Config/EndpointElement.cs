@@ -12,12 +12,12 @@ namespace SimpleLibrary.Config
         public string BindingNameRef { get; set; }
 
         [ConfigElement("bindingType",Required=true)]
-        public string BindingType { get; set; }
+        public TypeConfigElement BindingType { get; set; }
 
         [ConfigElement("address",Default="")]
         public string Address { get; set; }
 
-        [ConfigElement("endpointConfigurator")]
+        [ConfigElement("endpointConfiguratorType")]
         public List<ConfiguratorElement> EndpointConfigurators { get; set; }
     }
 }

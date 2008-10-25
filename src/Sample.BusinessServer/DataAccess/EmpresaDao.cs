@@ -15,7 +15,7 @@ namespace Sample.BusinessServer.DataAccess
     public class EmpresaDao : BaseDao<Empresa>
     {
         public EmpresaDao(ISession session) : base(session) { }
-        public EmpresaDao() : base() { }
+        public EmpresaDao() : base("otherSession") { }
         public EmpresaDao(BaseDao previousDao) : base(previousDao) { }
 
         public IList<Empresa> GetAllWithQuery()
@@ -27,7 +27,7 @@ namespace Sample.BusinessServer.DataAccess
                   group by e.nome, e.id_empresa, e.version");
 
             NewMethod(query);
-            
+
             query.SetResultTransformer(SimpleTransformers.ByProperties<TestDTO>());
             query.List();
             return null;

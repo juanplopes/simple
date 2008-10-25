@@ -23,12 +23,16 @@ namespace SimpleLibrary.DataAccess
         {
             Session = session;
         }
-        
+
         /// <summary>
         /// Creates a DAO instance getting session from pool.
         /// </summary>
         public BaseDao() : this(SessionManager.GetSession()) { }
-        
+        public BaseDao(string factoryName) : this(SessionManager.GetSession(factoryName)) { }
+        public BaseDao(bool forceNewSession) : this(SessionManager.GetSession(forceNewSession)) { }
+        public BaseDao(string factoryName, bool forceNewSession) : this(SessionManager.GetSession(factoryName, forceNewSession)) { }
+
+
         /// <summary>
         /// Creates a DAO instance using session from another DAO instance.
         /// </summary>
@@ -41,6 +45,9 @@ namespace SimpleLibrary.DataAccess
         public BaseDao() : base() { }
         public BaseDao(ISession session) : base(session) { }
         public BaseDao(BaseDao previousDao) : base(previousDao) { }
+        public BaseDao(string factoryName) : base(factoryName) { }
+        public BaseDao(bool forceNewSession) : base(forceNewSession) { }
+        public BaseDao(string factoryName, bool forceNewSession) : base(factoryName, forceNewSession) { }
 
         //public T Unproxy(T entity)
         //{

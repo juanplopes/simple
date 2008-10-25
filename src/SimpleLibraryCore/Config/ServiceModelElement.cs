@@ -15,7 +15,7 @@ namespace SimpleLibrary.Config
         [ConfigAcceptsParent("additionalEndpoints")]
         public List<EndpointElement> Endpoints { get; set; }
 
-        [ConfigElement("serviceConfigurator")]
+        [ConfigElement("serviceConfiguratorType")]
         public List<ConfiguratorElement> ServiceConfigurators { get; set; }
 
         [ConfigElement("defaultBaseAddress", Required=true)]
