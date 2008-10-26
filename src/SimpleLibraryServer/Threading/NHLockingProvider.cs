@@ -36,6 +36,7 @@ namespace SimpleLibrary.Threading
                 Data = data
             };
 
+            token.Session.Clear(); 
             token.Session.SaveOrUpdate(row);
             token.Session.Flush();
             token.Session.Transaction.Commit();
@@ -74,7 +75,7 @@ namespace SimpleLibrary.Threading
 
         protected override NHLockToken CreateLockToken(string type, int id)
         {
-            ISession session = SessionManager.GetSession();
+            ISession session = SessionManager.GetSession(true);
             session.BeginTransaction();
             return new NHLockToken(session, type, id);
         }

@@ -70,6 +70,7 @@
     <Compile Include="Infra\Program.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Infra\TestPersistedState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\EmpresaFuncionarioRules.cs" />
     <Compile Include="Rules\EmpresaRules.cs" />
