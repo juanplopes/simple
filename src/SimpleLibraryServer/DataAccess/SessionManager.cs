@@ -23,19 +23,38 @@ namespace SimpleLibrary.DataAccess
 
         public static ISession GetThreadSession(string factoryName)
         {
+            return GetThreadSession(factoryName, true);
+        }
+
+        public static ISession GetThreadSession(string factoryName, bool createIfDoesNotExist)
+        {
             lock (SessionFactories)
                 lock (MyData)
                 {
                     string realName = factoryName ?? "";
 
                     ISession session = (ISession)MyData[ISESSION_KEY + realName, 0];
-                    if (session == null)
+                    if (session == null || !((ISession)session).IsOpen)
                     {
+                        if (!createIfDoesNotExist) return null;
+
                         session = GetSessionFactory(factoryName).OpenSession();
                         MyData[ISESSION_KEY + realName, 0] = session;
                     }
                     return session;
                 }
+        }
+
+        public static void ReleaseThreadSessions()
+        {
+            ISession session = GetThreadSession(null, false);
+            if (session != null) session.Close();
+
+            foreach (string factoryName in SessionFactories.Keys)
+            {
+                session = GetThreadSession(factoryName, false);
+                if (session != null) session.Close();
+            }
         }
 
         public static ISessionFactory GetSessionFactory(string factoryName)

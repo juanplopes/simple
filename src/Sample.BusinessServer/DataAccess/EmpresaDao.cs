@@ -15,7 +15,7 @@ namespace Sample.BusinessServer.DataAccess
     public class EmpresaDao : BaseDao<Empresa>
     {
         public EmpresaDao(ISession session) : base(session) { }
-        public EmpresaDao() : base("otherSession") { }
+        public EmpresaDao() : base() { }
         public EmpresaDao(BaseDao previousDao) : base(previousDao) { }
 
         public IList<Empresa> GetAllWithQuery()

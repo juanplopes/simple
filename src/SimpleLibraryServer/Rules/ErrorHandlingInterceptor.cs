@@ -5,6 +5,8 @@ using System.Text;
 using Castle.Core.Interceptor;
 using SimpleLibrary.ServiceModel;
 using BasicLibrary.Logging;
+using System.Reflection;
+using SimpleLibrary.DataAccess;
 
 namespace SimpleLibrary.Rules
 {
@@ -17,11 +19,15 @@ namespace SimpleLibrary.Rules
             try
             {
                 invocation.Proceed();
+                SessionManager.ReleaseThreadSessions();
             }
             catch (Exception e)
             {
-                if (!DefaultExceptionHandler.Handle(e)) {
-                    throw;
+                if (e is TargetInvocationException) e = e.InnerException;
+
+                if (!DefaultExceptionHandler.Handle(e))
+                {
+                    throw e;
                 }
             }
         }
