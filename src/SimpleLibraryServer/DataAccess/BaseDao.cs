@@ -68,7 +68,7 @@ namespace SimpleLibrary.DataAccess
 
         protected virtual bool DefaultFlush
         {
-            get { return true; }
+            get { return false; }
         }
 
         public IOrderedQueryable<Q> GetQueryable<Q>()

@@ -47,13 +47,25 @@ namespace SimpleLibrary.DataAccess
 
         public static void ReleaseThreadSessions()
         {
-            ISession session = GetThreadSession(null, false);
-            if (session != null) session.Close();
+            lock (SessionFactories)
+            {
+                foreach (ISession session in GetAllSessions())
+                {
+                    session.Flush();
+                    session.Close();
+                }
+            }
+        }
 
+        public static IEnumerable<ISession> GetAllSessions()
+        {
+            ISession session = GetThreadSession(null, false);
+            if (session != null) yield return session;
             foreach (string factoryName in SessionFactories.Keys)
             {
                 session = GetThreadSession(factoryName, false);
-                if (session != null) session.Close();
+                if (session != null)
+                    yield return session;
             }
         }
 
