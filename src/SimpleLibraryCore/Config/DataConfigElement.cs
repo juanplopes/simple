@@ -18,7 +18,7 @@ namespace SimpleLibrary.Config
             base.CheckConstraints();
             foreach (SessionFactoryElement factory in SessionFactories)
             {
-                if (factory.Name == null) throw new InvalidConfigurationException("All additional session factories must have a name");
+                if (string.IsNullOrEmpty( factory.Name)) throw new InvalidConfigurationException("All additional session factories must have a name");
             }
         }
     }

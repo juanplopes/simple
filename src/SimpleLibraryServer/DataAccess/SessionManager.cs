@@ -7,6 +7,7 @@ using System.Xml;
 using NHibernate;
 using SimpleLibrary.Config;
 using BasicLibrary.Threading;
+using BasicLibrary.Logging;
 
 namespace SimpleLibrary.DataAccess
 {
@@ -47,13 +48,33 @@ namespace SimpleLibrary.DataAccess
 
         public static void ReleaseThreadSessions()
         {
+            Exception firstException = null;
             lock (SessionFactories)
             {
                 foreach (ISession session in GetAllSessions())
                 {
-                    session.Flush();
-                    session.Close();
+                    if (session.IsOpen)
+                    {
+                        try
+                        {
+                            session.Flush();
+                        }
+                        catch (Exception e)
+                        {
+                            MainLogger.Default.Error("Exception when flushing.", e);
+                            if (firstException == null)
+                            {
+                                MainLogger.Default.Debug("Was the first caught exception.");
+                                firstException = e;
+                            }
+                        }
+                        finally
+                        {
+                            session.Close();
+                        }
+                    }
                 }
+                if (firstException != null) throw firstException;
             }
         }
 
