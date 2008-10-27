@@ -34,18 +34,25 @@ namespace SimpleLibrary.DataAccess
                 Filters.ExampleFilter example = filter as Filters.ExampleFilter;
                 return Example.Create(example.Entity);
             }
-            else if (filter is Filters.BinaryOperator)
+            else if (filter is Filters.UnaryOperator)
             {
-                ICriterion criterion1 = GetCriterion((filter as Filters.BinaryOperator).Filter1);
-                ICriterion criterion2 = GetCriterion((filter as Filters.BinaryOperator).Filter2);
+                ICriterion criterion1 = GetCriterion((filter as Filters.UnaryOperator).Filter1);
+                if (filter is Filters.BinaryOperator)
+                {
+                    ICriterion criterion2 = GetCriterion((filter as Filters.BinaryOperator).Filter2);
 
-                if (filter is Filters.AndExpression)
-                {
-                    return new AndExpression(criterion1, criterion2);
+                    if (filter is Filters.AndExpression)
+                    {
+                        return new AndExpression(criterion1, criterion2);
+                    }
+                    else if (filter is Filters.OrExpression)
+                    {
+                        return new OrExpression(criterion1, criterion2);
+                    }
                 }
-                else if (filter is Filters.OrExpression)
+                else if (filter is Filters.NotExpression)
                 {
-                    return new OrExpression(criterion1, criterion2);
+                    return new NotExpression(criterion1);
                 }
             }
             else if (filter is Filters.BetweenExpression)

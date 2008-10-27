@@ -32,16 +32,16 @@ namespace Sample.BusinessServer.Infra
             //SchemaExport export = new SchemaExport(SessionManager.Config);
             //export.Execute(false, true, false, true);
 
-            TestPersistedState test = TestPersistedState.Get(10, 0);
+            //TestPersistedState test = TestPersistedState.Get(10, 0);
 
-            Thread t = new Thread(new ThreadStart(delegate()
-            {
-                TestPersistedState test2 = TestPersistedState.Get(10, 0);
-            }));
-            t.Start();
+            //Thread t = new Thread(new ThreadStart(delegate()
+            //{
+            //    TestPersistedState test2 = TestPersistedState.Get(10, 0);
+            //}));
+            //t.Start();
 
-            test.Ola = "olálálá";
-            test.Persist();
+            //test.Ola = "olálálá";
+            //test.Persist();
 
             MainController.Run(Assembly.GetExecutingAssembly());
         }

@@ -11,6 +11,10 @@ namespace SimpleLibrary.Filters
         {
             return Expression.Equals(propertyName, value);
         }
+        public static NotExpression NotEq(this PropertyName propertyName, object value)
+        {
+            return Expression.NotEquals(propertyName, value);
+        }
         public static SimpleExpression Gt(this PropertyName propertyName, object value)
         {
             return Expression.GreaterThan(propertyName, value);

@@ -10,6 +10,10 @@ namespace SimpleLibrary.Filters
     [DataContract]
     public abstract class Expression : Filter
     {
+        public static NotExpression NotEquals(string propertyName, object value)
+        {
+            return Equals(propertyName, value).Negate();
+        }
         public static SimpleExpression Equals(string propertyName, object value)
         {
             return new SimpleExpression(propertyName, value, SimpleExpression.EqualsExpression);
