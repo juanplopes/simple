@@ -18,14 +18,6 @@ namespace BasicLibrary.Configuration.TypeHandlers
         protected override void ForEachProperty(PropertyInfo property, ConfigElementAttribute attribute)
         {
             base.ForEachProperty(property, attribute);
-            object def = null;
-
-            if ((InstanceType.New.Equals(attribute.Default)))
-                def = Activator.CreateInstance(property.PropertyType);
-            else
-                def = attribute.Default;
-
-            property.SetValue(ConfigInfo.Element, def, null);
         }
     }
 }

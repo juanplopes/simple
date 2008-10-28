@@ -21,6 +21,8 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
+            FiltersElement element = new FiltersElement();
+
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
             Thread.Sleep(4000);
             IList<Empresa> list = rules.ListByFilter(Empresa.NomeProperty.Like("Living"), OrderBy.None());
