@@ -21,7 +21,10 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            FiltersElement element = new FiltersElement();
+            for (int i = 0; i < 100; i++)
+            {
+                SimpleLibraryConfig config = SimpleLibraryConfig.Get();
+            }
 
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
             Thread.Sleep(4000);

@@ -31,23 +31,28 @@ namespace BasicLibrary.Configuration
             }
         }
 
-        private static FileConfigProvider<T> instance;
+        protected SafeDictionary<ConfigIdentifier, T> Cache = new SafeDictionary<ConfigIdentifier, T>();
+
         public static FileConfigProvider<T> Instance
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new FileConfigProvider<T>();
-                }
-                return instance;
+                return Nested.Provider;
             }
+        }
+
+        protected static class Nested
+        {
+            public static FileConfigProvider<T> Provider = new FileConfigProvider<T>();
         }
 
         [LocalizationProviderIgnore]
         public T Get(string file, string location)
         {
-            T config = new T();
+            T config = Cache[new ConfigIdentifier(file, location)];
+            if (config != null) return config;
+            
+            config = new T();
 
             XmlElement docElement;
 
@@ -81,6 +86,8 @@ namespace BasicLibrary.Configuration
             }
 
             config.Lock();
+
+            Cache[new ConfigIdentifier(file, location)] = config;
 
             return config;
         }

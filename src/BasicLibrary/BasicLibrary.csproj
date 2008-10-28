@@ -59,6 +59,7 @@
     <Compile Include="Configuration\ConfigFilesConfig.cs" />
     <Compile Include="Configuration\ConfigFilesIgnoreAttribute.cs" />
     <Compile Include="Configuration\ConfigGroupElement.cs" />
+    <Compile Include="Configuration\ConfigIdentifier.cs" />
     <Compile Include="Configuration\ConfigurationNotDefinedException.cs" />
     <Compile Include="Configuration\FileConfigProvider.cs" />
     <Compile Include="Configuration\IConfigProvider.cs" />
