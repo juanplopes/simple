@@ -68,7 +68,7 @@ namespace BasicLibrary.Configuration
 
             foreach (XmlNode node in element) if (node is XmlElement)
                 {
-                    XmlElement childElement = node as XmlElement;
+                    XmlElement childElement = (XmlElement)node;
 
                     ConfigInfo.Handle(childElement);
                 }

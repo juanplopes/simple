@@ -13,7 +13,7 @@ namespace Sample.BusinessServer.Infra
 
         public void OnPostInsert(PostInsertEvent @event)
         {
-            throw new Exception("");
+
         }
 
         #endregion

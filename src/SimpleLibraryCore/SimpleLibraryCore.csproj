@@ -61,6 +61,7 @@
     <Compile Include="Config\Constants.cs" />
     <Compile Include="Config\DataConfigElement.cs" />
     <Compile Include="Config\EndpointElement.cs" />
+    <Compile Include="Config\FiltersElement.cs" />
     <Compile Include="Config\ServiceModelElement.cs" />
     <Compile Include="Config\SessionFactoryElement.cs" />
     <Compile Include="Config\SimpleLibraryConfig.cs" />

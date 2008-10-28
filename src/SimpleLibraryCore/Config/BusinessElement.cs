@@ -14,5 +14,7 @@ namespace SimpleLibrary.Config
         public AssemblyConfigElement ServerAssembly { get; set; }
         [ConfigElement("rulesFactoryType", Default = InstanceType.New)]
         public List<TypeConfigElement> RulesFactories { get; set; }
+        [ConfigElement("filters", Default = InstanceType.New)]
+        public FiltersElement Filters { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Sample.UserInterface2
         {
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
             Thread.Sleep(4000);
-            IList<Empresa> list = rules.ListByFilter(Empresa.NomeProperty.NotEq("Living"), OrderBy.None());
+            IList<Empresa> list = rules.ListByFilter(Empresa.NomeProperty.Like("Living"), OrderBy.None());
             Empresa e = new Empresa();
             e.Nome = "Living10";
             rules.SaveOrUpdate(e);
