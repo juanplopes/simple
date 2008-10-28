@@ -9,13 +9,13 @@ namespace SimpleLibrary.Config
     [DefaultFile("SimpleLibrary.config", false)]
     public class SimpleLibraryConfig : ConfigRoot<SimpleLibraryConfig>
     {
-        [ConfigElement("business",Required=true)]
+        [ConfigElement("business", Required = true)]
         public BusinessElement Business { get; set; }
 
         [ConfigElement("serviceModel", Required = true)]
         public ServiceModelElement ServiceModel { get; set; }
 
-        [ConfigElement("dataConfig", Default=InstanceType.New)]
+        [ConfigElement("dataConfig", Required = true)]
         public DataConfigElement DataConfig { get; set; }
 
         public override string DefaultXmlString

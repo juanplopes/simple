@@ -103,9 +103,7 @@
     </Compile>
     <Compile Include="ServiceModel\DefaultExceptionHandler.cs" />
     <Compile Include="ServiceModel\ServiceEnableAttribute.cs" />
-    <Compile Include="Threading\NHLockId.cs" />
     <Compile Include="Threading\NHLockingProvider.cs" />
-    <Compile Include="Threading\NHLockRow.cs" />
     <Compile Include="Threading\NHLockToken.cs" />
   </ItemGroup>
   <ItemGroup>

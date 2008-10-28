@@ -10,74 +10,70 @@ using System.IO;
 
 namespace SimpleLibrary.Threading
 {
-    public class NHLockingProvider : BaseLockingProvider<NHLockToken>, IDataStoreLockingProvider<NHLockToken>
+    public class NHLockingProvider : SqlLockingProvider<NHLockToken, ISession>
     {
-        public T GetData<T>(NHLockToken token) where T : BasicLibrary.Common.IInitializable, new()
+        protected override string TableName
         {
-            if (token.Data == null) return new T();
-            
-            return (T)token.Data;
+            get { return "instance_state"; }
         }
 
-        public void SetData(NHLockToken token, object obj)
+        protected override string TypeColumn
         {
-            byte[] data = null;
-            if (obj != null)
-            {
-                BinaryFormatter serializer = new BinaryFormatter();
-                MemoryStream stream = new MemoryStream();
-                serializer.Serialize(stream, obj);
-                data = stream.GetBuffer();
-            }
-
-            NHLockRow row = new NHLockRow()
-            {
-                Id = new NHLockId(token.Type, token.Id),
-                Data = data
-            };
-
-            token.Session.Clear(); 
-            token.Session.SaveOrUpdate(row);
-            token.Session.Flush();
-            token.Session.Transaction.Commit();
-            token.Session.Transaction.Begin();
+            get { return "type"; }
         }
 
-        public void RemoveData(NHLockToken token)
+        protected override string IdColumn
         {
-            NHLockRow row = token.Session.Load<NHLockRow>(new NHLockId(token.Type, token.Id));
-            token.Session.Delete(row);
+            get { return "id"; }
         }
 
-        protected override void EnsureLock(NHLockToken token, int secondsToWait)
+        protected override string SemaphoreColumn
         {
-            try
-            {
-                NHLockRow row = token.Session.Load<NHLockRow>(new NHLockId(token.Type, token.Id), LockMode.Upgrade);
-                if (row.Data != null)
-                {
-                    byte[] byteArray = (byte[])row.Data;
-                    BinaryFormatter deserializer = new BinaryFormatter();
-                    MemoryStream stream = new MemoryStream(byteArray);
-                    token.Data = deserializer.Deserialize(stream);
-                }
-                else
-                {
-                    token.Data = null;
-                }
+            get { return "semaphore"; }
+        }
 
-            }
-            catch (ObjectNotFoundException)
+        protected override string DataColumn
+        {
+            get { return "data"; }
+        }
+
+        protected override int DefaultTimeout
+        {
+            get { return 10; }
+        }
+
+        protected override object ExecuteQuery(ISession transaction, int timeout, string sqlQuery, params object[] parameter)
+        {
+            ISQLQuery query = transaction.CreateSQLQuery(sqlQuery);
+            query.SetTimeout(timeout);
+            for (int i = 0; i < parameter.Length; i++)
             {
-                token.Data = null;
+                query.SetParameter(i, parameter[i]);
             }
+            return query.UniqueResult();
+        }
+
+        protected override int ExecuteNonQuery(ISession transaction, int timeout, string sqlQuery, params object[] parameter)
+        {
+            ISQLQuery query = transaction.CreateSQLQuery(sqlQuery);
+            query.SetTimeout(timeout);
+            for (int i = 0; i < parameter.Length; i++)
+            {
+                query.SetParameter(i, parameter[i]);
+            }
+            return query.ExecuteUpdate();
+        }
+
+        protected override ISession CreateTransaction()
+        {
+            ISession session = SessionManager.GetSession(true);
+            session.BeginTransaction();
+            return session;
         }
 
         protected override NHLockToken CreateLockToken(string type, int id)
         {
-            ISession session = SessionManager.GetSession(true);
-            session.BeginTransaction();
-            return new NHLockToken(session, type, id);
+            return new NHLockToken(type, id);
         }
     }
 }

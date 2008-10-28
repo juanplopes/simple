@@ -4,24 +4,29 @@ using System.Linq;
 using System.Text;
 using BasicLibrary.Threading;
 using NHibernate;
+using SimpleLibrary.DataAccess;
+using System.Data;
 
 namespace SimpleLibrary.Threading
 {
-    public class NHLockToken : BaseLockToken, IDataStoreLockToken
+    public class NHLockToken : SqlLockToken<ISession>
     {
-        public ISession Session { get; set; }
-
-        public override bool ValidState
+        public override void Commit()
         {
-            get { return Session != null; }
+            this.Transaction.Flush();
+            this.Transaction.Transaction.Commit();
+            this.Transaction.Close();
         }
 
-        public object Data { get; set; }
-
-        public NHLockToken(ISession session, string type, int id)
-            : base(type, id)
+        public override void BeginTransaction()
         {
-            Session = session;
+            this.Transaction = SessionManager.GetSession(true);
+            this.Transaction.BeginTransaction(IsolationLevel.Serializable);
+        }
+
+        public NHLockToken(string type, int id) : base(null, type, id)
+        {
+            BeginTransaction();
         }
     }
 }

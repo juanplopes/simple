@@ -137,7 +137,6 @@
     </Compile>
     <Compile Include="Threading\BaseLockingProvider.cs" />
     <Compile Include="Threading\CriticalRegion.cs" />
-    <Compile Include="Threading\DefaultLockingProvider.cs" />
     <Compile Include="Threading\IDataStoreLockingProvider.cs" />
     <Compile Include="Threading\IDataStoreLockToken.cs" />
     <Compile Include="Threading\SqlLockToken.cs" />

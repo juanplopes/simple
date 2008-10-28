@@ -11,101 +11,68 @@ using BasicLibrary.Common;
 
 namespace BasicLibrary.Threading
 {
-    public abstract class SqlLockingProvider :
-        BaseLockingProvider<SqlLockToken>,
-        IDataStoreLockingProvider<SqlLockToken>
+    public abstract class SqlLockingProvider<TokenType, TransactionType> : BaseLockingProvider<TokenType>,
+        IDataStoreLockingProvider<TokenType>
+    where TokenType : SqlLockToken<TransactionType>
     {
-        public const int DEFAULT_WAIT = -1;
+        public const int DefaultTimeoutValue = -1;
 
-        protected abstract string ConnectionString { get; }
         protected abstract string TableName { get; }
         protected abstract string TypeColumn { get; }
         protected abstract string IdColumn { get; }
         protected abstract string SemaphoreColumn { get; }
         protected abstract string DataColumn { get; }
-        protected abstract int SecondsToWait { get; }
+        protected abstract int DefaultTimeout { get; }
 
-        protected override void EnsureLock(SqlLockToken token, int secondsToWait)
+        protected abstract object ExecuteQuery(TransactionType transaction, int timeout, string sqlQuery, params object[] parameter);
+        protected abstract int ExecuteNonQuery(TransactionType transaction, int timeout, string sqlQuery, params object[] parameter);
+        protected abstract TransactionType CreateTransaction();
+
+        protected int GetTimeout(int value)
         {
+            if (value < 0) return DefaultTimeout;
+            else return value;
+        }
+
+        protected override void EnsureLock(TokenType token, int timeout)
+        {
+            timeout = GetTimeout(timeout);
+
             if (token == null) throw new InvalidOperationException("Invalid locking token");
 
-            if (secondsToWait < 0) secondsToWait = SecondsToWait;
-
-            try
-            {
-                if (TryUpdate(token, token.Type, token.Id, secondsToWait) == 0)
-                    Insert(token, token.Type, token.Id, secondsToWait);
-            }
-            catch (SqlException e)
-            {
-                if (e.Number == 1222)
-                    throw new UnableToAcquireLockException(token.Type, token.Id);
-                else
-                    throw;
-            }
+            if (TryUpdate(token, token.Type, token.Id, timeout) == 0)
+                Insert(token, token.Type, token.Id, timeout);
         }
 
-        protected SqlTransaction CreateTransaction()
+        protected int TryUpdate(TokenType token, string type, int id, int timeout)
         {
-            SqlConnection connection = new SqlConnection(ConnectionString);
-            connection.Open();
-            return connection.BeginTransaction(IsolationLevel.ReadCommitted);
+            timeout = GetTimeout(timeout);
+
+            string sqlQuery =
+                TranslateSqlString(@"UPDATE :table:  SET :semaphore:=1-:semaphore: 
+                                                           WHERE :id:=? AND :type:=?");
+
+            return ExecuteNonQuery(token.Transaction, GetTimeout(timeout), sqlQuery, id, type);
+
         }
 
-        protected override SqlLockToken CreateLockToken(string type, int id)
+        protected int Insert(TokenType token, string type, int id, int timeout)
         {
-            SqlLockToken token = new SqlLockToken(CreateTransaction(), type, id);
-            return token;
+            timeout = GetTimeout(timeout);
+
+            string sqlQuery = TranslateSqlString(@"INSERT INTO :table:(:id:, :type:) 
+                                                       VALUES (?, ?)");
+
+            return ExecuteNonQuery(token.Transaction, GetTimeout(timeout), sqlQuery, id, type);
         }
 
-        protected int TryUpdate(SqlLockToken token, string type, int id, int secondsToWait)
+        public T GetData<T>(TokenType token) where T : IInitializable, new()
         {
-            if (secondsToWait < 0) secondsToWait = SecondsToWait;
-
-            SqlConnection connection = token.Transaction.Connection;
-
-            SqlCommand command = connection.CreateCommand();
-            command.CommandTimeout = secondsToWait;
-            command.CommandText = string.Format(
-                TranslateSqlString(@"UPDATE :table: WITH(ROWLOCK{0})    
-                                                           SET :semaphore:=1-:semaphore: 
-                                                           WHERE :id:=@id AND :type:=@type"), (secondsToWait == 0 ? ",NOWAIT" : ""));
-            command.Parameters.Add(new SqlParameter("id", id));
-            command.Parameters.Add(new SqlParameter("type", type));
-            command.Transaction = token.Transaction;
-            return command.ExecuteNonQuery();
-        }
-
-        protected int Insert(SqlLockToken token, string type, int id, int secondsToWait)
-        {
-            if (secondsToWait < 0) secondsToWait = SecondsToWait;
-
-            SqlConnection connection = token.Transaction.Connection;
-
-            SqlCommand command = connection.CreateCommand();
-            command.CommandTimeout = secondsToWait;
-            command.CommandText = string.Format(TranslateSqlString(@"INSERT INTO :table: WITH(ROWLOCK{0}) (:id:, :type:) 
-                                                       VALUES (@id, @type)"), (secondsToWait == 0 ? ",NOWAIT" : ""));
-            command.Parameters.Add(new SqlParameter("id", id));
-            command.Parameters.Add(new SqlParameter("type", type));
-            command.Transaction = token.Transaction;
-            return command.ExecuteNonQuery();
-        }
-
-        public T GetData<T>(SqlLockToken token) where T : IInitializable, new()
-        {
-            if (token.Data != null && token.Data is T) return (T)token.Data;
-
-            SqlConnection connection = token.Transaction.Connection;
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = TranslateSqlString(
+            string sqlQuery = TranslateSqlString(
                                         @"SELECT :data: AS data FROM :table:
-                                        WHERE :id:=@id AND :type:=@type");
-            command.Parameters.Add(new SqlParameter("id", token.Id));
-            command.Parameters.Add(new SqlParameter("type", token.Type));
-            command.Transaction = token.Transaction;
+                                        WHERE :id:=? AND :type:=?");
 
-            object lobjDBData = command.ExecuteScalar();
+            object lobjDBData = ExecuteQuery(token.Transaction, DefaultTimeout, sqlQuery, token.Id, token.Type);
             T ret;
 
             if (lobjDBData != DBNull.Value)
@@ -126,40 +93,34 @@ namespace BasicLibrary.Threading
             return ret;
         }
 
-        public override void Release(SqlLockToken token)
+        public override void Release(TokenType token)
         {
             lock (token)
             {
-                SqlConnection connection = token.Transaction.Connection;
-                token.Transaction.Commit();
-                connection.Close();
-
-                token.Transaction.Dispose();
+                token.Commit();
                 base.Release(token);
+
                 if (token.ConnectedClients > 0)
                 {
-                    token.Transaction = CreateTransaction();
-                    EnsureLock(token, DEFAULT_WAIT);
+                    token.BeginTransaction();
+                    EnsureLock(token, DefaultTimeoutValue);
                 }
                 else
                 {
-                    token.Transaction = null;
+                    token.Transaction = default(TransactionType);
                 }
             }
 
         }
 
-        public void SetData(SqlLockToken token, object obj)
+        public void SetData(TokenType token, object obj)
         {
             if (!object.ReferenceEquals(token.Data, obj)) throw new InvalidOperationException("Cannot persist this object. It is invalid");
 
-            SqlConnection lobjConnection = token.Transaction.Connection;
-
-            SqlCommand lobjCommand = lobjConnection.CreateCommand();
-            lobjCommand.CommandText = TranslateSqlString(
+            string sqlQuery = TranslateSqlString(
                                         @"UPDATE :table: 
-                                          SET :data:=@data
-                                          WHERE :id:=@id AND :type:=@type");
+                                          SET :data:=?
+                                          WHERE :id:=? AND :type:=?");
             object data = null;
             if (obj != null)
             {
@@ -169,12 +130,7 @@ namespace BasicLibrary.Threading
                 data = lobjStream.GetBuffer();
             }
 
-            lobjCommand.Parameters.Add(new SqlParameter("id", token.Id));
-            lobjCommand.Parameters.Add(new SqlParameter("type", token.Type));
-            lobjCommand.Parameters.Add(new SqlParameter("data", data!=null?data:DBNull.Value));
-            lobjCommand.Transaction = token.Transaction;
-
-            lobjCommand.ExecuteNonQuery();
+            ExecuteNonQuery(token.Transaction, DefaultTimeoutValue, sqlQuery, data, token.Id, token.Type);
 
             Release(token);
         }
@@ -192,7 +148,7 @@ namespace BasicLibrary.Threading
             return builder.ToString();
         }
 
-        public void RemoveData(SqlLockToken token)
+        public void RemoveData(TokenType token)
         {
             SetData(token, null);
         }

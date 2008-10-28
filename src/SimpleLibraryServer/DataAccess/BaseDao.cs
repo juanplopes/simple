@@ -8,6 +8,7 @@ using NHibernate.Impl;
 using NHibernate.Engine;
 using System.Collections;
 using NHibernate.Criterion;
+using SimpleLibrary.Config;
 
 
 namespace SimpleLibrary.DataAccess
@@ -49,6 +50,11 @@ namespace SimpleLibrary.DataAccess
         public BaseDao(bool forceNewSession) : base(forceNewSession) { }
         public BaseDao(string factoryName, bool forceNewSession) : base(factoryName, forceNewSession) { }
 
+        protected static class Nested
+        {
+            public static SimpleLibraryConfig Config = SimpleLibraryConfig.Get();
+        }
+
         //public T Unproxy(T entity)
         //{
         //    return (T)EntityHelper.Unproxy(entity, Session.GetSessionImplementation().PersistenceContext);
@@ -69,6 +75,11 @@ namespace SimpleLibrary.DataAccess
         protected virtual bool DefaultFlush
         {
             get { return true; }
+        }
+
+        protected virtual bool DefaultMergeBeforeUpdate
+        {
+            get { return Nested.Config.DataConfig.Options.MergeBeforeUpdate; }
         }
 
         public IOrderedQueryable<Q> GetQueryable<Q>()
@@ -128,6 +139,8 @@ namespace SimpleLibrary.DataAccess
 
         public void Update(T entity, bool flush)
         {
+            if (DefaultMergeBeforeUpdate)
+                entity = (T)Session.Merge(entity);
             Session.Update(entity);
             if (flush) Session.Flush();
         }
@@ -139,6 +152,9 @@ namespace SimpleLibrary.DataAccess
 
         public void Save(T entity, bool flush)
         {
+            if (DefaultMergeBeforeUpdate)
+                entity = (T)Session.Merge(entity);
+
             Session.Save(entity);
             if (flush) Session.Flush();
         }
@@ -150,6 +166,9 @@ namespace SimpleLibrary.DataAccess
 
         public void SaveOrUpdate(T entity, bool flush)
         {
+            if (DefaultMergeBeforeUpdate)
+                entity = (T)Session.Merge(entity);
+
             Session.SaveOrUpdate(entity);
             if (flush) Session.Flush();
         }
