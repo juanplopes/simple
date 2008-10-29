@@ -109,7 +109,6 @@
     <Compile Include="Configuration\ThreadCultureLocalizationProvider.cs" />
     <Compile Include="Persistence\GenericInstanceState.cs" />
     <Compile Include="Persistence\PageController.cs" />
-    <Compile Include="Persistence\PersistedInstanceState.cs" />
     <Compile Include="Persistence\SelfSerializableClass.cs" />
     <Compile Include="Persistence\XmlSerializationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,6 +144,7 @@
     <Compile Include="Threading\ILockingProvider.cs" />
     <Compile Include="Threading\BaseLockToken.cs" />
     <Compile Include="Threading\ThreadData.cs" />
+    <Compile Include="Threading\TimeoutValues.cs" />
     <Compile Include="Threading\UnableToAcquireLockException.cs" />
   </ItemGroup>
   <ItemGroup>

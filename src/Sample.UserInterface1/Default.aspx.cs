@@ -17,6 +17,15 @@ namespace Sample.UserInterface1
 {
     public partial class _Default : System.Web.UI.Page
     {
+        TestController controller = null;
+
+        protected override void OnInit(EventArgs e)
+        {
+            controller = TestController.Get(1, this);
+            controller.Ensure();
+            base.OnInit(e);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             GridView1.DataSource = new EntityDataSource<Empresa, IEmpresaRules>();

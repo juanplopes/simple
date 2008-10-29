@@ -7,22 +7,27 @@ using BasicLibrary.Threading;
 namespace BasicLibrary.Persistence
 {
     [Serializable]
-    public class GenericInstanceState<T, PType, TType> : IDisposable, IInitializable
-        where T : GenericInstanceState<T,PType,TType>, new()
-        where PType: IDataStoreLockingProvider<TType>, new()
-        where TType: IDataStoreLockToken
+    public abstract class GenericInstanceState<T, PType, TType> : IDisposable, IInitializable
+        where T : GenericInstanceState<T, PType, TType>, new()
+        where PType : IDataStoreLockingProvider<TType>, new()
+        where TType : IDataStoreLockToken
     {
         [NonSerialized]
         protected TType Token;
         [NonSerialized]
         protected PType Provider;
 
-        public static T Get(int id, int secondsToWait)
+        public static T Get(int id)
+        {
+            return Get(id, TimeoutValues.DefaultWait);
+        }
+
+        public static T Get(int id, int timeout)
         {
             PType provider = new PType();
-            TType token = provider.Lock(typeof(T).FullName, id, secondsToWait);
+            TType token = provider.Lock(typeof(T).FullName, id, timeout);
             T ret = provider.GetData<T>(token);
-           
+
             ret.Token = token;
             ret.Provider = provider;
 

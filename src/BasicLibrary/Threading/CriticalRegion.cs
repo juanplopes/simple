@@ -26,16 +26,23 @@ namespace BasicLibrary.Threading
     //    }
     //}
 
-    public class CriticalRegion<TokenType> : IDisposable
-        where TokenType : ILockToken
+    public abstract class CriticalRegion<PType, TType> : IDisposable
+        where PType : ILockingProvider<TType>, new()
+        where TType : ILockToken
     {
-        protected TokenType LockToken { get; set; }
-        protected ILockingProvider<TokenType> Provider { get; set; }
+        protected TType LockToken { get; set; }
+        protected ILockingProvider<TType> Provider { get; set; }
 
-        protected CriticalRegion(ILockingProvider<TokenType> provider, string type, int id, int secondsToWait)
+        protected CriticalRegion(string type, int id)
+            : this(type, id, TimeoutValues.DefaultWait)
         {
-            Provider = provider;
-            LockToken = Provider.Lock(type, id, secondsToWait);
+        }
+
+        protected CriticalRegion(
+            string type, int id, int timeout)
+        {
+            Provider = new PType();
+            LockToken = Provider.Lock(type, id, timeout);
         }
 
         public void End()

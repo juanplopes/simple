@@ -16,6 +16,7 @@ using SimpleLibrary.DataAccess;
 using SimpleLibrary.Threading;
 using System.Threading;
 using NHibernate;
+using BasicLibrary.Logging;
 
 namespace Sample.BusinessServer.Infra
 {
@@ -33,16 +34,7 @@ namespace Sample.BusinessServer.Infra
             //SchemaExport export = new SchemaExport(SessionManager.Config);
             //export.Execute(false, true, false, true);
 
-            ISession session1 = SessionManager.GetSession(true);
-            ISession session2 = SessionManager.GetSession(true);
-
-            FuncionarioDao fd1 = new FuncionarioDao(session1);
-            FuncionarioDao fd2 = new FuncionarioDao(session2);
-
-            Funcionario e = fd1.Load(1);
-            e.Nome = DateTime.Now.ToString();
-            fd2.Update(e);
-            session2.Flush();
+            MainLogger.Default.Debug("Initializing logger...");
 
             TestPersistedState test = TestPersistedState.Get(10, 3);
 

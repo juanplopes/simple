@@ -27,7 +27,7 @@ namespace BasicLibrary.Threading
         public virtual void Release(TokenType token)
         {
             token.ConnectedClients--;
-            if (Data[token.Type, token.Id] != null && token.ConnectedClients==0)
+            if (Data[token.Type, token.Id] != null && token.ConnectedClients == 0)
             {
                 Data[token.Type, token.Id] = null;
             }

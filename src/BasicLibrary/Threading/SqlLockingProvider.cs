@@ -15,8 +15,6 @@ namespace BasicLibrary.Threading
         IDataStoreLockingProvider<TokenType>
     where TokenType : SqlLockToken<TransactionType>
     {
-        public const int DefaultTimeoutValue = -1;
-
         protected abstract string TableName { get; }
         protected abstract string TypeColumn { get; }
         protected abstract string IdColumn { get; }
@@ -103,7 +101,7 @@ namespace BasicLibrary.Threading
                 if (token.ConnectedClients > 0)
                 {
                     token.BeginTransaction();
-                    EnsureLock(token, DefaultTimeoutValue);
+                    EnsureLock(token, TimeoutValues.DefaultWait);
                 }
                 else
                 {
@@ -130,7 +128,7 @@ namespace BasicLibrary.Threading
                 data = lobjStream.GetBuffer();
             }
 
-            ExecuteNonQuery(token.Transaction, DefaultTimeoutValue, sqlQuery, data, token.Id, token.Type);
+            ExecuteNonQuery(token.Transaction, TimeoutValues.DefaultWait, sqlQuery, data, token.Id, token.Type);
 
             Release(token);
         }

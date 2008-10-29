@@ -4,89 +4,91 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using BasicLibrary.Common;
+using BasicLibrary.Threading;
 
 namespace BasicLibrary.Persistence
 {
-    //[Serializable]
-    //public abstract class PageController<S,PType, TType,T> : S,IDisposable
-    //    where T : PageController<S,T>, new()
-    //    where S : GenericInstanceState<S,PType, TType>
-    //{
-    //    protected string CurrentPage { get; set; }
-    //    public SafeDictionary<string, object> UserData { get; set; }
-    //    [NonSerialized]
-    //    public Page ControlledPage;
-        
-    //    public abstract string InitialPage { get; }
+    [Serializable]
+    public abstract class PageController<T, PType, TType> : GenericInstanceState<T, PType, TType>, IDisposable
+        where T : PageController<T, PType, TType>, new()
+        where TType : IDataStoreLockToken
+        where PType  : IDataStoreLockingProvider<TType>, new()
+    {
+        protected string CurrentPage { get; set; }
+        public SafeDictionary<string, object> UserData { get; set; }
+        [NonSerialized]
+        public Page ControlledPage;
 
-    //    public Stack<string> NavigatedPagesStack { get; set; }
+        public abstract string InitialPage { get; }
 
-    //    public void NavigateBack()
-    //    {
-    //        NavigatedPagesStack.Pop();
-    //        string last = NavigatedPagesStack.Pop();
-    //        Navigate(last);
-    //    }
+        public Stack<string> NavigatedPagesStack { get; set; }
 
-    //    public static T Get(int id, Page page)
-    //    {
-    //        T control = Get(id);
-    //        if (control.CurrentPage == null) control.CurrentPage = control.InitialPage;
-    //        if (control.UserData == null) control.UserData = new SafeDictionary<string, object>();
-    //        if (control.NavigatedPagesStack == null) control.NavigatedPagesStack = new Stack<string>();
-    //        control.ControlledPage = page;
-    //        return control;
-    //    }
+        public void NavigateBack()
+        {
+            NavigatedPagesStack.Pop();
+            string last = NavigatedPagesStack.Pop();
+            Navigate(last);
+        }
 
-    //    public Q GetData<Q>(string key)
-    //    {
-    //        return (Q)UserData[key];
-    //    }
+        public static T Get(int id, Page page)
+        {
+            T control = Get(id);
+            if (control.CurrentPage == null) control.CurrentPage = control.InitialPage;
+            if (control.UserData == null) control.UserData = new SafeDictionary<string, object>();
+            if (control.NavigatedPagesStack == null) control.NavigatedPagesStack = new Stack<string>();
+            control.ControlledPage = page;
+            return control;
+        }
 
-    //    public void SetData(string key, object value)
-    //    {
-    //        UserData[key] = value;
-    //    }
+        public Q GetData<Q>(string key)
+        {
+            return (Q)UserData[key];
+        }
+
+        public void SetData(string key, object value)
+        {
+            UserData[key] = value;
+        }
 
 
-    //    public void Navigate(string pageUrl)
-    //    {
-    //        CurrentPage = pageUrl;
-    //        NavigatedPagesStack.Push(CurrentPage);
-    //        RedirectToCurrentPage();
-    //    }
-    //    protected string GetNoQueryPath(string url)
-    //    {
-    //        if (url == null) return null;
-    //        return url.Split('?')[0];
-    //    }
-    //    public void RedirectToCurrentPage()
-    //    {
-    //        ControlledPage.Response.Redirect(ControlledPage.ResolveUrl(CurrentPage));
-    //    }
-    //    public void Ensure()
-    //    {
-    //        string lstrUri1 = GetNoQueryPath(ControlledPage.ResolveUrl(CurrentPage));
-    //        string lstrUri2 = GetNoQueryPath(ControlledPage.ResolveUrl(ControlledPage.Request.Url.PathAndQuery));
-    //        if (!lstrUri1.Equals(lstrUri2, StringComparison.InvariantCultureIgnoreCase))
-    //        {
-    //            RedirectToCurrentPage();
-    //        }
-    //    }
+        public void Navigate(string pageUrl)
+        {
+            CurrentPage = pageUrl;
+            NavigatedPagesStack.Push(CurrentPage);
+            RedirectToCurrentPage();
+        }
+        protected string GetNoQueryPath(string url)
+        {
+            if (url == null) return null;
+            return url.Split('?')[0];
+        }
+        public void RedirectToCurrentPage()
+        {
+            ControlledPage.Response.Redirect(ControlledPage.ResolveUrl(CurrentPage));
+        }
+        public void Ensure()
+        {
+            string lstrUri1 = GetNoQueryPath(ControlledPage.ResolveUrl(CurrentPage));
+            string lstrUri2 = GetNoQueryPath(ControlledPage.ResolveUrl(ControlledPage.Request.Url.PathAndQuery));
+            if (!lstrUri1.Equals(lstrUri2, StringComparison.InvariantCultureIgnoreCase))
+            {
+                RedirectToCurrentPage();
+            }
+        }
 
-    //    public override void Init()
-    //    {
-    //        base.Init();
-    //        NavigatedPagesStack = new Stack<string>();
-    //    }
+        public override void Init()
+        {
+            base.Init();
+            NavigatedPagesStack = new Stack<string>();
+        }
 
-    //    #region IDisposable Members
+        #region IDisposable Members
 
-    //    public override void Dispose()
-    //    {
-    //        this.Persist();
-    //    }
+        public override void Dispose()
+        {
+            this.Persist();
+        }
 
-    //    #endregion
-    //}
+        #endregion
+    }
 }

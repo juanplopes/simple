@@ -105,6 +105,9 @@
     <Compile Include="ServiceModel\ServiceEnableAttribute.cs" />
     <Compile Include="Threading\NHLockingProvider.cs" />
     <Compile Include="Threading\NHLockToken.cs" />
+    <Compile Include="Threading\SimpleInstanceState.cs" />
+    <Compile Include="Threading\SimpleCriticalRegion.cs" />
+    <Compile Include="Threading\SimplePageController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DefaultBinding.config">
