@@ -63,9 +63,11 @@
     <Compile Include="Config\DataConfigOptionsElement.cs" />
     <Compile Include="Config\EndpointElement.cs" />
     <Compile Include="Config\FiltersElement.cs" />
+    <Compile Include="Config\LockingProviderElement.cs" />
     <Compile Include="Config\ServiceModelElement.cs" />
     <Compile Include="Config\SessionFactoryElement.cs" />
     <Compile Include="Config\SimpleLibraryConfig.cs" />
+    <Compile Include="Config\ThreadingElement.cs" />
     <Compile Include="DataAccess\EntityDataSource.cs" />
     <Compile Include="DataAccess\EntityDataSourceView.cs" />
     <Compile Include="DataAccess\Page.cs" />

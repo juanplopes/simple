@@ -7,39 +7,42 @@ using SimpleLibrary.DataAccess;
 using NHibernate;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using SimpleLibrary.Config;
 
 namespace SimpleLibrary.Threading
 {
     public class NHLockingProvider : SqlLockingProvider<NHLockToken, ISession>
     {
+        protected SimpleLibraryConfig Config = SimpleLibraryConfig.Get();
+
         protected override string TableName
         {
-            get { return "instance_state"; }
+            get { return Config.Threading.LockingProvider.TableName; }
         }
 
         protected override string TypeColumn
         {
-            get { return "type"; }
+            get { return Config.Threading.LockingProvider.TypeColumn; }
         }
 
         protected override string IdColumn
         {
-            get { return "id"; }
+            get { return Config.Threading.LockingProvider.IdColumn; }
         }
 
         protected override string SemaphoreColumn
         {
-            get { return "semaphore"; }
+            get { return Config.Threading.LockingProvider.SemaphoreColumn; }
         }
 
         protected override string DataColumn
         {
-            get { return "data"; }
+            get { return Config.Threading.LockingProvider.DataColumn; }
         }
 
         protected override int DefaultTimeout
         {
-            get { return 10; }
+            get { return Config.Threading.LockingProvider.DefaultTimeout; }
         }
 
         protected override object ExecuteQuery(ISession transaction, int timeout, string sqlQuery, params object[] parameter)

@@ -18,6 +18,9 @@ namespace SimpleLibrary.Config
         [ConfigElement("dataConfig", Required = true)]
         public DataConfigElement DataConfig { get; set; }
 
+        [ConfigElement("threading", Default=InstanceType.New)]
+        public ThreadingElement Threading { get; set; }
+
         public override string DefaultXmlString
         {
             get
