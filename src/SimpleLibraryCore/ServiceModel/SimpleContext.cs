@@ -5,30 +5,54 @@ using System.Text;
 using BasicLibrary.Persistence;
 using System.Security.Principal;
 using System.Web;
+using System.Globalization;
+using System.Threading;
 
 namespace SimpleLibrary.ServiceModel
 {
     [Serializable]
     public class SimpleContext : ExecutionContext<SimpleContext>
     {
-        public string ClientUsername { get; set; }
+        public string ClientHttpUsername { get; protected set; }
+        public string ClientWindowsUsername { get; protected set; }
+        public CultureInfo ClientThreadCulture { get; protected set; }
+        public CultureInfo ClientUICulture { get; protected set; }
+        
         public Dictionary<string, object> CustomData { get; set; }
 
-        public bool PopulateFromHttpContext()
+        protected bool PopulateFromHttpContext()
         {
             if (HttpContext.Current == null) return false;
             if (HttpContext.Current.User == null) return false;
             if (HttpContext.Current.User.Identity == null) return false;
-            ClientUsername = HttpContext.Current.User.Identity.Name;
+            ClientHttpUsername = HttpContext.Current.User.Identity.Name;
             return true;
         }
 
-        public bool PopulateFromWindowsIdentity()
+        protected bool PopulateFromWindowsIdentity()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
             if (identity == null) return false;
-            ClientUsername = identity.Name;
+            ClientWindowsUsername = identity.Name;
             return true;
+        }
+
+        public bool PopulateCultures()
+        {
+            ClientThreadCulture = Thread.CurrentThread.CurrentCulture;
+            ClientUICulture = Thread.CurrentThread.CurrentUICulture;
+
+            return true;
+        }
+
+        public void Refresh(bool isClientSide)
+        {
+            if (isClientSide)
+            {
+                PopulateFromHttpContext();
+                PopulateFromWindowsIdentity();
+                PopulateCultures();
+            }
         }
 
         public override void Init()

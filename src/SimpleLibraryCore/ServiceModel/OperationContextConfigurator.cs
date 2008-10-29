@@ -70,8 +70,7 @@ namespace SimpleLibrary.ServiceModel
 
         public object BeforeSendRequest(ref System.ServiceModel.Channels.Message request, IClientChannel channel)
         {
-            if (!SimpleContext.Get().PopulateFromHttpContext())
-                SimpleContext.Get().PopulateFromWindowsIdentity();
+            SimpleContext.Get().Refresh(true);
             HandleSetContext(ref request);
             return null;
         }
