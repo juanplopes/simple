@@ -14,6 +14,7 @@ using SimpleLibrary.DataAccess;
 using SimpleLibrary.Filters;
 using SimpleLibrary.Rules;
 using SimpleLibrary.ServiceModel;
+using System.Globalization;
 
 namespace Sample.UserInterface2
 {
