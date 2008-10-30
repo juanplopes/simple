@@ -12,7 +12,7 @@ namespace SimpleLibrary.ServiceModel
 {
     public class DataContractConfigurator : IEndpointConfigurator
     {
-        public void Configure(System.ServiceModel.Description.ServiceEndpoint endpoint, ConfiguratorElement config)
+        public void Configure(bool isClientSide, System.ServiceModel.Description.ServiceEndpoint endpoint, ConfiguratorElement config)
         {
             SimpleLibraryConfig simpleLibraryConfig = SimpleLibraryConfig.Get();
 

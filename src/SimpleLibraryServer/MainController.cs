@@ -6,6 +6,7 @@ using System.Reflection;
 using SimpleLibrary.ServiceModel;
 using SimpleLibrary.DataAccess;
 using BasicLibrary.ServiceModel;
+using BasicLibrary.Logging;
 
 namespace SimpleLibrary
 {
@@ -13,6 +14,7 @@ namespace SimpleLibrary
     {
         public static void Run(Assembly assembly)
         {
+            MainLogger.Default.Info("Initializing server framework...");
             AssemblyLocatorHoster hoster = new AssemblyLocatorHoster();
             hoster.LocateServices(assembly);
             hoster.StartHosting();

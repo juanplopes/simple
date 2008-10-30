@@ -18,11 +18,13 @@ namespace SimpleLibrary.ServiceModel
             return binding;
         }
 
-        public static void ApplyConfigurators(ServiceHost endpoint, ServiceModelElement element, bool isServer)
+        public static void ApplyConfigurators(ServiceHost endpoint, ServiceModelElement element, bool isClient)
         {
             foreach (ConfiguratorElement opClassType in element.ServiceConfigurators)
             {
-                if (opClassType.RunOnlyAtServer && !isServer) continue;
+                if ((opClassType.RunAt == SideType.Server && isClient) ||
+                    (opClassType.RunAt == SideType.Client && !isClient))
+                    continue;
 
                 Type t = opClassType.LoadType();
                 if (!typeof(IServiceConfigurator).IsAssignableFrom(t)) throw new InvalidOperationException("Configurator must implement IServiceConfigurator: " + t.FullName);
@@ -32,17 +34,20 @@ namespace SimpleLibrary.ServiceModel
             }
         }
 
-        public static void ApplyConfigurators(ServiceEndpoint endpoint, EndpointElement element, bool isServer)
+        public static void ApplyConfigurators(ServiceEndpoint endpoint, EndpointElement element, bool isClient)
         {
             foreach (ConfiguratorElement opClassType in element.EndpointConfigurators)
             {
-                if (opClassType.RunOnlyAtServer && !isServer) continue;
+                if ((opClassType.RunAt == SideType.Server && isClient) ||
+                    (opClassType.RunAt == SideType.Client && !isClient))
+                    continue;
+
 
                 Type t = opClassType.LoadType();
                 if (!typeof(IEndpointConfigurator).IsAssignableFrom(t)) throw new InvalidOperationException("Configurator must implement IEndpointConfigurator: " + t.FullName);
 
-                IEndpointConfigurator configurator =  (IEndpointConfigurator)Activator.CreateInstance(t);
-                configurator.Configure(endpoint, opClassType);
+                IEndpointConfigurator configurator = (IEndpointConfigurator)Activator.CreateInstance(t);
+                configurator.Configure(isClient, endpoint, opClassType);
             }
         }
     }

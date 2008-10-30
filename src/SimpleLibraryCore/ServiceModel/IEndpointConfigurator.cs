@@ -9,6 +9,6 @@ namespace SimpleLibrary.ServiceModel
 {
     public interface IEndpointConfigurator
     {
-        void Configure(ServiceEndpoint endpoint, ConfiguratorElement config);
+        void Configure(bool isClientSide, ServiceEndpoint endpoint, ConfiguratorElement config);
     }
 }

@@ -54,16 +54,16 @@ namespace SimpleLibrary.ServiceModel
 
             if (host.Description.Endpoints.Count == 0)
             {
-                ConfigLoader.ApplyConfigurators(host, Config.ServiceModel, true);
+                ConfigLoader.ApplyConfigurators(host, Config.ServiceModel, false);
 
                 ServiceEndpoint endpoint = AddEndpoint(host, Config.ServiceModel.DefaultEndpoint, contractType);
-                ConfigLoader.ApplyConfigurators(endpoint, Config.ServiceModel.DefaultEndpoint, true);
+                ConfigLoader.ApplyConfigurators(endpoint, Config.ServiceModel.DefaultEndpoint, false);
 
                 if (Config.ServiceModel.Endpoints != null)
                     foreach (EndpointElement addEndpointCfg in Config.ServiceModel.Endpoints)
                     {
                         ServiceEndpoint addEndpoint = AddEndpoint(host, addEndpointCfg, contractType);
-                        ConfigLoader.ApplyConfigurators(addEndpoint, addEndpointCfg, true);
+                        ConfigLoader.ApplyConfigurators(addEndpoint, addEndpointCfg, false);
                     }
 
                 //CustomDataContractSerializerOperationBehavior.OverrideOperations(endpoint.Contract.Operations);

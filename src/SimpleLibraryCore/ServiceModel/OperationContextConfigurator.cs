@@ -14,7 +14,7 @@ namespace SimpleLibrary.ServiceModel
     {
         #region IEndpointConfigurator Members
 
-        public void Configure(System.ServiceModel.Description.ServiceEndpoint endpoint, SimpleLibrary.Config.ConfiguratorElement config)
+        public void Configure(bool isClientSide, System.ServiceModel.Description.ServiceEndpoint endpoint, SimpleLibrary.Config.ConfiguratorElement config)
         {
             endpoint.Behaviors.Remove<OperationContextConfigurator>();
             endpoint.Behaviors.Add(this);

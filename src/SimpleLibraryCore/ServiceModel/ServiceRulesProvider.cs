@@ -6,6 +6,7 @@ using SimpleLibrary.Rules;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using SimpleLibrary.Config;
+using System.Net;
 
 namespace SimpleLibrary.ServiceModel
 {
@@ -37,7 +38,7 @@ namespace SimpleLibrary.ServiceModel
             {
                 Binding binding = ConfigLoader.CreateBinding(Config.ServiceModel.DefaultEndpoint);
                 FactoryCache = new ChannelFactory<T>(binding);
-                ConfigLoader.ApplyConfigurators(FactoryCache.Endpoint, Config.ServiceModel.DefaultEndpoint, false);
+                ConfigLoader.ApplyConfigurators(FactoryCache.Endpoint, Config.ServiceModel.DefaultEndpoint, true);
             }
 
             return FactoryCache;

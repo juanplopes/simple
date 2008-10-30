@@ -15,6 +15,7 @@ using SimpleLibrary.Filters;
 using SimpleLibrary.Rules;
 using SimpleLibrary.ServiceModel;
 using System.Globalization;
+using System.Reflection.Emit;
 
 namespace Sample.UserInterface2
 {
@@ -22,10 +23,7 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            for (int i = 0; i < 100; i++)
-            {
-                SimpleLibraryConfig config = SimpleLibraryConfig.Get();
-            }
+      
 
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
             Thread.Sleep(4000);

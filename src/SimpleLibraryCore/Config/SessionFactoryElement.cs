@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BasicLibrary.Configuration;
+using System.ServiceModel;
 
 namespace SimpleLibrary.Config
 {

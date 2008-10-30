@@ -27,7 +27,7 @@ namespace SimpleLibrary.Rules
 
                 if (!DefaultExceptionHandler.Handle(e))
                 {
-                    throw e;
+                    throw;
                 }
             }
         }

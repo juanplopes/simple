@@ -6,9 +6,16 @@ using BasicLibrary.Configuration;
 
 namespace SimpleLibrary.Config
 {
+    public enum SideType
+    {
+        Client,
+        Server,
+        Both
+    }
+
     public class ConfiguratorElement : TypeConfigElement
     {
-        [ConfigElement("runOnlyAtServer",Default=false)]
-        public bool RunOnlyAtServer { get; set; }
+        [ConfigElement("runAt",Default=SideType.Both)]
+        public SideType RunAt { get; set; }
     }
 }
