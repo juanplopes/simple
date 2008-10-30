@@ -27,7 +27,7 @@ namespace Sample.UserInterface2
 
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
             Thread.Sleep(4000);
-            rules.GetAllWithQuery();
+            Empresa e = rules.Load(1);
         }
     }
 }
