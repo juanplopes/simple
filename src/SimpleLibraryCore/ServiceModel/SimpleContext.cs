@@ -15,9 +15,20 @@ namespace SimpleLibrary.ServiceModel
     {
         public string ClientHttpUsername { get; protected set; }
         public string ClientWindowsUsername { get; protected set; }
-        public string ClientThreadCulture { get; protected set; }
-        public string ClientUICulture { get; protected set; }
-        
+        public int ClientThreadCultureLCID { get; protected set; }
+        public int ClientUICultureLCID { get; protected set; }
+
+
+        public CultureInfo GetThreadCulture()
+        {
+            return new CultureInfo(ClientThreadCultureLCID);
+        }
+
+        public CultureInfo GetUICulture()
+        {
+            return new CultureInfo(ClientUICultureLCID);
+        }
+
         public Dictionary<string, object> CustomData { get; set; }
 
         protected bool PopulateFromHttpContext()
@@ -40,9 +51,9 @@ namespace SimpleLibrary.ServiceModel
         public bool PopulateCultures()
         {
             if (Thread.CurrentThread.CurrentCulture != null)
-                ClientThreadCulture = Thread.CurrentThread.CurrentCulture.Name;
+                ClientThreadCultureLCID = Thread.CurrentThread.CurrentCulture.LCID;
             if (Thread.CurrentThread.CurrentUICulture != null)
-                ClientUICulture = Thread.CurrentThread.CurrentUICulture.Name;
+                ClientUICultureLCID = Thread.CurrentThread.CurrentUICulture.LCID;
 
             return true;
         }

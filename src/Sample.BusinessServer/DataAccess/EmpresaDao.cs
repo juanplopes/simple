@@ -27,14 +27,7 @@ namespace Sample.BusinessServer.DataAccess
             return null;
         }
 
-        private static void NewMethod(ISQLQuery query)
-        {
-            query.SetInt32("id_funcionario", 12868);
-            query.AddEntity(typeof(Empresa));
-            query.AddScalar("cnt", NHibernateUtil.Int32);
-        }
-
-        public IList<Empresa> GetAllWithSQLQuery()
+       public IList<Empresa> GetAllWithSQLQuery()
         {
             ISQLQuery query = Session.CreateSQLQuery("selecdt empresa.* from empresa");
             query.SetResultTransformer(Transformers.AliasToBean(typeof(TestDTO)));

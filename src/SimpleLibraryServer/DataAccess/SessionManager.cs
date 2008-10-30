@@ -46,6 +46,17 @@ namespace SimpleLibrary.DataAccess
                 }
         }
 
+        public static void ClearThreadSessions()
+        {
+            lock (SessionFactories)
+            {
+                foreach (ISession session in GetAllSessions())
+                {
+                    if (session.IsOpen && session.IsConnected) session.Clear();
+                }
+            }
+        }
+
         public static void ReleaseThreadSessions()
         {
             Exception firstException = null;
