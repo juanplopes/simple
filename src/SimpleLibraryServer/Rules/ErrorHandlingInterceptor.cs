@@ -19,17 +19,29 @@ namespace SimpleLibrary.Rules
             try
             {
                 invocation.Proceed();
-                SessionManager.ReleaseThreadSessions();
             }
             catch (Exception e)
             {
-                if (e is TargetInvocationException) e = e.InnerException;
-
-                if (!DefaultExceptionHandler.Handle(e))
+                if (!Handle(e)) throw;
+            }
+            finally
+            {
+                try
                 {
-                    throw;
+                    SessionManager.ReleaseThreadSessions();
+                }
+                catch (Exception e)
+                {
+                    if (!Handle(e)) throw;
                 }
             }
+        }
+
+        protected bool Handle(Exception e)
+        {
+            if (e is TargetInvocationException) e = e.InnerException;
+
+            return !DefaultExceptionHandler.Handle(e);
         }
 
         #endregion
