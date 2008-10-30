@@ -26,14 +26,7 @@ namespace SimpleLibrary.Rules
             }
             finally
             {
-                try
-                {
-                    SessionManager.ReleaseThreadSessions();
-                }
-                catch (Exception e)
-                {
-                    if (!Handle(e)) throw;
-                }
+                SessionManager.ReleaseThreadSessions();
             }
         }
 
