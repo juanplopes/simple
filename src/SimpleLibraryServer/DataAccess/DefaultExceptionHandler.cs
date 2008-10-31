@@ -6,14 +6,21 @@ using NHibernate;
 using SimpleLibrary.DataAccess;
 using System.ServiceModel;
 using BasicLibrary.Logging;
+using SimpleLibrary.Rules;
 
-namespace SimpleLibrary.ServiceModel
+namespace SimpleLibrary.DataAccess
 {
-    public class DefaultExceptionHandler
+    public class DefaultExceptionHandler : IExceptionHandler
     {
-        public static bool Handle(Exception e)
+        public static DefaultExceptionHandler Instance { get { return Nested.This; } }
+
+        protected static class Nested
         {
-            MainLogger.Default.Warn("Handling exception: " + e.ToString());
+            public static DefaultExceptionHandler This = new DefaultExceptionHandler();
+        }
+
+        public bool Handle(Exception e)
+        {
             if (e is StaleObjectStateException)
             {
                 throw CreatePersistenceFault(
@@ -38,13 +45,21 @@ namespace SimpleLibrary.ServiceModel
 
         protected static FaultException<PersistenceFault> CreatePersistenceFault(PersistenceFault.ReasonType reason, object info)
         {
-            PersistenceFault fault = new PersistenceFault();
-            fault.Reason = reason;
-            fault.Information = info;
+            PersistenceFault fault = new PersistenceFault(reason,info);
 
             FaultException<PersistenceFault> ex = new FaultException<PersistenceFault>(fault, 
                 new FaultReason( fault.Reason.ToString() + ": " + fault.Information.ToString()));
             return ex;
         }
+
+        #region IExceptionHandler Members
+
+
+        public IEnumerable<Type> IdentifyThrowingTypes()
+        {
+            yield return typeof(PersistenceFault);
+        }
+
+        #endregion
     }
 }

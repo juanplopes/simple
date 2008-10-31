@@ -7,11 +7,15 @@ using SimpleLibrary.ServiceModel;
 using BasicLibrary.Logging;
 using System.Reflection;
 using SimpleLibrary.DataAccess;
+using SimpleLibrary.Config;
+using BasicLibrary.Configuration;
 
 namespace SimpleLibrary.Rules
 {
     public class ErrorHandlingInterceptor : IInterceptor
     {
+        SimpleLibraryConfig Config = SimpleLibraryConfig.Get();
+
         #region IInterceptor Members
 
         public void Intercept(IInvocation invocation)
@@ -34,7 +38,12 @@ namespace SimpleLibrary.Rules
         {
             if (e is TargetInvocationException) e = e.InnerException;
 
-            return !DefaultExceptionHandler.Handle(e);
+            foreach (IExceptionHandler handler in Config.Business.ExceptionHandling.GetHandlers())
+            {
+                if (handler.Handle(e)) return true;
+            }
+
+            return false;
         }
 
         #endregion

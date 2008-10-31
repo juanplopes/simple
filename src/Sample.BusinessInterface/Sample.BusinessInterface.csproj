@@ -55,6 +55,7 @@
     <Compile Include="Domain\EmpresaFuncionario.cs" />
     <Compile Include="Domain\Funcionario.cs" />
     <Compile Include="Domain\TestDTO.cs" />
+    <Compile Include="GenericFaults.cs" />
     <Compile Include="IEmpresaFuncionarioRules.cs" />
     <Compile Include="IFuncionarioRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

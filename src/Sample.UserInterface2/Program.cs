@@ -31,8 +31,15 @@ namespace Sample.UserInterface2
             Empresa e = new Empresa();
             e.Nome = "teste";
 
-            rules.Save(e);
-            rules.Save(e);
+            try
+            {
+                rules.Save(e);
+            }
+            catch (FaultException<GenericFault> ex)
+            {
+                ex.Detail.GetType();
+            }
+            
         }
     }
 }

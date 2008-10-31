@@ -8,7 +8,7 @@ namespace SimpleLibrary.Config
 {
     public class DataConfigElement : ConfigElement
     {
-        [ConfigElement("options",Default=InstanceType.New)]
+        [ConfigElement("options", Default = InstanceType.New)]
         public DataConfigOptionsElement Options { get; set; }
         [ConfigElement("defaultSessionFactory", Required = true)]
         public SessionFactoryElement DefaultSessionFactory { get; set; }
@@ -20,7 +20,7 @@ namespace SimpleLibrary.Config
             base.CheckConstraints();
             foreach (SessionFactoryElement factory in SessionFactories)
             {
-                if (string.IsNullOrEmpty( factory.Name)) throw new InvalidConfigurationException("All additional session factories must have a name");
+                if (string.IsNullOrEmpty(factory.Name)) throw new InvalidConfigurationException("All additional session factories must have a name");
             }
         }
     }

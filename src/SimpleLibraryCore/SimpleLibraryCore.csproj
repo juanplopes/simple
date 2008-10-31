@@ -62,6 +62,7 @@
     <Compile Include="Config\DataConfigElement.cs" />
     <Compile Include="Config\DataConfigOptionsElement.cs" />
     <Compile Include="Config\EndpointElement.cs" />
+    <Compile Include="Config\ExceptionHandlingElement.cs" />
     <Compile Include="Config\FiltersElement.cs" />
     <Compile Include="Config\LockingProviderElement.cs" />
     <Compile Include="Config\ServiceModelElement.cs" />
@@ -70,6 +71,8 @@
     <Compile Include="Config\ThreadingElement.cs" />
     <Compile Include="DataAccess\EntityDataSource.cs" />
     <Compile Include="DataAccess\EntityDataSourceView.cs" />
+    <Compile Include="DataAccess\GenericFault.cs" />
+    <Compile Include="DataAccess\IExceptionHandler.cs" />
     <Compile Include="DataAccess\Page.cs" />
     <Compile Include="DataAccess\PropertyDescriptionMapping.cs" />
     <Compile Include="DataAccess\SortExpressionAnalyzer.cs" />

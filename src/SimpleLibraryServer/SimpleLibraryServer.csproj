@@ -101,7 +101,7 @@
     <Compile Include="ServiceModel\AssemblyLocatorHoster.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ServiceModel\DefaultExceptionHandler.cs" />
+    <Compile Include="DataAccess\DefaultExceptionHandler.cs" />
     <Compile Include="ServiceModel\ServiceEnableAttribute.cs" />
     <Compile Include="Threading\NHLockingProvider.cs" />
     <Compile Include="Threading\NHLockToken.cs" />

@@ -8,7 +8,7 @@ using System.ServiceModel;
 namespace SimpleLibrary.DataAccess
 {
     [DataContract]
-    public class PersistenceFault
+    public class PersistenceFault : GenericFault
     {
         public enum ReasonType
         {
@@ -17,9 +17,13 @@ namespace SimpleLibrary.DataAccess
             ObjectNotFound
         }
 
-        [DataMember]
-        public ReasonType Reason { get; set; }
-        [DataMember]
-        public object Information { get; set; }
+        public ReasonType GetReason()
+        {
+            return this.GetReason<ReasonType>();
+        }
+
+        public PersistenceFault() : base() { }
+        public PersistenceFault(ReasonType reason) : base((int)reason) { }
+        public PersistenceFault(ReasonType reason, object information) : base((int)reason, information) { }
     }
 }

@@ -16,5 +16,7 @@ namespace SimpleLibrary.Config
         public List<TypeConfigElement> RulesFactories { get; set; }
         [ConfigElement("filters", Default = InstanceType.New)]
         public FiltersElement Filters { get; set; }
+        [ConfigElement("exceptionHandling", Default = InstanceType.New)]
+        public ExceptionHandlingElement ExceptionHandling { get; set; }
     }
 }
