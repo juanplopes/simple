@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BasicLibrary.Configuration;
-using SimpleLibrary.Rules;
+using SimpleLibrary.DataAccess;
 
 namespace SimpleLibrary.Config
 {
