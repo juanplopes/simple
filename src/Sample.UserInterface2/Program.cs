@@ -16,6 +16,9 @@ using SimpleLibrary.Rules;
 using SimpleLibrary.ServiceModel;
 using System.Globalization;
 using System.Reflection.Emit;
+using System.ServiceModel.Description;
+using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel.Security;
 
 namespace Sample.UserInterface2
 {
@@ -23,11 +26,13 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-      
-
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
             Thread.Sleep(4000);
-            Empresa e = rules.Load(1);
+            Empresa e = new Empresa();
+            e.Nome = "teste";
+
+            rules.Save(e);
+            rules.Save(e);
         }
     }
 }

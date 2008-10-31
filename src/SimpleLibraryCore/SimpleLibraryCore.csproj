@@ -102,6 +102,7 @@
     <Compile Include="Rules\IRulesProvider.cs" />
     <Compile Include="Rules\RulesFactory.cs" />
     <Compile Include="ServiceModel\ConfigLoader.cs" />
+    <Compile Include="ServiceModel\CredentialsServiceConfigurator.cs" />
     <Compile Include="ServiceModel\CustomDataContractSerializerOperationBehavior.cs" />
     <Compile Include="ServiceModel\DataContractConfigurator.cs" />
     <Compile Include="ServiceModel\DebugServiceConfigurator.cs" />

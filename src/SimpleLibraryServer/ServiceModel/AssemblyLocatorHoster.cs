@@ -10,6 +10,7 @@ using SimpleLibrary.Config;
 using System.ServiceModel.Channels;
 using SimpleLibrary.Rules;
 using BasicLibrary.Logging;
+using System.IO;
 
 namespace SimpleLibrary.ServiceModel
 {
