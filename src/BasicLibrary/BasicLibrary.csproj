@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DecoratedTypeFinder.cs" />
     <Compile Include="Configuration\AssemblyConfigElement.cs" />
     <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
     <Compile Include="Configuration\ConfigFileElement.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="LibraryConfig\BasicLibraryConfig.cs" />
     <Compile Include="LibraryConfig\Log4netConfig.cs" />
     <Compile Include="LibraryConfig\SqlLockingElement.cs" />
-    <Compile Include="LibraryConfig\ThreadingConfig.cs" />
     <Compile Include="Logging\IgnoreLoggerAttribute.cs" />
     <Compile Include="Logging\MainLogger.cs" />
     <Compile Include="Common\BusinessDays.cs" />

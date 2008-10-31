@@ -120,18 +120,6 @@
   <data name="BasicLibraryConfig" xml:space="preserve">
     <value>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
 &lt;basicLibrary&gt;
-  &lt;threading&gt;
-    &lt;defaultLockingProvider&gt;
-      &lt;connectionString&gt;&lt;/connectionString&gt;
-      &lt;tableName&gt;t_acn_instance_state&lt;/tableName&gt;
-      &lt;typeColumn&gt;class_name&lt;/typeColumn&gt;
-      &lt;idColumn&gt;id_order_block&lt;/idColumn&gt;
-      &lt;semaphoreColumn&gt;semaphore&lt;/semaphoreColumn&gt;
-      &lt;data&gt;data&lt;/data&gt;
-      &lt;secondsToWait&gt;10&lt;/secondsToWait&gt;
-    &lt;/defaultLockingProvider&gt;
-  &lt;/threading&gt;
-
   &lt;log4net&gt;
     &lt;appender name="ConsoleAppender" type="log4net.Appender.ColoredConsoleAppender"&gt;
       &lt;mapping&gt;
@@ -148,7 +136,7 @@
       &lt;/mapping&gt;
       &lt;mapping&gt;
         &lt;level value="WARN" /&gt;
-        &lt;foreColor value="Yellow" /&gt;
+        &lt;foreColor value="Yellow, HighIntensity" /&gt;
       &lt;/mapping&gt;
       &lt;mapping&gt;
         &lt;level value="DEBUG" /&gt;

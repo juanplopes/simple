@@ -8,9 +8,6 @@ namespace BasicLibrary.LibraryConfig
     [DefaultFile("BasicLibrary.config", false)]
     public class BasicLibraryConfig : ConfigRoot<BasicLibraryConfig>
     {
-        [ConfigElement("threading")]
-        public ThreadingConfig Threading { get; set; }
-
         [ConfigElement("log4net", Required=true)]
         public Log4netConfig Log4net { get; set; }
 

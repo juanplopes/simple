@@ -118,6 +118,7 @@
     <Compile Include="ServiceModel\OperationContextConfigurator.cs" />
     <Compile Include="ServiceModel\ServiceRulesProvider.cs" />
     <Compile Include="ServiceModel\SimpleContext.cs" />
+    <Compile Include="ServiceModel\SimpleFaultContractAttribute.cs" />
     <Compile Include="ServiceModel\SingletonServiceConfigurator.cs" />
   </ItemGroup>
   <ItemGroup>

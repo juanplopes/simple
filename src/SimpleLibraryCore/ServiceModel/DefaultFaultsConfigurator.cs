@@ -7,24 +7,54 @@ using SimpleLibrary.DataAccess;
 using BasicLibrary.Configuration;
 using SimpleLibrary.Rules;
 using SimpleLibrary.Config;
+using BasicLibrary.Common;
+using System.Reflection;
 
 namespace SimpleLibrary.ServiceModel
 {
     public class DefaultFaultsConfigurator : IEndpointConfigurator
     {
+        protected static IList<Type> faults = null;
+
+        protected IList<Type> Faults
+        {
+            get
+            {
+                if (faults == null)
+                {
+                    SimpleLibraryConfig simpleLibraryConfig = SimpleLibraryConfig.Get();
+
+                    List<Type> list = new List<Type>();
+                    list.AddRange(DecoratedTypeFinder.Locate(
+                        Assembly.GetAssembly(typeof(GenericFault<>)),
+                        typeof(SimpleFaultContractAttribute),
+                        true
+                    ));
+                    list.AddRange(DecoratedTypeFinder.Locate(
+                        simpleLibraryConfig.Business.InterfaceAssembly.LoadAssembly(),
+                        typeof(SimpleFaultContractAttribute),
+                        true
+                    ));
+                    faults = list;
+                }
+                return faults;
+            }
+        }
+
         #region IEndpointConfigurator Members
+
+
 
         public void Configure(bool isClientSide, System.ServiceModel.Description.ServiceEndpoint endpoint, SimpleLibrary.Config.ConfiguratorElement config)
         {
             foreach (OperationDescription operation in endpoint.Contract.Operations)
             {
-                FaultDescription fault = new FaultDescription(typeof(PersistenceFault).Name);
-                fault.DetailType = typeof(PersistenceFault);
-                operation.Faults.Add(fault);
-
-                fault = new FaultDescription(typeof(GenericFault).Name);
-                fault.DetailType = typeof(GenericFault);
-                operation.Faults.Add(fault);
+                foreach (Type type in Faults)
+                {
+                    FaultDescription fault = new FaultDescription(type.Name);
+                    fault.DetailType = type;
+                    operation.Faults.Add(fault);
+                }
             }
         }
 

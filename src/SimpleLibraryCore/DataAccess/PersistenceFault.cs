@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using SimpleLibrary.ServiceModel;
 
 namespace SimpleLibrary.DataAccess
 {
-    [DataContract]
-    public class PersistenceFault : GenericFault
+    [DataContract, SimpleFaultContract]
+    public class PersistenceFault : GenericFault<PersistenceFault.ReasonType>
     {
         public enum ReasonType
         {
@@ -17,13 +18,8 @@ namespace SimpleLibrary.DataAccess
             ObjectNotFound
         }
 
-        public ReasonType GetReason()
-        {
-            return this.GetReason<ReasonType>();
-        }
-
         public PersistenceFault() : base() { }
-        public PersistenceFault(ReasonType reason) : base((int)reason) { }
-        public PersistenceFault(ReasonType reason, object information) : base((int)reason, information) { }
+        public PersistenceFault(ReasonType reason) : base(reason) { }
+        public PersistenceFault(ReasonType reason, object information) : base(reason, information) { }
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 using System.Reflection;
 using BasicLibrary.Logging;
 using System.Runtime.Serialization;
+using BasicLibrary.Common;
 
 namespace BasicLibrary.ServiceModel
 {
@@ -15,24 +16,13 @@ namespace BasicLibrary.ServiceModel
             Cache = new Dictionary<Assembly, IList<Type>>();
         }
 
-
         public static IList<Type> Locate(Assembly asm)
         {
             if (Cache.ContainsKey(asm)) return Cache[asm];
 
-            MainLogger.Default.Debug("Locating known types in " + asm.FullName + "...");
+            IList<Type> list = DecoratedTypeFinder.Locate(asm, typeof(DataContractAttribute), true);
 
-            IList<Type> types = new List<Type>();
-            foreach (Type t in asm.GetTypes())
-            {
-                if (Attribute.IsDefined(t, typeof(DataContractAttribute)) && !t.IsGenericTypeDefinition && !t.IsAbstract)
-                {
-                    MainLogger.Default.Debug(">" + t.FullName);
-                    types.Add(t);
-                }
-            }
-            Cache[asm] = types;
-            return types;
+            return (Cache[asm] = list);
         }
     }
 }

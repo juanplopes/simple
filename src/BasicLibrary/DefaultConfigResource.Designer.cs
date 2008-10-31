@@ -63,20 +63,20 @@ namespace BasicLibrary {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;basicLibrary&gt;
-        ///  &lt;threading&gt;
-        ///    &lt;defaultLockingProvider&gt;
-        ///      &lt;connectionString&gt;&lt;/connectionString&gt;
-        ///      &lt;tableName&gt;t_acn_instance_state&lt;/tableName&gt;
-        ///      &lt;typeColumn&gt;class_name&lt;/typeColumn&gt;
-        ///      &lt;idColumn&gt;id_order_block&lt;/idColumn&gt;
-        ///      &lt;semaphoreColumn&gt;semaphore&lt;/semaphoreColumn&gt;
-        ///      &lt;data&gt;data&lt;/data&gt;
-        ///      &lt;secondsToWait&gt;10&lt;/secondsToWait&gt;
-        ///    &lt;/defaultLockingProvider&gt;
-        ///  &lt;/threading&gt;
-        ///
         ///  &lt;log4net&gt;
-        ///    &lt;appender name=&quot;ConsoleAppender&quot; type=&quot;log4n [rest of string was truncated]&quot;;.
+        ///    &lt;appender name=&quot;ConsoleAppender&quot; type=&quot;log4net.Appender.ColoredConsoleAppender&quot;&gt;
+        ///      &lt;mapping&gt;
+        ///        &lt;level value=&quot;ERROR&quot; /&gt;
+        ///        &lt;foreColor value=&quot;Red, HighIntensity&quot; /&gt;
+        ///      &lt;/mapping&gt;
+        ///      &lt;mapping&gt;
+        ///        &lt;level value=&quot;CRITICAL&quot; /&gt;
+        ///        &lt;foreColor value=&quot;Red, HighIntensity&quot; /&gt;
+        ///      &lt;/mapping&gt;
+        ///      &lt;mapping&gt;
+        ///        &lt;level value=&quot;INFO&quot; /&gt;
+        ///        &lt;foreColor value=&quot;Blue, HighIntensity&quot; /&gt;
+        ///      &lt;/mapping&gt;        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string BasicLibraryConfig {
             get {

@@ -35,7 +35,7 @@ namespace Sample.UserInterface2
             {
                 rules.Save(e);
             }
-            catch (FaultException<GenericFault> ex)
+            catch (FaultException<CustomFault> ex)
             {
                 ex.Detail.GetType();
             }

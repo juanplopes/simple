@@ -125,7 +125,15 @@
     &lt;serverAssembly name="Sample.BusinessServer"/&gt;
     &lt;rulesFactoryType name="SimpleLibrary.Rules.DefaultRulesProvider`1,SimpleLibraryServer"/&gt;
     &lt;rulesFactoryType name="SimpleLibrary.ServiceModel.ServiceRulesProvider`1,SimpleLibraryCore"/&gt;
+
+    &lt;filters ignoreCaseDefault="false"/&gt;
+
+    &lt;exceptionHandling&gt;
+      &lt;type name="Sample.BusinessServer.Infra.CustomExceptionHandler,Sample.BusinessServer"/&gt;
+      &lt;type name="SimpleLibrary.DataAcess.DefaultExceptionHandler,SimpleLibraryServer"/&gt;
+    &lt;/exceptionHandling&gt;
   &lt;/business&gt;
+
   &lt;serviceModel&gt;
     &lt;defaultBaseAddress&gt;http://localhost:9001/&lt;/defaultBaseAddress&gt;
     &lt;serviceConfiguratorType name="SimpleLibrary.ServiceModel.SingletonServiceConfigurator, SimpleLibraryCore"/&gt;
@@ -140,11 +148,26 @@
       &lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.DataContractConfigurator, SimpleLibraryCore"/&gt;
       &lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.DefaultFaultsConfigurator, SimpleLibraryCore"/&gt;
       &lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.OperationContextConfigurator, SimpleLibraryCore"/&gt;
+      &lt;!--&lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.CredentialsServiceConfigurator, SimpleLibraryCore"/&gt;--&gt;
     &lt;/defaultEndpoint&gt;
 
     &lt;additionalEndpoints/&gt;
   &lt;/serviceModel&gt;
+
+  &lt;threading&gt;
+    &lt;lockingProvider&gt;
+      &lt;tableName&gt;instance_state&lt;/tableName&gt;
+      &lt;typeColumn&gt;type&lt;/typeColumn&gt;
+      &lt;idColumn&gt;id&lt;/idColumn&gt;
+      &lt;semaphoreColumn&gt;semaphore&lt;/semaphoreColumn&gt;
+      &lt;dataColumn&gt;data&lt;/dataColumn&gt;
+      &lt;defaultTimeout&gt;30&lt;/defaultTimeout&gt;
+    &lt;/lockingProvider&gt;
+  &lt;/threading&gt;
+
   &lt;dataConfig&gt;
+    &lt;options mergeBeforeUpdate="false"/&gt;
+
     &lt;defaultSessionFactory configFile="NHibernate.config"/&gt;
 
     &lt;!--&lt;sessionFactory configFile="OtherSession.config" name="otherSession"/&gt;--&gt;

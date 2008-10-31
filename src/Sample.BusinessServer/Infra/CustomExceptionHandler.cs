@@ -14,8 +14,8 @@ namespace Sample.BusinessServer.Infra
 
         public bool Handle(Exception e)
         {
-            GenericFault test = new GenericFault((int)GenericFaults.Test, "some info");
-            test.Throw<GenericFaults>();
+            CustomFault test = new CustomFault(CustomFault.CustomFaultType.Test2);
+            test.Throw();
             return true;
         }
 

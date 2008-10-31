@@ -68,10 +68,11 @@ namespace SimpleLibrary {
         ///    &lt;serverAssembly name=&quot;Sample.BusinessServer&quot;/&gt;
         ///    &lt;rulesFactoryType name=&quot;SimpleLibrary.Rules.DefaultRulesProvider`1,SimpleLibraryServer&quot;/&gt;
         ///    &lt;rulesFactoryType name=&quot;SimpleLibrary.ServiceModel.ServiceRulesProvider`1,SimpleLibraryCore&quot;/&gt;
-        ///  &lt;/business&gt;
-        ///  &lt;serviceModel&gt;
-        ///    &lt;defaultBaseAddress&gt;http://localhost:9001/&lt;/defaultBaseAddress&gt;
-        ///    &lt;serviceConfiguratorType name [rest of string was truncated]&quot;;.
+        ///
+        ///    &lt;filters ignoreCaseDefault=&quot;false&quot;/&gt;
+        ///
+        ///    &lt;exceptionHandling&gt;
+        ///      &lt;type name=&quot;Sample.BusinessServer.Infra.CustomExceptionHan [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SimpleLibraryConfig {
             get {
