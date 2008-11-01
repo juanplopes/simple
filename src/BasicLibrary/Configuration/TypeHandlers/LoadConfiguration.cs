@@ -6,6 +6,7 @@ using BasicLibrary.Common;
 using System.Configuration;
 using System.Xml;
 using System.Collections;
+using BasicLibrary.Logging;
 
 namespace BasicLibrary.Configuration.TypeHandlers
 {
@@ -70,6 +71,11 @@ namespace BasicLibrary.Configuration.TypeHandlers
         public void Lock()
         {
             CheckRequiredProperties();
+            MainLogger.Default.DebugFormat("{0}: All required properties are loaded. Locking...", Element.GetType().Name);
+            foreach (var item in Attributes)
+            {
+                MainLogger.Default.DebugFormat("  element {0} locked to {1} with type {2}", item.Value.Name, item.Key.Name, item.Key.PropertyType.Name);
+            }
             IsLocked = true;
         }
 
@@ -87,7 +93,11 @@ namespace BasicLibrary.Configuration.TypeHandlers
         {
             if (IsLocked) throw new InvalidOperationException("Configuration is already locked");
             HandlerList.ForEach(x => x.Handle(element));
-            if (ParentList.ContainsKey(element.Name)) Element.LoadFromElement(element);
+            if (ParentList.ContainsKey(element.Name))
+            {
+                MainLogger.Default.DebugFormat("Going deep the to the parent list {0}...", element.Name);
+                Element.LoadFromElement(element);
+            }
         }
 
         public void Handle(XmlAttribute attribute)

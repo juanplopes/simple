@@ -9,6 +9,7 @@ using System.Globalization;
 using BasicLibrary.Common;
 using BasicLibrary.Configuration.TypeHandlers;
 using System.Configuration;
+using BasicLibrary.Logging;
 
 namespace BasicLibrary.Configuration
 {
@@ -59,6 +60,8 @@ namespace BasicLibrary.Configuration
         {
             if (ConfigInfo == null) throw new InvalidDataException("ConfigElement default constructor must inherit from base default constructor");
             Dictionary<string, bool> alreadyDefined = new Dictionary<string, bool>();
+
+            MainLogger.Default.DebugFormat("Reading {0} into {1}...", element.Name, this.GetType().Name);
 
             ConfigInfo.NotifyStartHandling();
             foreach (XmlAttribute attribute in element.Attributes)

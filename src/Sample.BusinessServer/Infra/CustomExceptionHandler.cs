@@ -5,6 +5,7 @@ using System.Text;
 using SimpleLibrary.Rules;
 using SimpleLibrary.DataAccess;
 using Sample.BusinessInterface;
+using System.Diagnostics;
 
 namespace Sample.BusinessServer.Infra
 {

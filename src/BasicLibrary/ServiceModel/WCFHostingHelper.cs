@@ -52,6 +52,7 @@ namespace BasicLibrary.ServiceModel
         {
             if (Environment.UserInteractive)
             {
+                MainLogger.Default.Info("Starting as Console Application...");
                 Console.WriteLine();
                 Console.WriteLine("Self-hosting application running.");
                 Console.WriteLine("Type 'exit' and press <ENTER> to terminate.");
@@ -59,6 +60,7 @@ namespace BasicLibrary.ServiceModel
             }
             else
             {
+                MainLogger.Default.Info("Starting as Windows Service...");
                 Run(this);
             }
         }

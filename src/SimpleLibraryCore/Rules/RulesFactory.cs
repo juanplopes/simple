@@ -31,12 +31,19 @@ namespace SimpleLibrary.Rules
                     try
                     {
                         Type type = typeElement.LoadType();
-                        provider = (IRulesProvider<T>)Activator.CreateInstance(type.MakeGenericType(typeof(T)));
-                        break;
+                        if (type != null)
+                        {
+                            provider = (IRulesProvider<T>)Activator.CreateInstance(type.MakeGenericType(typeof(T)));
+                            break;
+                        }
+                        else
+                        {
+                            MainLogger.Default.WarnFormat("Couldn't load provider type {0}", typeElement.Name);
+                        }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
-                        MainLogger.Default.Warn("Couldn't load provider type " + typeElement.Name, e);
+                        MainLogger.Default.WarnFormat("Couldn't load provider type {0}", typeElement.Name);
                     }
                 }
 

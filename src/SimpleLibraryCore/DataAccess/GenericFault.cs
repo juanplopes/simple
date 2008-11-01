@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.Diagnostics;
 
 namespace SimpleLibrary.DataAccess
 {
@@ -32,6 +33,7 @@ namespace SimpleLibrary.DataAccess
                 (": " + Information.ToString()) : string.Empty);
         }
 
+        [DebuggerHidden]
         public void Throw()
         {
             throw (Exception)Activator.CreateInstance(

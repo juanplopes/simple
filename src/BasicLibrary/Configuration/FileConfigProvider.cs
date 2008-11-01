@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Xml;
 using BasicLibrary.Common;
 using System.IO;
+using BasicLibrary.Logging;
 
 namespace BasicLibrary.Configuration
 {
@@ -26,6 +27,7 @@ namespace BasicLibrary.Configuration
                 }
                 catch (FileNotFoundException)
                 {
+                    MainLogger.Default.DebugFormat("{0} not found. Assuming default...", DefaultFileAttribute.GetDefaultFile<ConfigFilesConfig>());
                     return new SafeDictionary<string, string>();
                 }
             }
@@ -50,8 +52,13 @@ namespace BasicLibrary.Configuration
         public T Get(string file, string location)
         {
             T config = Cache[new ConfigIdentifier(file, location)];
-            if (config != null) return config;
-            
+            MainLogger.Default.DebugFormat("Trying to load {0}...", typeof(T).Name);
+            if (config != null)
+            {
+                MainLogger.Default.DebugFormat("Found it in cache. Returning.");
+                return config;
+            }
+
             config = new T();
 
             XmlElement docElement;
@@ -68,13 +75,14 @@ namespace BasicLibrary.Configuration
                 }
                 else
                 {
+                    MainLogger.Default.DebugFormat("File not found. No exception thrown. Loading default xml string...");
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(config.DefaultXmlString);
                     docElement = doc.DocumentElement;
                 }
             }
-            
-            
+
+
             config.LoadFromElement(docElement);
 
             foreach (XmlElement element in docElement.GetElementsByTagName(LOCALIZATION_TAG))
