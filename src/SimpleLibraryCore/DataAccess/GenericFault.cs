@@ -8,13 +8,12 @@ using System.ServiceModel;
 namespace SimpleLibrary.DataAccess
 {
     [DataContract]
-    public abstract class GenericFault<T> where T:struct
+    public abstract class GenericFault<T> where T : struct
     {
         [DataMember]
         public T Reason { get; set; }
         [DataMember]
         public object Information { get; set; }
-
 
         public GenericFault() : this(default(T), null) { }
         public GenericFault(T reason) : this(reason, null) { }
@@ -25,11 +24,18 @@ namespace SimpleLibrary.DataAccess
             this.Information = information;
         }
 
+        public override string ToString()
+        {
+            return
+                Reason.ToString() +
+                (Information != null ?
+                (": " + Information.ToString()) : string.Empty);
+        }
+
         public void Throw()
         {
-            string reason = Reason.ToString() + ": " +(Information ?? string.Empty).ToString();
             throw (Exception)Activator.CreateInstance(
-             typeof(FaultException<>).MakeGenericType(this.GetType()), this, new FaultReason(reason));
+             typeof(FaultException<>).MakeGenericType(this.GetType()), this, new FaultReason(this.ToString()));
         }
     }
 }

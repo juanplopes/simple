@@ -7,6 +7,8 @@ using System.ServiceModel;
 using System.ServiceModel.Dispatcher;
 using SimpleLibrary.Config;
 using System.ServiceModel.Channels;
+using SimpleLibrary.DataAccess;
+using System.Runtime.Serialization;
 
 namespace SimpleLibrary.ServiceModel
 {
