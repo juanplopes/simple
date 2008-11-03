@@ -1,25 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.ServiceModel;
-using System.Text;
 using System.Threading;
-using BasicLibrary.Logging;
 using Sample.BusinessInterface;
 using Sample.BusinessInterface.Domain;
 using SimpleLibrary.Config;
-using SimpleLibrary.DataAccess;
 using SimpleLibrary.Filters;
 using SimpleLibrary.Rules;
-using SimpleLibrary.ServiceModel;
-using System.Globalization;
-using System.Reflection.Emit;
-using System.ServiceModel.Description;
-using System.Security.Cryptography.X509Certificates;
-using System.ServiceModel.Security;
-using BasicLibrary.Cache;
 
 namespace Sample.UserInterface2
 {
@@ -27,11 +14,13 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            while (true)
+            SimpleLibraryConfig.Get();
+            long start = DateTime.Now.Ticks;
+            for (int i = 0; i < 100; i++)
             {
-                SimpleLibraryConfig config = SimpleLibraryConfig.Get();
-                Console.ReadLine();
+                SimpleLibraryConfig.Get();
             }
+            TimeSpan end = new TimeSpan(DateTime.Now.Ticks - start);
         }
     }
 }

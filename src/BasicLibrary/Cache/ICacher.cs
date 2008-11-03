@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Configuration;
+using BasicLibrary.Configuration;
 
 namespace BasicLibrary.Cache
 {
@@ -22,5 +24,14 @@ namespace BasicLibrary.Cache
     {
         event CacheExpired<T> CacheExpiredEvent;
         T Identifier { get; }
+    }
+
+    public class MySection : ConfigElement
+    {
+        [ConfigElement("someIntValue", Required = true)]
+        public int SomeIntValue { get; set; }
+
+        [ConfigElement("someStringValue", Required = true)]
+        public string SomeStringValue { get; set; }
     }
 }
