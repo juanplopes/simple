@@ -8,6 +8,7 @@ using NHibernate;
 using SimpleLibrary.Config;
 using BasicLibrary.Threading;
 using BasicLibrary.Logging;
+using BasicLibrary.Cache;
 
 namespace SimpleLibrary.DataAccess
 {
@@ -104,13 +105,14 @@ namespace SimpleLibrary.DataAccess
             SimpleLibraryConfig libConfig = SimpleLibraryConfig.Get();
 
             DefaultConfig = new Configuration();
-            DefaultConfig.Configure(libConfig.DataConfig.DefaultSessionFactory.ConfigFile);
+            DefaultConfig.Configure(FileCacher.GetBasedFile(
+                libConfig.DataConfig.DefaultSessionFactory.ConfigFile));
             DefaultSessionFactory = DefaultConfig.BuildSessionFactory();
 
             foreach (SessionFactoryElement factoryConfig in libConfig.DataConfig.SessionFactories)
             {
                 Configuration config = new Configuration();
-                config.Configure(factoryConfig.ConfigFile);
+                config.Configure(FileCacher.GetBasedFile(factoryConfig.ConfigFile));
                 SessionFactories[factoryConfig.Name] = config.BuildSessionFactory();
                 Configs[factoryConfig.Name] = config;
             }
