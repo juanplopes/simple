@@ -19,6 +19,7 @@ using System.Reflection.Emit;
 using System.ServiceModel.Description;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Security;
+using BasicLibrary.Cache;
 
 namespace Sample.UserInterface2
 {
@@ -26,20 +27,12 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
-            Thread.Sleep(4000);
-            Empresa e = new Empresa();
-            e.Nome = "teste";
-
-            try
+            while (true)
             {
-                rules.Save(e);
+                SimpleLibraryConfig config = SimpleLibraryConfig.Get();
+                Console.ReadLine();
             }
-            catch (FaultException<CustomFault> ex)
-            {
-                ex.Detail.GetType();
-            }
-            
         }
     }
 }
+

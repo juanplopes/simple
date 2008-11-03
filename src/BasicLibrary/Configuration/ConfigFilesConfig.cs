@@ -7,7 +7,7 @@ using System.IO;
 namespace BasicLibrary.Configuration
 {
     [ConfigFilesIgnore]
-    [DefaultFile("ConfigFiles.xml")]
+    [DefaultFile("ConfigFiles.xml",ThrowException=false)]
     public class ConfigFilesConfig : ConfigRoot<ConfigFilesConfig>
     {
         [ConfigElement("configGroup")]
@@ -34,7 +34,13 @@ namespace BasicLibrary.Configuration
             }
         }
 
-
+        public override string DefaultXmlString
+        {
+            get
+            {
+                return DefaultConfigResource.ConfigFilesConfig;
+            }
+        }
 
     }
 }

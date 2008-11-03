@@ -13,23 +13,13 @@ namespace BasicLibrary.Configuration
     public class FileConfigProvider<T> : AutoLocalizationConfigProvider<T>
         where T : ConfigElement, new()
     {
-        protected const string LOCALIZATION_TAG = "localized";
-        protected const string COUNTRY_ATTRIBUTE = "for";
 
         protected SafeDictionary<string, string> ConfigFiles
         {
             get
             {
-                try
-                {
-                    ConfigFilesConfig config = ConfigFilesConfig.Get();
-                    return config.ConfigFiles;
-                }
-                catch (FileNotFoundException)
-                {
-                    MainLogger.Default.DebugFormat("{0} not found. Assuming default...", DefaultFileAttribute.GetDefaultFile<ConfigFilesConfig>());
-                    return new SafeDictionary<string, string>();
-                }
+                ConfigFilesConfig config = ConfigFilesConfig.Get();
+                return config.ConfigFiles;
             }
         }
 
@@ -51,53 +41,8 @@ namespace BasicLibrary.Configuration
         [LocalizationProviderIgnore]
         public T Get(string file, string location)
         {
-            T config = Cache[new ConfigIdentifier(file, location)];
-            MainLogger.Default.DebugFormat("Trying to load {0}...", typeof(T).Name);
-            if (config != null)
-            {
-                MainLogger.Default.DebugFormat("Found it in cache. Returning.");
-                return config;
-            }
-
-            config = new T();
-
-            XmlElement docElement;
-
-            try
-            {
-                docElement = FileContentCache.GetAsXmlElement(file);
-            }
-            catch (FileNotFoundException)
-            {
-                if (DefaultFileAttribute.ShouldThrowException<T>())
-                {
-                    throw;
-                }
-                else
-                {
-                    MainLogger.Default.DebugFormat("File not found. No exception thrown. Loading default xml string...");
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(config.DefaultXmlString);
-                    docElement = doc.DocumentElement;
-                }
-            }
-
-
-            config.LoadFromElement(docElement);
-
-            foreach (XmlElement element in docElement.GetElementsByTagName(LOCALIZATION_TAG))
-            {
-                if (element.Attributes[COUNTRY_ATTRIBUTE] != null && string.Equals(element.Attributes[COUNTRY_ATTRIBUTE].Value, location, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    config.LoadFromElement(element);
-                }
-            }
-
-            config.Lock();
-
-            Cache[new ConfigIdentifier(file, location)] = config;
-
-            return config;
+            ConfigIdentifier id = new ConfigIdentifier(file, location);
+            return FileConfigCacher<T>.GetValue(id);
         }
 
         [LocalizationProviderIgnore]

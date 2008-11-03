@@ -154,4 +154,7 @@
   &lt;/log4net&gt;
 &lt;/basicLibrary&gt;</value>
   </data>
+  <data name="ConfigFilesConfig" xml:space="preserve">
+    <value>&lt;config&gt;&lt;/config&gt;</value>
+  </data>
 </root>

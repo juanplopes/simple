@@ -83,5 +83,14 @@ namespace BasicLibrary {
                 return ResourceManager.GetString("BasicLibraryConfig", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;config&gt;&lt;/config&gt;.
+        /// </summary>
+        internal static string ConfigFilesConfig {
+            get {
+                return ResourceManager.GetString("ConfigFilesConfig", resourceCulture);
+            }
+        }
     }
 }

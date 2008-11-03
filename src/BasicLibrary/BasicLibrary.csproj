@@ -53,10 +53,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\BaseCacher.cs" />
+    <Compile Include="Cache\FileCacher.cs" />
+    <Compile Include="Cache\ICacher.cs" />
     <Compile Include="Common\BasicCache.cs" />
     <Compile Include="Common\DecoratedTypeFinder.cs" />
     <Compile Include="Configuration\AssemblyConfigElement.cs" />
     <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
+    <Compile Include="Configuration\FileConfigCacher.cs" />
     <Compile Include="Configuration\ConfigFileElement.cs" />
     <Compile Include="Configuration\ConfigFilesConfig.cs" />
     <Compile Include="Configuration\ConfigFilesIgnoreAttribute.cs" />
@@ -102,7 +106,6 @@
     <Compile Include="Configuration\ConfigElementAttribute.cs" />
     <Compile Include="Configuration\ConfigRoot.cs" />
     <Compile Include="Configuration\DefaultFileAttribute.cs" />
-    <Compile Include="Common\FileContentCache.cs" />
     <Compile Include="Configuration\ILocalizationProvider.cs" />
     <Compile Include="Configuration\LocalizationProviderAttribute.cs" />
     <Compile Include="Configuration\NamedAttribute.cs" />

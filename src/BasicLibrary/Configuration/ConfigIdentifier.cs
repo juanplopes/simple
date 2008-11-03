@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace BasicLibrary.Configuration
 {
@@ -25,6 +26,11 @@ namespace BasicLibrary.Configuration
         public override int GetHashCode()
         {
             return (this.File ?? string.Empty).GetHashCode() * (this.Localization ?? string.Empty).GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Path.GetFileName(File) + ":" + Localization;
         }
     }
 }
