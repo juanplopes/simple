@@ -4,6 +4,6 @@ using System.Text;
 
 namespace BasicLibrary.Configuration
 {
-    [global::System.AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+    [global::System.AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     public sealed class LocalizationProviderIgnoreAttribute : Attribute { }
 }

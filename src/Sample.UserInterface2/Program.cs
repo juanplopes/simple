@@ -7,20 +7,20 @@ using Sample.BusinessInterface.Domain;
 using SimpleLibrary.Config;
 using SimpleLibrary.Filters;
 using SimpleLibrary.Rules;
+using BasicLibrary.Configuration;
+using BasicLibrary.Logging;
+using System.IO;
+using System.Diagnostics;
 
 namespace Sample.UserInterface2
 {
-    class Program
+   class Program
     {
         static void Main(string[] args)
         {
-            SimpleLibraryConfig.Get();
-            long start = DateTime.Now.Ticks;
-            for (int i = 0; i < 100; i++)
-            {
-                SimpleLibraryConfig.Get();
-            }
-            TimeSpan end = new TimeSpan(DateTime.Now.Ticks - start);
+            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
+            IList<Empresa> list = rules.ListByFilter(
+                Empresa.NomeProperty.Contains("a"), OrderBy.Asc(Empresa.IdEmpresaProperty).Desc(Empresa.NomeProperty));
         }
     }
 }

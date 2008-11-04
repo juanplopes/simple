@@ -6,18 +6,17 @@ using System.Diagnostics;
 
 namespace BasicLibrary.Configuration
 {
+    [LocalizationProviderIgnore]
     public abstract class AutoLocalizationConfigProvider<T> : IConfigProvider<T>
         where T : ConfigElement, new()
     {
         public abstract T Get(string location);
-        
-        [LocalizationProviderIgnore]
+
         public T Get()
         {
             return Get(AutoGetLocation());
         }
 
-        [LocalizationProviderIgnore]
         protected string AutoGetLocation()
         {
             StackTrace stack = new StackTrace();
@@ -25,12 +24,15 @@ namespace BasicLibrary.Configuration
             do
             {
                 method = stack.GetFrame(currentFrameCounter++).GetMethod();
-            } while (Attribute.IsDefined(method, typeof(LocalizationProviderIgnoreAttribute)));
+            } while (
+                Attribute.IsDefined(method, typeof(LocalizationProviderIgnoreAttribute)) ||
+                Attribute.IsDefined(method.DeclaringType, typeof(LocalizationProviderIgnoreAttribute)) ||
+                Attribute.IsDefined(method.DeclaringType.Assembly, typeof(LocalizationProviderIgnoreAttribute))
+            );
 
             return GetLocationFromMethod(method);
         }
 
-        [LocalizationProviderIgnore]
         protected string GetLocationFromMethod(MethodBase callerMethod)
         {
             LocalizationProviderAttribute[] attribute;

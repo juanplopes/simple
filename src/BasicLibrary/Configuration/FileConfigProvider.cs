@@ -10,6 +10,7 @@ using BasicLibrary.Logging;
 
 namespace BasicLibrary.Configuration
 {
+    [LocalizationProviderIgnore]
     public class FileConfigProvider<T> : AutoLocalizationConfigProvider<T>
         where T : ConfigElement, new()
     {
@@ -38,14 +39,12 @@ namespace BasicLibrary.Configuration
             public static FileConfigProvider<T> Provider = new FileConfigProvider<T>();
         }
 
-        [LocalizationProviderIgnore]
         public T Get(string file, string location)
         {
             ConfigIdentifier id = new ConfigIdentifier(file, location);
             return FileConfigCacher<T>.GetValue(id);
         }
 
-        [LocalizationProviderIgnore]
         public override T Get(string location)
         {
             string file;
