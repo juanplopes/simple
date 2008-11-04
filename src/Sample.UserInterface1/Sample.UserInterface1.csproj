@@ -68,7 +68,6 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">

@@ -80,6 +80,10 @@
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
       <Name>SimpleLibraryCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimpleLibraryServer\SimpleLibraryServer.csproj">
+      <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
+      <Name>SimpleLibraryServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
