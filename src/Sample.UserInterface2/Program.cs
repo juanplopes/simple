@@ -11,17 +11,26 @@ using BasicLibrary.Configuration;
 using BasicLibrary.Logging;
 using System.IO;
 using System.Diagnostics;
+using SimpleLibrary.Threading;
 
 namespace Sample.UserInterface2
 {
-   class Program
+    public class TestClass : SimpleInstanceState<TestClass>
+    {
+        public string SomeStringValue { get; set; }
+        public int SomeIntValue { get; set; }
+    }
+
+    class Program
     {
         static void Main(string[] args)
         {
-            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
-            IList<Empresa> list = rules.ListByFilter(
-                Empresa.NomeProperty.Contains("a"), OrderBy.Asc(Empresa.IdEmpresaProperty).Desc(Empresa.NomeProperty));
-        }
+            using (TestClass obj = TestClass.Get(123))
+            {
+                obj.SomeIntValue = 42;
+                obj.SomeStringValue = "forty-two";
+            }
+       }
     }
 }
 
