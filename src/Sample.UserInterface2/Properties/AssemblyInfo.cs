@@ -14,7 +14,6 @@ using BasicLibrary.Configuration;
 [assembly: AssemblyCopyright("Copyright © Living Consultoria 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: LocalizationProvider(typeof(ThreadCultureLocalizationProvider))]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
