@@ -8,11 +8,14 @@ using Castle.DynamicProxy;
 using BasicLibrary.Common;
 using Castle.Core.Interceptor;
 using BasicLibrary.Logging;
+using log4net;
 
 namespace SimpleLibrary.Rules
 {
     public class DefaultRulesProvider<T> : IRulesProvider<T> where T : class
     {
+        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
         protected static Type ImplementerClass { get; set; }
         protected static Type ProxyClass { get; set; }
 
@@ -34,12 +37,12 @@ namespace SimpleLibrary.Rules
         {
             SimpleLibraryConfig config = SimpleLibraryConfig.Get();
 
-            MainLogger.Default.Debug("Searching for implementation for " + typeof(T).Name + " in " + asm.FullName);
+            Logger.Debug("Searching for implementation for " + typeof(T).Name + " in " + asm.FullName);
             foreach (Type t in asm.GetTypes())
             {
                 if (typeof(T).IsAssignableFrom(t) && t.GetConstructor(Type.EmptyTypes) != null)
                 {
-                    MainLogger.Default.Debug("Found " + t.FullName + ".");
+                    Logger.Debug("Found " + t.FullName + ".");
                     return t;
                 }
             }

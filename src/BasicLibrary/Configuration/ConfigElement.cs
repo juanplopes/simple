@@ -10,11 +10,14 @@ using BasicLibrary.Common;
 using BasicLibrary.Configuration.TypeHandlers;
 using System.Configuration;
 using BasicLibrary.Logging;
+using log4net;
 
 namespace BasicLibrary.Configuration
 {
     public class ConfigElement
     {
+        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
         protected LoadConfiguration ConfigInfo { get; set; }
         public IList<XmlElement> XmlElements { get; set; }
 
@@ -61,7 +64,7 @@ namespace BasicLibrary.Configuration
             if (ConfigInfo == null) throw new InvalidDataException("ConfigElement default constructor must inherit from base default constructor");
             Dictionary<string, bool> alreadyDefined = new Dictionary<string, bool>();
 
-            MainLogger.Default.DebugFormat("Reading {0} into {1}...", element.Name, this.GetType().Name);
+            Logger.DebugFormat("Reading {0} into {1}...", element.Name, this.GetType().Name);
 
             ConfigInfo.NotifyStartHandling();
             foreach (XmlAttribute attribute in element.Attributes)

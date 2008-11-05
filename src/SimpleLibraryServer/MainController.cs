@@ -7,14 +7,17 @@ using SimpleLibrary.ServiceModel;
 using SimpleLibrary.DataAccess;
 using BasicLibrary.ServiceModel;
 using BasicLibrary.Logging;
+using log4net;
 
 namespace SimpleLibrary
 {
     public class MainController
     {
+        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
         public static void Run(Assembly assembly)
         {
-            MainLogger.Default.Info("Initializing server framework...");
+            Logger.Info("Initializing server framework...");
             AssemblyLocatorHoster hoster = new AssemblyLocatorHoster();
             hoster.LocateServices(assembly);
             hoster.StartHosting();

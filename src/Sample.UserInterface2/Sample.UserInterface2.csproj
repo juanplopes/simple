@@ -60,9 +60,6 @@
     <None Include="BasicLibrary.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Test.cer">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="SimpleLibrary.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

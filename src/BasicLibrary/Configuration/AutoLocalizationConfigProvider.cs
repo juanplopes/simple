@@ -14,38 +14,12 @@ namespace BasicLibrary.Configuration
 
         public T Get()
         {
-            return Get(AutoGetLocation());
+            return Get(GetLocationFromAssembly(Assembly.GetEntryAssembly()));
         }
 
-        protected string AutoGetLocation()
+        protected string GetLocationFromAssembly(Assembly assembly)
         {
-            StackTrace stack = new StackTrace();
-            MethodBase method; int currentFrameCounter = 1;
-            do
-            {
-                method = stack.GetFrame(currentFrameCounter++).GetMethod();
-            } while (
-                Attribute.IsDefined(method, typeof(LocalizationProviderIgnoreAttribute)) ||
-                Attribute.IsDefined(method.DeclaringType, typeof(LocalizationProviderIgnoreAttribute)) ||
-                Attribute.IsDefined(method.DeclaringType.Assembly, typeof(LocalizationProviderIgnoreAttribute))
-            );
-
-            return GetLocationFromMethod(method);
-        }
-
-        protected string GetLocationFromMethod(MethodBase callerMethod)
-        {
-            LocalizationProviderAttribute[] attribute;
-
-            attribute = (LocalizationProviderAttribute[])callerMethod.GetCustomAttributes(typeof(LocalizationProviderAttribute), true);
-            if (attribute.Length > 0) return attribute[0].Provider.GetLocalization(typeof(T));
-
-            Type type = callerMethod.DeclaringType;
-            attribute = (LocalizationProviderAttribute[])type.GetCustomAttributes(typeof(LocalizationProviderAttribute), true);
-            if (attribute.Length > 0) return attribute[0].Provider.GetLocalization(typeof(T));
-
-            Assembly assembly = type.Assembly;
-            attribute = (LocalizationProviderAttribute[])assembly.GetCustomAttributes(typeof(LocalizationProviderAttribute), true);
+            LocalizationProviderAttribute[] attribute = (LocalizationProviderAttribute[])assembly.GetCustomAttributes(typeof(LocalizationProviderAttribute), true);
             if (attribute.Length > 0) return attribute[0].Provider.GetLocalization(typeof(T));
 
             return null;

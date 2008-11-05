@@ -9,8 +9,6 @@ namespace Sample.BusinessServer.Infra
 {
     public class DefaultSaveListener : IPostInsertEventListener, IPostUpdateEventListener
     {
-        ISession whatever = null;
-
         #region IPostInsertEventListener Members
 
         public void OnPostInsert(PostInsertEvent @event)

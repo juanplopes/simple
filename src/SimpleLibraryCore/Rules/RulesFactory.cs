@@ -8,11 +8,15 @@ using SimpleLibrary.ServiceModel;
 using SimpleLibrary.Config;
 using BasicLibrary.Logging;
 using BasicLibrary.Configuration;
+using log4net;
+using System.Reflection;
 
 namespace SimpleLibrary.Rules
 {
     public static class RulesFactory
     {
+        private static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
         private static Dictionary<Type, object> ProviderCache = new Dictionary<Type, object>();
         private static SimpleLibraryConfig Config = SimpleLibraryConfig.Get();
 
@@ -38,12 +42,12 @@ namespace SimpleLibrary.Rules
                         }
                         else
                         {
-                            MainLogger.Default.WarnFormat("Couldn't load provider type {0}", typeElement.Name);
+                            Logger.WarnFormat("Couldn't load provider type {0}", typeElement.Name);
                         }
                     }
                     catch (Exception)
                     {
-                        MainLogger.Default.WarnFormat("Couldn't load provider type {0}", typeElement.Name);
+                        Logger.WarnFormat("Couldn't load provider type {0}", typeElement.Name);
                     }
                 }
 

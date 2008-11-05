@@ -11,11 +11,14 @@ using System.ServiceModel.Channels;
 using SimpleLibrary.Rules;
 using BasicLibrary.Logging;
 using System.IO;
+using log4net;
 
 namespace SimpleLibrary.ServiceModel
 {
     public class AssemblyLocatorHoster : WCFHostingHelper
     {
+        //protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
         protected IList<Type> ServiceTypes { get; set; }
         protected SimpleLibraryConfig Config { get; set; }
 
@@ -80,12 +83,12 @@ namespace SimpleLibrary.ServiceModel
 
         public void LocateServices(Assembly assembly)
         {
-            MainLogger.Default.Debug("Locating service classes...");
+            Logger.Debug("Locating service classes...");
             foreach (Type t in assembly.GetTypes())
             {
                 if (Attribute.IsDefined(t, typeof(ServiceEnableAttribute)))
                 {
-                    MainLogger.Default.Debug("Found " + t.FullName + " by ServiceEnable attribute");
+                    Logger.Debug("Found " + t.FullName + " by ServiceEnable attribute");
                     ServiceTypes.Add(t);
                 }
                 else
@@ -94,7 +97,7 @@ namespace SimpleLibrary.ServiceModel
                     {
                         if (Attribute.IsDefined(ti, typeof(MainContractAttribute)))
                         {
-                            MainLogger.Default.Debug("Found " + t.FullName + " by implement an interface with MainContract attribute");
+                            Logger.Debug("Found " + t.FullName + " by implement an interface with MainContract attribute");
                             ServiceTypes.Add(t);
                             break;
                         }

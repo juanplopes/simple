@@ -7,15 +7,20 @@ using System.ServiceModel.Dispatcher;
 using BasicLibrary.Logging;
 using System.Runtime.Remoting.Contexts;
 using System.ServiceModel.Description;
+using log4net;
+using System.Reflection;
 
 namespace BasicLibrary.ServiceModel
 {
     public class WCFHostingHelper : ServiceBase, IHostingHelper
     {
+        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
         IList<ServiceHost> glstServiceHosts = new List<ServiceHost>();
         public void Register(Type ptypServiceType)
         {
-            MainLogger.Default.Debug("Starting " + ptypServiceType.Name + "... ");
+            
+            Logger.Debug("Starting " + ptypServiceType.Name + "... ");
             try
             {
                 ServiceHost lobjHost = GetServiceHost(ptypServiceType);
@@ -25,16 +30,16 @@ namespace BasicLibrary.ServiceModel
                 lobjHost.Open();
                 foreach (Uri lobjUri in lobjHost.BaseAddresses)
                 {
-                    MainLogger.Default.Info(ptypServiceType.Name + " based at: " + lobjUri);
+                    Logger.Info(ptypServiceType.Name + " based at: " + lobjUri);
                     foreach (ServiceEndpoint endpoint in lobjHost.Description.Endpoints)
                     {
-                        MainLogger.Default.Debug(">" + endpoint.Binding.GetType().Name + " at " + endpoint.Address.Uri);
+                        Logger.Debug(">" + endpoint.Binding.GetType().Name + " at " + endpoint.Address.Uri);
                     }
                 }
             }
             catch (Exception e)
             {
-                MainLogger.Default.Error("Failed.", e);
+                Logger.Error("Failed.", e);
             }
         }
 
@@ -45,14 +50,14 @@ namespace BasicLibrary.ServiceModel
 
         void lobjHost_UnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
         {
-            MainLogger.Default.Error("Received unknown message.");
+            Logger.Error("Received unknown message.");
         }
 
         public void Execute()
         {
             if (Environment.UserInteractive)
             {
-                MainLogger.Default.Info("Starting as Console Application...");
+                Logger.Info("Starting as Console Application...");
                 Console.WriteLine();
                 Console.WriteLine("Self-hosting application running.");
                 Console.WriteLine("Type 'exit' and press <ENTER> to terminate.");
@@ -60,7 +65,7 @@ namespace BasicLibrary.ServiceModel
             }
             else
             {
-                MainLogger.Default.Info("Starting as Windows Service...");
+                Logger.Info("Starting as Windows Service...");
                 Run(this);
             }
         }
@@ -70,14 +75,14 @@ namespace BasicLibrary.ServiceModel
             base.Dispose();
             foreach (ServiceHost lobjHost in glstServiceHosts)
             {
-                MainLogger.Default.Info("Terminating " + lobjHost.Description.Name + "... ");
+                Logger.Info("Terminating " + lobjHost.Description.Name + "... ");
                 try
                 {
                     lobjHost.Close();
                 }
                 catch (Exception e)
                 {
-                    MainLogger.Default.Error("Failed.", e);
+                    Logger.Error("Failed.", e);
                 }
             }
         }

@@ -87,8 +87,6 @@
     <Compile Include="Configuration\TypeHandlers\NullableTypeHandler.cs" />
     <Compile Include="LibraryConfig\BasicLibraryConfig.cs" />
     <Compile Include="LibraryConfig\Log4netConfig.cs" />
-    <Compile Include="LibraryConfig\SqlLockingElement.cs" />
-    <Compile Include="Logging\IgnoreLoggerAttribute.cs" />
     <Compile Include="Logging\MainLogger.cs" />
     <Compile Include="Common\BusinessDays.cs" />
     <Compile Include="Common\EnumTypeAttribute.cs" />

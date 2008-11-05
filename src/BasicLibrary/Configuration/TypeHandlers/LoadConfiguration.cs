@@ -7,11 +7,14 @@ using System.Configuration;
 using System.Xml;
 using System.Collections;
 using BasicLibrary.Logging;
+using log4net;
 
 namespace BasicLibrary.Configuration.TypeHandlers
 {
     public class LoadConfiguration
     {
+        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
         protected Dictionary<PropertyInfo, ConfigTypeHandler> Handlers { get; set; }
         public Dictionary<string, bool> ParentList { get; set; }
         public Dictionary<PropertyInfo, ConfigElementAttribute> Attributes { get; set; }
@@ -71,10 +74,10 @@ namespace BasicLibrary.Configuration.TypeHandlers
         public void Lock()
         {
             CheckRequiredProperties();
-            MainLogger.Default.DebugFormat("{0}: All required properties are loaded. Locking...", Element.GetType().Name);
+            Logger.DebugFormat("{0}: All required properties are loaded. Locking...", Element.GetType().Name);
             foreach (var item in Attributes)
             {
-                MainLogger.Default.DebugFormat("  element {0} locked to {1} with type {2}", item.Value.Name, item.Key.Name, item.Key.PropertyType.Name);
+                Logger.DebugFormat("  element {0} locked to {1} with type {2}", item.Value.Name, item.Key.Name, item.Key.PropertyType.Name);
             }
             IsLocked = true;
         }
@@ -95,7 +98,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
             HandlerList.ForEach(x => x.Handle(element));
             if (ParentList.ContainsKey(element.Name))
             {
-                MainLogger.Default.DebugFormat("Going deep the to the parent list {0}...", element.Name);
+                Logger.DebugFormat("Going deep the to the parent list {0}...", element.Name);
                 Element.LoadFromElement(element);
             }
         }

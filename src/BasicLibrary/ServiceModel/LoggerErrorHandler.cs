@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel.Dispatcher;
-using BasicLibrary.Logging;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
+using log4net;
+using System.Reflection;
+using BasicLibrary.Logging;
 
 namespace BasicLibrary.ServiceModel
 {
     public class LoggerErrorHandler : IErrorHandler
     {
+        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
         #region IErrorHandler Members
 
         public bool HandleError(Exception error)
         {
-            MainLogger.Default.Error(error.Message, error);
+            Logger.Error(error.Message, error);
             return false;
         }
 

@@ -139,7 +139,7 @@ namespace BasicLibrary.Configuration
             string typeName = typeof(T).Name;
             if (this.Identifier.Localization != null)
             {
-                typeName = "[" + this.Identifier.Localization + "]";
+                typeName += "[" + this.Identifier.Localization + "]";
             }
             return typeName;
         }

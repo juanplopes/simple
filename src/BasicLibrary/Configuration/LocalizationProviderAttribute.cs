@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BasicLibrary.Configuration
 {
-    [global::System.AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
+    [global::System.AttributeUsage(AttributeTargets.Assembly, Inherited = true, AllowMultiple = false)]
     public sealed class LocalizationProviderAttribute : Attribute 
     {
         public ILocalizationProvider Provider { get; private set; }

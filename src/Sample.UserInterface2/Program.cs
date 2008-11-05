@@ -1,36 +1,39 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Sample.BusinessInterface;
-using Sample.BusinessInterface.Domain;
-using SimpleLibrary.Config;
-using SimpleLibrary.Filters;
-using SimpleLibrary.Rules;
+﻿using SimpleLibrary.Threading;
 using BasicLibrary.Configuration;
-using BasicLibrary.Logging;
-using System.IO;
+using BasicLibrary.LibraryConfig;
+using SimpleLibrary.Config;
+using System;
 using System.Diagnostics;
-using SimpleLibrary.Threading;
+using System.Reflection;
 
 namespace Sample.UserInterface2
 {
-    public class TestClass : SimpleInstanceState<TestClass>
+    [DefaultFile("ConfigTest.config", ThrowException = false)]
+    public class TestClass : ConfigElement
     {
+        [ConfigElement("someStringValue")]
         public string SomeStringValue { get; set; }
+        [ConfigElement("someIntValue")]
         public int SomeIntValue { get; set; }
+
+        public override string DefaultXmlString
+        {
+            get { return "<a></a>"; }
+        }
     }
 
     class Program
     {
         static void Main(string[] args)
         {
-            using (TestClass obj = TestClass.Get(123))
+            SimpleLibraryConfig.Get();
+            long start = DateTime.Now.Ticks;
+            for (int i = 0; i < 100; i++)
             {
-                obj.SomeIntValue = 42;
-                obj.SomeStringValue = "forty-two";
+                SimpleLibraryConfig config = SimpleLibraryConfig.Get();
             }
-       }
+            TimeSpan end = new TimeSpan(DateTime.Now.Ticks - start);
+        }
     }
 }
 
