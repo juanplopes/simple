@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using Sample.BusinessInterface;
 using SimpleLibrary.ServiceModel;
@@ -9,7 +9,6 @@ using SimpleLibrary.DataAccess;
 using Sample.BusinessInterface.Domain;
 using Sample.BusinessServer.DataAccess;
 using SimpleLibrary.Rules;
-using SimpleLibrary.EntityPruner;
 
 namespace Sample.BusinessServer.Rules
 {
@@ -27,11 +26,11 @@ namespace Sample.BusinessServer.Rules
             return dao.GetAllWithSQLQuery();
         }
 
-        public virtual IList<Empresa> GetAllWithLINQ()
-        {
-            EmpresaDao dao = new EmpresaDao();
-            return dao.GetAllWithLINQ();
-        }
+        //public virtual IList<Empresa> GetAllWithLINQ()
+        //{
+        //    EmpresaDao dao = new EmpresaDao();
+        //    return dao.GetAllWithLINQ();
+        //}
 
         public virtual IList<Empresa> GetAllWithCriteria()
         {

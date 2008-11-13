@@ -1,10 +1,9 @@
-﻿using SimpleLibrary.Threading;
-using BasicLibrary.Configuration;
-using BasicLibrary.LibraryConfig;
-using SimpleLibrary.Config;
-using System;
-using System.Diagnostics;
-using System.Reflection;
+﻿using Sample.BusinessInterface;
+using SimpleLibrary.Rules;
+using SimpleLibrary.Filters;
+using System.Collections.Generic;
+using Sample.BusinessInterface.Domain;
+using System.Threading;
 
 namespace Sample.UserInterface2
 {
@@ -12,13 +11,9 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            long start = DateTime.Now.Ticks;
-            for (int i = 0; i < 3000; i++)
-            {
-                Console.WriteLine(i);
-                SimpleLibraryConfig config = SimpleLibraryConfig.Get();
-            }
-            TimeSpan end = new TimeSpan(DateTime.Now.Ticks - start);
+            Thread.Sleep(4000);
+            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
+            IList<Empresa> list = rules.ListByFilter(BooleanExpression.True, OrderBy.None());
         }
     }
 }

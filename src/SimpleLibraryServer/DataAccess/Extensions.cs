@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using NHibernate;
 using NHibernate.Criterion;
@@ -9,7 +9,7 @@ namespace SimpleLibrary.DataAccess
 {
     public static class Extensions
     {
-        public static Page<T> Paginate<T>(this ICriteria criteria, int skip, int take)
+        public static Page<T> Paginate<T>(ICriteria criteria, int skip, int take)
         {
             ICriteria countCriteria = CriteriaTransformer.Clone(criteria)
                     .SetProjection(Projections.RowCount());
@@ -23,9 +23,9 @@ namespace SimpleLibrary.DataAccess
 
             return pagedResult;
         }
-
+#if false
         public static IQueryable<T> PaginateQueryable<T>(
-            this IQueryable<T> query, int skip, int take)
+            IQueryable<T> query, int skip, int take)
         {
             return query.Skip(skip).Take(take);
         }
@@ -36,6 +36,7 @@ namespace SimpleLibrary.DataAccess
             int count = query.Count();
             return new Page<T>(query.PaginateQueryable(skip, take).ToList(), count);
         }
+#endif
 
 
     }

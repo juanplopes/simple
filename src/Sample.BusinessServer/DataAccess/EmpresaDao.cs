@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using Sample.BusinessInterface.Domain;
 using SimpleLibrary.DataAccess;
@@ -36,16 +36,16 @@ namespace Sample.BusinessServer.DataAccess
             return query.List<Empresa>();
         }
 
-        public IList<Empresa> GetAllWithLINQ()
-        {
-            var query = from e in GetQueryable<Empresa>()
-                        where (e.Nome == "Whatever")
-                        select e;
+        //public IList<Empresa> GetAllWithLINQ()
+        //{
+        //    var query = from e in GetQueryable<Empresa>()
+        //                where (e.Nome == "Whatever")
+        //                select e;
 
 
-            query.Paginate(5, 10);
-            return null;
-        }
+        //    query.Paginate(5, 10);
+        //    return null;
+        //}
 
         public IList<Empresa> GetAllWithCriteria()
         {

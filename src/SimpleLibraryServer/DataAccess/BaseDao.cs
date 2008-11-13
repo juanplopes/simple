@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using NHibernate;
-using NHibernate.Linq;
 using NHibernate.Impl;
 using NHibernate.Engine;
 using System.Collections;
@@ -82,10 +81,10 @@ namespace SimpleLibrary.DataAccess
             get { return Nested.Config.DataConfig.Options.MergeBeforeUpdate; }
         }
 
-        public IOrderedQueryable<Q> GetQueryable<Q>()
-        {
-            return Session.Linq<Q>();
-        }
+        //public IOrderedQueryable<Q> GetQueryable<Q>()
+        //{
+        //    return Session.Linq<Q>();
+        //}
 
         public T Load(object id)
         {

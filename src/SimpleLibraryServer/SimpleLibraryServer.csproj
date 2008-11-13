@@ -10,8 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SimpleLibrary</RootNamespace>
     <AssemblyName>SimpleLibraryServer</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,9 +58,6 @@
       <HintPath>..\..\lib\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -84,12 +83,9 @@
     <Compile Include="DataAccess\TupleToConstrctorTransformer.cs" />
     <Compile Include="DataAccess\BaseDao.cs" />
     <Compile Include="DataAccess\CriteriaHelper.cs" />
-    <Compile Include="DataAccess\EntityHelper.cs" />
     <Compile Include="DataAccess\Extensions.cs" />
     <Compile Include="DataAccess\SessionManager.cs" />
     <Compile Include="DataAccess\TupleToPropertiesTransformer.cs" />
-    <Compile Include="EntityPruner\Pruner.cs" />
-    <Compile Include="EntityPruner\PruneType.cs" />
     <Compile Include="MainController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\BaseRules.cs" />
@@ -124,6 +120,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="NHLockEngine.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

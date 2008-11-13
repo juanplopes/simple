@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using System.ServiceModel;
 using Sample.BusinessInterface.Domain;
@@ -19,9 +19,6 @@ namespace Sample.BusinessInterface
 
         [OperationContract]
         IList<Empresa> GetAllWithSQLQuery();
-
-        [OperationContract]
-        IList<Empresa> GetAllWithLINQ();
 
         [OperationContract]
         IList<Empresa> GetAllWithCriteria();

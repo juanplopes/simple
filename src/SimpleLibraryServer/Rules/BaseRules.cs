@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using SimpleLibrary.DataAccess;
 using SimpleLibrary.Filters;
@@ -45,7 +45,7 @@ namespace SimpleLibrary.Rules
         public virtual Page<T> PageByFilter(Filter filter, OrderByCollection order, int skip, int take)
         {
             ICriteria criteria = CreateCriteriaByFilter(filter, order);
-            return criteria.Paginate<T>(skip, take);
+            return Extensions.Paginate<T>(criteria, skip, take);
         }
 
         protected virtual ICriteria CreateCriteriaByFilter(Filter filter, OrderByCollection order)

@@ -10,8 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SimpleLibrary</RootNamespace>
     <AssemblyName>SimpleLibraryCore</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,9 +38,6 @@
       <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -95,7 +94,6 @@
     <Compile Include="Filters\Expression.cs" />
     <Compile Include="Filters\Filter.cs" />
     <Compile Include="Filters\PropertyExpression.cs" />
-    <Compile Include="Filters\PropertyFilter.cs" />
     <Compile Include="Filters\PropertyName.cs" />
     <Compile Include="Filters\SimpleExpression.cs" />
     <Compile Include="Filters\StringExtensor.cs" />
@@ -133,6 +131,9 @@
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
       <Name>BasicLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
