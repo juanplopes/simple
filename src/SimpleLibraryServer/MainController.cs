@@ -8,6 +8,7 @@ using SimpleLibrary.DataAccess;
 using BasicLibrary.ServiceModel;
 using BasicLibrary.Logging;
 using log4net;
+using System.Diagnostics;
 
 namespace SimpleLibrary
 {

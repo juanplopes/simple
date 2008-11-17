@@ -13,7 +13,9 @@ namespace Sample.UserInterface2
         {
             Thread.Sleep(4000);
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
-            IList<Empresa> list = rules.ListByFilter(BooleanExpression.True, OrderBy.None());
+            Empresa e = new Empresa();
+            e.Nome = "okok";
+            e = rules.Save(e);
         }
     }
 }
