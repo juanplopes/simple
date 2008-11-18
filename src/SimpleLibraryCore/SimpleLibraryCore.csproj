@@ -90,7 +90,6 @@
     <Compile Include="Filters\PropertyExpression.cs" />
     <Compile Include="Filters\PropertyName.cs" />
     <Compile Include="Filters\SimpleExpression.cs" />
-    <Compile Include="Filters\StringExtensor.cs" />
     <Compile Include="Filters\UnaryOperator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\IBaseRules.cs" />

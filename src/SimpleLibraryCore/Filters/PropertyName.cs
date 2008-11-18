@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 
 using System.Text;
+using System.Runtime.Serialization;
+using System.Diagnostics;
 
 namespace SimpleLibrary.Filters
 {
+    [DataContract]
     public sealed class PropertyName
     {
+        public const string DotMark = ".";
+
+        private bool dotted = false;
+
+        [DataMember]
         public string Name { get; set; }
+
         public PropertyName(string name)
         {
             this.Name = name;
@@ -31,9 +40,24 @@ namespace SimpleLibrary.Filters
             }
         }
 
+        public bool Dotted
+        {
+            get
+            {
+                return dotted || (dotted = Name.Contains(DotMark));
+            }
+        }
+
+        public void EnsureNotDotted()
+        {
+            Debug.Assert(!Dotted, "PropertyName must be non-dotted");
+        }
+
         public PropertyName Dot(PropertyName property)
         {
-            return new PropertyName(this.Name + "." + property.Name);
+            PropertyName prop = new PropertyName(this.Name + DotMark + property.Name);
+            prop.dotted = true;
+            return prop;
         }
 
         #region Operators

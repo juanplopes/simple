@@ -12,21 +12,22 @@ namespace SimpleLibrary.Filters
         [DataMember]
         public bool IsAsc { get; set; }
         [DataMember]
-        public string PropertyName { get; set; }
+        public PropertyName PropertyName { get; set; }
 
-        public OrderBy(string propertyName, bool asc)
+        public OrderBy(PropertyName propertyName, bool asc)
         {
+            propertyName.EnsureNotDotted();
             this.PropertyName = propertyName;
             this.IsAsc = asc;
         }
 
-        public static OrderByCollection Asc(string propertyName)
+        public static OrderByCollection Asc(PropertyName propertyName)
         {
             OrderByCollection col = new OrderByCollection();
             return col.Asc(propertyName);
         }
 
-        public static OrderByCollection Desc(string propertyName)
+        public static OrderByCollection Desc(PropertyName propertyName)
         {
             OrderByCollection col = new OrderByCollection();
             return col.Desc(propertyName);

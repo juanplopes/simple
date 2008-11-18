@@ -21,6 +21,9 @@ namespace SimpleLibrary.Rules
         T LoadByFilter(Filter filter);
 
         [OperationContract]
+        IList<T> ListAll(OrderByCollection order);
+
+        [OperationContract]
         IList<T> ListByExample(T example);
 
         [OperationContract]
@@ -30,13 +33,16 @@ namespace SimpleLibrary.Rules
         Page<T> PageByFilter(Filter filter, OrderByCollection order, int skip, int take);
 
         [OperationContract]
-        T SaveOrUpdate(T entity);
+        void SaveOrUpdate(T entity);
 
         [OperationContract]
-        T Save(T entity);
+        void Save(T entity);
 
         [OperationContract]
-        T Update(T entity);
+        void Update(T entity);
+
+        [OperationContract]
+        T Persist(T entity);
 
         [OperationContract]        
         void Delete(T entity);

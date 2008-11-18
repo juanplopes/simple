@@ -6,6 +6,9 @@ using log4net;
 using System.Reflection;
 using BasicLibrary.Logging;
 using log4net.Core;
+using System.Diagnostics;
+
+
 
 namespace BasicLibrary.Cache
 {
@@ -23,14 +26,18 @@ namespace BasicLibrary.Cache
         public abstract bool Validate();
         public abstract O GetValue();
 
-        public void Log(string message)
+        protected void Log(string message)
         {
+            Debug.Assert(message != null);
+
             if (Logger != null)
                 Logger.DebugFormat("{1}: " + message, this.GetType().Name, GetFormattedId());
         }
 
-        public virtual string GetFormattedId()
+        protected virtual string GetFormattedId()
         {
+            Debug.Assert(Identifier != null);
+
             return Identifier.ToString();
         }
     }

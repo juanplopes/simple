@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Runtime.Serialization;
+using System.Diagnostics;
 
 namespace SimpleLibrary.Filters
 {
@@ -10,14 +11,16 @@ namespace SimpleLibrary.Filters
     public class BetweenExpression : Expression
     {
         [DataMember]
-        public string PropertyName { get; set; }
+        public PropertyName PropertyName { get; set; }
         [DataMember]
         public object HiValue { get; set; }
         [DataMember]
         public object LoValue { get; set; }
 
-        public BetweenExpression(string propertyName, object lo, object hi)
+        public BetweenExpression(PropertyName propertyName, object lo, object hi)
         {
+            propertyName.EnsureNotDotted();
+
             this.PropertyName = propertyName;
             this.HiValue = hi;
             this.LoValue = lo;

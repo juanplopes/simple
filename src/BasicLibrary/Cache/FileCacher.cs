@@ -7,6 +7,7 @@ using BasicLibrary.Logging;
 using System.Timers;
 using System.Collections.Specialized;
 using BasicLibrary.LibraryConfig;
+using System.Diagnostics;
 
 namespace BasicLibrary.Cache
 {
@@ -34,6 +35,8 @@ namespace BasicLibrary.Cache
 
         public static FileCacher GetCacher(string file)
         {
+            Debug.Assert(file != null);
+
             lock (CachedValues)
             {
                 string id = GetBasedFile(file);
@@ -154,7 +157,7 @@ namespace BasicLibrary.Cache
             return Path.GetFullPath(file);
         }
 
-        public override string GetFormattedId()
+        protected override string GetFormattedId()
         {
             return Path.GetFileName(Identifier);
         }

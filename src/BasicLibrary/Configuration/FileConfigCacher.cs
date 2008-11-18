@@ -134,7 +134,7 @@ namespace BasicLibrary.Configuration
             return IsValid;
         }
 
-        public override string GetFormattedId()
+        protected override string GetFormattedId()
         {
             string typeName = typeof(T).Name;
             if (this.Identifier.Localization != null)

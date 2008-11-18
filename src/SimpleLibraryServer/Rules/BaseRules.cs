@@ -60,22 +60,30 @@ namespace SimpleLibrary.Rules
             return criteria;
         }
 
-        public virtual T SaveOrUpdate(T entity)
+        public virtual void SaveOrUpdate(T entity)
         {
             GetDao().SaveOrUpdate(entity);
-            return entity;
         }
 
-        public virtual T Save(T entity)
+        public virtual void Save(T entity)
         {
             GetDao().Save(entity);
+        }
+
+        public virtual void Update(T entity)
+        {
+            GetDao().Update(entity);
+        }
+
+        public virtual T Persist(T entity)
+        {
+            GetDao().Persist(entity);
             return entity;
         }
 
-        public virtual T Update(T entity)
+        public IList<T> ListAll(OrderByCollection order)
         {
-            GetDao().Update(entity);
-            return entity;
+            return this.ListByFilter(BooleanExpression.True, order);
         }
 
         public virtual void Delete(T entity)
