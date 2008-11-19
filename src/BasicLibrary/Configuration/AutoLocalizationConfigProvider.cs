@@ -19,6 +19,8 @@ namespace BasicLibrary.Configuration
 
         protected string GetLocationFromAssembly(Assembly assembly)
         {
+            if (assembly == null) return null;
+
             LocalizationProviderAttribute[] attribute = (LocalizationProviderAttribute[])assembly.GetCustomAttributes(typeof(LocalizationProviderAttribute), true);
             if (attribute.Length > 0) return attribute[0].Provider.GetLocalization(typeof(T));
 
