@@ -8,20 +8,15 @@ using System.Diagnostics;
 namespace SimpleLibrary.Filters
 {
     [DataContract]
-    public class BetweenExpression : Expression
+    public class BetweenExpression : PropertyExpression
     {
-        [DataMember]
-        public PropertyName PropertyName { get; set; }
         [DataMember]
         public object HiValue { get; set; }
         [DataMember]
         public object LoValue { get; set; }
-
-        public BetweenExpression(PropertyName propertyName, object lo, object hi)
+         
+        public BetweenExpression(PropertyName propertyName, object lo, object hi) : base(propertyName)
         {
-            propertyName.EnsureNotDotted();
-
-            this.PropertyName = propertyName;
             this.HiValue = hi;
             this.LoValue = lo;
         }

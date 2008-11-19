@@ -121,6 +121,14 @@ namespace SimpleLibrary.Filters
         {
             return Expression.Between(this, lo, hi);
         }
+        public IsNullExpression IsNull()
+        {
+            return Expression.IsNull(this);
+        }
+        public IsNotNullExpression IsNotNull()
+        {
+            return Expression.IsNotNull(this);
+        }
 
         #endregion
     }

@@ -80,6 +80,8 @@
     <Compile Include="Filters\BinaryOperator.cs" />
     <Compile Include="Filters\BooleanExpression.cs" />
     <Compile Include="Filters\ExampleFilter.cs" />
+    <Compile Include="Filters\IsNotNullExpression.cs" />
+    <Compile Include="Filters\IsNullExpression.cs" />
     <Compile Include="Filters\LikeExpression.cs" />
     <Compile Include="Filters\NotExpression.cs" />
     <Compile Include="Filters\OrderBy.cs" />

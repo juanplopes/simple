@@ -65,6 +65,12 @@ namespace SimpleLibrary.DataAccess
                 Filters.BooleanExpression boolean = filter as Filters.BooleanExpression;
                 return Expression.Eq(new ConstantProjection(1), boolean.Value ? 1 : 0);
             }
+            else if (filter is Filters.PropertyExpression)
+            {
+                Filters.PropertyExpression prop = filter as Filters.PropertyExpression;
+                if (prop is Filters.IsNullExpression) return Expression.IsNull(prop.PropertyName);
+                if (prop is Filters.IsNotNullExpression) return Expression.IsNotNull(prop.PropertyName);
+            }
             throw new InvalidOperationException("Invalid filter type");
         }
     }
