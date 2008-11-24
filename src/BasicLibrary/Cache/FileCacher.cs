@@ -134,11 +134,14 @@ namespace BasicLibrary.Cache
 
         protected void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            if (IsValid)
+            lock (Value)
             {
-                Log("Cache expired: file has changed");
-                if (CacheExpiredEvent != null) CacheExpiredEvent.Invoke(this.Identifier);
-                IsValid = false;
+                if (IsValid)
+                {
+                    Log("Cache expired: file has changed");
+                    IsValid = false;
+                    if (CacheExpiredEvent != null) CacheExpiredEvent.Invoke(this.Identifier);
+                }
             }
         }
 

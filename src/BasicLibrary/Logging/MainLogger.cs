@@ -19,10 +19,24 @@ namespace BasicLibrary.Logging
 {
     public class MainLogger
     {
+        protected static BasicLibraryConfig config;
+
         static MainLogger()
         {
-            BasicLibraryConfig config = BasicLibraryConfig.Get();
+            LoadConfig();
+        }
+
+        static void LoadConfig()
+        {
+            config = BasicLibraryConfig.Get();
+            (config as IConfigElement).OnExpire += new EventHandler(MainLogger_OnExpire);
+            LogManager.ResetConfiguration();
             XmlConfigurator.Configure(config.Log4net.GetStream());
+        }
+
+        static void MainLogger_OnExpire(object sender, EventArgs e)
+        {
+            LoadConfig();
         }
 
         public static ILog Get(Type type)

@@ -33,12 +33,9 @@ namespace Sample.UserInterface2
         
         static void Main(string[] args)
         {
-            long start = DateTime.Now.Ticks;
-            for (int i = 0; i < 1000; i++)
-            {
-                SimpleLibraryConfig config = SimpleLibraryConfig.Get();
-            }
-            TimeSpan end = new TimeSpan(DateTime.Now.Ticks - start);
+            SimpleLibraryConfig.Get();
+            Console.ReadLine();
+            SimpleLibraryConfig.Get();
         }
     }
 }
