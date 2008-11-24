@@ -11,7 +11,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
     {
         protected Dictionary<string, PropertyInfo> Properties { get; set; }
         protected LoadConfiguration ConfigInfo { get; set; }
-        protected ConfigElement Element { get { return ConfigInfo.Element; } }
+        protected IConfigElement Element { get { return ConfigInfo.Element; } }
         protected ChildTypeResolver Resolver { get; set; }
 
         public ConfigTypeHandler(LoadConfiguration config)

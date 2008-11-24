@@ -8,7 +8,7 @@ namespace BasicLibrary.Configuration
 {
     [LocalizationProviderIgnore]
     public abstract class AutoLocalizationConfigProvider<T> : IConfigProvider<T>
-        where T : ConfigElement, new()
+        where T : IConfigElement, new()
     {
         public abstract T Get(string location);
 

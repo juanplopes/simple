@@ -11,7 +11,7 @@ using System.Collections.Specialized;
 
 namespace BasicLibrary.Configuration
 {
-    public class ConfigRoot<T> : ConfigElement where T : ConfigElement, new()
+    public class ConfigRoot<T> : ConfigElement where T : IConfigElement, new()
     {
         [LocalizationProviderIgnore]
         public static T Get()

@@ -28,8 +28,6 @@ namespace BasicLibrary.Cache
 
         protected void Log(string message)
         {
-            Debug.Assert(message != null);
-
             if (Logger != null)
                 Logger.DebugFormat("{1}: " + message, this.GetType().Name, GetFormattedId());
         }

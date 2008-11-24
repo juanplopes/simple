@@ -14,7 +14,7 @@ namespace SimpleLibrary.ServiceModel
         public void Configure(System.ServiceModel.ServiceHost service, SimpleLibrary.Config.ConfiguratorElement config)
         {
             DebugServiceConfiguratorElement configT = new DebugServiceConfiguratorElement();
-            configT.LoadFromElement(config);
+            (configT as IConfigElement).LoadFromElement(config);
 
             ServiceDebugBehavior behavior = new ServiceDebugBehavior();
             behavior.IncludeExceptionDetailInFaults = configT.Enabled;;

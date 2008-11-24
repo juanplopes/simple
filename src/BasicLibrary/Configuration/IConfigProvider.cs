@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BasicLibrary.Configuration
 {
-    public interface IConfigProvider<T> where T : ConfigElement, new()
+    public interface IConfigProvider<T> where T : IConfigElement, new()
     {
         T Get();
         T Get(string location);

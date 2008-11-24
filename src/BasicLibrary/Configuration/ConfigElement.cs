@@ -14,9 +14,15 @@ using log4net;
 
 namespace BasicLibrary.Configuration
 {
-    public class ConfigElement
+    public class ConfigElement : IConfigElement
     {
         protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
+        public event EventHandler OnExpire;
+        void IConfigElement.InvokeExpire()
+        {
+            if (OnExpire != null) OnExpire(this, new EventArgs());
+        }
 
         protected LoadConfiguration ConfigInfo { get; set; }
         public IList<XmlElement> XmlElements { get; set; }
@@ -36,30 +42,30 @@ namespace BasicLibrary.Configuration
             ConfigInfo.EnsureThatAllAreHandled();
         }
 
-        public void Lock()
+        void IConfigElement.Lock()
         {
             ConfigInfo.Lock();
             foreach (PropertyInfo property in ConfigInfo.Attributes.Keys)
             {
                 object value = property.GetValue(this, null);
-                if (value != null && value is ConfigElement)
+                if (value != null && value is IConfigElement)
                 {
-                    (value as ConfigElement).Lock();
+                    (value as IConfigElement).Lock();
                 }
             }
 
         }
 
-        public void LoadFromElement(ConfigElement element)
+        void IConfigElement.LoadFromElement(IConfigElement element)
         {
             foreach (XmlElement xmlElement in element.XmlElements)
             {
-                this.LoadFromElement(xmlElement);
+                (this as IConfigElement).LoadFromElement(xmlElement);
             }
-            Lock();
+            (this as IConfigElement).Lock();
         }
 
-        public void LoadFromElement(XmlElement element)
+        void IConfigElement.LoadFromElement(XmlElement element)
         {
             if (ConfigInfo == null) throw new InvalidDataException("ConfigElement default constructor must inherit from base default constructor");
             Dictionary<string, bool> alreadyDefined = new Dictionary<string, bool>();

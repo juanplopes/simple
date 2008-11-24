@@ -11,9 +11,9 @@ namespace BasicLibrary.Configuration.TypeHandlers
     {
         public object GetFromXmlElement(XmlElement element, Type type, object currentValue)
         {
-            if (type.IsSubclassOf(typeof(ConfigElement)))
+            if (typeof(IConfigElement).IsAssignableFrom(type))
             {
-                ConfigElement configElement = (currentValue != null) ? (ConfigElement)currentValue : Activator.CreateInstance(type) as ConfigElement;
+                IConfigElement configElement = (currentValue != null) ? (IConfigElement)currentValue : Activator.CreateInstance(type) as IConfigElement;
                 configElement.LoadFromElement(element);
                 return configElement;
             }
@@ -43,7 +43,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
             }
             else
             {
-                throw new InvalidConfigurationException("invalid property type");
+                throw new InvalidConfigurationException("invalid property type: " + type.ToString());
             }
             
         }

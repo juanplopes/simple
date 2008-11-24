@@ -10,7 +10,7 @@ using System.IO;
 namespace BasicLibrary.Configuration
 {
     public class FileConfigCacher<T> : BaseCacher<ConfigIdentifier, T>
-                where T : ConfigElement, new()
+                where T : IConfigElement, new()
     {
         public const string LocalizationTag = "localized";
         public const string CountryAtribute = "for";
@@ -40,6 +40,7 @@ namespace BasicLibrary.Configuration
                 Log("Cache expired: file expired");
                 IsValid = false;
                 if (CacheExpiredEvent != null) CacheExpiredEvent.Invoke(Identifier);
+                if (Value != null) Value.InvokeExpire();
             }
         }
 
@@ -80,7 +81,7 @@ namespace BasicLibrary.Configuration
                     }
 
                     Log("Loaded main document.");
-                    Value.LoadFromElement(xmlElement);
+                    (Value as IConfigElement).LoadFromElement(xmlElement);
 
                     foreach (XmlElement element in xmlElement.GetElementsByTagName(LocalizationTag))
                     {
@@ -89,12 +90,12 @@ namespace BasicLibrary.Configuration
                             Identifier.Localization, StringComparison.InvariantCultureIgnoreCase))
                         {
                             Log(string.Format("Loading localized value for {0}...", element.Attributes[CountryAtribute].Value));
-                            Value.LoadFromElement(element);
+                            (Value as IConfigElement).LoadFromElement(element);
                         }
                     }
 
                     Log("Locking element.");
-                    Value.Lock();
+                    (Value as IConfigElement).Lock();
                 }
             }
             Log(sReturningCached);

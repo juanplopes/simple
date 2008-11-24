@@ -12,7 +12,7 @@ namespace BasicLibrary.Configuration
 {
     [LocalizationProviderIgnore]
     public class FileConfigProvider<T> : AutoLocalizationConfigProvider<T>
-        where T : ConfigElement, new()
+        where T : IConfigElement, new()
     {
 
         protected SafeDictionary<string, string> ConfigFiles

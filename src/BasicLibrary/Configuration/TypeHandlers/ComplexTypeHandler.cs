@@ -11,7 +11,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
         
         protected override bool IsMatch(Type type)
         {
-            return typeof(ConfigElement).IsAssignableFrom(type);
+            return typeof(IConfigElement).IsAssignableFrom(type);
         }
     }
 }

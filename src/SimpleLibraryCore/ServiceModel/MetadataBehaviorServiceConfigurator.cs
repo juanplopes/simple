@@ -12,7 +12,7 @@ namespace SimpleLibrary.ServiceModel
         public void Configure(System.ServiceModel.ServiceHost service, SimpleLibrary.Config.ConfiguratorElement config)
         {
             MetadataBehaviorServiceConfiguratorConfig configT = new MetadataBehaviorServiceConfiguratorConfig();
-            configT.LoadFromElement(config);
+            (configT as IConfigElement).LoadFromElement(config);
             ServiceMetadataBehavior behavior = new ServiceMetadataBehavior();
             behavior.HttpGetEnabled = configT.HttpGetEnabled;
 

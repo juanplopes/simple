@@ -67,6 +67,7 @@
     <Compile Include="Configuration\ConfigIdentifier.cs" />
     <Compile Include="Configuration\ConfigurationNotDefinedException.cs" />
     <Compile Include="Configuration\FileConfigProvider.cs" />
+    <Compile Include="Configuration\IConfigElement.cs" />
     <Compile Include="Configuration\IConfigProvider.cs" />
     <Compile Include="Configuration\InvalidConfigurationException.cs" />
     <Compile Include="Configuration\LocalizationProviderIgnoreAttribute.cs" />

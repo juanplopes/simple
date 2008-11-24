@@ -11,6 +11,7 @@ using log4net.Appender;
 using System.Diagnostics;
 using System;
 using System.Globalization;
+using SimpleLibrary.Config;
 
 namespace Sample.UserInterface2
 {
@@ -32,12 +33,12 @@ namespace Sample.UserInterface2
         
         static void Main(string[] args)
         {
-            Thread.Sleep(4000);
-            var rules1 = RulesFactory.Create<IEmpresaRules>();
-            var rules2 = RulesFactory.Create<IEmpresaFuncionarioRules>();
-
-            var list2 = rules2.ListByFilter(EmpresaFuncionario.EmpresaProperty[Empresa.NomeProperty].Eq("OutraEmpresa"), OrderBy.None());
-                        
+            long start = DateTime.Now.Ticks;
+            for (int i = 0; i < 1000; i++)
+            {
+                SimpleLibraryConfig config = SimpleLibraryConfig.Get();
+            }
+            TimeSpan end = new TimeSpan(DateTime.Now.Ticks - start);
         }
     }
 }

@@ -23,9 +23,9 @@ namespace BasicLibrary.Configuration.TypeHandlers
         public Dictionary<PropertyInfo, bool> IsLoaded { get; set; }
         public bool IsLocked { get; set; }
 
-        public ConfigElement Element { get; set; }
+        public IConfigElement Element { get; set; }
 
-        public LoadConfiguration(ConfigElement element)
+        public LoadConfiguration(IConfigElement element)
         {
             Element = element;
             Handlers = new Dictionary<PropertyInfo, ConfigTypeHandler>();
@@ -99,7 +99,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
             if (ParentList.ContainsKey(element.Name))
             {
                 Logger.DebugFormat("Going deep the to the parent list {0}...", element.Name);
-                Element.LoadFromElement(element);
+                (Element as IConfigElement).LoadFromElement(element);
             }
         }
 

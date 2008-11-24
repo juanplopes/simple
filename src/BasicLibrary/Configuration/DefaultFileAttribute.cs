@@ -21,14 +21,14 @@ namespace BasicLibrary.Configuration
 
         public string DefaultFile { get; set; }
 
-        public static string GetDefaultFile<T>() where T : ConfigElement
+        public static string GetDefaultFile<T>() where T : IConfigElement
         {
             DefaultFileAttribute attribute = ListExtensor.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
             if (attribute == null) return null;
             return attribute.DefaultFile;
         }
 
-        public static bool ShouldThrowException<T>() where T : ConfigElement
+        public static bool ShouldThrowException<T>() where T : IConfigElement
         {
             DefaultFileAttribute attribute = ListExtensor.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
             if (attribute == null) return true;
