@@ -10,35 +10,19 @@ using System.Threading;
 
 namespace Sample.UserInterface2
 {
-    [DefaultFile("Test.config")]
-    class Test : ConfigRoot<Test>
-    {
-        public class Test2 : ConfigElement, IStringConvertible
-        {
-            [ConfigElement("oi", Required = true)]
-            public string Oi { get; set; }
-
-            public void LoadFromString(string value)
-            {
-                Oi = value;
-                (this as IConfigElement).NotifyLoad("oi");
-            }
-        }
-
-        [ConfigElement("test2", Required = true)]
-        public TypeConfigElement Test2Prop { get; set; }
-    }
+    class Oi<T> { }
+    class Oi2 : Oi<Oi2> { }
 
     class Program
     {
         static void Main(string[] args)
         {
-            Thread.Sleep(4000);
-            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
-            rules.Persist(new Empresa()
-            {
-                Nome = "oi"
-            });
+
+        }
+
+        static void Test<T>(Oi<T> q)
+        {
+            
         }
     }
 }
