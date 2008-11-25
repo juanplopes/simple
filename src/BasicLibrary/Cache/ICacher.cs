@@ -25,13 +25,4 @@ namespace BasicLibrary.Cache
         event CacheExpired<T> CacheExpiredEvent;
         T Identifier { get; }
     }
-
-    public class MySection : ConfigElement
-    {
-        [ConfigElement("someIntValue", Required = true)]
-        public int SomeIntValue { get; set; }
-
-        [ConfigElement("someStringValue", Required = true)]
-        public string SomeStringValue { get; set; }
-    }
 }
