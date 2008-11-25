@@ -134,7 +134,7 @@ namespace BasicLibrary.Cache
 
         protected void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            lock (Value)
+            lock (this)
             {
                 if (IsValid)
                 {

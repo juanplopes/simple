@@ -41,6 +41,16 @@ namespace BasicLibrary.Configuration.TypeHandlers
             {
                 return GetFromXmlString(value, type.GetGenericArguments()[0]);
             }
+            else if (typeof(IStringConvertible).IsAssignableFrom(type))
+            {
+                IStringConvertible obj = (IStringConvertible)Activator.CreateInstance(type);
+                obj.LoadFromString(value);
+                return obj;
+            }
+            else if (typeof(IConfigElement).IsAssignableFrom(type))
+            {
+                throw new InvalidOperationException("An IConfigElement has been passed, but it does't implement IStringConvertible: " + type.ToString());
+            }
             else
             {
                 throw new InvalidConfigurationException("invalid property type: " + type.ToString());

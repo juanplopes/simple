@@ -7,7 +7,7 @@ using System.Configuration;
 
 namespace BasicLibrary.Configuration
 {
-    public class AssemblyConfigElement : PlainXmlConfigElement
+    public class AssemblyConfigElement : PlainXmlConfigElement, IStringConvertible
     {
         [ConfigElement("name", Default = null)]
         public string AssemblyName { get; set; }
@@ -36,5 +36,12 @@ namespace BasicLibrary.Configuration
             base.CheckConstraints();
             if (File == null && File == AssemblyName) throw new InvalidConfigurationException("Either file or assembly name must be populated.");
         }
+
+        void IStringConvertible.LoadFromString(string value)
+        {
+            AssemblyName = value;
+            (this as IConfigElement).NotifyLoad("name");
+        }
+
     }
 }

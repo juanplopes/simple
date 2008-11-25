@@ -56,6 +56,11 @@ namespace BasicLibrary.Configuration
 
         }
 
+        void IConfigElement.NotifyLoad(string elementName)
+        {
+            ConfigInfo.NotifyLoad(elementName);
+        }
+
         void IConfigElement.LoadFromElement(IConfigElement element)
         {
             foreach (XmlElement xmlElement in element.XmlElements)
@@ -70,7 +75,7 @@ namespace BasicLibrary.Configuration
             if (ConfigInfo == null) throw new InvalidDataException("ConfigElement default constructor must inherit from base default constructor");
             Dictionary<string, bool> alreadyDefined = new Dictionary<string, bool>();
 
-            Logger.DebugFormat("Reading {0} into {1}...", element.Name, this.GetType().Name);
+            Logger.DebugFormat("Reading '{0}' into '{1}'...", element.Name, this.GetType().Name);
 
             ConfigInfo.NotifyStartHandling();
             foreach (XmlAttribute attribute in element.Attributes)

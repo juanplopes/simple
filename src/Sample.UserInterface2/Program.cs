@@ -12,30 +12,37 @@ using System.Diagnostics;
 using System;
 using System.Globalization;
 using SimpleLibrary.Config;
+using System.Security.Cryptography;
+using System.Security;
+using BasicLibrary.Configuration;
+using BasicLibrary.LibraryConfig;
 
 namespace Sample.UserInterface2
 {
-    interface ITest
+    [DefaultFile("Test.config")]
+    class Test : ConfigRoot<Test>
     {
-        void Test();
+        public class Test2 : ConfigElement, IStringConvertible
+        {
+            [ConfigElement("oi", Required=true)]
+            public string Oi { get; set; }
+
+            public void LoadFromString(string value)
+            {
+                Oi = value;
+                (this as IConfigElement).NotifyLoad("oi");
+            }
+        }
+
+        [ConfigElement("test2", Required=true)]
+        public TypeConfigElement Test2Prop { get; set; }
     }
 
-    class Test : ITest
-    {
-        void ITest.Test()
-        {
-            throw new NotImplementedException();
-        }
-    }
-    
     class Program
     {
-        
         static void Main(string[] args)
         {
-            SimpleLibraryConfig.Get();
-            Console.ReadLine();
-            SimpleLibraryConfig.Get();
+            SimpleLibraryConfig config = SimpleLibraryConfig.Get();
         }
     }
 }

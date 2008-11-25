@@ -20,7 +20,8 @@ namespace BasicLibrary.Configuration.TypeHandlers
         public Dictionary<PropertyInfo, ConfigElementAttribute> Attributes { get; set; }
         public List<ConfigTypeHandler> HandlerList { get; set; }
         public int HandledItems { get; protected set; }
-        public Dictionary<PropertyInfo, bool> IsLoaded { get; set; }
+        public Dictionary<string, bool> IsLoaded { get; set; }
+        public Dictionary<string, ConfigTypeHandler> HandlerMapping { get; set; }
         public bool IsLocked { get; set; }
 
         public IConfigElement Element { get; set; }
@@ -32,7 +33,8 @@ namespace BasicLibrary.Configuration.TypeHandlers
             ParentList = new Dictionary<string, bool>();
             Attributes = new Dictionary<PropertyInfo, ConfigElementAttribute>();
             HandlerList = new List<ConfigTypeHandler>();
-            IsLoaded = new Dictionary<PropertyInfo, bool>();
+            IsLoaded = new Dictionary<string, bool>();
+            HandlerMapping = new Dictionary<string, ConfigTypeHandler>();
             IsLocked = false;
 
             HandledItems = 0;
@@ -55,16 +57,16 @@ namespace BasicLibrary.Configuration.TypeHandlers
             }
 
         }
-        public void NotifyLoad(PropertyInfo property)
+        public void NotifyLoad(string elementName)
         {
-            IsLoaded[property] = true;
+            IsLoaded[elementName] = true;
         }
 
         public void CheckRequiredProperties()
         {
             foreach (KeyValuePair<PropertyInfo, ConfigElementAttribute> pair in Attributes)
             {
-                if (pair.Value.Required && !IsLoaded.ContainsKey(pair.Key))
+                if (pair.Value.Required && !IsLoaded.ContainsKey(pair.Value.Name))
                 {
                     throw new InvalidOperationException("Cannot lock until all required properties are loaded. Missing property: " + pair.Value.Name);
                 }
@@ -77,7 +79,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
             Logger.DebugFormat("{0}: All required properties are loaded. Locking...", Element.GetType().Name);
             foreach (var item in Attributes)
             {
-                Logger.DebugFormat("  element {0} locked to {1} with type {2}", item.Value.Name, item.Key.Name, item.Key.PropertyType.Name);
+                Logger.DebugFormat("  element '{0}' locked to '{1}' with type {2}", item.Value.Name, item.Key.Name, item.Key.PropertyType.Name);
             }
             IsLocked = true;
         }
@@ -95,6 +97,8 @@ namespace BasicLibrary.Configuration.TypeHandlers
         public void Handle(XmlElement element)
         {
             if (IsLocked) throw new InvalidOperationException("Configuration is already locked");
+            
+
             HandlerList.ForEach(x => x.Handle(element));
             if (ParentList.ContainsKey(element.Name))
             {

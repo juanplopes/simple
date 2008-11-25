@@ -12,6 +12,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
 
         public virtual void Handle(XmlAttribute attribute)
         {
+            ConfigInfo.NotifyLoad(attribute.Name);
             if (Properties.ContainsKey(attribute.Name))
             {
                 PropertyInfo property = Properties[attribute.Name];

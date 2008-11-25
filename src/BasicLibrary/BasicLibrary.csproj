@@ -70,6 +70,7 @@
     <Compile Include="Configuration\IConfigElement.cs" />
     <Compile Include="Configuration\IConfigProvider.cs" />
     <Compile Include="Configuration\InvalidConfigurationException.cs" />
+    <Compile Include="Configuration\IStringConvertible.cs" />
     <Compile Include="Configuration\LocalizationProviderIgnoreAttribute.cs" />
     <Compile Include="Configuration\PlainXmlConfigElement.cs" />
     <Compile Include="Configuration\TypeConfigElement.cs" />

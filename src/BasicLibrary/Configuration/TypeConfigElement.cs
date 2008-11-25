@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BasicLibrary.Configuration
 {
-    public class TypeConfigElement : PlainXmlConfigElement
+    public class TypeConfigElement : PlainXmlConfigElement, IStringConvertible
     {
         [ConfigElement("name", Default = null)]
         public string Name { get; set; }
@@ -14,5 +14,12 @@ namespace BasicLibrary.Configuration
         {
             return Type.GetType(Name);
         }
+
+        void IStringConvertible.LoadFromString(string value)
+        {
+            Name = value;
+            (this as IConfigElement).NotifyLoad("name");
+        }
+
     }
 }

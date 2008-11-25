@@ -10,6 +10,7 @@ namespace BasicLibrary.Configuration
         void LoadFromElement(IConfigElement element);
         void LoadFromElement(XmlElement element);
         void Lock();
+        void NotifyLoad(string elementName);
         event EventHandler OnExpire;
         IList<XmlElement> XmlElements { get; set; }
     }

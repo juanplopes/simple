@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace BasicLibrary.Configuration.TypeHandlers
 {
-    public class ComplexTypeHandler : ElementTypeHandler
+    public class ComplexTypeHandler : AttributeAbleTypeHandler
     {
         public ComplexTypeHandler(LoadConfiguration config) : base(config) { }
         

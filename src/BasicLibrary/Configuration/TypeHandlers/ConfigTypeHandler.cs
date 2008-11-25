@@ -28,7 +28,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
         {
             if (Properties.ContainsKey(element.Name))
             {
-                ConfigInfo.NotifyLoad(Properties[element.Name]);
+                ConfigInfo.NotifyLoad(element.Name);
                 HandleElement(element);
             }
         }
