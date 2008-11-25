@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate, Version=2.1.0.1001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -76,10 +80,6 @@
     <ProjectReference Include="..\SimpleLibraryCore\SimpleLibraryCore.csproj">
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
       <Name>SimpleLibraryCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SimpleLibraryServer\SimpleLibraryServer.csproj">
-      <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
-      <Name>SimpleLibraryServer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
