@@ -14,8 +14,15 @@ namespace SimpleLibrary.ServiceModel
         public static Binding CreateBinding(EndpointElement element)
         {
             Type bindingType = element.BindingType.LoadType();
-            Binding binding = (Binding)Activator.CreateInstance(bindingType, element.BindingNameRef);
-            return binding;
+            try
+            {
+                Binding binding = (Binding)Activator.CreateInstance(bindingType, element.BindingNameRef);
+                return binding;
+            }
+            catch
+            {
+                return (Binding)Activator.CreateInstance(bindingType);
+            }
         }
 
         public static void ApplyConfigurators(ServiceHost endpoint, ServiceModelElement element, bool isClient)

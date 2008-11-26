@@ -85,7 +85,13 @@ namespace BasicLibrary {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;config&gt;&lt;/config&gt;.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;config&gt;
+        ///  &lt;!--&lt;configGroup path=&quot;D:\MetraTech\RMP\Config\ACN\OM&quot;&gt;
+        ///    &lt;configFile type=&quot;BasicLibrary.LibraryConfig.BasicLibraryConfig&quot; file=&quot;BasicLibrary.config&quot;/&gt;
+        ///  &lt;/configGroup&gt;--&gt;
+        ///&lt;/config&gt;
+        ///.
         /// </summary>
         internal static string ConfigFilesConfig {
             get {

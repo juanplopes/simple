@@ -117,58 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SimpleLibraryConfig" xml:space="preserve">
-    <value>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
-&lt;simpleLibrary&gt;
-  &lt;business&gt;
-    &lt;rulesFactoryType name="SimpleLibrary.Rules.DefaultRulesProvider`1,SimpleLibraryServer"/&gt;
-    &lt;rulesFactoryType name="SimpleLibrary.ServiceModel.ServiceRulesProvider`1,SimpleLibraryCore"/&gt;
-
-    &lt;filters ignoreCaseDefault="false"/&gt;
-
-    &lt;exceptionHandling&gt;
-      &lt;type name="SimpleLibrary.DataAccess.DefaultExceptionHandler,SimpleLibraryServer"/&gt;
-    &lt;/exceptionHandling&gt;
-  &lt;/business&gt;
-
-  &lt;serviceModel&gt;
-    &lt;defaultBaseAddress&gt;http://localhost:9001/&lt;/defaultBaseAddress&gt;
-    &lt;serviceConfiguratorType name="SimpleLibrary.ServiceModel.SingletonServiceConfigurator, SimpleLibraryCore"/&gt;
-    &lt;serviceConfiguratorType name="SimpleLibrary.ServiceModel.ErrorBehaviorServiceConfigurator, SimpleLibraryCore"/&gt;
-    &lt;serviceConfiguratorType name="SimpleLibrary.ServiceModel.DebugServiceConfigurator, SimpleLibraryCore" enabled="true"/&gt;
-
-    &lt;defaultEndpoint&gt;
-      &lt;bindingNameRef&gt;_DefaultBinding&lt;/bindingNameRef&gt;
-      &lt;bindingType name="System.ServiceModel.WSHttpBinding, System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/&gt;
-      &lt;address&gt;&lt;/address&gt;
-
-      &lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.DataContractConfigurator, SimpleLibraryCore"/&gt;
-      &lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.DefaultFaultsConfigurator, SimpleLibraryCore"/&gt;
-      &lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.OperationContextConfigurator, SimpleLibraryCore"/&gt;
-      &lt;!--&lt;endpointConfiguratorType name="SimpleLibrary.ServiceModel.CredentialsServiceConfigurator, SimpleLibraryCore"/&gt;--&gt;
-    &lt;/defaultEndpoint&gt;
-
-    &lt;additionalEndpoints/&gt;
-  &lt;/serviceModel&gt;
-
-  &lt;threading&gt;
-    &lt;lockingProvider&gt;
-      &lt;tableName&gt;instance_state&lt;/tableName&gt;
-      &lt;typeColumn&gt;type&lt;/typeColumn&gt;
-      &lt;idColumn&gt;id&lt;/idColumn&gt;
-      &lt;semaphoreColumn&gt;semaphore&lt;/semaphoreColumn&gt;
-      &lt;dataColumn&gt;data&lt;/dataColumn&gt;
-      &lt;defaultTimeout&gt;30&lt;/defaultTimeout&gt;
-    &lt;/lockingProvider&gt;
-  &lt;/threading&gt;
-
-  &lt;dataConfig&gt;
-    &lt;options mergeBeforeUpdate="false"/&gt;
-
-    &lt;defaultSessionFactory configFile="NHibernate.config"/&gt;
-
-    &lt;!--&lt;sessionFactory configFile="OtherSession.config" name="otherSession"/&gt;--&gt;
-  &lt;/dataConfig&gt;
-&lt;/simpleLibrary&gt;</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="SimpleLibraryConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SimpleLibrary.config;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

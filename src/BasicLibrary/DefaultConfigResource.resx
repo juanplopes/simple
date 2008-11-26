@@ -117,44 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BasicLibraryConfig" xml:space="preserve">
-    <value>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
-&lt;basicLibrary&gt;
-  &lt;log4net&gt;
-    &lt;appender name="ConsoleAppender" type="log4net.Appender.ColoredConsoleAppender"&gt;
-      &lt;mapping&gt;
-        &lt;level value="ERROR" /&gt;
-        &lt;foreColor value="Red, HighIntensity" /&gt;
-      &lt;/mapping&gt;
-      &lt;mapping&gt;
-        &lt;level value="CRITICAL" /&gt;
-        &lt;foreColor value="Red, HighIntensity" /&gt;
-      &lt;/mapping&gt;
-      &lt;mapping&gt;
-        &lt;level value="INFO" /&gt;
-        &lt;foreColor value="Blue, HighIntensity" /&gt;
-      &lt;/mapping&gt;
-      &lt;mapping&gt;
-        &lt;level value="WARN" /&gt;
-        &lt;foreColor value="Yellow, HighIntensity" /&gt;
-      &lt;/mapping&gt;
-      &lt;mapping&gt;
-        &lt;level value="DEBUG" /&gt;
-        &lt;foreColor value="White" /&gt;
-      &lt;/mapping&gt;
-      &lt;layout type="log4net.Layout.PatternLayout"&gt;
-        &lt;conversionPattern value="%message%newline" /&gt;
-      &lt;/layout&gt;
-    &lt;/appender&gt;
-    
-    &lt;root&gt;
-      &lt;level value="ALL"/&gt;
-      &lt;appender-ref ref="ConsoleAppender"/&gt;
-    &lt;/root&gt;
-  &lt;/log4net&gt;
-&lt;/basicLibrary&gt;</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BasicLibraryConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>BasicLibrary.config;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="ConfigFilesConfig" xml:space="preserve">
-    <value>&lt;config&gt;&lt;/config&gt;</value>
+  <data name="ConfigFilesConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ConfigFiles.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

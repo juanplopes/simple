@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <config>
-  <configGroup path="D:\MetraTech\RMP\Config\ACN\OM">
+  <!--<configGroup path="D:\MetraTech\RMP\Config\ACN\OM">
     <configFile type="BasicLibrary.LibraryConfig.BasicLibraryConfig" file="BasicLibrary.config"/>
-  </configGroup>
+  </configGroup>-->
 </config>
