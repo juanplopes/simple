@@ -29,7 +29,15 @@ namespace SimpleLibrary.NUnit
             }
         }
 
-        public void InsertionSetup()
+        [Test]
+        public void TestScript1()
+        {
+            InsertionSetup();
+            TestGetAllAndCompare();
+            DeleteAllAfterThat();
+        }
+
+        protected void InsertionSetup()
         {
             BaseDao<E> rules = new BaseDao<E>();
             for (int i = 0; i < CreationNumber; i++)
@@ -38,18 +46,18 @@ namespace SimpleLibrary.NUnit
             }
         }
 
-        public void TestGetAllAndCompare()
+        protected void TestGetAllAndCompare()
         {
             BaseDao<E> rules = new BaseDao<E>();
             for (int i = 0; i < CreationNumber; i++)
             {
                 E e = EntityProvider.Populate(i);
                 IList<E> list = rules.ListByExample(e);
-                Assert.GreaterOrEqual(list.Count, 1);
+                Assert.AreEqual(list.Count, 1);
             }
         }
 
-        public void DeleteAllAfterThat()
+        protected void DeleteAllAfterThat()
         {
             BaseDao<E> rules = new BaseDao<E>();
             for (int i = 0; i < CreationNumber; i++)
@@ -59,7 +67,7 @@ namespace SimpleLibrary.NUnit
                     CriteriaHelper.GetCriterion(Expression.Example(e)))
                 );
 
-                Assert.GreaterOrEqual(deleted, 1);
+                Assert.AreEqual(deleted, 1);
             }
         }
     }

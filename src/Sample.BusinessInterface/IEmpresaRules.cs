@@ -14,16 +14,5 @@ namespace Sample.BusinessInterface
     [MainContract]
     public interface IEmpresaRules : IBaseRules<Empresa>
     {
-        [OperationContract]
-        IList<Empresa> GetAllWithQuery();
-
-        [OperationContract]
-        IList<Empresa> GetAllWithSQLQuery();
-
-        [OperationContract]
-        IList<Empresa> GetAllWithCriteria();
-
-        [OperationContract]
-        Empresa GetOne();
     }
 }
