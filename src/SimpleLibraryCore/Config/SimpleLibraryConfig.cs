@@ -6,7 +6,7 @@ using BasicLibrary.Configuration;
 
 namespace SimpleLibrary.Config
 {
-    [DefaultFile("SimpleLibrary.config", false)]
+    [DefaultFile("SimpleLibrary.config", ThrowException = false, LoadDefaultFirst = true)]
     public class SimpleLibraryConfig : ConfigRoot<SimpleLibraryConfig>
     {
         [ConfigElement("business", Required = true)]
@@ -18,7 +18,7 @@ namespace SimpleLibrary.Config
         [ConfigElement("dataConfig", Required = true)]
         public DataConfigElement DataConfig { get; set; }
 
-        [ConfigElement("threading", Default=InstanceType.New)]
+        [ConfigElement("threading", Default = InstanceType.New)]
         public ThreadingElement Threading { get; set; }
 
         public override string DefaultXmlString

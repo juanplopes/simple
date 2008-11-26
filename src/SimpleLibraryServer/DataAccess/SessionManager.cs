@@ -11,6 +11,7 @@ using BasicLibrary.Logging;
 using BasicLibrary.Cache;
 using NHibernate.Mapping;
 using NHibernate.Engine;
+using System.IO;
 
 namespace SimpleLibrary.DataAccess
 {
@@ -102,20 +103,37 @@ namespace SimpleLibrary.DataAccess
             }
         }
 
+        protected static Configuration GetFactoryConfiguration(SessionFactoryElement factoryElement)
+        {
+            Configuration config = new Configuration();
+            if (factoryElement.NHibernateConfig != null)
+            {
+                MemoryStream stream = new MemoryStream();
+                XmlWriter writer = XmlWriter.Create(stream);
+                factoryElement.NHibernateConfig.LastXmlElement.WriteTo(writer);
+                writer.Flush();
+                stream.Seek(0, SeekOrigin.Begin);
+                XmlReader reader = XmlReader.Create(stream);
+                config.Configure(reader);
+                stream.Close();
+            }
+            else
+            {
+                config.Configure(FileCacher.GetBasedFile(factoryElement.ConfigFile));
+            }
+            return config;
+        }
+
         protected static void InitializeSessionFactories()
         {
             SimpleLibraryConfig libConfig = SimpleLibraryConfig.Get();
 
-            DefaultConfig = new Configuration();
-            DefaultConfig.Configure(FileCacher.GetBasedFile(
-                libConfig.DataConfig.DefaultSessionFactory.ConfigFile));
+            DefaultConfig = GetFactoryConfiguration(libConfig.DataConfig.DefaultSessionFactory);
             DefaultSessionFactory = DefaultConfig.BuildSessionFactory();
 
             foreach (SessionFactoryElement factoryConfig in libConfig.DataConfig.SessionFactories)
             {
-                Configuration config = new Configuration();
-                
-                config.Configure(FileCacher.GetBasedFile(factoryConfig.ConfigFile));
+                Configuration config = GetFactoryConfiguration(factoryConfig);
                 SessionFactories[factoryConfig.Name] = config.BuildSessionFactory();
                 Configs[factoryConfig.Name] = config;
             }

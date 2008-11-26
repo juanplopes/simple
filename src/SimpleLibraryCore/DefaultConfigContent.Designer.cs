@@ -64,15 +64,18 @@ namespace SimpleLibrary {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;simpleLibrary&gt;
         ///  &lt;business&gt;
-        ///    &lt;interfaceAssembly name=&quot;Sample.BusinessInterface&quot;/&gt;
-        ///    &lt;serverAssembly name=&quot;Sample.BusinessServer&quot;/&gt;
         ///    &lt;rulesFactoryType name=&quot;SimpleLibrary.Rules.DefaultRulesProvider`1,SimpleLibraryServer&quot;/&gt;
         ///    &lt;rulesFactoryType name=&quot;SimpleLibrary.ServiceModel.ServiceRulesProvider`1,SimpleLibraryCore&quot;/&gt;
         ///
         ///    &lt;filters ignoreCaseDefault=&quot;false&quot;/&gt;
         ///
         ///    &lt;exceptionHandling&gt;
-        ///      &lt;type name=&quot;Sample.BusinessServer.Infra.CustomExceptionHan [rest of string was truncated]&quot;;.
+        ///      &lt;type name=&quot;SimpleLibrary.DataAccess.DefaultExceptionHandler,SimpleLibraryServer&quot;/&gt;
+        ///    &lt;/exceptionHandling&gt;
+        ///  &lt;/business&gt;
+        ///
+        ///  &lt;serviceModel&gt;
+        ///    &lt;defaultBaseAddres [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SimpleLibraryConfig {
             get {

@@ -121,16 +121,13 @@
     <value>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
 &lt;simpleLibrary&gt;
   &lt;business&gt;
-    &lt;interfaceAssembly name="Sample.BusinessInterface"/&gt;
-    &lt;serverAssembly name="Sample.BusinessServer"/&gt;
     &lt;rulesFactoryType name="SimpleLibrary.Rules.DefaultRulesProvider`1,SimpleLibraryServer"/&gt;
     &lt;rulesFactoryType name="SimpleLibrary.ServiceModel.ServiceRulesProvider`1,SimpleLibraryCore"/&gt;
 
     &lt;filters ignoreCaseDefault="false"/&gt;
 
     &lt;exceptionHandling&gt;
-      &lt;type name="Sample.BusinessServer.Infra.CustomExceptionHandler,Sample.BusinessServer"/&gt;
-      &lt;type name="SimpleLibrary.DataAcess.DefaultExceptionHandler,SimpleLibraryServer"/&gt;
+      &lt;type name="SimpleLibrary.DataAccess.DefaultExceptionHandler,SimpleLibraryServer"/&gt;
     &lt;/exceptionHandling&gt;
   &lt;/business&gt;
 

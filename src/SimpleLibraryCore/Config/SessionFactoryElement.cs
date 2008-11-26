@@ -11,6 +11,8 @@ namespace SimpleLibrary.Config
     {
         [ConfigElement("configFile", Default = "NHibernate.config")]
         public string ConfigFile { get; set; }
+        [ConfigElement("hibernate-configuration", Default = null)]
+        public PlainXmlConfigElement NHibernateConfig { get; set; }
         [ConfigElement("name", Default = null)]
         public string Name { get; set; }
     }

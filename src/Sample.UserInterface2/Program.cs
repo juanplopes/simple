@@ -7,6 +7,9 @@ using NHibernate;
 using Sample.BusinessInterface;
 using SimpleLibrary.Rules;
 using System.Threading;
+using SimpleLibrary.Config;
+using SimpleLibrary.Filters;
+using System.Collections.Generic;
 
 namespace Sample.UserInterface2
 {
@@ -17,7 +20,8 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-
+            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
+            IList<Empresa> list = rules.ListAll(OrderBy.None());
         }
 
         static void Test<T>(Oi<T> q)

@@ -10,6 +10,7 @@ namespace BasicLibrary.Configuration
     {
         public bool ThrowException { get; set; }
         public string DefaultContent { get; set; }
+        public bool LoadDefaultFirst { get; set; }
 
         public DefaultFileAttribute(string defaultFile) : this(defaultFile, true) { }
 
@@ -33,6 +34,13 @@ namespace BasicLibrary.Configuration
             DefaultFileAttribute attribute = ListExtensor.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
             if (attribute == null) return true;
             return attribute.ThrowException;
+        }
+
+        public static bool ShouldLoadDefaultFirst<T>() where T : IConfigElement
+        {
+            DefaultFileAttribute attribute = ListExtensor.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
+            if (attribute == null) return true;
+            return attribute.LoadDefaultFirst;
         }
     }
 }

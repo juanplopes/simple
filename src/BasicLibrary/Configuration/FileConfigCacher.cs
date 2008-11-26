@@ -6,6 +6,7 @@ using BasicLibrary.Cache;
 using BasicLibrary.Logging;
 using System.Xml;
 using System.IO;
+using System.Xml.XPath;
 
 namespace BasicLibrary.Configuration
 {
@@ -55,13 +56,20 @@ namespace BasicLibrary.Configuration
                     IsValid = true;
 
                     Value = new T();
+
+                    bool loadDefaultFirst = DefaultFileAttribute.ShouldLoadDefaultFirst<T>();
+                    if (loadDefaultFirst)
+                    {
+                        Log("Loading default element...");
+                        LoadIntoElement(GetXmlFromString(Value.DefaultXmlString), true);
+                    }
+                    
                     string fileContent = File.GetValue();
-                    XmlElement xmlElement;
+
                     if (fileContent != null)
                     {
-                        XmlDocument mainDocument = new XmlDocument();
-                        mainDocument.LoadXml(fileContent);
-                        xmlElement = mainDocument.DocumentElement;
+                        Log("Loading file element...");
+                        LoadIntoElement(GetXmlFromString(fileContent), false);
                     }
                     else
                     {
@@ -73,24 +81,16 @@ namespace BasicLibrary.Configuration
                         }
                         else
                         {
-                            Log("No exception thrown. Loading default xml string...");
-                            XmlDocument doc = new XmlDocument();
-                            doc.LoadXml(Value.DefaultXmlString);
-                            xmlElement = doc.DocumentElement;
-                        }
-                    }
-
-                    Log("Loaded main document.");
-                    (Value as IConfigElement).LoadFromElement(xmlElement);
-
-                    foreach (XmlElement element in xmlElement.GetElementsByTagName(LocalizationTag))
-                    {
-                        if (element.Attributes[CountryAtribute] != null &&
-                            string.Equals(element.Attributes[CountryAtribute].Value,
-                            Identifier.Localization, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            Log(string.Format("Loading localized value for {0}...", element.Attributes[CountryAtribute].Value));
-                            (Value as IConfigElement).LoadFromElement(element);
+                            Log("No exception thrown.");
+                            if (!loadDefaultFirst)
+                            {
+                                Log("Loading default element...");
+                                LoadIntoElement(GetXmlFromString(Value.DefaultXmlString), true);
+                            }
+                            else
+                            {
+                                Log("Default element already loaded. Skipping.");
+                            }
                         }
                     }
 
@@ -100,6 +100,32 @@ namespace BasicLibrary.Configuration
             }
             Log(sReturningCached);
             return Value;
+        }
+
+        protected XmlElement GetXmlFromString(string xml)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            XmlElement xmlElement = doc.DocumentElement;
+            return xmlElement;
+        }
+
+        protected void LoadIntoElement(XmlElement xml, bool isDefault)
+        {
+            Log(string.Format("Loaded {0}main document.", isDefault ? "DEFAULT " : ""));
+            (Value as IConfigElement).LoadFromElement(xml);
+
+            foreach (XmlElement element in xml.GetElementsByTagName(LocalizationTag))
+            {
+                if (element.Attributes[CountryAtribute] != null &&
+                    string.Equals(element.Attributes[CountryAtribute].Value,
+                    Identifier.Localization, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Log(string.Format("Loading {0}localized value for {1}...", isDefault ? "DEFAULT " : "", element.Attributes[CountryAtribute].Value));
+                    (Value as IConfigElement).LoadFromElement(element);
+                }
+            }
+
         }
 
         public static FileConfigCacher<T> GetCacher(ConfigIdentifier identifier)

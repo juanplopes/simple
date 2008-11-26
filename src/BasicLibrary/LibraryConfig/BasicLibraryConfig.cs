@@ -5,10 +5,10 @@ using BasicLibrary.Configuration;
 
 namespace BasicLibrary.LibraryConfig
 {
-    [DefaultFile("BasicLibrary.config", false)]
+    [DefaultFile("BasicLibrary.config", ThrowException = false, LoadDefaultFirst = true)]
     public class BasicLibraryConfig : ConfigRoot<BasicLibraryConfig>
     {
-        [ConfigElement("log4net", Required=true)]
+        [ConfigElement("log4net", Required = true)]
         public Log4netConfig Log4net { get; set; }
 
         public override string DefaultXmlString
