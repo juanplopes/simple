@@ -58,9 +58,6 @@
     <None Include="BasicLibrary.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Test.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="NHibernate.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

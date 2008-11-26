@@ -59,12 +59,9 @@
     <Compile Include="DataAccess\EmpresaDao.cs" />
     <Compile Include="DataAccess\FuncionarioDao.cs" />
     <Compile Include="DataAccess\EmpresaFuncionarioDao.cs" />
-    <Compile Include="Infra\CustomExceptionHandler.cs" />
-    <Compile Include="Infra\DefaultSaveListener.cs" />
     <Compile Include="Infra\Program.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Infra\TestPersistedState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\EmpresaFuncionarioRules.cs" />
     <Compile Include="Rules\EmpresaRules.cs" />
