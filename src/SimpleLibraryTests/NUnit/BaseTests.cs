@@ -29,7 +29,6 @@ namespace SimpleLibrary.NUnit
             }
         }
 
-        [TestFixtureSetUp]
         public void InsertionSetup()
         {
             BaseDao<E> rules = new BaseDao<E>();
@@ -39,7 +38,6 @@ namespace SimpleLibrary.NUnit
             }
         }
 
-        [Test]
         public void TestGetAllAndCompare()
         {
             BaseDao<E> rules = new BaseDao<E>();
@@ -51,7 +49,6 @@ namespace SimpleLibrary.NUnit
             }
         }
 
-        [TestFixtureTearDown]
         public void DeleteAllAfterThat()
         {
             BaseDao<E> rules = new BaseDao<E>();
