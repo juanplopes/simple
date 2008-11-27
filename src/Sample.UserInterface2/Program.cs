@@ -11,34 +11,35 @@ using System.Globalization;
 
 namespace Sample.UserInterface2
 {
+    [DefaultFile("TestConfig.config")]
+    class TestConfig : ConfigRoot<TestConfig>
+    {
+        [ConfigElement("aSampleString")]
+        public string SampleString { get; set; }
 
+        [ConfigAcceptsParent("listOfStrings")]
+        [ConfigElement("aString")]
+        public List<string> ListOfStrings { get; set; }
+
+        [ConfigAcceptsParent("dictionary")]
+        [ConfigDictionaryKeyName("name")]
+        [ConfigElement("valor")]
+        public Dictionary<string, int> Dic { get; set; }
+    }
 
 
     class Program
     {
-        delegate R SelectDelegate<T, R>(T entity);
-
-
-        static R Transform<T, R>(T entity, SelectDelegate<T, R> del)
-        {
-            return del(entity);
-        }
-
         static void Main(string[] args)
         {
-            Empresa e = null;
-
-            SelectDelegate<Empresa, string> del = new SelectDelegate<Empresa, string>(x => x.Nome);
-
-            var s = Transform(e, x => x.Nome);
-            
+            Thread.Sleep(4000);
+            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
+            rules.TestMethod(null);
+            IList<Empresa> list = rules.ListAll(null);
 
             MainLogger.Get<Program>().Debug("alguma mensagem");
-            MainLogger.Get<Program>().Warn("warn message");
+            MainLogger.Get<Program>().Warn("warn message");   
         }
-
-
-
     }
 }
 

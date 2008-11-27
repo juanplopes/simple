@@ -14,5 +14,11 @@ namespace Sample.BusinessServer.Rules
 {
     public class EmpresaRules : BaseRules<Empresa, EmpresaDao>, IEmpresaRules
     {
+        public override object TestMethod(object obj)
+        {
+            IFuncionarioRules rules = RulesFactory.Create<IFuncionarioRules>();
+            IList<Funcionario> list = rules.ListAll(null);
+            return base.TestMethod(obj);
+        }
     }
 }

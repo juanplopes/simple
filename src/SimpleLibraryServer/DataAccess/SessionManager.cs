@@ -12,6 +12,7 @@ using BasicLibrary.Cache;
 using NHibernate.Mapping;
 using NHibernate.Engine;
 using System.IO;
+using NHibernate.Mapping.Attributes;
 
 namespace SimpleLibrary.DataAccess
 {
@@ -103,7 +104,7 @@ namespace SimpleLibrary.DataAccess
             }
         }
 
-        protected static Configuration GetFactoryConfiguration(SessionFactoryElement factoryElement)
+        protected static Configuration GetFactoryConfiguration(SessionFactoryElement factoryElement, bool findAttributes)
         {
             Configuration config = new Configuration();
             if (factoryElement.NHibernateConfig != null)
@@ -121,6 +122,14 @@ namespace SimpleLibrary.DataAccess
             {
                 config.Configure(FileCacher.GetBasedFile(factoryElement.ConfigFile));
             }
+
+            if (findAttributes)
+            {
+                var libConfig = SimpleLibraryConfig.Get();
+                MemoryStream stream = HbmSerializer.Default.Serialize(libConfig.Business.InterfaceAssembly.LoadAssembly());
+                config.AddInputStream(stream);
+            }
+
             return config;
         }
 
@@ -128,12 +137,12 @@ namespace SimpleLibrary.DataAccess
         {
             SimpleLibraryConfig libConfig = SimpleLibraryConfig.Get();
 
-            DefaultConfig = GetFactoryConfiguration(libConfig.DataConfig.DefaultSessionFactory);
+            DefaultConfig = GetFactoryConfiguration(libConfig.DataConfig.DefaultSessionFactory, true);
             DefaultSessionFactory = DefaultConfig.BuildSessionFactory();
 
             foreach (SessionFactoryElement factoryConfig in libConfig.DataConfig.SessionFactories)
             {
-                Configuration config = GetFactoryConfiguration(factoryConfig);
+                Configuration config = GetFactoryConfiguration(factoryConfig, false);
                 SessionFactories[factoryConfig.Name] = config.BuildSessionFactory();
                 Configs[factoryConfig.Name] = config;
             }
