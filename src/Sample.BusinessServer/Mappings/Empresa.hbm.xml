@@ -4,7 +4,6 @@
     <id name="Id" column="id_empresa" type="int">
       <generator class="native"/>
     </id>
-    <version name="Version" column="version" type="SimpleLibrary.DataAccess.TimestampType,SimpleLibraryServer" generated="always" unsaved-value="null"/>
     <property type="string" length="120" name="Nome" column="nome" unique="true" />
   </class>
 </hibernate-mapping>

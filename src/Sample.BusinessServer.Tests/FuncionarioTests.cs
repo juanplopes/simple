@@ -9,6 +9,7 @@ namespace Sample.BusinessServer.Tests
 {
     public class FuncionarioProvider : BaseEntityProvider<Funcionario>
     {
+        public FuncionarioProvider() : base(true) { }
     }
 
     [TestFixture]

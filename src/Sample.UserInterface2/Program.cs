@@ -37,8 +37,8 @@ namespace Sample.UserInterface2
             rules.TestMethod(null);
             IList<Empresa> list = rules.ListAll(null);
 
-            MainLogger.Get<Program>().Debug("alguma mensagem");
-            MainLogger.Get<Program>().Warn("warn message");   
+            
+
         }
     }
 }

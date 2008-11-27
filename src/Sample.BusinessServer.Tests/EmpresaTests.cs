@@ -9,7 +9,9 @@ using NUnit.Framework;
 namespace Sample.BusinessServer.Tests
 {
     public class EmpresaProvider : BaseEntityProvider<Empresa>
-    { }
+    {
+        public EmpresaProvider() : base(true) { }
+    }
 
 
     [TestFixture]

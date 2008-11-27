@@ -32,7 +32,7 @@ namespace SimpleLibrary.DataAccess
             else if (filter is Filters.ExampleFilter)
             {
                 Filters.ExampleFilter example = filter as Filters.ExampleFilter;
-                return Example.Create(example.Entity);
+                return Example.Create(example.Entity).EnableLike();
             }
             else if (filter is Filters.UnaryOperator)
             {

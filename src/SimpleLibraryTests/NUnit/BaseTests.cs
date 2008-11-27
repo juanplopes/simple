@@ -34,9 +34,10 @@ namespace SimpleLibrary.NUnit
         [Test]
         public void TestScript1()
         {
+            DeleteAll(false);
             InsertionSetup();
             TestGetAllAndCompare();
-            DeleteAllAfterThat();
+            DeleteAll(true);
         }
 
         protected void InsertionSetup()
@@ -59,7 +60,7 @@ namespace SimpleLibrary.NUnit
             }
         }
 
-        protected void DeleteAllAfterThat()
+        protected void DeleteAll(bool assert)
         {
             BaseDao<E> rules = new BaseDao<E>();
             for (int i = 0; i < CreationNumber; i++)
@@ -68,8 +69,8 @@ namespace SimpleLibrary.NUnit
                 int deleted = rules.DeleteByCriteria(rules.CreateCriteria().Add(
                     CriteriaHelper.GetCriterion(Expression.Example(e)))
                 );
-
-                Assert.AreEqual(deleted, 1);
+                if (assert)
+                    Assert.AreEqual(deleted, 1);
             }
         }
     }

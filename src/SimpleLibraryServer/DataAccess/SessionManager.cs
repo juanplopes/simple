@@ -51,6 +51,14 @@ namespace SimpleLibrary.DataAccess
                 }
         }
 
+        public static Configuration GetConfig(string factoryName)
+        {
+            if (factoryName == null)
+                return DefaultConfig;
+            else
+                return Configs[factoryName];
+        }
+
         public static void ClearThreadSessions()
         {
             lock (SessionFactories)

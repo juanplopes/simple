@@ -11,6 +11,7 @@ namespace SimpleLibrary.Filters
     {
         [DataMember]
         public object Entity { get; set; }
+
         public ExampleFilter(object entity)
         {
             this.Entity = entity;
