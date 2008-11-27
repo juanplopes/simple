@@ -7,6 +7,7 @@ using SimpleLibrary.Rules;
 using SimpleLibrary.Filters;
 using SimpleLibrary.DataAccess;
 using System.Reflection;
+using NHibernate;
 
 namespace SimpleLibrary.NUnit
 {
@@ -32,20 +33,42 @@ namespace SimpleLibrary.NUnit
         }
 
         [Test]
-        public void TestScript1()
+        public void InsertScript1()
         {
-            DeleteAll(false);
+            SessionManager.ReleaseThreadSessions();
             InsertionSetup();
+            TestGetAllAndCompare();
+            DeleteAll(true);
+        }
+
+        [Test]
+        public void UpdateScript1()
+        {
+            SessionManager.ReleaseThreadSessions();
+            InsertionSetup();
+            TestGetAllAndUpdate();
             TestGetAllAndCompare();
             DeleteAll(true);
         }
 
         protected void InsertionSetup()
         {
+            DeleteAll(false);
             BaseDao<E> rules = new BaseDao<E>();
             for (int i = 0; i < CreationNumber; i++)
             {
-                rules.SaveOrUpdate(EntityProvider.Populate(i));
+                rules.Persist(EntityProvider.Populate(i));
+            }
+        }
+
+        protected void TestGetAllAndUpdate()
+        {
+            BaseDao<E> rules = new BaseDao<E>();
+            for (int i = 0; i < CreationNumber; i++)
+            {
+                E e = EntityProvider.Populate(i);
+                e = rules.LoadByExample(e);
+                rules.Update(e);
             }
         }
 
