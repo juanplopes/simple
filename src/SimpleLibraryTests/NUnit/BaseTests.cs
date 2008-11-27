@@ -6,12 +6,14 @@ using NUnit.Framework;
 using SimpleLibrary.Rules;
 using SimpleLibrary.Filters;
 using SimpleLibrary.DataAccess;
+using System.Reflection;
 
 namespace SimpleLibrary.NUnit
 {
     [TestFixture]
     public class BaseTests<E, P>
         where P : IEntityProvider<E>, new()
+        where E : new()
     {
         public virtual int CreationNumber
         {

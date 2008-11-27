@@ -42,8 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NUnit\BaseEntityProvider.cs" />
     <Compile Include="NUnit\BaseTests.cs" />
+    <Compile Include="NUnit\BaseTypeSeeder.cs" />
     <Compile Include="NUnit\IEntityProvider.cs" />
+    <Compile Include="NUnit\ITypeSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

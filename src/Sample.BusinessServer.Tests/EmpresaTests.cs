@@ -8,25 +8,9 @@ using NUnit.Framework;
 
 namespace Sample.BusinessServer.Tests
 {
-    public class EmpresaProvider : IEntityProvider<Empresa>
-    {
-        #region IEntityProvider<Empresa> Members
+    public class EmpresaProvider : BaseEntityProvider<Empresa>
+    { }
 
-        public Empresa Populate(int seed)
-        {
-            return new Empresa()
-            {
-                Nome = typeof(Empresa).GUID.ToString() + seed
-            };
-        }
-
-        public bool Compare(Empresa e1, Empresa e2)
-        {
-            return e1.Nome == e2.Nome;
-        }
-
-        #endregion
-    }
 
     [TestFixture]
     public class EmpresaTests : BaseTests<Empresa, EmpresaProvider>
