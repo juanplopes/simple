@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Sample.BusinessInterface.Domain.Funcionario,Sample.BusinessInterface" table="funcionario" lazy="false">
+    <id name="IdFuncionario" column="id_funcionario" type="int">
+      <generator class="native"/>
+    </id>
+    <property type="string" length="120" name="Nome" column="nome" />
+  </class>
+</hibernate-mapping>

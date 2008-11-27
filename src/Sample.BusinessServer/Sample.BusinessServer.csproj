@@ -68,10 +68,6 @@
     <Compile Include="Rules\FuncionarioRules.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Empresa.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Funcionario.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="BasicLibrary.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -79,7 +75,6 @@
     <None Include="SimpleLibrary.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <EmbeddedResource Include="Mappings\EmpresaFuncionario.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
@@ -98,6 +93,11 @@
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
       <Name>SimpleLibraryServer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Empresa.hbm.xml" />
+    <EmbeddedResource Include="Mappings\EmpresaFuncionario.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Funcionario.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
