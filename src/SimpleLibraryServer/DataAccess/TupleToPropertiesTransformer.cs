@@ -41,7 +41,7 @@ namespace SimpleLibrary.DataAccess
             for (int i = 0; i < tuple.Length; i++)
             {
                 object obj = tuple[i];
-                if (obj.GetType().IsAssignableFrom(ResultType))
+                if (obj != null && obj.GetType().IsAssignableFrom(ResultType))
                 {
                     foreach (PropertyInfo prop in obj.GetType().GetProperties())
                     {

@@ -18,17 +18,21 @@ namespace SimpleLibrary.DataAccess
 {
     public class SessionManager
     {
+        protected static object locker = new object();
         protected static MultiSessionFactory _factory;
         protected static MultiSessionFactory Factory
         {
             get
             {
-                if (_factory == null)
+                lock (locker)
                 {
-                    var config = SimpleLibraryConfig.Get();
-                    _factory = new MultiSessionFactory(config.DataConfig, config.Business);
+                    if (_factory == null)
+                    {
+                        var config = SimpleLibraryConfig.Get();
+                        _factory = new MultiSessionFactory(config.DataConfig, config.Business);
+                    }
+                    return _factory;
                 }
-                return _factory;
             }
         }
 
