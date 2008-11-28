@@ -13,6 +13,14 @@ namespace BasicLibrary.Configuration
 {
     public class ConfigRoot<T> : ConfigElement where T : IConfigElement, new()
     {
+        public static bool IsLoading
+        {
+            get
+            {
+                return FileConfigProvider<T>.Instance.IsLoading;
+            }
+        }
+
         [LocalizationProviderIgnore]
         public static T Get()
         {
@@ -22,7 +30,7 @@ namespace BasicLibrary.Configuration
         [LocalizationProviderIgnore]
         public static T Get(string location)
         {
-            return FileConfigProvider<T>.Instance.Get(location);
+            return FileConfigProvider<T>.Instance.Get();
         }
     }
 }

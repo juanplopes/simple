@@ -14,6 +14,7 @@ namespace BasicLibrary.Logging
 
         public MultiLoggerFactory()
         {
+            if (BasicLibraryConfig.IsLoading) throw new InvalidOperationException("Cannot use logger until basic library is done.");
             LoadConfig();
         }
 

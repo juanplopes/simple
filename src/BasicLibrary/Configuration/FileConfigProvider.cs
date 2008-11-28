@@ -14,7 +14,9 @@ namespace BasicLibrary.Configuration
     public class FileConfigProvider<T> : AutoLocalizationConfigProvider<T>
         where T : IConfigElement, new()
     {
-
+        public bool IsLoading { get; protected set; }
+     
+        
         protected SafeDictionary<string, string> ConfigFiles
         {
             get
@@ -47,18 +49,25 @@ namespace BasicLibrary.Configuration
 
         public override T Get(string location)
         {
-            string file;
-
-            if (!Attribute.IsDefined(typeof(T), typeof(ConfigFilesIgnoreAttribute)))
+            try
             {
-                file = ConfigFiles[typeof(T).FullName];
+                string file;
+                IsLoading = true;
+                if (!Attribute.IsDefined(typeof(T), typeof(ConfigFilesIgnoreAttribute)))
+                {
+                    file = ConfigFiles[typeof(T).FullName];
+                    if (file != null) return Get(file, location);
+                }
+
+                file = DefaultFileAttribute.GetDefaultFile<T>();
                 if (file != null) return Get(file, location);
+
+                throw new InvalidOperationException("Cannot load " + typeof(T).Name + " from file. Config file not specified.");
             }
-
-            file = DefaultFileAttribute.GetDefaultFile<T>();
-            if (file != null) return Get(file, location);
-
-            throw new InvalidOperationException("Cannot load " + typeof(T).Name + " from file. Config file not specified.");
+            finally
+            {
+                IsLoading = false;
+            }
         }
     }
 }

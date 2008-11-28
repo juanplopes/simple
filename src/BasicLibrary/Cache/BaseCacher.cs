@@ -28,7 +28,8 @@ namespace BasicLibrary.Cache
 
         protected void Log(string message)
         {
-            Logger.DebugFormat("{1}: " + message, this.GetType().Name, GetFormattedId());
+            if (Logger != null)
+                Logger.DebugFormat("{1}: " + message, this.GetType().Name, GetFormattedId());
         }
 
         protected virtual string GetFormattedId()

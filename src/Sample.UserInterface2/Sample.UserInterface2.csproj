@@ -55,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="BasicLibrary.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SimpleLibrary.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

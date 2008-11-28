@@ -26,6 +26,7 @@ namespace BasicLibrary.Logging
             {
                 if (_factory == null)
                 {
+                    if (BasicLibraryConfig.IsLoading) return null;
                     _factory = new MultiLoggerFactory();
                 }
                 return _factory;
@@ -55,11 +56,12 @@ namespace BasicLibrary.Logging
         protected delegate ILog GetLoggerDelegate(MultiLoggerFactory factory);
         protected static ILog TryGetLogger(GetLoggerDelegate @delegate)
         {
-            try
+            MultiLoggerFactory factory = Factory;
+            if (factory != null)
             {
                 return @delegate.Invoke(Factory);
             }
-            catch
+            else
             {
                 return LogManager.GetLogger("dummy");
             }

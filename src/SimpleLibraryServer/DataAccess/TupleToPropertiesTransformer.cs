@@ -50,10 +50,11 @@ namespace SimpleLibrary.DataAccess
                     }
                 }
                 else
-                {
-                    PropertyInfo target = Properties[aliases[i + bias]];
-                    target.SetValue(result, obj, null);
-                }
+                    if (i + bias >= 0)
+                    {
+                        PropertyInfo target = Properties[aliases[i + bias]];
+                        target.SetValue(result, obj, null);
+                    }
             }
 
             return result;
