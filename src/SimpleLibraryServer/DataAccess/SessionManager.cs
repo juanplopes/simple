@@ -18,181 +18,53 @@ namespace SimpleLibrary.DataAccess
 {
     public class SessionManager
     {
-        public static Configuration DefaultConfig { get; set; }
-        public static ISessionFactory DefaultSessionFactory { get; set; }
-
-        public static Dictionary<string, Configuration> Configs { get; set; }
-        public static Dictionary<string, ISessionFactory> SessionFactories { get; set; }
-
-        private static ThreadData<SessionManager> MyData { get; set; }
-        private static string ISESSION_KEY = typeof(ISession).GUID.ToString();
-
-        public static ISession GetThreadSession(string factoryName)
+        protected static MultiSessionFactory _factory;
+        protected static MultiSessionFactory Factory
         {
-            return GetThreadSession(factoryName, true);
-        }
-
-        public static ISession GetThreadSession(string factoryName, bool createIfDoesNotExist)
-        {
-            lock (SessionFactories)
-                lock (MyData)
+            get
+            {
+                if (_factory == null)
                 {
-                    string realName = factoryName ?? "";
-
-                    ISession session = (ISession)MyData[ISESSION_KEY + realName, 0];
-                    if (session == null || !((ISession)session).IsOpen)
-                    {
-                        if (!createIfDoesNotExist) return null;
-
-                        session = GetSessionFactory(factoryName).OpenSession();
-                        MyData[ISESSION_KEY + realName, 0] = session;
-                    }
-                    return session;
+                    var config = SimpleLibraryConfig.Get();
+                    _factory = new MultiSessionFactory(config.DataConfig, config.Business);
                 }
-        }
-
-        public static Configuration GetConfig(string factoryName)
-        {
-            if (factoryName == null)
-                return DefaultConfig;
-            else
-                return Configs[factoryName];
-        }
-
-        public static void ClearThreadSessions()
-        {
-            lock (SessionFactories)
-            {
-                foreach (ISession session in GetAllSessions())
-                {
-                    if (session.IsOpen && session.IsConnected) session.Clear();
-                }
-            }
-        }
-
-        public static void ReleaseThreadSessions()
-        {
-            lock (SessionFactories)
-            {
-                foreach (ISession session in GetAllSessions())
-                {
-                    if (session.IsOpen) session.Close();
-                }
-            }
-        }
-
-        public static IEnumerable<ISession> GetAllSessions()
-        {
-            ISession session = GetThreadSession(null, false);
-            if (session != null) yield return session;
-            foreach (string factoryName in SessionFactories.Keys)
-            {
-                session = GetThreadSession(factoryName, false);
-                if (session != null)
-                    yield return session;
-            }
-        }
-
-        public static ISessionFactory GetSessionFactory(string factoryName)
-        {
-            lock (SessionFactories)
-            {
-                if (factoryName == null)
-                {
-                    return DefaultSessionFactory;
-                }
-                else
-                {
-                    try
-                    {
-                        return SessionFactories[factoryName];
-                    }
-                    catch (KeyNotFoundException) { throw new InvalidOperationException("Invalid factory name: " + factoryName); }
-                }
-            }
-        }
-
-        protected static Configuration GetFactoryConfiguration(SessionFactoryElement factoryElement, bool findAttributes)
-        {
-            Configuration config = new Configuration();
-            if (factoryElement.NHibernateConfig != null)
-            {
-                MemoryStream stream = new MemoryStream();
-                XmlWriter writer = XmlWriter.Create(stream);
-                factoryElement.NHibernateConfig.LastXmlElement.WriteTo(writer);
-                writer.Flush();
-                stream.Seek(0, SeekOrigin.Begin);
-                XmlReader reader = XmlReader.Create(stream);
-                config.Configure(reader);
-                stream.Close();
-            }
-            else
-            {
-                config.Configure(FileCacher.GetBasedFile(factoryElement.ConfigFile));
-            }
-
-            if (findAttributes)
-            {
-                var libConfig = SimpleLibraryConfig.Get();
-                MemoryStream stream = HbmSerializer.Default.Serialize(libConfig.Business.InterfaceAssembly.LoadAssembly());
-                config.AddInputStream(stream);
-            }
-
-            return config;
-        }
-
-        protected static void InitializeSessionFactories()
-        {
-            SimpleLibraryConfig libConfig = SimpleLibraryConfig.Get();
-
-            DefaultConfig = GetFactoryConfiguration(libConfig.DataConfig.DefaultSessionFactory, true);
-            DefaultSessionFactory = DefaultConfig.BuildSessionFactory();
-
-            foreach (SessionFactoryElement factoryConfig in libConfig.DataConfig.SessionFactories)
-            {
-                Configuration config = GetFactoryConfiguration(factoryConfig, false);
-                SessionFactories[factoryConfig.Name] = config.BuildSessionFactory();
-                Configs[factoryConfig.Name] = config;
-            }
-        }
-
-        static SessionManager()
-        {
-            SessionFactories = new Dictionary<string, ISessionFactory>();
-            lock (SessionFactories)
-            {
-                MyData = new ThreadData<SessionManager>();
-                Configs = new Dictionary<string, Configuration>();
-                InitializeSessionFactories();
+                return _factory;
             }
         }
 
         public static ISession GetSession()
         {
-            return GetSession(null);
-        }
-
-        public static ISession GetSession(string factoryName)
-        {
-            return GetSession(factoryName, false);
+            return Factory.GetSession();
         }
 
         public static ISession GetSession(bool forceNewSession)
         {
-            return GetSession(null, forceNewSession);
+            return Factory.GetSession(forceNewSession);
+        }
+
+        public static ISession GetSession(string factoryName)
+        {
+            return Factory.GetSession(factoryName);
         }
 
         public static ISession GetSession(string factoryName, bool forceNewSession)
         {
-            if (forceNewSession)
-            {
-                if (factoryName == null) return DefaultSessionFactory.OpenSession();
-                else return SessionFactories[factoryName].OpenSession();
-            }
-            else
-            {
-                return GetThreadSession(factoryName);
-            }
+            return Factory.GetSession(factoryName, forceNewSession);
+        }
+
+        public static void ReleaseThreadSessions()
+        {
+            Factory.ReleaseThreadSessions();
+        }
+
+        public static Configuration GetConfig()
+        {
+            return Factory.GetConfig();
+        }
+
+        public static Configuration GetConfig(string factoryName)
+        {
+            return Factory.GetConfig(factoryName);
         }
     }
 }

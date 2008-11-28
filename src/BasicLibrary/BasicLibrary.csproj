@@ -93,6 +93,7 @@
     <Compile Include="Common\IBusinessDaysProvider.cs" />
     <Compile Include="Common\ICastable.cs" />
     <Compile Include="Common\StringUtils.cs" />
+    <Compile Include="Logging\MultiLoggerFactory.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
     <Compile Include="Persistence\ExecutionContext.cs" />
     <Compile Include="Reflection\GenericActivator.cs" />

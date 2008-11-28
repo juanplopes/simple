@@ -6,6 +6,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLibraryTests", "SimpleLibraryTests\SimpleLibraryTests.csproj", "{B244B1EF-812D-4BDC-8BB7-E5ECAD0AACB1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{EF0CFA6E-D58B-4EB5-860F-1423E682755A}"
+	ProjectSection(SolutionItems) = preProject
+		dao.snippet = dao.snippet
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.BusinessInterface", "Sample.BusinessInterface\Sample.BusinessInterface.csproj", "{1FD053EF-EF04-4533-B61B-B7979DC20BDA}"
 EndProject
@@ -18,6 +21,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLibraryCore", "SimpleLibraryCore\SimpleLibraryCore.csproj", "{07D16BE0-3436-4B72-A34F-D6E1E1A02473}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLibraryServer", "SimpleLibraryServer\SimpleLibraryServer.csproj", "{35DBC634-E490-4239-9315-4E9210647C2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{884FDE6A-23BE-4170-852B-78393B2E610A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

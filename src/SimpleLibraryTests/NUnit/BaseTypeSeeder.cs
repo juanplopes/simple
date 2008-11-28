@@ -23,7 +23,7 @@ namespace SimpleLibrary.NUnit
                 return new DateTime(2000, 1, 1).AddDays(seed);
 
             else if (CheckType<char>(type))
-                return (char)seed;
+                return (seed%10).ToString()[0];
 
             else
                 return null;

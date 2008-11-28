@@ -7,11 +7,11 @@ namespace SimpleLibrary.DataAccess
 {
     public class SimpleTransformers
     {
-        public static TupleToConstrctorTransformer ByConstructor(Type t)
+        public static TupleToConstructorTransformer ByConstructor(Type t)
         {
-            return new TupleToConstrctorTransformer(t);
+            return new TupleToConstructorTransformer(t);
         }
-        public static TupleToConstrctorTransformer ByConstructor<T>()
+        public static TupleToConstructorTransformer ByConstructor<T>()
         {
             return ByConstructor(typeof(T));
         }

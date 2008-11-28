@@ -72,9 +72,10 @@
   <ItemGroup>
     <Compile Include="DataAccess\GenericInterceptor.cs" />
     <Compile Include="DataAccess\ISimpleInterceptor.cs" />
+    <Compile Include="DataAccess\MultiSessionFactory.cs" />
     <Compile Include="DataAccess\SimpleTransformers.cs" />
     <Compile Include="DataAccess\TimestampType.cs" />
-    <Compile Include="DataAccess\TupleToConstrctorTransformer.cs" />
+    <Compile Include="DataAccess\TupleToConstructorTransformer.cs" />
     <Compile Include="DataAccess\BaseDao.cs" />
     <Compile Include="DataAccess\CriteriaHelper.cs" />
     <Compile Include="DataAccess\Extensions.cs" />

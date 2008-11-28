@@ -8,6 +8,8 @@ using SimpleLibrary.Rules;
 using BasicLibrary.Logging;
 using BasicLibrary.Configuration;
 using System.Globalization;
+using SimpleLibrary.Config;
+using SimpleLibrary.DataAccess;
 
 namespace Sample.UserInterface2
 {
@@ -32,10 +34,11 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
+            SimpleLibraryConfig config = SimpleLibraryConfig.Get();
+
             Thread.Sleep(4000);
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
-            rules.TestMethod(null);
-            IList<Empresa> list = rules.ListAll(null);
+            rules.DeleteById(2);
 
             
 

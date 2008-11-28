@@ -7,10 +7,10 @@ using System.Reflection;
 
 namespace SimpleLibrary.DataAccess
 {
-    public class TupleToConstrctorTransformer : IResultTransformer
+    public class TupleToConstructorTransformer : IResultTransformer
     {
         public Type ResultType { get; set; }
-        public TupleToConstrctorTransformer(Type t)
+        public TupleToConstructorTransformer(Type t)
         {
             ResultType = t;
         }

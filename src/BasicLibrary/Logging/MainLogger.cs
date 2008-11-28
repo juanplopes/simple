@@ -19,43 +19,50 @@ namespace BasicLibrary.Logging
 {
     public class MainLogger
     {
-        protected static BasicLibraryConfig config;
-
-        static MainLogger()
+        protected static MultiLoggerFactory _factory;
+        protected static MultiLoggerFactory Factory
         {
-            LoadConfig();
-        }
-
-        static void LoadConfig()
-        {
-            config = BasicLibraryConfig.Get();
-            (config as IConfigElement).OnExpire += new EventHandler(MainLogger_OnExpire);
-            LogManager.ResetConfiguration();
-            XmlConfigurator.Configure(config.Log4net.GetStream());
-        }
-
-        static void MainLogger_OnExpire(object sender, EventArgs e)
-        {
-            LoadConfig();
+            get
+            {
+                if (_factory == null)
+                {
+                    _factory = new MultiLoggerFactory();
+                }
+                return _factory;
+            }
         }
 
         public static ILog Get(Type type)
         {
-            return LogManager.GetLogger(type);
+            return TryGetLogger(x => x.Get(type));
         }
 
-        public static ILog Get(string loggerName) {
-            return LogManager.GetLogger(loggerName);
+        public static ILog Get(string loggerName)
+        {
+            return TryGetLogger(x => x.Get(loggerName));
         }
 
         public static ILog Get(object obj)
         {
-            return Get(obj.GetType());
+            return TryGetLogger(x => x.Get(obj));
         }
 
         public static ILog Get<T>()
         {
-            return Get(typeof(T));
+            return TryGetLogger(x => x.Get<T>());
+        }
+
+        protected delegate ILog GetLoggerDelegate(MultiLoggerFactory factory);
+        protected static ILog TryGetLogger(GetLoggerDelegate @delegate)
+        {
+            try
+            {
+                return @delegate.Invoke(Factory);
+            }
+            catch
+            {
+                return LogManager.GetLogger("dummy");
+            }
         }
 
     }
