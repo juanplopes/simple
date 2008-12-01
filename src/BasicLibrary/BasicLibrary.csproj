@@ -56,6 +56,7 @@
     <Compile Include="Cache\FileCacher.cs" />
     <Compile Include="Cache\ICacher.cs" />
     <Compile Include="Common\DecoratedTypeFinder.cs" />
+    <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Configuration\AssemblyConfigElement.cs" />
     <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
     <Compile Include="Configuration\FileConfigCacher.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Common\ICastable.cs" />
     <Compile Include="Common\StringUtils.cs" />
     <Compile Include="Logging\MultiLoggerFactory.cs" />
+    <Compile Include="Reflection\EntityHelper.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
     <Compile Include="Persistence\ExecutionContext.cs" />
     <Compile Include="Reflection\GenericActivator.cs" />

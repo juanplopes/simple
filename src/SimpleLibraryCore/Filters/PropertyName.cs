@@ -50,7 +50,7 @@ namespace SimpleLibrary.Filters
 
         public void EnsureNotDotted()
         {
-            Debug.Assert(!Dotted, "PropertyName must be non-dotted");
+            //Debug.Assert(!Dotted, "PropertyName must be non-dotted");
         }
 
         public PropertyName Dot(PropertyName property)
