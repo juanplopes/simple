@@ -10,16 +10,16 @@ namespace SimpleLibrary.NUnit
     public class BaseEntityProvider<T> : IEntityProvider<T>
         where T : new()
     {
-        protected string SessionName { get; set; }
+        protected string FactoryName { get; set; }
         public bool SkipID { get; set; }
 
-        protected BaseEntityProvider(string sessionName, bool skipId)
+        public BaseEntityProvider(string factoryName, bool skipId)
         {
-            SessionName = sessionName;
+            FactoryName = factoryName;
             SkipID = skipId;
         }
 
-        protected BaseEntityProvider(bool skipId)
+        public BaseEntityProvider(bool skipId)
             : this(null, skipId) { }
 
         public virtual T Populate(int seed)
@@ -37,7 +37,7 @@ namespace SimpleLibrary.NUnit
             T e = new T();
             Dictionary<string, bool> dic = new Dictionary<string, bool>();
 
-            PersistentClass cls = SessionManager.GetConfig(SessionName).GetClassMapping(typeof(T));
+            PersistentClass cls = SessionManager.GetConfig(FactoryName).GetClassMapping(typeof(T));
             if (SkipID)
             {
                 if (cls.Identifier is Component)

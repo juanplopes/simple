@@ -12,11 +12,10 @@ using NHibernate;
 namespace SimpleLibrary.NUnit
 {
     [TestFixture]
-    public class BaseTests<E, P>
-        where P : IEntityProvider<E>, new()
+    public class BaseTests<E> : IEntityProvider<E>
         where E : new()
     {
-        public virtual int CreationNumber
+        protected virtual int CreationNumber
         {
             get
             {
@@ -24,12 +23,18 @@ namespace SimpleLibrary.NUnit
             }
         }
 
-        public P EntityProvider
+        protected virtual bool DefaultSkipID
         {
             get
             {
-                return new P();
+                return true;
             }
+        }
+
+
+        private IEntityProvider<E> CreateEntityProvider()
+        {
+            return new BaseEntityProvider<E>(DefaultSkipID);
         }
 
         [Test]
@@ -57,7 +62,7 @@ namespace SimpleLibrary.NUnit
             BaseDao<E> rules = new BaseDao<E>();
             for (int i = 0; i < CreationNumber; i++)
             {
-                rules.Persist(EntityProvider.Populate(i));
+                rules.Persist(Populate(i));
             }
         }
 
@@ -66,7 +71,7 @@ namespace SimpleLibrary.NUnit
             BaseDao<E> rules = new BaseDao<E>();
             for (int i = 0; i < CreationNumber; i++)
             {
-                E e = EntityProvider.Populate(i);
+                E e = Populate(i);
                 e = rules.LoadByExample(e);
                 rules.Update(e);
             }
@@ -77,7 +82,7 @@ namespace SimpleLibrary.NUnit
             BaseDao<E> rules = new BaseDao<E>();
             for (int i = 0; i < CreationNumber; i++)
             {
-                E e = EntityProvider.Populate(i);
+                var e = Populate(i);
                 IList<E> list = rules.ListByExample(e);
                 Assert.AreEqual(list.Count, 1);
             }
@@ -88,7 +93,7 @@ namespace SimpleLibrary.NUnit
             BaseDao<E> rules = new BaseDao<E>();
             for (int i = 0; i < CreationNumber; i++)
             {
-                E e = EntityProvider.Populate(i);
+                var e = Populate(i);
                 int deleted = rules.DeleteByCriteria(rules.CreateCriteria().Add(
                     CriteriaHelper.GetCriterion(Expression.Example(e)))
                 );
@@ -96,5 +101,19 @@ namespace SimpleLibrary.NUnit
                     Assert.AreEqual(deleted, 1);
             }
         }
+
+        #region IEntityProvider<E> Members
+
+        public virtual E Populate(int seed)
+        {
+            return CreateEntityProvider().Populate(seed);
+        }
+
+        public virtual bool Compare(E e1, E e2)
+        {
+            return CreateEntityProvider().Compare(e1, e1);
+        }
+
+        #endregion
     }
 }

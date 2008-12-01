@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+using BasicLibrary.Common;
 
 namespace BasicLibrary.Reflection
 {
@@ -55,6 +56,32 @@ namespace BasicLibrary.Reflection
                 throw new InvalidOperationException("Intern object reference not intialized");
 
             return ObjectEquals(_obj, obj2);
+        }
+
+        public int ObjectGetHashCode(object obj)
+        {
+            if (obj == null) return 1;
+            if (!_entityType.IsAssignableFrom(obj.GetType())) return -1;
+
+            IEnumerator<int> primes = PrimeNumbers.GetPrimeEnumrable().GetEnumerator();
+            int res = 1;
+
+            foreach (string idProp in _ids)
+            {
+                primes.MoveNext();
+                PropertyInfo info = _entityType.GetProperty(idProp);
+                object value = info.GetValue(obj, null);
+                if (value != null)
+                {
+                    res *= (value.GetHashCode() * primes.Current);
+                }
+            }
+            return res;
+        }
+
+        public int ObjectGetHashCode()
+        {
+            return ObjectGetHashCode(_obj);
         }
     }
 }

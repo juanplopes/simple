@@ -7,21 +7,50 @@ namespace BasicLibrary.Common
 {
     public class PrimeNumbers
     {
-        public IEnumerable<int> GetPrimeEnumerable(int topNumber)
+        protected static BitArray Numbers { get; set; }
+        protected static IList<int> Primes { get; set; }
+
+        public const int TopSieveNumber = 1<<14;
+        public static int PrimeCount
         {
-            BitArray numbers = new BitArray(topNumber, true);
-
-            for (int i = 2; i < topNumber; i++)
-                if (numbers[i])
-                    for (int j = i * 2; j < topNumber; j += i)
-                        numbers[j] = false;
-
-
-            for (int i = 1; i < topNumber; i++)
-                if (numbers[i])
-                    yield return i;
+            get
+            {
+                EnsureInitialized();
+                return Primes.Count;
+            }
         }
 
+        protected static void EnsureInitialized()
+        {
+            if (Numbers == null)
+            {
+                Numbers = new BitArray(TopSieveNumber, true);
+                for (int i = 2; i < TopSieveNumber; i++)
+                    if (Numbers[i])
+                        for (int j = i * 2; j < TopSieveNumber; j += i)
+                            Numbers[j] = false;
+
+
+                for (int i = 1; i < TopSieveNumber; i++)
+                    if (Numbers[i])
+                        Primes.Add(i);
+            }
+        }
+
+        public static IEnumerable<int> GetPrimeEnumrable()
+        {
+            EnsureInitialized();
+            foreach (int i in Primes)
+            {
+                yield return i;
+            }
+        }
+
+        public static int GetByIndex(int idx)
+        {
+            EnsureInitialized();
+            return Primes[idx];
+        }
 
     }
 }
