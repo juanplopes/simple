@@ -31,7 +31,7 @@ namespace SimpleLibrary.NUnit
 
         protected bool CheckType<T>(Type type)
         {
-            return typeof(T).IsAssignableFrom(type);
+            return type.IsAssignableFrom(typeof(T));
         }
 
         #endregion

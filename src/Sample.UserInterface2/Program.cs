@@ -10,6 +10,8 @@ using BasicLibrary.Configuration;
 using System.Globalization;
 using SimpleLibrary.Config;
 using SimpleLibrary.DataAccess;
+using System.Web.UI;
+using System.Collections;
 
 namespace Sample.UserInterface2
 {
@@ -32,15 +34,19 @@ namespace Sample.UserInterface2
 
     class Program
     {
+        static IEnumerable Test()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                yield return i;
+            }
+        }
+
         static void Main(string[] args)
         {
-            SimpleLibraryConfig config = SimpleLibraryConfig.Get();
+            IEnumerable a = Test();
+            IEnumerator b = a.GetEnumerator();
 
-            Thread.Sleep(4000);
-            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
-            rules.DeleteById(2);
-
-            
 
         }
     }

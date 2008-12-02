@@ -10,13 +10,15 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
-            <Columns>
-                <asp:BoundField DataField="IdEmpresa" HeaderText="ID" />
-                <asp:BoundField DataField="Nome" />
-                <asp:BoundField DataField="FkEmpresaFuncionarioEmpresa" />
-            </Columns>
-        </asp:GridView>
+       
+        <asp:DetailsView ID="DetailsView1" runat="server" Height="50px" Width="125px">
+        <Fields>
+        <asp:TemplateField>
+        
+        </asp:TemplateField>
+        </Fields>
+        </asp:DetailsView>
+       
     </div>
     </form>
 </body>

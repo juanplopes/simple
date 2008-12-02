@@ -62,8 +62,10 @@
     <Compile Include="Config\SessionFactoryElement.cs" />
     <Compile Include="Config\SimpleLibraryConfig.cs" />
     <Compile Include="Config\ThreadingElement.cs" />
-    <Compile Include="DataAccess\EntityDataSource.cs" />
-    <Compile Include="DataAccess\EntityDataSourceView.cs" />
+    <Compile Include="DataAccess\EntityTransformer.cs" />
+    <Compile Include="DataAccess\MappedProperty.cs" />
+    <Compile Include="DataAccess\SimpleDataSource.cs" />
+    <Compile Include="DataAccess\SimpleDataSourceView.cs" />
     <Compile Include="DataAccess\GenericFault.cs" />
     <Compile Include="DataAccess\IExceptionHandler.cs" />
     <Compile Include="DataAccess\Page.cs" />
