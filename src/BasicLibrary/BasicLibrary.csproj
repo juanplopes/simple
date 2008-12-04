@@ -154,7 +154,6 @@
     <Compile Include="Threading\UnableToAcquireLockException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="BasicLibrary.config">
     </None>
     <Content Include="ConfigFiles.xml" />
