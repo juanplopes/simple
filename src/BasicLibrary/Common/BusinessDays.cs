@@ -23,97 +23,97 @@ namespace BasicLibrary.Common
             instances = new Dictionary<IBusinessDaysProvider, BusinessDays>();
         }
 
-        private DateTime referenceDate;
-        private IList<DateTime> forwardDays;
-        private IList<DateTime> backwardDays;
-        private IDictionary<DateTime, int> refCache;
-        private IBusinessDaysProvider provider;
+        protected DateTime referenceDate;
+        protected IList<DateTime> forwardDays;
+        protected IList<DateTime> backwardDays;
+        protected IDictionary<DateTime, int> refCache;
+        protected IBusinessDaysProvider provider;
 
-        private BusinessDays(IBusinessDaysProvider pobjProvider)
+        protected BusinessDays(IBusinessDaysProvider provider)
         {
-            forwardDays = new List<DateTime>();
-            backwardDays = new List<DateTime>();
-            refCache = new Dictionary<DateTime, int>();
-            referenceDate = DateTime.Now.Date;
-            provider = pobjProvider;
-            refCache[referenceDate] = 0;
+            this.forwardDays = new List<DateTime>();
+            this.backwardDays = new List<DateTime>();
+            this.refCache = new Dictionary<DateTime, int>();
+            this.referenceDate = DateTime.Now.Date;
+            this.provider = provider;
+            this.refCache[referenceDate] = 0;
         }
 
-        public bool IsBusinessDay(DateTime pobjDate)
+        public bool IsBusinessDay(DateTime date)
         {
-            return provider.IsBusinessDay(pobjDate);
+            return provider.IsBusinessDay(date);
         }
 
-        public int GetBetween(DateTime pobjDate1, DateTime pobjDate2)
+        public int GetBetween(DateTime date1, DateTime date2)
         {
-            int lintDate1 = GetReferenceOffset(pobjDate1),
-                lintDate2 = GetReferenceOffset(pobjDate2);
+            int lintDate1 = GetReferenceOffset(date1),
+                lintDate2 = GetReferenceOffset(date2);
             return Math.Abs(lintDate2 - lintDate1);
         }
 
-        public DateTime GetBackwards(int pintBusinessDays)
+        public DateTime GetBackwards(int businessDays)
         {
-            return GetBackwards(pintBusinessDays, DateTime.Now);
+            return GetBackwards(businessDays, DateTime.Now);
         }
 
-        public DateTime GetInAdvance(int pintBusinessDays)
+        public DateTime GetInAdvance(int businessDays)
         {
-            return GetInAdvance(pintBusinessDays, DateTime.Now);
+            return GetInAdvance(businessDays, DateTime.Now);
         }
 
-        public DateTime GetBackwards(int pintBusinessDays, DateTime pobjReference)
+        public DateTime GetBackwards(int businessDays, DateTime reference)
         {
-            int lintOffset = GetReferenceOffset(pobjReference);
-            return GetGeneric(-pintBusinessDays + lintOffset);
+            int offset = GetReferenceOffset(reference);
+            return GetGeneric(-businessDays + offset);
         }
 
-        public DateTime GetInAdvance(int pintBusinessDays, DateTime pobjReference)
+        public DateTime GetInAdvance(int businessDays, DateTime reference)
         {
-            int lintOffset = GetReferenceOffset(pobjReference);
-            return GetGeneric(pintBusinessDays + lintOffset);
+            int offset = GetReferenceOffset(reference);
+            return GetGeneric(businessDays + offset);
         }
 
-        private int GetReferenceOffset(DateTime pobjDate)
+        protected int GetReferenceOffset(DateTime date)
         {
-            pobjDate = pobjDate.Date;
-            if (pobjDate == referenceDate) return 0;
+            date = date.Date;
+            if (date == referenceDate) return 0;
 
-            if (!refCache.ContainsKey(pobjDate))
+            if (!refCache.ContainsKey(date))
             {
-                IList<DateTime> llstBDays = (pobjDate < referenceDate) ? backwardDays : forwardDays;
-                int lintDirection = (pobjDate < referenceDate) ? -1 : 1;
+                IList<DateTime> listOfDays = (date < referenceDate) ? backwardDays : forwardDays;
+                int direction = (date < referenceDate) ? -1 : 1;
 
-                DateTime lobjCurrent = llstBDays.Count > 0 ? llstBDays[llstBDays.Count - 1] : referenceDate;
+                DateTime current = listOfDays.Count > 0 ? listOfDays[listOfDays.Count - 1] : referenceDate;
 
-                while (pobjDate.CompareTo(lobjCurrent) == lintDirection)
+                while (date.CompareTo(current) == direction)
                 {
-                    lobjCurrent = lobjCurrent.AddDays(lintDirection);
-                    if (IsBusinessDay(lobjCurrent)) llstBDays.Add(lobjCurrent);
-                    refCache[lobjCurrent] = lintDirection * llstBDays.Count;
+                    current = current.AddDays(direction);
+                    if (IsBusinessDay(current)) listOfDays.Add(current);
+                    refCache[current] = direction * listOfDays.Count;
                 }
             }
 
-            return refCache[pobjDate];
+            return refCache[date];
         }
 
-        private DateTime GetGeneric(int pintBusinessDays)
+        protected DateTime GetGeneric(int businessDays)
         {
-            if (pintBusinessDays == 0) return referenceDate;
+            if (businessDays == 0) return referenceDate;
 
-            IList<DateTime> llstBDays = (pintBusinessDays < 0) ? backwardDays : forwardDays;
-            int lintDirection = (pintBusinessDays < 0) ? -1 : 1;
-            pintBusinessDays = Math.Abs(pintBusinessDays);
+            IList<DateTime> listOfDays = (businessDays < 0) ? backwardDays : forwardDays;
+            int direction = (businessDays < 0) ? -1 : 1;
+            businessDays = Math.Abs(businessDays);
 
-            DateTime lobjCurrent = llstBDays.Count > 0 ? llstBDays[llstBDays.Count - 1] : referenceDate;
+            DateTime lobjCurrent = listOfDays.Count > 0 ? listOfDays[listOfDays.Count - 1] : referenceDate;
 
-            while (pintBusinessDays > llstBDays.Count)
+            while (businessDays > listOfDays.Count)
             {
-                lobjCurrent = lobjCurrent.AddDays(lintDirection);
-                if (IsBusinessDay(lobjCurrent)) llstBDays.Add(lobjCurrent);
-                refCache[lobjCurrent] = lintDirection * llstBDays.Count;
+                lobjCurrent = lobjCurrent.AddDays(direction);
+                if (IsBusinessDay(lobjCurrent)) listOfDays.Add(lobjCurrent);
+                refCache[lobjCurrent] = direction * listOfDays.Count;
             }
 
-            return llstBDays[pintBusinessDays - 1];
+            return listOfDays[businessDays - 1];
         }
     }
 }

@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLibraryCore", "Simple
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLibraryServer", "SimpleLibraryServer\SimpleLibraryServer.csproj", "{35DBC634-E490-4239-9315-4E9210647C2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.UserInterface1", "Sample.UserInterface1\Sample.UserInterface1.csproj", "{4E2A818E-E32B-4B3A-9537-00538BE79DF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.UserInterfaceMVC", "Sample.UserInterfaceMVC\Sample.UserInterfaceMVC.csproj", "{A761AE86-B8BC-444F-B39C-30949459EA3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,10 +62,10 @@ Global
 		{35DBC634-E490-4239-9315-4E9210647C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35DBC634-E490-4239-9315-4E9210647C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35DBC634-E490-4239-9315-4E9210647C2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E2A818E-E32B-4B3A-9537-00538BE79DF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E2A818E-E32B-4B3A-9537-00538BE79DF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E2A818E-E32B-4B3A-9537-00538BE79DF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E2A818E-E32B-4B3A-9537-00538BE79DF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A761AE86-B8BC-444F-B39C-30949459EA3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A761AE86-B8BC-444F-B39C-30949459EA3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A761AE86-B8BC-444F-B39C-30949459EA3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A761AE86-B8BC-444F-B39C-30949459EA3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

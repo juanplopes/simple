@@ -36,8 +36,6 @@ namespace SimpleLibrary.DataAccess
             }
             else
             {
-                DataTable d;
-
                 IList<T> page = Rules.ListByFilter(Filters, col);
                 arguments.TotalRowCount = page.Count;
                 return transformer.ToEnumerableDictionary(page);

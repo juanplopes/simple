@@ -12,25 +12,30 @@ using SimpleLibrary.Config;
 using SimpleLibrary.DataAccess;
 using System.Web.UI;
 using System.Collections;
+using BasicLibrary.Common;
 
 namespace Sample.UserInterface2
 {
-    [DefaultFile("TestConfig.config")]
-    class TestConfig : ConfigRoot<TestConfig>
+    public class TestBusinessDaysProvider : IBusinessDaysProvider
     {
-        [ConfigElement("aSampleString")]
-        public string SampleString { get; set; }
-
-        [ConfigAcceptsParent("listOfStrings")]
-        [ConfigElement("aString")]
-        public List<string> ListOfStrings { get; set; }
-
-        [ConfigAcceptsParent("dictionary")]
-        [ConfigDictionaryKeyName("name")]
-        [ConfigElement("valor")]
-        public Dictionary<string, int> Dic { get; set; }
+        public bool IsBusinessDay(DateTime pobjDate)
+        {
+            return pobjDate.Day % 2 == 0;
+        }
     }
 
+    public class Test2 : IBusinessDaysProvider
+    {
+
+        #region IBusinessDaysProvider Members
+
+        public bool IsBusinessDay(DateTime pobjDate)
+        {
+            return pobjDate.Day % 2 != 0;
+        }
+
+        #endregion
+    }
 
     class Program
     {
@@ -44,10 +49,15 @@ namespace Sample.UserInterface2
 
         static void Main(string[] args)
         {
-            IEnumerable a = Test();
-            IEnumerator b = a.GetEnumerator();
+            var days = BusinessDays.Get(
+                new CompositeBusinessDaysProvider(
+                    new TestBusinessDaysProvider(),
+                    new Test2()
+                )
+            );
 
-
+            DateTime time = days.GetBackwards(1, DateTime.Now.AddDays(-1));
+            DateTime asd = days.GetInAdvance(1, DateTime.Now.AddDays(-1));
         }
     }
 }
