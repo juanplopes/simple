@@ -11,7 +11,7 @@ using SimpleLibrary.Rules;
 
 namespace Sample.BusinessServer.Rules
 {
-    public class FuncionarioRules : BaseRules<Funcionario, FuncionarioDao>, IFuncionarioRules
+    public class FuncionarioRules : BaseRules<Funcionario>, IFuncionarioRules
     {
 
     }

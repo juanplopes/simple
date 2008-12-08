@@ -10,9 +10,7 @@ using SimpleLibrary.ServiceModel;
 
 namespace Sample.BusinessServer.Rules
 {
-    public class EmpresaFuncionarioRules :
-        BaseRules<EmpresaFuncionario, EmpresaFuncionarioDao>,
-        IEmpresaFuncionarioRules
+    public class EmpresaFuncionarioRules : BaseRules<EmpresaFuncionario>, IEmpresaFuncionarioRules
     {
     }
 }

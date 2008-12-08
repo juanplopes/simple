@@ -12,7 +12,7 @@ using SimpleLibrary.Rules;
 
 namespace Sample.BusinessServer.Rules
 {
-    public class EmpresaRules : BaseRules<Empresa, EmpresaDao>, IEmpresaRules
+    public class EmpresaRules : BaseRules<Empresa>, IEmpresaRules
     {
         public override object TestMethod(object obj)
         {

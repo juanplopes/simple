@@ -22,23 +22,8 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
-            {
-
-            }
-
             Thread.Sleep(4000);
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
-
-            for (int i = 0; i < 1000; i++)
-            {
-                Empresa e = new Empresa()
-                {
-                    Nome = "qualquer" + i
-                };
-
-                rules.Persist(e);
-            }
             IList<Empresa> list = rules.ListAll(OrderBy.None());
         }
     }

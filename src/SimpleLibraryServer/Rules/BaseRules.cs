@@ -9,6 +9,11 @@ using SimpleLibrary.ServiceModel;
 
 namespace SimpleLibrary.Rules
 {
+    public class BaseRules<T> : BaseRules<T, BaseDao<T>>
+    {
+
+    }
+
     public class BaseRules<T, D> : IBaseRules<T>
         where D : BaseDao<T>, new()
     {
