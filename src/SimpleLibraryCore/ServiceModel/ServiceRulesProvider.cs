@@ -14,10 +14,12 @@ namespace SimpleLibrary.ServiceModel
     {
         protected ChannelFactory<T> FactoryCache { get; set; }
         protected SimpleLibraryConfig Config { get; set; }
+        protected Binding DefaultBinding { get; set; }
 
         public ServiceRulesProvider()
         {
             Config = SimpleLibraryConfig.Get();
+            DefaultBinding = ConfigLoader.CreateDefaultBinding();
         }
 
         public T Create(Uri endpointAddress)
@@ -36,8 +38,7 @@ namespace SimpleLibrary.ServiceModel
         {
             if (FactoryCache == null)
             {
-                Binding binding = ConfigLoader.CreateBinding(Config.ServiceModel.DefaultEndpoint);
-                FactoryCache = new ChannelFactory<T>(binding);
+                FactoryCache = new ChannelFactory<T>(DefaultBinding);
                 ConfigLoader.ApplyConfigurators(FactoryCache.Endpoint, Config.ServiceModel.DefaultEndpoint, true);
             }
 

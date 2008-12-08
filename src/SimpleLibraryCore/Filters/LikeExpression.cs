@@ -8,7 +8,7 @@ using SimpleLibrary.Config;
 namespace SimpleLibrary.Filters
 {
     [DataContract]
-    public class LikeExpression : PropertyExpression<string>
+    public class LikeExpression : TypedPropertyExpression<string>
     {
         public static bool DefaultIgnoreCase
         {

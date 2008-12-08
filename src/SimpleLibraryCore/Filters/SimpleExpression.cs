@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace SimpleLibrary.Filters
 {
     [DataContract]
-    public class SimpleExpression : PropertyExpression<object>
+    public class SimpleExpression : TypedPropertyExpression<object>
     {
         public const string EqualsExpression = "=";
         public const string GreaterThanExpression = ">";

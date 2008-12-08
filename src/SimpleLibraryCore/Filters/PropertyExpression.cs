@@ -19,16 +19,4 @@ namespace SimpleLibrary.Filters
             this.PropertyName = propertyName;
         }
     }
-
-    [DataContract]
-    public class PropertyExpression<T> : PropertyExpression
-    {
-        [DataMember]
-        public T Value { get; set; }
-
-        public PropertyExpression(PropertyName propertyName, T value) : base(propertyName)
-        {
-            this.Value = value;
-        }
-    }
 }

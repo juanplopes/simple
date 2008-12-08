@@ -13,6 +13,7 @@ using SimpleLibrary.DataAccess;
 using System.Web.UI;
 using System.Collections;
 using BasicLibrary.Common;
+using System.Text.RegularExpressions;
 
 namespace Sample.UserInterface2
 {
@@ -39,25 +40,21 @@ namespace Sample.UserInterface2
 
     class Program
     {
-        static IEnumerable Test()
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                yield return i;
-            }
-        }
-
         static void Main(string[] args)
         {
-            var days = BusinessDays.Get(
-                new CompositeBusinessDaysProvider(
-                    new TestBusinessDaysProvider(),
-                    new Test2()
-                )
-            );
+            Thread.Sleep(4000);
+            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
 
-            DateTime time = days.GetBackwards(1, DateTime.Now.AddDays(-1));
-            DateTime asd = days.GetInAdvance(1, DateTime.Now.AddDays(-1));
+            for (int i = 0; i < 1000; i++)
+            {
+                Empresa e = new Empresa()
+                {
+                    Nome = "qualquer" + i
+                };
+
+                rules.Persist(e);
+            }
+            IList<Empresa> list = rules.ListAll(OrderBy.None());
         }
     }
 }

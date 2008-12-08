@@ -11,18 +11,9 @@ namespace SimpleLibrary.ServiceModel
 {
     public class ConfigLoader
     {
-        public static Binding CreateBinding(EndpointElement element)
+        public static Binding CreateDefaultBinding()
         {
-            Type bindingType = element.BindingType.LoadType();
-            try
-            {
-                Binding binding = (Binding)Activator.CreateInstance(bindingType, element.BindingNameRef);
-                return binding;
-            }
-            catch
-            {
-                return (Binding)Activator.CreateInstance(bindingType);
-            }
+            return new WSHttpBinding();
         }
 
         public static void ApplyConfigurators(ServiceHost endpoint, ServiceModelElement element, bool isClient)

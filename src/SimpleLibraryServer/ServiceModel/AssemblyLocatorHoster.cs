@@ -21,11 +21,13 @@ namespace SimpleLibrary.ServiceModel
 
         protected IList<Type> ServiceTypes { get; set; }
         protected SimpleLibraryConfig Config { get; set; }
+        protected Binding DefaultBinding { get; set; }
 
         public AssemblyLocatorHoster()
         {
             ServiceTypes = new List<Type>();
             Config = SimpleLibraryConfig.Get();
+            DefaultBinding = ConfigLoader.CreateDefaultBinding();
         }
 
         protected Type GetMainContractType(Type serviceType)
@@ -77,8 +79,7 @@ namespace SimpleLibrary.ServiceModel
 
         protected ServiceEndpoint AddEndpoint(ServiceHost host, EndpointElement element, Type contractType)
         {
-            Binding binding = ConfigLoader.CreateBinding(element);
-            return host.AddServiceEndpoint(contractType, binding, element.Address);
+            return host.AddServiceEndpoint(contractType, DefaultBinding, element.Address);
         }
 
         public void LocateServices(Assembly assembly)
