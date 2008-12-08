@@ -14,34 +14,19 @@ using System.Web.UI;
 using System.Collections;
 using BasicLibrary.Common;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace Sample.UserInterface2
 {
-    public class TestBusinessDaysProvider : IBusinessDaysProvider
-    {
-        public bool IsBusinessDay(DateTime pobjDate)
-        {
-            return pobjDate.Day % 2 == 0;
-        }
-    }
-
-    public class Test2 : IBusinessDaysProvider
-    {
-
-        #region IBusinessDaysProvider Members
-
-        public bool IsBusinessDay(DateTime pobjDate)
-        {
-            return pobjDate.Day % 2 != 0;
-        }
-
-        #endregion
-    }
-
     class Program
     {
         static void Main(string[] args)
         {
+            foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
+            {
+
+            }
+
             Thread.Sleep(4000);
             IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
 

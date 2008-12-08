@@ -70,6 +70,7 @@
     <Compile Include="DataAccess\IExceptionHandler.cs" />
     <Compile Include="DataAccess\Page.cs" />
     <Compile Include="DataAccess\PropertyDescriptionMapping.cs" />
+    <Compile Include="DataAccess\SimpleEntityAttribute.cs" />
     <Compile Include="DataAccess\SortExpressionAnalyzer.cs" />
     <Compile Include="DataAccess\PersistenceFault.cs" />
     <Compile Include="DefaultConfigContent.Designer.cs">
