@@ -29,6 +29,7 @@ namespace BasicLibrary.Configuration
 
         protected ConfigElement()
         {
+            this.LoadDefaults();
             ConfigInfo = new LoadConfiguration(this);
             XmlElements = new List<XmlElement>();
 
@@ -95,10 +96,9 @@ namespace BasicLibrary.Configuration
             XmlElements.Add(element);
         }
 
-        protected virtual void CheckConstraints()
-        {
+        protected virtual void LoadDefaults() { }
 
-        }
+        protected virtual void CheckConstraints() { }
 
         public virtual string DefaultXmlString
         {

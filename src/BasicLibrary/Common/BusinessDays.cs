@@ -53,22 +53,26 @@ namespace BasicLibrary.Common
 
         public DateTime GetBackwards(int businessDays)
         {
-            return GetBackwards(businessDays, DateTime.Now);
+            return GetBackwards(businessDays, DateTime.Now, false);
         }
 
         public DateTime GetInAdvance(int businessDays)
         {
-            return GetInAdvance(businessDays, DateTime.Now);
+            return GetInAdvance(businessDays, DateTime.Now, false);
         }
 
-        public DateTime GetBackwards(int businessDays, DateTime reference)
+        public DateTime GetBackwards(int businessDays, DateTime reference, bool considerCurrent)
         {
+            if (considerCurrent) businessDays--;
+
             int offset = GetReferenceOffset(reference);
             return GetGeneric(-businessDays + offset);
         }
 
-        public DateTime GetInAdvance(int businessDays, DateTime reference)
+        public DateTime GetInAdvance(int businessDays, DateTime reference, bool considerCurrent)
         {
+            if (considerCurrent) businessDays--;
+
             int offset = GetReferenceOffset(reference);
             return GetGeneric(businessDays + offset);
         }

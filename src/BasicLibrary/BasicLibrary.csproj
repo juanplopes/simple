@@ -57,9 +57,11 @@
     <Compile Include="Cache\ICacher.cs" />
     <Compile Include="Common\CompositeBusinessDaysProvider.cs" />
     <Compile Include="Common\DecoratedTypeFinder.cs" />
+    <Compile Include="Common\MathHelper.cs" />
     <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Configuration\AssemblyConfigElement.cs" />
     <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
+    <Compile Include="Configuration\ConfigStructureDisplayer.cs" />
     <Compile Include="Configuration\FileConfigCacher.cs" />
     <Compile Include="Configuration\ConfigFileElement.cs" />
     <Compile Include="Configuration\ConfigFilesConfig.cs" />

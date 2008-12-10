@@ -15,6 +15,9 @@ using System.Collections;
 using BasicLibrary.Common;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using System.Xml;
+using System.IO;
+using System.Text;
 
 namespace Sample.UserInterface2
 {
@@ -22,9 +25,10 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            Thread.Sleep(4000);
-            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
-            IList<Empresa> list = rules.ListAll(OrderBy.None());
+            ConfigStructureDisplayer disp = new ConfigStructureDisplayer(typeof(SimpleLibraryConfig));
+            XmlDocument doc = disp.CreateSampleStructure();
+            
+
         }
     }
 }
