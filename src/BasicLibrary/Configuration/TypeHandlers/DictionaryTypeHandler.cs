@@ -45,10 +45,10 @@ namespace BasicLibrary.Configuration.TypeHandlers
             Type[] types = property.PropertyType.GetGenericArguments();
             Type keyType = types[0];
             Type valueType = types[1];
-            object objectKey = Resolver.GetFromXmlString(key, keyType);
+            object objectKey = Resolver.FromString(key, keyType);
 
             ((IDictionary)property.GetValue(ConfigInfo.Element, null))[objectKey] =
-                Resolver.GetFromXmlElement(element, valueType, ((IDictionary)property.GetValue(ConfigInfo.Element, null))[objectKey]);
+                Resolver.FromXmlElement(element, valueType, ((IDictionary)property.GetValue(ConfigInfo.Element, null))[objectKey]);
         }
     }
 }

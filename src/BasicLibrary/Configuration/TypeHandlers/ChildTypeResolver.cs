@@ -9,7 +9,35 @@ namespace BasicLibrary.Configuration.TypeHandlers
 {
     public class ChildTypeResolver
     {
-        public object GetFromXmlElement(XmlElement element, Type type, object currentValue)
+        public static ChildTypeResolver Instance { get { return Nested._instance; } }
+
+        protected class Nested
+        {
+            public static ChildTypeResolver _instance = new ChildTypeResolver();
+        }
+
+        public static object Get(string value, Type type)
+        {
+            return Instance.FromString(value, type);
+        }
+
+        public static T Get<T>(string value)
+        {
+            return (T)Instance.FromString(value, typeof(T));
+        }
+
+        public static object Get(XmlElement element, Type type, object current)
+        {
+            return Instance.FromXmlElement(element, type, current);
+
+        }
+
+        public static T Get<T>(XmlElement element, T current)
+        {
+            return (T)Instance.FromXmlElement(element, typeof(T), current);
+        }
+
+        public object FromXmlElement(XmlElement element, Type type, object currentValue)
         {
             if (typeof(IConfigElement).IsAssignableFrom(type))
             {
@@ -19,11 +47,11 @@ namespace BasicLibrary.Configuration.TypeHandlers
             }
             else
             {
-                return GetFromXmlString(element.InnerText, type);
+                return FromString(element.InnerText, type);
             }
         }
 
-        public object GetFromXmlString(string value, Type type)
+        public object FromString(string value, Type type)
         {
             if (typeof(Enum).IsAssignableFrom(type))
             {
@@ -39,7 +67,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
             }
             else if (type.IsGenericType && typeof(Nullable<>).IsAssignableFrom(type.GetGenericTypeDefinition()) && typeof(IConvertible).IsAssignableFrom(type.GetGenericArguments()[0]))
             {
-                return GetFromXmlString(value, type.GetGenericArguments()[0]);
+                return FromString(value, type.GetGenericArguments()[0]);
             }
             else if (typeof(IStringConvertible).IsAssignableFrom(type))
             {

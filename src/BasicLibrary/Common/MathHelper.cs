@@ -22,5 +22,12 @@ namespace BasicLibrary.Common
         {
             return (int)ModRound(p, q);
         }
+
+        public static void Swap<T>(ref T a, ref T b)
+        {
+            T t = a;
+            a = b;
+            b = t;
+        }
     }
 }

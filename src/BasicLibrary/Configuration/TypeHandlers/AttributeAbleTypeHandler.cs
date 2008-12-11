@@ -18,7 +18,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
                 PropertyInfo property = Properties[attribute.Name];
 
                 property.SetValue(ConfigInfo.Element,
-                    Resolver.GetFromXmlString(attribute.Value, property.PropertyType),
+                    Resolver.FromString(attribute.Value, property.PropertyType),
                     null);
             }
         }

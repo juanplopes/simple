@@ -55,7 +55,7 @@
     <Compile Include="Cache\BaseCacher.cs" />
     <Compile Include="Cache\FileCacher.cs" />
     <Compile Include="Cache\ICacher.cs" />
-    <Compile Include="Common\CompositeBusinessDaysProvider.cs" />
+    <Compile Include="Common\BaseWorkingDaysProvider.cs" />
     <Compile Include="Common\DecoratedTypeFinder.cs" />
     <Compile Include="Common\MathHelper.cs" />
     <Compile Include="Common\PrimeNumbers.cs" />
@@ -92,9 +92,9 @@
     <Compile Include="LibraryConfig\BasicLibraryConfig.cs" />
     <Compile Include="LibraryConfig\Log4netConfig.cs" />
     <Compile Include="Logging\MainLogger.cs" />
-    <Compile Include="Common\BusinessDays.cs" />
+    <Compile Include="Common\WorkingDays.cs" />
     <Compile Include="Common\EnumTypeAttribute.cs" />
-    <Compile Include="Common\IBusinessDaysProvider.cs" />
+    <Compile Include="Common\IWorkingDaysProvider.cs" />
     <Compile Include="Common\ICastable.cs" />
     <Compile Include="Common\StringUtils.cs" />
     <Compile Include="Logging\MultiLoggerFactory.cs" />

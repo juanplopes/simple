@@ -17,7 +17,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
         public ConfigTypeHandler(LoadConfiguration config)
         {
             Properties = new Dictionary<string, PropertyInfo>();
-            Resolver = new ChildTypeResolver();
+            Resolver = ChildTypeResolver.Instance;
             ConfigInfo = config;
             LoadAllProperties();
         }

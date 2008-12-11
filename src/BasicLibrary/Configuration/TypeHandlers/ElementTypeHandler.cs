@@ -24,7 +24,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
 
         protected virtual object GetFromXmlElement(XmlElement element, Type type, object currentValue)
         {
-            return Resolver.GetFromXmlElement(element, type, currentValue);
+            return Resolver.FromXmlElement(element, type, currentValue);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
 
             if (!AlreadyDefined.ContainsKey(element.Name)) ((IList)property.GetValue(ConfigInfo.Element, null)).Clear();
 
-            ((IList)property.GetValue(ConfigInfo.Element, null)).Add(Resolver.GetFromXmlElement(element, property.PropertyType.GetGenericArguments()[0], null));
+            ((IList)property.GetValue(ConfigInfo.Element, null)).Add(Resolver.FromXmlElement(element, property.PropertyType.GetGenericArguments()[0], null));
 
             AlreadyDefined[element.Name] = true;
         }
