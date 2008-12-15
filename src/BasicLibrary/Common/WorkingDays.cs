@@ -44,7 +44,7 @@ namespace BasicLibrary.Common
         {
             int mult = (direction ? 1 : -1);
 
-            reference = reference.Date.AddDays(considerCurrent ? 0 : 1 * mult);
+            reference = reference.Date.AddDays(considerCurrent && IsWorkingDay(reference) ? 0 : 1 * mult);
             long start = reference.Ticks;
             long end = reference.AddDays(businessDays * 2 * mult).Ticks;
 
@@ -82,7 +82,7 @@ namespace BasicLibrary.Common
             }
 
             while (!IsWorkingDay(date))
-                date.AddDays(-1);
+                date = date.AddDays(-1);
 
             return date;
         }
