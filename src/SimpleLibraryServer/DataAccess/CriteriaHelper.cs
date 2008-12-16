@@ -34,11 +34,20 @@ namespace SimpleLibrary.DataAccess
                 Filters.ExampleFilter example = filter as Filters.ExampleFilter;
                 return Example.Create(example.Entity).EnableLike();
             }
-            else if (filter is Filters.UnaryOperator)
+            else if (filter is Filters.Operator)
             {
-                ICriterion criterion1 = GetCriterion((filter as Filters.UnaryOperator).Filter1);
+                if (filter is Filters.UnaryOperator)
+                {
+                    ICriterion criterion1 = GetCriterion((filter as Filters.UnaryOperator).Filter1);
+
+                    if (filter is Filters.NotExpression)
+                    {
+                        return new NotExpression(criterion1);
+                    }
+                }
                 if (filter is Filters.BinaryOperator)
                 {
+                    ICriterion criterion1 = GetCriterion((filter as Filters.BinaryOperator).Filter1);
                     ICriterion criterion2 = GetCriterion((filter as Filters.BinaryOperator).Filter2);
 
                     if (filter is Filters.AndExpression)
@@ -50,10 +59,7 @@ namespace SimpleLibrary.DataAccess
                         return new OrExpression(criterion1, criterion2);
                     }
                 }
-                else if (filter is Filters.NotExpression)
-                {
-                    return new NotExpression(criterion1);
-                }
+
             }
             else if (filter is Filters.BetweenExpression)
             {
@@ -71,7 +77,7 @@ namespace SimpleLibrary.DataAccess
                 if (prop is Filters.IsNullExpression) return Expression.IsNull(prop.PropertyName);
                 if (prop is Filters.IsNotNullExpression) return Expression.IsNotNull(prop.PropertyName);
             }
-            throw new InvalidOperationException("Invalid filter type");
+            throw new InvalidOperationException("Invalid filter type: " + filter.GetType().Name);
         }
     }
 }
