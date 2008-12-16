@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 
 using System.Text;
-using Castle.DynamicProxy;
-using Castle.Core.Interceptor;
 using System.Reflection;
 using BasicLibrary.Logging;
 using log4net;
-using Cramon.NetExtension.DynamicProxy;
+using BasicLibrary.DynamicProxy;
 
 namespace SimpleLibrary.Rules
 {

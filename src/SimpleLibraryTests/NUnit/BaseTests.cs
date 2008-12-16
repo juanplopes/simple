@@ -11,7 +11,6 @@ using NHibernate;
 
 namespace SimpleLibrary.NUnit
 {
-    [TestFixture]
     public class BaseTests<E> : IEntityProvider<E>
         where E : new()
     {

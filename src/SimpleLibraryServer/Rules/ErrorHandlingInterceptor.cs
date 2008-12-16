@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using System.Text;
-using Castle.Core.Interceptor;
 using SimpleLibrary.ServiceModel;
 using BasicLibrary.Logging;
 using System.Reflection;

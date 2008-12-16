@@ -49,6 +49,12 @@
     <Compile Include="NUnit\IEntityProvider.cs" />
     <Compile Include="NUnit\ITypeSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BasicLibraryTests\TestClasses\IImplemented.cs" />
+    <Compile Include="BasicLibraryTests\TestClasses\INotImplemented.cs" />
+    <Compile Include="BasicLibraryTests\TestClasses\INotImplemented2.cs" />
+    <Compile Include="BasicLibraryTests\TestClasses\ISimpleInterface.cs" />
+    <Compile Include="BasicLibraryTests\TestClasses\SimpleClass.cs" />
+    <Compile Include="BasicLibraryTests\DynamicProxyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">

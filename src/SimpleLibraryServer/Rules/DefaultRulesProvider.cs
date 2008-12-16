@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using SimpleLibrary.Config;
-using Castle.DynamicProxy;
 using BasicLibrary.Common;
-using Castle.Core.Interceptor;
 using BasicLibrary.Logging;
 using log4net;
 
