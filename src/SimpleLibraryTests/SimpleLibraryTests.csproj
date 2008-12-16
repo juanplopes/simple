@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicLibraryTests\BusinessDaysTests.cs" />
     <Compile Include="NUnit\BaseEntityProvider.cs" />
     <Compile Include="NUnit\BaseTests.cs" />
     <Compile Include="NUnit\BaseTypeSeeder.cs" />
@@ -50,6 +51,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
+      <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
+      <Name>BasicLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleLibraryCore\SimpleLibraryCore.csproj">
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
       <Name>SimpleLibraryCore</Name>

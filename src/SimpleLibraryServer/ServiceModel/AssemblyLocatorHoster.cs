@@ -53,7 +53,7 @@ namespace SimpleLibrary.ServiceModel
         protected override ServiceHost GetServiceHost(Type type)
         {
             Type contractType = GetMainContractType(type);
-            object obj = RulesProxyBuilder.CreateInstance(type, contractType);
+            object obj = RulesProxyBuilder.Instance.WrapInstance(Activator.CreateInstance(type), contractType);
 
             Uri uri = new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), contractType.Name);
             ServiceHost host = new ServiceHost(obj, uri);

@@ -12,17 +12,17 @@ using BasicLibrary.Configuration;
 
 namespace SimpleLibrary.Rules
 {
-    public class ErrorHandlingInterceptor : IInterceptor
+    public class ErrorHandlingInterceptor
     {
         SimpleLibraryConfig Config = SimpleLibraryConfig.Get();
 
         #region IInterceptor Members
 
-        public void Intercept(IInvocation invocation)
+        public object Interceptor(object target, MethodBase method, object[] parameters)
         {
             try
             {
-                invocation.Proceed();
+                return method.Invoke(target, parameters);
             }
             catch (Exception e)
             {
@@ -30,9 +30,12 @@ namespace SimpleLibrary.Rules
             }
             finally
             {
-                SessionManager.ReleaseThreadSessions();
+                if (SessionManager.IsInitialized)
+                    SessionManager.ReleaseThreadSessions();
             }
+            throw new InvalidProgramException("Cannot return without return");
         }
+
 
         protected bool Handle(Exception e)
         {

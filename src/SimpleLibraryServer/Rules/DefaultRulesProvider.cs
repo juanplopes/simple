@@ -17,15 +17,12 @@ namespace SimpleLibrary.Rules
         protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         protected static Type ImplementerClass { get; set; }
-        protected static Type ProxyClass { get; set; }
 
         public DefaultRulesProvider(Assembly asm)
         {
 
             if (ImplementerClass == null)
                 ImplementerClass = SearchForImplementerClass(asm);
-            if (ProxyClass == null)
-                ProxyClass = RulesProxyBuilder.CreateProxy(ImplementerClass, typeof(T));
         }
 
         public DefaultRulesProvider() : this(SimpleLibraryConfig.Get().Business.ServerAssembly.LoadAssembly())
@@ -51,7 +48,9 @@ namespace SimpleLibrary.Rules
 
         public T Create()
         {
-            return (T)RulesProxyBuilder.CreateInstanceFromProxyType(ProxyClass);
+            T obj = (T)Activator.CreateInstance(ImplementerClass);
+
+            return (T)RulesProxyBuilder.Instance.WrapInstance(obj, typeof(T));
         }
 
         public T CreateProxy(T obj)

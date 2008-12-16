@@ -7,32 +7,25 @@ using Castle.Core.Interceptor;
 using System.Reflection;
 using BasicLibrary.Logging;
 using log4net;
+using Cramon.NetExtension.DynamicProxy;
 
 namespace SimpleLibrary.Rules
 {
     public class RulesProxyBuilder
     {
-        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
-
-        public static Type CreateProxy(Type ruleType, Type interfaceType)
+        public static RulesProxyBuilder Instance { get { return Nested.Builder; } }
+        protected class Nested
         {
-            Logger.Debug("Creating proxy for type " + ruleType.FullName + "...");
-            DefaultProxyBuilder builder = new DefaultProxyBuilder();
-            ProxyGenerationOptions options = new ProxyGenerationOptions(new ErrorHandlingGenerationHook());
-            return builder.CreateClassProxy(ruleType, new Type[] { interfaceType }, options);
+            public static RulesProxyBuilder Builder = new RulesProxyBuilder();
         }
 
-        public static object CreateInstanceFromProxyType(Type type)
-        {
-            Logger.Debug("Creating proxy instance. Proxy type: " + type.FullName);
-            return Activator.CreateInstance(type, new object[] { 
-                new IInterceptor[] { new ErrorHandlingInterceptor() } });
-        }
+        protected ErrorHandlingInterceptor _interceptor = new ErrorHandlingInterceptor();
+        protected ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
-        public static object CreateInstance(Type ruleType, Type interfaceType)
+        public object WrapInstance(object obj, Type interfaceType)
         {
-            Type type = CreateProxy(ruleType, interfaceType);
-            return CreateInstanceFromProxyType(type);
+            DynamicProxyFactory factory = DynamicProxyFactory.Instance;
+            return factory.CreateProxy(obj, new InvocationDelegate(_interceptor.Interceptor), true, new Type[] { interfaceType });
         }
     }
 }

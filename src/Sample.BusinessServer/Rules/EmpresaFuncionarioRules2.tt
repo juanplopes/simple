@@ -7,7 +7,9 @@ using SimpleLibrary.ServiceModel;
 
 namespace Sample.BusinessServer.Rules
 {
-    public partial class FuncionarioRules : BaseRules<Funcionario>, IFuncionarioRules
+	<#for(int i=0; i<100; i++) {#>
+    public partial class EmpresaFuncionarioRules<#=i#> : BaseRules<EmpresaFuncionario>, IEmpresaFuncionarioRules<#=i#>
     {
     }
+    <#}#>
 }

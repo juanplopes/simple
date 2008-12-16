@@ -1,0 +1,16 @@
+using System;
+using System.ServiceModel;
+using Sample.BusinessInterface.Domain;
+using SimpleLibrary.Rules;
+using SimpleLibrary.ServiceModel;
+
+namespace Sample.BusinessInterface.Rules
+{
+    <#for(int i=0; i<100; i++) {#>
+    [ServiceContract, MainContract]
+    public partial interface IEmpresaFuncionarioRules<#=i#> : IBaseRules<EmpresaFuncionario>
+    {
+    }
+    <#}#>
+    
+}

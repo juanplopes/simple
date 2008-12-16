@@ -18,6 +18,8 @@ using System.Threading;
 using NHibernate;
 using BasicLibrary.Logging;
 using System.Globalization;
+using Sample.BusinessInterface.Rules;
+using SimpleLibrary.Rules;
 
 namespace Sample.BusinessServer.Infra
 {

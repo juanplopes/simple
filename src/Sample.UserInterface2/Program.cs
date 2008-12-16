@@ -18,6 +18,7 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using System.Text;
+using Sample.BusinessInterface.Rules;
 
 namespace Sample.UserInterface2
 {
@@ -25,10 +26,8 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            ConfigStructureDisplayer disp = new ConfigStructureDisplayer(typeof(SimpleLibraryConfig));
-            XmlDocument doc = disp.CreateSampleStructure();
-            
-
+            IEmpresaFuncionarioRules1 rules = RulesFactory.Create<IEmpresaFuncionarioRules1>();
+            rules.Save(new EmpresaFuncionario());
         }
     }
 }

@@ -35,6 +35,14 @@ namespace SimpleLibrary.DataAccess
                 }
             }
         }
+        public static bool IsInitialized
+        {
+            get
+            {
+                lock (locker)
+                    return _factory != null;
+            }
+        }
 
         public static ISession GetSession()
         {

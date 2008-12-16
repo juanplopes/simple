@@ -63,7 +63,16 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Rules\EmpresaFuncionarioRules2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EmpresaFuncionarioRules21.cs</LastGenOutput>
+    </None>
     <Compile Include="Rules\EmpresaFuncionarioRules.cs" />
+    <Compile Include="Rules\EmpresaFuncionarioRules21.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmpresaFuncionarioRules2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Rules\EmpresaRules.cs" />
     <Compile Include="Rules\FuncionarioRules.cs" />
   </ItemGroup>
@@ -91,9 +100,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Empresa.hbm.xml" />
-    <EmbeddedResource Include="Mappings\EmpresaFuncionario.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Funcionario.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Empresa.hbm.xml" />
+    <EmbeddedResource Include="Mapping\EmpresaFuncionario.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Funcionario.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
