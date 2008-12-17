@@ -27,6 +27,7 @@ namespace Sample.UserInterface2
         static void Main(string[] args)
         {
             IEmpresaFuncionarioRules1 rules = RulesFactory.Create<IEmpresaFuncionarioRules1>();
+            IEmpresaFuncionarioRules1 rules2 = RulesFactory.Create<IEmpresaFuncionarioRules1>();
             rules.Save(new EmpresaFuncionario());
         }
     }

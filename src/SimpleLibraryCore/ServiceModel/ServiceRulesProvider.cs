@@ -34,7 +34,7 @@ namespace SimpleLibrary.ServiceModel
         {
             lock (lockObj)
             {
-                if (Cache == null)
+                if (Cache == null || FactoryCache == null || FactoryCache.State != CommunicationState.Opened)
                 {
                     Type contractType = typeof(T);
                     Cache = CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), contractType.Name));
