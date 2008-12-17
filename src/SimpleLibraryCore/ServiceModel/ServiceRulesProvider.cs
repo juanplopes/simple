@@ -15,6 +15,8 @@ namespace SimpleLibrary.ServiceModel
         protected ChannelFactory<T> FactoryCache { get; set; }
         protected SimpleLibraryConfig Config { get; set; }
         protected Binding DefaultBinding { get; set; }
+        protected T Cache { get; set; }
+        protected object lockObj = new object();
 
         public ServiceRulesProvider()
         {
@@ -22,7 +24,7 @@ namespace SimpleLibrary.ServiceModel
             DefaultBinding = ConfigLoader.CreateDefaultBinding();
         }
 
-        public T Create(Uri endpointAddress)
+        protected T CreateNew(Uri endpointAddress)
         {
             ChannelFactory<T> factory = CreateChannelFactory();
             return factory.CreateChannel(new EndpointAddress(endpointAddress));
@@ -30,8 +32,15 @@ namespace SimpleLibrary.ServiceModel
 
         public T Create()
         {
-            Type contractType = typeof(T);
-            return Create(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), contractType.Name));
+            lock (lockObj)
+            {
+                if (Cache == null)
+                {
+                    Type contractType = typeof(T);
+                    Cache = CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), contractType.Name));
+                }
+                return Cache;
+            }
         }
 
         protected ChannelFactory<T> CreateChannelFactory()

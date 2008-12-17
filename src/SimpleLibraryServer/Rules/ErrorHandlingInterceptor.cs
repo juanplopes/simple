@@ -8,12 +8,14 @@ using System.Reflection;
 using SimpleLibrary.DataAccess;
 using SimpleLibrary.Config;
 using BasicLibrary.Configuration;
+using log4net;
 
 namespace SimpleLibrary.Rules
 {
     public class ErrorHandlingInterceptor
     {
-        SimpleLibraryConfig Config = SimpleLibraryConfig.Get();
+        protected SimpleLibraryConfig Config = SimpleLibraryConfig.Get();
+        ILog logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         #region IInterceptor Members
 
@@ -21,6 +23,7 @@ namespace SimpleLibrary.Rules
         {
             try
             {
+                logger.DebugFormat("Intercepting {0} of {1}...", method.Name, method.DeclaringType.Name);
                 return method.Invoke(target, parameters);
             }
             catch (Exception e)
