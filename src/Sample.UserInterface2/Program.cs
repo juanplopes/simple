@@ -19,6 +19,7 @@ using System.Xml;
 using System.IO;
 using System.Text;
 using Sample.BusinessInterface.Rules;
+using System.ServiceModel;
 
 namespace Sample.UserInterface2
 {
@@ -27,8 +28,8 @@ namespace Sample.UserInterface2
         static void Main(string[] args)
         {
             IEmpresaFuncionarioRules1 rules = RulesFactory.Create<IEmpresaFuncionarioRules1>();
-            IEmpresaFuncionarioRules1 rules2 = RulesFactory.Create<IEmpresaFuncionarioRules1>();
-            rules.Save(new EmpresaFuncionario());
+            using((IDisposable)rules)
+                rules.Save(new EmpresaFuncionario());
         }
     }
 }
