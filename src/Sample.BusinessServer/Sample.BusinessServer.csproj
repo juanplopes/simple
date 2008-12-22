@@ -63,16 +63,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Rules\EmpresaFuncionarioRules2.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EmpresaFuncionarioRules21.cs</LastGenOutput>
-    </None>
     <Compile Include="Rules\EmpresaFuncionarioRules.cs" />
-    <Compile Include="Rules\EmpresaFuncionarioRules21.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EmpresaFuncionarioRules2.tt</DependentUpon>
-    </Compile>
     <Compile Include="Rules\EmpresaRules.cs" />
     <Compile Include="Rules\FuncionarioRules.cs" />
   </ItemGroup>

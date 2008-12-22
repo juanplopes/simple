@@ -37,6 +37,9 @@ namespace Sample.BusinessServer.Infra
             //SchemaExport exp = new SchemaExport(SessionManager.DefaultConfig);
             //exp.Create(false, true);
 
+            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
+            IList<Empresa> list =  rules.ListByFilter(Empresa.IdProperty.In(1146, 1147, 1148), OrderBy.None());
+
             MainController.Run(Assembly.GetExecutingAssembly());
         }
     }

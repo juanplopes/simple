@@ -10,6 +10,10 @@ namespace SimpleLibrary.Filters
     [DataContract]
     public abstract class Expression : Filter
     {
+        public static InExpression In(PropertyName propertyName, params object[] values)
+        {
+            return new InExpression(propertyName, values);
+        }
         public static NotExpression NotEquals(PropertyName propertyName, object value)
         {
             return Equals(propertyName, value).Negate();
@@ -39,8 +43,6 @@ namespace SimpleLibrary.Filters
         {
             return Like(propertyName, value, LikeExpression.DefaultIgnoreCase);
         }
-
-
         public static LikeExpression Like(PropertyName propertyName, string value, bool ignoreCase)
         {
             return new LikeExpression(propertyName, value, ignoreCase);

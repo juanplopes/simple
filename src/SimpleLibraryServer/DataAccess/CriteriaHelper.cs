@@ -71,6 +71,11 @@ namespace SimpleLibrary.DataAccess
                 Filters.BooleanExpression boolean = filter as Filters.BooleanExpression;
                 return Expression.Eq(new ConstantProjection(1), boolean.Value ? 1 : 0);
             }
+            else if (filter is Filters.InExpression)
+            {
+                Filters.InExpression inExp = filter as Filters.InExpression;
+                return Expression.In(inExp.PropertyName, inExp.Value);
+            }
             else if (filter is Filters.PropertyExpression)
             {
                 Filters.PropertyExpression prop = filter as Filters.PropertyExpression;

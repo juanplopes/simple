@@ -69,6 +69,11 @@ namespace SimpleLibrary.Filters
         {
             return Expression.NotEquals(this, value);
         }
+        public InExpression In(params object[] values)
+        {
+            return Expression.In(this, values);
+        }
+
         public SimpleExpression Gt(object value)
         {
             return Expression.GreaterThan(this, value);
