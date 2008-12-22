@@ -4,7 +4,7 @@
     <id column="id_empresa" name="Id">
 <generator class="native"/>
     </id>
-    <property column="version" name="Version"/>
+    <!--<property column="version" name="Version"/>-->
     <property column="nome" name="Nome"/>
   </class>
 </hibernate-mapping>

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SimpleLibrary.NUnit
 {
-    public interface IEntityProvider<T>
+    public interface IEntityProvider
     {
-        T Populate(int seed);
-        bool Compare(T e1, T e2);
+        object Populate(int seed);
+        bool Compare(object e1, object e2);
     }
 }

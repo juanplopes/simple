@@ -26,9 +26,9 @@ namespace SimpleLibrary.Rules
                 logger.DebugFormat("Intercepting {0} of {1}...", method.Name, method.DeclaringType.Name);
                 return method.Invoke(target, parameters);
             }
-            catch (Exception e)
+            catch (TargetInvocationException e)
             {
-                if (!Handle(e)) throw;
+                if (!Handle(e.InnerException)) throw e.InnerException;
             }
             finally
             {
@@ -41,8 +41,6 @@ namespace SimpleLibrary.Rules
 
         protected bool Handle(Exception e)
         {
-            if (e is TargetInvocationException) e = e.InnerException;
-
             foreach (IExceptionHandler handler in Config.Business.ExceptionHandling.GetHandlers())
             {
                 if (handler.Handle(e)) return true;

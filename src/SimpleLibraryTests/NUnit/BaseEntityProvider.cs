@@ -4,40 +4,44 @@ using System.Text;
 using System.Reflection;
 using SimpleLibrary.DataAccess;
 using NHibernate.Mapping;
+using BasicLibrary.Reflection;
 
 namespace SimpleLibrary.NUnit
 {
-    public class BaseEntityProvider<T> : IEntityProvider<T>
-        where T : new()
+    public class BaseEntityProvider : IEntityProvider
     {
+        public Type EntityType { get; set; }
         protected string FactoryName { get; set; }
         public bool SkipID { get; set; }
-
-        public BaseEntityProvider(string factoryName, bool skipId)
+        protected EntityHelper Helper { get; set; }
+        public BaseEntityProvider(Type entityType, string factoryName, bool skipId)
         {
             FactoryName = factoryName;
             SkipID = skipId;
+            EntityType = entityType;
+            Helper = new EntityHelper(entityType);
+            Helper.AddAllProperties();
         }
 
-        public BaseEntityProvider(bool skipId)
-            : this(null, skipId) { }
+        public BaseEntityProvider(Type entityType, bool skipId)
+            : this(entityType, null, skipId) { }
 
-        public virtual T Populate(int seed)
+        public virtual object Populate(int seed)
         {
             return DefaultPopulate(new BaseTypeSeeder(), seed);
         }
 
-        public virtual bool Compare(T e1, T e2)
+        public virtual bool Compare(object e1, object e2)
         {
             return DefaultCompare(e1, e2);
         }
 
-        protected T DefaultPopulate(ITypeSeeder seeder, int seed)
+        protected object DefaultPopulate(ITypeSeeder seeder, int seed)
         {
-            T e = new T();
+            object e = Activator.CreateInstance(EntityType);
             Dictionary<string, bool> dic = new Dictionary<string, bool>();
 
-            PersistentClass cls = SessionManager.GetConfig(FactoryName).GetClassMapping(typeof(T));
+            PersistentClass cls = SessionManager.GetConfig(FactoryName).GetClassMapping(EntityType);
             if (SkipID)
             {
                 if (cls.Identifier is Component)
@@ -53,7 +57,7 @@ namespace SimpleLibrary.NUnit
                 }
             }
 
-            foreach (PropertyInfo prop in typeof(T).GetProperties())
+            foreach (PropertyInfo prop in EntityType.GetProperties())
             {
                 if (!dic.ContainsKey(prop.Name))
                     prop.SetValue(e, seeder.GetValue(prop.PropertyType, seed), null);
@@ -62,20 +66,9 @@ namespace SimpleLibrary.NUnit
             return e;
         }
 
-        protected bool DefaultCompare(T e1, T e2)
+        protected bool DefaultCompare(object e1, object e2)
         {
-            foreach (PropertyInfo prop in typeof(T).GetProperties())
-            {
-                object v1 = prop.GetValue(e1, null);
-                object v2 = prop.GetValue(e2, null);
-
-                if ((v1 == null || v2 == null) && v1 != v2) return false;
-                if (v1 != null && v2 != null)
-                {
-                    if (!v1.Equals(v2)) return false;
-                }
-            }
-            return true;
+            return Helper.ObjectEquals(e1, e2);
         }
     }
 }

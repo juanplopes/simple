@@ -30,6 +30,14 @@ namespace BasicLibrary.Reflection
             _ids.AddRange(propName);
         }
 
+        public void AddAllProperties()
+        {
+            foreach (PropertyInfo info in _entityType.GetProperties())
+            {
+                this.AddID(info.Name);
+            }
+        }
+
         public bool ObjectEquals(object obj1, object obj2)
         {
             if (obj1 == null ^ obj2 == null) return false;

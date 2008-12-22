@@ -4,16 +4,24 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 using SimpleLibrary.Rules;
-using SimpleLibrary.Filters;
 using SimpleLibrary.DataAccess;
 using System.Reflection;
 using NHibernate;
+using NHibernate.Criterion;
+using System.Collections;
 
 namespace SimpleLibrary.NUnit
 {
-    public class BaseTests<E> : IEntityProvider<E>
-        where E : new()
+    public class BaseTests : IEntityProvider
     {
+        public Type EntityType { get; set; }
+        public bool DefaultSkipID { get; set; }
+        public BaseTests(Type entityType, bool defaultSkipId)
+        {
+            this.EntityType = entityType;
+            this.DefaultSkipID = defaultSkipId;
+        }
+
         protected virtual int CreationNumber
         {
             get
@@ -22,18 +30,9 @@ namespace SimpleLibrary.NUnit
             }
         }
 
-        protected virtual bool DefaultSkipID
+        private IEntityProvider CreateEntityProvider()
         {
-            get
-            {
-                return true;
-            }
-        }
-
-
-        private IEntityProvider<E> CreateEntityProvider()
-        {
-            return new BaseEntityProvider<E>(DefaultSkipID);
+            return new BaseEntityProvider(EntityType, DefaultSkipID);
         }
 
         [Test]
@@ -58,44 +57,48 @@ namespace SimpleLibrary.NUnit
         protected void InsertionSetup()
         {
             DeleteAll(false);
-            BaseDao<E> rules = new BaseDao<E>();
+            ISession session = SessionManager.GetSession();
             for (int i = 0; i < CreationNumber; i++)
             {
-                rules.Persist(Populate(i));
+                session.Persist(Populate(i));
             }
         }
 
         protected void TestGetAllAndUpdate()
         {
-            BaseDao<E> rules = new BaseDao<E>();
+            ISession session = SessionManager.GetSession();
             for (int i = 0; i < CreationNumber; i++)
             {
-                E e = Populate(i);
-                e = rules.LoadByExample(e);
-                rules.Update(e);
+                object e = Populate(i);
+                e = session.CreateCriteria(EntityType).Add(Example.Create(e)).UniqueResult();
+                session.Update(e);
             }
         }
 
         protected void TestGetAllAndCompare()
         {
-            BaseDao<E> rules = new BaseDao<E>();
+            ISession session = SessionManager.GetSession();
             for (int i = 0; i < CreationNumber; i++)
             {
-                var e = Populate(i);
-                IList<E> list = rules.ListByExample(e);
+                object e = Populate(i);
+                IList list = session.CreateCriteria(EntityType).Add(Example.Create(e)).List();
                 Assert.AreEqual(list.Count, 1);
             }
         }
 
         protected void DeleteAll(bool assert)
         {
-            BaseDao<E> rules = new BaseDao<E>();
+            ISession session = SessionManager.GetSession();
             for (int i = 0; i < CreationNumber; i++)
             {
-                var e = Populate(i);
-                int deleted = rules.DeleteByCriteria(rules.CreateCriteria().Add(
-                    CriteriaHelper.GetCriterion(Expression.Example(e)))
-                );
+                object e = Populate(i);
+                IList list = session.CreateCriteria(EntityType).Add(Example.Create(e)).List();
+                int deleted = 0;
+                foreach (object o in list)
+                {
+                    session.Delete(o);
+                    deleted++;
+                }
                 if (assert)
                     Assert.AreEqual(deleted, 1);
             }
@@ -103,12 +106,12 @@ namespace SimpleLibrary.NUnit
 
         #region IEntityProvider<E> Members
 
-        public virtual E Populate(int seed)
+        public virtual object Populate(int seed)
         {
             return CreateEntityProvider().Populate(seed);
         }
 
-        public virtual bool Compare(E e1, E e2)
+        public virtual bool Compare(object e1, object e2)
         {
             return CreateEntityProvider().Compare(e1, e1);
         }
