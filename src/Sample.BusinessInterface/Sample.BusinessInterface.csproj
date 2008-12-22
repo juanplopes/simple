@@ -52,18 +52,9 @@
     <Compile Include="Domain\EmpresaFuncionario.cs" />
     <Compile Include="Domain\Funcionario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Rules\IIEmpresaFuncionarioRules2.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>IIEmpresaFuncionarioRules21.cs</LastGenOutput>
-    </None>
     <Compile Include="Rules\IEmpresaFuncionarioRules.cs" />
     <Compile Include="Rules\IEmpresaRules.cs" />
     <Compile Include="Rules\IFuncionarioRules.cs" />
-    <Compile Include="Rules\IIEmpresaFuncionarioRules21.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>IIEmpresaFuncionarioRules2.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">

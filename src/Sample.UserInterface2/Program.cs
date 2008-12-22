@@ -27,9 +27,14 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            IEmpresaFuncionarioRules1 rules = RulesFactory.Create<IEmpresaFuncionarioRules1>();
-            using((IDisposable)rules)
-                rules.Save(new EmpresaFuncionario());
+            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
+
+            List<string> s = new List<string>();
+            s.Add("1144");
+            s.Add("1145");
+
+            IList<Empresa> list = rules.ListByFilter(Empresa.IdProperty.In(s.ToArray()), OrderBy.None());
+            IList<Empresa> list2 = rules.ListByFilter(Empresa.IdProperty.In(1144, 1145), OrderBy.None());
         }
     }
 }
