@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicLibraryTests\BusinessDaysTests.cs" />
+    <Compile Include="DataAccessTests\FiltersTests.cs" />
     <Compile Include="NUnit\BaseEntityProvider.cs" />
     <Compile Include="NUnit\BaseTests.cs" />
     <Compile Include="NUnit\BaseTypeSeeder.cs" />

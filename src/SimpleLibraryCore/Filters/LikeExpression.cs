@@ -10,6 +10,8 @@ namespace SimpleLibrary.Filters
     [DataContract]
     public class LikeExpression : TypedPropertyExpression<string>
     {
+        public const string WildCardSign = "%";
+
         public static bool DefaultIgnoreCase
         {
             get
@@ -21,10 +23,27 @@ namespace SimpleLibrary.Filters
         [DataMember]
         public bool IgnoreCase { get; set; }
 
-        public LikeExpression(string propertyName, string value, bool ignoreCase)
+        public LikeExpression(PropertyName propertyName, string value, bool ignoreCase)
             : base(propertyName, value)
         {
             this.IgnoreCase = ignoreCase;
+        }
+
+        public LikeExpression(PropertyName propertyName, string value) : this(propertyName, value, DefaultIgnoreCase) { }
+
+        public static string ToStartsWith(string value)
+        {
+            return value + WildCardSign;
+        }
+
+        public static string ToEndsWith(string value)
+        {
+            return WildCardSign + value;
+        }
+
+        public static string ToContains(string value)
+        {
+            return ToStartsWith(ToEndsWith(value));
         }
     }
 }

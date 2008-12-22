@@ -11,13 +11,13 @@ namespace SimpleLibrary.Filters
     {
         public OrderByCollection() : base() { }
 
-        public OrderByCollection Asc(string propertyName)
+        public OrderByCollection Asc(PropertyName propertyName)
         {
             this.Add(new OrderBy(propertyName, true));
             return this;
         }
 
-        public OrderByCollection Desc(string propertyName)
+        public OrderByCollection Desc(PropertyName propertyName)
         {
             this.Add(new OrderBy(propertyName, false));
             return this;

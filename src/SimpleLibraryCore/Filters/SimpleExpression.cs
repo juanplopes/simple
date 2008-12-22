@@ -18,7 +18,7 @@ namespace SimpleLibrary.Filters
         [DataMember]
         public string Operator { get; set; }
 
-        public SimpleExpression(string propertyName, object value, string op) : base(propertyName, value)
+        public SimpleExpression(PropertyName propertyName, object value, string op) : base(propertyName, value)
         {
             Operator = op;
         }

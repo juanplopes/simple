@@ -61,34 +61,34 @@ namespace SimpleLibrary.Filters
         }
 
         #region Operators
-        public SimpleExpression Eq(object value)
-        {
-            return Expression.Equals(this, value);
-        }
         public NotExpression NotEq(object value)
         {
-            return Expression.NotEquals(this, value);
+            return new NotExpression(this.Eq(value));
         }
         public InExpression In(params object[] values)
         {
-            return Expression.In(this, values);
+            return new InExpression(this, values);
         }
 
+        public SimpleExpression Eq(object value)
+        {
+            return new SimpleExpression(this, value, SimpleExpression.EqualsExpression);
+        }
         public SimpleExpression Gt(object value)
         {
-            return Expression.GreaterThan(this, value);
+            return new SimpleExpression(this, value, SimpleExpression.GreaterThanExpression);
         }
         public SimpleExpression GtEq(object value)
         {
-            return Expression.GreaterThanOrEquals(this, value);
+            return new SimpleExpression(this, value, SimpleExpression.GreaterThanOrEqualsExpression);
         }
         public SimpleExpression Lt(object value)
         {
-            return Expression.LesserThan(this, value);
+            return new SimpleExpression(this, value, SimpleExpression.LesserThanExpression);
         }
         public SimpleExpression LtEq(object value)
         {
-            return Expression.LesserThanOrEquals(this, value);
+            return new SimpleExpression(this, value, SimpleExpression.LesserThanOrEqualsExpression);
         }
         public LikeExpression Like(string value)
         {
@@ -96,7 +96,7 @@ namespace SimpleLibrary.Filters
         }
         public LikeExpression Like(string value, bool ignoreCase)
         {
-            return Expression.Like(this, value, ignoreCase);
+            return new LikeExpression(this, value, ignoreCase);
         }
         public LikeExpression Contains(string value)
         {
@@ -104,7 +104,7 @@ namespace SimpleLibrary.Filters
         }
         public LikeExpression Contains(string value, bool ignoreCase)
         {
-            return Expression.Contains(this, value, ignoreCase);
+            return Like(LikeExpression.ToContains(value), ignoreCase);
         }
         public LikeExpression StartsWith(string value)
         {
@@ -112,7 +112,7 @@ namespace SimpleLibrary.Filters
         }
         public LikeExpression StartsWith(string value, bool ignoreCase)
         {
-            return Expression.StartsWith(this, value, ignoreCase);
+            return Like(LikeExpression.ToStartsWith(value), ignoreCase);
         }
         public LikeExpression EndsWith(string value)
         {
@@ -120,19 +120,19 @@ namespace SimpleLibrary.Filters
         }
         public LikeExpression EndsWith(string value, bool ignoreCase)
         {
-            return Expression.EndsWith(this, value, ignoreCase);
+            return Like(LikeExpression.ToEndsWith(value), ignoreCase);
         }
         public BetweenExpression Between(object lo, object hi)
         {
-            return Expression.Between(this, lo, hi);
+            return new BetweenExpression(this, lo, hi);
         }
         public IsNullExpression IsNull()
         {
-            return Expression.IsNull(this);
+            return new IsNullExpression(this);
         }
         public IsNotNullExpression IsNotNull()
         {
-            return Expression.IsNotNull(this);
+            return new IsNotNullExpression(this);
         }
 
         #endregion
