@@ -9,6 +9,7 @@ using SimpleLibrary.DataAccess;
 using SimpleLibrary.Config;
 using BasicLibrary.Configuration;
 using log4net;
+using System.Diagnostics;
 
 namespace SimpleLibrary.Rules
 {
@@ -19,11 +20,15 @@ namespace SimpleLibrary.Rules
 
         #region IInterceptor Members
 
+        [DebuggerHidden]
         public object Interceptor(object target, MethodBase method, object[] parameters)
         {
+            if (method.DeclaringType == typeof(object))
+                return method.Invoke(target, parameters);
+
             try
             {
-                logger.DebugFormat("Intercepting {0} of {1}...", method.Name, method.DeclaringType.Name);
+                logger.DebugFormat("Intercepting {1}.{0}...", method.Name, method.DeclaringType.Name);
                 return method.Invoke(target, parameters);
             }
             catch (TargetInvocationException e)
@@ -38,7 +43,7 @@ namespace SimpleLibrary.Rules
             throw new InvalidProgramException("Cannot return without return");
         }
 
-
+        [DebuggerHidden]
         protected bool Handle(Exception e)
         {
             foreach (IExceptionHandler handler in Config.Business.ExceptionHandling.GetHandlers())

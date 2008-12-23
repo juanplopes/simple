@@ -39,6 +39,7 @@
 using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Proxies;
+using System.Diagnostics;
 
 namespace BasicLibrary.DynamicProxy
 {
@@ -133,6 +134,8 @@ namespace BasicLibrary.DynamicProxy
 		/// </summary>
 		/// <param name="message"></param>
 		/// <returns></returns>
+        /// 
+        [DebuggerHidden]
 		public override System.Runtime.Remoting.Messaging.IMessage Invoke(System.Runtime.Remoting.Messaging.IMessage message) {
 			// Convert to a MethodCallMessage
 			System.Runtime.Remoting.Messaging.IMethodCallMessage methodMessage = new System.Runtime.Remoting.Messaging.MethodCallMessageWrapper((System.Runtime.Remoting.Messaging.IMethodCallMessage)message);
