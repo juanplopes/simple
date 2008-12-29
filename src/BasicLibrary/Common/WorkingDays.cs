@@ -63,7 +63,7 @@ namespace BasicLibrary.Common
 
             while (true)
             {
-                mid = (start + end) / 2;
+                mid =  MathHelper.ModRound((start + end) / 2, TimeSpan.TicksPerDay);
                 date = new DateTime(mid);
                 if (direction)
                     value = GetNetWorkingDays(reference, date);
@@ -75,16 +75,16 @@ namespace BasicLibrary.Common
                 else
                 {
                     if (value > businessDays == direction)
-                        end = mid;
+                        end = mid - TimeSpan.TicksPerDay * (direction ? 1 : -1);
                     else if (value < businessDays == direction)
-                        start = mid;
+                        start = mid + TimeSpan.TicksPerDay * (direction ? 1 : -1); ;
                 }
             }
 
             while (!IsWorkingDay(date))
-                date = date.AddDays(-1);
+                date = date.AddDays(-mult);
 
-            return date;
+            return date.Date;
         }
 
         public DateTime GetInAdvance(int businessDays, DateTime reference, bool considerCurrent)
@@ -97,6 +97,13 @@ namespace BasicLibrary.Common
             return BinarySearch(false, businessDays, reference, considerCurrent);
         }
 
+        public DateTime GetDays(int businessDays, DateTime reference, bool considerCurrent)
+        {
+            if (businessDays < 0)
+                return GetBackwards(-businessDays, reference, considerCurrent);
+            else
+                return GetInAdvance(businessDays, reference, considerCurrent);
+        }
 
     }
 }

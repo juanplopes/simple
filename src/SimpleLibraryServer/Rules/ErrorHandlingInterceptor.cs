@@ -20,7 +20,8 @@ namespace SimpleLibrary.Rules
 
         #region IInterceptor Members
 
-        [DebuggerHidden]
+        [DebuggerNonUserCode]
+        [DebuggerStepperBoundary]
         public object Interceptor(object target, MethodBase method, object[] parameters)
         {
             if (method.DeclaringType == typeof(object))
@@ -33,7 +34,10 @@ namespace SimpleLibrary.Rules
             }
             catch (TargetInvocationException e)
             {
-                if (!Handle(e.InnerException)) throw e.InnerException;
+                if (!Handle(e.InnerException))
+                {
+                    throw;
+                }
             }
             finally
             {
@@ -43,7 +47,8 @@ namespace SimpleLibrary.Rules
             throw new InvalidProgramException("Cannot return without return");
         }
 
-        [DebuggerHidden]
+        [DebuggerNonUserCode]
+        [DebuggerStepThrough]
         protected bool Handle(Exception e)
         {
             foreach (IExceptionHandler handler in Config.Business.ExceptionHandling.GetHandlers())

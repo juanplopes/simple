@@ -29,5 +29,20 @@ namespace BasicLibrary.Common
             a = b;
             b = t;
         }
+
+        public static bool FloatEq(decimal a, decimal b, decimal delta)
+        {
+            return Math.Abs(a - b) < delta;
+        } 
+
+        public static bool FloatEq(float a, float b, float delta)
+        {
+            return Math.Abs(a - b) < delta;
+        }
+
+        public static bool FloatEq(double a, double b, double delta)
+        {
+            return Math.Abs(a - b) < delta;
+        }
     }
 }
