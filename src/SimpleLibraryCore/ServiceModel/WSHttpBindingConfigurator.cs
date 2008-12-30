@@ -19,7 +19,7 @@ namespace SimpleLibrary.ServiceModel
 
             WSHttpBinding binding = new WSHttpBinding();
             binding.MaxReceivedMessageSize = element.MaxReceivedMessageSize;
-            binding.ReceiveTimeout = TimeSpan.FromSeconds(element.ReceiveTimeout);
+            binding.ReceiveTimeout = element.GetReceiveTimeout();
 
             endpoint.Binding = binding;
         }
@@ -34,6 +34,18 @@ namespace SimpleLibrary.ServiceModel
 
         [ConfigElement("receiveTimeout", Default = long.MaxValue)]
         public long ReceiveTimeout { get; set; }
+
+        public TimeSpan GetReceiveTimeout()
+        {
+            try
+            {
+                return TimeSpan.FromSeconds(ReceiveTimeout);
+            }
+            catch (OverflowException)
+            {
+                return TimeSpan.MaxValue;
+            }
+        }
 
     }
 }
