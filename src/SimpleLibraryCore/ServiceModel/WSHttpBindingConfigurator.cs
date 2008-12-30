@@ -19,7 +19,6 @@ namespace SimpleLibrary.ServiceModel
 
             WSHttpBinding binding = new WSHttpBinding();
             binding.MaxReceivedMessageSize = element.MaxReceivedMessageSize;
-
             endpoint.Binding = binding;
         }
 

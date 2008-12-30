@@ -19,6 +19,38 @@ namespace SimpleLibrary.DataAccess
     public class SessionManager
     {
         protected static object locker = new object();
+
+        protected static ThreadData<SessionManager> MyData = new ThreadData<SessionManager>();
+        protected const string LockerId = "Locker";
+
+        public static Guid? LockThreadSessions()
+        {
+            lock (locker)
+            {
+                Guid? identifier = (Guid?)MyData[LockerId, 0];
+                if (identifier == null)
+                {
+                    return (Guid?)(MyData[LockerId, 0] = Guid.NewGuid());
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public static bool ReleaseThreadSessions(Guid? identifier)
+        {
+            lock (locker)
+            {
+                Guid? identifier2 = (Guid?)MyData[LockerId, 0];
+                if (identifier2 != null && identifier != identifier2) return false;
+                ForceReleaseThreadSessions();
+                MyData[LockerId, 0] = null;
+                return true;
+            }
+        }
+
         protected static MultiSessionFactory _factory;
         protected static MultiSessionFactory Factory
         {
@@ -64,7 +96,7 @@ namespace SimpleLibrary.DataAccess
             return Factory.GetSession(factoryName, forceNewSession);
         }
 
-        public static void ReleaseThreadSessions()
+        public static void ForceReleaseThreadSessions()
         {
             Factory.ReleaseThreadSessions();
         }
@@ -78,5 +110,6 @@ namespace SimpleLibrary.DataAccess
         {
             return Factory.GetConfig(factoryName);
         }
+
     }
 }

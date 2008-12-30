@@ -20,35 +20,36 @@ namespace SimpleLibrary.Rules
 
         #region IInterceptor Members
 
+
         [DebuggerNonUserCode]
+        [DebuggerStepThrough]
         [DebuggerStepperBoundary]
         public object Interceptor(object target, MethodBase method, object[] parameters)
         {
             if (method.DeclaringType == typeof(object))
                 return method.Invoke(target, parameters);
 
-            try
+            using (DataContext.Enter())
             {
-                logger.DebugFormat("Intercepting {1}.{0}...", method.Name, method.DeclaringType.Name);
-                return method.Invoke(target, parameters);
-            }
-            catch (TargetInvocationException e)
-            {
-                if (!Handle(e.InnerException))
+                try
                 {
-                    throw;
+                    logger.DebugFormat("Intercepting {1}.{0}...", method.Name, method.DeclaringType.Name);
+                    return method.Invoke(target, parameters);
                 }
-            }
-            finally
-            {
-                if (SessionManager.IsInitialized)
-                    SessionManager.ReleaseThreadSessions();
+                catch (TargetInvocationException e)
+                {
+                    if (!Handle(e.InnerException))
+                    {
+                        throw e.InnerException;
+                    }
+                }
             }
             throw new InvalidProgramException("Cannot return without return");
         }
 
         [DebuggerNonUserCode]
         [DebuggerStepThrough]
+        [DebuggerStepperBoundary]
         protected bool Handle(Exception e)
         {
             foreach (IExceptionHandler handler in Config.Business.ExceptionHandling.GetHandlers())

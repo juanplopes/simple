@@ -75,9 +75,9 @@ namespace BasicLibrary.Common
                 else
                 {
                     if (value > businessDays == direction)
-                        end = mid - TimeSpan.TicksPerDay * (direction ? 1 : -1);
+                        end = mid - TimeSpan.TicksPerDay;
                     else if (value < businessDays == direction)
-                        start = mid + TimeSpan.TicksPerDay * (direction ? 1 : -1); ;
+                        start = mid + TimeSpan.TicksPerDay;
                 }
             }
 

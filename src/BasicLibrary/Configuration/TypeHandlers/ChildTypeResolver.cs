@@ -43,6 +43,9 @@ namespace BasicLibrary.Configuration.TypeHandlers
             {
                 IConfigElement configElement = (currentValue != null) ? (IConfigElement)currentValue : Activator.CreateInstance(type) as IConfigElement;
                 configElement.LoadFromElement(element);
+                if (element.ChildNodes.Count == 1 && element.ChildNodes[0].NodeType == XmlNodeType.Text)
+                    if (configElement is IStringConvertible)
+                        (configElement as IStringConvertible).LoadFromString(element.InnerText);
                 return configElement;
             }
             else

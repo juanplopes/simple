@@ -20,7 +20,7 @@ namespace SimpleLibrary.DataAccess
         protected Dictionary<string, Configuration> Configs { get; set; }
         protected Dictionary<string, ISessionFactory> SessionFactories { get; set; }
 
-        protected ThreadData<SessionManager> MyData { get; set; }
+        protected ThreadData<MultiSessionFactory> MyData { get; set; }
         protected string ISESSION_KEY = typeof(ISession).GUID.ToString();
         protected DataConfigElement DataConfig { get; set; }
         protected BusinessElement BusinessConfig { get; set; }
@@ -30,7 +30,7 @@ namespace SimpleLibrary.DataAccess
             DataConfig = dataConfig;
             BusinessConfig = businessConfig;
             SessionFactories = new Dictionary<string, ISessionFactory>();
-            MyData = new ThreadData<SessionManager>();
+            MyData = new ThreadData<MultiSessionFactory>();
             Configs = new Dictionary<string, Configuration>();
             InitializeSessionFactories();
         }

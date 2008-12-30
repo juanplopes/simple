@@ -9,5 +9,10 @@ namespace Sample.BusinessServer.Rules
 {
     public partial class EmpresaRules : BaseRules<Empresa>, IEmpresaRules
     {
+        public void TestRules()
+        {
+            IFuncionarioRules rules = RulesFactory.Create<IFuncionarioRules>();
+            rules.Load(1);
+        }
     }
 }

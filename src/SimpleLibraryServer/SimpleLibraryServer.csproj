@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\DataContext.cs" />
     <Compile Include="DataAccess\GenericInterceptor.cs" />
     <Compile Include="DataAccess\ISimpleInterceptor.cs" />
     <Compile Include="DataAccess\MultiSessionFactory.cs" />

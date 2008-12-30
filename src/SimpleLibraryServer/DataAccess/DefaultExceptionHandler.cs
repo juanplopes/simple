@@ -23,21 +23,24 @@ namespace SimpleLibrary.DataAccess
         {
             if (e is StaleObjectStateException)
             {
-                throw CreatePersistenceFault(
+                new PersistenceFault(
                     PersistenceFault.ReasonType.OptimisticLockFailed,
-                    (e as StaleObjectStateException).Message);
+                    e.Message).Throw();
+                return true;
             }
             else if (e is ADOException)
             {
-                throw CreatePersistenceFault(
+                new PersistenceFault(
                     PersistenceFault.ReasonType.ADOException,
-                    (e as ADOException).Message);
+                    e.Message).Throw();
+                return true;
             }
             else if (e is ObjectNotFoundException)
             {
-                throw CreatePersistenceFault(
+                new PersistenceFault(
                     PersistenceFault.ReasonType.ObjectNotFound,
-                    (e as ObjectNotFoundException).Message);
+                    e.Message).Throw();
+                return true;
 
             }
             return false;
@@ -46,7 +49,6 @@ namespace SimpleLibrary.DataAccess
         protected static FaultException<PersistenceFault> CreatePersistenceFault(PersistenceFault.ReasonType reason, object info)
         {
             PersistenceFault fault = new PersistenceFault(reason,info);
-
             FaultException<PersistenceFault> ex = new FaultException<PersistenceFault>(fault, 
                 new FaultReason( fault.Reason.ToString() + ": " + fault.Information.ToString()));
             return ex;

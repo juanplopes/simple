@@ -9,5 +9,7 @@ namespace Sample.BusinessInterface.Rules
     [ServiceContract, MainContract]
     public partial interface IEmpresaRules : IBaseRules<Empresa>
     {
+        [OperationContract]
+        void TestRules();
     }
 }

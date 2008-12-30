@@ -30,7 +30,7 @@ namespace BasicLibrary.Configuration
         [LocalizationProviderIgnore]
         public static T Get(string location)
         {
-            return FileConfigProvider<T>.Instance.Get();
+            return FileConfigProvider<T>.Instance.Get(location);
         }
     }
 }

@@ -38,20 +38,24 @@ namespace SimpleLibrary.NUnit
         [Test]
         public void InsertScript1()
         {
-            SessionManager.ReleaseThreadSessions();
-            InsertionSetup();
-            TestGetAllAndCompare();
-            DeleteAll(true);
+            using (DataContext.Enter())
+            {
+                InsertionSetup();
+                TestGetAllAndCompare();
+                DeleteAll(true);
+            }
         }
 
         [Test]
         public void UpdateScript1()
         {
-            SessionManager.ReleaseThreadSessions();
-            InsertionSetup();
-            TestGetAllAndUpdate();
-            TestGetAllAndCompare();
-            DeleteAll(true);
+            using (DataContext.Enter())
+            {
+                InsertionSetup();
+                TestGetAllAndUpdate();
+                TestGetAllAndCompare();
+                DeleteAll(true);
+            }
         }
 
         protected void InsertionSetup()
