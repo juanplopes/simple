@@ -7,10 +7,11 @@ using SimpleLibrary.Config;
 using BasicLibrary.Common;
 using BasicLibrary.Logging;
 using log4net;
+using SimpleLibrary.ServiceModel;
 
 namespace SimpleLibrary.Rules
 {
-    public class DefaultRulesProvider<T> : IRulesProvider<T> where T : class
+    public class DefaultRulesProvider<T> : IRulesProvider<T> where T : class, ITestableService
     {
         protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 

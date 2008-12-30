@@ -6,6 +6,7 @@ using SimpleLibrary.DataAccess;
 using SimpleLibrary.Filters;
 using NHibernate;
 using SimpleLibrary.ServiceModel;
+using BasicLibrary.Logging;
 
 namespace SimpleLibrary.Rules
 {
@@ -17,6 +18,12 @@ namespace SimpleLibrary.Rules
     public class BaseRules<T, D> : IBaseRules<T>
         where D : BaseDao<T>, new()
     {
+        bool ITestableService.HeartBeat()
+        {
+            MainLogger.Get(this).Debug("Heartbeat: " + typeof(T).Name);
+            return true;
+        }
+
         protected virtual D GetDao()
         {
             return new D();
@@ -107,9 +114,5 @@ namespace SimpleLibrary.Rules
             return GetDao().DeleteByCriteria(criteria);
         }
 
-        public virtual object TestMethod(object obj)
-        {
-            return GetDao().TestMethod(obj);
-        }
     }
 }

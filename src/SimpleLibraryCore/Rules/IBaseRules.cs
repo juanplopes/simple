@@ -5,11 +5,12 @@ using System.Text;
 using System.ServiceModel;
 using SimpleLibrary.Filters;
 using SimpleLibrary.DataAccess;
+using SimpleLibrary.ServiceModel;
 
 namespace SimpleLibrary.Rules
 {
     [ServiceContract]
-    public interface IBaseRules<T>
+    public interface IBaseRules<T> : ITestableService
     {
         [OperationContract]
         T LoadByExample(T example);
@@ -52,8 +53,5 @@ namespace SimpleLibrary.Rules
 
         [OperationContract]
         int DeleteByFilter(Filter filter);
-
-        [OperationContract]
-        object TestMethod(object obj);
     }
 }

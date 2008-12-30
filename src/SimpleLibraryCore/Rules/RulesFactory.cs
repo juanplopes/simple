@@ -20,7 +20,7 @@ namespace SimpleLibrary.Rules
         private static Dictionary<Type, object> ProviderCache = new Dictionary<Type, object>();
         private static SimpleLibraryConfig Config = SimpleLibraryConfig.Get();
 
-        public static T Create<T>() where T : class
+        public static T Create<T>() where T : class, ITestableService
         {
             IRulesProvider<T> provider = null;
 
