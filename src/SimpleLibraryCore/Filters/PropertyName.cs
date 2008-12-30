@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Diagnostics;
+using System.Collections;
 
 namespace SimpleLibrary.Filters
 {
@@ -66,6 +67,10 @@ namespace SimpleLibrary.Filters
             return new NotExpression(this.Eq(value));
         }
         public InExpression In(params object[] values)
+        {
+            return new InExpression(this, values);
+        }
+        public InExpression In(ICollection values)
         {
             return new InExpression(this, values);
         }
