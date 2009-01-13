@@ -37,6 +37,7 @@ namespace SimpleLibrary.ServiceModel
 
         public static void OverrideOperations(OperationDescriptionCollection collection, IList<Assembly> knownAssemblies)
         {
+            
             foreach (OperationDescription operation in collection)
             {
                 operation.Behaviors.Remove<DataContractSerializerOperationBehavior>();

@@ -30,9 +30,9 @@ namespace SimpleLibrary.DataAccess
 
             if (arguments.MaximumRows > 0)
             {
-                Page<T> page = Rules.PageByFilter(Filters, col, arguments.StartRowIndex, arguments.MaximumRows);
-                arguments.TotalRowCount = page.TotalItems;
-                return transformer.ToEnumerableDictionary(page.Items);
+                IPage<T> page = Rules.PaginateByFilter(Filters, col, arguments.StartRowIndex, arguments.MaximumRows);
+                arguments.TotalRowCount = page.TotalCount;
+                return transformer.ToEnumerableDictionary(page);
             }
             else
             {

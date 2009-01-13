@@ -7,6 +7,7 @@ using SimpleLibrary.Filters;
 using NHibernate;
 using SimpleLibrary.ServiceModel;
 using BasicLibrary.Logging;
+using System.Runtime.Serialization;
 
 namespace SimpleLibrary.Rules
 {
@@ -15,6 +16,7 @@ namespace SimpleLibrary.Rules
 
     }
 
+    [KnownType(typeof(Page<>))]
     public class BaseRules<T, D> : IBaseRules<T>
         where D : BaseDao<T>, new()
     {
@@ -54,7 +56,7 @@ namespace SimpleLibrary.Rules
             return CreateCriteriaByFilter(filter, order).List<T>();
         }
 
-        public virtual Page<T> PageByFilter(Filter filter, OrderByCollection order, int skip, int take)
+        public virtual Page<T> PaginateByFilter(Filter filter, OrderByCollection order, int skip, int take)
         {
             ICriteria criteria = CreateCriteriaByFilter(filter, order);
             return Extensions.Paginate<T>(criteria, skip, take);

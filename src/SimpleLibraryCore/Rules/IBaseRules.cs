@@ -6,6 +6,7 @@ using System.ServiceModel;
 using SimpleLibrary.Filters;
 using SimpleLibrary.DataAccess;
 using SimpleLibrary.ServiceModel;
+using System.Runtime.Serialization;
 
 namespace SimpleLibrary.Rules
 {
@@ -31,7 +32,7 @@ namespace SimpleLibrary.Rules
         IList<T> ListByFilter(Filter filter, OrderByCollection order);
 
         [OperationContract]
-        Page<T> PageByFilter(Filter filter, OrderByCollection order, int skip, int take);
+        Page<T> PaginateByFilter(Filter filter, OrderByCollection order, int skip, int take);
 
         [OperationContract]
         void SaveOrUpdate(T entity);

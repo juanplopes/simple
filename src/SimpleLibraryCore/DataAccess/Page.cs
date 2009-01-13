@@ -3,26 +3,23 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Runtime.Serialization;
+using System.Collections.ObjectModel;
 
 namespace SimpleLibrary.DataAccess
 {
     [DataContract]
-    public class Page<T>
+    public class Page<T> : ReadOnlyCollection<T>, IPage<T>
     {
         [DataMember]
-        public int TotalItems { get; set; }
-        [DataMember]
-        public IList<T> Items { get; set; }
+        public int TotalCount { get; private set; }
 
-        public int PageSize { get { return this.Items.Count; } }
-
-        public long TotalPages
+        public int TotalPages
         {
             get
             {
-                if (PageSize > 0)
+                if (Count > 0)
                 {
-                    return TotalItems / PageSize + ((TotalItems % PageSize == 0) ? 0 : 1);
+                    return TotalCount / Count + ((TotalCount % Count == 0) ? 0 : 1);
                 }
                 else
                 {
@@ -31,12 +28,9 @@ namespace SimpleLibrary.DataAccess
             }
         }
 
-        public Page(IList<T> items, int totalItems)
+        public Page(IList<T> items, int totalCount) : base(items)
         {
-            TotalItems = totalItems;
-            Items = items;
+            TotalCount = totalCount;
         }
-
-        public Page() { }
     }
 }

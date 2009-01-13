@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -63,6 +63,7 @@
     <Compile Include="Config\SimpleLibraryConfig.cs" />
     <Compile Include="Config\ThreadingElement.cs" />
     <Compile Include="DataAccess\EntityTransformer.cs" />
+    <Compile Include="DataAccess\IPage.cs" />
     <Compile Include="DataAccess\MappedProperty.cs" />
     <Compile Include="DataAccess\SimpleDataSource.cs" />
     <Compile Include="DataAccess\SimpleDataSourceView.cs" />
