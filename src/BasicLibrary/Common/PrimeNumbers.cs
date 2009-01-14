@@ -30,7 +30,7 @@ namespace BasicLibrary.Common
                         for (int j = i * 2; j < TopSieveNumber; j += i)
                             Numbers[j] = false;
 
-
+                Primes = new List<int>();
                 for (int i = 1; i < TopSieveNumber; i++)
                     if (Numbers[i])
                         Primes.Add(i);
