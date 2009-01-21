@@ -8,6 +8,7 @@ using NHibernate;
 using SimpleLibrary.ServiceModel;
 using BasicLibrary.Logging;
 using System.Runtime.Serialization;
+using log4net;
 
 namespace SimpleLibrary.Rules
 {
@@ -20,9 +21,20 @@ namespace SimpleLibrary.Rules
     public class BaseRules<T, D> : IBaseRules<T>
         where D : BaseDao<T>, new()
     {
+        private ILog _logger = null;
+        protected ILog Logger
+        {
+            get
+            {
+                if (_logger == null)
+                    _logger = MainLogger.Get(this);
+                return _logger;
+            }
+        }
+
         bool ITestableService.HeartBeat()
         {
-            MainLogger.Get(this).Debug("Heartbeat: " + typeof(T).Name);
+            Logger.Debug("Heartbeat: " + typeof(T).Name);
             return true;
         }
 
@@ -54,6 +66,12 @@ namespace SimpleLibrary.Rules
         public virtual IList<T> ListByFilter(Filter filter, OrderByCollection order)
         {
             return CreateCriteriaByFilter(filter, order).List<T>();
+        }
+
+        public virtual int CountByFilter(Filter filter)
+        {
+            return CriteriaTransformer.TransformToRowCount(
+                CreateCriteriaByFilter(filter, OrderBy.None())).UniqueResult<int>();
         }
 
         public virtual Page<T> PaginateByFilter(Filter filter, OrderByCollection order, int skip, int take)

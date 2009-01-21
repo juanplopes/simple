@@ -32,6 +32,9 @@ namespace SimpleLibrary.Rules
         IList<T> ListByFilter(Filter filter, OrderByCollection order);
 
         [OperationContract]
+        int CountByFilter(Filter filter);
+
+        [OperationContract]
         Page<T> PaginateByFilter(Filter filter, OrderByCollection order, int skip, int take);
 
         [OperationContract]
