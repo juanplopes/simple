@@ -45,46 +45,47 @@ namespace BasicLibrary.Common
             int mult = (direction ? 1 : -1);
 
             reference = reference.Date.AddDays(considerCurrent && IsWorkingDay(reference) ? 0 : 1 * mult);
-            long start = reference.Ticks;
-            long end = reference.AddDays(businessDays * 2 * mult).Ticks;
+            long referenceTicks = reference.Ticks;
 
-            if (start > end) MathHelper.Swap(ref start, ref end);
-
-            long mid = 0;
-            DateTime date = default(DateTime);
+            int start = 0;
+            int end = businessDays * 2;
+            int mid = 0;
             int value = 0;
+            DateTime midDate = default(DateTime);
+
 
             if (direction)
-                while (GetNetWorkingDays(reference, new DateTime(end)) < businessDays)
-                    end += (end - start);
+                while (GetNetWorkingDays(reference,
+                  new DateTime(referenceTicks + end * TimeSpan.TicksPerDay)) < businessDays)
+                    end = end * 2;
             else
-                while (GetNetWorkingDays(new DateTime(start), reference) < businessDays)
-                    start -= (end - start);
+                while (GetNetWorkingDays(new DateTime(referenceTicks - end * TimeSpan.TicksPerDay),
+                    reference) < businessDays)
+                    end = end * 2;
 
             while (true)
             {
-                mid =  MathHelper.ModRound((start + end) / 2, TimeSpan.TicksPerDay);
-                date = new DateTime(mid);
-                if (direction)
-                    value = GetNetWorkingDays(reference, date);
-                else
-                    value = GetNetWorkingDays(date, reference);
+                mid = (start + end) / 2;
+                midDate = new DateTime(referenceTicks + mid * TimeSpan.TicksPerDay * mult);
 
-                if (value == businessDays)
-                    break;
+                if (direction)
+                    value = GetNetWorkingDays(reference, midDate);
                 else
-                {
-                    if (value > businessDays == direction)
-                        end = mid - TimeSpan.TicksPerDay;
-                    else if (value < businessDays == direction)
-                        start = mid + TimeSpan.TicksPerDay;
-                }
+                    value = GetNetWorkingDays(midDate, reference);
+
+                if (value > businessDays)
+                    end = mid - 1;
+                else if (value < businessDays)
+                    start = mid + 1;
+                else
+                    break;
+
             }
 
-            while (!IsWorkingDay(date))
-                date = date.AddDays(-mult);
+            while (!IsWorkingDay(midDate))
+                midDate = midDate.AddDays(-mult);
 
-            return date.Date;
+            return midDate.Date;
         }
 
         public DateTime GetInAdvance(int businessDays, DateTime reference, bool considerCurrent)
