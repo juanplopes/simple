@@ -16,7 +16,7 @@ namespace SimpleLibrary.DataAccess
 
         public object TransformTuple(object[] tuple, string[] aliases)
         {
-            Dictionary<string, object> dic = new Dictionary<string, object>();
+            Dictionary<string, object> dic = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
             if (tuple.Length != aliases.Length) throw new InvalidOperationException("Cannot transform entity mappings with this transformer");
 
