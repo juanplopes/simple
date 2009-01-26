@@ -73,6 +73,7 @@
     <Compile Include="DataAccess\CriteriaHelper.cs" />
     <Compile Include="DataAccess\Extensions.cs" />
     <Compile Include="DataAccess\SessionManager.cs" />
+    <Compile Include="DataAccess\TupleToDictionaryTransformer.cs" />
     <Compile Include="DataAccess\TupleToPropertiesTransformer.cs" />
     <Compile Include="MainController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

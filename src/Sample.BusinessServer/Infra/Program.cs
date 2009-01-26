@@ -34,9 +34,6 @@ namespace Sample.BusinessServer.Infra
 
         public static void Main(string[] args)
         {
-            //SchemaExport exp = new SchemaExport(SessionManager.DefaultConfig);
-            //exp.Create(false, true);
-
             MainController.Run(Assembly.GetExecutingAssembly());
         }
     }

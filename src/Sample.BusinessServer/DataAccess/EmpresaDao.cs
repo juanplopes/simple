@@ -10,5 +10,12 @@ namespace Sample.BusinessServer.DataAccess
         public EmpresaDao() : base() { }
         public EmpresaDao(ISession session) : base(session) { }
         public EmpresaDao(BaseDao previousDao) : base(previousDao) { }
+
+        public override object TestMethod(object obj)
+        {
+            IQuery q = Session.CreateSQLQuery("select * from empresa");
+            q.SetResultTransformer(SimpleTransformers.ToDictionary);
+            return null;
+        }
     }
 }

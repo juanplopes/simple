@@ -7,6 +7,8 @@ namespace SimpleLibrary.DataAccess
 {
     public class SimpleTransformers
     {
+        public static TupleToDictionaryTransformer ToDictionary = new TupleToDictionaryTransformer();
+
         public static TupleToConstructorTransformer ByConstructor(Type t)
         {
             return new TupleToConstructorTransformer(t);
