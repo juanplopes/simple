@@ -25,8 +25,12 @@ namespace SimpleLibrary.BasicLibraryTests
     }
 
     [TestFixture]
-    public class BusinessDaysTests
+    public class WorkingDaysTests : BaseWorkingDaysTests
     {
+        public WorkingDaysTests() :
+            base(new TestProvider(), 1000, 100, new DateTime(2008, 1, 1))
+        { }
+
         #region ref1 ref2
         #region From back ref1 ref2
         [Test]

@@ -27,7 +27,7 @@ namespace BasicLibrary.Configuration
         protected LoadConfiguration ConfigInfo { get; set; }
         public IList<XmlElement> XmlElements { get; set; }
 
-        protected ConfigElement()
+        public ConfigElement()
         {
             this.LoadDefaults();
             ConfigInfo = new LoadConfiguration(this);

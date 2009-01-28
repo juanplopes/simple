@@ -21,6 +21,11 @@ namespace BasicLibrary.Configuration
             }
         }
 
+        public static T New()
+        {
+            return new T();
+        }
+
         [LocalizationProviderIgnore]
         public static T Get()
         {
