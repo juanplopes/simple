@@ -78,10 +78,16 @@ namespace BasicLibrary.IO
             where T:new()
         {
             StreamReader reader = new StreamReader(input);
+            return Parse<T>(reader);
+        }
+
+        public static IList<T> Parse<T>(StreamReader input)
+            where T:new()
+        {
             IList<T> result = new List<T>();
-            while (!reader.EndOfStream)
+            while (!input.EndOfStream)
             {
-                string value = reader.ReadLine();
+                string value = input.ReadLine();
                 result.Add(Parse<T>(value));
             }
             return result;

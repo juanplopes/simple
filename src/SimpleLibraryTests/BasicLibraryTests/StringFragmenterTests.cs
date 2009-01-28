@@ -96,6 +96,7 @@ namespace SimpleLibrary.BasicLibraryTests
             }
         }
 
+
         [Test]
         public void ArrayTest()
         {
