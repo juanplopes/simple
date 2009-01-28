@@ -92,6 +92,10 @@
     <Compile Include="DynamicProxy\DynamicProxyFactory.cs" />
     <Compile Include="DynamicProxy\DynamicProxyImpl.cs" />
     <Compile Include="DynamicProxy\IDynamicProxy.cs" />
+    <Compile Include="IO\CultureAttribute.cs" />
+    <Compile Include="IO\ICorrectible.cs" />
+    <Compile Include="IO\StringFragmenter.cs" />
+    <Compile Include="IO\StringOffsetAttribute.cs" />
     <Compile Include="LibraryConfig\BasicLibraryConfig.cs" />
     <Compile Include="LibraryConfig\Log4netConfig.cs" />
     <Compile Include="Logging\MainLogger.cs" />
