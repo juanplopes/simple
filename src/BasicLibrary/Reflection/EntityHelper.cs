@@ -91,5 +91,31 @@ namespace BasicLibrary.Reflection
         {
             return ObjectGetHashCode(_obj);
         }
+
+        protected static string GetToString(object obj)
+        {
+            if (obj == null) return "<null>";
+            return obj.ToString();
+        }
+
+        public string ObjectToString(object obj)
+        {
+            if (obj == null) return "<null>";
+            if (!_entityType.IsAssignableFrom(obj.GetType())) throw new InvalidOperationException("Invalid object type");
+
+            string[] response = new string[_ids.Count];
+
+            for (int i = 0; i < _ids.Count; i++)
+            {
+                response[i] = _ids[i] + "=" + GetToString(_entityType.GetProperty(_ids[i]).GetValue(obj, null));
+            }
+
+            return string.Join(" | ", response);
+        }
+
+        public string ObjectToString()
+        {
+            return ObjectToString(_obj);
+        }
     }
 }

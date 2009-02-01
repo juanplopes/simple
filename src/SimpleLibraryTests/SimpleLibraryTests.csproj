@@ -43,7 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicLibraryTests\BaseWorkingDaysTests.cs" />
+    <Compile Include="BasicLibraryTests\ConfigurationTests.cs" />
     <Compile Include="BasicLibraryTests\StringFragmenterTests.cs" />
+    <Compile Include="BasicLibraryTests\TestClasses\BasicTypesElement.cs" />
+    <Compile Include="BasicLibraryTests\TestClasses\ComplexElement.cs" />
     <Compile Include="BasicLibraryTests\TestClasses\TestStringClass.cs" />
     <Compile Include="BasicLibraryTests\WorkingDaysTests.cs" />
     <Compile Include="DataAccessTests\FiltersTests.cs" />

@@ -17,7 +17,6 @@ namespace SimpleLibrary.BasicLibraryTests.TestClasses
         [StringOffset(5)]
         public decimal TestDecimal2 { get; set; }
 
-
         #region ICorrectible Members
 
         public void CorrectMe()

@@ -56,7 +56,7 @@ namespace BasicLibrary.IO
                 Debug.Assert(start + length - 1 < input.Length, "End must be lesser than string length");
                 Debug.Assert(start >= 0, "Start must be non-negative");
                 lastEnd = start + length - 1;
-
+               
                 prop.SetValue(result,
                     Convert.ChangeType(input.Substring(start, length), prop.PropertyType, currCulture),
                     null);

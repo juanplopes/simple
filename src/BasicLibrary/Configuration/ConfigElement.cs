@@ -16,7 +16,7 @@ namespace BasicLibrary.Configuration
 {
     public class ConfigElement : IConfigElement
     {
-        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected ILog Logger = null;
 
         public event EventHandler OnExpire;
         void IConfigElement.InvokeExpire()
@@ -29,6 +29,12 @@ namespace BasicLibrary.Configuration
 
         public ConfigElement()
         {
+            try
+            {
+                Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+            }
+            catch { }
+
             this.LoadDefaults();
             ConfigInfo = new LoadConfiguration(this);
             XmlElements = new List<XmlElement>();
