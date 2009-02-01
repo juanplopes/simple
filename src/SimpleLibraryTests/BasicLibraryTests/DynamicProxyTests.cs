@@ -61,17 +61,17 @@ namespace SimpleLibrary.BasicLibraryTests
 			// No test for method 1, just make sure it doesn't bomb ;-)
 			testClassProxy.Method1();
 			
-			Assert.Equals("Hello World!", testClassProxy.Method2());
-			Assert.Equals(10000, testClassProxy.Method3());
-			Assert.Equals(123456, testClassProxy.Method4(123456));
+			Assert.AreEqual("Hello World!", testClassProxy.Method2());
+			Assert.AreEqual(10000, testClassProxy.Method3());
+			Assert.AreEqual(123456, testClassProxy.Method4(123456));
 
 			int outValue = 1234;
 			testClassProxy.Method5(3456, out outValue);
-			Assert.Equals(3456, outValue);
+			Assert.AreEqual(3456, outValue);
 
 			int refValue = 56748;
 			testClassProxy.Method6(ref refValue);
-			Assert.Equals(98765, refValue);
+			Assert.AreEqual(98765, refValue);
 
 			// Test casting
 			TestClasses.IImplemented implementedInterface = (TestClasses.IImplemented)testClassProxy;
