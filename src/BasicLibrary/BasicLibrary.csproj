@@ -164,6 +164,7 @@
     <Compile Include="Threading\TimeoutValues.cs" />
     <Compile Include="Threading\UnableToAcquireLockException.cs" />
     <Compile Include="UI\Windows\KeyboardHook.cs" />
+    <Compile Include="UI\Windows\SingleInstance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BasicLibrary.config">
