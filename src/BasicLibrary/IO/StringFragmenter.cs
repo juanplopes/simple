@@ -11,35 +11,42 @@ namespace BasicLibrary.IO
 {
     public class StringFragmenter
     {
+        private static CultureInfo GetCulture(MemberInfo member, CultureInfo defaultOne)
+        {
+            CultureAttribute cultureAttr = ListExtensor.GetFirst<CultureAttribute>(
+                member.GetCustomAttributes(typeof(CultureAttribute), true));
+            if (cultureAttr != null)
+                return cultureAttr.Culture;
+            else
+                return defaultOne;
+
+        }
+
+        private static IParser GetParser(MemberInfo member, IParser defaultOne)
+        {
+            ParserAttribute parserAttr = ListExtensor.GetFirst<ParserAttribute>(
+                member.GetCustomAttributes(typeof(ParserAttribute), true));
+            if (parserAttr != null)
+                return parserAttr.CreateInstance();
+            else
+                return defaultOne;
+        }
+
         public static object Parse(string input, Type resultType)
         {
             object result = Activator.CreateInstance(resultType);
 
+            CultureInfo defaultCulture = GetCulture(resultType, CultureInfo.InvariantCulture);
+            IParser defaultParser = GetParser(resultType, DefaultParser.Instance);
+
             int lastEnd = -1;
-
-            CultureAttribute cultureAttr = ListExtensor.GetFirst<CultureAttribute>(
-                resultType.GetCustomAttributes(typeof(CultureAttribute), true));
-
-            CultureInfo defaultCulture = null;
-            if (cultureAttr != null)
-                defaultCulture = cultureAttr.Culture;
-            else
-                defaultCulture = CultureInfo.InvariantCulture;
-
             foreach (PropertyInfo prop in resultType.GetProperties())
             {
                 StringOffsetAttribute attr = ListExtensor.GetFirst<StringOffsetAttribute>(
                     prop.GetCustomAttributes(typeof(StringOffsetAttribute), true));
-                cultureAttr = ListExtensor.GetFirst<CultureAttribute>(
-                    prop.GetCustomAttributes(typeof(CultureAttribute), true));
 
-                CultureInfo currCulture = null;
-                if (cultureAttr != null)
-                    currCulture = cultureAttr.Culture;
-                else
-                    currCulture = defaultCulture;
-
-
+                CultureInfo currCulture = GetCulture(prop, defaultCulture);
+                IParser currParser = GetParser(prop, defaultParser);
 
                 int start, length;
                 if (attr.Start != null)
@@ -56,9 +63,9 @@ namespace BasicLibrary.IO
                 Debug.Assert(start + length - 1 < input.Length, "End must be lesser than string length");
                 Debug.Assert(start >= 0, "Start must be non-negative");
                 lastEnd = start + length - 1;
-               
+
                 prop.SetValue(result,
-                    Convert.ChangeType(input.Substring(start, length), prop.PropertyType, currCulture),
+                    currParser.Parse(input.Substring(start, length), prop.PropertyType, currCulture),
                     null);
             }
 
@@ -75,14 +82,14 @@ namespace BasicLibrary.IO
         }
 
         public static IList<T> Parse<T>(Stream input)
-            where T:new()
+            where T : new()
         {
             StreamReader reader = new StreamReader(input);
             return Parse<T>(reader);
         }
 
         public static IList<T> Parse<T>(StreamReader input)
-            where T:new()
+            where T : new()
         {
             IList<T> result = new List<T>();
             while (!input.EndOfStream)
@@ -94,7 +101,7 @@ namespace BasicLibrary.IO
         }
 
         public static IList<T> Parse<T>(string[] input)
-            where T:new()
+            where T : new()
         {
             IList<T> result = new List<T>();
             foreach (string s in input)

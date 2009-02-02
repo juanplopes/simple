@@ -78,6 +78,15 @@ namespace SimpleLibrary.BasicLibraryTests
         }
 
         [Test]
+        public void ParseIntAndDate()
+        {
+            var s = StringFragmenter.Parse<TestStringClass4>("1234520081112");
+            Assert.AreEqual(12345, s.TestInt);
+            Assert.AreEqual(new DateTime(2008, 12, 11), s.TestDateTime);
+        }
+
+
+        [Test]
         public void StreamTest()
         {
             string st = "0123456789009876543210\n0123456789009876543210\n0123456789009876543210";

@@ -37,7 +37,7 @@ namespace SimpleLibrary.BasicLibraryTests.TestClasses
 
         [StringOffset(6)]
         public int TestInt2 { get; set; }
-        
+
         [StringOffset(5), Culture("en-us")]
         public decimal TestDecimal2 { get; set; }
     }
@@ -63,6 +63,11 @@ namespace SimpleLibrary.BasicLibraryTests.TestClasses
     {
         [StringOffset(0, 5)]
         public int TestInt { get; set; }
+
+        [StringOffset(8)]
+        [Parser(typeof(DateTimeParser), "yyyyddMM")]
+        public DateTime TestDateTime { get; set; }
+
     }
 
 }

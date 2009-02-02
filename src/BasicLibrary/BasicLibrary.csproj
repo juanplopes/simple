@@ -60,6 +60,7 @@
     <Compile Include="Common\DecoratedTypeFinder.cs" />
     <Compile Include="Common\MathHelper.cs" />
     <Compile Include="Common\PrimeNumbers.cs" />
+    <Compile Include="Common\Tuples.cs" />
     <Compile Include="Configuration\AssemblyConfigElement.cs" />
     <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
     <Compile Include="Configuration\ConfigStructureDisplayer.cs" />
@@ -94,7 +95,11 @@
     <Compile Include="DynamicProxy\DynamicProxyImpl.cs" />
     <Compile Include="DynamicProxy\IDynamicProxy.cs" />
     <Compile Include="IO\CultureAttribute.cs" />
+    <Compile Include="IO\DateTimeParser.cs" />
+    <Compile Include="IO\DefaultParser.cs" />
     <Compile Include="IO\ICorrectible.cs" />
+    <Compile Include="IO\IParser.cs" />
+    <Compile Include="IO\ParserAttribute.cs" />
     <Compile Include="IO\StringFragmenter.cs" />
     <Compile Include="IO\StringOffsetAttribute.cs" />
     <Compile Include="LibraryConfig\BasicLibraryConfig.cs" />
