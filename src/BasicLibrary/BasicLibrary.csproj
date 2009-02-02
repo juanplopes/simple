@@ -49,6 +49,7 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +163,7 @@
     <Compile Include="Threading\ThreadData.cs" />
     <Compile Include="Threading\TimeoutValues.cs" />
     <Compile Include="Threading\UnableToAcquireLockException.cs" />
+    <Compile Include="UI\Windows\KeyboardHook.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BasicLibrary.config">

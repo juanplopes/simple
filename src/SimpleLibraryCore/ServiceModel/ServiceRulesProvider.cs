@@ -55,6 +55,11 @@ namespace SimpleLibrary.ServiceModel
                         logger.Debug("Heartbeat failed. Refreshing...");
                         Cache = CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), typeof(T).Name));
                     }
+                    catch (CommunicationException)
+                    {
+                        logger.Debug("Heartbeat failed. Refreshing...");
+                        Cache = CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), typeof(T).Name));
+                    }
                 }
                 return Cache;
             }
