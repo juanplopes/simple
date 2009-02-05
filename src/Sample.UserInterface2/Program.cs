@@ -4,6 +4,8 @@ using Sample.BusinessInterface.Rules;
 using SimpleLibrary.Filters;
 using SimpleLibrary.DataAccess;
 using Sample.BusinessInterface.Domain;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Sample.UserInterface2
 {
@@ -11,10 +13,7 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            IEmpresaRules rules = RulesFactory.Create<IEmpresaRules>();
-
-            IPage<Empresa> page = rules.PaginateByFilter(BooleanExpression.True, OrderBy.None(), 30, 20);
-            page.TotalPages.ToString();
+            
         }
     }
 }
