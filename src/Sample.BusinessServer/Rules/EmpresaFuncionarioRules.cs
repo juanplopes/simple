@@ -10,4 +10,9 @@ namespace Sample.BusinessServer.Rules
     public partial class EmpresaFuncionarioRules : BaseRules<EmpresaFuncionario>, IEmpresaFuncionarioRules
     {
     }
+
+    public partial class EmpresaFuncionarioRules : SimpleLibrary.Rules.BaseRules<EmpresaFuncionario>
+    {
+
+    }
 }

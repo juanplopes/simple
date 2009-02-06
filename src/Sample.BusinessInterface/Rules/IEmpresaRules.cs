@@ -10,6 +10,6 @@ namespace Sample.BusinessInterface.Rules
     public partial interface IEmpresaRules : IBaseRules<Empresa>
     {
         [OperationContract]
-        void TestRules();
+        void TestRules(int a, out int b, ref int c);
     }
 }
