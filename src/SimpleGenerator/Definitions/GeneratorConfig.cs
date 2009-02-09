@@ -11,6 +11,9 @@ namespace SimpleGenerator.Definitions
         [ConfigElement("rulesDirectory")]
         public string RulesDirectory { get; set; }
 
+        [ConfigElement("domainDirectory")]
+        public string DomainDirectory { get; set; }
+
         [ConfigElement("domainNamespace")]
         public string DomainNamespace { get; set; }
 

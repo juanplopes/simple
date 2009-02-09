@@ -3,6 +3,7 @@ using Sample.BusinessInterface.Domain;
 using SimpleLibrary.Rules;
 using SimpleLibrary.ServiceModel;
 using System.ServiceModel;
+using System.Collections.Generic;
 
 namespace Sample.BusinessInterface.Rules
 {
@@ -10,6 +11,6 @@ namespace Sample.BusinessInterface.Rules
     public partial interface IEmpresaRules : IBaseRules<Empresa>
     {
         [OperationContract]
-        void TestRules(int a, out int b, ref int c);
+        void TestRules(IList<Funcionario> a, out Funcionario b, ref int c);
     }
 }

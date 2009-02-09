@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using DDW;
 using SimpleGenerator.Definitions;
 using System.Text.RegularExpressions;
+using CSharpParser.ProjectModel;
 
 namespace SimpleGenerator.RulesInterfaces
 {
@@ -16,33 +15,40 @@ namespace SimpleGenerator.RulesInterfaces
 
         public void Generate(GeneratorConfig config, string baseDir)
         {
+
             Dictionary<string, InterfaceCandidate> candidates = new Dictionary<string, InterfaceCandidate>();
 
-            #region Calculation
-            foreach (string file in Directory.GetFiles(Path.Combine(baseDir, config.RulesDirectory)))
-            {
-                Lexer lexer = new Lexer(File.OpenText(file));
-                Parser parser = new Parser(file);
+            CompilationUnit domain = new CompilationUnit(Path.Combine(baseDir, config.DomainDirectory), true);
+            domain.AddAssemblyReference("SimpleLibraryCore");
+            domain.Parse();
 
-                CompilationUnitNode comp = parser.Parse(lexer.Lex(), lexer.StringLiterals);
-                foreach (NamespaceNode ns in comp.Namespaces)
+            CompilationUnit project = new CompilationUnit(Path.Combine(baseDir, config.RulesDirectory), true);
+            project.AddAssemblyReference("SimpleLibraryServer");
+            project.AddProjectReference(domain, "domain");
+            project.Parse();
+
+            #region Calculation
+            
+            foreach (SourceFile source in project.Files)
+            {
+                foreach (NamespaceFragment ns in source.NestedNamespaces) 
                 {
-                    foreach (ClassNode cls in ns.Classes)
+                    foreach (TypeDeclaration cls in ns.TypeDeclarations)
                     {
                         InterfaceCandidate current = null;
-                        if (!candidates.ContainsKey(cls.Name.Identifier))
+                        if (!candidates.ContainsKey(cls.Name))
                         {
-                            current = candidates[cls.Name.Identifier] = new InterfaceCandidate();
-                            current.ClassName = InterfacePattern.Replace("%s", cls.Name.Identifier);
+                            current = candidates[cls.Name] = new InterfaceCandidate();
+                            current.ClassName = InterfacePattern.Replace("%s", cls.Name);
                         }
                         else
                         {
-                            current = candidates[cls.Name.Identifier];
+                            current = candidates[cls.Name];
                         }
 
-                        foreach (var baseClass in cls.BaseClasses)
+                        if (cls.BaseType != null)
                         {
-                            Match m = BaseRulesRegex.Match(SourceHelper.GetSource(baseClass));
+                            Match m = BaseRulesRegex.Match(cls.BaseType.ParametrizedName);
                             if (m.Success)
                             {
                                 string ruleName = IBaseRulesPattern.Replace("%s", m.Groups["domainClass"].Value);
@@ -51,19 +57,14 @@ namespace SimpleGenerator.RulesInterfaces
                             }
                         }
 
-                        foreach (var method in cls.Methods)
+                        foreach (MethodDeclaration method in cls.Methods)
                         {
-                            string currentMethod = method.GenericIdentifier;
-
-                            List<string> parameters = new List<string>();
-                            foreach (var param in method.Params)
+                            if (method.Visibility == Visibility.Public &&
+                                !(method is ConstructorDeclaration))
                             {
-                                string currentParam = SourceHelper.GetSource(param);
-                                parameters.Add(currentParam);
+                                string currentMethod = method.ResultingType.ParametrizedName + " " + method.Signature;
+                                current.MethodSignatures.Add(currentMethod);
                             }
-
-                            current.MethodSignatures.Add(
-                                currentMethod + "(" + string.Join(", ", parameters.ToArray()) + ")");
                         }
 
                     }
