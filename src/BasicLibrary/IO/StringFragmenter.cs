@@ -43,6 +43,7 @@ namespace BasicLibrary.IO
             IFormatter defaultParser = GetParser(input.GetType(), DefaultFormatter.Instance);
 
             int lastEnd = -1;
+            int maxSize = 0;
             foreach (PropertyInfo prop in input.GetType().GetProperties())
             {
                 StringOffsetAttribute attr = ListExtensor.GetFirst<StringOffsetAttribute>(
@@ -65,17 +66,17 @@ namespace BasicLibrary.IO
                     length = attr.Length;
                 }
 
-                Debug.Assert(start >= 0, "Start must be non-negative");
                 lastEnd = start + length - 1;
 
-                builder.EnsureCapacity(Math.Max(builder.Length, start + length));
+                maxSize = Math.Max(maxSize, start + length);
+                builder.Length = maxSize;
 
                 string formatted = currParser.Format(prop.GetValue(input, null), currCulture);
                 builder.Insert(start,
                     formatted.Substring(0, Math.Min(length, formatted.Length)));
             }
 
-            return builder.ToString();
+            return builder.ToString().Substring(0, maxSize);
         }
 
         public static object Parse(string input, Type resultType)
@@ -108,8 +109,6 @@ namespace BasicLibrary.IO
                     length = attr.Length;
                 }
 
-                Debug.Assert(start + length - 1 < input.Length, "End must be lesser than string length");
-                Debug.Assert(start >= 0, "Start must be non-negative");
                 lastEnd = start + length - 1;
 
                 prop.SetValue(result,
