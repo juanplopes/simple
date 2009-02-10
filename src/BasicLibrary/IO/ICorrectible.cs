@@ -7,6 +7,6 @@ namespace BasicLibrary.IO
 {
     public interface ICorrectible
     {
-        void CorrectMe();
+        void CorrectOnLoad();
     }
 }

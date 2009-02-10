@@ -6,6 +6,7 @@ using BasicLibrary.Common;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Collections;
 
 namespace BasicLibrary.IO
 {
@@ -22,14 +23,59 @@ namespace BasicLibrary.IO
 
         }
 
-        private static IParser GetParser(MemberInfo member, IParser defaultOne)
+        private static IFormatter GetParser(MemberInfo member, IFormatter defaultOne)
         {
-            ParserAttribute parserAttr = ListExtensor.GetFirst<ParserAttribute>(
-                member.GetCustomAttributes(typeof(ParserAttribute), true));
+            FormatterAttribute parserAttr = ListExtensor.GetFirst<FormatterAttribute>(
+                member.GetCustomAttributes(typeof(FormatterAttribute), true));
             if (parserAttr != null)
-                return parserAttr.CreateInstance();
+                return parserAttr.Instance;
             else
                 return defaultOne;
+        }
+
+        public static string Write(object input)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (input == null) throw new NullReferenceException();
+
+            CultureInfo defaultCulture = GetCulture(input.GetType(), CultureInfo.InvariantCulture);
+            IFormatter defaultParser = GetParser(input.GetType(), DefaultFormatter.Instance);
+
+            int lastEnd = -1;
+            foreach (PropertyInfo prop in input.GetType().GetProperties())
+            {
+                StringOffsetAttribute attr = ListExtensor.GetFirst<StringOffsetAttribute>(
+                    prop.GetCustomAttributes(typeof(StringOffsetAttribute), true));
+
+                if (attr == null) continue;
+
+                CultureInfo currCulture = GetCulture(prop, defaultCulture);
+                IFormatter currParser = GetParser(prop, defaultParser);
+
+                int start, length;
+                if (attr.Start != null)
+                {
+                    start = attr.Start ?? 0;
+                    length = attr.Length;
+                }
+                else
+                {
+                    start = lastEnd + 1;
+                    length = attr.Length;
+                }
+
+                Debug.Assert(start >= 0, "Start must be non-negative");
+                lastEnd = start + length - 1;
+
+                builder.EnsureCapacity(Math.Max(builder.Length, start + length));
+
+                string formatted = currParser.Format(prop.GetValue(input, null), currCulture);
+                builder.Insert(start,
+                    formatted.Substring(0, Math.Min(length, formatted.Length)));
+            }
+
+            return builder.ToString();
         }
 
         public static object Parse(string input, Type resultType)
@@ -37,7 +83,7 @@ namespace BasicLibrary.IO
             object result = Activator.CreateInstance(resultType);
 
             CultureInfo defaultCulture = GetCulture(resultType, CultureInfo.InvariantCulture);
-            IParser defaultParser = GetParser(resultType, DefaultParser.Instance);
+            IFormatter defaultParser = GetParser(resultType, DefaultFormatter.Instance);
 
             int lastEnd = -1;
             foreach (PropertyInfo prop in resultType.GetProperties())
@@ -45,8 +91,10 @@ namespace BasicLibrary.IO
                 StringOffsetAttribute attr = ListExtensor.GetFirst<StringOffsetAttribute>(
                     prop.GetCustomAttributes(typeof(StringOffsetAttribute), true));
 
+                if (attr == null) continue;
+
                 CultureInfo currCulture = GetCulture(prop, defaultCulture);
-                IParser currParser = GetParser(prop, defaultParser);
+                IFormatter currParser = GetParser(prop, defaultParser);
 
                 int start, length;
                 if (attr.Start != null)
@@ -70,7 +118,7 @@ namespace BasicLibrary.IO
             }
 
             if (result is ICorrectible)
-                (result as ICorrectible).CorrectMe();
+                (result as ICorrectible).CorrectOnLoad();
 
             return result;
         }
@@ -87,6 +135,32 @@ namespace BasicLibrary.IO
             StreamReader reader = new StreamReader(input);
             return Parse<T>(reader);
         }
+
+        public static void Write(Stream output, params object[] input)
+        {
+            Write(output, input);
+        }
+
+        public static void Write(Stream output, IEnumerable input)
+        {
+            Write(new StreamWriter(output), input);
+        }
+
+        public static void Write(StreamWriter output, params object[] input)
+        {
+            Write(output, input);
+        }
+
+        public static void Write(StreamWriter output, IEnumerable input)
+        {
+            foreach (object singInput in input)
+            {
+                string temp = Write(singInput);
+                output.WriteLine(temp);
+                output.Flush();
+            }
+        }
+
 
         public static IList<T> Parse<T>(StreamReader input)
             where T : new()

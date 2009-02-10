@@ -4,8 +4,9 @@ using System.Text;
 
 namespace BasicLibrary.IO
 {
-    public interface IParser
+    public interface IFormatter
     {
         object Parse(string value, Type type, IFormatProvider provider);
+        string Format(object value, IFormatProvider provider);
     }
 }

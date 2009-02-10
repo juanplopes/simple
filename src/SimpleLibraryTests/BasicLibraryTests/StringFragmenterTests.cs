@@ -21,6 +21,9 @@ namespace SimpleLibrary.BasicLibraryTests
 
             Assert.AreEqual(98765, s.TestInt2);
             Assert.AreEqual(43210, s.TestDecimal2);
+
+            string s2 = StringFragmenter.Write(s);
+            Assert.AreEqual("0123456789009876543210", s2);
         }
 
         [Test]
@@ -83,13 +86,16 @@ namespace SimpleLibrary.BasicLibraryTests
             var s = StringFragmenter.Parse<TestStringClass4>("1234520081112");
             Assert.AreEqual(12345, s.TestInt);
             Assert.AreEqual(new DateTime(2008, 12, 11), s.TestDateTime);
+
+            string s2 = StringFragmenter.Write(s);
+            Assert.AreEqual("1234520081112", s2);
         }
 
 
         [Test]
         public void StreamTest()
         {
-            string st = "0123456789009876543210\n0123456789009876543210\n0123456789009876543210";
+            string st = "0123456789009876543210\n0123456789009876543210\n0123456789009876543210\n";
             MemoryStream mem = new MemoryStream(Encoding.UTF8.GetBytes(st));
 
             IList<TestStringClass1> list = StringFragmenter.Parse<TestStringClass1>(mem);
@@ -103,6 +109,13 @@ namespace SimpleLibrary.BasicLibraryTests
                 Assert.AreEqual(98765, s.TestInt2);
                 Assert.AreEqual(43210, s.TestDecimal2);
             }
+
+            MemoryStream mem2 = new MemoryStream();
+            StringFragmenter.Write(mem2, list);
+
+            string st2 = Encoding.UTF8.GetString(mem2.ToArray());
+
+            Assert.AreEqual(st.Replace("\r\n", "\n"), st2.Replace("\r\n", "\n"));
         }
 
 

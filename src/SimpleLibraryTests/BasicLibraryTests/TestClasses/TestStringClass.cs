@@ -5,26 +5,18 @@ using BasicLibrary.IO;
 
 namespace SimpleLibrary.BasicLibraryTests.TestClasses
 {
-    public class TestStringClass1 : ICorrectible
+    public class TestStringClass1
     {
-        [StringOffset(5)]
+        [StringOffset(5), Formatter(typeof(NumericFormatter), "00000", 0)]
         public int TestInt { get; set; }
-        [StringOffset(6)]
+        [StringOffset(6), Formatter(typeof(NumericFormatter), "000000", 2)]
         public decimal TestDecimal { get; set; }
 
-        [StringOffset(6)]
+        [StringOffset(6), Formatter(typeof(NumericFormatter), "000000", 0)]
         public int TestInt2 { get; set; }
-        [StringOffset(5)]
+        [StringOffset(5), Formatter(typeof(NumericFormatter), "00000", 0)]
         public decimal TestDecimal2 { get; set; }
 
-        #region ICorrectible Members
-
-        public void CorrectMe()
-        {
-            TestDecimal /= 100m;
-        }
-
-        #endregion
     }
 
     [Culture("pt-br")]
@@ -61,11 +53,11 @@ namespace SimpleLibrary.BasicLibraryTests.TestClasses
     [Culture("pt-br")]
     public class TestStringClass4
     {
-        [StringOffset(0, 5)]
+        [StringOffset(0, 5), Formatter(typeof(NumericFormatter), "00000", 0)]
         public int TestInt { get; set; }
 
         [StringOffset(8)]
-        [Parser(typeof(DateTimeParser), "yyyyddMM")]
+        [Formatter(typeof(DateFormatter), "yyyyddMM")]
         public DateTime TestDateTime { get; set; }
 
     }

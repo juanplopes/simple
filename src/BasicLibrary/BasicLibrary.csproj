@@ -95,11 +95,12 @@
     <Compile Include="DynamicProxy\DynamicProxyImpl.cs" />
     <Compile Include="DynamicProxy\IDynamicProxy.cs" />
     <Compile Include="IO\CultureAttribute.cs" />
-    <Compile Include="IO\DateTimeParser.cs" />
-    <Compile Include="IO\DefaultParser.cs" />
+    <Compile Include="IO\DateFormatter.cs" />
+    <Compile Include="IO\DefaultFormatter.cs" />
     <Compile Include="IO\ICorrectible.cs" />
-    <Compile Include="IO\IParser.cs" />
-    <Compile Include="IO\ParserAttribute.cs" />
+    <Compile Include="IO\IFormatter.cs" />
+    <Compile Include="IO\FormatterAttribute.cs" />
+    <Compile Include="IO\NumericFormatter.cs" />
     <Compile Include="IO\StringFragmenter.cs" />
     <Compile Include="IO\StringOffsetAttribute.cs" />
     <Compile Include="LibraryConfig\BasicLibraryConfig.cs" />
