@@ -111,7 +111,7 @@ namespace SimpleLibrary.BasicLibraryTests
             }
 
             MemoryStream mem2 = new MemoryStream();
-            StringFragmenter.Write(mem2, list);
+            StringFragmenter.WriteEnum(mem2, list);
 
             string st2 = Encoding.UTF8.GetString(mem2.ToArray());
 

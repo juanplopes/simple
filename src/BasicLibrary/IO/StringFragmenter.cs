@@ -135,28 +135,28 @@ namespace BasicLibrary.IO
             return Parse<T>(reader);
         }
 
-        public static void Write(Stream output, params object[] input)
-        {
-            Write(output, input);
-        }
-
-        public static void Write(Stream output, IEnumerable input)
+        public static void Write(Stream output, object input)
         {
             Write(new StreamWriter(output), input);
         }
 
-        public static void Write(StreamWriter output, params object[] input)
+        public static void WriteEnum(Stream output, IEnumerable input)
         {
-            Write(output, input);
+            WriteEnum(new StreamWriter(output), input);
         }
 
-        public static void Write(StreamWriter output, IEnumerable input)
+        public static void Write(StreamWriter output, object input)
+        {
+            string temp = Write(input);
+            output.WriteLine(temp);
+            output.Flush();
+        }
+
+        public static void WriteEnum(StreamWriter output, IEnumerable input)
         {
             foreach (object singInput in input)
             {
-                string temp = Write(singInput);
-                output.WriteLine(temp);
-                output.Flush();
+                Write(output, singInput);
             }
         }
 
