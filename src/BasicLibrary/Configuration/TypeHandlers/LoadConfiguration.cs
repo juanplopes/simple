@@ -41,7 +41,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
 
             foreach (PropertyInfo property in Element.GetType().GetProperties())
             {
-                ConfigElementAttribute configElement = ListExtensor.GetFirst<ConfigElementAttribute>(property.GetCustomAttributes(typeof(ConfigElementAttribute), true));
+                ConfigElementAttribute configElement = Enumerable.GetFirst<ConfigElementAttribute>(property.GetCustomAttributes(typeof(ConfigElementAttribute), true));
                 if (configElement != null)
                 {
                     ConfigAcceptsParentAttribute[] parentList = (ConfigAcceptsParentAttribute[])property.GetCustomAttributes(typeof(ConfigAcceptsParentAttribute), true);

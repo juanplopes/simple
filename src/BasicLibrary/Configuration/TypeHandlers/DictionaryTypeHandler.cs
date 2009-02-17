@@ -30,7 +30,7 @@ namespace BasicLibrary.Configuration.TypeHandlers
         protected override void HandleElement(XmlElement element)
         {
             PropertyInfo property = Properties[element.Name];
-            ConfigDictionaryKeyNameAttribute configElement = ListExtensor.GetFirst<ConfigDictionaryKeyNameAttribute>(property.GetCustomAttributes(typeof(ConfigDictionaryKeyNameAttribute), true));
+            ConfigDictionaryKeyNameAttribute configElement = Enumerable.GetFirst<ConfigDictionaryKeyNameAttribute>(property.GetCustomAttributes(typeof(ConfigDictionaryKeyNameAttribute), true));
             string keyName = (configElement != null) ? configElement.Name : ConfigDictionaryKeyNameAttribute.DEFAULT_KEY_NAME;
             string key = "";
             try

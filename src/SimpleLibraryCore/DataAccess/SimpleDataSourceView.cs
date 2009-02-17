@@ -43,7 +43,6 @@ namespace SimpleLibrary.DataAccess
 
         }
 
-
         public override bool CanSort
         {
             get

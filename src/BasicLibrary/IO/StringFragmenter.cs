@@ -14,7 +14,7 @@ namespace BasicLibrary.IO
     {
         private static CultureInfo GetCulture(MemberInfo member, CultureInfo defaultOne)
         {
-            CultureAttribute cultureAttr = ListExtensor.GetFirst<CultureAttribute>(
+            CultureAttribute cultureAttr = Enumerable.GetFirst<CultureAttribute>(
                 member.GetCustomAttributes(typeof(CultureAttribute), true));
             if (cultureAttr != null)
                 return cultureAttr.Culture;
@@ -25,7 +25,7 @@ namespace BasicLibrary.IO
 
         private static IFormatter GetParser(MemberInfo member, IFormatter defaultOne)
         {
-            FormatterAttribute parserAttr = ListExtensor.GetFirst<FormatterAttribute>(
+            FormatterAttribute parserAttr = Enumerable.GetFirst<FormatterAttribute>(
                 member.GetCustomAttributes(typeof(FormatterAttribute), true));
             if (parserAttr != null)
                 return parserAttr.Instance;
@@ -46,7 +46,7 @@ namespace BasicLibrary.IO
             int maxSize = 0;
             foreach (PropertyInfo prop in input.GetType().GetProperties())
             {
-                StringOffsetAttribute attr = ListExtensor.GetFirst<StringOffsetAttribute>(
+                StringOffsetAttribute attr = Enumerable.GetFirst<StringOffsetAttribute>(
                     prop.GetCustomAttributes(typeof(StringOffsetAttribute), true));
 
                 if (attr == null) continue;
@@ -89,7 +89,7 @@ namespace BasicLibrary.IO
             int lastEnd = -1;
             foreach (PropertyInfo prop in resultType.GetProperties())
             {
-                StringOffsetAttribute attr = ListExtensor.GetFirst<StringOffsetAttribute>(
+                StringOffsetAttribute attr = Enumerable.GetFirst<StringOffsetAttribute>(
                     prop.GetCustomAttributes(typeof(StringOffsetAttribute), true));
 
                 if (attr == null) continue;

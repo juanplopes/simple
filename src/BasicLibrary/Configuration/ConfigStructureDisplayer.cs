@@ -43,7 +43,7 @@ namespace BasicLibrary.Configuration
         {
             foreach (PropertyInfo property in ConfigType.GetProperties())
             {
-                ConfigElementAttribute attr = ListExtensor.GetFirst<ConfigElementAttribute>(
+                ConfigElementAttribute attr = Enumerable.GetFirst<ConfigElementAttribute>(
                     property.GetCustomAttributes(typeof(ConfigElementAttribute), true));
                 if (attr != null)
                 {

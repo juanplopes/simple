@@ -5,19 +5,41 @@ using System.Collections;
 
 namespace BasicLibrary.Common
 {
-    public static class ListExtensor
+    public static class Enumerable
     {
-        public static T GetFirst<T>(IList list)
+        public static T GetFirst<T>(IEnumerable enumerable)
         {
-            if (list.Count > 0) return (T)list[0];
-            else return default(T);
+            IEnumerator enumerator = enumerable.GetEnumerator();
+
+            if (enumerator.MoveNext()) return (T)enumerator.Current;
+            return default(T);
+
         }
 
-        public static IEnumerable<Q> EnumerateCasting<T,Q>(IEnumerable<T> enumerable)
+        public static IEnumerable<Q> EnumerateCasting<T, Q>(IEnumerable<T> enumerable)
             where T : class, Q
+            where Q : class
         {
-            foreach (object obj in enumerable)
-                yield return obj as T;
+            return Convert(enumerable, e => e as Q);
+        }
+
+        public static void ForEach<T>(IEnumerable<T> enumerable, Action<T> action)
+        {
+            foreach (T t in enumerable)
+                action(t);
+        }
+
+        public static IEnumerable<T> Filter<T>(IEnumerable<T> enumerable, Predicate<T> predicate)
+        {
+            foreach (T t in enumerable)
+                if (predicate(t))
+                    yield return t;
+        }
+
+        public static IEnumerable<Q> Convert<T, Q>(IEnumerable<T> enumerable, Converter<T, Q> converter)
+        {
+            foreach (T t in enumerable)
+                yield return converter(t);
         }
 
         public static IEnumerable<T> EnumerateN<T>(params IEnumerable<T>[] enumerables)

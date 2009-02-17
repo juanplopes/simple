@@ -24,21 +24,21 @@ namespace BasicLibrary.Configuration
 
         public static string GetDefaultFile<T>() where T : IConfigElement
         {
-            DefaultFileAttribute attribute = ListExtensor.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
+            DefaultFileAttribute attribute = Enumerable.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
             if (attribute == null) return null;
             return attribute.DefaultFile;
         }
 
         public static bool ShouldThrowException<T>() where T : IConfigElement
         {
-            DefaultFileAttribute attribute = ListExtensor.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
+            DefaultFileAttribute attribute = Enumerable.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
             if (attribute == null) return true;
             return attribute.ThrowException;
         }
 
         public static bool ShouldLoadDefaultFirst<T>() where T : IConfigElement
         {
-            DefaultFileAttribute attribute = ListExtensor.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
+            DefaultFileAttribute attribute = Enumerable.GetFirst<DefaultFileAttribute>(typeof(T).GetCustomAttributes(typeof(DefaultFileAttribute), false));
             if (attribute == null) return true;
             return attribute.LoadDefaultFirst;
         }
