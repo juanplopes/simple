@@ -51,6 +51,7 @@
     <Compile Include="Domain\Empresa.cs" />
     <Compile Include="Domain\EmpresaFuncionario.cs" />
     <Compile Include="Domain\Funcionario.cs" />
+    <Compile Include="Domain\TestFault.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\IEmpresaFuncionarioRules.cs" />
     <Compile Include="Rules\IEmpresaRules.cs" />

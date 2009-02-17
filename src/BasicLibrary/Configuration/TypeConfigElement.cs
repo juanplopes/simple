@@ -12,7 +12,10 @@ namespace BasicLibrary.Configuration
 
         public Type LoadType()
         {
-            return Type.GetType(Name);
+            Type type = Type.GetType(Name);
+            if (type == null) throw new InvalidConfigurationException("Non existent type name: " + Name);
+
+            return type;
         }
 
         public object CreateInstance(params object[] objs)

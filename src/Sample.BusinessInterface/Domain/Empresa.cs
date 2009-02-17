@@ -2,11 +2,12 @@ using System;
 using System.Runtime.Serialization;
 using BasicLibrary.Reflection;
 using SimpleLibrary.Filters;
+using System.Xml.Serialization;
 
 namespace Sample.BusinessInterface.Domain
 {
 
-    [Serializable]
+    [XmlRoot]
     public partial class Empresa
     {
         public Int32 Id { get; set; }

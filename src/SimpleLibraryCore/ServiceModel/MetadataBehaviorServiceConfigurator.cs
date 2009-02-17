@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel.Description;
 using BasicLibrary.Configuration;
+using System.ServiceModel.Channels;
 
 namespace SimpleLibrary.ServiceModel
 {
@@ -19,7 +20,9 @@ namespace SimpleLibrary.ServiceModel
             service.Description.Behaviors.Remove<ServiceMetadataBehavior>();
             service.Description.Behaviors.Add(behavior);
             
-            service.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexHttpBinding(), configT.Address);
+            service.AddServiceEndpoint(typeof(IMetadataExchange), 
+                new CustomBinding(new HttpTransportBindingElement()), 
+                configT.Address);
         }
     }
 

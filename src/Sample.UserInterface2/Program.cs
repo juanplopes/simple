@@ -13,7 +13,7 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            
+            IList<Empresa> rules = RulesFactory.Create<IEmpresaRules>().ListAll(null);
         }
     }
 }

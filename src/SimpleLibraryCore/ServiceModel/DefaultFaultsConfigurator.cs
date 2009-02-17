@@ -53,6 +53,8 @@ namespace SimpleLibrary.ServiceModel
                 {
                     FaultDescription fault = new FaultDescription(type.Name);
                     fault.DetailType = type;
+                    fault.Name = type.Name;
+                    fault.Namespace = type.Namespace;
                     operation.Faults.Add(fault);
                 }
             }
