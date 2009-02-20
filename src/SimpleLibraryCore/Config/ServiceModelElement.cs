@@ -8,7 +8,7 @@ namespace SimpleLibrary.Config
 {
     public class ServiceModelElement : ConfigElement
     {
-        [ConfigElement("defaultEndpoint", Required=true)]
+        [ConfigElement("defaultEndpoint", Required = true)]
         public EndpointElement DefaultEndpoint { get; set; }
 
         [ConfigElement("endpoint")]
@@ -18,7 +18,7 @@ namespace SimpleLibrary.Config
         [ConfigElement("serviceConfiguratorType")]
         public List<ConfiguratorElement> ServiceConfigurators { get; set; }
 
-        [ConfigElement("defaultBaseAddress", Required=true)]
+        [ConfigElement("defaultBaseAddress", Required = true)]
         public string DefaultBaseAddress { get; set; }
     }
 }
