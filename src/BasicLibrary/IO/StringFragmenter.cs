@@ -128,7 +128,7 @@ namespace BasicLibrary.IO
             return (T)Parse(input, typeof(T));
         }
 
-        public static IList<T> Parse<T>(Stream input)
+        public static IEnumerable<T> Parse<T>(Stream input)
             where T : new()
         {
             StreamReader reader = new StreamReader(input);
@@ -161,27 +161,30 @@ namespace BasicLibrary.IO
         }
 
 
-        public static IList<T> Parse<T>(StreamReader input)
+        private static IEnumerable<T> ParseInternal<T>(StreamReader input)
             where T : new()
         {
-            IList<T> result = new List<T>();
             while (!input.EndOfStream)
             {
                 string value = input.ReadLine();
-                result.Add(Parse<T>(value));
+                if (value != null && !string.IsNullOrEmpty(value.Trim()))
+                    yield return Parse<T>(value);
             }
-            return result;
         }
 
-        public static IList<T> Parse<T>(string[] input)
+        public static IEnumerable<T> Parse<T>(StreamReader input)
             where T : new()
         {
-            IList<T> result = new List<T>();
+            return Enumerable.ToLazy(ParseInternal<T>(input));
+        }
+
+        public static IEnumerable<T> Parse<T>(string[] input)
+            where T : new()
+        {
             foreach (string s in input)
             {
-                result.Add(Parse<T>(s));
+                yield return Parse<T>(s);
             }
-            return result;
         }
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="Cache\ICacher.cs" />
     <Compile Include="Common\BaseWorkingDaysProvider.cs" />
     <Compile Include="Common\DecoratedTypeFinder.cs" />
+    <Compile Include="Common\LazyEnumerable.cs" />
     <Compile Include="Common\MathHelper.cs" />
     <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Common\Tuples.cs" />
@@ -118,7 +119,7 @@
     <Compile Include="Persistence\ExecutionContext.cs" />
     <Compile Include="Reflection\GenericActivator.cs" />
     <Compile Include="Common\IInitializable.cs" />
-    <Compile Include="Common\ListExtensor.cs" />
+    <Compile Include="Common\Enumerable.cs" />
     <Compile Include="Configuration\ConfigAcceptsParentAttribute.cs" />
     <Compile Include="Configuration\ConfigDictionaryKeyNameAttribute.cs" />
     <Compile Include="Configuration\ConfigElement.cs" />

@@ -16,6 +16,11 @@ namespace BasicLibrary.Common
 
         }
 
+        public static IEnumerable<T> ToLazy<T>(IEnumerable<T> enumerable)
+        {
+            return new LazyEnumerable<T>(enumerable);
+        }
+
         public static IEnumerable<Q> EnumerateCasting<T, Q>(IEnumerable<T> enumerable)
             where T : class, Q
             where Q : class
@@ -47,6 +52,12 @@ namespace BasicLibrary.Common
             foreach (IEnumerable<T> enumerable in enumerables)
                 foreach (T t in enumerable)
                     yield return t;
+        }
+
+        public static IEnumerable<T> ToTyped<T>(IEnumerable enumerable)
+        {
+            foreach (T t in enumerable)
+                yield return (T)t;
         }
     }
 }

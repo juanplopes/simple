@@ -98,7 +98,8 @@ namespace SimpleLibrary.BasicLibraryTests
             string st = "0123456789009876543210\n0123456789009876543210\n0123456789009876543210\n";
             MemoryStream mem = new MemoryStream(Encoding.UTF8.GetBytes(st));
 
-            IList<TestStringClass1> list = StringFragmenter.Parse<TestStringClass1>(mem);
+            IList<TestStringClass1> list = new List<TestStringClass1>(
+                StringFragmenter.Parse<TestStringClass1>(mem));
 
             Assert.AreEqual(3, list.Count);
             foreach (var s in list)
@@ -125,7 +126,8 @@ namespace SimpleLibrary.BasicLibraryTests
             string st = "0123456789009876543210\n0123456789009876543210\n0123456789009876543210";
             string[] mem = st.Split('\n');
 
-            IList<TestStringClass1> list = StringFragmenter.Parse<TestStringClass1>(mem);
+            IList<TestStringClass1> list = new List<TestStringClass1>(
+                StringFragmenter.Parse<TestStringClass1>(mem));
 
             Assert.AreEqual(3, list.Count);
             foreach (var s in list)
