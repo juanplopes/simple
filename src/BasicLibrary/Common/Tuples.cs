@@ -18,7 +18,6 @@ namespace BasicLibrary.Common
         }
     }
 
-
     [Serializable]
     public class Pair<T, Q>
     {
@@ -33,6 +32,12 @@ namespace BasicLibrary.Common
     }
 
     [Serializable]
+    public class Pair<T> : Pair<T, T>
+    {
+        public Pair(T first, T second) : base(first, second) { }
+    }
+
+    [Serializable]
     public class Triplet<T, Q, P> : Pair<T, Q>
     {
         public P Third { get; set; }
@@ -43,4 +48,11 @@ namespace BasicLibrary.Common
             Third = third;
         }
     }
+
+    [Serializable]
+    public class Triplet<T> : Triplet<T, T, T>
+    {
+        public Triplet(T first, T second, T third) : base(first, second, third) { }
+    }
+
 }
