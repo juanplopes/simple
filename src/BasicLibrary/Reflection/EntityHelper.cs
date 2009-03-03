@@ -71,7 +71,7 @@ namespace BasicLibrary.Reflection
             if (obj == null) return 1;
             if (!_entityType.IsAssignableFrom(obj.GetType())) return -1;
 
-            IEnumerator<int> primes = PrimeNumbers.GetPrimeEnumrable().GetEnumerator();
+            IEnumerator<int> primes = PrimeNumbers.GetPrimesEnumrable().GetEnumerator();
             int res = 1;
 
             foreach (string idProp in _ids)

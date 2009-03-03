@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="BasicLibraryTests\BaseWorkingDaysTests.cs" />
     <Compile Include="BasicLibraryTests\ConfigurationTests.cs" />
+    <Compile Include="BasicLibraryTests\PrimeNumbersTests.cs" />
     <Compile Include="BasicLibraryTests\StringFragmenterTests.cs" />
     <Compile Include="BasicLibraryTests\TestClasses\BasicTypesElement.cs" />
     <Compile Include="BasicLibraryTests\TestClasses\ComplexElement.cs" />

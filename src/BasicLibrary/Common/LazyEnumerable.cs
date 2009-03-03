@@ -36,6 +36,13 @@ namespace BasicLibrary.Common
             }
         }
 
+        public IEnumerable<T> Activate()
+        {
+            foreach(T t in this);
+
+            return this;
+        }
+
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return (this as IEnumerable<T>).GetEnumerator();
