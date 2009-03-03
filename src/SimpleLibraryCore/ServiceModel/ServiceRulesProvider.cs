@@ -50,14 +50,14 @@ namespace SimpleLibrary.ServiceModel
                     {
                         Cache.HeartBeat();
                     }
-                    catch (FaultException)
+                    catch (CommunicationException)
                     {
                         logger.Debug("Heartbeat failed. Refreshing...");
                         Cache = CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), typeof(T).Name));
                     }
-                    catch (CommunicationException)
+                    catch (TimeoutException)
                     {
-                        logger.Debug("Heartbeat failed. Refreshing...");
+                        logger.Debug("Heartbeat timed out. Refreshing...");
                         Cache = CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), typeof(T).Name));
                     }
                 }

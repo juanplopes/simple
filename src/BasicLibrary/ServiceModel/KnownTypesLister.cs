@@ -9,6 +9,12 @@ using BasicLibrary.Logging;
 
 namespace BasicLibrary.ServiceModel
 {
+    [global::System.AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
+    public sealed class BasicKnownTypeAttribute : Attribute
+    {
+
+    }
+
     public class KnownTypesLister
     {
         protected static Dictionary<Assembly, IList<Type>> Cache { get; set; }
@@ -23,7 +29,9 @@ namespace BasicLibrary.ServiceModel
         {
             if (Cache.ContainsKey(asm)) return Cache[asm];
 
-            IList<Type> list = DecoratedTypeFinder.Locate(asm, typeof(DataContractAttribute), true);
+            IList<Type> list = new List<Type>(Enumerable.EnumerateN(
+                DecoratedTypeFinder.Locate(asm, typeof(DataContractAttribute), true),
+                DecoratedTypeFinder.Locate(asm, typeof(BasicKnownTypeAttribute), true)));
 
             return (Cache[asm] = list);
         }
