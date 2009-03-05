@@ -55,7 +55,11 @@ namespace SimpleLibrary.ServiceModel
                     }
                     finally
                     {
-                        (obj as ICommunicationObject).Close();
+                        try
+                        {
+                            (obj as ICommunicationObject).Close();
+                        }
+                        catch { logger.Warn("Unable to close CommunicationObject"); }
                     }
                 });
             }
@@ -66,6 +70,7 @@ namespace SimpleLibrary.ServiceModel
             if (FactoryCache == null)
             {
                 FactoryCache = new ChannelFactory<T>(DefaultBinding);
+                FactoryCache.Faulted += (s, a) => ((ICommunicationObject)s).Abort();
                 ConfigLoader.ApplyConfigurators(FactoryCache.Endpoint, Config.ServiceModel.DefaultEndpoint, true);
             }
 
