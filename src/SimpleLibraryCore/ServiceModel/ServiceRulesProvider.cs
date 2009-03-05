@@ -10,18 +10,19 @@ using System.Net;
 using BasicLibrary.Logging;
 using log4net;
 using System.Reflection;
+using BasicLibrary.DynamicProxy;
 
 namespace SimpleLibrary.ServiceModel
 {
     public class ServiceRulesProvider<T> : IRulesProvider<T>
-        where T:ITestableService
+        where T : ITestableService
     {
         protected ChannelFactory<T> FactoryCache { get; set; }
         protected SimpleLibraryConfig Config { get; set; }
         protected Binding DefaultBinding { get; set; }
-        protected T Cache { get; set; }
         protected object lockObj = new object();
         protected ILog logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+
         public ServiceRulesProvider()
         {
             Config = SimpleLibraryConfig.Get();
@@ -34,34 +35,29 @@ namespace SimpleLibrary.ServiceModel
             return factory.CreateChannel(new EndpointAddress(endpointAddress));
         }
 
+        protected T CreateNew()
+        {
+            return CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), typeof(T).Name));
+        }
+
         public T Create()
         {
             lock (lockObj)
             {
-                if (Cache == null || (Cache as ICommunicationObject).State != CommunicationState.Opened ||
-                    FactoryCache == null || FactoryCache.State != CommunicationState.Opened)
+                var factory = DynamicProxyFactory.Instance;
+                return (T)factory.CreateProxy(null, (o, m, p) =>
                 {
-                    logger.Debug("The channel was in an invalid state. Refreshing...");
-                    Cache = CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), typeof(T).Name));
-                }
-                else
-                {
+                    T obj = CreateNew();
+
                     try
                     {
-                        Cache.HeartBeat();
+                        return m.Invoke(obj, p);
                     }
-                    catch (CommunicationException)
+                    finally
                     {
-                        logger.Debug("Heartbeat failed. Refreshing...");
-                        Cache = CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), typeof(T).Name));
+                        (obj as ICommunicationObject).Close();
                     }
-                    catch (TimeoutException)
-                    {
-                        logger.Debug("Heartbeat timed out. Refreshing...");
-                        Cache = CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), typeof(T).Name));
-                    }
-                }
-                return Cache;
+                });
             }
         }
 
