@@ -114,6 +114,7 @@
     <Compile Include="Common\StringUtils.cs" />
     <Compile Include="Logging\MultiLoggerFactory.cs" />
     <Compile Include="Common\EmailTemplate.cs" />
+    <Compile Include="Reflection\AttributeCache.cs" />
     <Compile Include="Reflection\EntityHelper.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
     <Compile Include="Persistence\ExecutionContext.cs" />

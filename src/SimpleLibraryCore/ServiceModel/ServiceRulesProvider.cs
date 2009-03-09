@@ -45,13 +45,13 @@ namespace SimpleLibrary.ServiceModel
             lock (lockObj)
             {
                 var factory = DynamicProxyFactory.Instance;
-                return (T)factory.CreateProxy(null, (o, m, p) =>
+                return (T)factory.CreateProxy(null, (nullObject, method, parameters) =>
                 {
                     T obj = CreateNew();
 
                     try
                     {
-                        return m.Invoke(obj, p);
+                        return method.Invoke(obj, parameters);
                     }
                     finally
                     {

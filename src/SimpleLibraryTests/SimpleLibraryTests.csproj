@@ -42,10 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicLibraryTests\AttributeCacheTests.cs" />
     <Compile Include="BasicLibraryTests\BaseWorkingDaysTests.cs" />
     <Compile Include="BasicLibraryTests\ConfigurationTests.cs" />
     <Compile Include="BasicLibraryTests\PrimeNumbersTests.cs" />
     <Compile Include="BasicLibraryTests\StringFragmenterTests.cs" />
+    <Compile Include="BasicLibraryTests\TestClasses\AttributeCacheClasses.cs" />
     <Compile Include="BasicLibraryTests\TestClasses\BasicTypesElement.cs" />
     <Compile Include="BasicLibraryTests\TestClasses\ComplexElement.cs" />
     <Compile Include="BasicLibraryTests\TestClasses\TestStringClass.cs" />
