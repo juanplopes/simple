@@ -83,13 +83,7 @@ namespace SimpleLibrary.Rules
         protected virtual ICriteria CreateCriteriaByFilter(Filter filter, OrderByCollection order)
         {
             D dao = GetDao();
-            ICriteria criteria = dao.CreateCriteria();
-            criteria.Add(CriteriaHelper.GetCriterion(filter));
-            if (order != null)
-                foreach (OrderBy o in order)
-                    criteria.AddOrder(CriteriaHelper.GetOrder(o));
-
-            return criteria;
+            return dao.ToCriteria(filter, order);
         }
 
         public virtual void SaveOrUpdate(T entity)
