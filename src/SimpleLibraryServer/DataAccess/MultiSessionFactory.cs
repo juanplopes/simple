@@ -9,6 +9,8 @@ using System.IO;
 using System.Xml;
 using NHibernate.Mapping.Attributes;
 using BasicLibrary.Cache;
+using log4net;
+using BasicLibrary.Logging;
 
 namespace SimpleLibrary.DataAccess
 {
@@ -24,6 +26,7 @@ namespace SimpleLibrary.DataAccess
         protected string ISESSION_KEY = typeof(ISession).GUID.ToString();
         protected DataConfigElement DataConfig { get; set; }
         protected BusinessElement BusinessConfig { get; set; }
+        protected ILog Logger = MainLogger.Get<MultiSessionFactory>();
 
         public MultiSessionFactory(DataConfigElement dataConfig, BusinessElement businessConfig)
         {
@@ -142,6 +145,8 @@ namespace SimpleLibrary.DataAccess
             if (findAttributes)
             {
                 MemoryStream stream = HbmSerializer.Default.Serialize(BusinessConfig.InterfaceAssembly.LoadAssembly());
+                Logger.Debug(new StreamReader(stream).ReadToEnd());
+                stream.Seek(0, SeekOrigin.Begin);
                 config.AddInputStream(stream);
             }
 
