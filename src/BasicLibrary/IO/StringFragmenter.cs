@@ -110,6 +110,10 @@ namespace BasicLibrary.IO
                 }
 
                 lastEnd = start + length - 1;
+                if (start + length > input.Length)
+                    length = input.Length - start;
+
+                if (length < 0) continue;
 
                 prop.SetValue(result,
                     currParser.Parse(input.Substring(start, length), prop.PropertyType, currCulture),

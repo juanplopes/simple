@@ -20,6 +20,7 @@ namespace SimpleLibrary.ServiceModel
             WSHttpBinding binding = new WSHttpBinding();
             binding.MaxReceivedMessageSize = element.MaxReceivedMessageSize;
             binding.ReceiveTimeout = element.GetReceiveTimeout();
+            binding.ReaderQuotas.MaxArrayLength = int.MaxValue;
 
             endpoint.Binding = binding;
         }
