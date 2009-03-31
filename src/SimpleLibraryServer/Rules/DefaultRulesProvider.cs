@@ -8,6 +8,7 @@ using BasicLibrary.Common;
 using BasicLibrary.Logging;
 using log4net;
 using SimpleLibrary.ServiceModel;
+using BasicLibrary.DynamicProxy;
 
 namespace SimpleLibrary.Rules
 {
@@ -48,8 +49,12 @@ namespace SimpleLibrary.Rules
         public T Create()
         {
             T obj = (T)Activator.CreateInstance(ImplementerClass);
-
-            return (T)RulesProxyBuilder.Instance.WrapInstance(obj, typeof(T));
+            T obj1 = (T)RulesProxyBuilder.Instance.WrapInstance(obj, typeof(T));
+            return (T)DynamicProxyFactory.Instance.CreateProxy(obj1, (o, m, p) =>
+            {
+                SimpleContext.Get().Refresh(true);
+                return m.Invoke(o, p);
+            });
         }
 
         public T CreateProxy(T obj)

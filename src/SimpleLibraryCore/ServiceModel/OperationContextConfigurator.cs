@@ -72,7 +72,6 @@ namespace SimpleLibrary.ServiceModel
 
         public object BeforeSendRequest(ref System.ServiceModel.Channels.Message request, IClientChannel channel)
         {
-            SimpleContext.Get().Refresh(true);
             HandleSetContext(ref request);
             return null;
         }

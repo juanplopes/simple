@@ -11,6 +11,7 @@ using BasicLibrary.Logging;
 using log4net;
 using System.Reflection;
 using BasicLibrary.DynamicProxy;
+using System.Diagnostics;
 
 namespace SimpleLibrary.ServiceModel
 {
@@ -39,7 +40,8 @@ namespace SimpleLibrary.ServiceModel
         {
             return CreateNew(new Uri(new Uri(Config.ServiceModel.DefaultBaseAddress), typeof(T).Name));
         }
-
+        
+        [DebuggerHidden]
         public T Create()
         {
             lock (lockObj)
@@ -51,6 +53,7 @@ namespace SimpleLibrary.ServiceModel
 
                     try
                     {
+                        SimpleContext.Get().Refresh(true);
                         return method.Invoke(obj, parameters);
                     }
                     finally
