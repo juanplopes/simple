@@ -52,8 +52,15 @@ namespace SimpleLibrary.Rules
             T obj1 = (T)RulesProxyBuilder.Instance.WrapInstance(obj, typeof(T));
             return (T)DynamicProxyFactory.Instance.CreateProxy(obj1, (o, m, p) =>
             {
-                SimpleContext.Get().Refresh(true);
-                return m.Invoke(o, p);
+                try
+                {
+                    SimpleContext.Get().Refresh(true);
+                    return m.Invoke(o, p);
+                }
+                catch (TargetInvocationException e)
+                {
+                    throw ExHelper.ForReal(e);
+                }
             });
         }
 

@@ -12,6 +12,7 @@ using log4net;
 using System.Reflection;
 using BasicLibrary.DynamicProxy;
 using System.Diagnostics;
+using BasicLibrary.Common;
 
 namespace SimpleLibrary.ServiceModel
 {
@@ -55,6 +56,10 @@ namespace SimpleLibrary.ServiceModel
                     {
                         SimpleContext.Get().Refresh(true);
                         return method.Invoke(obj, parameters);
+                    }
+                    catch (TargetInvocationException e)
+                    {
+                        throw ExHelper.ForReal(e);
                     }
                     finally
                     {
