@@ -119,6 +119,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>..\util\ilmerge /out:SimpleDotNet.dll BasicLibrary.dll SimpleLibraryCore.dll SimpleLibraryServer.dll NHibernate.dll Iesi.Collections.dll Castle.DynamicProxy2.dll Castle.Core.dll SimpleLibraryTests.dll</PostBuildEvent>
+    <PostBuildEvent>..\util\ilmerge /out:SimpleDotNet.dll BasicLibrary.dll SimpleLibraryCore.dll SimpleLibraryServer.dll NHibernate.dll Iesi.Collections.dll Castle.DynamicProxy2.dll Castle.Core.dll SimpleLibraryTests.dll log4net.dll</PostBuildEvent>
   </PropertyGroup>
 </Project>
