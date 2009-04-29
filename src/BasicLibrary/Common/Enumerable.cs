@@ -34,6 +34,14 @@ namespace BasicLibrary.Common
                 action(t);
         }
 
+        public static IDictionary<K, V> ToDictionary<K, V>(IEnumerable<V> enumerable, Converter<V, K> conv)
+        {
+            IDictionary<K, V> dic = new Dictionary<K, V>();
+            foreach (V v in enumerable)
+                dic[conv(v)] = v;
+            return dic;
+        }
+
         public static IEnumerable<T> Filter<T>(IEnumerable<T> enumerable, Predicate<T> predicate)
         {
             foreach (T t in enumerable)

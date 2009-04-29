@@ -76,6 +76,26 @@ namespace SimpleLibrary.DataAccess
             }
         }
 
+        public static ITransaction BeginTransaction()
+        {
+            return GetSession().BeginTransaction();
+        }
+
+        public static ITransaction BeginTransaction(bool forceNewSession)
+        {
+            return GetSession(forceNewSession).BeginTransaction();
+        }
+
+        public static ITransaction BeginTransaction(string factoryName)
+        {
+            return GetSession(factoryName).BeginTransaction();
+        }
+
+        public static ITransaction BeginTransaction(string factoryName, bool forceNewSession)
+        {
+            return GetSession(factoryName, forceNewSession).BeginTransaction();
+        }
+
         public static ISession GetSession()
         {
             return Factory.GetSession();
