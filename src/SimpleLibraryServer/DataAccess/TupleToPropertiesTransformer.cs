@@ -46,14 +46,16 @@ namespace SimpleLibrary.DataAccess
                     foreach (PropertyInfo prop in obj.GetType().GetProperties())
                     {
                         PropertyInfo target = Properties[prop.Name];
-                        target.SetValue(result, prop.GetValue(obj, null), null);
+                        if (target.CanWrite)
+                            target.SetValue(result, prop.GetValue(obj, null), null);
                     }
                 }
                 else
                     if (i + bias >= 0)
                     {
                         PropertyInfo target = Properties[aliases[i + bias]];
-                        target.SetValue(result, obj, null);
+                        if (target.CanWrite)
+                            target.SetValue(result, obj, null);
                     }
             }
 
