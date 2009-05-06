@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel.Channels;
 using System.ServiceModel;
-using SimpleLibrary.ServiceModel;
-using SimpleLibrary.Config;
-using BasicLibrary.Logging;
-using BasicLibrary.Configuration;
+using Simple.ServiceModel;
+using Simple.Config;
+using Simple.Logging;
+using Simple.Configuration;
 using log4net;
 using System.Reflection;
 
-namespace SimpleLibrary.Rules
+namespace Simple.Rules
 {
     public static class RulesFactory
     {

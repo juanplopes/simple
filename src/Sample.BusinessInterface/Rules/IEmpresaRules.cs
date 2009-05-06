@@ -1,7 +1,7 @@
 using System;
 using Sample.BusinessInterface.Domain;
-using SimpleLibrary.Rules;
-using SimpleLibrary.ServiceModel;
+using Simple.Rules;
+using Simple.ServiceModel;
 using System.ServiceModel;
 using System.Collections.Generic;
 

@@ -4,7 +4,7 @@ using System.Text;
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace BasicLibrary.Threading
+namespace Simple.Threading
 {
     public abstract class SqlLockToken<T> : BaseLockToken, IDataStoreLockToken
     {

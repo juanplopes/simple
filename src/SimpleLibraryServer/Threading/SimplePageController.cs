@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.Persistence;
+using Simple.Persistence;
 
-namespace SimpleLibrary.Threading
+namespace Simple.Threading
 {
     public abstract class SimplePageController<T> : PageController<T, NHLockingProvider, NHLockToken>
         where T : PageController<T, NHLockingProvider, NHLockToken>,new()

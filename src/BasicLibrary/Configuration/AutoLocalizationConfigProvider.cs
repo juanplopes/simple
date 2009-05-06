@@ -4,7 +4,7 @@ using System.Text;
 using System.Reflection;
 using System.Diagnostics;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     [LocalizationProviderIgnore]
     public abstract class AutoLocalizationConfigProvider<T> : IConfigProvider<T>

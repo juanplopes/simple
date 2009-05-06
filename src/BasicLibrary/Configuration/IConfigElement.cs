@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 using System.Collections.Generic;
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     public interface IConfigElement
     {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 using System.Text;
 using NHibernate;
-using SimpleLibrary.DataAccess;
+using Simple.DataAccess;
 using System.ServiceModel;
-using BasicLibrary.Logging;
-using SimpleLibrary.Rules;
+using Simple.Logging;
+using Simple.Rules;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public class DefaultExceptionHandler : IExceptionHandler
     {

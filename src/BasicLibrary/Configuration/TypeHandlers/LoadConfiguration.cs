@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
-using BasicLibrary.Common;
+using Simple.Common;
 using System.Configuration;
 using System.Xml;
 using System.Collections;
-using BasicLibrary.Logging;
+using Simple.Logging;
 using log4net;
 
-namespace BasicLibrary.Configuration.TypeHandlers
+namespace Simple.Configuration.TypeHandlers
 {
     public class LoadConfiguration
     {

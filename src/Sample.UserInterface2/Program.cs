@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using SimpleLibrary.Rules;
+using Simple.Rules;
 using Sample.BusinessInterface.Rules;
-using SimpleLibrary.Filters;
-using SimpleLibrary.DataAccess;
+using Simple.Filters;
+using Simple.DataAccess;
 using Sample.BusinessInterface.Domain;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -14,7 +14,7 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-
+            Empresa e = Empresa.Load(1);
 
         }
     }

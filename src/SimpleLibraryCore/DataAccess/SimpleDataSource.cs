@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Web.UI;
-using SimpleLibrary.Rules;
-using SimpleLibrary.Filters;
+using Simple.Rules;
+using Simple.Filters;
 using System.Data;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public class SimpleDataSource
     {

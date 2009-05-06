@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Reflection;
-using BasicLibrary.Logging;
+using Simple.Logging;
 using log4net;
-using BasicLibrary.DynamicProxy;
+using Simple.DynamicProxy;
 
-namespace SimpleLibrary.Rules
+namespace Simple.Rules
 {
     public class RulesProxyBuilder
     {

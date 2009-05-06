@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BasicLibrary.Configuration.TypeHandlers
+namespace Simple.Configuration.TypeHandlers
 {
     public class NullableTypeHandler : BasicTypeHandler
     {

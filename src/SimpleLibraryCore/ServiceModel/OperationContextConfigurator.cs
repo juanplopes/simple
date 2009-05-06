@@ -5,18 +5,18 @@ using System.Text;
 using System.ServiceModel.Description;
 using System.ServiceModel;
 using System.ServiceModel.Dispatcher;
-using SimpleLibrary.Config;
+using Simple.Config;
 using System.ServiceModel.Channels;
-using SimpleLibrary.DataAccess;
+using Simple.DataAccess;
 using System.Runtime.Serialization;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class OperationContextConfigurator : IEndpointConfigurator, IEndpointBehavior, IClientMessageInspector, IDispatchMessageInspector
     {
         #region IEndpointConfigurator Members
 
-        public void Configure(bool isClientSide, System.ServiceModel.Description.ServiceEndpoint endpoint, SimpleLibrary.Config.ConfiguratorElement config)
+        public void Configure(bool isClientSide, System.ServiceModel.Description.ServiceEndpoint endpoint, Simple.Config.ConfiguratorElement config)
         {
             endpoint.Behaviors.Remove<OperationContextConfigurator>();
             endpoint.Behaviors.Add(this);

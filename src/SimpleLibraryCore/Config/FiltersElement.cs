@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.Configuration;
+using Simple.Configuration;
 
-namespace SimpleLibrary.Config
+namespace Simple.Config
 {
     public class FiltersElement : ConfigElement
     {

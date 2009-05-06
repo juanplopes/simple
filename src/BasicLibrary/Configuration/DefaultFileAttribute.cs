@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BasicLibrary.Common;
+using Simple.Common;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     [global::System.AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public sealed class DefaultFileAttribute : Attribute

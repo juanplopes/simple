@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public class ServiceEnableAttribute : Attribute

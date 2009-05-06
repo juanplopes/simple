@@ -5,16 +5,16 @@ using System.Text;
 using NHibernate.Cfg;
 using System.Xml;
 using NHibernate;
-using SimpleLibrary.Config;
-using BasicLibrary.Threading;
-using BasicLibrary.Logging;
-using BasicLibrary.Cache;
+using Simple.Config;
+using Simple.Threading;
+using Simple.Logging;
+using Simple.Cache;
 using NHibernate.Mapping;
 using NHibernate.Engine;
 using System.IO;
 using NHibernate.Mapping.Attributes;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public class SessionManager
     {
@@ -121,12 +121,12 @@ namespace SimpleLibrary.DataAccess
             Factory.ReleaseThreadSessions();
         }
 
-        public static Configuration GetConfig()
+        public static NHibernate.Cfg.Configuration GetConfig()
         {
             return Factory.GetConfig();
         }
 
-        public static Configuration GetConfig(string factoryName)
+        public static NHibernate.Cfg.Configuration GetConfig(string factoryName)
         {
             return Factory.GetConfig(factoryName);
         }

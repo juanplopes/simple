@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BasicLibrary.Common;
+using Simple.Common;
 using System.IO;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     [ConfigFilesIgnore]
     [DefaultFile("ConfigFiles.xml",ThrowException=false)]

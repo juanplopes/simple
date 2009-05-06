@@ -6,7 +6,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using System.Collections;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public class CriteriaHelper
     {

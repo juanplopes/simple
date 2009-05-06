@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.ServiceProcess;
 using System.Configuration.Install;
 
-namespace BasicLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     [RunInstaller(true)]
     public partial class WCFWindowsServiceInstaller : Installer

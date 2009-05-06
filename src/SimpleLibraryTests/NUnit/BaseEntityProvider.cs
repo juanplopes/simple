@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
-using SimpleLibrary.DataAccess;
+using Simple.DataAccess;
 using NHibernate.Mapping;
-using BasicLibrary.Reflection;
+using Simple.Reflection;
 
-namespace SimpleLibrary.NUnit
+namespace Simple.NUnit
 {
     public class BaseEntityProvider : IEntityProvider
     {

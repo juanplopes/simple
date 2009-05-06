@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BasicLibrary.Common;
-using BasicLibrary.Threading;
+using Simple.Common;
+using Simple.Threading;
 
-namespace BasicLibrary.Persistence
+namespace Simple.Persistence
 {
     [Serializable]
     public abstract class GenericInstanceState<T, PType, TType> : IDisposable, IInitializable

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Simple</RootNamespace>
+    <AssemblyName>SimpleCore</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\BusinessElement.cs" />
+    <Compile Include="Config\ConfiguratorElement.cs" />
+    <Compile Include="Config\Constants.cs" />
+    <Compile Include="Config\DataConfigElement.cs" />
+    <Compile Include="Config\DataConfigOptionsElement.cs" />
+    <Compile Include="Config\EndpointElement.cs" />
+    <Compile Include="Config\ExceptionHandlingElement.cs" />
+    <Compile Include="Config\FiltersElement.cs" />
+    <Compile Include="Config\LockingProviderElement.cs" />
+    <Compile Include="Config\ServiceModelElement.cs" />
+    <Compile Include="Config\SessionFactoryElement.cs" />
+    <Compile Include="Config\SimpleLibraryConfig.cs" />
+    <Compile Include="Config\ThreadingElement.cs" />
+    <Compile Include="DataAccess\EntityTransformer.cs" />
+    <Compile Include="DataAccess\IPage.cs" />
+    <Compile Include="DataAccess\MappedProperty.cs" />
+    <Compile Include="DataAccess\SimpleDataSource.cs" />
+    <Compile Include="DataAccess\SimpleDataSourceView.cs" />
+    <Compile Include="DataAccess\GenericFault.cs" />
+    <Compile Include="DataAccess\IExceptionHandler.cs" />
+    <Compile Include="DataAccess\Page.cs" />
+    <Compile Include="DataAccess\PropertyDescriptionMapping.cs" />
+    <Compile Include="DataAccess\SimpleEntityAttribute.cs" />
+    <Compile Include="DataAccess\SortExpressionAnalyzer.cs" />
+    <Compile Include="DataAccess\PersistenceFault.cs" />
+    <Compile Include="DefaultConfigContent.Designer.cs">
+      <DependentUpon>DefaultConfigContent.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Filters\AndExpression.cs" />
+    <Compile Include="Filters\BetweenExpression.cs" />
+    <Compile Include="Filters\BinaryOperator.cs" />
+    <Compile Include="Filters\BooleanExpression.cs" />
+    <Compile Include="Filters\ExampleFilter.cs" />
+    <Compile Include="Filters\InExpression.cs" />
+    <Compile Include="Filters\IsNotNullExpression.cs" />
+    <Compile Include="Filters\IsNullExpression.cs" />
+    <Compile Include="Filters\LikeExpression.cs" />
+    <Compile Include="Filters\NotExpression.cs" />
+    <Compile Include="Filters\Operator.cs" />
+    <Compile Include="Filters\OrderBy.cs" />
+    <Compile Include="Filters\OrderByCollection.cs" />
+    <Compile Include="Filters\OrExpression.cs" />
+    <Compile Include="Filters\Expression.cs" />
+    <Compile Include="Filters\Filter.cs" />
+    <Compile Include="Filters\PropertyExpression.cs" />
+    <Compile Include="Filters\PropertyName.cs" />
+    <Compile Include="Filters\SimpleExpression.cs" />
+    <Compile Include="Filters\TypedPropertyExpression.cs" />
+    <Compile Include="Filters\UnaryOperator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\IBaseRules.cs" />
+    <Compile Include="Rules\IRulesProvider.cs" />
+    <Compile Include="Rules\RuledEntity.cs" />
+    <Compile Include="Rules\RulesFactory.cs" />
+    <Compile Include="ServiceModel\BasicHttpBindingConfigurator.cs" />
+    <Compile Include="ServiceModel\ConfigLoader.cs" />
+    <Compile Include="ServiceModel\CredentialsServiceConfigurator.cs" />
+    <Compile Include="ServiceModel\CustomDataContractSerializerOperationBehavior.cs" />
+    <Compile Include="ServiceModel\DataContractConfigurator.cs" />
+    <Compile Include="ServiceModel\DebugServiceConfigurator.cs" />
+    <Compile Include="ServiceModel\DefaultFaultsConfigurator.cs" />
+    <Compile Include="ServiceModel\ErrorBehaviorServiceConfigurator.cs" />
+    <Compile Include="ServiceModel\IEndpointConfigurator.cs" />
+    <Compile Include="ServiceModel\IServiceConfigurator.cs" />
+    <Compile Include="ServiceModel\ITestableService.cs" />
+    <Compile Include="ServiceModel\MainContractAttribute.cs" />
+    <Compile Include="ServiceModel\MetadataBehaviorServiceConfigurator.cs" />
+    <Compile Include="ServiceModel\OperationContextConfigurator.cs" />
+    <Compile Include="ServiceModel\ServiceRulesProvider.cs" />
+    <Compile Include="ServiceModel\SimpleContext.cs" />
+    <Compile Include="ServiceModel\SimpleFaultContractAttribute.cs" />
+    <Compile Include="ServiceModel\SingletonServiceConfigurator.cs" />
+    <Compile Include="ServiceModel\WSHttpBindingConfigurator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DefaultConfigContent.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DefaultConfigContent.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BasicLibrary\SimpleLib.csproj">
+      <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
+      <Name>SimpleLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleLibrary.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

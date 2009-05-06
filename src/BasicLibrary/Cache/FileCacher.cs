@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.IO;
-using BasicLibrary.Logging;
+using Simple.Logging;
 using System.Timers;
 using System.Collections.Specialized;
-using BasicLibrary.LibraryConfig;
+using Simple.Config;
 using System.Diagnostics;
 
-namespace BasicLibrary.Cache
+namespace Simple.Cache
 {
     public class FileCacher : BaseCacher<string, string>
     {

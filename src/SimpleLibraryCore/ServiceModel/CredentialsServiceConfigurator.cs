@@ -7,13 +7,13 @@ using System.ServiceModel.Security;
 using System.ServiceModel.Description;
 using System.Security.Cryptography.X509Certificates;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class CredentialsServiceConfigurator : IEndpointConfigurator
     {
         #region IEndpointConfigurator Members
 
-        public void Configure(bool isClientSide, ServiceEndpoint endpoint, SimpleLibrary.Config.ConfiguratorElement config)
+        public void Configure(bool isClientSide, ServiceEndpoint endpoint, Simple.Config.ConfiguratorElement config)
         {
             if (!isClientSide || true)
             {

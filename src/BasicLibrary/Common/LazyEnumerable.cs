@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BasicLibrary.Common
+namespace Simple.Common
 {
     [Serializable]
     public class LazyEnumerable<T> : IEnumerable<T>

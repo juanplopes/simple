@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using NHibernate;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public class GenericInterceptor : EmptyInterceptor
     {

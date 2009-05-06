@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
-using BasicLibrary.Common;
+using Simple.Common;
 using System.Xml;
 
-namespace BasicLibrary.Configuration.TypeHandlers
+namespace Simple.Configuration.TypeHandlers
 {
     public abstract class ConfigTypeHandler
     {

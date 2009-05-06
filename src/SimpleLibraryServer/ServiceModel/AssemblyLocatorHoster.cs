@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.ServiceModel;
+using Simple.ServiceModel;
 using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using SimpleLibrary.Config;
+using Simple.Config;
 using System.ServiceModel.Channels;
-using SimpleLibrary.Rules;
-using BasicLibrary.Logging;
+using Simple.Rules;
+using Simple.Logging;
 using System.IO;
 using log4net;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class AssemblyLocatorHoster : WCFHostingHelper
     {

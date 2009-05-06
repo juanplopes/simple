@@ -7,7 +7,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Configuration;
 
-namespace BasicLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     // This attribute can be used to install a custom error handler for a service.
     public class ErrorBehaviorExtension : BehaviorExtensionElement

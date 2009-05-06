@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BasicLibrary.LibraryConfig;
-using BasicLibrary.Configuration;
+using Simple.Config;
+using Simple.Configuration;
 using log4net;
 using log4net.Config;
 
-namespace BasicLibrary.Logging
+namespace Simple.Logging
 {
     public class MultiLoggerFactory
     {
-        protected BasicLibraryConfig Config { get; set; }
+        protected SimpleLibConfig Config { get; set; }
 
         public MultiLoggerFactory()
         {
-            if (BasicLibraryConfig.IsLoading) throw new InvalidOperationException("Cannot use logger until basic library is done.");
+            if (SimpleLibConfig.IsLoading) throw new InvalidOperationException("Cannot use logger until basic library is done.");
             LoadConfig();
         }
 
@@ -22,7 +22,7 @@ namespace BasicLibrary.Logging
         {
             lock (this)
             {
-                Config = BasicLibraryConfig.Get();
+                Config = SimpleLibConfig.Get();
                 (Config as IConfigElement).OnExpire += new EventHandler(MultiLoggerFactory_OnExpire);
                 LogManager.ResetConfiguration();
                 XmlConfigurator.Configure(Config.Log4net.GetStream());

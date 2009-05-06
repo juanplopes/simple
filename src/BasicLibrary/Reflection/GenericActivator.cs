@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BasicLibrary.Reflection
+namespace Simple.Reflection
 {
     public class GenericActivator
     {

@@ -5,7 +5,7 @@ using System.Text;
 using NHibernate;
 using NHibernate.Criterion;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public static class Extensions
     {

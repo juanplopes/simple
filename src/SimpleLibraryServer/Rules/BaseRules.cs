@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 
 using System.Text;
-using SimpleLibrary.DataAccess;
-using SimpleLibrary.Filters;
+using Simple.DataAccess;
+using Simple.Filters;
 using NHibernate;
-using SimpleLibrary.ServiceModel;
-using BasicLibrary.Logging;
+using Simple.ServiceModel;
+using Simple.Logging;
 using System.Runtime.Serialization;
 using log4net;
 
-namespace SimpleLibrary.Rules
+namespace Simple.Rules
 {
     public class BaseRules<T> : BaseRules<T, BaseDao<T>>
     {

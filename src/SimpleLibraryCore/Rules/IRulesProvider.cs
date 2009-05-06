@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 using System.Text;
-using SimpleLibrary.ServiceModel;
+using Simple.ServiceModel;
 
-namespace SimpleLibrary.Rules
+namespace Simple.Rules
 {
     public interface IRulesProvider<T>
         where T : ITestableService

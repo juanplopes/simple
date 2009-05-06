@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SimpleLibrary.Filters;
-using SimpleLibrary.DataAccess;
+using Simple.Filters;
+using Simple.DataAccess;
 
-namespace SimpleLibrary.Rules
+namespace Simple.Rules
 {
     public class RuledEntity<T, R>
         where T : RuledEntity<T, R>

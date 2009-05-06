@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 
-namespace SimpleLibrary.NUnit
+namespace Simple.NUnit
 {
     public delegate void TestDelegate();
 

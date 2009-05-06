@@ -6,11 +6,11 @@ using System.ServiceModel.Description;
 using System.Runtime.Serialization;
 using System.Xml;
 using System.ServiceModel.Dispatcher;
-using BasicLibrary.ServiceModel;
+using Simple.ServiceModel;
 using System.Collections;
 using System.Reflection;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class CustomDataContractSerializerOperationBehavior : DataContractSerializerOperationBehavior
     {

@@ -38,7 +38,7 @@
  */
 using System;
 
-namespace BasicLibrary.DynamicProxy
+namespace Simple.DynamicProxy
 {
 	/// <summary>
 	/// Factory for creating Dynamic proxy instances

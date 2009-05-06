@@ -4,11 +4,11 @@ using System.Text;
 using System.Reflection;
 using System.Diagnostics;
 using System.Xml;
-using BasicLibrary.Common;
+using Simple.Common;
 using System.IO;
-using BasicLibrary.Logging;
+using Simple.Logging;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     [LocalizationProviderIgnore]
     public class FileConfigProvider<T> : AutoLocalizationConfigProvider<T>

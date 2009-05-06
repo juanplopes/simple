@@ -58,20 +58,25 @@
     <Compile Include="Rules\IFuncionarioRules.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
+    <ProjectReference Include="..\BasicLibrary\SimpleLib.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
-      <Name>BasicLibrary</Name>
+      <Name>SimpleLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleLibraryCore\SimpleLibraryCore.csproj">
+    <ProjectReference Include="..\SimpleLibraryCore\SimpleCore.csproj">
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
-      <Name>SimpleLibraryCore</Name>
+      <Name>SimpleCore</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BasicLibrary.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SimpleLibrary.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

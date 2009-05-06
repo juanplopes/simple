@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Runtime.Serialization;
-using SimpleLibrary.Config;
+using Simple.Config;
 
-namespace SimpleLibrary.Filters
+namespace Simple.Filters
 {
     [DataContract]
     public class LikeExpression : TypedPropertyExpression<string>

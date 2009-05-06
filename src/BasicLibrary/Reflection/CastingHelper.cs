@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Collections;
-using BasicLibrary.Common;
+using Simple.Common;
 
-namespace BasicLibrary.Reflection
+namespace Simple.Reflection
 {
     /// <summary>
     /// Class for Field-To-Field or EnumValue cast helping.

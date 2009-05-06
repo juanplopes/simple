@@ -3,14 +3,15 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Reflection;
-using SimpleLibrary.Config;
-using BasicLibrary.Common;
-using BasicLibrary.Logging;
+using Simple.Config;
+using Simple.Common;
+using Simple.Logging;
 using log4net;
-using SimpleLibrary.ServiceModel;
-using BasicLibrary.DynamicProxy;
+using Simple.ServiceModel;
+using Simple.DynamicProxy;
+using System.Diagnostics;
 
-namespace SimpleLibrary.Rules
+namespace Simple.Rules
 {
     public class DefaultRulesProvider<T> : IRulesProvider<T> where T : class, ITestableService
     {
@@ -46,6 +47,7 @@ namespace SimpleLibrary.Rules
             throw new InvalidOperationException("Could not find implementation for interface " + typeof(T).FullName);
         }
 
+        [DebuggerHidden]
         public T Create()
         {
             T obj = (T)Activator.CreateInstance(ImplementerClass);

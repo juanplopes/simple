@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using System.Reflection;
-using BasicLibrary.Common;
+using Simple.Common;
 using System.Xml;
-using BasicLibrary.Reflection;
+using Simple.Reflection;
 
-namespace BasicLibrary.Configuration.TypeHandlers
+namespace Simple.Configuration.TypeHandlers
 {
     public class ListTypeHandler : ConfigTypeHandler
     {

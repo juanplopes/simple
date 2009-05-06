@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.ServiceModel.Channels;
-using SimpleLibrary.Config;
+using Simple.Config;
 using System.ServiceModel.Description;
 using System.ServiceModel;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class ConfigLoader
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 
-namespace BasicLibrary.Common
+namespace Simple.Common
 {
     public static class ExHelper
     {

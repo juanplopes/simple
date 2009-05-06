@@ -4,7 +4,7 @@ using System.Text;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
 
-namespace BasicLibrary.Persistence
+namespace Simple.Persistence
 {
     [Serializable]
     public class ExecutionContext<T> where T : ExecutionContext<T>, new()

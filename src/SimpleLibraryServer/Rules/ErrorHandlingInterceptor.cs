@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 
 using System.Text;
-using SimpleLibrary.ServiceModel;
-using BasicLibrary.Logging;
+using Simple.ServiceModel;
+using Simple.Logging;
 using System.Reflection;
-using SimpleLibrary.DataAccess;
-using SimpleLibrary.Config;
-using BasicLibrary.Configuration;
+using Simple.DataAccess;
+using Simple.Config;
+using Simple.Configuration;
 using log4net;
 using System.Diagnostics;
 
-namespace SimpleLibrary.Rules
+namespace Simple.Rules
 {
     public class ErrorHandlingInterceptor
     {

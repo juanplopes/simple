@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
-using BasicLibrary.Reflection;
-using SimpleLibrary.Filters;
+using Simple.Reflection;
+using Simple.Filters;
 
 namespace Sample.BusinessInterface.Domain
 {

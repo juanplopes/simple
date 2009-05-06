@@ -40,7 +40,7 @@ using System;
 using System.Reflection;
 using System.Runtime.Remoting;
 
-namespace BasicLibrary.DynamicProxy
+namespace Simple.DynamicProxy
 {
     /// <summary>
     /// Delegate for implementing the invocation task in a Dynamic Proxy

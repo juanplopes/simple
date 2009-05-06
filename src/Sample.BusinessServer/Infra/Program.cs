@@ -1,9 +1,9 @@
 ﻿
 using System.Reflection;
-using SimpleLibrary;
+using Simple;
 using System.ComponentModel;
-using BasicLibrary.ServiceModel;
-using SimpleLibrary.DataAccess;
+using Simple.ServiceModel;
+using Simple.DataAccess;
 using NHibernate.Tool.hbm2ddl;
 
 namespace Sample.BusinessServer.Infra

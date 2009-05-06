@@ -41,7 +41,7 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Proxies;
 using System.Diagnostics;
 
-namespace BasicLibrary.DynamicProxy
+namespace Simple.DynamicProxy
 {
 	/// <summary>
 	/// The implementation for a dynamic proxy. Should not be instantiated directly, but rather through the

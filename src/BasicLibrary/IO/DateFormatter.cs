@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BasicLibrary.IO
+namespace Simple.IO
 {
     public class DateFormatter : IFormatter
     {

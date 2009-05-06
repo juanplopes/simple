@@ -6,7 +6,7 @@ using System.Collections;
 using System.Globalization;
 using System.Reflection;
 
-namespace BasicLibrary.Common
+namespace Simple.Common
 {
     public class EmailTemplate
     {

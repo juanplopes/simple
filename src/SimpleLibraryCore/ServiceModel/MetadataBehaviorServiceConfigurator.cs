@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.ServiceModel.Description;
-using BasicLibrary.Configuration;
+using Simple.Configuration;
 using System.ServiceModel.Channels;
-using BasicLibrary.Common;
+using Simple.Common;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class WsdlSpecialExporter : WsdlExporter
     {
@@ -38,7 +38,7 @@ namespace SimpleLibrary.ServiceModel
 
     public class MetadataBehaviorServiceConfigurator : IServiceConfigurator
     {
-        public void Configure(System.ServiceModel.ServiceHost service, SimpleLibrary.Config.ConfiguratorElement config)
+        public void Configure(System.ServiceModel.ServiceHost service, Simple.Config.ConfiguratorElement config)
         {
             MetadataBehaviorServiceConfiguratorConfig configT = new MetadataBehaviorServiceConfiguratorConfig();
             (configT as IConfigElement).LoadFromElement(config);

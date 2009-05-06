@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.Cache;
-using BasicLibrary.Logging;
+using Simple.Cache;
+using Simple.Logging;
 using System.Xml;
 using System.IO;
 using System.Xml.XPath;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     public class FileConfigCacher<T> : BaseCacher<ConfigIdentifier, T>
                 where T : IConfigElement, new()

@@ -7,9 +7,9 @@ using System.Configuration;
 using System.Data;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using BasicLibrary.Common;
+using Simple.Common;
 
-namespace BasicLibrary.Threading
+namespace Simple.Threading
 {
     public abstract class SqlLockingProvider<TokenType, TransactionType> : BaseLockingProvider<TokenType>,
         IDataStoreLockingProvider<TokenType>

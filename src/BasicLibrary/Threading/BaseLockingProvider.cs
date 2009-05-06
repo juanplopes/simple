@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BasicLibrary.Threading
+namespace Simple.Threading
 {
     public abstract class BaseLockingProvider<TokenType> : ILockingProvider<TokenType> where TokenType : BaseLockToken
     {

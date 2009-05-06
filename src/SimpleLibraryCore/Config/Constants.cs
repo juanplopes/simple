@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 
-namespace SimpleLibrary.Config
+namespace Simple.Config
 {
     public static class Constants
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     public class TypeConfigElement : PlainXmlConfigElement, IStringConvertible
     {

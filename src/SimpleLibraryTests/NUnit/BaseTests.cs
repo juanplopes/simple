@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 using System.Text;
 using NUnit.Framework;
-using SimpleLibrary.Rules;
-using SimpleLibrary.DataAccess;
+using Simple.Rules;
+using Simple.DataAccess;
 using System.Reflection;
 using NHibernate;
 using NHibernate.Criterion;
 using System.Collections;
 
-namespace SimpleLibrary.NUnit
+namespace Simple.NUnit
 {
     public class BaseTests : IEntityProvider
     {

@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace BasicLibrary.UI.Windows
+namespace Simple.UI.Windows
 {
     public sealed class KeyboardHook : IDisposable
     {

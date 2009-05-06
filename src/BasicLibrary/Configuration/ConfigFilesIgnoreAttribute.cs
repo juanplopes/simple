@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ConfigFilesIgnoreAttribute : Attribute

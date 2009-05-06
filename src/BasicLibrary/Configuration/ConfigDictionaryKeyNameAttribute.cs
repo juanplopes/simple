@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     [global::System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class ConfigDictionaryKeyNameAttribute : NamedAttribute

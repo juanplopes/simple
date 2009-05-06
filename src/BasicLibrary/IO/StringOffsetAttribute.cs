@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BasicLibrary.IO
+namespace Simple.IO
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public sealed class StringOffsetAttribute : Attribute

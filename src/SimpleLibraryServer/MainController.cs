@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Reflection;
-using SimpleLibrary.ServiceModel;
-using SimpleLibrary.DataAccess;
-using BasicLibrary.ServiceModel;
-using BasicLibrary.Logging;
+using Simple.ServiceModel;
+using Simple.DataAccess;
+using Simple.ServiceModel;
+using Simple.Logging;
 using log4net;
 using System.Diagnostics;
 
-namespace SimpleLibrary
+namespace Simple
 {
     public class MainController
     {
@@ -18,6 +18,8 @@ namespace SimpleLibrary
 
         public static void Run(Assembly assembly)
         {
+            NHibernate.ByteCode.LinFu.LazyInitializer.Equals(null, null);
+
             Logger.Info("Initializing server framework...");
             AssemblyLocatorHoster hoster = new AssemblyLocatorHoster();
             hoster.LocateServices(assembly);

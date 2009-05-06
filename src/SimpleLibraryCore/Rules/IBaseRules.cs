@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.ServiceModel;
-using SimpleLibrary.Filters;
-using SimpleLibrary.DataAccess;
-using SimpleLibrary.ServiceModel;
+using Simple.Filters;
+using Simple.DataAccess;
+using Simple.ServiceModel;
 using System.Runtime.Serialization;
 
-namespace SimpleLibrary.Rules
+namespace Simple.Rules
 {
     [ServiceContract]
     public interface IBaseRules<T> : ITestableService

@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 
 using System.Text;
-using SimpleLibrary.Rules;
+using Simple.Rules;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using SimpleLibrary.Config;
+using Simple.Config;
 using System.Net;
-using BasicLibrary.Logging;
+using Simple.Logging;
 using log4net;
 using System.Reflection;
-using BasicLibrary.DynamicProxy;
+using Simple.DynamicProxy;
 using System.Diagnostics;
-using BasicLibrary.Common;
+using Simple.Common;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class ServiceRulesProvider<T> : IRulesProvider<T>
         where T : ITestableService

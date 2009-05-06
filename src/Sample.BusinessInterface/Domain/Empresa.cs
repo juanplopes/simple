@@ -1,10 +1,10 @@
 using System;
 using System.Runtime.Serialization;
-using BasicLibrary.Reflection;
-using SimpleLibrary.Filters;
+using Simple.Reflection;
+using Simple.Filters;
 using System.Xml.Serialization;
 using Sample.BusinessInterface.Rules;
-using SimpleLibrary.Rules;
+using Simple.Rules;
 
 namespace Sample.BusinessInterface.Domain
 {

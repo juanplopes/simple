@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-namespace BasicLibrary.UI.Windows
+namespace Simple.UI.Windows
 {
     /// <summary>
     /// Summary description for SingleApp.

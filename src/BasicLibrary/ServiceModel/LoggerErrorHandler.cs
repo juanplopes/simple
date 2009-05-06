@@ -6,9 +6,9 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using log4net;
 using System.Reflection;
-using BasicLibrary.Logging;
+using Simple.Logging;
 
-namespace BasicLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class LoggerErrorHandler : IErrorHandler
     {

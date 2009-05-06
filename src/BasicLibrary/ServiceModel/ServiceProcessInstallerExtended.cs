@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ServiceProcess;
 
-namespace BasicLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class ServiceProcessInstallerExtended : ServiceInstaller
     {

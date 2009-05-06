@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BasicLibrary.Common;
+using Simple.Common;
 
-namespace BasicLibrary.Threading
+namespace Simple.Threading
 {
     public interface IDataStoreLockingProvider<TokenType> : ILockingProvider<TokenType>
         where TokenType : IDataStoreLockToken

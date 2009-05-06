@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Diagnostics;
 
-namespace SimpleLibrary.Filters
+namespace Simple.Filters
 {
     [DataContract]
     public class PropertyExpression : Expression

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.ServiceModel.Description;
-using BasicLibrary.Configuration;
+using Simple.Configuration;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class DebugServiceConfigurator : IServiceConfigurator
     {
         #region IServiceConfigurator Members
 
-        public void Configure(System.ServiceModel.ServiceHost service, SimpleLibrary.Config.ConfiguratorElement config)
+        public void Configure(System.ServiceModel.ServiceHost service, Simple.Config.ConfiguratorElement config)
         {
             DebugServiceConfiguratorElement configT = new DebugServiceConfiguratorElement();
             (configT as IConfigElement).LoadFromElement(config);

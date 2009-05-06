@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace BasicLibrary.Persistence
+namespace Simple.Persistence
 {
     public class XmlSerializationHelper
     {

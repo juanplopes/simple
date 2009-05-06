@@ -52,13 +52,13 @@
     <Compile Include="RulesInterfaces\InterfaceCandidate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
+    <ProjectReference Include="..\BasicLibrary\SimpleLib.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
-      <Name>BasicLibrary</Name>
+      <Name>SimpleLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleLibraryServer\SimpleLibraryServer.csproj">
+    <ProjectReference Include="..\SimpleLibraryServer\SimpleServer.csproj">
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
-      <Name>SimpleLibraryServer</Name>
+      <Name>SimpleServer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

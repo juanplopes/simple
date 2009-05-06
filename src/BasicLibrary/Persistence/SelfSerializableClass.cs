@@ -4,7 +4,7 @@ using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-namespace BasicLibrary.Persistence
+namespace Simple.Persistence
 {
     [Serializable]
     public class SelfSerializableClass<T>

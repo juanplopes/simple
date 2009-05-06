@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.Threading;
+using Simple.Threading;
 
-namespace SimpleLibrary.Threading
+namespace Simple.Threading
 {
     public class SimpleCriticalRegion : CriticalRegion<NHLockingProvider, NHLockToken>
     {

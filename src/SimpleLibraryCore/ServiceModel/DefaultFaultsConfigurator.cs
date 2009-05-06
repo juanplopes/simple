@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.ServiceModel.Description;
-using SimpleLibrary.DataAccess;
-using BasicLibrary.Configuration;
-using SimpleLibrary.Rules;
-using SimpleLibrary.Config;
-using BasicLibrary.Common;
+using Simple.DataAccess;
+using Simple.Configuration;
+using Simple.Rules;
+using Simple.Config;
+using Simple.Common;
 using System.Reflection;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class DefaultFaultsConfigurator : IEndpointConfigurator
     {
@@ -45,7 +45,7 @@ namespace SimpleLibrary.ServiceModel
 
 
 
-        public void Configure(bool isClientSide, System.ServiceModel.Description.ServiceEndpoint endpoint, SimpleLibrary.Config.ConfiguratorElement config)
+        public void Configure(bool isClientSide, System.ServiceModel.Description.ServiceEndpoint endpoint, Simple.Config.ConfiguratorElement config)
         {
             foreach (OperationDescription operation in endpoint.Contract.Operations)
             {

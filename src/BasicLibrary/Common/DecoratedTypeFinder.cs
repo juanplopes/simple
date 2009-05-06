@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Reflection;
-using BasicLibrary.Logging;
+using Simple.Logging;
 using log4net;
 
-namespace BasicLibrary.Common
+namespace Simple.Common
 {
     public static class DecoratedTypeFinder
     {

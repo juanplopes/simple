@@ -6,10 +6,10 @@ using System.IO;
 using System.Globalization;
 using System.Reflection;
 using System.Diagnostics;
-using BasicLibrary.Common;
+using Simple.Common;
 using System.Collections.Specialized;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     public class ConfigRoot<T> : ConfigElement where T : IConfigElement, new()
     {

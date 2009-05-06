@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Configuration;
-using BasicLibrary.Configuration;
+using Simple.Configuration;
 
-namespace BasicLibrary.Cache
+namespace Simple.Cache
 {
     public delegate void CacheExpired<T>(T identifier);
 

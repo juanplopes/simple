@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SimpleLibrary.ServiceModel;
+using Simple.ServiceModel;
 
 namespace Sample.BusinessInterface.Domain
 {

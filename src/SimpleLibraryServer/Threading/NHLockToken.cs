@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.Threading;
+using Simple.Threading;
 using NHibernate;
-using SimpleLibrary.DataAccess;
+using Simple.DataAccess;
 using System.Data;
 
-namespace SimpleLibrary.Threading
+namespace Simple.Threading
 {
     public class NHLockToken : SqlLockToken<ISession>
     {

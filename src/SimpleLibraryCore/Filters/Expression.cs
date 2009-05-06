@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 
 using System.Text;
-using SimpleLibrary.Filters;
+using Simple.Filters;
 using System.Runtime.Serialization;
 
-namespace SimpleLibrary.Filters
+namespace Simple.Filters
 {
     [DataContract]
     public abstract class Expression : Filter

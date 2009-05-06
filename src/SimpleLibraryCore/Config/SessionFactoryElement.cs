@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.Configuration;
+using Simple.Configuration;
 using System.ServiceModel;
 
-namespace SimpleLibrary.Config
+namespace Simple.Config
 {
     public class SessionFactoryElement : ConfigElement
     {

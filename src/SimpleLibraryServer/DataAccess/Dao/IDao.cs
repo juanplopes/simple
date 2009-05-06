@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SimpleLibrary.DataAccess.Dao
+namespace Simple.DataAccess.Dao
 {
     public interface IDao<T>
     {

@@ -4,7 +4,7 @@ using System.Text;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 
-namespace BasicLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class ErrorServiceBehavior : IServiceBehavior
     {

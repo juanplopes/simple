@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NHibernate.Transform;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public class TupleToDictionaryTransformer : IResultTransformer
     {

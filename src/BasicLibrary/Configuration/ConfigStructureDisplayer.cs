@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Reflection;
-using BasicLibrary.Common;
+using Simple.Common;
 using System.Collections;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     public class ConfigStructureDisplayer
     {

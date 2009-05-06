@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel.Description;
-using SimpleLibrary.Config;
-using BasicLibrary.Configuration;
+using Simple.Config;
+using Simple.Configuration;
 using System.ServiceModel;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class WSHttpBindingConfigurator : IEndpointConfigurator
     {

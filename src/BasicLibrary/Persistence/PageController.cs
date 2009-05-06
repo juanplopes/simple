@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.Web.UI;
-using BasicLibrary.Common;
-using BasicLibrary.Threading;
+using Simple.Common;
+using Simple.Threading;
 
-namespace BasicLibrary.Persistence
+namespace Simple.Persistence
 {
     [Serializable]
     public abstract class PageController<T, PType, TType> : GenericInstanceState<T, PType, TType>, IDisposable

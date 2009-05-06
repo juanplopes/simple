@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.ServiceModel;
+using Simple.ServiceModel;
 using System.ServiceModel;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class ErrorBehaviorServiceConfigurator : IServiceConfigurator
     {
-        public void Configure(System.ServiceModel.ServiceHost service, SimpleLibrary.Config.ConfiguratorElement config)
+        public void Configure(System.ServiceModel.ServiceHost service, Simple.Config.ConfiguratorElement config)
         {
             service.Description.Behaviors.Remove<ErrorServiceBehavior>();
             service.Description.Behaviors.Add(new ErrorServiceBehavior());

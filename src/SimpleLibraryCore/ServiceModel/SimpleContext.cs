@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.Persistence;
+using Simple.Persistence;
 using System.Security.Principal;
 using System.Web;
 using System.Globalization;
 using System.Threading;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     [Serializable]
     public class SimpleContext : ExecutionContext<SimpleContext>

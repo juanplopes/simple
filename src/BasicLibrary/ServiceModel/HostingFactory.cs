@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BasicLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class HostingFactory
     {

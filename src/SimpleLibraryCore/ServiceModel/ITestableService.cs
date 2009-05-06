@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     [ServiceContract]
     public interface ITestableService

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.Configuration;
-using SimpleLibrary.DataAccess;
+using Simple.Configuration;
+using Simple.DataAccess;
 
-namespace SimpleLibrary.Config
+namespace Simple.Config
 {
     public class ExceptionHandlingElement : ConfigElement
     {

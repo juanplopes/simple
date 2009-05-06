@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     [DataContract]
     public class Page<T> : ReadOnlyCollection<T>, IPage<T>

@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SimpleLibrary.Config;
+using Simple.Config;
 using NHibernate.Cfg;
 using NHibernate;
-using BasicLibrary.Threading;
+using Simple.Threading;
 using System.IO;
 using System.Xml;
 using NHibernate.Mapping.Attributes;
-using BasicLibrary.Cache;
+using Simple.Cache;
 using log4net;
-using BasicLibrary.Logging;
+using Simple.Logging;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public class MultiSessionFactory
     {
-        public Configuration DefaultConfig { get; set; }
+        public NHibernate.Cfg.Configuration DefaultConfig { get; set; }
         public ISessionFactory DefaultSessionFactory { get; set; }
 
-        protected Dictionary<string, Configuration> Configs { get; set; }
+        protected Dictionary<string, NHibernate.Cfg.Configuration> Configs { get; set; }
         protected Dictionary<string, ISessionFactory> SessionFactories { get; set; }
 
         protected ThreadData<MultiSessionFactory> MyData { get; set; }
@@ -34,7 +34,7 @@ namespace SimpleLibrary.DataAccess
             BusinessConfig = businessConfig;
             SessionFactories = new Dictionary<string, ISessionFactory>();
             MyData = new ThreadData<MultiSessionFactory>();
-            Configs = new Dictionary<string, Configuration>();
+            Configs = new Dictionary<string, NHibernate.Cfg.Configuration>();
             InitializeSessionFactories();
         }
 
@@ -60,12 +60,12 @@ namespace SimpleLibrary.DataAccess
             }
         }
 
-        public Configuration GetConfig()
+        public NHibernate.Cfg.Configuration GetConfig()
         {
             return GetConfig(null);
         }
 
-        public Configuration GetConfig(string factoryName)
+        public NHibernate.Cfg.Configuration GetConfig(string factoryName)
         {
             if (factoryName == null)
                 return DefaultConfig;
@@ -123,9 +123,9 @@ namespace SimpleLibrary.DataAccess
             }
         }
 
-        protected Configuration GetFactoryConfiguration(SessionFactoryElement factoryElement, bool findAttributes)
+        protected NHibernate.Cfg.Configuration GetFactoryConfiguration(SessionFactoryElement factoryElement, bool findAttributes)
         {
-            Configuration config = new Configuration();
+            NHibernate.Cfg.Configuration config = new NHibernate.Cfg.Configuration();
             if (factoryElement.NHibernateConfig != null)
             {
                 MemoryStream stream = new MemoryStream();
@@ -162,7 +162,7 @@ namespace SimpleLibrary.DataAccess
 
                 foreach (SessionFactoryElement factoryConfig in DataConfig.SessionFactories)
                 {
-                    Configuration config = GetFactoryConfiguration(factoryConfig, false);
+                    NHibernate.Cfg.Configuration config = GetFactoryConfiguration(factoryConfig, false);
                     SessionFactories[factoryConfig.Name] = config.BuildSessionFactory();
                     Configs[factoryConfig.Name] = config;
                 }

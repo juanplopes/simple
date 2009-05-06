@@ -1,6 +1,6 @@
 using System;
 using Sample.BusinessInterface.Domain;
-using SimpleLibrary.DataAccess;
+using Simple.DataAccess;
 using NHibernate;
 
 namespace Sample.BusinessServer.DataAccess

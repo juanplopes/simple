@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Text;
 using log4net;
 using System.Reflection;
-using BasicLibrary.Logging;
+using Simple.Logging;
 using log4net.Core;
 using System.Diagnostics;
 
 
 
-namespace BasicLibrary.Cache
+namespace Simple.Cache
 {
     public abstract class BaseCacher<T, O> : ICacher<T, O>
     {

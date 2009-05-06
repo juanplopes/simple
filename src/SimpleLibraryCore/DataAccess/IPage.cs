@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections;
 using System.Runtime.Serialization;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public interface IPage<T> : IList<T>
     {

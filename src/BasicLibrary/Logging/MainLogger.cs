@@ -6,16 +6,16 @@ using log4net;
 using log4net.Config;
 using System.Configuration;
 using System.IO;
-using BasicLibrary.LibraryConfig;
-using BasicLibrary.Common;
+using Simple.Config;
+using Simple.Common;
 using log4net.Repository.Hierarchy;
 using log4net.Appender;
 using log4net.Layout;
 using log4net.Core;
-using BasicLibrary.Configuration;
+using Simple.Configuration;
 using System.Reflection;
 
-namespace BasicLibrary.Logging
+namespace Simple.Logging
 {
     public class MainLogger
     {
@@ -26,7 +26,7 @@ namespace BasicLibrary.Logging
             {
                 if (_factory == null)
                 {
-                    if (BasicLibraryConfig.IsLoading) return null;
+                    if (SimpleLibConfig.IsLoading) return null;
                     _factory = new MultiLoggerFactory();
                 }
                 return _factory;

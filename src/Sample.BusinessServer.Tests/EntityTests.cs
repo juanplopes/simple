@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using SimpleLibrary.NUnit;
+using Simple.NUnit;
 using Sample.BusinessInterface.Domain;
 
 namespace Sample.BusinessServer.Tests

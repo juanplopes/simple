@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SimpleLibrary.NUnit
+namespace Simple.NUnit
 {
     public class BaseTypeSeeder : ITypeSeeder
     {

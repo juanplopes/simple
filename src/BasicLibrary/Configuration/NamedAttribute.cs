@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     public class NamedAttribute : Attribute
     {

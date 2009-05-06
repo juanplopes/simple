@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Collections.Specialized;
 using System.Collections;
 
-namespace BasicLibrary.UI.Web
+namespace Simple.UI.Web
 {
     [global::System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class SaveControlStateAttribute : Attribute { }

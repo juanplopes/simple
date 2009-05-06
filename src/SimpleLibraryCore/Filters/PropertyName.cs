@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Collections;
 
-namespace SimpleLibrary.Filters
+namespace Simple.Filters
 {
     [DataContract]
     public sealed class PropertyName

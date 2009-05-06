@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using SimpleLibrary.ServiceModel;
+using Simple.ServiceModel;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     [DataContract, SimpleFaultContract]
     public class PersistenceFault : GenericFault<PersistenceFault.ReasonType>

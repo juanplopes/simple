@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 
 using System.Text;
-using BasicLibrary.Threading;
-using SimpleLibrary.DataAccess;
+using Simple.Threading;
+using Simple.DataAccess;
 using NHibernate;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using SimpleLibrary.Config;
+using Simple.Config;
 
-namespace SimpleLibrary.Threading
+namespace Simple.Threading
 {
     public class NHLockingProvider : SqlLockingProvider<NHLockToken, ISession>
     {

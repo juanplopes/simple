@@ -5,7 +5,7 @@ using System.Data.Common;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace BasicLibrary.Threading
+namespace Simple.Threading
 {
     //public class CriticalRegion : CriticalRegion<SqlLockToken>
     //{

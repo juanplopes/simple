@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.ServiceModel;
-using SimpleLibrary.Config;
+using Simple.Config;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public interface IServiceConfigurator
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 
-namespace BasicLibrary.Threading
+namespace Simple.Threading
 {
     public class UnableToAcquireLockException : Exception
     {

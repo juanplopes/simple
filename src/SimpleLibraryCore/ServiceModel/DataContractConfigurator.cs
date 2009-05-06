@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.ServiceModel.Description;
-using SimpleLibrary.Config;
-using BasicLibrary.Configuration;
-using BasicLibrary.ServiceModel;
+using Simple.Config;
+using Simple.Configuration;
+using Simple.ServiceModel;
 using System.Reflection;
 
-namespace SimpleLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class DataContractConfigurator : IEndpointConfigurator
     {

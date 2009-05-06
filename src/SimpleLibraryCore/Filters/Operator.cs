@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-namespace SimpleLibrary.Filters
+namespace Simple.Filters
 {
     [DataContract]
     public abstract class Operator : Expression

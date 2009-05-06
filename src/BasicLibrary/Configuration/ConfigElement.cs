@@ -6,13 +6,13 @@ using System.IO;
 using System.Reflection;
 using System.Collections;
 using System.Globalization;
-using BasicLibrary.Common;
-using BasicLibrary.Configuration.TypeHandlers;
+using Simple.Common;
+using Simple.Configuration.TypeHandlers;
 using System.Configuration;
-using BasicLibrary.Logging;
+using Simple.Logging;
 using log4net;
 
-namespace BasicLibrary.Configuration
+namespace Simple.Configuration
 {
     public class ConfigElement : IConfigElement
     {

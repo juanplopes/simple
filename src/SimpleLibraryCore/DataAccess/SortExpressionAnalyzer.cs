@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SimpleLibrary.Filters;
+using Simple.Filters;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     public class SortExpressionAnalyzer
     {

@@ -4,13 +4,13 @@ using System.Text;
 using System.ServiceProcess;
 using System.ServiceModel;
 using System.ServiceModel.Dispatcher;
-using BasicLibrary.Logging;
+using Simple.Logging;
 using System.Runtime.Remoting.Contexts;
 using System.ServiceModel.Description;
 using log4net;
 using System.Reflection;
 
-namespace BasicLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     public class WCFHostingHelper : ServiceBase, IHostingHelper
     {

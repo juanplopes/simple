@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BasicLibrary.Configuration;
+using Simple.Configuration;
 
 namespace SimpleGenerator.Definitions
 {

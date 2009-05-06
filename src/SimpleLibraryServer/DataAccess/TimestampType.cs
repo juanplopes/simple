@@ -6,7 +6,7 @@ using NHibernate;
 using NHibernate.Type;
 using NHibernate.SqlTypes;
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     /// <summary>
     /// UserTypeTimestamp implements the Nhibernate BinaryType that is used to handle Nhibernate version . 

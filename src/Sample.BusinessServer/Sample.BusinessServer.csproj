@@ -42,6 +42,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.ByteCode.LinFu, Version=2.1.0.1003, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NHibernate.ByteCode.LinFu.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate.Linq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=444cf6a87fdab271, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.Linq.dll</HintPath>
@@ -68,29 +72,21 @@
     <Compile Include="Rules\FuncionarioRules.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicLibrary.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SimpleLibrary.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
+    <ProjectReference Include="..\BasicLibrary\SimpleLib.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
-      <Name>BasicLibrary</Name>
+      <Name>SimpleLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sample.BusinessInterface\Sample.BusinessInterface.csproj">
       <Project>{1FD053EF-EF04-4533-B61B-B7979DC20BDA}</Project>
       <Name>Sample.BusinessInterface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleLibraryCore\SimpleLibraryCore.csproj">
+    <ProjectReference Include="..\SimpleLibraryCore\SimpleCore.csproj">
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
-      <Name>SimpleLibraryCore</Name>
+      <Name>SimpleCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleLibraryServer\SimpleLibraryServer.csproj">
+    <ProjectReference Include="..\SimpleLibraryServer\SimpleServer.csproj">
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
-      <Name>SimpleLibraryServer</Name>
+      <Name>SimpleServer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

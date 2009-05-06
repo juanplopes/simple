@@ -7,11 +7,11 @@ using NHibernate.Impl;
 using NHibernate.Engine;
 using System.Collections;
 using NHibernate.Criterion;
-using SimpleLibrary.Config;
-using SimpleLibrary.Filters;
+using Simple.Config;
+using Simple.Filters;
 
 
-namespace SimpleLibrary.DataAccess
+namespace Simple.DataAccess
 {
     /// <summary>
     /// Untyped base DAO class. Session holder.
@@ -76,6 +76,7 @@ namespace SimpleLibrary.DataAccess
         {
             ICriteria criteria = this.CreateCriteria();
             criteria.Add(CriteriaHelper.GetCriterion(filter));
+
             if (order != null)
                 foreach (OrderBy o in order)
                     criteria.AddOrder(CriteriaHelper.GetOrder(o));
@@ -91,11 +92,6 @@ namespace SimpleLibrary.DataAccess
         {
             get { return Nested.Config.DataConfig.Options.MergeBeforeUpdate; }
         }
-
-        //public IOrderedQueryable<Q> GetQueryable<Q>()
-        //{
-        //    return Session.Linq<Q>();
-        //}
 
         public T Load(object id)
         {

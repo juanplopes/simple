@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Runtime.Serialization;
-using BasicLibrary.Common;
+using Simple.Common;
 using log4net;
-using BasicLibrary.Logging;
+using Simple.Logging;
 
-namespace BasicLibrary.ServiceModel
+namespace Simple.ServiceModel
 {
     [global::System.AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public sealed class BasicKnownTypeAttribute : Attribute

@@ -2,8 +2,8 @@ using System;
 using Sample.BusinessInterface.Rules;
 using Sample.BusinessInterface.Domain;
 using Sample.BusinessServer.DataAccess;
-using SimpleLibrary.Rules;
-using SimpleLibrary.ServiceModel;
+using Simple.Rules;
+using Simple.ServiceModel;
 
 namespace Sample.BusinessServer.Rules
 {
