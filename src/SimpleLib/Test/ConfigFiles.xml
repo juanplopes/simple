@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <configGroup path="D:\MetraTech\RMP\Config\ACN\OM">
+    <configFile type="BasicLibrary.LibraryConfig.BasicLibraryConfig" file="BasicLibrary.config"/>
+    <configFile type="ACN.Order.BusinessLogic.BackOfficeConfig" file="BasicLibrary.config"/>
+  </configGroup>
+</config>

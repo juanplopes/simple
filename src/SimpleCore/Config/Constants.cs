@@ -1,0 +1,12 @@
+﻿using System;
+using System.Collections.Generic;
+
+using System.Text;
+
+namespace Simple.Config
+{
+    public static class Constants
+    {
+        public const string DefaultNamespace = "SimpleLibrary";
+    }
+}
