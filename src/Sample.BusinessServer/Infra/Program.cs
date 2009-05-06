@@ -1,25 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.Text;
-using SimpleLibrary.ServiceModel;
+﻿
 using System.Reflection;
 using SimpleLibrary;
 using System.ComponentModel;
 using BasicLibrary.ServiceModel;
-using Sample.BusinessServer.Rules;
-using SimpleLibrary.Filters;
-using Sample.BusinessInterface.Domain;
-using Sample.BusinessServer.DataAccess;
-using NHibernate.Tool.hbm2ddl;
 using SimpleLibrary.DataAccess;
-using SimpleLibrary.Threading;
-using System.Threading;
-using NHibernate;
-using BasicLibrary.Logging;
-using System.Globalization;
-using Sample.BusinessInterface.Rules;
-using SimpleLibrary.Rules;
+using NHibernate.Tool.hbm2ddl;
 
 namespace Sample.BusinessServer.Infra
 {
