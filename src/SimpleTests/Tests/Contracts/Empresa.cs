@@ -7,14 +7,14 @@ using NHibernate.Mapping.Attributes;
 namespace Simple.Tests.Contracts
 {
 
-    [XmlRoot, Class]
+    [XmlRoot, Class(Lazy = false)]
     public partial class Empresa : Entity<Empresa, IEmpresaRules>
     {
-        [Id(0, TypeType = typeof(Guid), UnsavedValueObject = null)]
-        [Generator(1, Class="guid")]
-        public virtual Guid? Id { get; set; }
-        public static PropertyName IdProperty =  "Id";
-        
+        [Id(0, Name = "Id")]
+        [Generator(1, Class = "identity")]
+        public virtual int Id { get; set; }
+        public static PropertyName IdProperty = "Id";
+
         [Property]
         public virtual String Nome { get; set; }
         public static PropertyName NomeProperty = "Nome";
