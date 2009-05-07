@@ -33,13 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentNHibernate, Version=0.1.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.0.3, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Iesi.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="LinFu.DynamicProxy, Version=1.0.3.14911, Culture=neutral, PublicKeyToken=62a6874124340d6e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\LinFu.DynamicProxy.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -52,10 +52,6 @@
     <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.1003, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.ByteCode.Castle.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.Mapping.Attributes, Version=2.0.0.2001, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NHibernate.Mapping.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

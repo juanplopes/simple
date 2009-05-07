@@ -7,7 +7,6 @@ using NHibernate;
 using Simple.Threading;
 using System.IO;
 using System.Xml;
-using NHibernate.Mapping.Attributes;
 using Simple.Cache;
 using log4net;
 using Simple.Logging;
@@ -140,14 +139,6 @@ namespace Simple.DataAccess
             else
             {
                 config.Configure(FileCacher.GetBasedFile(factoryElement.ConfigFile));
-            }
-
-            if (findAttributes)
-            {
-                MemoryStream stream = HbmSerializer.Default.Serialize(BusinessConfig.ContractsAssembly.LoadAssembly());
-                Logger.Debug(new StreamReader(stream).ReadToEnd());
-                stream.Seek(0, SeekOrigin.Begin);
-                config.AddInputStream(stream);
             }
 
             return config;

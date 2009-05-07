@@ -12,7 +12,6 @@ using Simple.Cache;
 using NHibernate.Mapping;
 using NHibernate.Engine;
 using System.IO;
-using NHibernate.Mapping.Attributes;
 
 namespace Simple.DataAccess
 {
