@@ -13,7 +13,7 @@ namespace Simple.DataAccess
         {
             ICriteria countCriteria = CriteriaTransformer.Clone(criteria)
                     .SetProjection(Projections.RowCount());
-            countCriteria.ClearOrders();
+            countCriteria.Orders.Clear();
 
             ICriteria pageCriteria = CriteriaTransformer.Clone(criteria)
                 .SetMaxResults(take)

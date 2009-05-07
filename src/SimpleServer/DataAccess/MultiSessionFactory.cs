@@ -10,6 +10,10 @@ using System.Xml;
 using Simple.Cache;
 using log4net;
 using Simple.Logging;
+using FluentNHibernate;
+using FluentNHibernate.Cfg;
+using System.Reflection;
+using FluentNHibernate.Conventions.Helpers;
 
 namespace Simple.DataAccess
 {
@@ -141,6 +145,20 @@ namespace Simple.DataAccess
                 config.Configure(FileCacher.GetBasedFile(factoryElement.ConfigFile));
             }
 
+            Assembly serverAssembly = BusinessConfig.ServerAssembly.LoadAssembly();
+            Assembly contractsAssembly = BusinessConfig.ContractsAssembly.LoadAssembly();
+            config = Fluently.Configure(config).Mappings(
+                m =>
+                {
+                    m.FluentMappings
+                        .AddFromAssembly(serverAssembly)
+                        .AddFromAssembly(contractsAssembly)
+                    .ConventionDiscovery.Add(DefaultLazy.AlwaysFalse())
+                    .ConventionDiscovery.AddAssembly(serverAssembly)
+                    .ConventionDiscovery.AddAssembly(contractsAssembly);
+                }).BuildConfiguration();
+            
+                    
             return config;
         }
 
