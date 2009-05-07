@@ -6,7 +6,7 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B244B1EF-812D-4BDC-8BB7-E5ECAD0AACB1}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Simple</RootNamespace>
     <AssemblyName>SimpleTests</AssemblyName>
@@ -14,6 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
+    <StartupObject>Simple.Tests.Server</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,9 +44,16 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\Contracts\IEmpresaFuncionarioRules.cs" />
+    <Compile Include="Tests\Contracts\IEmpresaRules.cs" />
+    <Compile Include="Tests\Contracts\IFuncionarioRules.cs" />
+    <Compile Include="Tests\Server.cs" />
     <Compile Include="Tests\BasicLibraryTests\AttributeCacheTests.cs" />
     <Compile Include="Tests\BasicLibraryTests\BaseWorkingDaysTests.cs" />
     <Compile Include="Tests\BasicLibraryTests\ConfigurationTests.cs" />
@@ -57,6 +65,9 @@
     <Compile Include="Tests\BasicLibraryTests\TestClasses\TestStringClass.cs" />
     <Compile Include="Tests\BasicLibraryTests\WorkingDaysTests.cs" />
     <Compile Include="Tests\DataAccessTests\FiltersTests.cs" />
+    <Compile Include="Tests\Contracts\Empresa.cs" />
+    <Compile Include="Tests\Contracts\EmpresaFuncionario.cs" />
+    <Compile Include="Tests\Contracts\Funcionario.cs" />
     <Compile Include="Tests\Experiences\LambdaFixture.cs" />
     <Compile Include="NUnit\BaseEntityProvider.cs" />
     <Compile Include="NUnit\BaseTests.cs" />
@@ -71,6 +82,9 @@
     <Compile Include="Tests\BasicLibraryTests\TestClasses\ISimpleInterface.cs" />
     <Compile Include="Tests\BasicLibraryTests\TestClasses\SimpleClass.cs" />
     <Compile Include="Tests\BasicLibraryTests\DynamicProxyTests.cs" />
+    <Compile Include="Tests\Server\EmpresaFuncionarioRules.cs" />
+    <Compile Include="Tests\Server\EmpresaRules.cs" />
+    <Compile Include="Tests\Server\FuncionarioRules.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleLib\00_SimpleLib.csproj">
@@ -85,6 +99,19 @@
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
       <Name>02_SimpleServer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Simple.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SimpleLib.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tests\Server\Empresa.hbm.xml" />
+    <Content Include="Tests\Server\EmpresaFuncionario.hbm.xml" />
+    <Content Include="Tests\Server\Funcionario.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -31,7 +31,7 @@ namespace Simple.ServiceModel
                         true
                     ));
                     list.AddRange(DecoratedTypeFinder.Locate(
-                        simpleLibraryConfig.Business.InterfaceAssembly.LoadAssembly(),
+                        simpleLibraryConfig.Business.ContractsAssembly.LoadAssembly(),
                         typeof(SimpleFaultContractAttribute),
                         true
                     ));

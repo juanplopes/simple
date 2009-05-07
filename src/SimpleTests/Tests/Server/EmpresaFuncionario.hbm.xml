@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Sample.BusinessInterface.Domain.EmpresaFuncionario,Sample.BusinessInterface" table="empresa_funcionario" lazy="false">
+    <id column="id_empresa_funcionario" name="Id">
+<generator class="native"/>
+    </id>
+    <many-to-one name="Funcionario">
+      <column name="id_funcionario"/>
+    </many-to-one>
+
+    <many-to-one name="Empresa">
+      <column name="id_empresa"/>
+    </many-to-one>
+
+  </class>
+</hibernate-mapping>

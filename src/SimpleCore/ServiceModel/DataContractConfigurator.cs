@@ -18,7 +18,7 @@ namespace Simple.ServiceModel
 
             IList<Assembly> assemblies = new List<Assembly>();
             assemblies.Add(Assembly.GetAssembly(typeof(Filters.Filter)));
-            assemblies.Add(simpleLibraryConfig.Business.InterfaceAssembly.LoadAssembly());
+            assemblies.Add(simpleLibraryConfig.Business.ContractsAssembly.LoadAssembly());
             CustomDataContractSerializerOperationBehavior.OverrideOperations(endpoint.Contract.Operations, assemblies);
         }
     }

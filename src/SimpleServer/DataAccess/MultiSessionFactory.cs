@@ -144,7 +144,7 @@ namespace Simple.DataAccess
 
             if (findAttributes)
             {
-                MemoryStream stream = HbmSerializer.Default.Serialize(BusinessConfig.InterfaceAssembly.LoadAssembly());
+                MemoryStream stream = HbmSerializer.Default.Serialize(BusinessConfig.ContractsAssembly.LoadAssembly());
                 Logger.Debug(new StreamReader(stream).ReadToEnd());
                 stream.Seek(0, SeekOrigin.Begin);
                 config.AddInputStream(stream);

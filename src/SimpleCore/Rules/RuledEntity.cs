@@ -6,6 +6,7 @@ using Simple.DataAccess;
 
 namespace Simple.Rules
 {
+    [Serializable]
     public class RuledEntity<T, R>
         where T : RuledEntity<T, R>
         where R : class, IBaseRules<T>
