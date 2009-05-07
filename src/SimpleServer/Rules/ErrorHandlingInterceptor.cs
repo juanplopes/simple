@@ -10,6 +10,8 @@ using Simple.Config;
 using Simple.Configuration;
 using log4net;
 using System.Diagnostics;
+using Simple.Common;
+using log4net.Repository.Hierarchy;
 
 namespace Simple.Rules
 {
@@ -36,12 +38,13 @@ namespace Simple.Rules
                     logger.DebugFormat("Intercepting {1}.{0}...", method.Name, method.DeclaringType.Name);
                     return method.Invoke(target, parameters);
                 }
-                catch (TargetInvocationException e)
+                catch (Exception e)
                 {
-                    if (!Handle(e.InnerException))
-                    {
-                        throw e.InnerException;
-                    }
+                    e = ExHelper.ForReal(e);
+                    MainLogger.Get(this).Error(
+                        string.Format("There was an error inside a rule: {0}", e.Message), e);
+                    if (!Handle(e)) throw e;
+
                 }
             }
             throw new InvalidProgramException("Cannot return without return");

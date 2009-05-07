@@ -7,8 +7,8 @@ using Simple.DataAccess;
 namespace Simple.Rules
 {
     [Serializable]
-    public class RuledEntity<T, R>
-        where T : RuledEntity<T, R>
+    public class Entity<T, R>
+        where T : Entity<T, R>
         where R : class, IBaseRules<T>
     {
         public static R Rules
@@ -19,7 +19,7 @@ namespace Simple.Rules
             }
         }
 
-        protected static void EnsureThisType(RuledEntity<T, R> entity)
+        protected static void EnsureThisType(Entity<T, R> entity)
         {
             if (!(entity is T)) throw new InvalidOperationException("Assertion failure. No idea what's happening.");
         }
@@ -64,7 +64,27 @@ namespace Simple.Rules
             return Rules.PaginateByFilter(filter, orderBy, skip, take);
         }
 
-        protected T ThisAsT
+        public static IList<T> ListByExample(T entity)
+        {
+            return Rules.ListByExample(entity);
+        }
+
+        public static int CountByFilter(Filter filter)
+        {
+            return Rules.CountByFilter(filter);
+        }
+
+        public static int DeleteByFilter(Filter filter)
+        {
+            return Rules.DeleteByFilter(filter);
+        }
+
+        public static void DeleteById(object id)
+        {
+            Rules.DeleteById(id);
+        }
+
+        protected virtual T ThisAsT
         {
             get
             {
@@ -73,22 +93,27 @@ namespace Simple.Rules
             }
         }
 
-        public T Persist()
+        public virtual T Persist()
         {
             return Rules.Persist(ThisAsT);
         }
 
-        public void Save()
+        public virtual void Save()
         {
             Rules.Save(ThisAsT);
         }
 
-        public void Update()
+        public virtual void Update()
         {
             Rules.Update(ThisAsT);
         }
 
-        public void SaveOrUpdate()
+        public virtual void Delete()
+        {
+            Rules.Delete(ThisAsT);
+        }
+
+        public virtual void SaveOrUpdate()
         {
             Rules.SaveOrUpdate(ThisAsT);
         }

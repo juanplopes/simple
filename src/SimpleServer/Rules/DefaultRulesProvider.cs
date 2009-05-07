@@ -61,7 +61,6 @@ namespace Simple.Rules
                 }
                 catch (TargetInvocationException e)
                 {
-                    Logger.Error("Error calling rules: " + e.Message, e);
                     throw ExHelper.ForReal(e);
                 }
             });

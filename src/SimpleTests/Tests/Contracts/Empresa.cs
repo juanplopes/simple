@@ -2,16 +2,21 @@ using System;
 using System.Xml.Serialization;
 using Simple.Filters;
 using Simple.Rules;
+using NHibernate.Mapping.Attributes;
 
 namespace Simple.Tests.Contracts
 {
 
-    [XmlRoot]
-    public partial class Empresa : RuledEntity<Empresa, IEmpresaRules>
+    [XmlRoot, Class]
+    public partial class Empresa : Entity<Empresa, IEmpresaRules>
     {
-        public Int32 Id { get; set; }
+        [Id(0, TypeType = typeof(Guid), UnsavedValueObject = null)]
+        [Generator(1, Class="guid")]
+        public virtual Guid? Id { get; set; }
         public static PropertyName IdProperty =  "Id";
-        public String Nome { get; set; }
+        
+        [Property]
+        public virtual String Nome { get; set; }
         public static PropertyName NomeProperty = "Nome";
     }
 }

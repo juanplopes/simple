@@ -38,12 +38,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.Mapping.Attributes, Version=2.0.0.2001, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NHibernate.Mapping.Attributes.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -53,6 +60,8 @@
     <Compile Include="Tests\Contracts\IEmpresaFuncionarioRules.cs" />
     <Compile Include="Tests\Contracts\IEmpresaRules.cs" />
     <Compile Include="Tests\Contracts\IFuncionarioRules.cs" />
+    <Compile Include="Tests\DataAccessTests\SimpleEntityFixture.cs" />
+    <Compile Include="Tests\DBEnsurer.cs" />
     <Compile Include="Tests\Server.cs" />
     <Compile Include="Tests\BasicLibraryTests\AttributeCacheTests.cs" />
     <Compile Include="Tests\BasicLibraryTests\BaseWorkingDaysTests.cs" />
@@ -109,9 +118,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tests\Server\Empresa.hbm.xml" />
-    <Content Include="Tests\Server\EmpresaFuncionario.hbm.xml" />
-    <Content Include="Tests\Server\Funcionario.hbm.xml" />
+    <Content Include="Tests.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\ServiceTests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

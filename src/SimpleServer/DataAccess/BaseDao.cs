@@ -161,7 +161,7 @@ namespace Simple.DataAccess
             if (DefaultMergeBeforeUpdate)
                 entity = (T)Session.Merge(entity);
 
-            Session.Save(entity);
+            object obj = Session.Save(entity);
             if (flush) Session.Flush();
         }
 
