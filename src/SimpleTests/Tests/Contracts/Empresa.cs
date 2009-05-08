@@ -10,9 +10,9 @@ namespace Simple.Tests.Contracts
     [XmlRoot]
     public partial class Empresa : Entity<Empresa, IEmpresaRules>
     {
-        public virtual int Id { get; set; }
+        public int Id { get; set; }
         public static PropertyName IdProperty = "Id";
-        public virtual String Nome { get; set; }
+        public String Nome { get; set; }
         public static PropertyName NomeProperty = "Nome";
 
         public class Map : ClassMap<Empresa>

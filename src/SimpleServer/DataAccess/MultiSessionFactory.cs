@@ -126,9 +126,8 @@ namespace Simple.DataAccess
             }
         }
 
-        protected NHibernate.Cfg.Configuration GetFactoryConfiguration(SessionFactoryElement factoryElement, bool findAttributes)
+        protected void ConfigureFromConfig(NHibernate.Cfg.Configuration config, SessionFactoryElement factoryElement)
         {
-            NHibernate.Cfg.Configuration config = new NHibernate.Cfg.Configuration();
             if (factoryElement.NHibernateConfig != null)
             {
                 MemoryStream stream = new MemoryStream();
@@ -144,7 +143,10 @@ namespace Simple.DataAccess
             {
                 config.Configure(FileCacher.GetBasedFile(factoryElement.ConfigFile));
             }
+        }
 
+        protected void ConfigureFluently(NHibernate.Cfg.Configuration config, SessionFactoryElement factoryElement)
+        {
             Assembly serverAssembly = BusinessConfig.ServerAssembly.LoadAssembly();
             Assembly contractsAssembly = BusinessConfig.ContractsAssembly.LoadAssembly();
             config = Fluently.Configure(config).Mappings(
@@ -157,8 +159,14 @@ namespace Simple.DataAccess
                     .ConventionDiscovery.AddAssembly(serverAssembly)
                     .ConventionDiscovery.AddAssembly(contractsAssembly);
                 }).BuildConfiguration();
-            
-                    
+        }
+
+
+        protected NHibernate.Cfg.Configuration GetFactoryConfiguration(SessionFactoryElement factoryElement)
+        {
+            NHibernate.Cfg.Configuration config = new NHibernate.Cfg.Configuration();
+            ConfigureFromConfig(config, factoryElement);
+            ConfigureFluently(config, factoryElement);
             return config;
         }
 
@@ -166,12 +174,12 @@ namespace Simple.DataAccess
         {
             lock (this)
             {
-                DefaultConfig = GetFactoryConfiguration(DataConfig.DefaultSessionFactory, true);
+                DefaultConfig = GetFactoryConfiguration(DataConfig.DefaultSessionFactory);
                 DefaultSessionFactory = DefaultConfig.BuildSessionFactory();
 
                 foreach (SessionFactoryElement factoryConfig in DataConfig.SessionFactories)
                 {
-                    NHibernate.Cfg.Configuration config = GetFactoryConfiguration(factoryConfig, false);
+                    NHibernate.Cfg.Configuration config = GetFactoryConfiguration(factoryConfig);
                     SessionFactories[factoryConfig.Name] = config.BuildSessionFactory();
                     Configs[factoryConfig.Name] = config;
                 }
