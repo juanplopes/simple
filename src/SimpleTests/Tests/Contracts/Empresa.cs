@@ -10,15 +10,17 @@ namespace Simple.Tests.Contracts
     [XmlRoot]
     public partial class Empresa : Entity<Empresa, IEmpresaRules>
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
         public static PropertyName IdProperty = "Id";
-        public String Nome { get; set; }
+        public virtual String Nome { get; set; }
         public static PropertyName NomeProperty = "Nome";
 
         public class Map : ClassMap<Empresa>
         {
             public Map()
             {
+                Not.LazyLoad();
+
                 Id(e => e.Id).GeneratedBy.Identity();
                 Map(e => e.Nome);
             }

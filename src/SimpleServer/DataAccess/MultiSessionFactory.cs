@@ -14,6 +14,7 @@ using FluentNHibernate;
 using FluentNHibernate.Cfg;
 using System.Reflection;
 using FluentNHibernate.Conventions.Helpers;
+using Simple.DataAccess.Conventions;
 
 namespace Simple.DataAccess
 {
@@ -149,15 +150,20 @@ namespace Simple.DataAccess
         {
             Assembly serverAssembly = BusinessConfig.ServerAssembly.LoadAssembly();
             Assembly contractsAssembly = BusinessConfig.ContractsAssembly.LoadAssembly();
+
             config = Fluently.Configure(config).Mappings(
                 m =>
                 {
                     m.FluentMappings
-                        .AddFromAssembly(serverAssembly)
-                        .AddFromAssembly(contractsAssembly)
-                    .ConventionDiscovery.Add(DefaultLazy.AlwaysFalse())
-                    .ConventionDiscovery.AddAssembly(serverAssembly)
-                    .ConventionDiscovery.AddAssembly(contractsAssembly);
+                    .AddFromAssembly(serverAssembly)
+                    .AddFromAssembly(contractsAssembly).ConventionDiscovery.Setup(
+                        f =>
+                        {
+                            f.Add(LazyConvention.ForClass(false));
+                            f.Add(LazyConvention.ForHasOne(false));
+                            f.AddAssembly(contractsAssembly);
+                            f.AddAssembly(serverAssembly);
+                        });
                 }).BuildConfiguration();
         }
 

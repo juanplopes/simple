@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\Conventions\LazyConvention.cs" />
     <Compile Include="DataAccess\Dao\IDao.cs" />
     <Compile Include="DataAccess\DataContext.cs" />
     <Compile Include="DataAccess\GenericInterceptor.cs" />
@@ -116,9 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NHLockEngine.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataAccess\Conventions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
