@@ -9,6 +9,7 @@ using Simple.ServiceModel;
 using Simple.Logging;
 using System.Runtime.Serialization;
 using log4net;
+using System.Linq;
 
 namespace Simple.Rules
 {
@@ -32,7 +33,7 @@ namespace Simple.Rules
             }
         }
 
-        bool ITestableService.HeartBeat()
+        public bool HeartBeat()
         {
             Logger.Debug("Heartbeat: " + typeof(T).Name);
             return true;
@@ -41,6 +42,16 @@ namespace Simple.Rules
         protected virtual D GetDao()
         {
             return new D();
+        }
+
+        public virtual IOrderedQueryable<Q> Linq<Q>()
+        {
+            return GetDao().Linq<Q>();
+        }
+
+        public virtual IOrderedQueryable<T> Linq()
+        {
+            return GetDao().Linq();
         }
 
         public virtual T Load(object id)

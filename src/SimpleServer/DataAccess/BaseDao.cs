@@ -9,7 +9,8 @@ using System.Collections;
 using NHibernate.Criterion;
 using Simple.Config;
 using Simple.Filters;
-
+using System.Linq;
+using NHibernate.Linq;
 
 namespace Simple.DataAccess
 {
@@ -71,6 +72,16 @@ namespace Simple.DataAccess
 
         //    return colOutput;
         //}
+
+        public IOrderedQueryable<Q> Linq<Q>()
+        {
+            return Session.Linq<Q>();
+        }
+
+        public IOrderedQueryable<T> Linq()
+        {
+            return Linq<T>();
+        }
 
         public ICriteria ToCriteria(Filter filter, OrderByCollection order)
         {

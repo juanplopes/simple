@@ -90,12 +90,12 @@ namespace Simple {
         ///      &lt;/mapping&gt;
         ///      &lt;mapping&gt;
         ///        &lt;level value=&quot;INFO&quot; /&gt;
-        ///        &lt;foreColor value=&quot;Blue, HighIntensity&quot; /&gt;
-        ///      &lt;/mapping&gt;        /// [rest of string was truncated]&quot;;.
+        ///        &lt;foreColor value=&quot;Green, HighIntensity&quot; /&gt;
+        ///      &lt;/mapping&gt; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string SimpleLibConfig {
+        internal static string SimpleConfig {
             get {
-                return ResourceManager.GetString("SimpleLibConfig", resourceCulture);
+                return ResourceManager.GetString("SimpleConfig", resourceCulture);
             }
         }
     }

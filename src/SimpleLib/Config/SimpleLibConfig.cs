@@ -5,7 +5,7 @@ using Simple.Configuration;
 
 namespace Simple.Config
 {
-    [DefaultFile("SimpleLib.config", ThrowException = false, LoadDefaultFirst = true)]
+    [DefaultFile("Simple.config", ThrowException = false, LoadDefaultFirst = true)]
     public class SimpleLibConfig : ConfigRoot<SimpleLibConfig>
     {
         [ConfigElement("log4net", Required = true)]
@@ -15,7 +15,7 @@ namespace Simple.Config
         {
             get
             {
-                return DefaultConfigResource.SimpleLibConfig;
+                return DefaultConfigResource.SimpleConfig;
             }
         }
     }

@@ -181,7 +181,7 @@
     <Compile Include="UI\Windows\SingleInstance.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SimpleLib.config">
+    <None Include="Simple.config">
     </None>
     <Content Include="ConfigFiles.xml" />
   </ItemGroup>

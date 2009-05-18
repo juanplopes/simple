@@ -7,6 +7,7 @@ using Simple.Filters;
 using Simple.DataAccess;
 using Simple.ServiceModel;
 using System.Runtime.Serialization;
+using System.Linq;
 
 namespace Simple.Rules
 {
@@ -21,6 +22,12 @@ namespace Simple.Rules
 
         [OperationContract]
         T LoadByFilter(Filter filter);
+
+        [OperationContract]
+        IOrderedQueryable<Q> Linq<Q>();
+
+        [OperationContract]
+        IOrderedQueryable<T> Linq();
 
         [OperationContract]
         IList<T> ListAll(OrderByCollection order);

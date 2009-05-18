@@ -121,7 +121,7 @@
   <data name="ConfigFilesConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ConfigFiles.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="SimpleLibConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>SimpleLib.config;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="SimpleConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Simple.config;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

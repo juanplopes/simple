@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Simple.Filters;
 using Simple.DataAccess;
 using NHCrit = NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace Simple.Tests.DataAccess
 {

@@ -42,6 +42,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.Linq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=444cf6a87fdab271, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NHibernate.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -58,9 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tests\Contracts\IEmpresaFuncionarioRules.cs" />
-    <Compile Include="Tests\Contracts\IEmpresaRules.cs" />
-    <Compile Include="Tests\Contracts\IFuncionarioRules.cs" />
+    <Compile Include="Tests\ConfigTests\SimpleLibFixture.cs" />
+    <Compile Include="Tests\%40Contracts\IEmpresaFuncionarioRules.cs" />
+    <Compile Include="Tests\%40Contracts\IEmpresaRules.cs" />
+    <Compile Include="Tests\%40Contracts\IFuncionarioRules.cs" />
     <Compile Include="Tests\DataAccessTests\SimpleEntityFixture.cs" />
     <Compile Include="Tests\DBEnsurer.cs" />
     <Compile Include="Tests\Server.cs" />
@@ -75,9 +80,9 @@
     <Compile Include="Tests\BasicLibraryTests\TestClasses\TestStringClass.cs" />
     <Compile Include="Tests\BasicLibraryTests\WorkingDaysTests.cs" />
     <Compile Include="Tests\DataAccessTests\FiltersTests.cs" />
-    <Compile Include="Tests\Contracts\Empresa.cs" />
-    <Compile Include="Tests\Contracts\EmpresaFuncionario.cs" />
-    <Compile Include="Tests\Contracts\Funcionario.cs" />
+    <Compile Include="Tests\%40Contracts\Empresa.cs" />
+    <Compile Include="Tests\%40Contracts\EmpresaFuncionario.cs" />
+    <Compile Include="Tests\%40Contracts\Funcionario.cs" />
     <Compile Include="Tests\Experiences\LambdaFixture.cs" />
     <Compile Include="NUnit\BaseEntityProvider.cs" />
     <Compile Include="NUnit\BaseTests.cs" />
@@ -92,9 +97,9 @@
     <Compile Include="Tests\BasicLibraryTests\TestClasses\ISimpleInterface.cs" />
     <Compile Include="Tests\BasicLibraryTests\TestClasses\SimpleClass.cs" />
     <Compile Include="Tests\BasicLibraryTests\DynamicProxyTests.cs" />
-    <Compile Include="Tests\Server\EmpresaFuncionarioRules.cs" />
-    <Compile Include="Tests\Server\EmpresaRules.cs" />
-    <Compile Include="Tests\Server\FuncionarioRules.cs" />
+    <Compile Include="Tests\%40Server\EmpresaFuncionarioRules.cs" />
+    <Compile Include="Tests\%40Server\EmpresaRules.cs" />
+    <Compile Include="Tests\%40Server\FuncionarioRules.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleLib\00_SimpleLib.csproj">
@@ -112,9 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Simple.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SimpleLib.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
