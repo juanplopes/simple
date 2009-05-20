@@ -17,11 +17,13 @@ namespace SimpleLibrary.ServiceModel
             WSHttpBindingElement element = new WSHttpBindingElement();
             (element as IConfigElement).LoadFromElement(config);
 
-            WSHttpBinding binding = new WSHttpBinding();
+            WSHttpBinding binding = element.WeakSecurity?
+                new WSHttpBinding(SecurityMode.None):
+                new WSHttpBinding();
             binding.MaxReceivedMessageSize = element.MaxReceivedMessageSize;
             binding.ReceiveTimeout = element.GetReceiveTimeout();
             binding.ReaderQuotas.MaxArrayLength = int.MaxValue;
-
+            
             endpoint.Binding = binding;
         }
 
@@ -35,6 +37,9 @@ namespace SimpleLibrary.ServiceModel
 
         [ConfigElement("receiveTimeout", Default = long.MaxValue)]
         public long ReceiveTimeout { get; set; }
+
+        [ConfigElement("weakSecurity", Default = false)]
+        public bool WeakSecurity { get; set; }
 
         public TimeSpan GetReceiveTimeout()
         {

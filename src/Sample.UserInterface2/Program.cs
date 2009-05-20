@@ -6,6 +6,8 @@ using SimpleLibrary.DataAccess;
 using Sample.BusinessInterface.Domain;
 using System.IO;
 using System.Text.RegularExpressions;
+using System;
+using BasicLibrary.Logging;
 
 namespace Sample.UserInterface2
 {
@@ -13,7 +15,15 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            IList<Empresa> rules = RulesFactory.Create<IEmpresaRules>().ListAll(null);
+            try
+            {
+                RulesFactory.Create<IEmpresaRules>().HeartBeat();
+            }
+            catch (Exception e)
+            {
+                MainLogger.Get<Program>().Error(e.Message, e);
+            }
+            Console.ReadLine();
         }
     }
 }
