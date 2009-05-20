@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Simple.Filters
 {
-    [DataContract]
+    [Serializable]
     public class TypedPropertyExpression<T> : PropertyExpression
     {
         [DataMember]

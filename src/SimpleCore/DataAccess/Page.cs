@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace Simple.DataAccess
 {
-    [DataContract]
+    [Serializable]
     public class Page<T> : ReadOnlyCollection<T>, IPage<T>
     {
         [DataMember]

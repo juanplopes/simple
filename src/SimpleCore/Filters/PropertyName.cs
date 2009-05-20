@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace Simple.Filters
 {
-    [DataContract]
+    [Serializable]
     public sealed class PropertyName
     {
         public const string DotMark = ".";

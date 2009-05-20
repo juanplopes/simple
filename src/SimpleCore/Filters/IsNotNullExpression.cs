@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Simple.Filters
 {
-    [DataContract]
+    [Serializable]
     public class IsNotNullExpression : PropertyExpression
     {
         public IsNotNullExpression(PropertyName propertyName) : base(propertyName) { }

@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Simple.Filters
 {
-    [DataContract]
+    [Serializable]
     public class InExpression : TypedPropertyExpression<IList>
     {
         public InExpression(PropertyName propertyName, params object[] values)

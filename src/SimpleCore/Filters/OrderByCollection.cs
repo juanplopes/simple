@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Simple.Filters
 {
-    [CollectionDataContract]
+    [Serializable]
     public class OrderByCollection : List<OrderBy>
     {
         public OrderByCollection() : base() { }

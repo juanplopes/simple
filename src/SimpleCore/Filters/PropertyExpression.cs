@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Simple.Filters
 {
-    [DataContract]
+    [Serializable]
     public class PropertyExpression : Expression
     {
         [DataMember]

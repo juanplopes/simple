@@ -7,7 +7,7 @@ using Simple.Config;
 
 namespace Simple.Filters
 {
-    [DataContract]
+    [Serializable]
     public class LikeExpression : TypedPropertyExpression<string>
     {
         public const string WildCardSign = "%";

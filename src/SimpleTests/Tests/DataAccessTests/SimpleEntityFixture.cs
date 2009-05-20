@@ -23,29 +23,24 @@ namespace Simple.Tests.DataAccessTests
         [Test]
         public void InsertEmpresa()
         {
-            using (SessionManager.BeginTransaction())
+            Empresa e = new Empresa()
             {
-                Empresa e = new Empresa()
-                {
-                    Nome = "Whatever"
-                };
-                e.Save();
-            }
+                Nome = "Whatever"
+            };
+            e.Save();
+
+            Empresa.Delete(e);
         }
 
         [Test]
         public void UpdateEmpresa()
         {
-            using (SessionManager.BeginTransaction())
-            {
-                Empresa e = Empresa.LoadByFilter(BooleanExpression.True);
-                Assert.AreEqual(e.Id, DBEnsurer.E1.Id);
-                e.Nome = "E2";
-                e.SaveOrUpdate();
+            Empresa e = Empresa.LoadByFilter(BooleanExpression.True);
+            Assert.AreEqual(e.Id, DBEnsurer.E1.Id);
+            e.Nome = "E2";
+            e.SaveOrUpdate();
 
-                Assert.AreEqual(e.Nome, Empresa.Load(e.Id).Nome);
-            }
-
+            Assert.AreEqual(e.Nome, Empresa.Load(e.Id).Nome);
         }
 
         [Test]
@@ -65,24 +60,11 @@ namespace Simple.Tests.DataAccessTests
         public void SecondLinqTest()
         {
             Empresa e = Empresa.Rules.GetByNameLinq("E1");
-            
+
             Assert.IsNotNull(e);
             Assert.AreEqual("E1", e.Nome);
         }
 
-        [Test]
-        public void ExternalLinqTest()
-        {
-            var query = from e in Empresa.Rules.Linq()
-                        where e.Nome == "E1"
-                        select e;
-
-            Assert.AreEqual(1, query.Count());
-            Assert.IsNotNull(query.First());
-            Assert.AreEqual("E1", query.First().Nome);
-
-            
-        }
 
     }
 }

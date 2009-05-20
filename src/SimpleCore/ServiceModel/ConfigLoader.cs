@@ -13,7 +13,7 @@ namespace Simple.ServiceModel
     {
         public static Binding CreateDefaultBinding()
         {
-            return new WSHttpBinding();
+            return new NetTcpBinding();
         }
 
         public static void ApplyConfigurators(ServiceHost endpoint, ServiceModelElement element, bool isClient)

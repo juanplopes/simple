@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Simple.Filters
 {
-    [DataContract]
+    [Serializable]
     public class SimpleExpression : TypedPropertyExpression<object>
     {
         public const string EqualsExpression = "=";

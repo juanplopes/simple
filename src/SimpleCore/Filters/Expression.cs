@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 
 namespace Simple.Filters
 {
-    [DataContract]
+    [Serializable]
     public abstract class Expression : Filter
     {
     }

@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace Simple.DataAccess
 {
-    [DataContract]
+    [Serializable]
     public abstract class GenericFault<T> where T : struct
     {
         [DataMember]

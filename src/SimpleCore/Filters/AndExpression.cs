@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Simple.Filters
 {
-    [DataContract]
+    [Serializable]
     public class AndExpression : BinaryOperator
     {
         public AndExpression(Filter filter1, Filter filter2) : base(filter1, filter2) { }

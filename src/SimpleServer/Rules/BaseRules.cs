@@ -19,7 +19,7 @@ namespace Simple.Rules
     }
 
     [KnownType(typeof(Page<>))]
-    public class BaseRules<T, D> : IBaseRules<T>
+    public class BaseRules<T, D> : MarshalByRefObject, IBaseRules<T>
         where D : BaseDao<T>, new()
     {
         private ILog _logger = null;
@@ -44,12 +44,12 @@ namespace Simple.Rules
             return new D();
         }
 
-        public virtual IOrderedQueryable<Q> Linq<Q>()
+        protected virtual IOrderedQueryable<Q> Linq<Q>()
         {
             return GetDao().Linq<Q>();
         }
 
-        public virtual IOrderedQueryable<T> Linq()
+        protected virtual IOrderedQueryable<T> Linq()
         {
             return GetDao().Linq();
         }

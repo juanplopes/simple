@@ -74,6 +74,11 @@ namespace Simple.Rules
             return Rules.CountByFilter(filter);
         }
 
+        public static void Delete(T entity)
+        {
+            Rules.Delete(entity);
+        }
+
         public static int DeleteByFilter(Filter filter)
         {
             return Rules.DeleteByFilter(filter);

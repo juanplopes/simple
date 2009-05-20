@@ -8,6 +8,7 @@ namespace Simple.Tests.Contracts
     [ServiceContract, MainContract]
     public partial interface IEmpresaRules : IBaseRules<Empresa>
     {
+        [OperationContract]
         Empresa GetByNameLinq(string name);
     }
 }
