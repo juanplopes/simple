@@ -24,7 +24,7 @@ namespace TestClient
             IEmpresaFuncionarioRules server3 = client.Create<IEmpresaFuncionarioRules>("EmpresaFuncionario");
 
             server1.Load(1);
-            server2.Load(1);
+            server3.Load(1);
 
             var q = server2.ListByFilter(BooleanExpression.True, null);
 
