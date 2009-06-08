@@ -187,11 +187,18 @@ namespace SimpleLibrary.DataAccess
 
         public ISession GetSession(string factoryName, bool forceNewSession)
         {
-            if (forceNewSession)
-                return GetSessionFactory(factoryName).OpenSession();
-            else
-                return GetThreadSession(factoryName);
-        }
+            ISession session;
 
+            if (forceNewSession)
+                session = GetSessionFactory(factoryName).OpenSession();
+            else
+                session = GetThreadSession(factoryName);
+
+            if (DataConfig.DefaultSessionFactory.ExecuteCommand != null)
+            {
+                session.CreateSQLQuery(DataConfig.DefaultSessionFactory.ExecuteCommand).ExecuteUpdate();
+            }
+            return session;
+        }
     }
 }

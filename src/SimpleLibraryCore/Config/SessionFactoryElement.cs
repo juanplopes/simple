@@ -13,6 +13,8 @@ namespace SimpleLibrary.Config
         public string ConfigFile { get; set; }
         [ConfigElement("hibernate-configuration", Default = null)]
         public PlainXmlConfigElement NHibernateConfig { get; set; }
+        [ConfigElement("executeCommand", Default  = null)]
+        public string ExecuteCommand { get; set; }
         [ConfigElement("name", Default = null)]
         public string Name { get; set; }
     }
