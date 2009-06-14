@@ -7,12 +7,12 @@ using System.Reflection;
 using System.Collections;
 using System.Globalization;
 using Simple.Common;
-using Simple.Configuration.TypeHandlers;
+using Simple.Configuration2.TypeHandlers;
 using System.Configuration;
 using Simple.Logging;
 using log4net;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     public class ConfigElement : IConfigElement
     {

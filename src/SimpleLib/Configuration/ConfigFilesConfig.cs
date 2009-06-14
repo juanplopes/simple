@@ -4,7 +4,7 @@ using System.Text;
 using Simple.Common;
 using System.IO;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     [ConfigFilesIgnore]
     [DefaultFile("ConfigFiles.xml",ThrowException=false)]

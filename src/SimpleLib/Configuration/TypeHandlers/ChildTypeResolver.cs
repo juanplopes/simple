@@ -5,7 +5,7 @@ using System.Xml;
 using System.Globalization;
 using System.Configuration;
 
-namespace Simple.Configuration.TypeHandlers
+namespace Simple.Configuration2.TypeHandlers
 {
     public class ChildTypeResolver
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Configuration;
-using Simple.Configuration;
+using Simple.Configuration2;
 
 namespace Simple.Cache
 {

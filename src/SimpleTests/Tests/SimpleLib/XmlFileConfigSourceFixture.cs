@@ -40,33 +40,37 @@ namespace Simple.Tests.SimpleLib
         {
             using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
             {
-                var cfg = src.Load(new FileInfo(TEST_FILE_NAME));
+                var cfg = src.Load(new FileInfo(TEST_FILE_NAME)).Get();
                 XmlConfigSourceFixture.TestCreatedSimpleSample(cfg);
+            }
+        }
+
+        [Test]
+        public void WithRepositoryTest()
+        {
+            using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
+            {
+                ConfigRepository conf = new ConfigRepository();
+                conf.SetSource(src.LoadFile(TEST_FILE_NAME));
+                XmlConfigSourceFixture.TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
             }
         }
 
         [Test]
         public void SimpleLoadAndModifyTest()
         {
-            using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
+            using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>()
+                .LoadFile(TEST_FILE_NAME))
             {
                 bool flag = false;
-                var cfg = src.Load(new FileInfo(TEST_FILE_NAME));
+                var cfg = src.Get();
 
-                src.Expired += x =>
+                src.Reloaded += x =>
                 {
-                    try
-                    {
-                        cfg = x.Reload();
-
-                        Assert.AreEqual(43, cfg.AnIntegral);
-                        Assert.AreEqual(43.43, cfg.AFloat, 0.001);
-                        flag = true;
-                    }
-                    catch (IOException)
-                    {
-
-                    }
+                    cfg = x;
+                    Assert.AreEqual(43, cfg.AnIntegral);
+                    Assert.AreEqual(43.43, cfg.AFloat, 0.001);
+                    flag = true;
                 };
 
                 XmlConfigSourceFixture.TestCreatedSimpleSample(cfg);

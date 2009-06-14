@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 using Simple.Tests.SimpleLib.Sample;
-using Simple.Configuration;
+using Simple.Configuration2;
 using System.Xml;
 
 namespace Simple.Tests.SimpleLib

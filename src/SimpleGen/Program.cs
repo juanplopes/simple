@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Simple.Generator.Definitions;
-using Simple.Configuration;
+using Simple.Configuration2;
 using System.IO;
 
 namespace Simple.Generator

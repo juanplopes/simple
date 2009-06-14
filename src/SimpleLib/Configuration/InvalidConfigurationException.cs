@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     public class InvalidConfigurationException : Exception
     {

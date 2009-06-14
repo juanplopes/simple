@@ -5,7 +5,7 @@ using System.Text;
 using System.Reflection;
 using System.Configuration;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     public class AssemblyConfigElement : PlainXmlConfigElement, IStringConvertible
     {

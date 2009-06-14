@@ -9,7 +9,7 @@ using System.Diagnostics;
 using Simple.Common;
 using System.Collections.Specialized;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     public class ConfigRoot<T> : ConfigElement where T : IConfigElement, new()
     {

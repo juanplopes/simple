@@ -4,7 +4,7 @@ using System.Text;
 using System.Globalization;
 using System.Threading;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     public class ThreadCultureLocalizationProvider : ILocalizationProvider
     {

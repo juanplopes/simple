@@ -9,7 +9,7 @@ using System.Collections;
 using Simple.Logging;
 using log4net;
 
-namespace Simple.Configuration.TypeHandlers
+namespace Simple.Configuration2.TypeHandlers
 {
     public class LoadConfiguration
     {

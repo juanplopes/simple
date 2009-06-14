@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Reflection;
 
-namespace Simple.Configuration.TypeHandlers
+namespace Simple.Configuration2.TypeHandlers
 {
     public abstract class AttributeAbleTypeHandler : ElementTypeHandler
     {

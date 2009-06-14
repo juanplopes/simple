@@ -7,7 +7,7 @@ using Simple.Common;
 using System.Xml;
 using Simple.Reflection;
 
-namespace Simple.Configuration.TypeHandlers
+namespace Simple.Configuration2.TypeHandlers
 {
     public class DictionaryTypeHandler : ConfigTypeHandler
     {

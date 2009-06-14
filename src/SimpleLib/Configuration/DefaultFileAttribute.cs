@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Simple.Common;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     [global::System.AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public sealed class DefaultFileAttribute : Attribute

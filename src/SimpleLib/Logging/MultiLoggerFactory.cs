@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Simple.Config;
-using Simple.Configuration;
+using Simple.Configuration2;
 using log4net;
 using log4net.Config;
 

@@ -5,7 +5,7 @@ using System.Xml;
 using System.Configuration;
 using System.IO;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     public class PlainXmlConfigElement : ConfigElement
     {

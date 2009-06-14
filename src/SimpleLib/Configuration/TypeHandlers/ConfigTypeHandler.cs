@@ -5,7 +5,7 @@ using System.Reflection;
 using Simple.Common;
 using System.Xml;
 
-namespace Simple.Configuration.TypeHandlers
+namespace Simple.Configuration2.TypeHandlers
 {
     public abstract class ConfigTypeHandler
     {

@@ -4,7 +4,7 @@ using System.Text;
 using System.Reflection;
 using System.Xml;
 
-namespace Simple.Configuration.TypeHandlers
+namespace Simple.Configuration2.TypeHandlers
 { 
     public abstract class ElementTypeHandler : ConfigTypeHandler
     {

@@ -32,7 +32,7 @@ namespace Simple.Tests.SimpleLib
         {
             IConfigSource<BasicTypesSampleWithoutAttr, string> src =
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-            TestCreatedSimpleSample(src.Load(SAMPLE_XML));
+            TestCreatedSimpleSample(src.Load(SAMPLE_XML).Get());
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Simple.Tests.SimpleLib
 
             IConfigSource<BasicTypesSampleWithoutAttr, string> src =
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-            Assert.AreEqual("whatever", src.Load(mySample).AString);
+            Assert.AreEqual("whatever", src.Load(mySample).Get().AString);
         }
 
 
@@ -57,7 +57,7 @@ namespace Simple.Tests.SimpleLib
                 IConfigSource<BasicTypesSampleWithoutAttr, Stream> src =
                     new XmlConfigSource<BasicTypesSampleWithoutAttr>();
 
-                TestCreatedSimpleSample(src.Load(mem));
+                TestCreatedSimpleSample(src.Load(mem).Get());
             }
         }
 
@@ -69,11 +69,49 @@ namespace Simple.Tests.SimpleLib
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(SAMPLE_XML);
 
-                IConfigSource<BasicTypesSampleWithoutAttr, XmlDocument> src =
+                IConfigSource<BasicTypesSampleWithoutAttr, XmlNode> src =
                     new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-                TestCreatedSimpleSample(src.Load(doc));
+                TestCreatedSimpleSample(src.Load(doc.DocumentElement).Get());
             }
         }
+
+        [Test]
+        public void BasicTypesSampleFromDocumentTest()
+        {
+            using (MemoryStream mem = new MemoryStream(Encoding.UTF8.GetBytes(SAMPLE_XML)))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(SAMPLE_XML);
+
+                IConfigSource<BasicTypesSampleWithoutAttr, XmlDocument> src =
+                    new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+                TestCreatedSimpleSample(src.Load(doc).Get());
+            }
+        }
+
+        [Test]
+        public void BasicTypesSampleFromTextReaderTest()
+        {
+            StringReader reader = new StringReader(SAMPLE_XML);
+
+            IConfigSource<BasicTypesSampleWithoutAttr, TextReader> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+            TestCreatedSimpleSample(src.Load(reader).Get());
+        }
+
+        [Test]
+        public void BasicTypesSampleFromXmlTextReaderTest()
+        {
+            StringReader reader = new StringReader(SAMPLE_XML);
+            XmlTextReader reader2 = new XmlTextReader(reader);
+
+            IConfigSource<BasicTypesSampleWithoutAttr, XmlReader> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+
+            TestCreatedSimpleSample(src.Load(reader2).Get());
+
+        }
+
 
         [Test]
         public void MissingAStringTest()
@@ -84,7 +122,7 @@ namespace Simple.Tests.SimpleLib
                     <AFloat>42.42</AFloat>
                   </BasicTypesSampleWithoutAttr>";
             var src = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-            var cfg = src.Load(brokenXml);
+            var cfg = src.Load(brokenXml).Get();
             Assert.IsNull(cfg.AString);
         }
 
@@ -96,7 +134,7 @@ namespace Simple.Tests.SimpleLib
                     <AFloat>42.42</AFloat>
                   </BasicTypesSampleWithoutAttr>";
             var src = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-            var cfg = src.Load(brokenXml);
+            var cfg = src.Load(brokenXml).Get();
         }
 
         [Test]
@@ -111,7 +149,7 @@ namespace Simple.Tests.SimpleLib
                     .Replace("%z", doc.DocumentElement.InnerXml);
 
             var src = new XmlConfigSource<ComplexTypesSample>();
-            var cfg = src.Load(complexXml);
+            var cfg = src.Load(complexXml).Get();
 
             TestCreatedSimpleSample(cfg.Basic);
             Assert.AreEqual(3, cfg.Basics.Length);
@@ -133,18 +171,51 @@ namespace Simple.Tests.SimpleLib
                     .Replace("%z", doc.DocumentElement.InnerXml);
 
             var src = new XmlConfigSource<NotKnownTypeSample>();
-            var cfg = src.Load(complexXml);
+            var cfg = src.Load(complexXml).Get();
 
             var src2 = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
 
-            TestCreatedSimpleSample(src2.Load(cfg.Basic));
+            TestCreatedSimpleSample(src2.Load(cfg.Basic).Get());
             Assert.AreEqual(3, cfg.Basics.Length);
             foreach (var simple in cfg.Basics)
             {
-                TestCreatedSimpleSample(src2.Load(cfg.Basic));
+                TestCreatedSimpleSample(src2.Load(cfg.Basic).Get());
             }
         }
 
+        [Test]
+        public void WithRepositoryTest()
+        {
+            IConfigSource<BasicTypesSampleWithoutAttr, string> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+            
+            ConfigRepository conf = new ConfigRepository();
+            conf.SetSource(src.Load(SAMPLE_XML));
+
+            TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
+        }
+
+        [Test]
+        public void WithConfigSourcesTest()
+        {
+            var src = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+            ConfigSources.SetDefaultSource(src.Load(SAMPLE_XML));
+            TestCreatedSimpleSample(ConfigSources.GetDefault<BasicTypesSampleWithoutAttr>());
+        }
+
+
+
+        [Test, ExpectedException(typeof(KeyNotFoundException))]
+        public void WithRepositoryFailure()
+        {
+            IConfigSource<BasicTypesSampleWithoutAttr, string> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+
+            ConfigRepository conf = new ConfigRepository();
+            //conf.SetSource(src.Load(SAMPLE_XML));
+
+            TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
+        }
     }
 
     #region Samples

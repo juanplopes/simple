@@ -8,7 +8,7 @@ using Simple.Common;
 using System.IO;
 using Simple.Logging;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     [LocalizationProviderIgnore]
     public class FileConfigProvider<T> : AutoLocalizationConfigProvider<T>

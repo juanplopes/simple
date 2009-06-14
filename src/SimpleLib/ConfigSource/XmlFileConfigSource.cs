@@ -10,11 +10,12 @@ namespace Simple.ConfigSource
 {
     public class XmlFileConfigSource<T> :
         XmlConfigSource<T>,
+        IFileConfigSource<T>,
         IConfigSource<T, FileInfo>
     {
         public FileInfo File { get; set; }
         protected FileSystemWatcher Watcher { get; set; }
-        
+
         public bool Active { get; protected set; }
         public DateTime LastModification { get; protected set; }
 
@@ -23,11 +24,11 @@ namespace Simple.ConfigSource
             lock (this)
             {
                 if (Active)
-                    InvokeExpired();
+                    InvokeReload();
             }
         }
 
-        public virtual T Load(FileInfo input)
+        public virtual IConfigSource<T> Load(FileInfo input)
         {
             lock (this)
             {
@@ -42,23 +43,35 @@ namespace Simple.ConfigSource
                 File = input;
 
                 Active = true;
-                using (Stream s = File.OpenRead())
+                using (Stream s = File.Open(FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
-                    T ret = Load(s);
+                    var ret = Load(s);
                     s.Close();
                     return ret;
                 }
             }
         }
 
+        public virtual IConfigSource<T> LoadFile(string fileName)
+        {
+            return Load(new FileInfo(fileName));
+        }
 
-
-        public override T Reload()
+        public override bool Reload()
         {
             lock (this)
             {
                 if (File == null) throw new InvalidOperationException("Cannot reload a non-loaded source");
-                return Load(File);
+
+                try
+                {
+                    Load(File);
+                    return true;
+                }
+                catch (IOException)
+                {
+                    return false;
+                }
             }
         }
 
@@ -71,6 +84,6 @@ namespace Simple.ConfigSource
             }
         }
 
-       
+
     }
 }

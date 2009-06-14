@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     public class ConfigIdentifier
     {

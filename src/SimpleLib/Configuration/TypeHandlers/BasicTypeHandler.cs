@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Xml;
 using System.Globalization;
 
-namespace Simple.Configuration.TypeHandlers
+namespace Simple.Configuration2.TypeHandlers
 {
     public class BasicTypeHandler : AttributeAbleTypeHandler
     {

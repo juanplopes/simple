@@ -6,7 +6,7 @@ using System.Reflection;
 using Simple.Common;
 using System.Collections;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     public class ConfigStructureDisplayer
     {

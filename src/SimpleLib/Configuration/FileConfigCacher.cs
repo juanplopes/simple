@@ -8,7 +8,7 @@ using System.Xml;
 using System.IO;
 using System.Xml.XPath;
 
-namespace Simple.Configuration
+namespace Simple.Configuration2
 {
     public class FileConfigCacher<T> : BaseCacher<ConfigIdentifier, T>
                 where T : IConfigElement, new()

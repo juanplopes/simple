@@ -12,7 +12,7 @@ using log4net.Repository.Hierarchy;
 using log4net.Appender;
 using log4net.Layout;
 using log4net.Core;
-using Simple.Configuration;
+using Simple.Configuration2;
 using System.Reflection;
 
 namespace Simple.Logging

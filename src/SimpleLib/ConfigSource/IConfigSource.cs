@@ -7,16 +7,26 @@ using System.Text;
 
 namespace Simple.ConfigSource
 {
-    public delegate void HandleConfigExpired<T>(IConfigSource<T> source);
+    public delegate void ConfigReloadedDelegate<T>(T config);
 
     public interface IConfigSource<T> : IDisposable
     {
-        T Reload();
-        event HandleConfigExpired<T> Expired;
+        bool Loaded { get; }
+        T Get();
+        bool Reload();
+        event ConfigReloadedDelegate<T> Reloaded;
+
     }
 
-    public interface IConfigSource<T, Q> : IConfigSource<T>
+    public interface IFileConfigSource<T> : IConfigSource<T>
     {
-        T Load(Q input);
+        IConfigSource<T> LoadFile(string fileName);
+    }
+
+
+    public interface IConfigSource<T, A> : IConfigSource<T>
+    {
+        IConfigSource<T> Load(A input);
     }
 }
+ 

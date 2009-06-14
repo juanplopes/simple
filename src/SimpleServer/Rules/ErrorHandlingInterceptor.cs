@@ -7,7 +7,7 @@ using Simple.Logging;
 using System.Reflection;
 using Simple.DataAccess;
 using Simple.Config;
-using Simple.Configuration;
+using Simple.Configuration2;
 using log4net;
 using System.Diagnostics;
 using Simple.Common;
