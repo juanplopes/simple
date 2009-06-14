@@ -54,19 +54,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cfg\ServiceModelConfig.cs" />
-    <Compile Include="Config\BusinessElement.cs" />
-    <Compile Include="Config\ConfiguratorElement.cs" />
-    <Compile Include="Config\Constants.cs" />
-    <Compile Include="Config\DataConfigElement.cs" />
-    <Compile Include="Config\DataConfigOptionsElement.cs" />
-    <Compile Include="Config\EndpointElement.cs" />
-    <Compile Include="Config\ExceptionHandlingElement.cs" />
-    <Compile Include="Config\FiltersElement.cs" />
-    <Compile Include="Config\LockingProviderElement.cs" />
-    <Compile Include="Config\ServiceModelElement.cs" />
-    <Compile Include="Config\SessionFactoryElement.cs" />
-    <Compile Include="Config\SimpleConfig.cs" />
-    <Compile Include="Config\ThreadingElement.cs" />
+    <Compile Include="Config2\BusinessElement.cs" />
+    <Compile Include="Config2\ConfiguratorElement.cs" />
+    <Compile Include="Config2\Constants.cs" />
+    <Compile Include="Config2\DataConfigElement.cs" />
+    <Compile Include="Config2\DataConfigOptionsElement.cs" />
+    <Compile Include="Config2\EndpointElement.cs" />
+    <Compile Include="Config2\ExceptionHandlingElement.cs" />
+    <Compile Include="Config2\FiltersElement.cs" />
+    <Compile Include="Config2\LockingProviderElement.cs" />
+    <Compile Include="Config2\ServiceModelElement.cs" />
+    <Compile Include="Config2\SessionFactoryElement.cs" />
+    <Compile Include="Config2\SimpleConfig.cs" />
+    <Compile Include="Config2\ThreadingElement.cs" />
+    <Compile Include="Config\DataConfig.cs" />
     <Compile Include="DataAccess\EntityTransformer.cs" />
     <Compile Include="DataAccess\IPage.cs" />
     <Compile Include="DataAccess\MappedProperty.cs" />

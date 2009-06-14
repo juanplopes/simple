@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ServiceModel.Description;
 using Simple.Config;
-using Simple.Configuration;
+using Simple.Configuration2;
 using Simple.ServiceModel;
 using System.Reflection;
 

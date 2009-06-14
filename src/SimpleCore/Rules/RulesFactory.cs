@@ -7,7 +7,7 @@ using System.ServiceModel;
 using Simple.ServiceModel;
 using Simple.Config;
 using Simple.Logging;
-using Simple.Configuration;
+using Simple.Configuration2;
 using log4net;
 using System.Reflection;
 

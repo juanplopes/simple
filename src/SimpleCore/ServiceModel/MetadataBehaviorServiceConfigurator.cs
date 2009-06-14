@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.ServiceModel.Description;
-using Simple.Configuration;
+using Simple.Configuration2;
 using System.ServiceModel.Channels;
 using Simple.Common;
 

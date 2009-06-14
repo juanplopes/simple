@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using System.Text;
-using Simple.Configuration;
+using Simple.Configuration2;
 
 namespace Simple.Config
 { 
