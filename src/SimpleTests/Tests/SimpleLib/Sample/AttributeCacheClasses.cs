@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Simple.Tests.Lib.TestClasses
+namespace Simple.Tests.SimpleLib.Sample
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple=true)]
     public class Attribute1Attribute : Attribute { }

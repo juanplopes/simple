@@ -4,6 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using System.Linq.Expressions;
 using Simple.Persistence;
+using Simple.IO;
 
 namespace Simple.Tests.Experiences
 {
@@ -17,7 +18,7 @@ namespace Simple.Tests.Experiences
             Expression<Predicate<int>> lambda = 
                 x => x == 2 && x == 3;
 
-            XmlSerializationHelper.QuickSerialize(lambda);
+            XmlHelper.QuickSerialize(lambda);
         }
     }
 }

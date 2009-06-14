@@ -4,9 +4,9 @@ using System.Text;
 using NUnit.Framework;
 using Simple.Common;
 
-namespace Simple.Tests.Lib
+namespace Simple.Tests.SimpleLib
 {
-    public class BaseWorkingDaysTests
+    public class BaseWorkingDaysFixture
     {
         protected static void AssertProviderSoft(IWorkingDaysProvider prov, int iterations, params DateTime[] baseDates)
         {
@@ -55,7 +55,7 @@ namespace Simple.Tests.Lib
         protected int HeavyIterations { get; private set; }
         protected DateTime[] BaseDates { get; private set; }
 
-        protected BaseWorkingDaysTests(IWorkingDaysProvider provider, int softIterations, int heavyIterations, params DateTime[] baseDates)
+        protected BaseWorkingDaysFixture(IWorkingDaysProvider provider, int softIterations, int heavyIterations, params DateTime[] baseDates)
         {
             Provider = provider;
             SoftIterations = softIterations;

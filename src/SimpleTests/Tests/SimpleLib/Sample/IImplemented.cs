@@ -38,49 +38,12 @@
  */
 using System;
 
-namespace Simple.Tests.Lib.TestClasses
+namespace Simple.Tests.SimpleLib.Sample
 {
 	/// <summary>
-	/// Our test class.
+	/// Interface used to test casting in the DynamicProxy
 	/// </summary>
-	public class SimpleClass : ISimpleInterface, IImplemented
-	{
-		public SimpleClass()
-		{
-		}
-
-		public void Method1() {
-			Console.WriteLine("    Method 1 called");
-		}
-
-		public string Method2() {
-			Console.WriteLine("    Method 2 called, returning 'Hello World!'");
-			return "Hello World!";
-		}
-
-		public int Method3() {
-			Console.WriteLine("    Method 3 called, returning 10000");
-			return 10000;
-		}
-
-		public int Method4(int inValue) {
-			Console.WriteLine("    Method 4 called, returning inValue: " + inValue);
-			return inValue;
-		}
-
-		public void Method5(int inValue, out int outValue) {
-			Console.WriteLine("    Method 5 called. Setting outValue to the value of the inValue: " + inValue);
-			outValue = inValue;
-		}
-
-		public void Method6(ref int value) {
-			Console.WriteLine("    Method 5 called. Changing value from: " + value + " to: 98765");
-			value = 98765;
-		}
-
-		public void ImplementedMethod() {
-			Console.WriteLine("Implemented method called");
-		}
-
+	public interface IImplemented {
+		void ImplementedMethod();
 	}
 }

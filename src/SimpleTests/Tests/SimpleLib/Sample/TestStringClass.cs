@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Simple.IO;
 
-namespace Simple.Tests.Lib.TestClasses
+namespace Simple.Tests.SimpleLib.Sample
 {
     public class TestStringClass1
     {

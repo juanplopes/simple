@@ -10,7 +10,7 @@ using NHibernate.Linq;
 namespace Simple.Tests.DataAccess
 {
     [TestFixture]
-    public class FiltersTests
+    public class FiltersFixture
     {
         protected void AssertSimpleFilter(string filterExpression)
         {

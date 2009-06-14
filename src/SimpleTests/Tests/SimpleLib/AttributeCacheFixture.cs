@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 using Simple.Reflection;
-using Simple.Tests.Lib.TestClasses;
+using Simple.Tests.SimpleLib.Sample;
 
-namespace Simple.Tests.Lib
+namespace Simple.Tests.SimpleLib
 {
     [TestFixture]
-    public class AttributeCacheTests
+    public class AttributeCacheFixture
     {
         [Test]
         public void ClassAttributesFirstTest()

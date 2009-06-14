@@ -38,12 +38,17 @@
  */
 using System;
 
-namespace Simple.Tests.Lib.TestClasses
+namespace Simple.Tests.SimpleLib.Sample
 {
 	/// <summary>
-	/// Interface which is used to test strictness in the Dynamic Proxy. 
+	/// Interface for the SimpleClass (since you have to program against interfaces with the Dynamic proxy)
 	/// </summary>
-	public interface INotImplemented {
-		void NotImplementedMethod();
+	public interface ISimpleInterface {
+		void Method1();
+		string Method2();
+		int Method3();
+		int Method4(int inValue);
+		void Method5(int inValue, out int outValue);
+		void Method6(ref int value);
 	}
 }

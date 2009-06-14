@@ -4,10 +4,10 @@ using System.Text;
 using NUnit.Framework;
 using Simple.Common;
 
-namespace Simple.Tests.Lib
+namespace Simple.Tests.SimpleLib
 {
     [TestFixture]
-    public class PrimeNumbersTests
+    public class PrimeNumbersFixture
     {
         [Test]
         public void FirstPrimes()

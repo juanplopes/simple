@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using Simple.Tests.Lib.TestClasses;
+using Simple.Tests.SimpleLib.Sample;
 using Simple.Configuration;
 using System.Xml;
 
-namespace Simple.Tests.Lib
+namespace Simple.Tests.SimpleLib
 {
     [TestFixture]
-    public class ConfigurationTests
+    public class ConfigurationFixture
     {
         protected XmlElement ElementFromString(string xml)
         {

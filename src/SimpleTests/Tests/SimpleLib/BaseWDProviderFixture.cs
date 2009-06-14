@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Simple.Tests.Lib;
+using Simple.Tests.SimpleLib;
 using Simple.Common;
 
 namespace Simple.Tests.BasicLibraryTests
@@ -31,9 +31,9 @@ namespace Simple.Tests.BasicLibraryTests
     }
 
     [TestFixture]
-    public class BaseWorkingDaysProviderTests : BaseWorkingDaysTests
+    public class BaseWDProviderTests : BaseWorkingDaysFixture
     {
-        public BaseWorkingDaysProviderTests()
+        public BaseWDProviderTests()
             : base(
                 new TestBaseProvider(), 1000, 100, new DateTime(2008, 1, 17))
         {

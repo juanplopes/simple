@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 using Simple.IO;
-using Simple.Tests.Lib.TestClasses;
+using Simple.Tests.SimpleLib.Sample;
 using System.IO;
 
-namespace Simple.Tests.Lib
+namespace Simple.Tests.SimpleLib
 {
     [TestFixture]
-    public class StringFragmenterTests
+    public class StringFragmenterFixture
     {
         [Test]
         public void SimpleTest1()

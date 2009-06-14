@@ -4,7 +4,7 @@ using System.Text;
 using Simple.Common;
 using NUnit.Framework;
 
-namespace Simple.Tests.Lib
+namespace Simple.Tests.SimpleLib
 {
     public class TestProvider : IWorkingDaysProvider
     {
@@ -25,9 +25,9 @@ namespace Simple.Tests.Lib
     }
 
     [TestFixture]
-    public class WorkingDaysTests : BaseWorkingDaysTests
+    public class WorkingDaysFixture : BaseWorkingDaysFixture
     {
-        public WorkingDaysTests() :
+        public WorkingDaysFixture() :
             base(new TestProvider(), 1000, 100, new DateTime(2008, 1, 1))
         { }
 
