@@ -63,7 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tests\SimpleLib\BaseWorkingDaysProviderTests.cs" />
+    <Compile Include="Tests\SimpleLib\BaseWDProviderFixture.cs" />
     <Compile Include="Tests\ConfigTests\SimpleLibFixture.cs" />
     <Compile Include="Tests\%40Contracts\IEmpresaFuncionarioRules.cs" />
     <Compile Include="Tests\%40Contracts\IEmpresaRules.cs" />
@@ -71,17 +71,17 @@
     <Compile Include="Tests\DataAccessTests\SimpleEntityFixture.cs" />
     <Compile Include="Tests\DBEnsurer.cs" />
     <Compile Include="Tests\Server.cs" />
-    <Compile Include="Tests\SimpleLib\AttributeCacheTests.cs" />
-    <Compile Include="Tests\SimpleLib\BaseWorkingDaysTests.cs" />
-    <Compile Include="Tests\SimpleLib\ConfigurationTests.cs" />
-    <Compile Include="Tests\SimpleLib\PrimeNumbersTests.cs" />
-    <Compile Include="Tests\SimpleLib\StringFragmenterTests.cs" />
+    <Compile Include="Tests\SimpleLib\AttributeCacheFixture.cs" />
+    <Compile Include="Tests\SimpleLib\BaseWorkingDaysFixture.cs" />
+    <Compile Include="Tests\SimpleLib\ConfigurationFixture.cs" />
+    <Compile Include="Tests\SimpleLib\PrimeNumbersFixture.cs" />
+    <Compile Include="Tests\SimpleLib\StringFragmenterFixture.cs" />
     <Compile Include="Tests\SimpleLib\Sample\AttributeCacheClasses.cs" />
     <Compile Include="Tests\SimpleLib\Sample\BasicTypesElement.cs" />
     <Compile Include="Tests\SimpleLib\Sample\ComplexElement.cs" />
     <Compile Include="Tests\SimpleLib\Sample\TestStringClass.cs" />
-    <Compile Include="Tests\SimpleLib\WorkingDaysTests.cs" />
-    <Compile Include="Tests\DataAccessTests\FiltersTests.cs" />
+    <Compile Include="Tests\SimpleLib\WorkingDaysFixture.cs" />
+    <Compile Include="Tests\DataAccessTests\FiltersFixture.cs" />
     <Compile Include="Tests\%40Contracts\Empresa.cs" />
     <Compile Include="Tests\%40Contracts\EmpresaFuncionario.cs" />
     <Compile Include="Tests\%40Contracts\Funcionario.cs" />
@@ -93,16 +93,13 @@
     <Compile Include="NUnit\IEntityProvider.cs" />
     <Compile Include="NUnit\ITypeSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\SimpleLib\Sample\IImplemented.cs" />
-    <Compile Include="Tests\SimpleLib\Sample\INotImplemented.cs" />
-    <Compile Include="Tests\SimpleLib\Sample\INotImplemented2.cs" />
-    <Compile Include="Tests\SimpleLib\Sample\ISimpleInterface.cs" />
-    <Compile Include="Tests\SimpleLib\Sample\SimpleClass.cs" />
-    <Compile Include="Tests\SimpleLib\DynamicProxyTests.cs" />
+    <Compile Include="Tests\SimpleLib\DynamicProxyFixture.cs" />
     <Compile Include="Tests\%40Server\EmpresaFuncionarioRules.cs" />
     <Compile Include="Tests\%40Server\EmpresaRules.cs" />
     <Compile Include="Tests\%40Server\FuncionarioRules.cs" />
     <Compile Include="Tests\ServiceTests\ServiceConnectionFixture.cs" />
+    <Compile Include="Tests\SimpleLib\XmlConfigSourceFixture.cs" />
+    <Compile Include="Tests\SimpleLib\XmlFileConfigSourceFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleLib\00_SimpleLib.csproj">

@@ -68,6 +68,7 @@
     <Compile Include="Common\Tuples.cs" />
     <Compile Include="ConfigSource\IConfigSource.cs" />
     <Compile Include="ConfigSource\XmlConfigSource.cs" />
+    <Compile Include="ConfigSource\XmlFileConfigSource.cs" />
     <Compile Include="Configuration\AssemblyConfigElement.cs" />
     <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
     <Compile Include="Configuration\ConfigStructureDisplayer.cs" />

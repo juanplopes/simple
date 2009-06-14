@@ -10,31 +10,59 @@ using Simple.IO;
 
 namespace Simple.ConfigSource
 {
-    public class XmlConfigSource<T> : IConfigSource<T>
+    public class XmlConfigSource<T> : 
+        IConfigSource<T>,
+        IConfigSource<T, Stream>,
+        IConfigSource<T, string>,
+        IConfigSource<T, XmlNode>,
+        IConfigSource<T, XmlDocument>
     {
         private XmlSerializer serializer = new XmlSerializer(typeof(T));
-        public Stream Source { get; set; }
 
-        public XmlConfigSource(Stream stream)
+        public virtual T Load(Stream stream)
         {
-            Source = stream;
-        }
-
-        public XmlConfigSource(string xml)
-        {
-            Source = XmlHelper.GetStream(xml);
-        }
-
-        public XmlConfigSource(XmlNode node)
-        {
-            Source = XmlHelper.GetStream(node);
-        }
-
-        public T Load()
-        {
-            return (T)serializer.Deserialize(Source);
+            return (T)serializer.Deserialize(stream);
         }
 
         public event HandleConfigExpired<T> Expired;
+        protected virtual void InvokeExpired()
+        {
+            if (Expired != null)
+                Expired.Invoke(this);
+        }
+
+        public virtual T Load(string input)
+        {
+            using (var stream = XmlHelper.GetStream(input))
+            {
+                return Load(stream);
+            }
+        }
+
+        public virtual T Load(XmlNode input)
+        {
+            using (var stream = XmlHelper.GetStream(input))
+            {
+                return Load(stream);
+            }
+        }
+
+        public virtual T Load(XmlDocument input)
+        {
+            return Load(input.DocumentElement);
+        }
+
+        public virtual T Reload()
+        {
+            throw new NotSupportedException("This implementation doesn't support reloading");
+        }
+
+        #region IDisposable Members
+
+        public virtual void Dispose()
+        {            
+        }
+
+        #endregion
     }
 }

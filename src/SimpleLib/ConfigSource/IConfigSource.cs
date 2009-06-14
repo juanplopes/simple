@@ -9,9 +9,14 @@ namespace Simple.ConfigSource
 {
     public delegate void HandleConfigExpired<T>(IConfigSource<T> source);
 
-    public interface IConfigSource<T>
+    public interface IConfigSource<T> : IDisposable
     {
-        T Load();
+        T Reload();
         event HandleConfigExpired<T> Expired;
+    }
+
+    public interface IConfigSource<T, Q> : IConfigSource<T>
+    {
+        T Load(Q input);
     }
 }
