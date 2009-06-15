@@ -20,7 +20,7 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual(42.42, config.AFloat, 0.001);
         }
 
-        public static string SAMPLE_XML =
+        public const string SAMPLE_XML =
                 @"<BasicTypesSampleWithoutAttr>
                     <AString>whatever</AString>
                     <AnIntegral>42</AnIntegral>
@@ -183,39 +183,39 @@ namespace Simple.Tests.SimpleLib
             }
         }
 
-        [Test]
-        public void WithRepositoryTest()
-        {
-            IConfigSource<BasicTypesSampleWithoutAttr, string> src =
-                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+        //[Test]
+        //public void WithRepositoryTest()
+        //{
+        //    IConfigSource<BasicTypesSampleWithoutAttr, string> src =
+        //        new XmlConfigSource<BasicTypesSampleWithoutAttr>();
             
-            ConfigRepository conf = new ConfigRepository();
-            conf.SetSource(src.Load(SAMPLE_XML));
+        //    ConfigRepository conf = new ConfigRepository();
+        //    conf.SetSource(src.Load(SAMPLE_XML));
 
-            TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
-        }
+        //    TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
+        //}B
 
-        [Test]
-        public void WithConfigSourcesTest()
-        {
-            var src = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-            ConfigSources.SetDefaultSource(src.Load(SAMPLE_XML));
-            TestCreatedSimpleSample(ConfigSources.GetDefault<BasicTypesSampleWithoutAttr>());
-        }
+        //[Test]
+        //public void WithConfigSourcesTest()
+        //{
+        //    var src = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+        //    ConfigSources.SetDefaultSource(src.Load(SAMPLE_XML));
+        //    TestCreatedSimpleSample(ConfigSources.GetDefault<BasicTypesSampleWithoutAttr>());
+        //}
 
 
 
-        [Test, ExpectedException(typeof(KeyNotFoundException))]
-        public void WithRepositoryFailure()
-        {
-            IConfigSource<BasicTypesSampleWithoutAttr, string> src =
-                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+        //[Test, ExpectedException(typeof(KeyNotFoundException))]
+        //public void WithRepositoryFailure()
+        //{
+        //    IConfigSource<BasicTypesSampleWithoutAttr, string> src =
+        //        new XmlConfigSource<BasicTypesSampleWithoutAttr>();
 
-            ConfigRepository conf = new ConfigRepository();
-            //conf.SetSource(src.Load(SAMPLE_XML));
+        //    ConfigRepository conf = new ConfigRepository();
+        //    //conf.SetSource(src.Load(SAMPLE_XML));
 
-            TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
-        }
+        //    TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
+        //}
     }
 
     #region Samples

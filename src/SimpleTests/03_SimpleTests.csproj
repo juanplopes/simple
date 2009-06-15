@@ -74,6 +74,7 @@
     <Compile Include="Tests\SimpleLib\AttributeCacheFixture.cs" />
     <Compile Include="Tests\SimpleLib\BaseWorkingDaysFixture.cs" />
     <Compile Include="Tests\SimpleLib\ConfigurationFixture.cs" />
+    <Compile Include="Tests\SimpleLib\FactoryFixture.cs" />
     <Compile Include="Tests\SimpleLib\PrimeNumbersFixture.cs" />
     <Compile Include="Tests\SimpleLib\StringFragmenterFixture.cs" />
     <Compile Include="Tests\SimpleLib\Sample\AttributeCacheClasses.cs" />

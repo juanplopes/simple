@@ -45,16 +45,16 @@ namespace Simple.Tests.SimpleLib
             }
         }
 
-        [Test]
-        public void WithRepositoryTest()
-        {
-            using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
-            {
-                ConfigRepository conf = new ConfigRepository();
-                conf.SetSource(src.LoadFile(TEST_FILE_NAME));
-                XmlConfigSourceFixture.TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
-            }
-        }
+        //[Test]
+        //public void WithRepositoryTest()
+        //{
+        //    using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
+        //    {
+        //        ConfigRepository conf = new ConfigRepository();
+        //        conf.SetSource(src.LoadFile(TEST_FILE_NAME));
+        //        XmlConfigSourceFixture.TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
+        //    }
+        //}
 
         [Test]
         public void SimpleLoadAndModifyTest()

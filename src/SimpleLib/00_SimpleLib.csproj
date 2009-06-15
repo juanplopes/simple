@@ -64,14 +64,17 @@
     <Compile Include="Common\ExHelper.cs" />
     <Compile Include="Common\LazyEnumerable.cs" />
     <Compile Include="Common\MathHelper.cs" />
+    <Compile Include="Common\OrderedItemsList.cs" />
     <Compile Include="Common\PrimeNumbers.cs" />
+    <Compile Include="Common\Singleton.cs" />
     <Compile Include="Common\Tuples.cs" />
+    <Compile Include="ConfigSource\AggregateFactory.cs" />
     <Compile Include="ConfigSource\BaseConfigSource.cs" />
-    <Compile Include="ConfigSource\BaseChildFactory.cs" />
-    <Compile Include="ConfigSource\ConfigRepository.cs" />
-    <Compile Include="ConfigSource\ConfigSources.cs" />
+    <Compile Include="ConfigSource\Factory.cs" />
     <Compile Include="ConfigSource\FactorySingleton.cs" />
+    <Compile Include="ConfigSource\FactoryStack.cs" />
     <Compile Include="ConfigSource\IConfigSource.cs" />
+    <Compile Include="ConfigSource\XmlConfig.cs" />
     <Compile Include="ConfigSource\XmlConfigSource.cs" />
     <Compile Include="ConfigSource\XmlFileConfigSource.cs" />
     <Compile Include="Configuration\AssemblyConfigElement.cs" />
@@ -104,6 +107,8 @@
     <Compile Include="Configuration\TypeHandlers\ListTypeHandler.cs" />
     <Compile Include="Configuration\TypeHandlers\LoadConfiguration.cs" />
     <Compile Include="Configuration\TypeHandlers\NullableTypeHandler.cs" />
+    <Compile Include="Config\LoggerConfig.cs" />
+    <Compile Include="Config\SimpleLibFactory.cs" />
     <Compile Include="DefaultConfigResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -123,6 +128,8 @@
     <Compile Include="IO\StringOffsetAttribute.cs" />
     <Compile Include="Config\SimpleLibConfig.cs" />
     <Compile Include="Config\Log4netConfig.cs" />
+    <Compile Include="Logging\ILog4netFactory.cs" />
+    <Compile Include="Logging\Log4netFactory.cs" />
     <Compile Include="Logging\MainLogger.cs" />
     <Compile Include="Common\WorkingDays.cs" />
     <Compile Include="Common\EnumTypeAttribute.cs" />
