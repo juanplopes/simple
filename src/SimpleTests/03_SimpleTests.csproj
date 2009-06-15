@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=2.1.0.1003, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.dll</HintPath>
@@ -75,6 +79,7 @@
     <Compile Include="Tests\SimpleLib\BaseWorkingDaysFixture.cs" />
     <Compile Include="Tests\SimpleLib\ConfigurationFixture.cs" />
     <Compile Include="Tests\SimpleLib\FactoryFixture.cs" />
+    <Compile Include="Tests\SimpleLib\LoggerFactoryFixture.cs" />
     <Compile Include="Tests\SimpleLib\PrimeNumbersFixture.cs" />
     <Compile Include="Tests\SimpleLib\StringFragmenterFixture.cs" />
     <Compile Include="Tests\SimpleLib\Sample\AttributeCacheClasses.cs" />

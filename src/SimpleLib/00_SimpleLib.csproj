@@ -68,12 +68,10 @@
     <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Common\Singleton.cs" />
     <Compile Include="Common\Tuples.cs" />
-    <Compile Include="ConfigSource\AggregateFactory.cs" />
     <Compile Include="ConfigSource\BaseConfigSource.cs" />
     <Compile Include="ConfigSource\Factory.cs" />
-    <Compile Include="ConfigSource\FactorySingleton.cs" />
-    <Compile Include="ConfigSource\FactoryStack.cs" />
     <Compile Include="ConfigSource\IConfigSource.cs" />
+    <Compile Include="ConfigSource\SourcesManager.cs" />
     <Compile Include="ConfigSource\XmlConfig.cs" />
     <Compile Include="ConfigSource\XmlConfigSource.cs" />
     <Compile Include="ConfigSource\XmlFileConfigSource.cs" />
@@ -108,7 +106,6 @@
     <Compile Include="Configuration\TypeHandlers\LoadConfiguration.cs" />
     <Compile Include="Configuration\TypeHandlers\NullableTypeHandler.cs" />
     <Compile Include="Config\LoggerConfig.cs" />
-    <Compile Include="Config\SimpleLibFactory.cs" />
     <Compile Include="DefaultConfigResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -130,13 +127,13 @@
     <Compile Include="Config\Log4netConfig.cs" />
     <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netFactory.cs" />
-    <Compile Include="Logging\MainLogger.cs" />
+    <Compile Include="Logging\NullLog.cs" />
+    <Compile Include="Logging\SimpleLogger.cs" />
     <Compile Include="Common\WorkingDays.cs" />
     <Compile Include="Common\EnumTypeAttribute.cs" />
     <Compile Include="Common\IWorkingDaysProvider.cs" />
     <Compile Include="Common\ICastable.cs" />
     <Compile Include="Common\StringUtils.cs" />
-    <Compile Include="Logging\MultiLoggerFactory.cs" />
     <Compile Include="Common\EmailTemplate.cs" />
     <Compile Include="Reflection\AttributeCache.cs" />
     <Compile Include="Reflection\EntityHelper.cs" />

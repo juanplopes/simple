@@ -28,7 +28,7 @@ namespace Simple.Rules
             get
             {
                 if (_logger == null)
-                    _logger = MainLogger.Get(this);
+                    _logger = SimpleLogger.Get(this);
                 return _logger;
             }
         }

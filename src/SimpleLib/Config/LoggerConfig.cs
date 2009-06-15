@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 
 namespace Simple.Config
 {
+    [XmlRoot("logger")]
     public class LoggerConfig
     {
         [XmlElement("log4net")]

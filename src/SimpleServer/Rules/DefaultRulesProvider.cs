@@ -15,7 +15,7 @@ namespace Simple.Rules
 {
     public class DefaultRulesProvider<T> : IRulesProvider<T> where T : class, ITestableService
     {
-        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected static ILog Logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         protected static Type ImplementerClass { get; set; }
 

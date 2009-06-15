@@ -8,7 +8,7 @@ namespace Simple
 {
     public class MainController
     {
-        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected static ILog Logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         public static void Run(Assembly assembly)
         {

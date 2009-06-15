@@ -20,7 +20,7 @@ namespace Simple.ConfigSource
             {
                 T config = source.Get();
                 InitializeObjects(config);
-                source.Reloaded += InitializeObjects;
+                source.Reloaded += x => { lock (this) InitializeObjects(x); };
                 Initialized = true;
             }
         }

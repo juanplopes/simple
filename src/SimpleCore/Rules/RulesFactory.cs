@@ -15,7 +15,7 @@ namespace Simple.Rules
 {
     public static class RulesFactory
     {
-        private static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        private static ILog Logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         private static Dictionary<Type, object> ProviderCache = new Dictionary<Type, object>();
         private static SimpleConfig Config = SimpleConfig.Get();

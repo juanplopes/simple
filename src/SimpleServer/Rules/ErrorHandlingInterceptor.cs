@@ -18,7 +18,7 @@ namespace Simple.Rules
     public class ErrorHandlingInterceptor
     {
         protected SimpleConfig Config = SimpleConfig.Get();
-        ILog logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        ILog logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         #region IInterceptor Members
 
@@ -41,7 +41,7 @@ namespace Simple.Rules
                 catch (Exception e)
                 {
                     e = ExHelper.ForReal(e);
-                    MainLogger.Get(this).Error(
+                    SimpleLogger.Get(this).Error(
                         string.Format("There was an error inside a rule: {0}", e.Message), e);
                     if (!Handle(e)) throw e;
 

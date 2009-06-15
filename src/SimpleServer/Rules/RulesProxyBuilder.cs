@@ -18,7 +18,7 @@ namespace Simple.Rules
         }
 
         protected ErrorHandlingInterceptor _interceptor = new ErrorHandlingInterceptor();
-        protected ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected ILog Logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         public object WrapInstance(object obj, Type interfaceType)
         {

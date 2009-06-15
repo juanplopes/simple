@@ -5,6 +5,7 @@ using System.Text;
 using Simple.ConfigSource;
 using NUnit.Framework;
 using System.IO;
+using Simple.Logging;
 
 namespace Simple.Tests.SimpleLib
 {
@@ -44,7 +45,6 @@ namespace Simple.Tests.SimpleLib
             using (var src = XmlConfig.LoadFile<BasicTypesSampleWithoutAttr>
                 (XmlFileConfigSourceFixture.TEST_FILE_NAME))
             {
-
                 BasicFactory b = new BasicFactory();
                 b.Init(src);
 

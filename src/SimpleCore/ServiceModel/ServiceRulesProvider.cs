@@ -23,7 +23,7 @@ namespace Simple.ServiceModel
         protected SimpleConfig Config { get; set; }
         protected Binding DefaultBinding { get; set; }
         protected object lockObj = new object();
-        protected ILog logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected ILog logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         public ServiceRulesProvider()
         {

@@ -14,7 +14,7 @@ namespace Simple.Cache
 {
     public abstract class BaseCacher<T, O> : ICacher<T, O>
     {
-        protected static ILog Logger = MainLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected static ILog Logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         public static string sTrying = "Trying to get cached value...";
         public static string sNotValid = "Stored cached value was not valid. Reloading cache...";

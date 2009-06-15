@@ -30,7 +30,7 @@ namespace Simple.DataAccess
         protected string ISESSION_KEY = typeof(ISession).GUID.ToString();
         protected DataConfigElement DataConfig { get; set; }
         protected BusinessElement BusinessConfig { get; set; }
-        protected ILog Logger = MainLogger.Get<MultiSessionFactory>();
+        protected ILog Logger = SimpleLogger.Get<MultiSessionFactory>();
 
         public MultiSessionFactory(DataConfigElement dataConfig, BusinessElement businessConfig)
         {
