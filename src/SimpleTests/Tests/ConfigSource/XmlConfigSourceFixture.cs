@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.ConfigSource
 {
     [TestFixture, Category("Configuration")]
     public class XmlConfigSourceFixture
@@ -27,13 +27,175 @@ namespace Simple.Tests.SimpleLib
                     <AFloat>42.42</AFloat>
                   </BasicTypesSampleWithoutAttr>";
 
-        [Test]
-        public void BasicTypesSampleFromStringTest()
+        public const string XPATH_OUTER = "./BasicTypesSampleWithoutAttr";
+
+        public const string XPATH_SAMPLE_XML = "<test>" + SAMPLE_XML + "</test>";
+
+
+        public void BasicStringTestBase(string xml, string xpath)
         {
-            IConfigSource<BasicTypesSampleWithoutAttr, string> src =
+            IXPathConfigSource<BasicTypesSampleWithoutAttr, string> src =
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-            TestCreatedSimpleSample(src.Load(SAMPLE_XML).Get());
+            TestCreatedSimpleSample(src.Load(new XPathParameter<string>(xml, xpath)).Get());
         }
+
+        public void BasicStreamTestBase(string xml, string xpath)
+        {
+            using (MemoryStream mem = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
+            {
+                IXPathConfigSource<BasicTypesSampleWithoutAttr, Stream> src =
+                    new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+
+                TestCreatedSimpleSample(src.Load(new XPathParameter<Stream>(mem, xpath)).Get());
+            }
+        }
+
+        public void BasicXmlElementTestBase(string xml, string xpath)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+
+            IXPathConfigSource<BasicTypesSampleWithoutAttr, XmlElement> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+            TestCreatedSimpleSample(src.Load(new XPathParameter<XmlElement>(
+                doc.DocumentElement, xpath)).Get());
+        }
+
+        public void BasicXmlDocumentTestBase(string xml, string xpath)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+
+            IXPathConfigSource<BasicTypesSampleWithoutAttr, XmlDocument> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+            TestCreatedSimpleSample(src.Load(new XPathParameter<XmlDocument>(doc, xpath)).Get());
+
+        }
+
+        public void BasicTextReaderTestBase(string xml, string xpath)
+        {
+            StringReader reader = new StringReader(xml);
+
+            IXPathConfigSource<BasicTypesSampleWithoutAttr, TextReader> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+            TestCreatedSimpleSample(src.Load(new XPathParameter<TextReader>(reader, xpath)).Get());
+        }
+
+        public void BasicXmlReaderTestBase(string xml, string xpath)
+        {
+            StringReader reader = new StringReader(xml);
+            XmlTextReader reader2 = new XmlTextReader(reader);
+
+            IXPathConfigSource<BasicTypesSampleWithoutAttr, XmlReader> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+
+            TestCreatedSimpleSample(src.Load(new XPathParameter<XmlReader>(reader2, xpath)).Get());
+
+        }
+
+        public void BasicXmlContentHolderTestBase(string xml, string xpath)
+        {
+            IXPathConfigSource<XmlContainerSample, string> src =
+                new XmlConfigSource<XmlContainerSample>();
+            XmlContainerSample samp = src.Load(new XPathParameter<string>(xml, xpath)).Get();
+
+            IXPathConfigSource<BasicTypesSampleWithoutAttr, XmlElement> src2 =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+
+            TestCreatedSimpleSample(src2.Load(samp.Element).Get());
+        }
+
+        #region Basic
+        [Test]
+        public void BasicStringTest()
+        {
+            BasicStringTestBase(SAMPLE_XML, null);
+        }
+
+        [Test]
+        public void BasicStreamTest()
+        {
+            BasicStreamTestBase(SAMPLE_XML, null);
+        }
+
+        [Test]
+        public void BasicXmlElementTest()
+        {
+            BasicXmlElementTestBase(SAMPLE_XML, null);
+        }
+
+        [Test]
+        public void BasicXmlDocumentTest()
+        {
+            BasicXmlDocumentTestBase(SAMPLE_XML, null);
+        }
+
+        [Test]
+        public void BasicTextReaderTest()
+        {
+            BasicTextReaderTestBase(SAMPLE_XML, null);
+        }
+
+        [Test]
+        public void BasicXmlReaderTest()
+        {
+            BasicXmlReaderTestBase(SAMPLE_XML, null);
+        }
+
+        [Test]
+        public void BasicXmlContentHolderTest()
+        {
+            BasicXmlContentHolderTestBase(SAMPLE_XML, null);
+        }
+
+        #endregion
+
+
+        #region XPath
+        [Test]
+        public void XPathStringTest()
+        {
+            BasicStringTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
+        }
+
+        [Test]
+        public void XPathStreamTest()
+        {
+            BasicStreamTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
+        }
+
+        [Test]
+        public void XPathXmlElementTest()
+        {
+            BasicXmlElementTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
+        }
+
+        [Test]
+        public void XPathXmlDocumentTest()
+        {
+            BasicXmlDocumentTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
+        }
+
+        [Test]
+        public void XPathTextReaderTest()
+        {
+            BasicTextReaderTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
+        }
+
+        [Test]
+        public void XPathXmlReaderTest()
+        {
+            BasicXmlReaderTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
+        }
+
+        [Test]
+        public void XPathXmlContentHolderTest()
+        {
+            BasicXmlContentHolderTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
+        }
+
+
+        #endregion
 
         [Test]
         public void MoreInformationThanCanHandle()
@@ -43,75 +205,10 @@ namespace Simple.Tests.SimpleLib
                     <NotKnown>asd</NotKnown>
                   </BasicTypesSampleWithoutAttr>"; ;
 
-            IConfigSource<BasicTypesSampleWithoutAttr, string> src =
+            IXPathConfigSource<BasicTypesSampleWithoutAttr, string> src =
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>();
             Assert.AreEqual("whatever", src.Load(mySample).Get().AString);
         }
-
-
-        [Test]
-        public void BasicTypesSampleFromStreamTest()
-        {
-            using (MemoryStream mem = new MemoryStream(Encoding.UTF8.GetBytes(SAMPLE_XML)))
-            {
-                IConfigSource<BasicTypesSampleWithoutAttr, Stream> src =
-                    new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-
-                TestCreatedSimpleSample(src.Load(mem).Get());
-            }
-        }
-
-        [Test]
-        public void BasicTypesSampleFromNodeTest()
-        {
-            using (MemoryStream mem = new MemoryStream(Encoding.UTF8.GetBytes(SAMPLE_XML)))
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(SAMPLE_XML);
-
-                IConfigSource<BasicTypesSampleWithoutAttr, XmlNode> src =
-                    new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-                TestCreatedSimpleSample(src.Load(doc.DocumentElement).Get());
-            }
-        }
-
-        [Test]
-        public void BasicTypesSampleFromDocumentTest()
-        {
-            using (MemoryStream mem = new MemoryStream(Encoding.UTF8.GetBytes(SAMPLE_XML)))
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(SAMPLE_XML);
-
-                IConfigSource<BasicTypesSampleWithoutAttr, XmlDocument> src =
-                    new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-                TestCreatedSimpleSample(src.Load(doc).Get());
-            }
-        }
-
-        [Test]
-        public void BasicTypesSampleFromTextReaderTest()
-        {
-            StringReader reader = new StringReader(SAMPLE_XML);
-
-            IConfigSource<BasicTypesSampleWithoutAttr, TextReader> src =
-                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-            TestCreatedSimpleSample(src.Load(reader).Get());
-        }
-
-        [Test]
-        public void BasicTypesSampleFromXmlTextReaderTest()
-        {
-            StringReader reader = new StringReader(SAMPLE_XML);
-            XmlTextReader reader2 = new XmlTextReader(reader);
-
-            IConfigSource<BasicTypesSampleWithoutAttr, XmlReader> src =
-                new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-
-            TestCreatedSimpleSample(src.Load(reader2).Get());
-
-        }
-
 
         [Test]
         public void MissingAStringTest()
@@ -188,7 +285,7 @@ namespace Simple.Tests.SimpleLib
         //{
         //    IConfigSource<BasicTypesSampleWithoutAttr, string> src =
         //        new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-            
+
         //    ConfigRepository conf = new ConfigRepository();
         //    conf.SetSource(src.Load(SAMPLE_XML));
 
@@ -238,6 +335,11 @@ namespace Simple.Tests.SimpleLib
         public XmlElement Basic { get; set; }
         [XmlArrayItem("BasicTypesSampleWithoutAttr")]
         public XmlElement[] Basics { get; set; }
+    }
+
+    public class XmlContainerSample : IXmlContentHolder
+    {
+        public XmlElement Element { get; set; }
     }
 
     #endregion

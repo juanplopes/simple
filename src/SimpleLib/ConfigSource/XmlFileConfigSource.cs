@@ -6,16 +6,17 @@ using System.IO;
 using System.Threading;
 using System.ComponentModel;
 using Simple.Logging;
+using System.Xml;
 
 namespace Simple.ConfigSource
 {
     public class XmlFileConfigSource<T> :
         XmlConfigSource<T>,
         IFileConfigSource<T>,
-        IConfigSource<T, FileInfo>
+        IConfigSource<T, XPathParameter<FileInfo>>
         where T : new()
     {
-        public FileInfo File { get; set; }
+        public XPathParameter<FileInfo> XmlFile { get; set; }
         protected FileSystemWatcher Watcher { get; set; }
 
         public bool Active { get; protected set; }
@@ -27,36 +28,25 @@ namespace Simple.ConfigSource
             {
                 if (Active)
                 {
-                    SimpleLogger.Get(this).DebugFormat("The watch in file {0} has raised.", File.Name);
+                    SimpleLogger.Get(this).DebugFormat("The watch in file {0} has raised.", XmlFile.Parameter.Name);
                     InvokeReload();
                 }
             }
         }
 
-        public virtual IConfigSource<T> Load(FileInfo input)
+        protected virtual void SetXmlFileInfo(XPathParameter<FileInfo> info)
         {
-            lock (this)
-            {
-                SimpleLogger.Get(this).DebugFormat("Loading XMLConfig for class {0}...", typeof(T).Name);
+            XmlFile = info;
 
-                if (Watcher != null) Watcher.Dispose();
+            if (Watcher != null) Watcher.Dispose();
 
-                Watcher = new FileSystemWatcher(input.DirectoryName, input.Name);
-                Watcher.Changed += Watcher_Changed;
-                Watcher.Created += Watcher_Changed;
-                Watcher.Deleted += Watcher_Changed;
-                Watcher.EnableRaisingEvents = true;
+            Watcher = new FileSystemWatcher(XmlFile.Parameter.DirectoryName, XmlFile.Parameter.Name);
+            Watcher.Changed += Watcher_Changed;
+            Watcher.Created += Watcher_Changed;
+            Watcher.Deleted += Watcher_Changed;
+            Watcher.EnableRaisingEvents = true;
 
-                File = input;
-
-                Active = true;
-                using (Stream s = File.Open(FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    var ret = Load(s);
-                    s.Close();
-                    return ret;
-                }
-            }
+            Active = true;
         }
 
         public virtual IConfigSource<T> LoadFile(string fileName)
@@ -68,13 +58,13 @@ namespace Simple.ConfigSource
         {
             lock (this)
             {
-                if (File == null) throw new InvalidOperationException("Cannot reload a non-loaded source");
+                if (XmlFile.Parameter == null) throw new InvalidOperationException("Cannot reload a non-loaded source");
 
-                SimpleLogger.Get(this).DebugFormat("Reloading file {0}...", File.Name);
+                SimpleLogger.Get(this).DebugFormat("Reloading file {0}...", XmlFile.Parameter.Name);
 
                 try
                 {
-                    Load(File);
+                    Load(XmlFile);
                     return true;
                 }
                 catch (IOException)
@@ -94,6 +84,26 @@ namespace Simple.ConfigSource
             }
         }
 
+        #region IConfigSource<T,XPathParameter<FileInfo>> Members
 
+        public IConfigSource<T> Load(XPathParameter<FileInfo> input)
+        {
+            lock (this)
+            {
+                SimpleLogger.Get(this).DebugFormat("Loading XMLConfig for class {0}...", typeof(T).Name);
+
+                SetXmlFileInfo(input.Parameter);
+
+
+                using (Stream s = XmlFile.Parameter.Open(FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    var ret = Load(XmlFile.ToOther(s));
+                    s.Close();
+                    return ret;
+                }
+            }
+        }
+
+        #endregion
     }
 }

@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cfg\NHibernateConfig.cs" />
     <Compile Include="DataAccess\Conventions\LazyConvention.cs" />
     <Compile Include="DataAccess\Dao\IDao.cs" />
     <Compile Include="DataAccess\DataContext.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Rules\DefaultRulesProvider.cs" />
     <Compile Include="Rules\ErrorHandlingInterceptor.cs" />
     <Compile Include="Rules\RulesProxyBuilder.cs" />
+    <Compile Include="Server\Simply.cs" />
     <Compile Include="ServiceModel\AssemblyLocatorHoster.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -118,9 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NHLockEngine.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Factory\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

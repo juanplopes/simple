@@ -71,14 +71,14 @@
     <Compile Include="Tests\%40Contracts\IEmpresaFuncionarioRules.cs" />
     <Compile Include="Tests\%40Contracts\IEmpresaRules.cs" />
     <Compile Include="Tests\%40Contracts\IFuncionarioRules.cs" />
-    <Compile Include="Tests\DataAccessTests\SimpleEntityFixture.cs" />
+    <Compile Include="Tests\DataAccess\SimpleEntityFixture.cs" />
     <Compile Include="Tests\DBEnsurer.cs" />
     <Compile Include="Tests\Server.cs" />
     <Compile Include="Tests\SimpleLib\AttributeCacheFixture.cs" />
     <Compile Include="Tests\SimpleLib\BaseWorkingDaysFixture.cs" />
     <Compile Include="Tests\SimpleLib\ConfigurationFixture.cs" />
-    <Compile Include="Tests\SimpleLib\FactoryFixture.cs" />
-    <Compile Include="Tests\SimpleLib\LoggerFactoryFixture.cs" />
+    <Compile Include="Tests\ConfigSource\FactoryFixture.cs" />
+    <Compile Include="Tests\ConfigSource\LoggerFactoryFixture.cs" />
     <Compile Include="Tests\SimpleLib\PrimeNumbersFixture.cs" />
     <Compile Include="Tests\SimpleLib\StringFragmenterFixture.cs" />
     <Compile Include="Tests\SimpleLib\Sample\AttributeCacheClasses.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="Tests\SimpleLib\Sample\ComplexElement.cs" />
     <Compile Include="Tests\SimpleLib\Sample\TestStringClass.cs" />
     <Compile Include="Tests\SimpleLib\WorkingDaysFixture.cs" />
-    <Compile Include="Tests\DataAccessTests\FiltersFixture.cs" />
+    <Compile Include="Tests\DataAccess\FiltersFixture.cs" />
     <Compile Include="Tests\%40Contracts\Empresa.cs" />
     <Compile Include="Tests\%40Contracts\EmpresaFuncionario.cs" />
     <Compile Include="Tests\%40Contracts\Funcionario.cs" />
@@ -102,9 +102,9 @@
     <Compile Include="Tests\%40Server\EmpresaFuncionarioRules.cs" />
     <Compile Include="Tests\%40Server\EmpresaRules.cs" />
     <Compile Include="Tests\%40Server\FuncionarioRules.cs" />
-    <Compile Include="Tests\ServiceTests\ServiceConnectionFixture.cs" />
-    <Compile Include="Tests\SimpleLib\XmlConfigSourceFixture.cs" />
-    <Compile Include="Tests\SimpleLib\XmlFileConfigSourceFixture.cs" />
+    <Compile Include="Tests\Service\ServiceConnectionFixture.cs" />
+    <Compile Include="Tests\ConfigSource\XmlConfigSourceFixture.cs" />
+    <Compile Include="Tests\ConfigSource\XmlFileConfigSourceFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleLib\00_SimpleLib.csproj">

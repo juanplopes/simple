@@ -8,26 +8,28 @@ using System.Reflection;
 
 namespace Simple.Client
 {
-    public static class Simply
+    public class Simply
     {
         #region Logger
         public static ILog Log(object obj)
         {
-            return SimpleLogger.Get(obj);
+            return Logger.Get(obj);
         }
-
         public static ILog Log(string name)
         {
-            return SimpleLogger.Get(name);
+            return Logger.Get(name);
         }
-
         public static ILog Log(MemberInfo member)
         {
-            return SimpleLogger.Get(member);
+            return Logger.Get(member);
+        }
+        public static ILog Log(Type type)
+        {
+            return Logger.Get(type);
         }
         public static ILog Log<T>()
         {
-            return SimpleLogger.Get<T>();
+            return Logger.Get<T>();
         }
         #endregion
 

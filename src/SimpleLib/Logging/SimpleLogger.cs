@@ -6,7 +6,7 @@ using Simple.ConfigSource;
 
 namespace Simple.Logging
 {
-    public class SimpleLogger
+    public class Logger
     {
         protected static object _lockObj = new object();
 

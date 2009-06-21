@@ -11,70 +11,78 @@ using Simple.Reflection;
 
 namespace Simple.ConfigSource
 {
-    public class XmlConfigSource<T> : 
+    public class XmlConfigSource<T> :
         ConfigSource<T>,
-        IConfigSource<T, Stream>,
-        IConfigSource<T, string>,
-        IConfigSource<T, XmlNode>,
-        IConfigSource<T, XmlDocument>,
-        IConfigSource<T, XmlReader>,
-        IConfigSource<T, TextReader>
+
+        IXPathConfigSource<T, Stream>,
+        IXPathConfigSource<T, string>,
+        IXPathConfigSource<T, XmlElement>,
+        IXPathConfigSource<T, XmlDocument>,
+        IXPathConfigSource<T, XmlReader>,
+        IXPathConfigSource<T, TextReader>
         where T : new()
     {
+        protected bool IsXmlContainer
+        {
+            get { return TypesHelper.CanAssign<T, IXmlContentHolder>(); }
+        }
+
         #region How do we load... Boring...
 
-        public virtual IConfigSource<T> Load(Stream stream)
+        public IConfigSource<T> Load(XPathParameter<XmlReader> input)
         {
-            return Load(XmlReader.Create(stream));
-        }
+            XmlDocument doc = new XmlDocument();
+            doc.Load(input.Parameter);
+            return Load(input.ToOther(doc.DocumentElement));
 
-        public virtual IConfigSource<T> Load(TextReader input)
-        {
-            return Load(XmlReader.Create(input));
         }
-
-        public virtual IConfigSource<T> Load(XmlReader input)
+        public IConfigSource<T> Load(XPathParameter<XmlElement> input)
         {
-            if (!TypesHelper.CanAssign<T, IXmlContentHolder>())
+            XmlElement element = input.Parameter.SelectSingleNode(input.XPath) as XmlElement;
+            if (element == null) throw new InvalidOperationException("Xml node not found");
+
+            if (IsXmlContainer)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
-                Cache = (T)serializer.Deserialize(input);
+                T t = new T();
+                (t as IXmlContentHolder).Element = element;
+                Cache = t;
                 return this;
             }
             else
             {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(input);
+                using (Stream stream = new MemoryStream())
+                {
+                    XmlWriter w = XmlWriter.Create(stream);
+                    element.WriteTo(w); w.Flush();
+                    stream.Seek(0, SeekOrigin.Begin);
 
-                T t = new T();
-                (t as IXmlContentHolder).Element = doc.DocumentElement;
-                Cache = t;
-                return this;
+                    XmlSerializer serializer = new XmlSerializer(typeof(T));
+                    Cache = (T)serializer.Deserialize(stream);
+                    return this;
+                }
             }
         }
-
-        public virtual IConfigSource<T> Load(string input)
+        public IConfigSource<T> Load(XPathParameter<string> input)
         {
-            using (var stream = XmlHelper.GetStream(input))
+            using (Stream stream = XmlHelper.GetStream(input.Parameter))
             {
-                return Load(stream);
+                return Load(input.ToOther(stream));
             }
         }
-
-        public virtual IConfigSource<T> Load(XmlNode input)
+        public IConfigSource<T> Load(XPathParameter<Stream> input)
         {
-            using (var stream = XmlHelper.GetStream(input))
-            {
-                return Load(stream);
-            }
+            return Load(input.ToOther(XmlReader.Create(input.Parameter)));
         }
-
-        public virtual IConfigSource<T> Load(XmlDocument input)
+        public IConfigSource<T> Load(XPathParameter<XmlDocument> input)
         {
-            return Load(input.DocumentElement);
+            return Load(input.ToOther(input.Parameter.DocumentElement));
         }
-
+        public IConfigSource<T> Load(XPathParameter<TextReader> input)
+        {
+            return Load(input.ToOther(XmlReader.Create(input.Parameter)));
+        }
         #endregion
-       
+
+
     }
 }

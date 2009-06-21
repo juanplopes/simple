@@ -5,8 +5,10 @@ using System.Text;
 using NUnit.Framework;
 using System.IO;
 using Simple.ConfigSource;
+using System.Xml;
+using System.Xml.Serialization;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.ConfigSource
 {
     [TestFixture, Category("Configuration")]
     public class XmlFileConfigSourceFixture
@@ -86,4 +88,15 @@ namespace Simple.Tests.SimpleLib
             
         }
     }
+
+    #region Samples
+    [XmlRoot("test1")]
+    public class Test1
+    {
+        [XmlElement("s")]
+        public string  S { get; set; }
+        [XmlElement("i")]
+        public int I { get; set; }
+    }
+    #endregion
 }

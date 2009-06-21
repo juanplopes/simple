@@ -81,6 +81,7 @@
     <Compile Include="ConfigSource\XmlConfig.cs" />
     <Compile Include="ConfigSource\XmlConfigSource.cs" />
     <Compile Include="ConfigSource\XmlFileConfigSource.cs" />
+    <Compile Include="ConfigSource\XPathParameter.cs" />
     <Compile Include="Configuration\AssemblyConfigElement.cs" />
     <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
     <Compile Include="Configuration\ConfigStructureDisplayer.cs" />

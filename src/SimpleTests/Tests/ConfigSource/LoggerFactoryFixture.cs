@@ -8,7 +8,7 @@ using Simple.Config;
 using Simple.ConfigSource;
 using Simple.Cfg;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.ConfigSource
 {
     [TestFixture, Category("Configuration")]
     public class LoggerFactoryFixture

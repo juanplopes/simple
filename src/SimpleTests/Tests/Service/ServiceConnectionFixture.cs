@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Simple.Tests.Contracts;
 
-namespace Simple.Tests.ServiceTests
+namespace Simple.Tests.Service
 {
     [TestFixture]
     public class ServiceConnectionFixture

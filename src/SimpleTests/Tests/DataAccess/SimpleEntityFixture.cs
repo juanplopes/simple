@@ -9,7 +9,7 @@ using Simple.DataAccess;
 using Simple.Filters;
 using NHibernate.Linq;
 
-namespace Simple.Tests.DataAccessTests
+namespace Simple.Tests.DataAccess
 {
     [TestFixture]
     public class SimpleEntityFixture

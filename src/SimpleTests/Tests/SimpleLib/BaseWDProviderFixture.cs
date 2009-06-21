@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple.Tests.SimpleLib;
 using Simple.Common;
 
-namespace Simple.Tests.BasicLibraryTests
+namespace Simple.Tests.SimpleLib
 {
     public class TestBaseProvider : BaseWorkingDaysProvider
     {

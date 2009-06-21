@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System.IO;
 using Simple.Logging;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.ConfigSource
 {
     [TestFixture, Category("Configuration")]
     public class FactoryFixture
@@ -79,6 +79,31 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
         }
+
+        [Test]
+        public void RedoSourcesFactoredTestWithKey()
+        {
+            IConfigSource<BasicTypesSampleWithoutAttr> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
+                XmlConfigSourceFixture.SAMPLE_XML);
+
+            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>(2);
+
+            var b = new BasicFactory();
+
+            SourcesManager.Configure(b);
+            Assert.AreEqual(default(string), b.BuildString());
+            Assert.AreEqual(default(int), b.BuildInt());
+
+            SourcesManager.RegisterSource(src);
+            Assert.AreEqual("whatever", b.BuildString());
+            Assert.AreEqual(42, b.BuildInt());
+
+            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>();
+            Assert.AreEqual(default(string), b.BuildString());
+            Assert.AreEqual(default(int), b.BuildInt());
+        }
+
 
         [Test]
         public void ExpiringFactoringTest()
