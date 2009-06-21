@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
 using log4net;
-using log4net.Config;
-using System.Configuration;
-using System.IO;
-using Simple.Config;
 using Simple.Common;
-using log4net.Repository.Hierarchy;
-using log4net.Appender;
-using log4net.Layout;
-using log4net.Core;
-using Simple.Configuration2;
 using System.Reflection;
 using Simple.ConfigSource;
 
@@ -20,19 +8,22 @@ namespace Simple.Logging
 {
     public class SimpleLogger
     {
+        protected static object _lockObj = new object();
+
         protected static Log4netFactory _factory;
         protected static Log4netFactory Factory
         {
             get
             {
-                if (!SourcesManager<LoggerConfig>.HasSource())
-                    return null;
-
-                if (_factory == null)
+                lock (_lockObj)
                 {
-                    _factory = SourcesManager<LoggerConfig>.GetFactory<Log4netFactory>();
+                    if (_factory == null)
+                    {
+                        _factory = new Log4netFactory();
+                        SourcesManager.Configure(_factory);
+                    }
+                    return _factory;
                 }
-                return _factory;
             }
         }
 

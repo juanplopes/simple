@@ -62,40 +62,26 @@ namespace Simple {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;config&gt;
-        ///  &lt;!--&lt;configGroup path=&quot;D:\MetraTech\RMP\Config\ACN\OM&quot;&gt;
-        ///    &lt;configFile type=&quot;BasicLibrary.LibraryConfig.BasicLibraryConfig&quot; file=&quot;BasicLibrary.config&quot;/&gt;
-        ///  &lt;/configGroup&gt;--&gt;
-        ///&lt;/config&gt;
-        ///.
+        ///&lt;log4net&gt;
+        ///  &lt;appender name=&quot;ConsoleAppender&quot; type=&quot;log4net.Appender.ColoredConsoleAppender&quot;&gt;
+        ///    &lt;mapping&gt;
+        ///      &lt;level value=&quot;ERROR&quot; /&gt;
+        ///      &lt;foreColor value=&quot;Red, HighIntensity&quot; /&gt;
+        ///    &lt;/mapping&gt;
+        ///    &lt;mapping&gt;
+        ///      &lt;level value=&quot;CRITICAL&quot; /&gt;
+        ///      &lt;foreColor value=&quot;Red, HighIntensity&quot; /&gt;
+        ///    &lt;/mapping&gt;
+        ///    &lt;mapping&gt;
+        ///      &lt;level value=&quot;INFO&quot; /&gt;
+        ///      &lt;foreColor value=&quot;Green, HighIntensity&quot; /&gt;
+        ///    &lt;/mapping&gt;
+        ///    &lt;mapping&gt;
+        ///      &lt;level value=&quot;WARN&quot; / [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ConfigFilesConfig {
+        internal static string Log4netConfig {
             get {
-                return ResourceManager.GetString("ConfigFilesConfig", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;basicLibrary&gt;
-        ///  &lt;log4net&gt;
-        ///    &lt;appender name=&quot;ConsoleAppender&quot; type=&quot;log4net.Appender.ColoredConsoleAppender&quot;&gt;
-        ///      &lt;mapping&gt;
-        ///        &lt;level value=&quot;ERROR&quot; /&gt;
-        ///        &lt;foreColor value=&quot;Red, HighIntensity&quot; /&gt;
-        ///      &lt;/mapping&gt;
-        ///      &lt;mapping&gt;
-        ///        &lt;level value=&quot;CRITICAL&quot; /&gt;
-        ///        &lt;foreColor value=&quot;Red, HighIntensity&quot; /&gt;
-        ///      &lt;/mapping&gt;
-        ///      &lt;mapping&gt;
-        ///        &lt;level value=&quot;INFO&quot; /&gt;
-        ///        &lt;foreColor value=&quot;Green, HighIntensity&quot; /&gt;
-        ///      &lt;/mapping&gt; [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SimpleConfig {
-            get {
-                return ResourceManager.GetString("SimpleConfig", resourceCulture);
+                return ResourceManager.GetString("Log4netConfig", resourceCulture);
             }
         }
     }

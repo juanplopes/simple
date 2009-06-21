@@ -6,84 +6,74 @@ using Simple.Logging;
 
 namespace Simple.ConfigSource
 {
-    public class DefaultSource
+    internal static class SourceFor<C>
+        where C : new()
     {
-        public static DefaultSource Instance = new DefaultSource();
-        private DefaultSource() { }
-    }
-    public static class SourcesManager<C>
-    {
-        private static IDictionary<object, IConfigSource<C>> sources = new Dictionary<object, IConfigSource<C>>();
-        private static IDictionary<object, Factory<C>> factories = new Dictionary<object, Factory<C>>();
+        private static IDictionary<object, WrappedConfigSource<C>> Instances =
+            new Dictionary<object, WrappedConfigSource<C>>();
 
-        public static void RegisterSource(object key, IConfigSource<C> source)
+        public static WrappedConfigSource<C> Get(object key)
         {
-            lock (sources)
-                sources[key] = source;
-        }
-
-        public static void RegisterSource(IConfigSource<C> source)
-        {
-            RegisterSource(DefaultSource.Instance, source);
-        }
-
-        private static IConfigSource<C> GetSource(object key)
-        {
-            try
+            lock (Instances)
             {
-                return sources[key];
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new InvalidOperationException("This factory has no source for the key " + key.ToString());
-            }
-        }
+                WrappedConfigSource<C> ret = null;
 
-        public static bool HasSource(object key)
-        {
-            return sources.ContainsKey(key);
-        }
-
-        public static void RemoveSource(object key)
-        {
-            lock (sources)
-                if (HasSource(key))
-                    sources.Remove(key);
-        }
-
-        public static void RemoveSource()
-        {
-            RemoveSource(DefaultSource.Instance);
-        }
-
-        public static bool HasSource()
-        {
-            return HasSource(DefaultSource.Instance);
-        }
-
-        public static F GetFactory<F>(object key)
-            where F : Factory<C>, new()
-        {
-            lock (factories)
-            {
-                Factory<C> res = null;
-
-                if (!factories.TryGetValue(key, out res))
+                if (!Instances.TryGetValue(key, out ret))
                 {
-                    res = new F();
-                    res.Init(GetSource(key));
-                    factories[key] = res;
+                    ret = new WrappedConfigSource<C>().LoadSelf(NullConfigSource<C>.Instance); ;
+                    Instances[key] = ret;
                 }
 
-                return (F)res;
+                return ret;
+            }
+        }
+        public static void Set(object key, IConfigSource<C> source)
+        {
+            lock (Instances)
+            {
+                var wrapped = Get(key);
+                wrapped.LoadAgain(source);
             }
         }
 
-        public static F GetFactory<F>()
-            where F : Factory<C>, new()
+    }
+
+    public static class SourcesManager
+    {
+        public static object DefaultKey = new object();
+
+
+        public static void RegisterSource<C>(IConfigSource<C> source)
+            where C : new()
         {
-            return GetFactory<F>(DefaultSource.Instance);
+            RegisterSource(DefaultKey, source);
+        }
+        public static void RegisterSource<C>(object key, IConfigSource<C> source)
+            where C : new()
+        {
+            SourceFor<C>.Set(key, source);
         }
 
+        public static void ClearSource<C>()
+            where C : new()
+        {
+            ClearSource<C>(DefaultKey);
+        }
+        public static void ClearSource<C>(object key)
+            where C : new()
+        {
+            SourceFor<C>.Set(key, NullConfigSource<C>.Instance);
+        }
+
+        public static void Configure<C>(IFactory<C> factory)
+            where C : new()
+        {
+            Configure(DefaultKey, factory);
+        }
+        public static void Configure<C>(object key, IFactory<C> factory)
+            where C : new()
+        {
+            factory.Init(SourceFor<C>.Get(key));
+        }
     }
 }

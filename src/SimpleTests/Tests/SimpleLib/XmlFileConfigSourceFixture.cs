@@ -8,7 +8,7 @@ using Simple.ConfigSource;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestFixture]
+    [TestFixture, Category("Configuration")]
     public class XmlFileConfigSourceFixture
     {
         public const string TEST_FILE_NAME = "__test__.xml";

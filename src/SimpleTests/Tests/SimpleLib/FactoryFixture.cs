@@ -9,7 +9,7 @@ using Simple.Logging;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestFixture]
+    [TestFixture, Category("Configuration")]
     public class FactoryFixture
     {
         [SetUp]
@@ -31,12 +31,53 @@ namespace Simple.Tests.SimpleLib
             IConfigSource<BasicTypesSampleWithoutAttr> src =
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
-            
+
             BasicFactory b = new BasicFactory();
-            b.Init(src);
+            (b as IFactory<BasicTypesSampleWithoutAttr>).Init(src);
 
             Assert.AreEqual(42, b.BuildInt());
             Assert.AreEqual("whatever", b.BuildString());
+        }
+
+        [Test]
+        public void SourcesFactoredTest()
+        {
+            IConfigSource<BasicTypesSampleWithoutAttr> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
+                XmlConfigSourceFixture.SAMPLE_XML);
+
+            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>();
+            SourcesManager.RegisterSource(src);
+
+            var b = new BasicFactory();
+            SourcesManager.Configure(b);
+
+            Assert.AreEqual(42, b.BuildInt());
+            Assert.AreEqual("whatever", b.BuildString());
+        }
+
+        [Test]
+        public void RedoSourcesFactoredTest()
+        {
+            IConfigSource<BasicTypesSampleWithoutAttr> src =
+                new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
+                XmlConfigSourceFixture.SAMPLE_XML);
+
+            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>();
+
+            var b = new BasicFactory();
+
+            SourcesManager.Configure(b);
+            Assert.AreEqual(default(string), b.BuildString());
+            Assert.AreEqual(default(int), b.BuildInt());
+
+            SourcesManager.RegisterSource(src);
+            Assert.AreEqual("whatever", b.BuildString());
+            Assert.AreEqual(42, b.BuildInt());
+
+            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>();
+            Assert.AreEqual(default(string), b.BuildString());
+            Assert.AreEqual(default(int), b.BuildInt());
         }
 
         [Test]
@@ -46,7 +87,7 @@ namespace Simple.Tests.SimpleLib
                 (XmlFileConfigSourceFixture.TEST_FILE_NAME))
             {
                 BasicFactory b = new BasicFactory();
-                b.Init(src);
+                (b as IFactory<BasicTypesSampleWithoutAttr>).Init(src);
 
                 bool flag = false;
 
@@ -75,10 +116,16 @@ namespace Simple.Tests.SimpleLib
         string value1;
         int value2;
 
-        protected override void InitializeObjects(BasicTypesSampleWithoutAttr config)
+        protected override void Config(BasicTypesSampleWithoutAttr config)
         {
             value1 = config.AString;
             value2 = config.AnIntegral;
+        }
+
+        public override void InitDefault()
+        {
+            value1 = default(string);
+            value2 = default(int);
         }
 
         public string BuildString()

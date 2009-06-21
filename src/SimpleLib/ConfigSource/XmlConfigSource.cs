@@ -7,20 +7,21 @@ using Simple.Persistence;
 using System.IO;
 using System.Xml;
 using Simple.IO;
+using Simple.Reflection;
 
 namespace Simple.ConfigSource
 {
     public class XmlConfigSource<T> : 
-        BaseConfigSource<T>,
+        ConfigSource<T>,
         IConfigSource<T, Stream>,
         IConfigSource<T, string>,
         IConfigSource<T, XmlNode>,
         IConfigSource<T, XmlDocument>,
         IConfigSource<T, XmlReader>,
         IConfigSource<T, TextReader>
+        where T : new()
     {
         #region How do we load... Boring...
-        private XmlSerializer serializer = new XmlSerializer(typeof(T));
 
         public virtual IConfigSource<T> Load(Stream stream)
         {
@@ -34,8 +35,22 @@ namespace Simple.ConfigSource
 
         public virtual IConfigSource<T> Load(XmlReader input)
         {
-            Cache = (T)serializer.Deserialize(input);
-            return this;
+            if (!TypesHelper.CanAssign<T, IXmlContentHolder>())
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                Cache = (T)serializer.Deserialize(input);
+                return this;
+            }
+            else
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(input);
+
+                T t = new T();
+                (t as IXmlContentHolder).Element = doc.DocumentElement;
+                Cache = t;
+                return this;
+            }
         }
 
         public virtual IConfigSource<T> Load(string input)

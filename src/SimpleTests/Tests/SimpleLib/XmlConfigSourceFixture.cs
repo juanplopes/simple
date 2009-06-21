@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestFixture]
+    [TestFixture, Category("Configuration")]
     public class XmlConfigSourceFixture
     {
         public static void TestCreatedSimpleSample(BasicTypesSampleWithoutAttr config)

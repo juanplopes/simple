@@ -5,27 +5,46 @@ using System.Text;
 
 namespace Simple.ConfigSource
 {
-    public abstract class Factory<T>
+    public abstract class Factory<T> : IFactory<T>
+        where T : new()
     {
-        public bool Initialized { get; set; }
+        bool IFactory<T>.Initialized
+        {
+            get { return Source != null; }
+        }
+
+        protected IConfigSource<T> Source { get; set; }
 
         public void CheckInitialized()
         {
-            if (!Initialized) throw new InvalidOperationException("Factory not initialized");
+            if (!(this as IFactory<T>).Initialized) throw new InvalidOperationException("Factory not initialized");
         }
 
-        public void Init(IConfigSource<T> source)
+        void IFactory<T>.Init(IConfigSource<T> source)
         {
             lock (this)
             {
-                T config = source.Get();
-                InitializeObjects(config);
-                source.Reloaded += x => { lock (this) InitializeObjects(x); };
-                Initialized = true;
+                if (Source != null)
+                    Source.Reloaded -= SafeConfig;
+
+                Source = source;
+
+                T config = Source.Get();
+
+                SafeConfig(config);
+
+                source.Reloaded += SafeConfig;
             }
         }
 
-        protected abstract void InitializeObjects(T config);
+        protected void SafeConfig(T config)
+        {
+            lock (this)
+                if (!object.Equals(default(T), config)) Config(config);
+                else InitDefault();
+        }
 
+        protected abstract void Config(T config);
+        public abstract void InitDefault();
     }
 }

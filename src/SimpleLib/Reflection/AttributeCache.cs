@@ -16,7 +16,7 @@ namespace Simple.Reflection
         {
             public static AttributeCache Instance = new AttributeCache();
         }
-        public static AttributeCache Instance { get { return Nested.Instance; } }
+        public static AttributeCache Do { get { return Nested.Instance; } }
 
         public IEnumerable<T> Enumerate<T>(MemberInfo member, bool inherit)
             where T : Attribute

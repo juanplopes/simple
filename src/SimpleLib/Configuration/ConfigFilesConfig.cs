@@ -38,7 +38,7 @@ namespace Simple.Configuration2
         {
             get
             {
-                return DefaultConfigResource.ConfigFilesConfig;
+                return "";
             }
         }
 

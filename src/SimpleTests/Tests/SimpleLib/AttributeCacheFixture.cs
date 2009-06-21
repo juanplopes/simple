@@ -13,13 +13,13 @@ namespace Simple.Tests.SimpleLib
         [Test]
         public void ClassAttributesFirstTest()
         {
-            var attr1 = AttributeCache.Instance.First<Attribute1Attribute>(typeof(AttributeTest));
+            var attr1 = AttributeCache.Do.First<Attribute1Attribute>(typeof(AttributeTest));
             Assert.IsNotNull(attr1);
 
-            var attr2 = AttributeCache.Instance.First<Attribute2Attribute>(typeof(AttributeTest));
+            var attr2 = AttributeCache.Do.First<Attribute2Attribute>(typeof(AttributeTest));
             Assert.IsNotNull(attr2);
 
-            var attr3 = AttributeCache.Instance.First<Attribute3Attribute>(typeof(AttributeTest));
+            var attr3 = AttributeCache.Do.First<Attribute3Attribute>(typeof(AttributeTest));
             Assert.IsNull(attr3);
         }
 
@@ -27,20 +27,20 @@ namespace Simple.Tests.SimpleLib
         public void ClassAttributeEnumTest()
         {
             var attr1 = new List<Attribute1Attribute>(
-                AttributeCache.Instance.Enumerate<Attribute1Attribute>(typeof(AttributeTest)));
+                AttributeCache.Do.Enumerate<Attribute1Attribute>(typeof(AttributeTest)));
             Assert.AreEqual(2, attr1.Count);
         }
 
         [Test]
         public void PropAttributesFirstTest()
         {
-            var attr1 = AttributeCache.Instance.First<Attribute1Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
+            var attr1 = AttributeCache.Do.First<Attribute1Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
             Assert.IsNull(attr1);
 
-            var attr2 = AttributeCache.Instance.First<Attribute2Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
+            var attr2 = AttributeCache.Do.First<Attribute2Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
             Assert.IsNotNull(attr2);
 
-            var attr3 = AttributeCache.Instance.First<Attribute3Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
+            var attr3 = AttributeCache.Do.First<Attribute3Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
             Assert.IsNotNull(attr3);
         }
 
@@ -48,7 +48,7 @@ namespace Simple.Tests.SimpleLib
         public void PropAttributeEnumTest()
         {
             var attr3 = new List<Attribute3Attribute>(
-                AttributeCache.Instance.Enumerate<Attribute3Attribute>(typeof(AttributeTest).GetProperty("TestProp")));
+                AttributeCache.Do.Enumerate<Attribute3Attribute>(typeof(AttributeTest).GetProperty("TestProp")));
             Assert.AreEqual(2, attr3.Count);
         }
     }

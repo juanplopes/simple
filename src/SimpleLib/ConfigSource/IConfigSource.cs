@@ -10,6 +10,7 @@ namespace Simple.ConfigSource
     public delegate void ConfigReloadedDelegate<T>(T config);
 
     public interface IConfigSource<T> : IDisposable
+        where T : new()
     {
         bool Loaded { get; }
         T Get();
@@ -19,14 +20,16 @@ namespace Simple.ConfigSource
     }
 
     public interface IFileConfigSource<T> : IConfigSource<T>
+        where T : new()
     {
         IConfigSource<T> LoadFile(string fileName);
     }
 
 
     public interface IConfigSource<T, A> : IConfigSource<T>
+        where T : new()
     {
         IConfigSource<T> Load(A input);
     }
 }
- 
+

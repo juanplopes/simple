@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cfg\ServiceModelConfig.cs" />
+    <Compile Include="Client\Simply.cs" />
     <Compile Include="Config2\BusinessElement.cs" />
     <Compile Include="Config2\ConfiguratorElement.cs" />
     <Compile Include="Config2\Constants.cs" />

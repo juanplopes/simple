@@ -6,16 +6,17 @@ using NUnit.Framework;
 using Simple.Logging;
 using Simple.Config;
 using Simple.ConfigSource;
+using Simple.Cfg;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestFixture]
+    [TestFixture, Category("Configuration")]
     public class LoggerFactoryFixture
     {
         [SetUp]
         public void Setup()
         {
-            SourcesManager<LoggerConfig>.RemoveSource();
+            SourcesManager.ClearSource<Log4netConfig>();
         }
 
         [Test]

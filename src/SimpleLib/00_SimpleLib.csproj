@@ -59,6 +59,7 @@
     <Compile Include="Cache\BaseCacher.cs" />
     <Compile Include="Cache\FileCacher.cs" />
     <Compile Include="Cache\ICacher.cs" />
+    <Compile Include="Cfg\Log4netConfig.cs" />
     <Compile Include="Common\BaseWorkingDaysProvider.cs" />
     <Compile Include="Common\DecoratedTypeFinder.cs" />
     <Compile Include="Common\ExHelper.cs" />
@@ -68,10 +69,15 @@
     <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Common\Singleton.cs" />
     <Compile Include="Common\Tuples.cs" />
-    <Compile Include="ConfigSource\BaseConfigSource.cs" />
+    <Compile Include="ConfigSource\ConfigSource.cs" />
     <Compile Include="ConfigSource\Factory.cs" />
     <Compile Include="ConfigSource\IConfigSource.cs" />
+    <Compile Include="ConfigSource\IFactory.cs" />
+    <Compile Include="ConfigSource\IFactoryContract.cs" />
+    <Compile Include="ConfigSource\IXmlContentHolder.cs" />
+    <Compile Include="ConfigSource\NullConfigSource.cs" />
     <Compile Include="ConfigSource\SourcesManager.cs" />
+    <Compile Include="ConfigSource\WrappedConfigSource.cs" />
     <Compile Include="ConfigSource\XmlConfig.cs" />
     <Compile Include="ConfigSource\XmlConfigSource.cs" />
     <Compile Include="ConfigSource\XmlFileConfigSource.cs" />
@@ -105,7 +111,6 @@
     <Compile Include="Configuration\TypeHandlers\ListTypeHandler.cs" />
     <Compile Include="Configuration\TypeHandlers\LoadConfiguration.cs" />
     <Compile Include="Configuration\TypeHandlers\NullableTypeHandler.cs" />
-    <Compile Include="Config\LoggerConfig.cs" />
     <Compile Include="DefaultConfigResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -123,8 +128,6 @@
     <Compile Include="IO\NumericFormatter.cs" />
     <Compile Include="IO\StringFragmenter.cs" />
     <Compile Include="IO\StringOffsetAttribute.cs" />
-    <Compile Include="Config\SimpleLibConfig.cs" />
-    <Compile Include="Config\Log4netConfig.cs" />
     <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netFactory.cs" />
     <Compile Include="Logging\NullLog.cs" />
@@ -137,9 +140,10 @@
     <Compile Include="Common\EmailTemplate.cs" />
     <Compile Include="Reflection\AttributeCache.cs" />
     <Compile Include="Reflection\EntityHelper.cs" />
+    <Compile Include="Reflection\TypesHelper.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
     <Compile Include="Persistence\ExecutionContext.cs" />
-    <Compile Include="Reflection\GenericActivator.cs" />
+    <Compile Include="Configuration\GenericActivator.cs" />
     <Compile Include="Common\IInitializable.cs" />
     <Compile Include="Common\Enumerable.cs" />
     <Compile Include="Configuration\ConfigAcceptsParentAttribute.cs" />
@@ -193,7 +197,7 @@
     <Compile Include="UI\Windows\SingleInstance.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Simple.config">
+    <None Include="Log4net.config">
     </None>
     <Content Include="ConfigFiles.xml" />
   </ItemGroup>

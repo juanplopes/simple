@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Simple.ConfigSource;
 
-namespace Simple.Config
+
+namespace Simple.Cfg
 {
-    [XmlRoot("logger")]
-    public class LoggerConfig
+    public class Log4netConfig : IXmlContentHolder
     {
-        [XmlElement("log4net")]
-        public XmlElement Log4net { get; set; }
+        public XmlElement Element { get; set; }
     }
 }

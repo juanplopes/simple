@@ -6,7 +6,6 @@ using System.IO;
 using Simple.Logging;
 using System.Timers;
 using System.Collections.Specialized;
-using Simple.Config;
 using System.Diagnostics;
 
 namespace Simple.Cache

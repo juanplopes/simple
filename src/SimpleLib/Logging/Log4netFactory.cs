@@ -1,22 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Config;
 using Simple.ConfigSource;
 using log4net;
 using log4net.Config;
-using log4net.Repository;
 using System.Reflection;
+using System.Xml;
+using Simple.Cfg;
+using System.IO;
 
 namespace Simple.Logging
 {
-    public class Log4netFactory : Factory<LoggerConfig>, ILog4netFactory
+    public class Log4netFactory : Factory<Log4netConfig>, ILog4netFactory
     {
-        protected override void InitializeObjects(LoggerConfig config)
+        protected override void Config(Log4netConfig config)
         {
             LogManager.ResetConfiguration();
-            XmlConfigurator.Configure(config.Log4net);
+            XmlConfigurator.Configure(config.Element);
+        }
+
+        public override void InitDefault()
+        {
+            IConfigSource<Log4netConfig> source = new XmlConfigSource<Log4netConfig>().Load(
+                DefaultConfigResource.Log4netConfig);
+
+            Config(source.Get());
         }
 
         public ILog GetLogger(string name)
@@ -45,5 +51,9 @@ namespace Simple.Logging
         {
             return GetLogger(member.DeclaringType);
         }
+
+
+
+
     }
 }

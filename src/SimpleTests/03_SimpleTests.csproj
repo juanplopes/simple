@@ -68,7 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests\SimpleLib\BaseWDProviderFixture.cs" />
-    <Compile Include="Tests\ConfigTests\SimpleLibFixture.cs" />
     <Compile Include="Tests\%40Contracts\IEmpresaFuncionarioRules.cs" />
     <Compile Include="Tests\%40Contracts\IEmpresaRules.cs" />
     <Compile Include="Tests\%40Contracts\IFuncionarioRules.cs" />

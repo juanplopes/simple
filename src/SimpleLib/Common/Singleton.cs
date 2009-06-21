@@ -19,5 +19,14 @@ namespace Simple.Common
                 return Nested.Instance;
             }
         }
+
+        public static T Do
+        {
+            get
+            {
+                return Instance;
+            }
+
+        }
     }
 }

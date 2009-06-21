@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Simple.Logging;
 
 namespace Simple.ConfigSource
 {
-    public abstract class BaseConfigSource<T> : IConfigSource<T>
+    public abstract class ConfigSource<T> : IConfigSource<T>
+        where T : new()
     {
         public bool Loaded
         {
             get
             {
-                return !Cache.Equals(default(T));
+                return !object.Equals(default(T), Cache);
             }
         }
         protected T Cache {get; set;}
@@ -25,6 +27,8 @@ namespace Simple.ConfigSource
         public void InvokeReload() {
             if (this.Reload())
             {
+                SimpleLogger.Get(this).DebugFormat("Reload was invoked for {0}...", typeof(T));
+
                 if (Reloaded != null)
                     Reloaded.Invoke(this.Get());
             }

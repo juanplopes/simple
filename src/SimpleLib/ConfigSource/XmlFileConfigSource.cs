@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Threading;
 using System.ComponentModel;
+using Simple.Logging;
 
 namespace Simple.ConfigSource
 {
@@ -12,6 +13,7 @@ namespace Simple.ConfigSource
         XmlConfigSource<T>,
         IFileConfigSource<T>,
         IConfigSource<T, FileInfo>
+        where T : new()
     {
         public FileInfo File { get; set; }
         protected FileSystemWatcher Watcher { get; set; }
@@ -24,7 +26,10 @@ namespace Simple.ConfigSource
             lock (this)
             {
                 if (Active)
+                {
+                    SimpleLogger.Get(this).DebugFormat("The watch in file {0} has raised.", File.Name);
                     InvokeReload();
+                }
             }
         }
 
@@ -32,6 +37,8 @@ namespace Simple.ConfigSource
         {
             lock (this)
             {
+                SimpleLogger.Get(this).DebugFormat("Loading XMLConfig for class {0}...", typeof(T).Name);
+
                 if (Watcher != null) Watcher.Dispose();
 
                 Watcher = new FileSystemWatcher(input.DirectoryName, input.Name);
@@ -63,6 +70,8 @@ namespace Simple.ConfigSource
             {
                 if (File == null) throw new InvalidOperationException("Cannot reload a non-loaded source");
 
+                SimpleLogger.Get(this).DebugFormat("Reloading file {0}...", File.Name);
+
                 try
                 {
                     Load(File);
@@ -79,6 +88,7 @@ namespace Simple.ConfigSource
         {
             lock (this)
             {
+                SimpleLogger.Get(this).DebugFormat("Disposing configurator for {0}...", typeof(T));
                 Active = false;
                 Watcher.Dispose();
             }
