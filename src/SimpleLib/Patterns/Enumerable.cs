@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 
-namespace Simple.Common
+namespace Simple.Patterns
 {
     public static class Enumerable
     {

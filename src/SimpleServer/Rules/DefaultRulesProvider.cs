@@ -61,7 +61,7 @@ namespace Simple.Rules
                 }
                 catch (TargetInvocationException e)
                 {
-                    throw ExHelper.ForReal(e);
+                    throw ExceptionHelper.ForReal(e);
                 }
             });
         }

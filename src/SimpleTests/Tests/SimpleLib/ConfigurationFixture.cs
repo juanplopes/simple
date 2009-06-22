@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Tests.SimpleLib.Sample;
 using Simple.Configuration2;
 using System.Xml;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestFixture]
+    [TestClass]
     public class ConfigurationFixture
     {
         protected XmlElement ElementFromString(string xml)
@@ -19,7 +19,7 @@ namespace Simple.Tests.SimpleLib
             return xmlElement;
         }
 
-        [Test]
+        [TestMethod]
         public void BasicTypesTest()
         {
             BasicTypesElement e = new BasicTypesElement();
@@ -34,11 +34,11 @@ namespace Simple.Tests.SimpleLib
 
             Assert.AreEqual(1, e.IntValue);
             Assert.AreEqual(1.5, e.DoubleValue);
-            Assert.AreEqual(1.6, e.DecimalValue);
+            Assert.AreEqual(1.6m, e.DecimalValue);
             Assert.AreEqual(new DateTime(2008, 11, 12, 12, 13, 14), e.DateValue);
         }
 
-        [Test]
+        [TestMethod]
         public void ComplexTypesTest()
         {
             ComplexElement e = new ComplexElement();
@@ -56,7 +56,7 @@ namespace Simple.Tests.SimpleLib
             {
                 Assert.AreEqual(1, b.IntValue);
                 Assert.AreEqual(1.5, b.DoubleValue);
-                Assert.AreEqual(1.6, b.DecimalValue);
+                Assert.AreEqual(1.6m, b.DecimalValue);
                 Assert.AreEqual(new DateTime(2008, 11, 12, 12, 13, 14), b.DateValue);
             }
 
@@ -64,7 +64,7 @@ namespace Simple.Tests.SimpleLib
             {
                 Assert.AreEqual(1, e.Dic1[i].IntValue);
                 Assert.AreEqual(1.5, e.Dic1[i].DoubleValue);
-                Assert.AreEqual(1.6, e.Dic1[i].DecimalValue);
+                Assert.AreEqual(1.6m, e.Dic1[i].DecimalValue);
                 Assert.AreEqual(new DateTime(2008, 11, 12, 12, 13, 14), e.Dic1[i].DateValue);
 
             }

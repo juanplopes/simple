@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Tests.Contracts;
-using Simple.NUnit;
+using Simple.TestBase;
 using Simple.DataAccess;
 using Simple.Filters;
 using NHibernate.Linq;
 
 namespace Simple.Tests.DataAccess
 {
-    [TestFixture]
+    [TestClass]
     public class SimpleEntityFixture
     {
-        [TestFixtureSetUp]
+        [ClassInitialize]
         public void Setup()
         {
             DBEnsurer.Ensure();
         }
 
-        [Test]
+        [TestMethod]
         public void InsertEmpresa()
         {
             Empresa e = new Empresa()
@@ -32,7 +32,7 @@ namespace Simple.Tests.DataAccess
             Empresa.Delete(e);
         }
 
-        [Test]
+        [TestMethod]
         public void UpdateEmpresa()
         {
             Empresa e = Empresa.LoadByFilter(BooleanExpression.True);
@@ -43,7 +43,7 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual(e.Nome, Empresa.Load(e.Id).Nome);
         }
 
-        [Test]
+        [TestMethod]
         public void FirstLinqTest()
         {
             var queryable = SessionManager.GetSession().Linq<Empresa>();
@@ -56,7 +56,7 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual("E1", query.First());
         }
 
-        [Test]
+        [TestMethod]
         public void SecondLinqTest()
         {
             Empresa e = Empresa.Rules.GetByNameLinq("E1");

@@ -1,68 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.IO;
 using Simple.Tests.SimpleLib.Sample;
 using System.IO;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestFixture]
+    [TestClass]
     public class StringFragmenterFixture
     {
-        [Test]
+        [TestMethod]
         public void SimpleTest1()
         {
             var s = StringFragmenter.Parse<TestStringClass1>("0123456789009876543210");
 
             Assert.AreEqual(1234, s.TestInt);
-            Assert.AreEqual(5678.9, s.TestDecimal);
+            Assert.AreEqual(5678.9m, s.TestDecimal);
 
             Assert.AreEqual(98765, s.TestInt2);
-            Assert.AreEqual(43210, s.TestDecimal2);
+            Assert.AreEqual(43210m, s.TestDecimal2);
 
             string s2 = StringFragmenter.Write(s);
             Assert.AreEqual("0123456789009876543210", s2);
         }
 
-        [Test]
+        [TestMethod]
         public void SimpleTest2()
         {
             var s = StringFragmenter.Parse<TestStringClass2>("012345678,9098765432.1");
 
             Assert.AreEqual(1234, s.TestInt);
-            Assert.AreEqual(5678.9, s.TestDecimal);
+            Assert.AreEqual(5678.9m, s.TestDecimal);
 
             Assert.AreEqual(98765, s.TestInt2);
-            Assert.AreEqual(432.1, s.TestDecimal2);
+            Assert.AreEqual(432.1m, s.TestDecimal2);
         }
 
-        [Test]
+        [TestMethod]
         public void SimpleTestFormatException3()
         {
             var s = StringFragmenter.Parse<TestStringClass2>("012345678.9098765432.1");
 
             Assert.AreEqual(1234, s.TestInt);
-            Assert.AreEqual(56789, s.TestDecimal);
+            Assert.AreEqual(56789m, s.TestDecimal);
 
             Assert.AreEqual(98765, s.TestInt2);
-            Assert.AreEqual(432.1, s.TestDecimal2);
+            Assert.AreEqual(432.1m, s.TestDecimal2);
         }
 
-        [Test]
+        [TestMethod]
         public void SimpleTestFormatException4()
         {
             var s = StringFragmenter.Parse<TestStringClass2>("012345678,9098765432,1");
 
             Assert.AreEqual(1234, s.TestInt);
-            Assert.AreEqual(5678.9, s.TestDecimal);
+            Assert.AreEqual(5678.9m, s.TestDecimal);
 
             Assert.AreEqual(98765, s.TestInt2);
-            Assert.AreEqual(4321, s.TestDecimal2);
+            Assert.AreEqual(4321m, s.TestDecimal2);
         }
 
-        [Test]
+        [TestMethod]
         public void ExtremeCaseAllInOne()
         {
             var s = StringFragmenter.Parse<TestStringClass3>("123,5.9999");
@@ -70,17 +70,17 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual(123m, s.TestInt);
             Assert.AreEqual(123.5m, s.TestDecimal);
             Assert.AreEqual(123m, s.TestInt2);
-            Assert.AreEqual(1235.9999, s.TestDecimal2);
+            Assert.AreEqual(1235.9999m, s.TestDecimal2);
         }
 
-        [Test]
+        [TestMethod]
         [ExpectedException(typeof(FormatException))]
         public void FormatExceptionCase()
         {
             var s = StringFragmenter.Parse<TestStringClass4>("123,5");
         }
 
-        [Test]
+        [TestMethod]
         public void ParseIntAndDate()
         {
             var s = StringFragmenter.Parse<TestStringClass4>("1234520081112");
@@ -92,7 +92,7 @@ namespace Simple.Tests.SimpleLib
         }
 
 
-        [Test]
+        [TestMethod]
         public void StreamTest()
         {
             string st = "0123456789009876543210\n0123456789009876543210\n0123456789009876543210\n";
@@ -105,10 +105,10 @@ namespace Simple.Tests.SimpleLib
             foreach (var s in list)
             {
                 Assert.AreEqual(1234, s.TestInt);
-                Assert.AreEqual(5678.9, s.TestDecimal);
+                Assert.AreEqual(5678.9m, s.TestDecimal);
 
                 Assert.AreEqual(98765, s.TestInt2);
-                Assert.AreEqual(43210, s.TestDecimal2);
+                Assert.AreEqual(43210m, s.TestDecimal2);
             }
 
             MemoryStream mem2 = new MemoryStream();
@@ -120,7 +120,7 @@ namespace Simple.Tests.SimpleLib
         }
 
 
-        [Test]
+        [TestMethod]
         public void ArrayTest()
         {
             string st = "0123456789009876543210\n0123456789009876543210\n0123456789009876543210";
@@ -133,10 +133,10 @@ namespace Simple.Tests.SimpleLib
             foreach (var s in list)
             {
                 Assert.AreEqual(1234, s.TestInt);
-                Assert.AreEqual(5678.9, s.TestDecimal);
+                Assert.AreEqual(5678.9m, s.TestDecimal);
 
                 Assert.AreEqual(98765, s.TestInt2);
-                Assert.AreEqual(43210, s.TestDecimal2);
+                Assert.AreEqual(43210m, s.TestDecimal2);
             }
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 
-namespace Simple.Common
+namespace Simple.IO
 {
     public class StringUtils
     {

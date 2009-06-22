@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Reflection;
 using Simple.Tests.SimpleLib.Sample;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestFixture]
+    [TestClass]
     public class AttributeCacheFixture
     {
-        [Test]
+        [TestMethod]
         public void ClassAttributesFirstTest()
         {
             var attr1 = AttributeCache.Do.First<Attribute1Attribute>(typeof(AttributeTest));
@@ -23,7 +23,7 @@ namespace Simple.Tests.SimpleLib
             Assert.IsNull(attr3);
         }
 
-        [Test]
+        [TestMethod]
         public void ClassAttributeEnumTest()
         {
             var attr1 = new List<Attribute1Attribute>(
@@ -31,7 +31,7 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual(2, attr1.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void PropAttributesFirstTest()
         {
             var attr1 = AttributeCache.Do.First<Attribute1Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
@@ -44,7 +44,7 @@ namespace Simple.Tests.SimpleLib
             Assert.IsNotNull(attr3);
         }
 
-        [Test]
+        [TestMethod]
         public void PropAttributeEnumTest()
         {
             var attr3 = new List<Attribute3Attribute>(

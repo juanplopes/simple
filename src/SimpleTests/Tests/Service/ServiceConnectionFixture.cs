@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Tests.Contracts;
 
 namespace Simple.Tests.Service
 {
-    [TestFixture]
+    [TestClass]
     public class ServiceConnectionFixture
     {
-        [Test]
+        [TestMethod]
         public void TestConnectServices()
         {
             Assert.IsTrue(Funcionario.Rules.HeartBeat());

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Simple.Common;
+using Simple.Patterns;
 
 namespace Simple.Configuration2
 {

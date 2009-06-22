@@ -6,7 +6,7 @@ using System.Reflection;
 using Simple.Logging;
 using log4net;
 
-namespace Simple.Common
+namespace Simple.Reflecion
 {
     public static class DecoratedTypeFinder
     {

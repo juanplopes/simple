@@ -5,6 +5,7 @@ using System.Xml;
 using System.Reflection;
 using Simple.Common;
 using System.Collections;
+using Simple.Patterns;
 
 namespace Simple.Configuration2
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Logging;
 using Simple.Config;
 using Simple.ConfigSource;
@@ -10,16 +10,16 @@ using Simple.Cfg;
 
 namespace Simple.Tests.ConfigSource
 {
-    [TestFixture, Category("Configuration")]
+    [TestClass]
     public class LoggerFactoryFixture
     {
-        [SetUp]
+        [TestInitialize]
         public void Setup()
         {
             SourcesManager.RemoveSource<Log4netConfig>();
         }
 
-        [Test]
+        [TestMethod]
         public void NullLoggerTests()
         {
             SimpleLogger.Get(this).Debug("Teste");

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Simple.Common;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Simple.Patterns;
 
 namespace Simple.Tests.SimpleLib
 {
@@ -24,7 +25,7 @@ namespace Simple.Tests.SimpleLib
         }
     }
 
-    [TestFixture]
+    [TestClass]
     public class WorkingDaysFixture : BaseWorkingDaysFixture
     {
         public WorkingDaysFixture() :
@@ -33,21 +34,21 @@ namespace Simple.Tests.SimpleLib
 
         #region ref1 ref2
         #region From back ref1 ref2
-        [Test]
+        [TestMethod]
         public void Ref1Ref2FromToConsider()
         {
             var d = GeneralTest(true, true, true, true, true);
             Assert.AreEqual(d, new DateTime(2008, 01, 8));
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1Ref2FromToNot()
         {
             var d = GeneralTest(true, true, true, true, false);
             Assert.AreEqual(d, new DateTime(2008, 01, 6));
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1Ref2FromNotConsider()
         {
             var d = GeneralTest(true, true, true, false, true);
@@ -55,7 +56,7 @@ namespace Simple.Tests.SimpleLib
 
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1Ref2FromNotNot()
         {
             var d = GeneralTest(true, true, true, false, false);
@@ -65,21 +66,21 @@ namespace Simple.Tests.SimpleLib
         #endregion
 
         #region To forward ref1 ref2
-        [Test]
+        [TestMethod]
         public void Ref1Ref2NotToConsider()
         {
             var d = GeneralTest(true, true, false, true, true);
             Assert.AreEqual(d, new DateTime(2008, 01, 20));
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1Ref2NotToNot()
         {
             var d = GeneralTest(true, true, false, true, false);
             Assert.AreEqual(d, new DateTime(2008, 01, 18));
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1Ref2NotNotConsider()
         {
             var d = GeneralTest(true, true, false, false, true);
@@ -87,7 +88,7 @@ namespace Simple.Tests.SimpleLib
 
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1Ref2NotNotNot()
         {
             var d = GeneralTest(true, true, false, false, false);
@@ -99,21 +100,21 @@ namespace Simple.Tests.SimpleLib
 
         #region ref1 not
         #region From back ref1 not
-        [Test]
+        [TestMethod]
         public void Ref1NotFromToConsider()
         {
             var d = GeneralTest(true, false, true, true, true);
             Assert.AreEqual(d, new DateTime(2008, 01, 6));
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1NotFromToNot()
         {
             var d = GeneralTest(true, false, true, true, false);
             Assert.AreEqual(d, new DateTime(2008, 01, 6));
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1NotFromNotConsider()
         {
             var d = GeneralTest(true, false, true, false, true);
@@ -121,7 +122,7 @@ namespace Simple.Tests.SimpleLib
 
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1NotFromNotNot()
         {
             var d = GeneralTest(true, false, true, false, false);
@@ -131,21 +132,21 @@ namespace Simple.Tests.SimpleLib
         #endregion
 
         #region To forward ref1 not
-        [Test]
+        [TestMethod]
         public void Ref1NotNotToConsider()
         {
             var d = GeneralTest(true, false, false, true, true);
             Assert.AreEqual(d, new DateTime(2008, 01, 20));
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1NotNotToNot()
         {
             var d = GeneralTest(true, false, false, true, false);
             Assert.AreEqual(d, new DateTime(2008, 01, 20));
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1NotNotNotConsider()
         {
             var d = GeneralTest(true, false, false, false, true);
@@ -153,7 +154,7 @@ namespace Simple.Tests.SimpleLib
 
         }
 
-        [Test]
+        [TestMethod]
         public void Ref1NotNotNotNot()
         {
             var d = GeneralTest(true, false, false, false, false);
@@ -166,21 +167,21 @@ namespace Simple.Tests.SimpleLib
 
         #region not ref2
         #region From back not ref2
-        [Test]
+        [TestMethod]
         public void NotRef2FromToConsider()
         {
             var d = GeneralTest(false, true, true, true, true);
             Assert.AreEqual(d, new DateTime(2008, 01, 8));
         }
 
-        [Test]
+        [TestMethod]
         public void NotRef2FromToNot()
         {
             var d = GeneralTest(false, true, true, true, false);
             Assert.AreEqual(d, new DateTime(2008, 01, 6));
         }
 
-        [Test]
+        [TestMethod]
         public void NotRef2FromNotConsider()
         {
             var d = GeneralTest(false, true, true, false, true);
@@ -188,7 +189,7 @@ namespace Simple.Tests.SimpleLib
 
         }
 
-        [Test]
+        [TestMethod]
         public void NotRef2FromNotNot()
         {
             var d = GeneralTest(false, true, true, false, false);
@@ -198,21 +199,21 @@ namespace Simple.Tests.SimpleLib
         #endregion
 
         #region To forward not ref2
-        [Test]
+        [TestMethod]
         public void NotRef2NotToConsider()
         {
             var d = GeneralTest(false, true, false, true, true);
             Assert.AreEqual(d, new DateTime(2008, 01, 22));
         }
 
-        [Test]
+        [TestMethod]
         public void NotRef2NotToNot()
         {
             var d = GeneralTest(false, true, false, true, false);
             Assert.AreEqual(d, new DateTime(2008, 01, 20));
         }
 
-        [Test]
+        [TestMethod]
         public void NotRef2NotNotConsider()
         {
             var d = GeneralTest(false, true, false, false, true);
@@ -220,7 +221,7 @@ namespace Simple.Tests.SimpleLib
 
         }
 
-        [Test]
+        [TestMethod]
         public void NotRef2NotNotNot()
         {
             var d = GeneralTest(false, true, false, false, false);
@@ -232,21 +233,21 @@ namespace Simple.Tests.SimpleLib
 
         #region not not
         #region From back not not
-        [Test]
+        [TestMethod]
         public void NotNotFromToConsider()
         {
             var d = GeneralTest(false, false, true, true, true);
             Assert.AreEqual(d, new DateTime(2008, 01, 8));
         }
 
-        [Test]
+        [TestMethod]
         public void NotNotFromToNot()
         {
             var d = GeneralTest(false, false, true, true, false);
             Assert.AreEqual(d, new DateTime(2008, 01, 8));
         }
 
-        [Test]
+        [TestMethod]
         public void NotNotFromNotConsider()
         {
             var d = GeneralTest(false, false, true, false, true);
@@ -254,7 +255,7 @@ namespace Simple.Tests.SimpleLib
 
         }
 
-        [Test]
+        [TestMethod]
         public void NotNotFromNotNot()
         {
             var d = GeneralTest(false, false, true, false, false);
@@ -264,21 +265,21 @@ namespace Simple.Tests.SimpleLib
         #endregion
 
         #region To forward not not
-        [Test]
+        [TestMethod]
         public void NotNotNotToConsider()
         {
             var d = GeneralTest(false, false, false, true, true);
             Assert.AreEqual(d, new DateTime(2008, 01, 20));
         }
 
-        [Test]
+        [TestMethod]
         public void NotNotNotToNot()
         {
             var d = GeneralTest(false, false, false, true, false);
             Assert.AreEqual(d, new DateTime(2008, 01, 20));
         }
 
-        [Test]
+        [TestMethod]
         public void NotNotNotNotConsider()
         {
             var d = GeneralTest(false, false, false, false, true);
@@ -286,7 +287,7 @@ namespace Simple.Tests.SimpleLib
 
         }
 
-        [Test]
+        [TestMethod]
         public void NotNotNotNotNot()
         {
             var d = GeneralTest(false, false, false, false, false);

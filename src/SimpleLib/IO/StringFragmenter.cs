@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Collections;
+using Simple.Patterns;
 
 namespace Simple.IO
 {

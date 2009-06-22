@@ -3,6 +3,7 @@ using log4net;
 using Simple.Common;
 using System.Reflection;
 using Simple.ConfigSource;
+using Simple.Patterns;
 
 namespace Simple.Logging
 {

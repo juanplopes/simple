@@ -9,6 +9,7 @@ using Simple.Rules;
 using Simple.Config;
 using Simple.Common;
 using System.Reflection;
+using Simple.Reflecion;
 
 namespace Simple.ServiceModel
 {

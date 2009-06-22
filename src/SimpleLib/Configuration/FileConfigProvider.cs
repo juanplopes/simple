@@ -7,6 +7,7 @@ using System.Xml;
 using Simple.Common;
 using System.IO;
 using Simple.Logging;
+using Simple.Patterns;
 
 namespace Simple.Configuration2
 {
@@ -27,6 +28,7 @@ namespace Simple.Configuration2
         }
 
         protected SafeDictionary<ConfigIdentifier, T> Cache = new SafeDictionary<ConfigIdentifier, T>();
+
 
         public static FileConfigProvider<T> Instance
         {

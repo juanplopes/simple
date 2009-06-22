@@ -5,7 +5,7 @@ using System.Text;
 using NHibernate.Tool.hbm2ddl;
 using Simple.DataAccess;
 using Simple.Tests.Contracts;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Filters;
 
 namespace Simple.Tests

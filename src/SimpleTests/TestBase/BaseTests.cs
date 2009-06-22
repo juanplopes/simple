@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Rules;
 using Simple.DataAccess;
 using System.Reflection;
@@ -10,7 +10,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using System.Collections;
 
-namespace Simple.NUnit
+namespace Simple.TestBase
 {
     public class BaseTests : IEntityProvider
     {
@@ -35,7 +35,7 @@ namespace Simple.NUnit
             return new BaseEntityProvider(EntityType, DefaultSkipID);
         }
 
-        [Test]
+        [TestMethod]
         public void InsertScript1()
         {
             using (DataContext.Enter())
@@ -46,7 +46,7 @@ namespace Simple.NUnit
             }
         }
 
-        [Test]
+        [TestMethod]
         public void UpdateScript1()
         {
             using (DataContext.Enter())

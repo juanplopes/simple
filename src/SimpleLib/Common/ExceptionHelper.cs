@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Simple.Common
 {
-    public static class ExHelper
+    public static class ExceptionHelper
     {
         public static Exception ForReal(Exception e)
         {

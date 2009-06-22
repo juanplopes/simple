@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using Simple.Common;
 using Simple.Threading;
+using Simple.Patterns;
 
 namespace Simple.Persistence
 {

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Expressions;
 using Simple.Persistence;
 using Simple.IO;
 
 namespace Simple.Tests.Experiences
 {
-    [TestFixture]
+    [TestClass]
     public class LambdaFixture
     {
-        [Test]
+        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestSerializeExpression()
         {

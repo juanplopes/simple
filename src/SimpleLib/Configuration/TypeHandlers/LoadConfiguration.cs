@@ -8,6 +8,7 @@ using System.Xml;
 using System.Collections;
 using Simple.Logging;
 using log4net;
+using Simple.Patterns;
 
 namespace Simple.Configuration2.TypeHandlers
 {

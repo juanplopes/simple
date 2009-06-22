@@ -6,6 +6,8 @@ using System.Runtime.Serialization;
 using Simple.Common;
 using log4net;
 using Simple.Logging;
+using Simple.Patterns;
+using Simple.Reflecion;
 
 namespace Simple.ServiceModel
 {

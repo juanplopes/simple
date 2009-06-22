@@ -40,7 +40,7 @@ namespace Simple.Rules
                 }
                 catch (Exception e)
                 {
-                    e = ExHelper.ForReal(e);
+                    e = ExceptionHelper.ForReal(e);
                     SimpleLogger.Get(this).Error(
                         string.Format("There was an error inside a rule: {0}", e.Message), e);
                     if (!Handle(e)) throw e;

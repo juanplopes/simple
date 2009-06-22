@@ -6,7 +6,7 @@ using Simple.DataAccess;
 using NHibernate.Mapping;
 using Simple.Reflection;
 
-namespace Simple.NUnit
+namespace Simple.TestBase
 {
     public class BaseEntityProvider : IEntityProvider
     {

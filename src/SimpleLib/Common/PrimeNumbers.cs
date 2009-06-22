@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections;
+using Simple.Patterns;
 
 namespace Simple.Common
 {

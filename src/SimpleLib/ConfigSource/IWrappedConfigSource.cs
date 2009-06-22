@@ -10,4 +10,7 @@ namespace Simple.ConfigSource
         where A:new()
     {
     }
+
+    public interface IWrappedConfigSource<T> : IWrappedConfigSource<T, T>
+        where T : new() { }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Simple.NUnit
+namespace Simple.TestBase
 {
     public delegate void TestDelegate();
 
@@ -26,7 +26,7 @@ namespace Simple.NUnit
             this.Tests.Clear();
         }
 
-        [Test]
+        [TestMethod]
         public void InsertScript1()
         {
             foreach (BaseTests test in Tests)
@@ -35,7 +35,7 @@ namespace Simple.NUnit
             }
         }
 
-        [Test]
+        [TestMethod]
         public void UpdateScript1()
         {
             foreach (BaseTests test in Tests)

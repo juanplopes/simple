@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
 
-namespace Simple.Common
+namespace Simple.Patterns
 {
     [Serializable]
     public class Tuple<T>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Filters;
 using Simple.DataAccess;
 using NHCrit = NHibernate.Criterion;
@@ -9,7 +9,7 @@ using NHibernate.Linq;
 
 namespace Simple.Tests.DataAccess
 {
-    [TestFixture]
+    [TestClass]
     public class FiltersFixture
     {
         protected void AssertSimpleFilter(string filterExpression)
@@ -21,27 +21,27 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual(((NHCrit.SimpleExpression)crit).Value, "someValue");
         }
 
-        [Test]
+        [TestMethod]
         public void SimpleFilters_Eq()
         {
             AssertSimpleFilter(SimpleExpression.EqualsExpression);
         }
-        [Test]
+        [TestMethod]
         public void SimpleFilters_Lt()
         {
             AssertSimpleFilter(SimpleExpression.LesserThanExpression);
         }
-        [Test]
+        [TestMethod]
         public void SimpleFilters_Gt()
         {
             AssertSimpleFilter(SimpleExpression.GreaterThanExpression);
         }
-        [Test]
+        [TestMethod]
         public void SimpleFilters_LtEq()
         {
             AssertSimpleFilter(SimpleExpression.LesserThanOrEqualsExpression);
         }
-        [Test]
+        [TestMethod]
         public void SimpleFilters_GtEq()
         {
             AssertSimpleFilter(SimpleExpression.GreaterThanOrEqualsExpression);

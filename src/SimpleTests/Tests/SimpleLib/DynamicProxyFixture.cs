@@ -39,7 +39,7 @@
 
 using System;
 using System.Reflection;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.DynamicProxy;
 
 namespace Simple.Tests.SimpleLib
@@ -47,12 +47,12 @@ namespace Simple.Tests.SimpleLib
 	/// <summary>
 	/// Unit test for the dynamic proxy
 	/// </summary>
-	[TestFixture]
+	[TestClass]
 	public class DynamicProxyFixture {
 		public DynamicProxyFixture() {
 		}
 
-		[Test]
+		[TestMethod]
 		public void TestSimpleProxy() {
 			SimpleClass testClass = new SimpleClass();
 			ISimpleInterface testClassProxy = (ISimpleInterface) DynamicProxyFactory.Instance.CreateProxy(testClass, new InvocationDelegate(InvocationHandler));
@@ -83,7 +83,7 @@ namespace Simple.Tests.SimpleLib
 			Assert.IsNotNull(dynProxy);
 		}
 
-		[Test]
+		[TestMethod]
 		[ExpectedException(typeof(TargetException))]
 		public void TestInvalidCastWithoutStrict() {
 			SimpleClass testClass = new SimpleClass();
@@ -95,7 +95,7 @@ namespace Simple.Tests.SimpleLib
 			notImplementedInterface.NotImplementedMethod();
 		}
 
-		[Test]
+		[TestMethod]
 		public void TestStrictness() {
 			SimpleClass testClass = new SimpleClass();
 			ISimpleInterface testClassProxy = (ISimpleInterface) DynamicProxyFactory.Instance.CreateProxy(testClass, new InvocationDelegate(InvocationHandler), true);
@@ -109,7 +109,7 @@ namespace Simple.Tests.SimpleLib
 			implementedInterface.ImplementedMethod();
 		}
 
-		[Test]
+		[TestMethod]
 		[ExpectedException(typeof(InvalidCastException))]
 		public void TestStrictnessWithInvalidCast() {
 			SimpleClass testClass = new SimpleClass();
@@ -125,7 +125,7 @@ namespace Simple.Tests.SimpleLib
 		}
 
 
-		[Test]
+		[TestMethod]
 		public void TestStrictnessWithSupportedList() {
 			SimpleClass testClass = new SimpleClass();
 			ISimpleInterface testClassProxy = (ISimpleInterface) DynamicProxyFactory.Instance.CreateProxy(testClass, new InvocationDelegate(InvocationHandler), true, new Type[] { typeof(INotImplemented) });
@@ -145,7 +145,7 @@ namespace Simple.Tests.SimpleLib
 			Assert.IsNotNull(notImplementedInterface);
 		}
 
-		[Test]
+		[TestMethod]
 		[ExpectedException(typeof(InvalidCastException))]
 		public void TestStrictnessWithSupportedListAndInvalidCast() {
 			SimpleClass testClass = new SimpleClass();

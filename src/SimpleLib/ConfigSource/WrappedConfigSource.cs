@@ -60,7 +60,7 @@ namespace Simple.ConfigSource
         }
     }
 
-    public class WrappedConfigSource<T> : WrappedConfigSource<T, T>
+    public class WrappedConfigSource<T> : WrappedConfigSource<T, T>, IWrappedConfigSource<T>
         where T:new()
     {
         public override T TransformFromInput(T input)

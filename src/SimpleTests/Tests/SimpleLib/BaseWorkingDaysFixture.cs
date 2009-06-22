@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Common;
+using Simple.Patterns;
 
 namespace Simple.Tests.SimpleLib
 {
@@ -63,31 +64,31 @@ namespace Simple.Tests.SimpleLib
             BaseDates = baseDates;
         }
 
-        [Test]
+        [TestMethod]
         public void SoftTest()
         {
             AssertProviderSoft(Provider, SoftIterations, BaseDates);
         }
 
-        [Test]
+        [TestMethod]
         public void HeavyForwardConsiderTest()
         {
             AssertProviderHeavy(Provider, HeavyIterations, true, true, BaseDates);
         }
 
-        [Test]
+        [TestMethod]
         public void HeavyForwardNotConsiderTest()
         {
             AssertProviderHeavy(Provider, HeavyIterations, true, false, BaseDates);
         }
 
-        [Test]
+        [TestMethod]
         public void HeavyBackwardConsiderTest()
         {
             AssertProviderHeavy(Provider, HeavyIterations, false, true, BaseDates);
         }
 
-        [Test]
+        [TestMethod]
         public void HeavyBackwardNotConsiderTest()
         {
             AssertProviderHeavy(Provider, HeavyIterations, false, false, BaseDates);

@@ -14,7 +14,6 @@ namespace Simple.Cfg
         {
             Configuration config = new Configuration();
             config.AddXmlString(input.Element.OuterXml);
-
             return config;
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 
-namespace Simple.Common
+namespace Simple.Patterns
 {
     [Serializable]
     public class SafeDictionary<K, V> : Dictionary<K, V>

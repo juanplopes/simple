@@ -6,6 +6,7 @@ using System.Reflection;
 using Simple.Common;
 using System.Xml;
 using Simple.Reflection;
+using Simple.Patterns;
 
 namespace Simple.Configuration2.TypeHandlers
 {

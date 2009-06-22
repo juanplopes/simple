@@ -6,6 +6,8 @@ using Simple.Logging;
 
 namespace Simple.ConfigSource
 {
+    public delegate T ConfigHookDelegate<T>(T config);
+
     public abstract class ConfigSource<T> : IConfigSource<T>
         where T : new()
     {

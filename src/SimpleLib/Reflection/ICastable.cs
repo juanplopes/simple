@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Simple.Common
+namespace Simple.Reflection
 {
     public interface ICastable
     {
