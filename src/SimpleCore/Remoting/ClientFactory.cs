@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.Cfg;
 using System.Runtime.Remoting;
 
 namespace Simple.Remoting
 {
     public class ClientFactory
     {
-        public ServiceModelConfig Config { get; set; }
-        public ClientFactory(ServiceModelConfig config)
+
+        public ClientFactory(object config)
         {
-            Config = config;
         }
 
         public MarshalByRefObject Create(Type type, string endpointKey)

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.Cfg;
 using Simple.ConfigSource;
 using NHibernate.Cfg;
 using NHibernate;
+using Simple.Patterns;
 
 namespace Simple.DataAccess
 {
@@ -14,7 +14,7 @@ namespace Simple.DataAccess
         protected Configuration NHConfig { get; set; }
         private ISessionFactory _sessionFactory = null;
 
-        public ConfigHookDelegate<Configuration> MappingHook { get; set; }
+        public TransformationList<Configuration> MappingHooks { get; set; }
 
         protected ISessionFactory SessionFactory
         {
@@ -24,10 +24,15 @@ namespace Simple.DataAccess
                 {
                     if (_sessionFactory == null)
                         _sessionFactory = NHConfig.BuildSessionFactory();
-
+                    
                     return _sessionFactory;
                 }
             }
+        }
+
+        protected ISessionFactory BuildSessionFactory()
+        {
+            return null;
         }
 
         protected override void Config(Configuration config)

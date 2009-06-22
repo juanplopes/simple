@@ -4,7 +4,6 @@ using log4net;
 using log4net.Config;
 using System.Reflection;
 using System.Xml;
-using Simple.Cfg;
 using System.IO;
 
 namespace Simple.Logging

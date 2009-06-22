@@ -9,22 +9,14 @@ namespace Simple.Logging
 {
     public class SimpleLogger
     {
-        protected static object _lockObj = new object();
+        private static FactoriesManager<Log4netFactory, Log4netConfig> manager =
+            new FactoriesManager<Log4netFactory, Log4netConfig>(() => new Log4netFactory());
 
-        protected static Log4netFactory _factory;
         protected static Log4netFactory Factory
         {
             get
             {
-                lock (_lockObj)
-                {
-                    if (_factory == null)
-                    {
-                        _factory = new Log4netFactory();
-                        SourcesManager.Configure(_factory);
-                    }
-                    return _factory;
-                }
+                return manager.SafeGet();
             }
         }
 

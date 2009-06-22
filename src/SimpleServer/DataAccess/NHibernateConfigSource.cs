@@ -6,7 +6,7 @@ using Simple.ConfigSource;
 using System.Xml;
 using NHibernate.Cfg;
 
-namespace Simple.Cfg
+namespace Simple.DataAccess
 {
     public class NHibernateConfigSource : WrappedConfigSource<Configuration, NHibernateConfig>
     {

@@ -6,7 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Logging;
 using Simple.Config;
 using Simple.ConfigSource;
-using Simple.Cfg;
 
 namespace Simple.Tests.ConfigSource
 {

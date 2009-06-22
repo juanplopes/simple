@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.ConfigSource;
 using System.Xml;
+using System.Xml.Serialization;
+using Simple.ConfigSource;
 
-namespace Simple.Cfg
+
+namespace Simple.Logging
 {
-    public class NHibernateConfig : IXmlContentHolder
+    public class Log4netConfig : IXmlContentHolder
     {
         public XmlElement Element { get; set; }
     }

@@ -59,8 +59,10 @@
     <Compile Include="Cache\BaseCacher.cs" />
     <Compile Include="Cache\FileCacher.cs" />
     <Compile Include="Cache\ICacher.cs" />
-    <Compile Include="Cfg\Log4netConfig.cs" />
+    <Compile Include="Logging\Log4netConfig.cs" />
+    <Compile Include="ConfigSource\FactoriesManager.cs" />
     <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />
+    <Compile Include="Patterns\TransformationList.cs" />
     <Compile Include="Reflection\DecoratedTypeFinder.cs" />
     <Compile Include="Common\ExceptionHelper.cs" />
     <Compile Include="Patterns\LazyEnumerable.cs" />

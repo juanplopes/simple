@@ -70,8 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cfg\NHibernateConfig.cs" />
-    <Compile Include="Cfg\NHibernateConfigSource.cs" />
+    <Compile Include="DataAccess\NHibernateConfig.cs" />
+    <Compile Include="DataAccess\NHibernateConfigSource.cs" />
     <Compile Include="DataAccess\Conventions\LazyConvention.cs" />
     <Compile Include="DataAccess\Dao\IDao.cs" />
     <Compile Include="DataAccess\DataContext.cs" />
