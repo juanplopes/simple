@@ -5,33 +5,30 @@ using System.Text;
 
 namespace Simple.ConfigSource
 {
-    public class WrappedConfigSource<T> : 
-        ConfigSource<T>,
-        IConfigSource<T, IConfigSource<T>>
-        where T : new()
+    public abstract class WrappedConfigSource<T1, T2> :
+        ConfigSource<T1>,
+        IWrappedConfigSource<T1, T2>
+        where T1 : new()
+        where T2 : new()
     {
-        protected IConfigSource<T> WrappedSource { get; set; }
+        protected IConfigSource<T2> WrappedSource { get; set; }
 
-        public IConfigSource<T> Load(IConfigSource<T> input)
+        public IConfigSource<T1> Load(IConfigSource<T2> input)
         {
-            if (WrappedSource != null) WrappedSource.Reloaded -= SafeReload;
-
-            WrappedSource = input;
-
-            Cache = input.Get();
-            input.Reloaded += SafeReload;
+            lock (this)
+            {
+                SafeReset(input);
+            }
 
             return this;
         }
 
-        public WrappedConfigSource<T> LoadSelf(IConfigSource<T> input)
-        {
-            return Load(input) as WrappedConfigSource<T>;
-        }
+        public abstract T1 TransformFromInput(T2 input);
 
-        public void LoadAgain(IConfigSource<T> input)
+        public void LoadAgain(IConfigSource<T2> input)
         {
-            LoadSelf(input).InvokeReload();
+            Load(input);
+            InvokeReload();
         }
 
         public override bool Reload()
@@ -39,10 +36,36 @@ namespace Simple.ConfigSource
             return true;
         }
 
-        protected void SafeReload(T config)
+        protected void SafeReset(IConfigSource<T2> source)
         {
-            Cache = config;
+            bool flag = false;
+
+            if (WrappedSource != null)
+            {
+                WrappedSource.Reloaded -= SafeReload;
+                flag = true;
+            }
+
+            WrappedSource = source;
+            Cache = TransformFromInput(WrappedSource.Get());
+            WrappedSource.Reloaded += SafeReload;
+
+            if (flag) InvokeReload();
+        }
+
+        protected void SafeReload(T2 config)
+        {
+            Cache = TransformFromInput(config);
             InvokeReload();
+        }
+    }
+
+    public class WrappedConfigSource<T> : WrappedConfigSource<T, T>
+        where T:new()
+    {
+        public override T TransformFromInput(T input)
+        {
+            return input;
         }
     }
 }

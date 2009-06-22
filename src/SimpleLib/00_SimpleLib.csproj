@@ -69,8 +69,10 @@
     <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Common\Singleton.cs" />
     <Compile Include="Common\Tuples.cs" />
+    <Compile Include="ConfigSource\AggregateConfigSource.cs" />
     <Compile Include="ConfigSource\ConfigSource.cs" />
     <Compile Include="ConfigSource\Factory.cs" />
+    <Compile Include="ConfigSource\IWrappedConfigSource.cs" />
     <Compile Include="ConfigSource\IConfigSource.cs" />
     <Compile Include="ConfigSource\IFactory.cs" />
     <Compile Include="ConfigSource\IFactoryContract.cs" />
@@ -129,7 +131,6 @@
     <Compile Include="IO\NumericFormatter.cs" />
     <Compile Include="IO\StringFragmenter.cs" />
     <Compile Include="IO\StringOffsetAttribute.cs" />
-    <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netFactory.cs" />
     <Compile Include="Logging\NullLog.cs" />
     <Compile Include="Logging\SimpleLogger.cs" />

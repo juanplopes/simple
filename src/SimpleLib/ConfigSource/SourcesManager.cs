@@ -20,7 +20,10 @@ namespace Simple.ConfigSource
 
                 if (!Instances.TryGetValue(key, out ret))
                 {
-                    ret = new WrappedConfigSource<C>().LoadSelf(NullConfigSource<C>.Instance); ;
+                    ret = new WrappedConfigSource<C>().Load(NullConfigSource<C>.Instance)
+                        as WrappedConfigSource<C>;
+
+
                     Instances[key] = ret;
                 }
 
@@ -32,7 +35,15 @@ namespace Simple.ConfigSource
             lock (Instances)
             {
                 var wrapped = Get(key);
-                wrapped.LoadAgain(source);
+                wrapped.Load(source);
+            }
+        }
+
+        public static void Clear()
+        {
+            lock (Instances)
+            {
+                Instances.Clear();
             }
         }
 
@@ -54,15 +65,21 @@ namespace Simple.ConfigSource
             SourceFor<C>.Set(key, source);
         }
 
-        public static void ClearSource<C>()
+        public static void RemoveSource<C>()
             where C : new()
         {
-            ClearSource<C>(DefaultKey);
+            RemoveSource<C>(DefaultKey);
         }
-        public static void ClearSource<C>(object key)
+        public static void RemoveSource<C>(object key)
             where C : new()
         {
             SourceFor<C>.Set(key, NullConfigSource<C>.Instance);
+        }
+
+        public static void ClearSources<C>()
+            where C : new()
+        {
+            SourceFor<C>.Clear();
         }
 
         public static void Configure<C>(IFactory<C> factory)

@@ -13,23 +13,23 @@ namespace Simple.Client
         #region Logger
         public static ILog Log(object obj)
         {
-            return Logger.Get(obj);
+            return SimpleLogger.Get(obj);
         }
         public static ILog Log(string name)
         {
-            return Logger.Get(name);
+            return SimpleLogger.Get(name);
         }
         public static ILog Log(MemberInfo member)
         {
-            return Logger.Get(member);
+            return SimpleLogger.Get(member);
         }
         public static ILog Log(Type type)
         {
-            return Logger.Get(type);
+            return SimpleLogger.Get(type);
         }
         public static ILog Log<T>()
         {
-            return Logger.Get<T>();
+            return SimpleLogger.Get<T>();
         }
         #endregion
 

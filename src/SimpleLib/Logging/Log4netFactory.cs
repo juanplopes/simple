@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Simple.Logging
 {
-    public class Log4netFactory : Factory<Log4netConfig>, ILog4netFactory
+    public class Log4netFactory : Factory<Log4netConfig>
     {
         protected override void Config(Log4netConfig config)
         {
@@ -27,13 +27,11 @@ namespace Simple.Logging
 
         public ILog GetLogger(string name)
         {
-            base.CheckInitialized();
             return LogManager.GetLogger(name);
         }
 
         public ILog GetLogger(Type type)
         {
-            base.CheckInitialized();
             return LogManager.GetLogger(type);
         }
 

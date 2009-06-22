@@ -46,7 +46,7 @@ namespace Simple.Tests.ConfigSource
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
 
-            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>();
+            SourcesManager.RemoveSource<BasicTypesSampleWithoutAttr>();
             SourcesManager.RegisterSource(src);
 
             var b = new BasicFactory();
@@ -63,7 +63,7 @@ namespace Simple.Tests.ConfigSource
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
 
-            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>();
+            SourcesManager.RemoveSource<BasicTypesSampleWithoutAttr>();
 
             var b = new BasicFactory();
 
@@ -75,7 +75,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual("whatever", b.BuildString());
             Assert.AreEqual(42, b.BuildInt());
 
-            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>();
+            SourcesManager.RemoveSource<BasicTypesSampleWithoutAttr>();
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
         }
@@ -87,19 +87,19 @@ namespace Simple.Tests.ConfigSource
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
 
-            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>(2);
+            SourcesManager.ClearSources<BasicTypesSampleWithoutAttr>();
 
             var b = new BasicFactory();
 
-            SourcesManager.Configure(b);
+            SourcesManager.Configure(2, b);
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
 
-            SourcesManager.RegisterSource(src);
+            SourcesManager.RegisterSource(2, src);
             Assert.AreEqual("whatever", b.BuildString());
             Assert.AreEqual(42, b.BuildInt());
 
-            SourcesManager.ClearSource<BasicTypesSampleWithoutAttr>();
+            SourcesManager.RemoveSource<BasicTypesSampleWithoutAttr>(2);
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
         }
