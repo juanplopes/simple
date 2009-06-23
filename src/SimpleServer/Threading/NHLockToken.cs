@@ -20,7 +20,7 @@ namespace Simple.Threading
 
         public override void BeginTransaction()
         {
-            this.Transaction = SessionManager.GetSession(true);
+            this.Transaction = SessionManagerOld.GetSession(true);
             this.Transaction.BeginTransaction(IsolationLevel.Serializable);
         }
 

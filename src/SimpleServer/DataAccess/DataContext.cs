@@ -15,15 +15,15 @@ namespace Simple.DataAccess
 
         public static DataContext Enter()
         {
-            return new DataContext(SessionManager.LockThreadSessions());
+            return new DataContext(SessionManagerOld.LockThreadSessions());
         }
 
         #region IDisposable Members
 
         public void Dispose()
         {
-            if (SessionManager.IsInitialized)
-                SessionManager.ReleaseThreadSessions(this.Identifier);
+            if (SessionManagerOld.IsInitialized)
+                SessionManagerOld.ReleaseThreadSessions(this.Identifier);
         }
 
         #endregion

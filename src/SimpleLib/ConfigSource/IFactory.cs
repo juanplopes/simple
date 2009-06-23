@@ -10,6 +10,6 @@ namespace Simple.ConfigSource
     {
         bool Initialized { get; }
         void Init(IConfigSource<T> source);
-        void InitDefault();
+        void ClearConfig();
     }
 }

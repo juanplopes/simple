@@ -61,7 +61,7 @@ namespace Simple.TestBase
         protected void InsertionSetup()
         {
             DeleteAll(false);
-            ISession session = SessionManager.GetSession();
+            ISession session = SessionManagerOld.GetSession();
             for (int i = 0; i < CreationNumber; i++)
             {
                 session.Persist(Populate(i));
@@ -70,7 +70,7 @@ namespace Simple.TestBase
 
         protected void TestGetAllAndUpdate()
         {
-            ISession session = SessionManager.GetSession();
+            ISession session = SessionManagerOld.GetSession();
             for (int i = 0; i < CreationNumber; i++)
             {
                 object e = Populate(i);
@@ -81,7 +81,7 @@ namespace Simple.TestBase
 
         protected void TestGetAllAndCompare()
         {
-            ISession session = SessionManager.GetSession();
+            ISession session = SessionManagerOld.GetSession();
             for (int i = 0; i < CreationNumber; i++)
             {
                 object e = Populate(i);
@@ -92,7 +92,7 @@ namespace Simple.TestBase
 
         protected void DeleteAll(bool assert)
         {
-            ISession session = SessionManager.GetSession();
+            ISession session = SessionManagerOld.GetSession();
             for (int i = 0; i < CreationNumber; i++)
             {
                 object e = Populate(i);

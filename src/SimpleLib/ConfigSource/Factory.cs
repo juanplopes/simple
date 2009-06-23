@@ -41,10 +41,10 @@ namespace Simple.ConfigSource
         {
             lock (this)
                 if (!object.Equals(default(T), config)) Config(config);
-                else InitDefault();
+                else ClearConfig();
         }
 
         protected abstract void Config(T config);
-        public abstract void InitDefault();
+        public abstract void ClearConfig();
     }
 }

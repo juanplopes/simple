@@ -16,7 +16,7 @@ namespace Simple.Logging
             XmlConfigurator.Configure(config.Element);
         }
 
-        public override void InitDefault()
+        public override void ClearConfig()
         {
             IConfigSource<Log4netConfig> source = new XmlConfigSource<Log4netConfig>().Load(
                 DefaultConfigResource.Log4netConfig);

@@ -16,6 +16,7 @@
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
     <StartupObject>Simple.Tests.Server</StartupObject>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>http://localhost/SimpleTests/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -28,7 +29,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -83,6 +83,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\DataAccess\NHConfigFixture.cs" />
+    <Compile Include="Tests\DataAccess\NHConfigurations.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NHConfigurations.resx</DependentUpon>
+    </Compile>
     <Compile Include="Tests\SimpleLib\BaseWDProviderFixture.cs" />
     <Compile Include="Tests\%40Contracts\IEmpresaFuncionarioRules.cs" />
     <Compile Include="Tests\%40Contracts\IEmpresaRules.cs" />
@@ -143,6 +149,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\NHConfig1.xml" />
     <Content Include="Tests.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -181,6 +188,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tests\DataAccess\NHConfigurations.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NHConfigurations.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

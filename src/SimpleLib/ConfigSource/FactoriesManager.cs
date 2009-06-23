@@ -36,7 +36,7 @@ namespace Simple.ConfigSource
                     if (howToBuild == null) throw new InvalidOperationException("I don't know how to build factory!");
                     
                     factory = howToBuild();
-                    SourcesManager.Configure(factory);
+                    SourcesManager.Configure(key, factory);
                     this[key] = factory;
                 }
 

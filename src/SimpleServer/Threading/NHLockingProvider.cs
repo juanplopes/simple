@@ -69,7 +69,7 @@ namespace Simple.Threading
 
         protected override ISession CreateTransaction()
         {
-            ISession session = SessionManager.GetSession(true);
+            ISession session = SessionManagerOld.GetSession(true);
             session.BeginTransaction();
             return session;
         }

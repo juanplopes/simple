@@ -41,7 +41,7 @@ namespace Simple.TestBase
             object e = Activator.CreateInstance(EntityType);
             Dictionary<string, bool> dic = new Dictionary<string, bool>();
 
-            PersistentClass cls = SessionManager.GetConfig(FactoryName).GetClassMapping(EntityType);
+            PersistentClass cls = SessionManagerOld.GetConfig(FactoryName).GetClassMapping(EntityType);
             if (SkipID)
             {
                 if (cls.Identifier is Component)

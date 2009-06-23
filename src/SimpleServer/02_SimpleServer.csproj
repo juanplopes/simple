@@ -79,13 +79,14 @@
     <Compile Include="DataAccess\ISimpleInterceptor.cs" />
     <Compile Include="DataAccess\MultiSessionFactory.cs" />
     <Compile Include="DataAccess\NHibernateFactory.cs" />
+    <Compile Include="DataAccess\SessionManager.cs" />
     <Compile Include="DataAccess\SimpleTransformers.cs" />
     <Compile Include="DataAccess\TimestampType.cs" />
     <Compile Include="DataAccess\TupleToConstructorTransformer.cs" />
     <Compile Include="DataAccess\BaseDao.cs" />
     <Compile Include="DataAccess\CriteriaHelper.cs" />
     <Compile Include="DataAccess\Extensions.cs" />
-    <Compile Include="DataAccess\SessionManager.cs" />
+    <Compile Include="DataAccess\SessionManagerOld.cs" />
     <Compile Include="DataAccess\TupleToDictionaryTransformer.cs" />
     <Compile Include="DataAccess\TupleToPropertiesTransformer.cs" />
     <Compile Include="MainController.cs" />

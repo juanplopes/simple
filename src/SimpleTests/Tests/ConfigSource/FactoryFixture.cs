@@ -168,6 +168,46 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(default(string), f.BuildString());
             Assert.AreEqual(default(int), f.BuildInt());
         }
+
+        [TestMethod]
+        public void WrappedFactoryConfigTest()
+        {
+            IWrappedConfigSource<BasicTypesSampleWithoutAttr> src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>();
+            src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
+                XmlConfigSourceFixture.SAMPLE_XML));
+
+            FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr> factories = 
+                new FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr>(() => new BasicFactory());
+
+            var f = factories.SafeGet();
+            Assert.AreEqual(default(string), f.BuildString());
+            Assert.AreEqual(default(int), f.BuildInt());
+
+            SourcesManager.RegisterSource(src);
+            Assert.AreEqual("whatever", f.BuildString());
+            Assert.AreEqual(42, f.BuildInt());
+        }
+
+        [TestMethod]
+        public void WrappedKeyedFactoryConfigTest()
+        {
+            IWrappedConfigSource<BasicTypesSampleWithoutAttr> src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>();
+            src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
+                XmlConfigSourceFixture.SAMPLE_XML));
+
+            FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr> factories =
+                new FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr>(() => new BasicFactory());
+
+            object key = new object(); 
+
+            var f = factories.SafeGet(key);
+            Assert.AreEqual(default(string), f.BuildString());
+            Assert.AreEqual(default(int), f.BuildInt());
+
+            SourcesManager.RegisterSource(key, src);
+            Assert.AreEqual("whatever", f.BuildString());
+            Assert.AreEqual(42, f.BuildInt());
+        }
     }
     #region Samples
 
@@ -182,7 +222,7 @@ namespace Simple.Tests.ConfigSource
             value2 = config.AnIntegral;
         }
 
-        public override void InitDefault()
+        public override void ClearConfig()
         {
             value1 = default(string);
             value2 = default(int);

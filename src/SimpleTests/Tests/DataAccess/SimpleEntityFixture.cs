@@ -46,7 +46,7 @@ namespace Simple.Tests.DataAccess
         [TestMethod]
         public void FirstLinqTest()
         {
-            var queryable = SessionManager.GetSession().Linq<Empresa>();
+            var queryable = SessionManagerOld.GetSession().Linq<Empresa>();
             var query = from e in queryable
                         where e.Nome == "E1"
                         select e.Nome;

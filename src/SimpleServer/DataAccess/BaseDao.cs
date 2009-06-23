@@ -29,10 +29,10 @@ namespace Simple.DataAccess
         /// <summary>
         /// Creates a DAO instance getting session from pool.
         /// </summary>
-        public BaseDao() : this(SessionManager.GetSession()) { }
-        public BaseDao(string factoryName) : this(SessionManager.GetSession(factoryName)) { }
-        public BaseDao(bool forceNewSession) : this(SessionManager.GetSession(forceNewSession)) { }
-        public BaseDao(string factoryName, bool forceNewSession) : this(SessionManager.GetSession(factoryName, forceNewSession)) { }
+        public BaseDao() : this(SessionManagerOld.GetSession()) { }
+        public BaseDao(string factoryName) : this(SessionManagerOld.GetSession(factoryName)) { }
+        public BaseDao(bool forceNewSession) : this(SessionManagerOld.GetSession(forceNewSession)) { }
+        public BaseDao(string factoryName, bool forceNewSession) : this(SessionManagerOld.GetSession(factoryName, forceNewSession)) { }
 
 
         /// <summary>

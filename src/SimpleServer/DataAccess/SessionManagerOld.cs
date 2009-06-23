@@ -15,11 +15,11 @@ using System.IO;
 
 namespace Simple.DataAccess
 {
-    public class SessionManager
+    public class SessionManagerOld
     {
         protected static object locker = new object();
 
-        protected static ThreadData<SessionManager> MyData = new ThreadData<SessionManager>();
+        protected static ThreadData<SessionManagerOld> MyData = new ThreadData<SessionManagerOld>();
         protected const string LockerId = "Locker";
 
         public static Guid? LockThreadSessions()
