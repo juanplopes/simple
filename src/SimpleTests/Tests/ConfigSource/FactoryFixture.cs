@@ -198,9 +198,9 @@ namespace Simple.Tests.ConfigSource
             FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr> factories =
                 new FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr>(() => new BasicFactory());
 
-            object key = new object(); 
+            object key = new object();
 
-            var f = factories.SafeGet(key);
+            var f = factories[key];
             Assert.AreEqual(default(string), f.BuildString());
             Assert.AreEqual(default(int), f.BuildInt());
 

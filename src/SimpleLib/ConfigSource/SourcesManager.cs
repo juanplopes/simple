@@ -16,6 +16,8 @@ namespace Simple.ConfigSource
         {
             lock (Instances)
             {
+                if (key == null) key = SourcesManager.DefaultKey;
+
                 WrappedConfigSource<C> ret = null;
 
                 if (!Instances.TryGetValue(key, out ret))
@@ -53,11 +55,10 @@ namespace Simple.ConfigSource
     {
         public static object DefaultKey = new object();
 
-
         public static void RegisterSource<C>(IConfigSource<C> source)
             where C : new()
         {
-            RegisterSource(DefaultKey, source);
+            RegisterSource(null, source);
         }
         public static void RegisterSource<C>(object key, IConfigSource<C> source)
             where C : new()
@@ -68,7 +69,7 @@ namespace Simple.ConfigSource
         public static void RemoveSource<C>()
             where C : new()
         {
-            RemoveSource<C>(DefaultKey);
+            RemoveSource<C>(null);
         }
         public static void RemoveSource<C>(object key)
             where C : new()
@@ -85,7 +86,7 @@ namespace Simple.ConfigSource
         public static void Configure<C>(IFactory<C> factory)
             where C : new()
         {
-            Configure(DefaultKey, factory);
+            Configure(null, factory);
         }
         public static void Configure<C>(object key, IFactory<C> factory)
             where C : new()

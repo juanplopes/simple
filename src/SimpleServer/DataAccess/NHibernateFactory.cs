@@ -9,15 +9,15 @@ using Simple.Patterns;
 
 namespace Simple.DataAccess
 {
-    public class NHibernateFactory : Factory<TransformationList<Configuration>>
+    public class NHibernateFactory : Factory<NHConfigurator>
     {
-        protected TransformationList<Configuration> ConfigHooks { get; set; }
-        public TransformationList<Configuration> MappingHooks { get; protected set; }
+        protected NHConfigurator ConfigHooks { get; set; }
+        public NHConfigurator MappingHooks { get; protected set; }
 
         public NHibernateFactory()
         {
-            ConfigHooks = new TransformationList<Configuration>();
-            MappingHooks = new TransformationList<Configuration>();
+            ConfigHooks = new NHConfigurator();
+            MappingHooks = new NHConfigurator();
         }
 
         private ISessionFactory _sessionFactory = null;
@@ -56,7 +56,7 @@ namespace Simple.DataAccess
             return SessionFactory.OpenSession();
         }
 
-        protected override void Config(TransformationList<Configuration> config)
+        protected override void Config(NHConfigurator config)
         {
             lock (this)
             {
@@ -70,7 +70,7 @@ namespace Simple.DataAccess
         {
             lock (this)
             {
-                ConfigHooks = new TransformationList<Configuration>();
+                ConfigHooks = new NHConfigurator();
                 _configuration = null;
                 _sessionFactory = null;
             }

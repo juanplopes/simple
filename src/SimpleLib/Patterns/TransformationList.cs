@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Simple.Patterns
 {
+    [Serializable]
     public class TransformationList<T> : LinkedList<Func<T,T>>
     {
         public TransformationList(IEnumerable<Func<T,T>> collection) : base(collection) { }

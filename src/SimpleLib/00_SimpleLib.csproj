@@ -62,6 +62,7 @@
     <Compile Include="Logging\Log4netConfig.cs" />
     <Compile Include="ConfigSource\FactoriesManager.cs" />
     <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />
+    <Compile Include="Patterns\DictionaryWrapper.cs" />
     <Compile Include="Patterns\TransformationList.cs" />
     <Compile Include="Reflection\DecoratedTypeFinder.cs" />
     <Compile Include="Common\ExceptionHelper.cs" />

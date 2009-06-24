@@ -6,16 +6,27 @@ using Simple.ConfigSource;
 using System.Xml;
 using NHibernate.Cfg;
 using Simple.Patterns;
+using System.Runtime.Serialization;
+using System.IO;
 
 namespace Simple.DataAccess
 {
-    public class NHibernateConfigSource : WrappedConfigSource<
-        TransformationList<Configuration>, NHibernateConfig>
+    public class NHConfigurator : TransformationList<Configuration>
     {
-        public override TransformationList<Configuration> TransformFromInput(NHibernateConfig input)
+        public NHConfigurator() : base() { }
+        public NHConfigurator(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    }
+
+    public class NHibernateConfigSource : WrappedConfigSource<
+        NHConfigurator, NHibernateConfig>
+    {
+        public override NHConfigurator TransformFromInput(NHibernateConfig input)
         {
-            TransformationList<Configuration> list = new TransformationList<Configuration>();
-            list.Add(c=>c.AddXmlString(input.Element.OuterXml));
+            NHConfigurator list = new NHConfigurator();
+            list.Add(c=> {
+                StringReader r = new StringReader(input.Element.OuterXml);
+                return c.Configure(XmlReader.Create(r));
+            });
             return list;
         }
     }

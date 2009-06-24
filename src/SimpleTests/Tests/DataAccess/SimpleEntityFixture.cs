@@ -15,7 +15,7 @@ namespace Simple.Tests.DataAccess
     public class SimpleEntityFixture
     {
         [ClassInitialize]
-        public void Setup()
+        public static void Setup(TestContext context)
         {
             DBEnsurer.Ensure();
         }
