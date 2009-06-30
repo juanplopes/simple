@@ -7,7 +7,6 @@ using System.IO;
 namespace Simple.ConfigSource
 {
     public interface IXPathConfigSource<T, A> : IConfigSource<T, XPathParameter<A>>
-        where T : new()
     { }
 
     public class XPathParameter<T>

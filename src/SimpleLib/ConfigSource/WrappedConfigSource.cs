@@ -8,8 +8,6 @@ namespace Simple.ConfigSource
     public abstract class WrappedConfigSource<T1, T2> :
         ConfigSource<T1>,
         IWrappedConfigSource<T1, T2>
-        where T1 : new()
-        where T2 : new()
     {
         protected IConfigSource<T2> WrappedSource { get; set; }
 
@@ -61,7 +59,6 @@ namespace Simple.ConfigSource
     }
 
     public class WrappedConfigSource<T> : WrappedConfigSource<T, T>, IWrappedConfigSource<T>
-        where T:new()
     {
         public override T TransformFromInput(T input)
         {

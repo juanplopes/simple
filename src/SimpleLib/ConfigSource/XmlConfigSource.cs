@@ -20,7 +20,6 @@ namespace Simple.ConfigSource
         IXPathConfigSource<T, XmlDocument>,
         IXPathConfigSource<T, XmlReader>,
         IXPathConfigSource<T, TextReader>
-        where T : new()
     {
         protected bool IsXmlContainer
         {
@@ -43,7 +42,7 @@ namespace Simple.ConfigSource
 
             if (IsXmlContainer)
             {
-                T t = new T();
+                T t = Activator.CreateInstance<T>();
                 (t as IXmlContentHolder).Element = element;
                 Cache = t;
                 return this;

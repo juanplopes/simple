@@ -7,7 +7,6 @@ using Simple.Logging;
 namespace Simple.ConfigSource
 {
     internal static class SourceFor<C>
-        where C : new()
     {
         private static IDictionary<object, WrappedConfigSource<C>> Instances =
             new Dictionary<object, WrappedConfigSource<C>>();
@@ -56,40 +55,33 @@ namespace Simple.ConfigSource
         public static object DefaultKey = new object();
 
         public static void RegisterSource<C>(IConfigSource<C> source)
-            where C : new()
         {
             RegisterSource(null, source);
         }
         public static void RegisterSource<C>(object key, IConfigSource<C> source)
-            where C : new()
         {
             SourceFor<C>.Set(key, source);
         }
 
         public static void RemoveSource<C>()
-            where C : new()
         {
             RemoveSource<C>(null);
         }
         public static void RemoveSource<C>(object key)
-            where C : new()
         {
             SourceFor<C>.Set(key, NullConfigSource<C>.Instance);
         }
 
         public static void ClearSources<C>()
-            where C : new()
         {
             SourceFor<C>.Clear();
         }
 
         public static void Configure<C>(IFactory<C> factory)
-            where C : new()
         {
             Configure(null, factory);
         }
         public static void Configure<C>(object key, IFactory<C> factory)
-            where C : new()
         {
             factory.Init(SourceFor<C>.Get(key));
         }

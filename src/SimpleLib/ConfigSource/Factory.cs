@@ -6,7 +6,6 @@ using System.Text;
 namespace Simple.ConfigSource
 {
     public abstract class Factory<T> : IFactory<T>
-        where T : new()
     {
         bool IFactory<T>.Initialized
         {

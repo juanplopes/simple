@@ -14,7 +14,6 @@ namespace Simple.ConfigSource
         XmlConfigSource<T>,
         IFileConfigSource<T>,
         IConfigSource<T, XPathParameter<FileInfo>>
-        where T : new()
     {
         public XPathParameter<FileInfo> XmlFile { get; set; }
         protected FileSystemWatcher Watcher { get; set; }
