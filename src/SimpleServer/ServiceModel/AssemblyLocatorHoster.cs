@@ -8,7 +8,7 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using Simple.Config;
 using System.ServiceModel.Channels;
-using Simple.Rules;
+using Simple.Services;
 using Simple.Logging;
 using System.IO;
 using log4net;

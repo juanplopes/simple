@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Simple.Rules;
+using Simple.Services;
 using Simple.DataAccess;
 using System.Reflection;
 using NHibernate;

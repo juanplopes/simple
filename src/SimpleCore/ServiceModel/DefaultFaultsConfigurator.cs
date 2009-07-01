@@ -5,7 +5,7 @@ using System.Text;
 using System.ServiceModel.Description;
 using Simple.DataAccess;
 using Simple.Configuration2;
-using Simple.Rules;
+using Simple.Services;
 using Simple.Config;
 using Simple.Common;
 using System.Reflection;

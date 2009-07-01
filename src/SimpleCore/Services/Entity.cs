@@ -4,12 +4,12 @@ using System.Text;
 using Simple.Filters;
 using Simple.DataAccess;
 
-namespace Simple.Rules
+namespace Simple.Services
 {
     [Serializable]
     public class Entity<T, R>
         where T : Entity<T, R>
-        where R : class, IBaseRules<T>
+        where R : class, IEntityService<T>
     {
         public static R Rules
         {

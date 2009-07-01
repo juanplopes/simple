@@ -5,7 +5,6 @@ using System.Text;
 using log4net;
 using System.Reflection;
 using Simple.Logging;
-using log4net.Core;
 using System.Diagnostics;
 
 
@@ -14,7 +13,7 @@ namespace Simple.Cache
 {
     public abstract class BaseCacher<T, O> : ICacher<T, O>
     {
-        protected static ILog Logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected static ILog Logger = LoggerManager.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         public static string sTrying = "Trying to get cached value...";
         public static string sNotValid = "Stored cached value was not valid. Reloading cache...";

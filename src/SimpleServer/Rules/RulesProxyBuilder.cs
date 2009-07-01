@@ -7,7 +7,7 @@ using Simple.Logging;
 using log4net;
 using Simple.DynamicProxy;
 
-namespace Simple.Rules
+namespace Simple.Services
 {
     public class RulesProxyBuilder
     {
@@ -18,7 +18,7 @@ namespace Simple.Rules
         }
 
         protected ErrorHandlingInterceptor _interceptor = new ErrorHandlingInterceptor();
-        protected ILog Logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected ILog Logger = LoggerManager.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         public object WrapInstance(object obj, Type interfaceType)
         {

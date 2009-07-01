@@ -71,8 +71,6 @@
     <Compile Include="DataAccess\EntityTransformer.cs" />
     <Compile Include="DataAccess\IPage.cs" />
     <Compile Include="DataAccess\MappedProperty.cs" />
-    <Compile Include="DataAccess\SimpleDataSource.cs" />
-    <Compile Include="DataAccess\SimpleDataSourceView.cs" />
     <Compile Include="DataAccess\GenericFault.cs" />
     <Compile Include="DataAccess\IExceptionHandler.cs" />
     <Compile Include="DataAccess\Page.cs" />
@@ -109,10 +107,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Remoting\ClientFactory.cs" />
     <Compile Include="Remoting\ServerHoster.cs" />
-    <Compile Include="Rules\IBaseRules.cs" />
-    <Compile Include="Rules\IRulesProvider.cs" />
-    <Compile Include="Rules\RuledEntity.cs" />
-    <Compile Include="Rules\RulesFactory.cs" />
+    <Compile Include="Services\IEntityService.cs" />
+    <Compile Include="Services\Entity.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\IServiceClientProvider.cs" />
+    <Compile Include="Services\IServiceHostProvider.cs" />
+    <Compile Include="Services\RulesFactory.cs" />
     <Compile Include="ServiceModel\BasicHttpBindingConfigurator.cs" />
     <Compile Include="ServiceModel\BinarySerializationConfigurator.cs" />
     <Compile Include="ServiceModel\ConfigLoader.cs" />
@@ -129,11 +129,13 @@
     <Compile Include="ServiceModel\MetadataBehaviorServiceConfigurator.cs" />
     <Compile Include="ServiceModel\NetTcpBindingConfigurator.cs" />
     <Compile Include="ServiceModel\OperationContextConfigurator.cs" />
-    <Compile Include="ServiceModel\ServiceRulesProvider.cs" />
     <Compile Include="ServiceModel\SimpleContext.cs" />
     <Compile Include="ServiceModel\SimpleFaultContractAttribute.cs" />
     <Compile Include="ServiceModel\SingletonServiceConfigurator.cs" />
     <Compile Include="ServiceModel\WSHttpBindingConfigurator.cs" />
+    <Compile Include="Services\ServiceClientFactory.cs" />
+    <Compile Include="Services\ServiceHostFactory.cs" />
+    <Compile Include="Services\ServiceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DefaultConfigContent.resx">

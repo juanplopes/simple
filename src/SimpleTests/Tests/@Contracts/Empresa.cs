@@ -1,7 +1,7 @@
 using System;
 using System.Xml.Serialization;
 using Simple.Filters;
-using Simple.Rules;
+using Simple.Services;
 using FluentNHibernate.Mapping;
 
 namespace Simple.Tests.Contracts

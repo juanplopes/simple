@@ -13,6 +13,7 @@ namespace Simple.ConfigSource
         }
 
         protected IConfigSource<T> Source { get; set; }
+        protected T ConfigCache { get; set; }
 
         public void CheckInitialized()
         {
@@ -28,9 +29,9 @@ namespace Simple.ConfigSource
 
                 Source = source;
 
-                T config = Source.Get();
+                ConfigCache = Source.Get();
 
-                SafeConfig(config);
+                SafeConfig(ConfigCache);
 
                 source.Reloaded += SafeConfig;
             }
@@ -39,8 +40,11 @@ namespace Simple.ConfigSource
         protected void SafeConfig(T config)
         {
             lock (this)
+            {
+                ConfigCache = config;
                 if (!object.Equals(default(T), config)) Config(config);
                 else ClearConfig();
+            }
         }
 
         protected abstract void Config(T config);

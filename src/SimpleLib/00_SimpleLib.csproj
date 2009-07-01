@@ -60,7 +60,7 @@
     <Compile Include="Cache\FileCacher.cs" />
     <Compile Include="Cache\ICacher.cs" />
     <Compile Include="Logging\Log4netConfig.cs" />
-    <Compile Include="ConfigSource\FactoriesManager.cs" />
+    <Compile Include="ConfigSource\FactoryManager.cs" />
     <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />
     <Compile Include="Patterns\DictionaryWrapper.cs" />
     <Compile Include="Patterns\TransformationList.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="ConfigSource\IFactoryContract.cs" />
     <Compile Include="ConfigSource\IXmlContentHolder.cs" />
     <Compile Include="ConfigSource\NullConfigSource.cs" />
-    <Compile Include="ConfigSource\SourcesManager.cs" />
+    <Compile Include="ConfigSource\SourceManager.cs" />
     <Compile Include="ConfigSource\WrappedConfigSource.cs" />
     <Compile Include="ConfigSource\XmlConfig.cs" />
     <Compile Include="ConfigSource\XmlConfigSource.cs" />
@@ -135,7 +135,7 @@
     <Compile Include="IO\StringOffsetAttribute.cs" />
     <Compile Include="Logging\Log4netFactory.cs" />
     <Compile Include="Logging\NullLog.cs" />
-    <Compile Include="Logging\SimpleLogger.cs" />
+    <Compile Include="Logging\LoggerManager.cs" />
     <Compile Include="Patterns\WorkingDays.cs" />
     <Compile Include="Common\EnumTypeAttribute.cs" />
     <Compile Include="Patterns\IWorkingDaysProvider.cs" />

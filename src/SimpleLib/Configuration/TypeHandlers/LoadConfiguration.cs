@@ -14,7 +14,7 @@ namespace Simple.Configuration2.TypeHandlers
 {
     public class LoadConfiguration
     {
-        protected static ILog Logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected static ILog Logger = LoggerManager.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         protected Dictionary<PropertyInfo, ConfigTypeHandler> Handlers { get; set; }
         public Dictionary<string, bool> ParentList { get; set; }

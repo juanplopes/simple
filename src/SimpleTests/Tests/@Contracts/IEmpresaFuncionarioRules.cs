@@ -1,11 +1,11 @@
 
 using Simple.ServiceModel;
 using System.ServiceModel;
-using Simple.Rules;
+using Simple.Services;
 namespace Simple.Tests.Contracts
 {
     [ServiceContract, MainContract]
-    public partial interface IEmpresaFuncionarioRules : IBaseRules<EmpresaFuncionario>
+    public partial interface IEmpresaFuncionarioRules : IEntityService<EmpresaFuncionario>
     {
     }
 }

@@ -15,7 +15,7 @@ namespace Simple.ConfigSource
         {
             lock (Instances)
             {
-                if (key == null) key = SourcesManager.DefaultKey;
+                if (key == null) key = SourceManager.DefaultKey;
 
                 WrappedConfigSource<C> ret = null;
 
@@ -50,7 +50,7 @@ namespace Simple.ConfigSource
 
     }
 
-    public static class SourcesManager
+    public static class SourceManager
     {
         public static object DefaultKey = new object();
 

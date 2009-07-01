@@ -15,13 +15,13 @@ namespace Simple.Tests.ConfigSource
         [TestInitialize]
         public void Setup()
         {
-            SourcesManager.RemoveSource<Log4netConfig>();
+            SourceManager.RemoveSource<Log4netConfig>();
         }
 
         [TestMethod]
         public void NullLoggerTests()
         {
-            SimpleLogger.Get(this).Debug("Teste");
+            LoggerManager.Get(this).Debug("Teste");
         }
     }
 }

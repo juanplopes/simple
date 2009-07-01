@@ -11,8 +11,8 @@ namespace Simple.DataAccess
 {
     public class SessionManager
     {
-        private static FactoriesManager<NHibernateFactory, NHConfigurator> factories =
-            new FactoriesManager<NHibernateFactory, NHConfigurator>(
+        private static FactoryManager<NHibernateFactory, NHConfigurator> factories =
+            new FactoryManager<NHibernateFactory, NHConfigurator>(
                 () => new NHibernateFactory());
 
         private static NHibernateFactory Factory()
@@ -35,14 +35,14 @@ namespace Simple.DataAccess
             return GetSession(forceNewSession).BeginTransaction();
         }
 
-        public static ITransaction BeginTransaction(string factoryName)
+        public static ITransaction BeginTransaction(object key)
         {
-            return GetSession(factoryName).BeginTransaction();
+            return GetSession(key).BeginTransaction();
         }
 
-        public static ITransaction BeginTransaction(string factoryName, bool forceNewSession)
+        public static ITransaction BeginTransaction(object key, bool forceNewSession)
         {
-            return GetSession(factoryName, forceNewSession).BeginTransaction();
+            return GetSession(key, forceNewSession).BeginTransaction();
         }
 
         public static ISession GetSession()

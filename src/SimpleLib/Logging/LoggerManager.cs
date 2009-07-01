@@ -7,10 +7,10 @@ using Simple.Patterns;
 
 namespace Simple.Logging
 {
-    public class SimpleLogger
+    public class LoggerManager
     {
-        private static FactoriesManager<Log4netFactory, Log4netConfig> manager =
-            new FactoriesManager<Log4netFactory, Log4netConfig>(() => new Log4netFactory());
+        private static FactoryManager<Log4netFactory, Log4netConfig> manager =
+            new FactoryManager<Log4netFactory, Log4netConfig>(() => new Log4netFactory());
 
         protected static Log4netFactory Factory
         {

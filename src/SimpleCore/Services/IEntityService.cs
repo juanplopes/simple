@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using System.Text;
 using System.ServiceModel;
-using Simple.Filters;
 using Simple.DataAccess;
-using Simple.ServiceModel;
-using System.Runtime.Serialization;
-using System.Linq;
+using Simple.Filters;
 
-namespace Simple.Rules
+namespace Simple.Services
 {
     [ServiceContract]
-    public interface IBaseRules<T> : ITestableService
+    public interface IEntityService<T> : IService
     {
         [OperationContract]
         T LoadByExample(T example);
@@ -50,7 +47,7 @@ namespace Simple.Rules
         [OperationContract]
         T Persist(T entity);
 
-        [OperationContract]        
+        [OperationContract]
         void Delete(T entity);
 
         [OperationContract]

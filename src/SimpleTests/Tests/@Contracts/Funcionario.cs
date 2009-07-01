@@ -1,6 +1,6 @@
 using System;
 using Simple.Filters;
-using Simple.Rules;
+using Simple.Services;
 using FluentNHibernate.Mapping;
 using System.Collections.Generic;
 

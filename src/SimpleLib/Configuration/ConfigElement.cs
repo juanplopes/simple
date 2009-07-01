@@ -31,7 +31,7 @@ namespace Simple.Configuration2
         {
             try
             {
-                Logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+                Logger = LoggerManager.Get(MethodInfo.GetCurrentMethod().DeclaringType);
             }
             catch { }
 

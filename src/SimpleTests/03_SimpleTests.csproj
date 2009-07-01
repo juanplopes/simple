@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\Service\ServiceConfigFixture.cs" />
     <Compile Include="Tests\DataAccess\NHConfigFixture.cs" />
     <Compile Include="Tests\DataAccess\NHConfigurations.Designer.cs">
       <AutoGen>True</AutoGen>

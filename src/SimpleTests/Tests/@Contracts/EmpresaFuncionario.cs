@@ -1,5 +1,5 @@
 using System;
-using Simple.Rules;
+using Simple.Services;
 using Simple.Filters;
 using FluentNHibernate.Mapping;
 

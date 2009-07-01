@@ -13,12 +13,12 @@ using System.Diagnostics;
 using Simple.Common;
 using log4net.Repository.Hierarchy;
 
-namespace Simple.Rules
+namespace Simple.Services
 {
     public class ErrorHandlingInterceptor
     {
         protected SimpleConfig Config = SimpleConfig.Get();
-        ILog logger = SimpleLogger.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        ILog logger = LoggerManager.Get(MethodInfo.GetCurrentMethod().DeclaringType);
 
         #region IInterceptor Members
 
@@ -41,7 +41,7 @@ namespace Simple.Rules
                 catch (Exception e)
                 {
                     e = ExceptionHelper.ForReal(e);
-                    SimpleLogger.Get(this).Error(
+                    LoggerManager.Get(this).Error(
                         string.Format("There was an error inside a rule: {0}", e.Message), e);
                     if (!Handle(e)) throw e;
 

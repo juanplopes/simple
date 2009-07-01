@@ -6,15 +6,14 @@ using Simple.Patterns;
 
 namespace Simple.ConfigSource
 {
-    public class FactoriesManager<F, C>
+    public class FactoryManager<F, C>
         where F : class, IFactory<C>
-        where C : new()
     {
         protected Func<F> HowToBuild { get; set; }
         protected Dictionary<object, F> Factories { get; set; }
 
-        public FactoriesManager() : this(() => Activator.CreateInstance<F>()) { }
-        public FactoriesManager(Func<F> howToBuild)
+        public FactoryManager() : this(() => Activator.CreateInstance<F>()) { }
+        public FactoryManager(Func<F> howToBuild)
         {
             this.HowToBuild = howToBuild;
             this.Factories = new Dictionary<object, F>();
@@ -24,7 +23,7 @@ namespace Simple.ConfigSource
         {
             lock (Factories)
             {
-                if (key == null) key = SourcesManager.DefaultKey;
+                if (key == null) key = SourceManager.DefaultKey;
 
                 howToBuild = howToBuild ?? HowToBuild;
 
@@ -34,7 +33,7 @@ namespace Simple.ConfigSource
                     if (howToBuild == null) throw new InvalidOperationException("I don't know how to build factory!");
 
                     factory = howToBuild();
-                    SourcesManager.Configure(key, factory);
+                    SourceManager.Configure(key, factory);
                     Factories[key] = factory;
                 }
 

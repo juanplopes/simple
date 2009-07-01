@@ -11,7 +11,7 @@ using System.Runtime.Serialization;
 using log4net;
 using System.Linq;
 
-namespace Simple.Rules
+namespace Simple.Services
 {
     public class BaseRules<T> : BaseRules<T, BaseDao<T>>
     {
@@ -19,7 +19,7 @@ namespace Simple.Rules
     }
 
     [KnownType(typeof(Page<>))]
-    public class BaseRules<T, D> : MarshalByRefObject, IBaseRules<T>
+    public class BaseRules<T, D> : MarshalByRefObject, IEntityService<T>
         where D : BaseDao<T>, new()
     {
         private ILog _logger = null;
@@ -28,7 +28,7 @@ namespace Simple.Rules
             get
             {
                 if (_logger == null)
-                    _logger = SimpleLogger.Get(this);
+                    _logger = LoggerManager.Get(this);
                 return _logger;
             }
         }

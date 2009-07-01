@@ -46,11 +46,11 @@ namespace Simple.Tests.ConfigSource
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
 
-            SourcesManager.RemoveSource<BasicTypesSampleWithoutAttr>();
-            SourcesManager.RegisterSource(src);
+            SourceManager.RemoveSource<BasicTypesSampleWithoutAttr>();
+            SourceManager.RegisterSource(src);
 
             var b = new BasicFactory();
-            SourcesManager.Configure(b);
+            SourceManager.Configure(b);
 
             Assert.AreEqual(42, b.BuildInt());
             Assert.AreEqual("whatever", b.BuildString());
@@ -63,19 +63,19 @@ namespace Simple.Tests.ConfigSource
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
 
-            SourcesManager.RemoveSource<BasicTypesSampleWithoutAttr>();
+            SourceManager.RemoveSource<BasicTypesSampleWithoutAttr>();
 
             var b = new BasicFactory();
 
-            SourcesManager.Configure(b);
+            SourceManager.Configure(b);
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
 
-            SourcesManager.RegisterSource(src);
+            SourceManager.RegisterSource(src);
             Assert.AreEqual("whatever", b.BuildString());
             Assert.AreEqual(42, b.BuildInt());
 
-            SourcesManager.RemoveSource<BasicTypesSampleWithoutAttr>();
+            SourceManager.RemoveSource<BasicTypesSampleWithoutAttr>();
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
         }
@@ -87,19 +87,19 @@ namespace Simple.Tests.ConfigSource
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
 
-            SourcesManager.ClearSources<BasicTypesSampleWithoutAttr>();
+            SourceManager.ClearSources<BasicTypesSampleWithoutAttr>();
 
             var b = new BasicFactory();
 
-            SourcesManager.Configure(2, b);
+            SourceManager.Configure(2, b);
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
 
-            SourcesManager.RegisterSource(2, src);
+            SourceManager.RegisterSource(2, src);
             Assert.AreEqual("whatever", b.BuildString());
             Assert.AreEqual(42, b.BuildInt());
 
-            SourcesManager.RemoveSource<BasicTypesSampleWithoutAttr>(2);
+            SourceManager.RemoveSource<BasicTypesSampleWithoutAttr>(2);
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
         }
@@ -156,11 +156,11 @@ namespace Simple.Tests.ConfigSource
             src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML));
 
-            SourcesManager.ClearSources<BasicTypesSampleWithoutAttr>();
-            SourcesManager.RegisterSource(src);
+            SourceManager.ClearSources<BasicTypesSampleWithoutAttr>();
+            SourceManager.RegisterSource(src);
 
             var f = new BasicFactory();
-            SourcesManager.Configure(f);
+            SourceManager.Configure(f);
             Assert.AreEqual("whatever", f.BuildString());
             Assert.AreEqual(42, f.BuildInt());
 
@@ -176,14 +176,14 @@ namespace Simple.Tests.ConfigSource
             src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML));
 
-            FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr> factories = 
-                new FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr>(() => new BasicFactory());
+            FactoryManager<BasicFactory, BasicTypesSampleWithoutAttr> factories = 
+                new FactoryManager<BasicFactory, BasicTypesSampleWithoutAttr>(() => new BasicFactory());
 
             var f = factories.SafeGet();
             Assert.AreEqual(default(string), f.BuildString());
             Assert.AreEqual(default(int), f.BuildInt());
 
-            SourcesManager.RegisterSource(src);
+            SourceManager.RegisterSource(src);
             Assert.AreEqual("whatever", f.BuildString());
             Assert.AreEqual(42, f.BuildInt());
         }
@@ -195,8 +195,8 @@ namespace Simple.Tests.ConfigSource
             src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML));
 
-            FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr> factories =
-                new FactoriesManager<BasicFactory, BasicTypesSampleWithoutAttr>(() => new BasicFactory());
+            FactoryManager<BasicFactory, BasicTypesSampleWithoutAttr> factories =
+                new FactoryManager<BasicFactory, BasicTypesSampleWithoutAttr>(() => new BasicFactory());
 
             object key = new object();
 
@@ -204,7 +204,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(default(string), f.BuildString());
             Assert.AreEqual(default(int), f.BuildInt());
 
-            SourcesManager.RegisterSource(key, src);
+            SourceManager.RegisterSource(key, src);
             Assert.AreEqual("whatever", f.BuildString());
             Assert.AreEqual(42, f.BuildInt());
         }

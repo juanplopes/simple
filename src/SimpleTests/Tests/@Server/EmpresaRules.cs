@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Simple.Rules;
+using Simple.Services;
 using Simple.Tests.Contracts;
 using System.Linq;
 

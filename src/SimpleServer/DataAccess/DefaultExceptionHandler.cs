@@ -6,7 +6,7 @@ using NHibernate;
 using Simple.DataAccess;
 using System.ServiceModel;
 using Simple.Logging;
-using Simple.Rules;
+using Simple.Services;
 
 namespace Simple.DataAccess
 {

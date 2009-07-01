@@ -28,7 +28,7 @@ namespace Simple.ConfigSource
         public void InvokeReload() {
             if (this.Reload())
             {
-                SimpleLogger.Get(this).DebugFormat("Reload was invoked for {0}...", typeof(T));
+                LoggerManager.Get(this).DebugFormat("Reload was invoked for {0}...", typeof(T));
 
                 if (Reloaded != null)
                     Reloaded.Invoke(this.Get());
