@@ -13,14 +13,14 @@ using System.Linq;
 
 namespace Simple.Services
 {
-    public class BaseRules<T> : BaseRules<T, BaseDao<T>>
+    public class BaseRules<T> : BaseRules<T, EntityDao<T>>
     {
 
     }
 
     [KnownType(typeof(Page<>))]
     public class BaseRules<T, D> : MarshalByRefObject, IEntityService<T>
-        where D : BaseDao<T>, new()
+        where D : EntityDao<T>, new()
     {
         private ILog _logger = null;
         protected ILog Logger

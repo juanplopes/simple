@@ -18,14 +18,14 @@ namespace Simple.Tests.ConfigSource
             SourceManager.RemoveSource<IServiceClientProvider>(this);
             var svc = Simply.Connect<ITestClientConnector>();
 
-            Assert.AreEqual(null, svc.TestInt());
+            Assert.AreEqual(0, svc.TestInt());
             Assert.AreEqual(null, svc.TestString());
         }
     }
 
     public interface ITestClientConnector
     {
-        int? TestInt();
+        int TestInt();
         string TestString();
     }
 }

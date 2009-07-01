@@ -17,44 +17,42 @@ namespace Simple.DataAccess
     /// <summary>
     /// Untyped base DAO class. Session holder.
     /// </summary>
-    public class BaseDao
+    public class Dao
     {
-        public ISession Session { get; private set; }
-
-        public BaseDao(ISession session)
+        private ISession _session = null;
+        public ISession Session
         {
-            Session = session;
+            get
+            {
+                if (_session == null)
+                    throw new InvalidOperationException("This Dao has no session attached");
+                
+                return _session;
+            }
         }
+
+        public Dao(ISession session)
+        {
+            _session = session;
+        }
+
 
         /// <summary>
         /// Creates a DAO instance getting session from pool.
         /// </summary>
-        public BaseDao() : this(SessionManagerOld.GetSession()) { }
-        public BaseDao(string factoryName) : this(SessionManagerOld.GetSession(factoryName)) { }
-        public BaseDao(bool forceNewSession) : this(SessionManagerOld.GetSession(forceNewSession)) { }
-        public BaseDao(string factoryName, bool forceNewSession) : this(SessionManagerOld.GetSession(factoryName, forceNewSession)) { }
-
-
-        /// <summary>
-        /// Creates a DAO instance using session from another DAO instance.
-        /// </summary>
-        /// <param name="previousDao">DAO reference</param>
-        public BaseDao(BaseDao previousDao) : this(previousDao.Session) { }
+        public Dao() { }
+        public Dao(object key) : this(SessionManager.GetSession(key)) { }
+        public Dao(object key, bool forceNew) : this(SessionManager.GetSession(key, forceNew)) { }
+     
     }
 
-    public class BaseDao<T> : BaseDao
+    public class EntityDao<T> : Dao
     {
-        public BaseDao() : base() { }
-        public BaseDao(ISession session) : base(session) { }
-        public BaseDao(BaseDao previousDao) : base(previousDao) { }
-        public BaseDao(string factoryName) : base(factoryName) { }
-        public BaseDao(bool forceNewSession) : base(forceNewSession) { }
-        public BaseDao(string factoryName, bool forceNewSession) : base(factoryName, forceNewSession) { }
+        public EntityDao() : base() { }
+        public EntityDao(ISession session) : base(session) { }
+        public EntityDao(object key) : base(key) { }
+        public EntityDao(object key, bool forceNew) : base(key, forceNew) { }
 
-        protected static class Nested
-        {
-            public static SimpleConfig Config = SimpleConfig.Get();
-        }
 
         //public T Unproxy(T entity)
         //{
@@ -97,11 +95,6 @@ namespace Simple.DataAccess
         protected virtual bool DefaultFlush
         {
             get { return true; }
-        }
-
-        protected virtual bool DefaultMergeBeforeUpdate
-        {
-            get { return Nested.Config.DataConfig.Options.MergeBeforeUpdate; }
         }
 
         public T Load(object id)
@@ -156,8 +149,6 @@ namespace Simple.DataAccess
 
         public void Update(T entity, bool flush)
         {
-            if (DefaultMergeBeforeUpdate)
-                entity = (T)Session.Merge(entity);
             Session.Update(entity);
             if (flush) Session.Flush();
         }
@@ -169,9 +160,6 @@ namespace Simple.DataAccess
 
         public void Save(T entity, bool flush)
         {
-            if (DefaultMergeBeforeUpdate)
-                entity = (T)Session.Merge(entity);
-
             object obj = Session.Save(entity);
             if (flush) Session.Flush();
         }
@@ -183,9 +171,6 @@ namespace Simple.DataAccess
 
         public void SaveOrUpdate(T entity, bool flush)
         {
-            if (DefaultMergeBeforeUpdate)
-                entity = (T)Session.Merge(entity);
-
             Session.SaveOrUpdate(entity);
             if (flush) Session.Flush();
         }

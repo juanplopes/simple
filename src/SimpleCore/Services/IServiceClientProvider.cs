@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.DynamicProxy;
+using System.Reflection;
 
 namespace Simple.Services
 {
@@ -13,14 +14,25 @@ namespace Simple.Services
 
     public class NullServiceClientProvider : IServiceClientProvider
     {
+        private object _cache = null;
+
         #region IServiceFactory Members
 
         public object Create(Type type)
         {
-            return DynamicProxyFactory.Instance.CreateProxy(null, (o, m, p) =>
+            lock (this)
             {
-                return null;
-            });
+                if (_cache == null)
+                {
+                    _cache = DynamicProxyFactory.Instance.CreateProxy(null, (o, m, p) =>
+                    {
+                        Type retType = ((MethodInfo)m).ReturnType;
+                        return retType.IsValueType ? Activator.CreateInstance(retType) : null;
+                    });
+                }
+
+                return _cache;
+            }
         }
 
         #endregion

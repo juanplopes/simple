@@ -73,7 +73,6 @@
     <Compile Include="DataAccess\NHibernateConfig.cs" />
     <Compile Include="DataAccess\NHibernateConfigSource.cs" />
     <Compile Include="DataAccess\Conventions\LazyConvention.cs" />
-    <Compile Include="DataAccess\Dao\IDao.cs" />
     <Compile Include="DataAccess\DataContext.cs" />
     <Compile Include="DataAccess\GenericInterceptor.cs" />
     <Compile Include="DataAccess\ISimpleInterceptor.cs" />
