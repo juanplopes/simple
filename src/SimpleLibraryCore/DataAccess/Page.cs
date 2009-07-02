@@ -28,7 +28,7 @@ namespace SimpleLibrary.DataAccess
             }
         }
 
-        public Page(IList<T> items, int totalCount) : base(items)
+        public Page(IEnumerable<T> items, int totalCount) : base(new List<T>(items))
         {
             TotalCount = totalCount;
         }
