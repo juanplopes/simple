@@ -113,7 +113,9 @@
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\Entity.cs" />
     <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\IServiceClientFactory.cs" />
     <Compile Include="Services\IServiceClientProvider.cs" />
+    <Compile Include="Services\IServiceHostFactory.cs" />
     <Compile Include="Services\IServiceHostProvider.cs" />
     <Compile Include="Services\RulesFactory.cs" />
     <Compile Include="ServiceModel\BasicHttpBindingConfigurator.cs" />

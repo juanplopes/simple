@@ -19,13 +19,13 @@ namespace Simple.Remoting
         HTTP
     }
 
-    [XmlRoot]
+    [XmlRoot("remoting")]
     public class RemotingConfig
     {
         public const string MaskVariable = "$typename";
 
-        [XmlElement("addressBase")]
-        public string AddressBase { get; set; }
+        [XmlElement("baseAddress")]
+        public string BaseAddress { get; set; }
 
         [XmlElement("endpointMask"), DefaultValue(MaskVariable)]
         public string EndpointMask { get; set; }
@@ -42,7 +42,7 @@ namespace Simple.Remoting
 
         public Uri GetUriFromAddressBase()
         {
-            return new Uri(AddressBase, UriKind.Absolute);
+            return new Uri(BaseAddress, UriKind.Absolute);
         }
 
         public IChannelReceiver GetChannel()

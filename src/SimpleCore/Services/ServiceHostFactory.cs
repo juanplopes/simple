@@ -10,9 +10,9 @@ using System.Reflection;
 
 namespace Simple.Services
 {
-    public class ServiceHostFactory : Factory<IServiceHostProvider>
+    public class ServiceHostFactory : Factory<IServiceHostProvider>, Simple.Services.IServiceHostFactory
     {
-        ILog logger = Simply.Log(MethodInfo.GetCurrentMethod());
+        ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
         protected override void OnConfig(IServiceHostProvider config)
         {
@@ -23,9 +23,9 @@ namespace Simple.Services
             ConfigCache = new NullServiceHostProvider();
         }
 
-        public void Add(Type type)
+        public void Host(Type type)
         {
-            ConfigCache.Add(type, GetContractFromType(type));
+            ConfigCache.Host(type, GetContractFromType(type));
         }
 
         protected Type GetContractFromType(Type type)

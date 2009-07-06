@@ -22,27 +22,27 @@ namespace Simple.Logging
 
         public static ILog Get(Type type)
         {
-            return TryGetLogger(x => x.GetLogger(type));
+            return TryGetLogger(x => x.Log(type));
         }
 
         public static ILog Get(string loggerName)
         {
-            return TryGetLogger(x => x.GetLogger(loggerName));
+            return TryGetLogger(x => x.Log(loggerName));
         }
 
         public static ILog Get(object obj)
         {
-            return TryGetLogger(x => x.GetLogger(obj));
+            return TryGetLogger(x => x.Log(obj));
         }
 
         public static ILog Get<T>()
         {
-            return TryGetLogger(x => x.GetLogger<T>());
+            return TryGetLogger(x => x.Log<T>());
         }
 
         public static ILog Get(MemberInfo member)
         {
-            return TryGetLogger(x => x.GetLogger(member));
+            return TryGetLogger(x => x.Log(member));
         }
 
         protected delegate ILog GetLoggerDelegate(Log4netFactory factory);

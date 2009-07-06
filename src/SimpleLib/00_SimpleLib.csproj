@@ -59,6 +59,9 @@
     <Compile Include="Cache\BaseCacher.cs" />
     <Compile Include="Cache\FileCacher.cs" />
     <Compile Include="Cache\ICacher.cs" />
+    <Compile Include="ConfigSource\AggregateFactory.cs" />
+    <Compile Include="ConfigSource\DirectConfigSource.cs" />
+    <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netConfig.cs" />
     <Compile Include="ConfigSource\FactoryManager.cs" />
     <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />

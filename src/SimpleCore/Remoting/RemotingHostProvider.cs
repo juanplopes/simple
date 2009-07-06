@@ -33,7 +33,7 @@ namespace Simple.Remoting
                 channel.StopListening(null);
         }
 
-        public void Add(Type type, Type contract)
+        public void Host(Type type, Type contract)
         {
             string key = ConfigCache.GetEndpointKey(contract);
             RemotingConfiguration.RegisterWellKnownServiceType(type, key, WellKnownObjectMode.Singleton);

@@ -6,7 +6,6 @@ namespace TestClient
     {
         static void Main(string[] args)
         {
-            Simply.Log<Program>().Debug("Teste");
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Simple.Tests.ConfigSource
         public void TestNullServiceCreation()
         {
             SourceManager.RemoveSource<IServiceClientProvider>(this);
-            var svc = Simply.Connect<ITestClientConnector>();
+            var svc = Simply.Do.Connect<ITestClientConnector>();
 
             Assert.AreEqual(0, svc.TestInt());
             Assert.AreEqual(null, svc.TestString());

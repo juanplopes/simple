@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\INHibernateFactory.cs" />
     <Compile Include="DataAccess\NHibernateConfig.cs" />
     <Compile Include="DataAccess\NHibernateConfigSource.cs" />
     <Compile Include="DataAccess\Conventions\LazyConvention.cs" />

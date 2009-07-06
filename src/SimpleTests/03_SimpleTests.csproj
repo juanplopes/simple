@@ -83,6 +83,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\Service\RemotingConfigs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RemotingConfigs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Service\RemotingFactoryFixture.cs" />
     <Compile Include="Tests\Service\ServiceConfigFixture.cs" />
     <Compile Include="Tests\DataAccess\NHConfigFixture.cs" />
     <Compile Include="Tests\DataAccess\NHConfigurations.Designer.cs">
@@ -151,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\NHConfig1.xml" />
+    <Content Include="Resources\SimpleRemotingConfig.xml" />
     <Content Include="Tests.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -194,6 +201,10 @@
     <EmbeddedResource Include="Tests\DataAccess\NHConfigurations.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>NHConfigurations.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tests\Service\RemotingConfigs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RemotingConfigs.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

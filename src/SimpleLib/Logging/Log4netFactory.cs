@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Simple.Logging
 {
-    public class Log4netFactory : Factory<Log4netConfig>
+    public class Log4netFactory : Factory<Log4netConfig>, Simple.Logging.ILog4netFactory
     {
         protected override void OnConfig(Log4netConfig config)
         {
@@ -24,29 +24,29 @@ namespace Simple.Logging
             OnConfig(source.Get());
         }
 
-        public ILog GetLogger(string name)
+        public ILog Log(string name)
         {
             return LogManager.GetLogger(name);
         }
 
-        public ILog GetLogger(Type type)
+        public ILog Log(Type type)
         {
             return LogManager.GetLogger(type);
         }
 
-        public ILog GetLogger(object obj)
+        public ILog Log(object obj)
         {
-            return GetLogger(obj.GetType());
+            return Log(obj.GetType());
         }
 
-        public ILog GetLogger<T>()
+        public ILog Log<T>()
         {
-            return GetLogger(typeof(T));
+            return Log(typeof(T));
         }
 
-        public ILog GetLogger(MemberInfo member)
+        public ILog Log(MemberInfo member)
         {
-            return GetLogger(member.DeclaringType);
+            return Log(member.DeclaringType);
         }
 
 

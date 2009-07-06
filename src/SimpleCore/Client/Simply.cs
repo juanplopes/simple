@@ -6,51 +6,57 @@ using log4net;
 using Simple.Logging;
 using System.Reflection;
 using Simple.Services;
+using Simple.ConfigSource;
 
 namespace Simple.Client
 {
-    public class Simply
+    public class Simply : ClientSimplyBase<Simply>
+    {
+
+    }
+
+    public class ClientSimplyBase<F> : AggregateFactory<F>, ILog4netFactory, IServiceClientFactory, IServiceHostFactory
+        where F : AggregateFactory<F>, new()
     {
         #region Logger
-        public static ILog Log(object obj)
+        public ILog Log(object obj)
         {
             return LoggerManager.Get(obj);
         }
-        public static ILog Log(string name)
+        public ILog Log(string name)
         {
             return LoggerManager.Get(name);
         }
-        public static ILog Log(MemberInfo member)
+        public ILog Log(MemberInfo member)
         {
             return LoggerManager.Get(member);
         }
-        public static ILog Log(Type type)
+        public ILog Log(Type type)
         {
             return LoggerManager.Get(type);
         }
-        public static ILog Log<T>()
+        public ILog Log<T>()
         {
             return LoggerManager.Get<T>();
         }
         #endregion
 
         #region Services
-        public static void Host(Type type)
+        public void Host(Type type)
         {
-            ServiceManager.Host(type);
+            ServiceManager.Host(ConfigKey, type);
         }
-        public static void Host(object key, Type type)
+
+        public T Connect<T>()
         {
-            ServiceManager.Host(key, type);
+            return ServiceManager.Connect<T>(ConfigKey);
         }
-        public static T Connect<T>()
+
+        public object Connect(Type type)
         {
-            return ServiceManager.Connect<T>();
-        }
-        public static T Connect<T>(object key)
-        {
-            return ServiceManager.Connect<T>(key);
+            return ServiceManager.Connect(ConfigKey, type);
         }
         #endregion
+
     }
 }

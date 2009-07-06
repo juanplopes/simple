@@ -6,7 +6,7 @@ using Simple.ConfigSource;
 
 namespace Simple.Services
 {
-    public class ServiceClientFactory : Factory<IServiceClientProvider>
+    public class ServiceClientFactory : Factory<IServiceClientProvider>, Simple.Services.IServiceClientFactory
     {
         protected override void OnConfig(IServiceClientProvider config) { }
 
@@ -15,12 +15,12 @@ namespace Simple.Services
             ConfigCache = new NullServiceClientProvider();
         }
 
-        public T Create<T>()
+        public T Connect<T>()
         {
             return (T)ConfigCache.Create(typeof(T));
         }
 
-        public object Create(Type type)
+        public object Connect(Type type)
         {
             return ConfigCache.Create(type);
         }

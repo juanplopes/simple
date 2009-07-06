@@ -9,7 +9,7 @@ using Simple.Patterns;
 
 namespace Simple.DataAccess
 {
-    public class NHibernateFactory : Factory<NHConfigurator>
+    public class NHibernateFactory : Factory<NHConfigurator>, Simple.DataAccess.INHibernateFactory
     {
         protected NHConfigurator ConfigHooks { get; set; }
         public NHConfigurator MappingHooks { get; protected set; }

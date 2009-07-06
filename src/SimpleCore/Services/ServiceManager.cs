@@ -36,22 +36,27 @@ namespace Simple.Services
 
         public static void Host(Type type)
         {
-            HostFactory().Add(type);
+            HostFactory().Host(type);
         }
 
         public static void Host(object key, Type type)
         {
-            HostFactory(key).Add(type);
+            HostFactory(key).Host(type);
         }
 
         public static T Connect<T>()
         {
-            return ClientFactory().Create<T>();
+            return ClientFactory().Connect<T>();
         }
 
         public static T Connect<T>(object key)
         {
-            return ClientFactory(key).Create<T>();
+            return ClientFactory(key).Connect<T>();
+        }
+
+        public static object Connect(object key, Type type)
+        {
+            return ClientFactory(key).Connect(type);
         }
     }
 }
