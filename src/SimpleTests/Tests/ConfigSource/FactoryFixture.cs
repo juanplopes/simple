@@ -216,13 +216,13 @@ namespace Simple.Tests.ConfigSource
         string value1;
         int value2;
 
-        protected override void Config(BasicTypesSampleWithoutAttr config)
+        protected override void OnConfig(BasicTypesSampleWithoutAttr config)
         {
             value1 = config.AString;
             value2 = config.AnIntegral;
         }
 
-        public override void ClearConfig()
+        protected override void OnClearConfig()
         {
             value1 = default(string);
             value2 = default(int);

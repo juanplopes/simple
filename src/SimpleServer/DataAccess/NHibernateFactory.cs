@@ -56,7 +56,7 @@ namespace Simple.DataAccess
             return SessionFactory.OpenSession();
         }
 
-        protected override void Config(NHConfigurator config)
+        protected override void OnConfig(NHConfigurator config)
         {
             lock (this)
             {
@@ -66,7 +66,7 @@ namespace Simple.DataAccess
             }
         }
 
-        public override void ClearConfig()
+        protected override void OnClearConfig()
         {
             lock (this)
             {

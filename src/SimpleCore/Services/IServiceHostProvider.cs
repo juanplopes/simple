@@ -7,19 +7,26 @@ namespace Simple.Services
 {
     public interface IServiceHostProvider
     {
-        void Add(Type type);
+        void Init();
+        void Add(Type type, Type contract);
+        void Start();
     }
 
     public class NullServiceHostProvider : IServiceHostProvider
     {
 
-        #region IServiceHost Members
-
-        public void Add(Type type)
+        public void Add(Type type, Type contract)
         {
-            throw new NotImplementedException();
         }
 
-        #endregion
+        public void Init()
+        {
+            
+        }
+
+        public void Start()
+        {
+
+        }
     }
 }

@@ -10,18 +10,18 @@ namespace Simple.Logging
 {
     public class Log4netFactory : Factory<Log4netConfig>
     {
-        protected override void Config(Log4netConfig config)
+        protected override void OnConfig(Log4netConfig config)
         {
             LogManager.ResetConfiguration();
             XmlConfigurator.Configure(config.Element);
         }
 
-        public override void ClearConfig()
+        protected override void OnClearConfig()
         {
             IConfigSource<Log4netConfig> source = new XmlConfigSource<Log4netConfig>().Load(
                 DefaultConfigResource.Log4netConfig);
 
-            Config(source.Get());
+            OnConfig(source.Get());
         }
 
         public ILog GetLogger(string name)

@@ -8,9 +8,9 @@ namespace Simple.Services
 {
     public class ServiceClientFactory : Factory<IServiceClientProvider>
     {
-        protected override void Config(IServiceClientProvider config) { }
+        protected override void OnConfig(IServiceClientProvider config) { }
 
-        public override void ClearConfig()
+        protected override void OnClearConfig()
         {
             ConfigCache = new NullServiceClientProvider();
         }

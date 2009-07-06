@@ -3,23 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.ConfigSource;
+using Simple.Reflection;
+using Simple.Client;
+using log4net;
+using System.Reflection;
 
 namespace Simple.Services
 {
     public class ServiceHostFactory : Factory<IServiceHostProvider>
     {
-        protected override void Config(IServiceHostProvider config)
+        ILog logger = Simply.Log(MethodInfo.GetCurrentMethod());
+
+        protected override void OnConfig(IServiceHostProvider config)
         {
         }
 
-        public override void ClearConfig()
+        protected override void OnClearConfig()
         {
             ConfigCache = new NullServiceHostProvider();
         }
 
         public void Add(Type type)
         {
-            ConfigCache.Add(type);
+            ConfigCache.Add(type, GetContractFromType(type));
+        }
+
+        protected Type GetContractFromType(Type type)
+        {
+            Type[] interfaces = type.GetInterfaces();
+            Type selectedOne = null;
+            
+            foreach (Type inter in interfaces)
+            {
+                if (inter.IsDefined(typeof(MainContractAttribute), false))
+                {
+                    if (selectedOne != null)
+                    {
+                        if (inter.IsAssignableFrom(selectedOne))
+                        {
+                            logger.Debug("Found multiple assignable interface types. Inheritance. Skipping...");
+                            continue;
+                        }
+
+                        logger.Warn("Found multiple assignable interface types. Going on...");
+                    }
+
+                    selectedOne = inter;
+                }
+            }
+
+            if (selectedOne == null)
+                throw new ApplicationException("MainContract not found for type: " + type.Name);
+
+            return selectedOne;
         }
     }
 }

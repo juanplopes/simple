@@ -18,7 +18,7 @@ namespace Simple.Services
 
         #region IServiceFactory Members
 
-        public object Create(Type type)
+        public object Create(Type contract)
         {
             lock (this)
             {
