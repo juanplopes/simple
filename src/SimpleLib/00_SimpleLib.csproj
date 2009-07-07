@@ -61,6 +61,7 @@
     <Compile Include="Cache\ICacher.cs" />
     <Compile Include="ConfigSource\AggregateFactory.cs" />
     <Compile Include="ConfigSource\DirectConfigSource.cs" />
+    <Compile Include="ConfigSource\ISimply.cs" />
     <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netConfig.cs" />
     <Compile Include="ConfigSource\FactoryManager.cs" />

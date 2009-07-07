@@ -10,6 +10,7 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting;
 using System.ComponentModel;
+using Simple.Client;
 
 namespace Simple.Remoting
 {
@@ -19,7 +20,7 @@ namespace Simple.Remoting
         HTTP
     }
 
-    [XmlRoot("remoting")]
+    [XmlRoot("remoting"), Serializable]
     public class RemotingConfig
     {
         public const string MaskVariable = "$typename";
@@ -49,6 +50,7 @@ namespace Simple.Remoting
         {
             Uri uri = GetUriFromAddressBase();
 
+            Simply.Do.Log(this).DebugFormat("Creating channel for URI {0}...", uri);
             switch (uri.Scheme.ToLower())
             {
                 case "tcp":

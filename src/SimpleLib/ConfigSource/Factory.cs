@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simple.ConfigSource
 {
-    public abstract class Factory<T> : IFactory<T>
+    public abstract class Factory<T> : IFactory<T>, IDisposable
     {
         public bool Initialized
         {
@@ -52,5 +52,14 @@ namespace Simple.ConfigSource
 
         protected abstract void OnConfig(T config);
         protected abstract void OnClearConfig();
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Clear();
+        }
+
+        #endregion
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Simple.ConfigSource;
 using Simple.Reflection;
 using Simple.Client;
 using log4net;
 using System.Reflection;
+using Simple.Patterns;
 
 namespace Simple.Services
 {
@@ -25,37 +25,16 @@ namespace Simple.Services
 
         public void Host(Type type)
         {
-            ConfigCache.Host(type, GetContractFromType(type));
+            foreach (Type contract in GetContractsFromType(type))
+            {
+                ConfigCache.Host(type, contract);
+            }
         }
 
-        protected Type GetContractFromType(Type type)
+        protected IEnumerable<Type> GetContractsFromType(Type type)
         {
             Type[] interfaces = type.GetInterfaces();
-            Type selectedOne = null;
-            
-            foreach (Type inter in interfaces)
-            {
-                if (inter.IsDefined(typeof(MainContractAttribute), false))
-                {
-                    if (selectedOne != null)
-                    {
-                        if (inter.IsAssignableFrom(selectedOne))
-                        {
-                            logger.Debug("Found multiple assignable interface types. Inheritance. Skipping...");
-                            continue;
-                        }
-
-                        logger.Warn("Found multiple assignable interface types. Going on...");
-                    }
-
-                    selectedOne = inter;
-                }
-            }
-
-            if (selectedOne == null)
-                throw new ApplicationException("MainContract not found for type: " + type.Name);
-
-            return selectedOne;
+            return Enumerable.Filter(interfaces, t => t.IsDefined(typeof(MainContractAttribute), false));
         }
     }
 }
