@@ -3,11 +3,12 @@ using Simple.Filters;
 using Simple.Services;
 using FluentNHibernate.Mapping;
 using System.Collections.Generic;
+using Simple.ConfigSource;
 
 namespace Simple.Tests.Contracts
 {
 
-    [Serializable]
+    [Serializable, DefaultConfig(typeof(DBEnsurer))]
     public partial class Funcionario : Entity<Funcionario, IFuncionarioRules>
     {
         public virtual int Id { get; set; }

@@ -47,6 +47,11 @@ namespace Simple.Client
             ServiceManager.Host(ConfigKey, type);
         }
 
+        public void HostAssemblyOf(Type type)
+        {
+            ServiceManager.HostAssemblyOf(ConfigKey, type);
+        }
+
         public T Connect<T>()
         {
             return ServiceManager.Connect<T>(ConfigKey);
@@ -57,6 +62,7 @@ namespace Simple.Client
             return ServiceManager.Connect(ConfigKey, type);
         }
         #endregion
+
 
     }
 }

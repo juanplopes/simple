@@ -7,17 +7,30 @@ using Simple.DataAccess;
 using Simple.Tests.Contracts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Filters;
+using Simple.ConfigSource;
+using Simple.Tests.DataAccess;
+using Simple.Remoting;
+using Simple.Tests.Service;
+using Simple.Server;
 
 namespace Simple.Tests
 {
     public class DBEnsurer
     {
-        public static void Ensure()
+        public static void Ensure(object key)
         {
-            SchemaExport exp = new SchemaExport(SessionManager.GetConfig());
+            NHibernateSimply.Do.Configure(key,
+                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
+            RemotingSimply.Do.Configure(key,
+                XmlConfig.LoadXml<RemotingConfig>(RemotingConfigs.SimpleRemotingConfig8020));
+            Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer));
+
+            SchemaExport exp = new SchemaExport(SessionManager.GetConfig(key));
             exp.Drop(true, true);
             exp.Create(true, true);
             InsertTestData();
+
+
         }
         public static Empresa E1 = null;
         public static Funcionario F1 = null;

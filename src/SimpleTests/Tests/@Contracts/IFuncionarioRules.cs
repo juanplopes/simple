@@ -4,7 +4,7 @@ using Simple.ServiceModel;
 
 namespace Simple.Tests.Contracts
 {
-    [ServiceContract, MainContract]
+    [ServiceContract]
     public partial interface IFuncionarioRules : IEntityService<Funcionario>
     {
     }

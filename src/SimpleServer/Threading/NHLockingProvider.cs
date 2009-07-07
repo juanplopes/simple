@@ -7,7 +7,6 @@ using Simple.DataAccess;
 using NHibernate;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using Simple.Config;
 
 namespace Simple.Threading
 {

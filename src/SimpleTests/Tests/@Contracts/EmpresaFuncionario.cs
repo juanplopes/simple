@@ -2,11 +2,12 @@ using System;
 using Simple.Services;
 using Simple.Filters;
 using FluentNHibernate.Mapping;
+using Simple.ConfigSource;
 
 namespace Simple.Tests.Contracts
 {
 
-    [Serializable]
+    [Serializable, DefaultConfig(typeof(DBEnsurer))]
     public partial class EmpresaFuncionario : Entity<EmpresaFuncionario, IEmpresaFuncionarioRules>
     {
         public virtual int Id { get; set; }

@@ -5,7 +5,7 @@ using Simple.ServiceModel;
 
 namespace Simple.Tests.Contracts
 {
-    [ServiceContract, MainContract]
+    [ServiceContract]
     public partial interface IEmpresaRules : IEntityService<Empresa>
     {
         [OperationContract]

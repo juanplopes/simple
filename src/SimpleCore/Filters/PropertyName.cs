@@ -97,7 +97,7 @@ namespace Simple.Filters
         }
         public LikeExpression Like(string value)
         {
-            return Like(value, LikeExpression.DefaultIgnoreCase);
+            return new LikeExpression(this, value);
         }
         public LikeExpression Like(string value, bool ignoreCase)
         {
@@ -105,7 +105,7 @@ namespace Simple.Filters
         }
         public LikeExpression Contains(string value)
         {
-            return Contains(value, LikeExpression.DefaultIgnoreCase);
+            return Like(LikeExpression.ToContains(value));
         }
         public LikeExpression Contains(string value, bool ignoreCase)
         {
@@ -113,7 +113,7 @@ namespace Simple.Filters
         }
         public LikeExpression StartsWith(string value)
         {
-            return StartsWith(value, LikeExpression.DefaultIgnoreCase);
+            return Like(LikeExpression.ToStartsWith(value));
         }
         public LikeExpression StartsWith(string value, bool ignoreCase)
         {
@@ -121,7 +121,7 @@ namespace Simple.Filters
         }
         public LikeExpression EndsWith(string value)
         {
-            return EndsWith(value, LikeExpression.DefaultIgnoreCase);
+            return Like(LikeExpression.ToEndsWith(value));
         }
         public LikeExpression EndsWith(string value, bool ignoreCase)
         {

@@ -8,7 +8,7 @@ using Simple.ServiceModel;
 
 namespace Simple.DataAccess
 {
-    [DataContract, SimpleFaultContract]
+    [Serializable]
     public class PersistenceFault : GenericFault<PersistenceFault.ReasonType>
     {
         public enum ReasonType

@@ -44,6 +44,17 @@ namespace Simple.Services
             HostFactory(key).Host(type);
         }
 
+        public static void HostAssemblyOf(Type type)
+        {
+            HostFactory().HostAssemblyOf(type);
+        }
+
+        public static void HostAssemblyOf(object key, Type type)
+        {
+            HostFactory(key).HostAssemblyOf(type);
+        }
+
+
         public static T Connect<T>()
         {
             return ClientFactory().Connect<T>();
@@ -58,5 +69,6 @@ namespace Simple.Services
         {
             return ClientFactory(key).Connect(type);
         }
+
     }
 }

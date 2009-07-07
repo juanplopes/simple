@@ -10,6 +10,7 @@ using Simple.Server;
 using System.Runtime.Remoting;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 
 namespace Simple.Tests.Service
 {
@@ -27,7 +28,7 @@ namespace Simple.Tests.Service
                 Arguments = Server.RemotingTest,
                 WindowStyle = ProcessWindowStyle.Hidden,
             });
-
+            Thread.Sleep(3000);
         }
 
         [ClassCleanup]
@@ -119,22 +120,19 @@ namespace Simple.Tests.Service
     }
 
     #region Samples
-    [MainContract]
-    public interface ISimpleService
+    public interface ISimpleService : IService
     {
         string GetString();
         int GetInt32();
         byte[] GetByteArray(int size);
     }
 
-    [MainContract]
-    public interface IFailService
+    public interface IFailService : IService
     {
         int FailInt();
     }
 
-    [MainContract]
-    public interface ISecondService
+    public interface ISecondService : IService
     {
         string OtherString();
     }

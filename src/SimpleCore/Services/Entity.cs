@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Simple.Filters;
 using Simple.DataAccess;
+using Simple.Reflection;
+using Simple.ConfigSource;
+using Simple.Client;
 
 namespace Simple.Services
 {
@@ -15,7 +18,9 @@ namespace Simple.Services
         {
             get
             {
-                return RulesFactory.Create<R>();
+                DefaultConfigAttribute attr = AttributeCache.Do.First<DefaultConfigAttribute>(typeof(T));
+                object key = attr == null ? null : attr.Key;
+                return Simply.Get(key).Connect<R>();
             }
         }
 

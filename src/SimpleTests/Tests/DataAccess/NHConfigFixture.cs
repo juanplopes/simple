@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate.Tool.hbm2ddl;
 using Simple.ConfigSource;
 using Simple.DataAccess;
+using Simple.Remoting;
+using Simple.Tests.Service;
 
 namespace Simple.Tests.DataAccess
 {
@@ -15,9 +17,8 @@ namespace Simple.Tests.DataAccess
         [TestMethod]
         public void TestSchemaCreation()
         {
-            SourceManager.ClearSources<NHConfigurator>();
-            SourceManager.RegisterSource(this, new NHibernateConfigSource().Load(
-                new XmlFileConfigSource<NHibernateConfig>().Load(NHConfigurations.NHConfig1)));
+            NHibernateSimply.Do.Configure(this,
+                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
 
             SchemaExport exp = new SchemaExport(SessionManager.GetConfig(this));
             exp.Drop(true, true);

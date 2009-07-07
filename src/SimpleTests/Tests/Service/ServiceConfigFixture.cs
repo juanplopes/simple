@@ -21,11 +21,20 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(0, svc.TestInt());
             Assert.AreEqual(null, svc.TestString());
         }
+
+        [TestMethod]
+        public void TestVoidCall()
+        {
+            SourceManager.RemoveSource<IServiceClientProvider>(this);
+            var svc = Simply.Do.Connect<ITestClientConnector>();
+            svc.TestVoid();
+        }
     }
 
     public interface ITestClientConnector
     {
         int TestInt();
         string TestString();
+        void TestVoid();
     }
 }

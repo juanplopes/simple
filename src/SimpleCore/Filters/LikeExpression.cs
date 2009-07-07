@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Runtime.Serialization;
-using Simple.Config;
 
 namespace Simple.Filters
 {
@@ -11,14 +10,6 @@ namespace Simple.Filters
     public class LikeExpression : TypedPropertyExpression<string>
     {
         public const string WildCardSign = "%";
-
-        public static bool DefaultIgnoreCase
-        {
-            get
-            {
-                return SimpleConfig.Get().Business.Filters.IgnoreCaseDefault;
-            }
-        }
 
         [DataMember]
         public bool IgnoreCase { get; set; }
@@ -29,7 +20,7 @@ namespace Simple.Filters
             this.IgnoreCase = ignoreCase;
         }
 
-        public LikeExpression(PropertyName propertyName, string value) : this(propertyName, value, DefaultIgnoreCase) { }
+        public LikeExpression(PropertyName propertyName, string value) : this(propertyName, value, false) { }
 
         public static string ToStartsWith(string value)
         {

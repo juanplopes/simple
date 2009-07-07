@@ -34,7 +34,20 @@ namespace Simple.Services
         protected IEnumerable<Type> GetContractsFromType(Type type)
         {
             Type[] interfaces = type.GetInterfaces();
-            return Enumerable.Filter(interfaces, t => t.IsDefined(typeof(MainContractAttribute), false));
+            return Enumerable.Filter(interfaces, t => typeof(IService).IsAssignableFrom(t));
         }
+
+        #region IServiceHostFactory Members
+
+
+        public void HostAssemblyOf(Type type)
+        {
+            foreach (Type t in Enumerable.Filter(type.Assembly.GetTypes(), t => t.IsClass && !t.IsAbstract))
+            {
+                Host(t);
+            }
+        }
+
+        #endregion
     }
 }

@@ -27,7 +27,8 @@ namespace Simple.Services
                     _cache = DynamicProxyFactory.Instance.CreateProxy(null, (o, m, p) =>
                     {
                         Type retType = ((MethodInfo)m).ReturnType;
-                        return retType.IsValueType ? Activator.CreateInstance(retType) : null;
+                        return retType.IsValueType && !typeof(void).IsAssignableFrom(retType) ?
+                            Activator.CreateInstance(retType) : null;
                     });
                 }
 

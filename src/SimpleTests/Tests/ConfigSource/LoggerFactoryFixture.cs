@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Logging;
-using Simple.Config;
 using Simple.ConfigSource;
 
 namespace Simple.Tests.ConfigSource

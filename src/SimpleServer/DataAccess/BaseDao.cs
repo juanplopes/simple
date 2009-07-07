@@ -7,7 +7,6 @@ using NHibernate.Impl;
 using NHibernate.Engine;
 using System.Collections;
 using NHibernate.Criterion;
-using Simple.Config;
 using Simple.Filters;
 using System.Linq;
 using NHibernate.Linq;

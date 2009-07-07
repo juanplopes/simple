@@ -56,10 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cache\BaseCacher.cs" />
-    <Compile Include="Cache\FileCacher.cs" />
-    <Compile Include="Cache\ICacher.cs" />
     <Compile Include="ConfigSource\AggregateFactory.cs" />
+    <Compile Include="ConfigSource\DefaultConfigAttribute.cs" />
     <Compile Include="ConfigSource\DirectConfigSource.cs" />
     <Compile Include="ConfigSource\ISimply.cs" />
     <Compile Include="Logging\ILog4netFactory.cs" />
@@ -90,36 +88,6 @@
     <Compile Include="ConfigSource\XmlConfigSource.cs" />
     <Compile Include="ConfigSource\XmlFileConfigSource.cs" />
     <Compile Include="ConfigSource\XPathParameter.cs" />
-    <Compile Include="Configuration\AssemblyConfigElement.cs" />
-    <Compile Include="Configuration\AutoLocalizationConfigProvider.cs" />
-    <Compile Include="Configuration\ConfigStructureDisplayer.cs" />
-    <Compile Include="Configuration\FileConfigCacher.cs" />
-    <Compile Include="Configuration\ConfigFileElement.cs" />
-    <Compile Include="Configuration\ConfigFilesConfig.cs" />
-    <Compile Include="Configuration\ConfigFilesIgnoreAttribute.cs" />
-    <Compile Include="Configuration\ConfigGroupElement.cs" />
-    <Compile Include="Configuration\ConfigIdentifier.cs" />
-    <Compile Include="Configuration\ConfigurationNotDefinedException.cs" />
-    <Compile Include="Configuration\FileConfigProvider.cs" />
-    <Compile Include="Configuration\IConfigElement.cs" />
-    <Compile Include="Configuration\IConfigProvider.cs" />
-    <Compile Include="Configuration\InvalidConfigurationException.cs" />
-    <Compile Include="Configuration\IStringConvertible.cs" />
-    <Compile Include="Configuration\LocalizationProviderIgnoreAttribute.cs" />
-    <Compile Include="Configuration\PlainXmlConfigElement.cs" />
-    <Compile Include="Configuration\TypeConfigElement.cs" />
-    <Compile Include="Configuration\TypeHandlers\AttributeAbleTypeHandler.cs" />
-    <Compile Include="Configuration\TypeHandlers\BasicTypeHandler.cs" />
-    <Compile Include="Configuration\TypeHandlers\ByteArrayTypeHandler.cs" />
-    <Compile Include="Configuration\TypeHandlers\ChildTypeResolver.cs" />
-    <Compile Include="Configuration\TypeHandlers\ConfigTypeHandler.cs" />
-    <Compile Include="Configuration\TypeHandlers\ComplexTypeHandler.cs" />
-    <Compile Include="Configuration\TypeHandlers\DictionaryTypeHandler.cs" />
-    <Compile Include="Configuration\TypeHandlers\ElementTypeHandler.cs" />
-    <Compile Include="Configuration\TypeHandlers\EnumTypeHandler.cs" />
-    <Compile Include="Configuration\TypeHandlers\ListTypeHandler.cs" />
-    <Compile Include="Configuration\TypeHandlers\LoadConfiguration.cs" />
-    <Compile Include="Configuration\TypeHandlers\NullableTypeHandler.cs" />
     <Compile Include="DefaultConfigResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -151,20 +119,8 @@
     <Compile Include="Reflection\TypesHelper.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
     <Compile Include="Persistence\ExecutionContext.cs" />
-    <Compile Include="Configuration\GenericActivator.cs" />
     <Compile Include="Threading\IInitializable.cs" />
     <Compile Include="Patterns\Enumerable.cs" />
-    <Compile Include="Configuration\ConfigAcceptsParentAttribute.cs" />
-    <Compile Include="Configuration\ConfigDictionaryKeyNameAttribute.cs" />
-    <Compile Include="Configuration\ConfigElement.cs" />
-    <Compile Include="Configuration\ConfigElementAttribute.cs" />
-    <Compile Include="Configuration\ConfigRoot.cs" />
-    <Compile Include="Configuration\DefaultFileAttribute.cs" />
-    <Compile Include="Configuration\ILocalizationProvider.cs" />
-    <Compile Include="Configuration\LocalizationProviderAttribute.cs" />
-    <Compile Include="Configuration\NamedAttribute.cs" />
-    <Compile Include="Configuration\NopLocalizationProvider.cs" />
-    <Compile Include="Configuration\ThreadCultureLocalizationProvider.cs" />
     <Compile Include="Persistence\GenericInstanceState.cs" />
     <Compile Include="Persistence\PageController.cs" />
     <Compile Include="Persistence\SelfSerializableClass.cs" />
