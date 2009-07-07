@@ -5,23 +5,53 @@ using System.Threading;
 
 namespace Simple.Threading
 {
-    public class ThreadData<T>
+    public class ThreadData
     {
-        public object this[string type, int id]
+        LocalDataStoreSlot store = null;
+
+        object defaultKey = new object();
+
+        public ThreadData()
         {
-            get
+            store = Thread.AllocateDataSlot();
+            Thread.SetData(store, new Dictionary<object, object>());
+        }
+
+        public T Get<T>(object key)
+        {
+            lock (this)
             {
-                return Thread.GetData(Thread.GetNamedDataSlot(typeof(T).GUID.ToString() + GetKeyFromPair(type,id)));
-            }
-            set
-            {
-                Thread.SetData(Thread.GetNamedDataSlot(typeof(T).GUID.ToString() + GetKeyFromPair(type,id)), value);
+                if (key == null) key = defaultKey;
+
+                try
+                {
+                    return (T)((Dictionary<object, object>)Thread.GetData(store))[key];
+                }
+                catch (KeyNotFoundException)
+                {
+                    return default(T);
+                }
             }
         }
 
-        protected string GetKeyFromPair(string type, int id)
+        public void Set(object key, object value)
         {
-            return type + "&&&" + id;
+            lock (this)
+            {
+                if (key == null) key = defaultKey;
+
+                ((Dictionary<object, object>)Thread.GetData(store))[key] = value;
+            }
+        }
+
+        public void Remove(object key)
+        {
+            lock (this)
+            {
+                if (key == null) key = defaultKey;
+
+                ((Dictionary<object, object>)Thread.GetData(store)).Remove(key);
+            }
         }
     }
 }

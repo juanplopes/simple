@@ -18,9 +18,7 @@ namespace Simple.Services
         {
             get
             {
-                DefaultConfigAttribute attr = AttributeCache.Do.First<DefaultConfigAttribute>(typeof(T));
-                object key = attr == null ? null : attr.Key;
-                return Simply.Get(key).Connect<R>();
+                return Simply.Get(DefaultConfigAttribute.GetKey(typeof(T))).Connect<R>();
             }
         }
 

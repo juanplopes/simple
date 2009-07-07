@@ -28,6 +28,10 @@ namespace Simple.DataAccess
                 
                 return _session;
             }
+            set
+            {
+                _session = value;
+            }
         }
 
         public Dao(ISession session)

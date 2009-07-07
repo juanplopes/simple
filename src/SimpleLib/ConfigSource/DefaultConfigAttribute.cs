@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Simple.Reflection;
 
 namespace Simple.ConfigSource
 {
@@ -13,6 +14,13 @@ namespace Simple.ConfigSource
         public DefaultConfigAttribute(object key)
         {
             this.Key = key;
+        }
+
+        public static object GetKey(Type type)
+        {
+            DefaultConfigAttribute attr = AttributeCache.Do.First<DefaultConfigAttribute>(type);
+            object key = attr == null ? null : attr.Key;
+            return key;
         }
     }
 }

@@ -10,6 +10,8 @@ using Simple.Logging;
 using System.Runtime.Serialization;
 using log4net;
 using System.Linq;
+using Simple.Server;
+using Simple.ConfigSource;
 
 namespace Simple.Services
 {
@@ -33,6 +35,14 @@ namespace Simple.Services
             }
         }
 
+        protected object ConfigKey
+        {
+            get
+            {
+                return DefaultConfigAttribute.GetKey(typeof(T));
+            }
+        }
+
         public bool HeartBeat()
         {
             Logger.Debug("Heartbeat: " + typeof(T).Name);
@@ -41,7 +51,9 @@ namespace Simple.Services
 
         protected virtual D GetDao()
         {
-            return new D();
+            D dao = new D();
+            dao.Session = Simply.Get(ConfigKey).GetSession();
+            return dao;
         }
 
         protected virtual IOrderedQueryable<Q> Linq<Q>()

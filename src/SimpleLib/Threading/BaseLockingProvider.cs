@@ -6,20 +6,25 @@ namespace Simple.Threading
 {
     public abstract class BaseLockingProvider<TokenType> : ILockingProvider<TokenType> where TokenType : BaseLockToken
     {
-        protected ThreadData<BaseLockingProvider<TokenType>> Data { get; set; }
+        protected ThreadData Data { get; set; }
 
         public BaseLockingProvider()
         {
-            Data = new ThreadData<BaseLockingProvider<TokenType>>();
+            Data = new ThreadData();
+        }
+
+        protected string GetKeyFromToken(string type, int id)
+        {
+            return type + "&&&" + id;
         }
 
         protected TokenType GetToken(string type, int id, int secondsToWait)
         {
-            TokenType token = Data[type, id] as TokenType;
+            TokenType token = Data.Get<TokenType>(GetKeyFromToken(type, id)) as TokenType;
             if (token == null)
             {
                 token = CreateLockToken(type, id);
-                Data[type, id] = token;
+                Data.Set(GetKeyFromToken(type, id), token);
             }
             return token;
         }
@@ -27,9 +32,9 @@ namespace Simple.Threading
         public virtual void Release(TokenType token)
         {
             token.ConnectedClients--;
-            if (Data[token.Type, token.Id] != null && token.ConnectedClients == 0)
+            if (Data.Get<TokenType>(GetKeyFromToken(token.Type, token.Id)) != null && token.ConnectedClients == 0)
             {
-                Data[token.Type, token.Id] = null;
+                Data.Remove(GetKeyFromToken(token.Type, token.Id));
             }
         }
 
