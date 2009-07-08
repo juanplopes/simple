@@ -18,6 +18,17 @@ namespace Simple.Patterns
             this.AddLast(func);
         }
 
+        public void AddRange(IEnumerable<Func<T,T>> enumerable)
+        {
+            lock (this)
+            {
+                foreach (Func<T, T> func in enumerable)
+                {
+                    Add(func);
+                }
+            }
+        }
+
         public T Invoke(T obj)
         {
             lock (this)

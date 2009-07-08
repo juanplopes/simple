@@ -14,7 +14,7 @@ namespace Simple.Tests.ConfigSource
         [TestInitialize]
         public void Setup()
         {
-            SourceManager.RemoveSource<Log4netConfig>();
+            SourceManager.Do.Remove<Log4netConfig>();
         }
 
         [TestMethod]

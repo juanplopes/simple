@@ -5,18 +5,32 @@ using System.Text;
 
 namespace Simple.Patterns
 {
-    public class Singleton<T>
-        where T : new()
+    public class Singleton<T> : MarshalByRefObject
+        where T : class, new()
     {
-        class Nested
-        {
-            public static T Instance = new T();
-        }
+        protected static T _instance = null;
+        protected static object _lock = new object();
+
         public static T Instance
         {
             get
             {
-                return Nested.Instance;
+                lock (_lock)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new T();
+                    }
+                    return _instance;
+                }
+            }
+        }
+
+        public static void ForceInstance(T instance)
+        {
+            lock (_lock)
+            {
+                _instance = instance;
             }
         }
 

@@ -3,87 +3,98 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Logging;
+using Simple.Patterns;
 
 namespace Simple.ConfigSource
 {
-    internal static class SourceFor<C>
+    internal class SourceFor<C> : Singleton<SourceFor<C>>
     {
-        private static IDictionary<object, WrappedConfigSource<C>> Instances =
+        private IDictionary<object, WrappedConfigSource<C>> Configs =
             new Dictionary<object, WrappedConfigSource<C>>();
 
-        public static WrappedConfigSource<C> Get(object key)
+        public WrappedConfigSource<C> Get(object key)
         {
-            lock (Instances)
+            lock (Configs)
             {
-                if (key == null) key = SourceManager.DefaultKey;
+                if (key == null) key = SourceManager.Do.DefaultKey;
 
                 WrappedConfigSource<C> ret = null;
 
-                if (!Instances.TryGetValue(key, out ret))
+                if (!Configs.TryGetValue(key, out ret))
                 {
                     ret = new WrappedConfigSource<C>().Load(NullConfigSource<C>.Instance)
                         as WrappedConfigSource<C>;
 
 
-                    Instances[key] = ret;
+                    Configs[key] = ret;
                 }
 
                 return ret;
             }
         }
-        public static void Set(object key, IConfigSource<C> source)
+        public void Set(object key, IConfigSource<C> source)
         {
-            lock (Instances)
+            lock (Configs)
             {
                 var wrapped = Get(key);
                 wrapped.Load(source);
             }
         }
 
-        public static void Clear()
+        public void Clear()
         {
-            lock (Instances)
+            lock (Configs)
             {
-                Instances.Clear();
+                Configs.Clear();
             }
         }
 
     }
 
-    public static class SourceManager
+    public class SourceManager : Singleton<SourceManager>
     {
-        public static object DefaultKey = new object();
+        public object DefaultKey = new object();
 
-        public static void RegisterSource<C>(IConfigSource<C> source)
+        public IConfigSource<C> Get<C>()
         {
-            RegisterSource(null, source);
-        }
-        public static void RegisterSource<C>(object key, IConfigSource<C> source)
-        {
-            SourceFor<C>.Set(key, source);
+            return Get<C>(null);
         }
 
-        public static void RemoveSource<C>()
+        public IConfigSource<C> Get<C>(object key)
         {
-            RemoveSource<C>(null);
-        }
-        public static void RemoveSource<C>(object key)
-        {
-            SourceFor<C>.Set(key, NullConfigSource<C>.Instance);
+            return SourceFor<C>.Do.Get(key);
         }
 
-        public static void ClearSources<C>()
+        public void Register<C>(IConfigSource<C> source)
         {
-            SourceFor<C>.Clear();
+            Register(null, source);
+        }
+        public void Register<C>(object key, IConfigSource<C> source)
+        {
+            SourceFor<C>.Do.Set(key, source);
         }
 
-        public static void Configure<C>(IFactory<C> factory)
+        public void Remove<C>()
         {
-            Configure(null, factory);
+            Remove<C>(null);
         }
-        public static void Configure<C>(object key, IFactory<C> factory)
+        public void Remove<C>(object key)
         {
-            factory.Init(SourceFor<C>.Get(key));
+            SourceFor<C>.Do.Set(key, NullConfigSource<C>.Instance);
+        }
+
+        public void Clear<C>()
+        {
+            SourceFor<C>.Do.Clear();
+        }
+
+        public void AttachFactory<C>(IFactory<C> factory)
+        {
+            AttachFactory(null, factory);
+        }
+        public void AttachFactory<C>(object key, IFactory<C> factory)
+        {
+            factory.Init(SourceFor<C>.Do.Get(key));
         }
     }
 }

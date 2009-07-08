@@ -14,16 +14,16 @@ namespace Simple.Remoting
 
         public void Configure(object key, IConfigSource<RemotingConfig> source)
         {
-            SourceManager.RegisterSource(key, source);
+            SourceManager.Do.Register(key, source);
 
             var hostProvider = new RemotingHostProvider();
-            SourceManager.Configure(key, hostProvider);
+            SourceManager.Do.AttachFactory(key, hostProvider);
 
             var clientProvider = new RemotingClientProvider();
-            SourceManager.Configure(key, clientProvider);
+            SourceManager.Do.AttachFactory(key, clientProvider);
 
-            SourceManager.RegisterSource(key, new DirectConfigSource<IServiceHostProvider>().Load(hostProvider));
-            SourceManager.RegisterSource(key, new DirectConfigSource<IServiceClientProvider>().Load(clientProvider));
+            SourceManager.Do.Register(key, new DirectConfigSource<IServiceHostProvider>().Load(hostProvider));
+            SourceManager.Do.Register(key, new DirectConfigSource<IServiceClientProvider>().Load(clientProvider));
 
         }
 

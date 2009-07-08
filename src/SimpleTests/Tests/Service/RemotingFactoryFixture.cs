@@ -28,6 +28,24 @@ namespace Simple.Tests.Service
                 Arguments = Server.RemotingTest,
                 WindowStyle = ProcessWindowStyle.Hidden,
             });
+            Guid guid = GetSource();
+            ISimpleService service = Simply.Get(guid).Connect<ISimpleService>();
+
+            int i = 0;
+            while (i++<10)
+            {
+                try
+                {
+                    service.GetInt32();
+                    break;
+                }
+                catch
+                {
+                    Thread.Sleep(500);
+                }
+            }
+
+
             Thread.Sleep(3000);
         }
 
@@ -38,7 +56,7 @@ namespace Simple.Tests.Service
         }
 
 
-        protected Guid GetSource()
+        protected static Guid GetSource()
         {
             Guid guid = Guid.NewGuid();
 
@@ -50,9 +68,9 @@ namespace Simple.Tests.Service
 
         protected void ReleaseSource(Guid guid)
         {
-            SourceManager.RemoveSource<RemotingConfig>(guid);
-            SourceManager.RemoveSource<IServiceHostProvider>(guid);
-            SourceManager.RemoveSource<IServiceClientProvider>(guid);
+            SourceManager.Do.Remove<RemotingConfig>(guid);
+            SourceManager.Do.Remove<IServiceHostProvider>(guid);
+            SourceManager.Do.Remove<IServiceClientProvider>(guid);
         }
 
         [TestMethod]

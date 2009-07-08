@@ -14,7 +14,7 @@ using Simple.Patterns;
 
 namespace Simple.Remoting
 {
-    public class RemotingHostProvider : Factory<RemotingConfig>, IServiceHostProvider
+    public class RemotingHostProvider : Factory<RemotingConfig>, IServiceHostProvider, IDisposable
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         AppDomain domain = null;
@@ -40,6 +40,7 @@ namespace Simple.Remoting
         {
             if (domain != null)
             {
+                if (server != null) server.TryStop();
                 AppDomain.Unload(domain);
                 domain = null;
                 server = null;
@@ -59,5 +60,7 @@ namespace Simple.Remoting
         public void Start()
         {
         }
+
+
     }
 }

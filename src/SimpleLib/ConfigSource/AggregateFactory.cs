@@ -26,7 +26,7 @@ namespace Simple.ConfigSource
         {
             lock (_instances)
             {
-                if (key == null) key = SourceManager.DefaultKey;
+                if (key == null) key = SourceManager.Do.DefaultKey;
 
                 THIS ret;
                 if (!_instances.TryGetValue(key, out ret))

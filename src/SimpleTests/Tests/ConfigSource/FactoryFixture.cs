@@ -46,11 +46,11 @@ namespace Simple.Tests.ConfigSource
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
 
-            SourceManager.RemoveSource<BasicTypesSampleWithoutAttr>();
-            SourceManager.RegisterSource(src);
+            SourceManager.Do.Remove<BasicTypesSampleWithoutAttr>();
+            SourceManager.Do.Register(src);
 
             var b = new BasicFactory();
-            SourceManager.Configure(b);
+            SourceManager.Do.AttachFactory(b);
 
             Assert.AreEqual(42, b.BuildInt());
             Assert.AreEqual("whatever", b.BuildString());
@@ -63,19 +63,19 @@ namespace Simple.Tests.ConfigSource
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
 
-            SourceManager.RemoveSource<BasicTypesSampleWithoutAttr>();
+            SourceManager.Do.Remove<BasicTypesSampleWithoutAttr>();
 
             var b = new BasicFactory();
 
-            SourceManager.Configure(b);
+            SourceManager.Do.AttachFactory(b);
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
 
-            SourceManager.RegisterSource(src);
+            SourceManager.Do.Register(src);
             Assert.AreEqual("whatever", b.BuildString());
             Assert.AreEqual(42, b.BuildInt());
 
-            SourceManager.RemoveSource<BasicTypesSampleWithoutAttr>();
+            SourceManager.Do.Remove<BasicTypesSampleWithoutAttr>();
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
         }
@@ -87,19 +87,19 @@ namespace Simple.Tests.ConfigSource
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML);
 
-            SourceManager.ClearSources<BasicTypesSampleWithoutAttr>();
+            SourceManager.Do.Clear<BasicTypesSampleWithoutAttr>();
 
             var b = new BasicFactory();
 
-            SourceManager.Configure(2, b);
+            SourceManager.Do.AttachFactory(2, b);
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
 
-            SourceManager.RegisterSource(2, src);
+            SourceManager.Do.Register(2, src);
             Assert.AreEqual("whatever", b.BuildString());
             Assert.AreEqual(42, b.BuildInt());
 
-            SourceManager.RemoveSource<BasicTypesSampleWithoutAttr>(2);
+            SourceManager.Do.Remove<BasicTypesSampleWithoutAttr>(2);
             Assert.AreEqual(default(string), b.BuildString());
             Assert.AreEqual(default(int), b.BuildInt());
         }
@@ -156,11 +156,11 @@ namespace Simple.Tests.ConfigSource
             src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfigSourceFixture.SAMPLE_XML));
 
-            SourceManager.ClearSources<BasicTypesSampleWithoutAttr>();
-            SourceManager.RegisterSource(src);
+            SourceManager.Do.Clear<BasicTypesSampleWithoutAttr>();
+            SourceManager.Do.Register(src);
 
             var f = new BasicFactory();
-            SourceManager.Configure(f);
+            SourceManager.Do.AttachFactory(f);
             Assert.AreEqual("whatever", f.BuildString());
             Assert.AreEqual(42, f.BuildInt());
 
@@ -183,7 +183,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(default(string), f.BuildString());
             Assert.AreEqual(default(int), f.BuildInt());
 
-            SourceManager.RegisterSource(src);
+            SourceManager.Do.Register(src);
             Assert.AreEqual("whatever", f.BuildString());
             Assert.AreEqual(42, f.BuildInt());
         }
@@ -204,7 +204,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(default(string), f.BuildString());
             Assert.AreEqual(default(int), f.BuildInt());
 
-            SourceManager.RegisterSource(key, src);
+            SourceManager.Do.Register(key, src);
             Assert.AreEqual("whatever", f.BuildString());
             Assert.AreEqual(42, f.BuildInt());
         }

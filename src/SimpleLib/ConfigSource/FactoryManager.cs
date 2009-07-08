@@ -23,7 +23,7 @@ namespace Simple.ConfigSource
         {
             lock (Factories)
             {
-                if (key == null) key = SourceManager.DefaultKey;
+                if (key == null) key = SourceManager.Do.DefaultKey;
 
                 howToBuild = howToBuild ?? HowToBuild;
 
@@ -33,7 +33,7 @@ namespace Simple.ConfigSource
                     if (howToBuild == null) throw new InvalidOperationException("I don't know how to build factory!");
 
                     factory = howToBuild();
-                    SourceManager.Configure(key, factory);
+                    SourceManager.Do.AttachFactory(key, factory);
                     Factories[key] = factory;
                 }
 

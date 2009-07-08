@@ -53,5 +53,17 @@ namespace Simple.Remoting
             }
         }
 
+        public void TryStop()
+        {
+            try
+            {
+                logger.DebugFormat("Instructing channel to stop.");
+                GetChannel().StopListening(null);
+            }
+            catch
+            {
+                logger.WarnFormat("Couldn't stop channel.");
+            }
+        }
     }
 }

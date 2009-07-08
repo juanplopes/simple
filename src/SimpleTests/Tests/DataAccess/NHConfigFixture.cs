@@ -28,8 +28,8 @@ namespace Simple.Tests.DataAccess
         [TestMethod]
         public void TestLoadDialect()
         {
-            SourceManager.ClearSources<NHConfigurator>();
-            SourceManager.RegisterSource(this, new NHibernateConfigSource().Load(
+            SourceManager.Do.Clear<NHConfigurator>();
+            SourceManager.Do.Register(this, new NHibernateConfigSource().Load(
                 new XmlFileConfigSource<NHibernateConfig>().Load(NHConfigurations.NHConfig1)));
 
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();

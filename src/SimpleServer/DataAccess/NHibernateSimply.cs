@@ -13,7 +13,7 @@ namespace Simple.DataAccess
 
         public void Configure(object key, IConfigSource<NHibernateConfig> source)
         {
-            SourceManager.RegisterSource(key, new NHibernateConfigSource().Load(source));
+            SourceManager.Do.Register(key, new NHibernateConfigSource().Load(source));
         }
 
         #endregion

@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\Initializers.cs" />
     <Compile Include="Tests\Service\RemotingConfigs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

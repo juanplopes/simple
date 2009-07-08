@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Simple.ConfigSource;
 using System.Xml;
@@ -20,6 +19,8 @@ namespace Simple.DataAccess
     public class NHibernateConfigSource : WrappedConfigSource<
         NHConfigurator, NHibernateConfig>
     {
+        NHConfigurator configurators = new NHConfigurator();
+
         public override NHConfigurator TransformFromInput(NHibernateConfig input)
         {
             NHConfigurator list = new NHConfigurator();
@@ -27,7 +28,16 @@ namespace Simple.DataAccess
                 StringReader r = new StringReader(input.Element.OuterXml);
                 return c.Configure(XmlReader.Create(r));
             });
+            list.AddRange(configurators);
+
             return list;
         }
+
+        public virtual void AddConfigurator(NHConfigurator config)
+        {
+            configurators.AddRange(config);
+            InvokeReload();
+        }
+
     }
 }
