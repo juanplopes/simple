@@ -5,6 +5,7 @@ using System.Text;
 using NHibernate;
 using Simple.DataAccess;
 using NHibernate.Cfg;
+using Simple.DataAccess.Context;
 
 namespace Simple.Server
 {
@@ -12,24 +13,33 @@ namespace Simple.Server
     {
     }
 
-    public class ServerSimplyBase<F> : Client.ClientSimplyBase<F>, INHibernateFactory
-        where F:Client.ClientSimplyBase<F>, new()
+    public class ServerSimplyBase<F> : Client.ClientSimplyBase<F>, INHibernateFactory, IDataContextFactory
+        where F : Client.ClientSimplyBase<F>, new()
     {
         #region DataAccess
-        public Configuration Configuration
+        public Configuration NHConfiguration
         {
             get { return SessionManager.GetConfig(ConfigKey); }
         }
-        public ISession GetSession()
+        public ISession OpenNHSession()
         {
-            return SessionManager.GetSession(ConfigKey);
-        }
-        public ITransaction BeginTransaction()
-        {
-            return SessionManager.BeginTransaction(ConfigKey);
+            return SessionManager.OpenSession(ConfigKey);
         }
         #endregion
 
 
+        #region IDataContextFactory Members
+
+        public IDataContext EnterContext()
+        {
+            return DataContextFactory.Get(ConfigKey).EnterContext();
+        }
+
+        public IDataContext GetContext()
+        {
+            return DataContextFactory.Get(ConfigKey).GetContext();
+        }
+
+        #endregion
     }
 }

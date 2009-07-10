@@ -15,13 +15,13 @@ using Simple.ConfigSource;
 
 namespace Simple.Services
 {
-    public class BaseRules<T> : BaseRules<T, EntityDao<T>>
+    public class EntityService<T> : EntityService<T, EntityDao<T>>
     {
 
     }
 
     [KnownType(typeof(Page<>))]
-    public class BaseRules<T, D> : MarshalByRefObject, IEntityService<T>
+    public class EntityService<T, D> : MarshalByRefObject, IEntityService<T>
         where D : EntityDao<T>, new()
     {
         private ILog _logger = null;
@@ -52,7 +52,7 @@ namespace Simple.Services
         protected virtual D GetDao()
         {
             D dao = new D();
-            dao.Session = Simply.Get(ConfigKey).GetSession();
+            dao.Session = Simply.Get(ConfigKey).OpenNHSession();
             return dao;
         }
 
@@ -109,19 +109,22 @@ namespace Simple.Services
             return dao.ToCriteria(filter, order);
         }
 
-        public virtual void SaveOrUpdate(T entity)
+        public virtual T SaveOrUpdate(T entity)
         {
             GetDao().SaveOrUpdate(entity);
+            return entity;
         }
 
-        public virtual void Save(T entity)
+        public virtual T Save(T entity)
         {
             GetDao().Save(entity);
+            return entity;
         }
 
-        public virtual void Update(T entity)
+        public virtual T Update(T entity)
         {
             GetDao().Update(entity);
+            return entity;
         }
 
         public virtual T Persist(T entity)

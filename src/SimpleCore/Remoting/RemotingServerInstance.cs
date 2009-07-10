@@ -7,6 +7,7 @@ using Simple.Client;
 using System.Reflection;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
+using Simple.ConfigSource;
 
 namespace Simple.Remoting
 {
@@ -51,6 +52,11 @@ namespace Simple.Remoting
                 }
 
             }
+        }
+
+        public void SetSourceManagerInstance(SourceManager manager)
+        {
+            SourceManager.ForceInstance(manager);
         }
 
         public void TryStop()

@@ -70,7 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\DataContext.cs" />
+    <Compile Include="DataAccess\Context\DataContextFactory.cs" />
+    <Compile Include="DataAccess\Context\DataContext.cs" />
+    <Compile Include="DataAccess\Context\IDataContext.cs" />
+    <Compile Include="DataAccess\Context\IDataContextFactory.cs" />
     <Compile Include="DataAccess\INHibernateFactory.cs" />
     <Compile Include="DataAccess\NHibernateConfig.cs" />
     <Compile Include="DataAccess\NHibernateConfigSource.cs" />
@@ -89,7 +92,7 @@
     <Compile Include="DataAccess\TupleToDictionaryTransformer.cs" />
     <Compile Include="DataAccess\TupleToPropertiesTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\BaseRules.cs" />
+    <Compile Include="Rules\EntityService.cs" />
     <Compile Include="Server\Simply.cs" />
     <Compile Include="DataAccess\DefaultExceptionHandler.cs" />
     <None Include="Threading\NHLockingProvider.cs" />

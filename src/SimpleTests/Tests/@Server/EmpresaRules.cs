@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Sample.BusinessServer.Rules
 {
-    public partial class EmpresaRules : BaseRules<Empresa>, IEmpresaRules
+    public partial class EmpresaRules : EntityService<Empresa>, IEmpresaRules
     {
 
         public Empresa GetByNameLinq(string name)

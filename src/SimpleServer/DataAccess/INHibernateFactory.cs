@@ -3,7 +3,7 @@ namespace Simple.DataAccess
 {
     interface INHibernateFactory
     {
-        NHibernate.Cfg.Configuration Configuration { get; }
-        NHibernate.ISession GetSession();
+        NHibernate.Cfg.Configuration NHConfiguration { get; }
+        NHibernate.ISession OpenNHSession();
     }
 }

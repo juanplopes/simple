@@ -106,14 +106,14 @@ namespace Simple.Services
             return Rules.Persist(ThisAsT);
         }
 
-        public virtual void Save()
+        public virtual T Save()
         {
-            Rules.Save(ThisAsT);
+            return Rules.Save(ThisAsT);
         }
 
-        public virtual void Update()
+        public virtual T Update()
         {
-            Rules.Update(ThisAsT);
+            return Rules.Update(ThisAsT);
         }
 
         public virtual void Delete()
@@ -121,9 +121,9 @@ namespace Simple.Services
             Rules.Delete(ThisAsT);
         }
 
-        public virtual void SaveOrUpdate()
+        public virtual T SaveOrUpdate()
         {
-            Rules.SaveOrUpdate(ThisAsT);
+            return Rules.SaveOrUpdate(ThisAsT);
         }
     }
 }

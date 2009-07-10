@@ -15,16 +15,18 @@ namespace Simple.Tests.Contracts
         public static PropertyName IdProperty = "Id";
         public virtual String Nome { get; set; }
         public static PropertyName NomeProperty = "Nome";
-    }
 
-    public class EmpresaMap : ClassMap<Empresa>
-    {
-        public EmpresaMap()
+        public class Map : ClassMap<Empresa>
         {
-            Not.LazyLoad();
+            public Map()
+            {
+                Not.LazyLoad();
 
-            Id(e => e.Id).GeneratedBy.Identity();
-            Map(e => e.Nome);
+                Id(e => e.Id).GeneratedBy.Identity();
+                Map(e => e.Nome);
+            }
         }
     }
+
+    
 }

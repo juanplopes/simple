@@ -21,9 +21,11 @@ namespace Simple.Tests
         {
             NHibernateSimply.Do.Configure(key,
                 XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
+            NHibernateSimply.Do.MapAssemblyOf<Empresa.Map>(key);
+
             RemotingSimply.Do.Configure(key,
                 XmlConfig.LoadXml<RemotingConfig>(RemotingConfigs.SimpleRemotingConfig8020));
-            Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer));
+                        Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer));
 
             SchemaExport exp = new SchemaExport(SessionManager.GetConfig(key));
             exp.Drop(true, true);
@@ -42,21 +44,21 @@ namespace Simple.Tests
             {
                 Nome = "E1"
             };
-            E1.Save();
+            E1 = E1.Save();
             
 
             F1 = new Funcionario()
             {
                 Nome = "F1"
             };
-            F1.Save();
+            F1 = F1.Save();
 
             EF1 = new EmpresaFuncionario()
             {
                 Empresa = E1,
                 Funcionario = F1
             };
-            EF1.Save();
+            EF1 = EF1.Save();
         }
 
         public static void AssertStillOk()

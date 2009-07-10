@@ -4,6 +4,7 @@ using System.Linq;
 
 
 using System.Text;
+using Simple.Patterns;
 
 namespace Simple.ConfigSource
 {
@@ -13,6 +14,7 @@ namespace Simple.ConfigSource
     {
         bool Loaded { get; }
         T Get();
+        void AddTransform(Func<T, T> func);
         bool Reload();
         event ConfigReloadedDelegate<T> Reloaded;
 

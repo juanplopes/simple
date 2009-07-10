@@ -13,7 +13,8 @@ namespace Simple.Logging
         protected override void OnConfig(Log4netConfig config)
         {
             LogManager.ResetConfiguration();
-            XmlConfigurator.Configure(config.Element);
+            if (config != null)
+                XmlConfigurator.Configure(config.Element);
         }
 
         protected override void OnClearConfig()

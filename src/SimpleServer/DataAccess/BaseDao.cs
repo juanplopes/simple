@@ -38,24 +38,13 @@ namespace Simple.DataAccess
         {
             _session = session;
         }
-
-
-        /// <summary>
-        /// Creates a DAO instance getting session from pool.
-        /// </summary>
         public Dao() { }
-        public Dao(object key) : this(SessionManager.GetSession(key)) { }
-        public Dao(object key, bool forceNew) : this(SessionManager.GetSession(key, forceNew)) { }
-     
     }
 
     public class EntityDao<T> : Dao
     {
         public EntityDao() : base() { }
         public EntityDao(ISession session) : base(session) { }
-        public EntityDao(object key) : base(key) { }
-        public EntityDao(object key, bool forceNew) : base(key, forceNew) { }
-
 
         //public T Unproxy(T entity)
         //{

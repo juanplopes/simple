@@ -17,50 +17,72 @@ namespace Simple.Remoting
     public class RemotingHostProvider : Factory<RemotingConfig>, IServiceHostProvider, IDisposable
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
-        AppDomain domain = null;
-        RemotingServerInstance server = null;
+        IList<Pair<Type, Type>> services = new List<Pair<Type, Type>>();
+        bool started = false;
+        
+        IChannelReceiver channel = null;
+
         protected override void OnConfig(RemotingConfig config)
         {
-            TryUnloadDomain();
-            domain = AppDomain.CreateDomain("Remoting_" + Guid.NewGuid().ToString(), AppDomain.CurrentDomain.Evidence,
-                AppDomain.CurrentDomain.SetupInformation);
-
-            Type serverType = typeof(RemotingServerInstance);
-            server = (RemotingServerInstance)domain.CreateInstanceAndUnwrap
-                (serverType.Assembly.FullName, serverType.FullName);
-            server.Config = config;
+            if (started)
+            {
+                Stop();
+                Start();
+            }
         }
 
         protected override void OnClearConfig()
         {
-            TryUnloadDomain();
-        }
-
-        protected void TryUnloadDomain()
-        {
-            if (domain != null)
+            if (started)
             {
-                if (server != null) server.TryStop();
-                AppDomain.Unload(domain);
-                domain = null;
-                server = null;
+                Stop();
             }
         }
 
         public void Host(Type type, Type contract)
         {
-            server.AddType(type, contract);
+            lock (this)
+            {
+                if (!started) Start();
+
+                services.Add(new Pair<Type, Type>(type, contract));
+
+                string key = ConfigCache.GetEndpointKey(contract);
+                logger.DebugFormat("Registering type {0} with contract {1} at endpoint {2}...", type.Name, contract.Name, key);
+                RemotingConfiguration.RegisterWellKnownServiceType(type, key, WellKnownObjectMode.Singleton);
+
+                logger.InfoFormat("{0} hosted:", key);
+                foreach (string url in channel.GetUrlsForUri(key))
+                {
+                    logger.DebugFormat("* {0}.", url);
+                }
+            }
         }
 
         public void Stop()
         {
-            TryUnloadDomain();
+            lock (this)
+            {
+                if (started)
+                {
+                    channel.StopListening(null);
+                    started = false;
+                }
+            }
         }
+
 
         public void Start()
         {
-        }
+            lock (this)
+            {
+                logger.DebugFormat("Initializing Remoting Channel...");
+                channel = ConfigCache.GetChannel();
+                channel.StartListening(null);
+                started = true;
+            }
 
+        }
 
     }
 }

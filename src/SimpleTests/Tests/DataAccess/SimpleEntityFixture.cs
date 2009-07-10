@@ -10,16 +10,34 @@ using NHibernate.Linq;
 using Simple.ConfigSource;
 using Simple.Remoting;
 using Simple.Tests.Service;
+using Simple.DataAccess.Context;
+using Simple.Server;
 
 namespace Simple.Tests.DataAccess
 {
     [TestClass]
     public class SimpleEntityFixture
     {
+
+
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
             DBEnsurer.Ensure(typeof(DBEnsurer));
+        }
+
+
+        IDataContext dtx = null;
+        [TestInitialize]
+        public void TestSetup()
+        {
+            dtx = Simply.Get(typeof(DBEnsurer)).EnterContext();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            dtx.Exit();
         }
 
         [TestMethod]
@@ -29,11 +47,13 @@ namespace Simple.Tests.DataAccess
             {
                 Nome = "Whatever"
             };
-            e.Save();
+            e = e.Save();
+            Assert.AreNotEqual(0, e.Id);
 
             Empresa e2 = Empresa.LoadByFilter(Empresa.NomeProperty.Eq("Whatever"));
             Assert.IsNotNull(e2);
             Assert.AreEqual(e.Nome, e2.Nome);
+            Assert.AreEqual(e.Id, e2.Id);
 
             Empresa.Delete(e);
         }
@@ -44,7 +64,7 @@ namespace Simple.Tests.DataAccess
             Empresa e = Empresa.LoadByFilter(BooleanExpression.True);
             Assert.AreEqual(e.Id, DBEnsurer.E1.Id);
             e.Nome = "E2";
-            e.SaveOrUpdate();
+            e = e.SaveOrUpdate();
 
             Assert.AreEqual(e.Nome, Empresa.Load(e.Id).Nome);
         }
@@ -52,7 +72,7 @@ namespace Simple.Tests.DataAccess
         [TestMethod]
         public void FirstLinqTest()
         {
-            var queryable = SessionManager.GetSession(typeof(DBEnsurer)).Linq<Empresa>();
+            var queryable = SessionManager.OpenSession(typeof(DBEnsurer)).Linq<Empresa>();
             var query = from e in queryable
                         where e.Nome == "E1"
                         select e.Nome;

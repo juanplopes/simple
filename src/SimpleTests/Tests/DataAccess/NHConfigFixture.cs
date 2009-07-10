@@ -8,6 +8,8 @@ using Simple.ConfigSource;
 using Simple.DataAccess;
 using Simple.Remoting;
 using Simple.Tests.Service;
+using FluentNHibernate.Cfg;
+using Simple.Tests.Contracts;
 
 namespace Simple.Tests.DataAccess
 {
@@ -35,9 +37,22 @@ namespace Simple.Tests.DataAccess
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
             var factory = factories[this];
 
-            Assert.AreEqual("NHibernate.Dialect.SQLiteDialect", factory.Configuration.GetProperty("dialect"));
+            Assert.AreEqual("NHibernate.Dialect.SQLiteDialect", factory.NHConfiguration.GetProperty("dialect"));
+        }
 
+        [TestMethod]
+        public void TestMapEntities()
+        {
+            NHibernateSimply.Do.Configure(this, 
+                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
+            NHibernateSimply.Do.Map<Empresa.Map>(this);
+            NHibernateSimply.Do.Map<Funcionario.Map>(this);
+                
 
+            var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
+            var factory = factories[this];
+
+            Assert.AreEqual(2, factory.NHConfiguration.ClassMappings.Count);
         }
     }
 }

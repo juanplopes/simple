@@ -29,16 +29,21 @@ namespace Simple.Patterns
             }
         }
 
+        public T StaticInvoke(T obj, IEnumerable<Func<T, T>> transformations)
+        {
+            T temp = obj;
+            foreach (var func in transformations)
+            {
+                temp = func(temp);
+            }
+            return temp;
+        }
+
         public T Invoke(T obj)
         {
             lock (this)
             {
-                T temp = obj;
-                foreach(var func in this)
-                {
-                    temp = func(temp);
-                }
-                return temp;
+                return StaticInvoke(obj, this);
             }
         }
 

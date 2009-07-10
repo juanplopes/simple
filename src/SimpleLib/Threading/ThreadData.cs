@@ -7,14 +7,24 @@ namespace Simple.Threading
 {
     public class ThreadData
     {
-        LocalDataStoreSlot store = null;
-
         object defaultKey = new object();
 
         public ThreadData()
         {
-            store = Thread.AllocateDataSlot();
-            Thread.SetData(store, new Dictionary<object, object>());
+        }
+
+        public Dictionary<object, object> GetStorage()
+        {
+            lock (this)
+            {
+                var dic = (Dictionary<object, object>)Thread.GetData(Thread.GetNamedDataSlot(this.GetType().GUID.ToString()));
+                if (dic == null)
+                {
+                    var store = Thread.AllocateNamedDataSlot(this.GetType().GUID.ToString());
+                    Thread.SetData(store, new Dictionary<object, object>());
+                }
+                return dic;
+            }
         }
 
         public T Get<T>(object key)
@@ -25,7 +35,7 @@ namespace Simple.Threading
 
                 try
                 {
-                    return (T)((Dictionary<object, object>)Thread.GetData(store))[key];
+                    return (T)GetStorage()[key];
                 }
                 catch (KeyNotFoundException)
                 {
@@ -40,7 +50,7 @@ namespace Simple.Threading
             {
                 if (key == null) key = defaultKey;
 
-                ((Dictionary<object, object>)Thread.GetData(store))[key] = value;
+                GetStorage()[key] = value;
             }
         }
 
@@ -50,7 +60,7 @@ namespace Simple.Threading
             {
                 if (key == null) key = defaultKey;
 
-                ((Dictionary<object, object>)Thread.GetData(store)).Remove(key);
+                GetStorage().Remove(key);
             }
         }
     }

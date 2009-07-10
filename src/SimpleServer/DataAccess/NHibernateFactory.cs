@@ -9,7 +9,7 @@ using Simple.Patterns;
 
 namespace Simple.DataAccess
 {
-    public class NHibernateFactory : Factory<NHConfigurator>, Simple.DataAccess.INHibernateFactory
+    public class NHibernateFactory : Factory<NHConfigurator>, INHibernateFactory
     {
         protected NHConfigurator ConfigHooks { get; set; }
         public NHConfigurator MappingHooks { get; protected set; }
@@ -28,7 +28,7 @@ namespace Simple.DataAccess
                 lock (this)
                 {
                     if (_sessionFactory == null)
-                        _sessionFactory = Configuration.BuildSessionFactory();
+                        _sessionFactory = NHConfiguration.BuildSessionFactory();
 
                     return _sessionFactory;
                 }
@@ -36,7 +36,7 @@ namespace Simple.DataAccess
         }
 
         private Configuration _configuration = null;
-        public virtual Configuration Configuration
+        public virtual Configuration NHConfiguration
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Simple.DataAccess
             }
         }
 
-        public virtual ISession GetSession()
+        public virtual ISession OpenNHSession()
         {
             return SessionFactory.OpenSession();
         }

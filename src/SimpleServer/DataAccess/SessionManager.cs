@@ -25,54 +25,24 @@ namespace Simple.DataAccess
             return factories[key];
         }
 
-        public static ITransaction BeginTransaction()
+        public static ISession OpenSession()
         {
-            return GetSession().BeginTransaction();
+            return Factory().OpenNHSession();
         }
 
-        public static ITransaction BeginTransaction(bool forceNewSession)
+        public static ISession OpenSession(object key)
         {
-            return GetSession(forceNewSession).BeginTransaction();
-        }
-
-        public static ITransaction BeginTransaction(object key)
-        {
-            return GetSession(key).BeginTransaction();
-        }
-
-        public static ITransaction BeginTransaction(object key, bool forceNewSession)
-        {
-            return GetSession(key, forceNewSession).BeginTransaction();
-        }
-
-        public static ISession GetSession()
-        {
-            return Factory().GetSession();
-        }
-
-        public static ISession GetSession(bool forceNewSession)
-        {
-            return Factory().GetSession();
-        }
-
-        public static ISession GetSession(object key)
-        {
-            return Factory(key).GetSession();
-        }
-
-        public static ISession GetSession(object key, bool forceNewSession)
-        {
-            return Factory(key).GetSession();
+            return Factory(key).OpenNHSession();
         }
 
         public static NHibernate.Cfg.Configuration GetConfig()
         {
-            return Factory().Configuration;
+            return Factory().NHConfiguration;
         }
 
         public static NHibernate.Cfg.Configuration GetConfig(object key)
         {
-            return Factory(key).Configuration;
+            return Factory(key).NHConfiguration;
         }
     }
 }
