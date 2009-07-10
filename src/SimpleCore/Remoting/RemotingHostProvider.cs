@@ -49,7 +49,8 @@ namespace Simple.Remoting
 
                 string key = ConfigCache.GetEndpointKey(contract);
                 logger.DebugFormat("Registering type {0} with contract {1} at endpoint {2}...", type.Name, contract.Name, key);
-                RemotingConfiguration.RegisterWellKnownServiceType(type, key, WellKnownObjectMode.Singleton);
+                RemotingConfiguration.RegisterWellKnownServiceType(
+                    type, key, WellKnownObjectMode.Singleton);
 
                 logger.InfoFormat("{0} hosted:", key);
                 foreach (string url in channel.GetUrlsForUri(key))

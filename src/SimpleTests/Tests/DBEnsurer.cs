@@ -19,13 +19,7 @@ namespace Simple.Tests
     {
         public static void Ensure(object key)
         {
-            NHibernateSimply.Do.Configure(key,
-                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
-            NHibernateSimply.Do.MapAssemblyOf<Empresa.Map>(key);
-
-            RemotingSimply.Do.Configure(key,
-                XmlConfig.LoadXml<RemotingConfig>(RemotingConfigs.SimpleRemotingConfig8020));
-                        Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer));
+           
 
             SchemaExport exp = new SchemaExport(SessionManager.GetConfig(key));
             exp.Drop(true, true);
@@ -34,6 +28,18 @@ namespace Simple.Tests
 
 
         }
+
+        public static void Configure(object key)
+        {
+            NHibernateSimply.Do.Configure(key,
+               XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
+            NHibernateSimply.Do.MapAssemblyOf<Empresa.Map>(key);
+
+            RemotingSimply.Do.Configure(key,
+                XmlConfig.LoadXml<RemotingConfig>(RemotingConfigs.SimpleRemotingConfig8020));
+            Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer));
+        }
+
         public static Empresa E1 = null;
         public static Funcionario F1 = null;
         public static EmpresaFuncionario EF1 = null;
@@ -67,6 +73,7 @@ namespace Simple.Tests
             Assert.AreEqual(1, Funcionario.CountByFilter(BooleanExpression.True));
             Assert.AreEqual(1, EmpresaFuncionario.CountByFilter(BooleanExpression.True));
         }
+
 
 
     }

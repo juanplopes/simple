@@ -27,6 +27,11 @@ namespace Simple.Services
             if (!(entity is T)) throw new InvalidOperationException("Assertion failure. No idea what's happening.");
         }
 
+        public static int CountByFilter(Filter filter)
+        {
+            return Rules.CountByFilter(filter);
+        }
+
         public static T Load(object id)
         {
             return Rules.Load(id);
@@ -62,37 +67,32 @@ namespace Simple.Services
             return Rules.ListByFilter(filter, orderBy);
         }
 
-        public static Page<T> PageByFilter(Filter filter, OrderByCollection orderBy, int skip, int take)
+        public static IList<T> ListByExample(T example)
+        {
+            return Rules.ListByExample(example);
+        }
+
+        public static Page<T> PaginateByFilter(Filter filter, OrderByCollection orderBy, int skip, int take)
         {
             return Rules.PaginateByFilter(filter, orderBy, skip, take);
         }
 
-        public static IList<T> ListByExample(T entity)
+        public static Page<T> PaginateByFilter(Filter filter, int skip, int take)
         {
-            return Rules.ListByExample(entity);
+            return Rules.PaginateByFilter(filter, OrderBy.None(), skip, take);
         }
 
-        public static int CountByFilter(Filter filter)
+        public static Page<T> PaginateAll(OrderByCollection orderBy, int skip, int take)
         {
-            return Rules.CountByFilter(filter);
+            return Rules.PaginateAll(orderBy, skip, take);
         }
 
-        public static void Delete(T entity)
+        public static Page<T> PaginateAll(int skip, int take)
         {
-            Rules.Delete(entity);
+            return Rules.PaginateAll(OrderBy.None(), skip, take);
         }
 
-        public static int DeleteByFilter(Filter filter)
-        {
-            return Rules.DeleteByFilter(filter);
-        }
-
-        public static void DeleteById(object id)
-        {
-            Rules.DeleteById(id);
-        }
-
-        protected virtual T ThisAsT
+        protected T ThisAsT
         {
             get
             {
@@ -101,27 +101,38 @@ namespace Simple.Services
             }
         }
 
-        public virtual T Persist()
+        public T Persist()
         {
             return Rules.Persist(ThisAsT);
         }
 
-        public virtual T Save()
+        public T Save()
         {
             return Rules.Save(ThisAsT);
         }
 
-        public virtual T Update()
+        public T Update()
         {
             return Rules.Update(ThisAsT);
         }
 
-        public virtual void Delete()
+        public void Delete()
         {
             Rules.Delete(ThisAsT);
         }
 
-        public virtual T SaveOrUpdate()
+        public static void DeleteById(object id)
+        {
+            Rules.DeleteById(id);
+        }
+
+        public static int DeleteByFilter(Filter filter)
+        {
+            return Rules.DeleteByFilter(filter);
+        }
+
+
+        public T SaveOrUpdate()
         {
             return Rules.SaveOrUpdate(ThisAsT);
         }

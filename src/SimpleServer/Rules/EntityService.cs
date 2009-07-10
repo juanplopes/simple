@@ -103,6 +103,10 @@ namespace Simple.Services
             return Extensions.Paginate<T>(criteria, skip, take);
         }
 
+        public virtual Page<T> PaginateAll(OrderByCollection order, int skip, int take)
+        {
+            return this.PaginateAll(order, skip, take);
+        }
         protected virtual ICriteria CreateCriteriaByFilter(Filter filter, OrderByCollection order)
         {
             D dao = GetDao();

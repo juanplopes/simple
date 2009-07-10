@@ -12,6 +12,7 @@ using Simple.Remoting;
 using Simple.Tests.Service;
 using Simple.DataAccess.Context;
 using Simple.Server;
+using NHibernate;
 
 namespace Simple.Tests.DataAccess
 {
@@ -23,14 +24,16 @@ namespace Simple.Tests.DataAccess
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
-            DBEnsurer.Ensure(typeof(DBEnsurer));
+            DBEnsurer.Configure(typeof(DBEnsurer));
         }
 
 
         IDataContext dtx = null;
+        ITransaction tx = null;
         [TestInitialize]
         public void TestSetup()
         {
+            DBEnsurer.Ensure(typeof(DBEnsurer));
             dtx = Simply.Get(typeof(DBEnsurer)).EnterContext();
         }
 
@@ -55,7 +58,7 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual(e.Nome, e2.Nome);
             Assert.AreEqual(e.Id, e2.Id);
 
-            Empresa.Delete(e);
+            e.Delete();
         }
 
         [TestMethod]

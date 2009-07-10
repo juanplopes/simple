@@ -17,11 +17,12 @@ namespace Simple.Threading
         {
             lock (this)
             {
-                var dic = (Dictionary<object, object>)Thread.GetData(Thread.GetNamedDataSlot(this.GetType().GUID.ToString()));
+                var store = Thread.GetNamedDataSlot(this.GetType().GUID.ToString());
+                var dic = (Dictionary<object, object>)Thread.GetData(store);
                 if (dic == null)
                 {
-                    var store = Thread.AllocateNamedDataSlot(this.GetType().GUID.ToString());
-                    Thread.SetData(store, new Dictionary<object, object>());
+                    dic = new Dictionary<object, object>();
+                    Thread.SetData(store, dic);
                 }
                 return dic;
             }
