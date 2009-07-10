@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+
+using System.Text;
+using System.ServiceModel.Description;
+using SimpleLibrary.Config;
+using BasicLibrary.Configuration;
+using BasicLibrary.ServiceModel;
+using System.Reflection;
+
+namespace SimpleLibrary.ServiceModel
+{
+    public class DataContractConfigurator : IEndpointConfigurator
+    {
+        public void Configure(bool isClientSide, System.ServiceModel.Description.ServiceEndpoint endpoint, ConfiguratorElement config)
+        {
+            SimpleLibraryConfig simpleLibraryConfig = SimpleLibraryConfig.Get();
+
+            IList<Assembly> assemblies = new List<Assembly>();
+            assemblies.Add(Assembly.GetAssembly(typeof(Filters.Filter)));
+            assemblies.Add(simpleLibraryConfig.Business.InterfaceAssembly.LoadAssembly());
+            CustomDataContractSerializerOperationBehavior.OverrideOperations(endpoint.Contract.Operations, assemblies);
+        }
+    }
+}
