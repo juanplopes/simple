@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.DynamicProxy;
 using System.Reflection;
+using Simple.Reflection;
 
 namespace Simple.Services
 {
@@ -27,8 +28,7 @@ namespace Simple.Services
                     _cache = DynamicProxyFactory.Instance.CreateProxy(null, (o, m, p) =>
                     {
                         Type retType = ((MethodInfo)m).ReturnType;
-                        return retType.IsValueType && !typeof(void).IsAssignableFrom(retType) ?
-                            Activator.CreateInstance(retType) : null;
+                        return TypesHelper.GetBoxedDefaultInstance(retType);
                     });
                 }
 

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.Remoting;
 using Simple.Tests.Service;
+using Simple.DynamicProxy;
 
 namespace Simple.Tests.Experiences
 {
@@ -21,5 +22,23 @@ namespace Simple.Tests.Experiences
                 this.GetType().GUID.ToString(), WellKnownObjectMode.SingleCall);
         }
 
+        [TestMethod, ExpectedException(typeof(InvalidCastException))]
+        public void CreateConcreteClassProxy()
+        {
+            var obj = (SampleConcreteClass)DynamicProxyFactory.Instance.CreateProxy(null, (o, m, p) =>
+            {
+                return 84;
+            });
+
+            Assert.AreEqual(84, obj.GetInt());
+        }
+
+        class SampleConcreteClass
+        {
+            public int GetInt()
+            {
+                return 42;
+            }
+        }
     }
 }

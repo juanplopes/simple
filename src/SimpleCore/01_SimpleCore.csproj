@@ -94,7 +94,6 @@
     <Compile Include="Remoting\RemotingClientProvider.cs" />
     <Compile Include="Remoting\RemotingConfig.cs" />
     <Compile Include="Remoting\RemotingHostProvider.cs" />
-    <Compile Include="Remoting\RemotingServerInstance.cs" />
     <Compile Include="Remoting\RemotingSimply.cs" />
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\Entity.cs" />

@@ -16,5 +16,11 @@ namespace Simple.Reflection
         {
             return intoThis.IsAssignableFrom(type);
         }
+
+        public static object GetBoxedDefaultInstance(Type type)
+        {
+            return type.IsValueType && !typeof(void).IsAssignableFrom(type) ?
+                Activator.CreateInstance(type) : null;
+        }
     }
 }

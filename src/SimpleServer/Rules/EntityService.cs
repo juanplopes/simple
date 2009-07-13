@@ -12,6 +12,7 @@ using log4net;
 using System.Linq;
 using Simple.Server;
 using Simple.ConfigSource;
+using System.Runtime.Remoting.Proxies;
 
 namespace Simple.Services
 {
@@ -34,6 +35,7 @@ namespace Simple.Services
                 return _logger;
             }
         }
+
 
         protected object ConfigKey
         {

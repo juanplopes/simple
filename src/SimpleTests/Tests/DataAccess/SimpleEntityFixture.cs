@@ -29,7 +29,6 @@ namespace Simple.Tests.DataAccess
 
 
         IDataContext dtx = null;
-        ITransaction tx = null;
         [TestInitialize]
         public void TestSetup()
         {

@@ -52,36 +52,54 @@ namespace Simple.Tests.SimpleLib
 		public DynamicProxyFixture() {
 		}
 
+        protected static void TestCreatedSimpleProxy(ISimpleInterface testClassProxy)
+        {
+            Assert.IsNotNull(testClassProxy);
+
+            // No test for method 1, just make sure it doesn't bomb ;-)
+            testClassProxy.Method1();
+
+            Assert.AreEqual("Hello World!", testClassProxy.Method2());
+            Assert.AreEqual(10000, testClassProxy.Method3());
+            Assert.AreEqual(123456, testClassProxy.Method4(123456));
+
+            int outValue = 1234;
+            testClassProxy.Method5(3456, out outValue);
+            Assert.AreEqual(3456, outValue);
+
+            int refValue = 56748;
+            testClassProxy.Method6(ref refValue);
+            Assert.AreEqual(98765, refValue);
+
+            // Test casting
+            IImplemented implementedInterface = (IImplemented)testClassProxy;
+            Assert.IsNotNull(implementedInterface);
+            implementedInterface.ImplementedMethod();
+
+            // Test IDynamicProxy test
+            IDynamicProxy dynProxy = (IDynamicProxy)testClassProxy;
+            Assert.IsNotNull(dynProxy);
+        }
+
 		[TestMethod]
 		public void TestSimpleProxy() {
 			SimpleClass testClass = new SimpleClass();
 			ISimpleInterface testClassProxy = (ISimpleInterface) DynamicProxyFactory.Instance.CreateProxy(testClass, new InvocationDelegate(InvocationHandler));
-            Assert.IsNotNull(testClassProxy);
-			
-			// No test for method 1, just make sure it doesn't bomb ;-)
-			testClassProxy.Method1();
-			
-			Assert.AreEqual("Hello World!", testClassProxy.Method2());
-			Assert.AreEqual(10000, testClassProxy.Method3());
-			Assert.AreEqual(123456, testClassProxy.Method4(123456));
-
-			int outValue = 1234;
-			testClassProxy.Method5(3456, out outValue);
-			Assert.AreEqual(3456, outValue);
-
-			int refValue = 56748;
-			testClassProxy.Method6(ref refValue);
-			Assert.AreEqual(98765, refValue);
-
-			// Test casting
-			IImplemented implementedInterface = (IImplemented)testClassProxy;
-			Assert.IsNotNull(implementedInterface);
-			implementedInterface.ImplementedMethod();
-
-			// Test IDynamicProxy test
-			IDynamicProxy dynProxy = (IDynamicProxy)testClassProxy;
-			Assert.IsNotNull(dynProxy);
+            TestCreatedSimpleProxy(testClassProxy);
 		}
+
+        [TestMethod]
+        public void TestSimpleProxyType()
+        {
+            SimpleClass testClass = new SimpleClass();
+            Type type = DynamicProxyFactory.Instance.CreateProxyType
+                (testClass, new InvocationDelegate(InvocationHandler));
+
+            ISimpleInterface testClassProxy = (ISimpleInterface)Activator.CreateInstance(type);
+
+
+            TestCreatedSimpleProxy(testClassProxy);
+        }
 
 		[TestMethod]
 		[ExpectedException(typeof(TargetException))]
@@ -160,7 +178,7 @@ namespace Simple.Tests.SimpleLib
 			notImplementedInterface2 = (INotImplemented2)testClassProxy;
 		}
 
-		private object InvocationHandler(object target, MethodBase method, object[] parameters) {
+    	private object InvocationHandler(object target, MethodBase method, object[] parameters) {
 			Console.WriteLine("Before: " + method.Name);
 			object result = method.Invoke(target, parameters);
 			Console.WriteLine("After: " + method.Name);

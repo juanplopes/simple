@@ -19,14 +19,10 @@ namespace Simple.Tests
     {
         public static void Ensure(object key)
         {
-           
-
             SchemaExport exp = new SchemaExport(SessionManager.GetConfig(key));
             exp.Drop(true, true);
             exp.Create(true, true);
             InsertTestData();
-
-
         }
 
         public static void Configure(object key)
