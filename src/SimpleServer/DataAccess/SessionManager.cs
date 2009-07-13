@@ -27,12 +27,12 @@ namespace Simple.DataAccess
 
         public static ISession OpenSession()
         {
-            return Factory().OpenNHSession();
+            return Factory().OpenNewSession();
         }
 
         public static ISession OpenSession(object key)
         {
-            return Factory(key).OpenNHSession();
+            return Factory(key).OpenNewSession();
         }
 
         public static NHibernate.Cfg.Configuration GetConfig()

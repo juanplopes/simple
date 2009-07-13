@@ -11,7 +11,6 @@ namespace Simple.DataAccess.Context
         ISession Session { get; }
         ISession NewSession();
         
-        IDataContext NewContext();
         bool IsOpen { get; }
         void Exit();
     }

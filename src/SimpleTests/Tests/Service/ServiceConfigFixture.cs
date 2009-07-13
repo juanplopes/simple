@@ -16,7 +16,7 @@ namespace Simple.Tests.ConfigSource
         public void TestNullServiceCreation()
         {
             SourceManager.Do.Remove<IServiceClientProvider>(this);
-            var svc = Simply.Do.Connect<ITestClientConnector>();
+            var svc = Simply.Do.Resolve<ITestClientConnector>();
 
             Assert.AreEqual(0, svc.TestInt());
             Assert.AreEqual(null, svc.TestString());
@@ -26,7 +26,7 @@ namespace Simple.Tests.ConfigSource
         public void TestVoidCall()
         {
             SourceManager.Do.Remove<IServiceClientProvider>(this);
-            var svc = Simply.Do.Connect<ITestClientConnector>();
+            var svc = Simply.Do.Resolve<ITestClientConnector>();
             svc.TestVoid();
         }
     }

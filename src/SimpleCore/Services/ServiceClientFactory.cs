@@ -15,12 +15,12 @@ namespace Simple.Services
             ConfigCache = new NullServiceClientProvider();
         }
 
-        public T Connect<T>()
+        public T Resolve<T>()
         {
             return (T)ConfigCache.Create(typeof(T));
         }
 
-        public object Connect(Type type)
+        public object Resolve(Type type)
         {
             return ConfigCache.Create(type);
         }

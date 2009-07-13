@@ -16,10 +16,10 @@ namespace Simple.DataAccess.Context
         protected IList<ISession> _addSessions = new List<ISession>();
         protected bool _isOpen = false;
 
-        internal DataContext(Func<ISession> sessionCreator, ISession defaultSession, bool mainContext)
+        internal DataContext(Func<ISession> sessionCreator, ISession defaultSession)
         {
             _creator = sessionCreator;
-            _isMain = mainContext;
+            _isMain = defaultSession == null;
             _defaultSession = defaultSession ?? sessionCreator();
             _isOpen = true;
         }
@@ -81,11 +81,6 @@ namespace Simple.DataAccess.Context
                 session.Clear();
                 session.Close();
             }
-        }
-
-        public IDataContext NewContext()
-        {
-            return new DataContext(_creator, _defaultSession, false);
         }
 
         public void Exit()

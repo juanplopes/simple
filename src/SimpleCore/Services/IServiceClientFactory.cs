@@ -3,7 +3,7 @@ namespace Simple.Services
 {
     public interface IServiceClientFactory
     {
-        object Connect(Type type);
-        T Connect<T>();
+        object Resolve(Type type);
+        T Resolve<T>();
     }
 }

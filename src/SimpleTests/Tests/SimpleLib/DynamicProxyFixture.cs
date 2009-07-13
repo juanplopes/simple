@@ -89,19 +89,6 @@ namespace Simple.Tests.SimpleLib
 		}
 
         [TestMethod]
-        public void TestSimpleProxyType()
-        {
-            SimpleClass testClass = new SimpleClass();
-            Type type = DynamicProxyFactory.Instance.CreateProxyType
-                (testClass, new InvocationDelegate(InvocationHandler));
-
-            ISimpleInterface testClassProxy = (ISimpleInterface)Activator.CreateInstance(type);
-
-
-            TestCreatedSimpleProxy(testClassProxy);
-        }
-
-		[TestMethod]
 		[ExpectedException(typeof(TargetException))]
 		public void TestInvalidCastWithoutStrict() {
 			SimpleClass testClass = new SimpleClass();

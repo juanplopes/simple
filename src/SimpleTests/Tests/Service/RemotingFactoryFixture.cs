@@ -29,7 +29,7 @@ namespace Simple.Tests.Service
                 WindowStyle = ProcessWindowStyle.Hidden,
             });
             Guid guid = GetSource();
-            ISimpleService service = Simply.Get(guid).Connect<ISimpleService>();
+            ISimpleService service = Simply.Get(guid).Resolve<ISimpleService>();
 
             int i = 0;
             while (i++<10)
@@ -78,14 +78,14 @@ namespace Simple.Tests.Service
         {
             Guid guid = GetSource();
 
-            ISimpleService service = Simply.Get(guid).Connect<ISimpleService>();
+            ISimpleService service = Simply.Get(guid).Resolve<ISimpleService>();
 
             Assert.AreEqual(42, service.GetInt32());
             Assert.AreEqual("whatever", service.GetString());
 
             ReleaseSource(guid);
             
-            service = Simply.Get(guid).Connect<ISimpleService>();
+            service = Simply.Get(guid).Resolve<ISimpleService>();
             Assert.AreEqual(0, service.GetInt32());
             Assert.AreEqual(null, service.GetString());
         }
@@ -95,7 +95,7 @@ namespace Simple.Tests.Service
         {
             Guid guid = GetSource();
 
-            IFailService service = Simply.Get(guid).Connect<IFailService>();
+            IFailService service = Simply.Get(guid).Resolve<IFailService>();
 
             Assert.AreEqual(84, service.FailInt());
         }
@@ -105,13 +105,13 @@ namespace Simple.Tests.Service
         {
             Guid guid = GetSource();
 
-            ISimpleService service = Simply.Get(guid).Connect<ISimpleService>();
+            ISimpleService service = Simply.Get(guid).Resolve<ISimpleService>();
 
             Assert.AreEqual(500000, service.GetByteArray(500000).Length);
 
             ReleaseSource(guid);
 
-            service = Simply.Get(guid).Connect<ISimpleService>();
+            service = Simply.Get(guid).Resolve<ISimpleService>();
             Assert.AreEqual(null, service.GetByteArray(100));
 
         }
@@ -121,7 +121,7 @@ namespace Simple.Tests.Service
         {
             Guid guid = GetSource();
 
-            ISecondService service = Simply.Get(guid).Connect<ISecondService>();
+            ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
 
             Assert.AreEqual("42", service.OtherString());
         }

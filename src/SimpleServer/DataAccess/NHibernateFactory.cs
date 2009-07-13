@@ -51,7 +51,7 @@ namespace Simple.DataAccess
             }
         }
 
-        public virtual ISession OpenNHSession()
+        public virtual ISession OpenNewSession()
         {
             return SessionFactory.OpenSession();
         }

@@ -52,12 +52,12 @@ namespace Simple.Client
             ServiceManager.HostAssemblyOf(ConfigKey, type);
         }
 
-        public T Connect<T>()
+        public T Resolve<T>()
         {
             return ServiceManager.Connect<T>(ConfigKey);
         }
 
-        public object Connect(Type type)
+        public object Resolve(Type type)
         {
             return ServiceManager.Connect(ConfigKey, type);
         }

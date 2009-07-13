@@ -14,11 +14,11 @@ namespace Simple.Services
         where T : Entity<T, R>
         where R : class, IEntityService<T>
     {
-        public static R Rules
+        public static R Service
         {
             get
             {
-                return Simply.Get(DefaultConfigAttribute.GetKey(typeof(T))).Connect<R>();
+                return Simply.Get(DefaultConfigAttribute.GetKey(typeof(T))).Resolve<R>();
             }
         }
 
@@ -29,22 +29,22 @@ namespace Simple.Services
 
         public static int CountByFilter(Filter filter)
         {
-            return Rules.CountByFilter(filter);
+            return Service.CountByFilter(filter);
         }
 
         public static T Load(object id)
         {
-            return Rules.Load(id);
+            return Service.Load(id);
         }
 
         public static T LoadByFilter(Filter filter)
         {
-            return Rules.LoadByFilter(filter);
+            return Service.LoadByFilter(filter);
         }
 
         public static T LoadByExample(T example)
         {
-            return Rules.LoadByExample(example);
+            return Service.LoadByExample(example);
         }
 
         public static IList<T> ListAll()
@@ -54,7 +54,7 @@ namespace Simple.Services
 
         public static IList<T> ListAll(OrderByCollection orderBy)
         {
-            return Rules.ListAll(orderBy);
+            return Service.ListAll(orderBy);
         }
 
         public static IList<T> ListByFilter(Filter filter)
@@ -64,32 +64,32 @@ namespace Simple.Services
 
         public static IList<T> ListByFilter(Filter filter, OrderByCollection orderBy)
         {
-            return Rules.ListByFilter(filter, orderBy);
+            return Service.ListByFilter(filter, orderBy);
         }
 
         public static IList<T> ListByExample(T example)
         {
-            return Rules.ListByExample(example);
+            return Service.ListByExample(example);
         }
 
         public static Page<T> PaginateByFilter(Filter filter, OrderByCollection orderBy, int skip, int take)
         {
-            return Rules.PaginateByFilter(filter, orderBy, skip, take);
+            return Service.PaginateByFilter(filter, orderBy, skip, take);
         }
 
         public static Page<T> PaginateByFilter(Filter filter, int skip, int take)
         {
-            return Rules.PaginateByFilter(filter, OrderBy.None(), skip, take);
+            return Service.PaginateByFilter(filter, OrderBy.None(), skip, take);
         }
 
         public static Page<T> PaginateAll(OrderByCollection orderBy, int skip, int take)
         {
-            return Rules.PaginateAll(orderBy, skip, take);
+            return Service.PaginateAll(orderBy, skip, take);
         }
 
         public static Page<T> PaginateAll(int skip, int take)
         {
-            return Rules.PaginateAll(OrderBy.None(), skip, take);
+            return Service.PaginateAll(OrderBy.None(), skip, take);
         }
 
         protected T ThisAsT
@@ -103,38 +103,38 @@ namespace Simple.Services
 
         public T Persist()
         {
-            return Rules.Persist(ThisAsT);
+            return Service.Persist(ThisAsT);
         }
 
         public T Save()
         {
-            return Rules.Save(ThisAsT);
+            return Service.Save(ThisAsT);
         }
 
         public T Update()
         {
-            return Rules.Update(ThisAsT);
+            return Service.Update(ThisAsT);
         }
 
         public void Delete()
         {
-            Rules.Delete(ThisAsT);
+            Service.Delete(ThisAsT);
         }
 
         public static void DeleteById(object id)
         {
-            Rules.DeleteById(id);
+            Service.DeleteById(id);
         }
 
         public static int DeleteByFilter(Filter filter)
         {
-            return Rules.DeleteByFilter(filter);
+            return Service.DeleteByFilter(filter);
         }
 
 
         public T SaveOrUpdate()
         {
-            return Rules.SaveOrUpdate(ThisAsT);
+            return Service.SaveOrUpdate(ThisAsT);
         }
     }
 }

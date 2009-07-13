@@ -32,8 +32,8 @@ namespace Simple.Tests.DataAccess
         [TestInitialize]
         public void TestSetup()
         {
-            DBEnsurer.Ensure(typeof(DBEnsurer));
             dtx = Simply.Get(typeof(DBEnsurer)).EnterContext();
+            DBEnsurer.Ensure(typeof(DBEnsurer));
         }
 
         [TestCleanup]
@@ -87,7 +87,7 @@ namespace Simple.Tests.DataAccess
         [TestMethod]
         public void SecondLinqTest()
         {
-            Empresa e = Empresa.Rules.GetByNameLinq("E1");
+            Empresa e = Empresa.Service.GetByNameLinq("E1");
 
             Assert.IsNotNull(e);
             Assert.AreEqual("E1", e.Nome);

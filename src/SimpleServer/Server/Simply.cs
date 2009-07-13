@@ -13,20 +13,9 @@ namespace Simple.Server
     {
     }
 
-    public class ServerSimplyBase<F> : Client.ClientSimplyBase<F>, INHibernateFactory, IDataContextFactory
+    public class ServerSimplyBase<F> : Client.ClientSimplyBase<F>, IDataContextFactory
         where F : Client.ClientSimplyBase<F>, new()
     {
-        #region DataAccess
-        public Configuration NHConfiguration
-        {
-            get { return SessionManager.GetConfig(ConfigKey); }
-        }
-        public ISession OpenNHSession()
-        {
-            return SessionManager.OpenSession(ConfigKey);
-        }
-        #endregion
-
 
         #region IDataContextFactory Members
 
@@ -38,6 +27,21 @@ namespace Simple.Server
         public IDataContext GetContext()
         {
             return DataContextFactory.Get(ConfigKey).GetContext();
+        }
+
+        #endregion
+
+        #region IDataContextFactory Members
+
+
+        public ISession GetSession()
+        {
+            return DataContextFactory.Get(ConfigKey).GetSession();
+        }
+
+        public ISession NewSession()
+        {
+            return DataContextFactory.Get(ConfigKey).NewSession();
         }
 
         #endregion

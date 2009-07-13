@@ -54,7 +54,7 @@ namespace Simple.Services
         protected virtual D GetDao()
         {
             D dao = new D();
-            dao.Session = Simply.Get(ConfigKey).OpenNHSession();
+            dao.Session = Simply.Get(ConfigKey).GetSession();
             return dao;
         }
 

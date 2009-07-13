@@ -57,17 +57,17 @@ namespace Simple.Services
 
         public static T Connect<T>()
         {
-            return ClientFactory().Connect<T>();
+            return ClientFactory().Resolve<T>();
         }
 
         public static T Connect<T>(object key)
         {
-            return ClientFactory(key).Connect<T>();
+            return ClientFactory(key).Resolve<T>();
         }
 
         public static object Connect(object key, Type type)
         {
-            return ClientFactory(key).Connect(type);
+            return ClientFactory(key).Resolve(type);
         }
 
     }
