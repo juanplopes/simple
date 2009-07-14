@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate.Tool.hbm2ddl;
 using Simple.ConfigSource;
 using Simple.DataAccess;
-using Simple.Remoting;
+using Simple.Services.Remoting;
 using Simple.Tests.Service;
 using FluentNHibernate.Cfg;
 using Simple.Tests.Contracts;

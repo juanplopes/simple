@@ -8,7 +8,7 @@ using System.Runtime.Remoting;
 using Sample.BusinessServer.Rules;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Channels.Tcp;
-using Simple.Remoting;
+using Simple.Services.Remoting;
 using Simple.ConfigSource;
 using Simple.Tests.Service;
 using Simple.Services;

@@ -9,9 +9,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Filters;
 using Simple.ConfigSource;
 using Simple.Tests.DataAccess;
-using Simple.Remoting;
+using Simple.Services.Remoting;
 using Simple.Tests.Service;
 using Simple.Server;
+using Simple.Services.Default;
 
 namespace Simple.Tests
 {
@@ -31,8 +32,7 @@ namespace Simple.Tests
                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
             NHibernateSimply.Do.MapAssemblyOf<Empresa.Map>(key);
 
-            RemotingSimply.Do.Configure(key,
-                XmlConfig.LoadXml<RemotingConfig>(RemotingConfigs.SimpleRemotingConfig8020));
+            DefaultHostSimply.Do.Configure(key, new DirectConfigSource<DefaultHostConfig>());
             Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer));
         }
 

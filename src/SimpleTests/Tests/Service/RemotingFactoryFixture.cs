@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simple.Services;
 using Simple.ConfigSource;
-using Simple.Remoting;
+using Simple.Services.Remoting;
 using Simple.Server;
 using System.Runtime.Remoting;
 using System.Diagnostics;

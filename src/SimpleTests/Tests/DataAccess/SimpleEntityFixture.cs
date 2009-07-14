@@ -8,7 +8,7 @@ using Simple.DataAccess;
 using Simple.Filters;
 using NHibernate.Linq;
 using Simple.ConfigSource;
-using Simple.Remoting;
+using Simple.Services.Remoting;
 using Simple.Tests.Service;
 using Simple.DataAccess.Context;
 using Simple.Server;
@@ -19,14 +19,6 @@ namespace Simple.Tests.DataAccess
     [TestClass]
     public class SimpleEntityFixture
     {
-
-
-        [ClassInitialize]
-        public static void Setup(TestContext context)
-        {
-            DBEnsurer.Configure(typeof(DBEnsurer));
-        }
-
 
         IDataContext dtx = null;
         [TestInitialize]
