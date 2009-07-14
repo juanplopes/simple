@@ -8,6 +8,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System;
 using BasicLibrary.Logging;
+using BasicLibrary.Common;
 
 namespace Sample.UserInterface2
 {
@@ -15,14 +16,23 @@ namespace Sample.UserInterface2
     {
         static void Main(string[] args)
         {
-            try
+            string[] campos = new string[] { "Nome", "Id" };
+            Pair<string, bool>[] orderBy = new Pair<string, bool>[] { 
+                new Pair<string, bool>("Id", true),
+                new Pair<string, bool>("Nome", false)};
+
+            Filter filter = BooleanExpression.True;
+            foreach (string campo in campos)
             {
-                RulesFactory.Create<IEmpresaRules>().HeartBeat();
+                filter = new AndExpression(filter, new LikeExpression(campo, "whatever"));
             }
-            catch (Exception e)
+
+            OrderByCollection col = new OrderByCollection();
+            foreach (var pair in orderBy)
             {
-                MainLogger.Get<Program>().Error(e.Message, e);
+                col.Add(new OrderBy(pair.First, pair.Second));
             }
+
             Console.ReadLine();
         }
     }

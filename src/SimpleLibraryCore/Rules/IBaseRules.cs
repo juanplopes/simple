@@ -38,6 +38,9 @@ namespace SimpleLibrary.Rules
         Page<T> PaginateByFilter(Filter filter, OrderByCollection order, int skip, int take);
 
         [OperationContract]
+        Page<T> PaginateAll(OrderByCollection order, int skip, int take);
+
+        [OperationContract]
         void SaveOrUpdate(T entity);
 
         [OperationContract]

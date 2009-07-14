@@ -112,6 +112,11 @@ namespace SimpleLibrary.Rules
             return this.ListByFilter(BooleanExpression.True, order);
         }
 
+        public Page<T> PaginateAll(OrderByCollection order, int skip, int take)
+        {
+            return this.PaginateByFilter(BooleanExpression.True, order, skip, take);
+        }
+
         public virtual void Delete(T entity)
         {
             GetDao().Delete(entity);
