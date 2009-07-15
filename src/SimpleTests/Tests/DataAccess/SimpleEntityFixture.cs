@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.Tests.Contracts;
 using Simple.DataAccess;
 using Simple.Filters;
@@ -16,25 +16,30 @@ using NHibernate;
 
 namespace Simple.Tests.DataAccess
 {
-    [TestClass]
+    [TestFixture]
     public class SimpleEntityFixture
     {
+        [TestFixtureSetUp]
+        public void SetupFixture()
+        {
+            DBEnsurer.Configure(typeof(DBEnsurer));
+        }
 
         IDataContext dtx = null;
-        [TestInitialize]
+        [SetUp]
         public void TestSetup()
         {
             dtx = Simply.Get(typeof(DBEnsurer)).EnterContext();
             DBEnsurer.Ensure(typeof(DBEnsurer));
         }
 
-        [TestCleanup]
-        public void TestCleanup()
+        [TearDown]
+        public void TestTearDown()
         {
             dtx.Exit();
         }
 
-        [TestMethod]
+        [Test]
         public void InsertEmpresa()
         {
             Empresa e = new Empresa()
@@ -52,7 +57,7 @@ namespace Simple.Tests.DataAccess
             e.Delete();
         }
 
-        [TestMethod]
+        [Test]
         public void UpdateEmpresa()
         {
             Empresa e = Empresa.LoadByFilter(BooleanExpression.True);
@@ -63,7 +68,7 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual(e.Nome, Empresa.Load(e.Id).Nome);
         }
 
-        [TestMethod]
+        [Test]
         public void FirstLinqTest()
         {
             var queryable = SessionManager.OpenSession(typeof(DBEnsurer)).Linq<Empresa>();
@@ -76,7 +81,7 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual("E1", query.First());
         }
 
-        [TestMethod]
+        [Test]
         public void SecondLinqTest()
         {
             Empresa e = Empresa.Service.GetByNameLinq("E1");

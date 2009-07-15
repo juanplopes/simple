@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.Services;
 using Simple.ConfigSource;
 using Simple.Services.Remoting;
@@ -14,19 +14,19 @@ using System.Threading;
 
 namespace Simple.Tests.Service
 {
-    [TestClass]
+    [TestFixture]
     public class RemotingFactoryFixture
     {
-        static Process process;
+        Process process;
 
-        [ClassInitialize]
-        public static void ClassSetup(TestContext context)
+        [TestFixtureSetUp]
+        public void ClassSetup()
         {
             process = Process.Start(new ProcessStartInfo()
             {
-                FileName = Assembly.GetExecutingAssembly().Location,
+                FileName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath,
                 Arguments = Server.RemotingTest,
-                WindowStyle = ProcessWindowStyle.Hidden,
+                WindowStyle = ProcessWindowStyle.Hidden
             });
             Guid guid = GetSource();
             ISimpleService service = Simply.Get(guid).Resolve<ISimpleService>();
@@ -44,15 +44,13 @@ namespace Simple.Tests.Service
                     Thread.Sleep(500);
                 }
             }
-
-
-            Thread.Sleep(3000);
         }
 
-        [ClassCleanup]
-        public static void ClassTeardown()
+        [TestFixtureTearDown]
+        public void ClassTeardown()
         {
             process.Kill();
+            SourceManager.Do.Clear<RemotingConfig>();
         }
 
 
@@ -73,7 +71,7 @@ namespace Simple.Tests.Service
             SourceManager.Do.Remove<IServiceClientProvider>(guid);
         }
 
-        [TestMethod]
+        [Test]
         public void SimpleServiceMarshalingTest()
         {
             Guid guid = GetSource();
@@ -90,7 +88,7 @@ namespace Simple.Tests.Service
             Assert.AreEqual(null, service.GetString());
         }
 
-        [TestMethod, ExpectedException(typeof(RemotingException))]
+        [Test, ExpectedException(typeof(RemotingException))]
         public void TestFailConnect()
         {
             Guid guid = GetSource();
@@ -100,7 +98,7 @@ namespace Simple.Tests.Service
             Assert.AreEqual(84, service.FailInt());
         }
 
-        [TestMethod]
+        [Test]
         public void SimpleBigMarshalingTest()
         {
             Guid guid = GetSource();
@@ -116,7 +114,7 @@ namespace Simple.Tests.Service
 
         }
 
-        [TestMethod]
+        [Test]
         public void ConnectToSecondServiceTest()
         {
             Guid guid = GetSource();
@@ -126,7 +124,7 @@ namespace Simple.Tests.Service
             Assert.AreEqual("42", service.OtherString());
         }
 
-        [TestMethod]
+        [Test]
         public void TestCreateSameServiceTwice()
         {
             for (int i = 0; i < 3; i++)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using NHibernate.Tool.hbm2ddl;
 using Simple.ConfigSource;
 using Simple.DataAccess;
@@ -13,10 +13,10 @@ using Simple.Tests.Contracts;
 
 namespace Simple.Tests.DataAccess
 {
-    [TestClass]
+    [TestFixture]
     public class NHConfigFixture
     {
-        [TestMethod]
+        [Test]
         public void TestSchemaCreation()
         {
             NHibernateSimply.Do.Configure(this,
@@ -27,7 +27,7 @@ namespace Simple.Tests.DataAccess
             exp.Create(true, true);
         }
 
-        [TestMethod]
+        [Test]
         public void TestLoadDialect()
         {
             SourceManager.Do.Remove<NHConfigurator>();
@@ -40,7 +40,7 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual("NHibernate.Dialect.SQLiteDialect", factory.NHConfiguration.GetProperty("dialect"));
         }
 
-        [TestMethod]
+        [Test]
         public void TestMapEntities()
         {
             NHibernateSimply.Do.Configure(this, 

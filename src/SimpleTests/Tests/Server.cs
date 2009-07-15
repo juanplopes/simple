@@ -34,7 +34,7 @@ namespace Simple.Tests
                         XmlConfig.LoadXml<RemotingConfig>(RemotingConfigs.SimpleRemotingConfig));
 
                     Simply.Get(guid).Host(typeof(SimpleService));
-                    Thread.Sleep(-1);
+                    Console.ReadLine();
                 }
             }
             return 0;

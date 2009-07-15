@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.Common;
 using Simple.Patterns;
 
 namespace Simple.Tests.SimpleLib
 {
-    public class BaseWorkingDaysFixture
+    public abstract class BaseWorkingDaysFixture
     {
         protected static void AssertProviderSoft(IWorkingDaysProvider prov, int iterations, params DateTime[] baseDates)
         {
@@ -64,31 +64,31 @@ namespace Simple.Tests.SimpleLib
             BaseDates = baseDates;
         }
 
-        [TestMethod]
+        [Test]
         public void SoftTest()
         {
             AssertProviderSoft(Provider, SoftIterations, BaseDates);
         }
 
-        [TestMethod]
+        [Test]
         public void HeavyForwardConsiderTest()
         {
             AssertProviderHeavy(Provider, HeavyIterations, true, true, BaseDates);
         }
 
-        [TestMethod]
+        [Test]
         public void HeavyForwardNotConsiderTest()
         {
             AssertProviderHeavy(Provider, HeavyIterations, true, false, BaseDates);
         }
 
-        [TestMethod]
+        [Test]
         public void HeavyBackwardConsiderTest()
         {
             AssertProviderHeavy(Provider, HeavyIterations, false, true, BaseDates);
         }
 
-        [TestMethod]
+        [Test]
         public void HeavyBackwardNotConsiderTest()
         {
             AssertProviderHeavy(Provider, HeavyIterations, false, false, BaseDates);

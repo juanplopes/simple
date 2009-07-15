@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.IO;
 using Simple.ConfigSource;
 using System.Xml;
@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace Simple.Tests.ConfigSource
 {
-    [TestClass]
+    [TestFixture]
     public class XmlFileConfigSourceFixture
     {
         public const string TEST_FILE_NAME = "__test__.xml";
@@ -23,13 +23,13 @@ namespace Simple.Tests.ConfigSource
                   </BasicTypesSampleWithoutAttr>";
 
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             File.WriteAllText(TEST_FILE_NAME, XmlConfigSourceFixture.SAMPLE_XML);
         }
 
-        [TestCleanup]
+        [TestFixtureTearDown]
         public void Teardown()
         {
             if (File.Exists(TEST_FILE_NAME))
@@ -37,7 +37,7 @@ namespace Simple.Tests.ConfigSource
         }
 
 
-        [TestMethod]
+        [Test]
         public void SimpleLoadTest()
         {
             using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
@@ -47,7 +47,7 @@ namespace Simple.Tests.ConfigSource
             }
         }
 
-        //[TestMethod]
+        //[Test]
         //public void WithRepositoryTest()
         //{
         //    using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
@@ -58,7 +58,7 @@ namespace Simple.Tests.ConfigSource
         //    }
         //}
 
-        [TestMethod]
+        [Test]
         public void SimpleLoadAndModifyTest()
         {
             using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>()

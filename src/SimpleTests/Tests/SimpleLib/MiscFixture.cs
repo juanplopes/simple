@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.Patterns;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestClass]
+    [TestFixture]
     public class MiscFixture
     {
-        [TestMethod]
+        [Test]
         public void TransformationListTest()
         {
             TransformationList<int> t = new TransformationList<int>();

@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.ConfigSource;
 using Simple.Services;
 using Simple.Client;
 
 namespace Simple.Tests.ConfigSource
 {
-    [TestClass]
+    [TestFixture]
     public class ServiceObjectsFixture
     {
-        [TestMethod]
+        [Test]
         public void TestNullServiceCreation()
         {
             SourceManager.Do.Remove<IServiceClientProvider>(this);
@@ -22,7 +22,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(null, svc.TestString());
         }
 
-        [TestMethod]
+        [Test]
         public void TestVoidCall()
         {
             SourceManager.Do.Remove<IServiceClientProvider>(this);

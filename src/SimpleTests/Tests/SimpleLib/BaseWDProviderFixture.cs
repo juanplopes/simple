@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.Tests.SimpleLib;
 using Simple.Common;
 using Simple.Patterns;
@@ -31,7 +31,7 @@ namespace Simple.Tests.SimpleLib
         }
     }
 
-    [TestClass]
+    [TestFixture]
     public class BaseWDProviderTests : BaseWorkingDaysFixture
     {
         public BaseWDProviderTests()

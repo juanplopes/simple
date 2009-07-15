@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.ConfigSource;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.IO;
 using Simple.Logging;
 
 namespace Simple.Tests.ConfigSource
 {
-    [TestClass]
+    [TestFixture]
     public class FactoryFixture
     {
-        [TestInitialize]
+        [TestFixtureSetUp]
         public void Setup()
         {
             File.WriteAllText(XmlFileConfigSourceFixture.TEST_FILE_NAME, XmlConfigSourceFixture.SAMPLE_XML);
         }
 
-        [TestCleanup]
+        [TestFixtureTearDown]
         public void Teardown()
         {
             if (File.Exists(XmlFileConfigSourceFixture.TEST_FILE_NAME))
                 File.Delete(XmlFileConfigSourceFixture.TEST_FILE_NAME);
         }
 
-        [TestMethod]
+        [Test]
         public void SimpleFactoringTest()
         {
             IConfigSource<BasicTypesSampleWithoutAttr> src =
@@ -39,7 +39,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual("whatever", b.BuildString());
         }
 
-        [TestMethod]
+        [Test]
         public void SourcesFactoredTest()
         {
             IConfigSource<BasicTypesSampleWithoutAttr> src =
@@ -56,7 +56,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual("whatever", b.BuildString());
         }
 
-        [TestMethod]
+        [Test]
         public void RedoSourcesFactoredTest()
         {
             IConfigSource<BasicTypesSampleWithoutAttr> src =
@@ -80,7 +80,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(default(int), b.BuildInt());
         }
 
-        [TestMethod]
+        [Test]
         public void RedoSourcesFactoredTestWithKey()
         {
             IConfigSource<BasicTypesSampleWithoutAttr> src =
@@ -105,7 +105,7 @@ namespace Simple.Tests.ConfigSource
         }
 
 
-        [TestMethod]
+        [Test]
         public void ExpiringFactoringTest()
         {
             using (var src = XmlConfig.LoadFile<BasicTypesSampleWithoutAttr>
@@ -134,7 +134,7 @@ namespace Simple.Tests.ConfigSource
             }
         }
 
-        [TestMethod]
+        [Test]
         public void WrappedConfigTest()
         {
             IWrappedConfigSource<BasicTypesSampleWithoutAttr> src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>();
@@ -149,7 +149,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(b, null);
         }
 
-        [TestMethod]
+        [Test]
         public void WrappedConfigFactoredTest()
         {
             IWrappedConfigSource<BasicTypesSampleWithoutAttr> src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>();
@@ -169,7 +169,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(default(int), f.BuildInt());
         }
 
-        [TestMethod]
+        [Test]
         public void WrappedFactoryConfigTest()
         {
             IWrappedConfigSource<BasicTypesSampleWithoutAttr> src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>();
@@ -188,7 +188,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual(42, f.BuildInt());
         }
 
-        [TestMethod]
+        [Test]
         public void WrappedKeyedFactoryConfigTest()
         {
             IWrappedConfigSource<BasicTypesSampleWithoutAttr> src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>();

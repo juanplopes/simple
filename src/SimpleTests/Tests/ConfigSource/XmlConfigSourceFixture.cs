@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.ConfigSource;
 using System.Xml.Serialization;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace Simple.Tests.ConfigSource
 {
-    [TestClass]
+    [TestFixture]
     public class XmlConfigSourceFixture
     {
         public static void TestCreatedSimpleSample(BasicTypesSampleWithoutAttr config)
@@ -106,43 +106,43 @@ namespace Simple.Tests.ConfigSource
         }
 
         #region Basic
-        [TestMethod]
+        [Test]
         public void BasicStringTest()
         {
             BasicStringTestBase(SAMPLE_XML, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BasicStreamTest()
         {
             BasicStreamTestBase(SAMPLE_XML, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BasicXmlElementTest()
         {
             BasicXmlElementTestBase(SAMPLE_XML, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BasicXmlDocumentTest()
         {
             BasicXmlDocumentTestBase(SAMPLE_XML, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BasicTextReaderTest()
         {
             BasicTextReaderTestBase(SAMPLE_XML, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BasicXmlReaderTest()
         {
             BasicXmlReaderTestBase(SAMPLE_XML, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BasicXmlContentHolderTest()
         {
             BasicXmlContentHolderTestBase(SAMPLE_XML, null);
@@ -152,43 +152,43 @@ namespace Simple.Tests.ConfigSource
 
 
         #region XPath
-        [TestMethod]
+        [Test]
         public void XPathStringTest()
         {
             BasicStringTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
         }
 
-        [TestMethod]
+        [Test]
         public void XPathStreamTest()
         {
             BasicStreamTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
         }
 
-        [TestMethod]
+        [Test]
         public void XPathXmlElementTest()
         {
             BasicXmlElementTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
         }
 
-        [TestMethod]
+        [Test]
         public void XPathXmlDocumentTest()
         {
             BasicXmlDocumentTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
         }
 
-        [TestMethod]
+        [Test]
         public void XPathTextReaderTest()
         {
             BasicTextReaderTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
         }
 
-        [TestMethod]
+        [Test]
         public void XPathXmlReaderTest()
         {
             BasicXmlReaderTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
         }
 
-        [TestMethod]
+        [Test]
         public void XPathXmlContentHolderTest()
         {
             BasicXmlContentHolderTestBase(XPATH_SAMPLE_XML, XPATH_OUTER);
@@ -197,7 +197,7 @@ namespace Simple.Tests.ConfigSource
 
         #endregion
 
-        [TestMethod]
+        [Test]
         public void MoreInformationThanCanHandle()
         {
             string mySample = @"<BasicTypesSampleWithoutAttr>
@@ -210,7 +210,7 @@ namespace Simple.Tests.ConfigSource
             Assert.AreEqual("whatever", src.Load(mySample).Get().AString);
         }
 
-        [TestMethod]
+        [Test]
         public void MissingAStringTest()
         {
             string brokenXml =
@@ -223,7 +223,7 @@ namespace Simple.Tests.ConfigSource
             Assert.IsNull(cfg.AString);
         }
 
-        [TestMethod]
+        [Test]
         public void MissingAnIntegralTest()
         {
             string brokenXml =
@@ -234,7 +234,7 @@ namespace Simple.Tests.ConfigSource
             var cfg = src.Load(brokenXml).Get();
         }
 
-        [TestMethod]
+        [Test]
         public void ComplexTypesTest()
         {
             XmlDocument doc = new XmlDocument();
@@ -256,7 +256,7 @@ namespace Simple.Tests.ConfigSource
             }
         }
 
-        [TestMethod]
+        [Test]
         public void NotKnownTypesTest()
         {
             XmlDocument doc = new XmlDocument();
@@ -280,7 +280,7 @@ namespace Simple.Tests.ConfigSource
             }
         }
 
-        //[TestMethod]
+        //[Test]
         //public void WithRepositoryTest()
         //{
         //    IConfigSource<BasicTypesSampleWithoutAttr, string> src =
@@ -292,7 +292,7 @@ namespace Simple.Tests.ConfigSource
         //    TestCreatedSimpleSample(conf.Get<BasicTypesSampleWithoutAttr>());
         //}B
 
-        //[TestMethod]
+        //[Test]
         //public void WithConfigSourcesTest()
         //{
         //    var src = new XmlConfigSource<BasicTypesSampleWithoutAttr>();

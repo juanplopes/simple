@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.IO;
 using Simple.Tests.SimpleLib.Sample;
 using System.IO;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestClass]
+    [TestFixture]
     public class StringFragmenterFixture
     {
-        [TestMethod]
+        [Test]
         public void SimpleTest1()
         {
             var s = StringFragmenter.Parse<TestStringClass1>("0123456789009876543210");
@@ -26,7 +26,7 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual("0123456789009876543210", s2);
         }
 
-        [TestMethod]
+        [Test]
         public void SimpleTest2()
         {
             var s = StringFragmenter.Parse<TestStringClass2>("012345678,9098765432.1");
@@ -38,7 +38,7 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual(432.1m, s.TestDecimal2);
         }
 
-        [TestMethod]
+        [Test]
         public void SimpleTestFormatException3()
         {
             var s = StringFragmenter.Parse<TestStringClass2>("012345678.9098765432.1");
@@ -50,7 +50,7 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual(432.1m, s.TestDecimal2);
         }
 
-        [TestMethod]
+        [Test]
         public void SimpleTestFormatException4()
         {
             var s = StringFragmenter.Parse<TestStringClass2>("012345678,9098765432,1");
@@ -62,7 +62,7 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual(4321m, s.TestDecimal2);
         }
 
-        [TestMethod]
+        [Test]
         public void ExtremeCaseAllInOne()
         {
             var s = StringFragmenter.Parse<TestStringClass3>("123,5.9999");
@@ -73,14 +73,14 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual(1235.9999m, s.TestDecimal2);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(FormatException))]
         public void FormatExceptionCase()
         {
             var s = StringFragmenter.Parse<TestStringClass4>("123,5");
         }
 
-        [TestMethod]
+        [Test]
         public void ParseIntAndDate()
         {
             var s = StringFragmenter.Parse<TestStringClass4>("1234520081112");
@@ -92,7 +92,7 @@ namespace Simple.Tests.SimpleLib
         }
 
 
-        [TestMethod]
+        [Test]
         public void StreamTest()
         {
             string st = "0123456789009876543210\n0123456789009876543210\n0123456789009876543210\n";
@@ -120,7 +120,7 @@ namespace Simple.Tests.SimpleLib
         }
 
 
-        [TestMethod]
+        [Test]
         public void ArrayTest()
         {
             string st = "0123456789009876543210\n0123456789009876543210\n0123456789009876543210";

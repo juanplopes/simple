@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Runtime.Remoting;
 using Simple.Tests.Service;
 using Simple.DynamicProxy;
 
 namespace Simple.Tests.Experiences
 {
-    [TestClass]
+    [TestFixture]
     public class RemotingFixture
     {
-        [TestMethod]
+        [Test]
         public void TestSameServiceInSameEndpoint()
         {
             RemotingConfiguration.RegisterWellKnownServiceType(typeof(SimpleService),
@@ -22,7 +22,7 @@ namespace Simple.Tests.Experiences
                 this.GetType().GUID.ToString(), WellKnownObjectMode.SingleCall);
         }
 
-        [TestMethod, ExpectedException(typeof(InvalidCastException))]
+        [Test, ExpectedException(typeof(InvalidCastException))]
         public void CreateConcreteClassProxy()
         {
             var obj = (SampleConcreteClass)DynamicProxyFactory.Instance.CreateProxy(null, (o, m, p) =>

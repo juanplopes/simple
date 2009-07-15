@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.DataAccess.Context;
 using Simple.Server;
 using NHibernate;
@@ -10,10 +10,16 @@ using Simple.Tests.Contracts;
 
 namespace Simple.Tests.DataAccess
 {
-    [TestClass]
+    [TestFixture]
     public class DataContextFixture
     {
-        [TestInitialize]
+        [TestFixtureSetUp]
+        public void SetupFixture()
+        {
+            DBEnsurer.Configure(typeof(DBEnsurer));
+        }
+
+        [SetUp]
         public void TestSetup()
         {
             using(var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
@@ -21,7 +27,7 @@ namespace Simple.Tests.DataAccess
         }
 
 
-        [TestMethod]
+        [Test]
         public void SimpleDataContextTest()
         {
             ISession s1, s2, s3, s4;
@@ -42,7 +48,7 @@ namespace Simple.Tests.DataAccess
                 }
 
                 Assert.IsFalse(s3.IsOpen);
-                
+
                 Assert.IsTrue(s2.IsOpen);
                 Assert.IsTrue(s4.IsOpen);
             }
@@ -51,7 +57,39 @@ namespace Simple.Tests.DataAccess
             Assert.IsFalse(s4.IsOpen);
         }
 
-        [TestMethod]
+        [Test]
+        public void TestReopenDataContext()
+        {
+            try
+            {
+                using (var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
+                {
+                    var s1 = dx.Session;
+                    s1.Close();
+                }
+            }
+            catch (InvalidOperationException) { }
+
+            using (var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
+            {
+                var s1 = dx.Session;
+                Assert.IsTrue(dx.IsOpen);
+            }
+        }
+
+        [Test, ExpectedException(typeof(InvalidOperationException))]
+        public void TryCloseMainSessionTest()
+        {
+            using (var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
+            {
+                using (var dx2 = Simply.Get(typeof(DBEnsurer)).EnterContext())
+                {
+                    dx2.Session.Close();
+                }
+            }
+        }
+
+        [Test, ExpectedException(typeof(ObjectDisposedException))]
         public void NestedTransactions()
         {
             using (var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())

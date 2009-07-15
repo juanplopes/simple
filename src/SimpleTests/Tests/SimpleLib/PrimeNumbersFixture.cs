@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Simple.Common;
 
 namespace Simple.Tests.SimpleLib
 {
-    [TestClass]
+    [TestFixture]
     public class PrimeNumbersFixture
     {
-        [TestMethod]
+        [Test]
         public void FirstPrimes()
         {
             List<int> primes = new List<int>(PrimeNumbers.GetPrimesEnumrable());
