@@ -22,6 +22,7 @@ namespace Simple.Tests
     {
         public const string RemotingTest="remotingtest";
 
+        [STAThread]
         static int Main(string[] args)
         {
             if (args.Length > 0)
@@ -37,6 +38,8 @@ namespace Simple.Tests
                     Console.ReadLine();
                 }
             }
+            NUnit.Gui.AppEntry.Main(new string[] { Assembly.GetExecutingAssembly().Location });
+
             return 0;
         }
     }

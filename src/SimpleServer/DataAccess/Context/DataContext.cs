@@ -56,12 +56,12 @@ namespace Simple.DataAccess.Context
         {
             if (_isOpen)
             {
+                _isOpen = false;
+
                 if (_isMain)
                     CloseMainSession();
 
                 CloseAdditionalSessions();
-
-                _isOpen = false;
             }
         }
 
