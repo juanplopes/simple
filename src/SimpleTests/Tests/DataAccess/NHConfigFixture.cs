@@ -30,7 +30,7 @@ namespace Simple.Tests.DataAccess
         [TestMethod]
         public void TestLoadDialect()
         {
-            SourceManager.Do.Clear<NHConfigurator>();
+            SourceManager.Do.Remove<NHConfigurator>();
             SourceManager.Do.Register(this, new NHibernateConfigSource().Load(
                 new XmlFileConfigSource<NHibernateConfig>().Load(NHConfigurations.NHConfig1)));
 
