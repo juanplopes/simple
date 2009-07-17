@@ -86,19 +86,22 @@ namespace SimpleLibrary.Rules
             return dao.ToCriteria(filter, order);
         }
 
-        public virtual void SaveOrUpdate(T entity)
+        public virtual T SaveOrUpdate(T entity)
         {
             GetDao().SaveOrUpdate(entity);
+            return entity;
         }
 
-        public virtual void Save(T entity)
+        public virtual T Save(T entity)
         {
             GetDao().Save(entity);
+            return entity;
         }
 
-        public virtual void Update(T entity)
+        public virtual T Update(T entity)
         {
             GetDao().Update(entity);
+            return entity;
         }
 
         public virtual T Persist(T entity)

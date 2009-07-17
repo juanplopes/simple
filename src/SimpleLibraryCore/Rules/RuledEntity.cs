@@ -98,14 +98,14 @@ namespace SimpleLibrary.Rules
             return Rules.Persist(ThisAsT);
         }
 
-        public void Save()
+        public T Save()
         {
-            Rules.Save(ThisAsT);
+            return Rules.Save(ThisAsT);
         }
 
-        public void Update()
+        public T Update()
         {
-            Rules.Update(ThisAsT);
+            return Rules.Update(ThisAsT);
         }
 
         public void Delete()

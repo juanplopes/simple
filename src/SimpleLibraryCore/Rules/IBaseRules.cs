@@ -41,13 +41,13 @@ namespace SimpleLibrary.Rules
         Page<T> PaginateAll(OrderByCollection order, int skip, int take);
 
         [OperationContract]
-        void SaveOrUpdate(T entity);
+        T SaveOrUpdate(T entity);
 
         [OperationContract]
-        void Save(T entity);
+        T Save(T entity);
 
         [OperationContract]
-        void Update(T entity);
+        T Update(T entity);
 
         [OperationContract]
         T Persist(T entity);
