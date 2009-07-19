@@ -38,7 +38,7 @@ namespace Simple.Tests
                     Console.ReadLine();
                 }
             }
-            NUnit.Gui.AppEntry.Main(new string[] { Assembly.GetExecutingAssembly().Location });
+//            NUnit.Gui.AppEntry.Main(new string[] { Assembly.GetExecutingAssembly().Location });
 
             return 0;
         }
