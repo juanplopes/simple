@@ -29,6 +29,16 @@ namespace SimpleLibrary.Rules
             return Rules.Load(id);
         }
 
+        public static int CountAll()
+        {
+            return CountByFilter(BooleanExpression.True);
+        }
+
+        public static int CountByFilter(Filter filter)
+        {
+            return Rules.CountByFilter(filter);
+        }
+
         public static T LoadByFilter(Filter filter)
         {
             return Rules.LoadByFilter(filter);
