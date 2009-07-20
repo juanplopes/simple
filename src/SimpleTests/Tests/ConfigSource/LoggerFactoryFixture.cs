@@ -14,7 +14,7 @@ namespace Simple.Tests.ConfigSource
         [TestFixtureSetUp]
         public void Setup()
         {
-            SourceManager.Do.Remove<Log4netConfig>();
+            SourceManager.Do.Remove<Log4netConfig>(this);
         }
 
         [Test]

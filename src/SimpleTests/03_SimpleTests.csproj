@@ -49,6 +49,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate, Version=0.1.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\FluentNHibernate.dll</HintPath>
@@ -84,11 +88,15 @@
   <ItemGroup>
     <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
+    <Compile Include="Tests\Service\Helper.cs" />
     <Compile Include="Tests\Service\RemotingConfigs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RemotingConfigs.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Service\SelfRemotingFactoryFixture.cs" />
+    <Compile Include="Tests\Service\DefaultFactoryFixture.cs" />
+    <Compile Include="Tests\Service\BaseFactoryFixture.cs" />
     <Compile Include="Tests\Service\RemotingFactoryFixture.cs" />
     <Compile Include="Tests\Service\ServiceConfigFixture.cs" />
     <Compile Include="Tests\DataAccess\NHConfigFixture.cs" />
@@ -136,6 +144,7 @@
     <Content Include="Resources\NHConfig1.xml" />
     <Content Include="Resources\SimpleRemotingConfig.xml" />
     <Content Include="Resources\SimpleRemotingConfig8020.xml" />
+    <None Include="Resources\SimpleRemotingAny.xml" />
     <Content Include="Tests.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -95,6 +95,10 @@
     <Compile Include="Services\Default\DefaultHostConfig.cs" />
     <Compile Include="Services\Default\DefaultHostSimply.cs" />
     <Compile Include="Services\Default\ServiceLocationFactory.cs" />
+    <Compile Include="Services\IControlledService.cs" />
+    <Compile Include="Services\Remoting\DefaultDynamicProperty.cs" />
+    <Compile Include="Services\Remoting\DefaultDynamicSink.cs" />
+    <Compile Include="Services\Remoting\DefaultTrackingHandler.cs" />
     <Compile Include="Services\Remoting\RemotingClientProvider.cs" />
     <Compile Include="Services\Remoting\RemotingConfig.cs" />
     <Compile Include="Services\Remoting\RemotingHostProvider.cs" />
@@ -108,6 +112,7 @@
     <Compile Include="Services\IServiceHostFactory.cs" />
     <Compile Include="Services\IServiceHostProvider.cs" />
     <Compile Include="Services\ServiceClientFactory.cs" />
+    <Compile Include="Services\ServiceConnectionException.cs" />
     <Compile Include="Services\ServiceHostFactory.cs" />
     <Compile Include="Services\ServiceManager.cs" />
   </ItemGroup>

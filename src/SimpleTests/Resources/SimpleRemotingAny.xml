@@ -1,0 +1,3 @@
+<remoting>
+	<baseAddress>tcp://localhost:%%PORT%%</baseAddress>
+</remoting>

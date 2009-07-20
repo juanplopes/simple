@@ -12,8 +12,15 @@ namespace Simple.Services.Default
 
         public object Create(Type type)
         {
-            return Activator.CreateInstance(
-                ServiceLocationFactory.Get(ConfigCache).Get(type));
+            try
+            {
+                return Activator.CreateInstance(
+                    ServiceLocationFactory.Get(ConfigCache).Get(type));
+            }
+            catch (KeyNotFoundException e)
+            {
+                throw new ServiceConnectionException(e.Message, e);
+            }
         }
 
         #endregion

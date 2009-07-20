@@ -7,7 +7,7 @@ using Simple.ConfigSource;
 using Simple.Services;
 using Simple.Client;
 
-namespace Simple.Tests.ConfigSource
+namespace Simple.Tests.Service
 {
     [TestFixture]
     public class ServiceObjectsFixture

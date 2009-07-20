@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Simple.ConfigSource;
-using Simple.Services;
-using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting;
 using log4net;
 using Simple.Client;
 using System.Reflection;
 using Simple.Patterns;
+using System.Runtime.Remoting.Services;
+using System.Runtime.Remoting.Contexts;
 
 namespace Simple.Services.Remoting
 {
@@ -67,6 +65,8 @@ namespace Simple.Services.Remoting
                 if (started)
                 {
                     channel.StopListening(null);
+                    //Context.UnregisterDynamicProperty(DefaultDynamicProperty.PropertyName, null, null);
+                    //ChannelServices.UnregisterChannel(channel);
                     started = false;
                 }
             }
@@ -78,8 +78,12 @@ namespace Simple.Services.Remoting
             lock (this)
             {
                 logger.DebugFormat("Initializing Remoting Channel...");
+
                 channel = ConfigCache.GetChannel();
+                // ChannelServices.RegisterChannel(channel, false);
+                
                 channel.StartListening(null);
+
                 started = true;
             }
 

@@ -92,7 +92,7 @@
     <Compile Include="DataAccess\TupleToDictionaryTransformer.cs" />
     <Compile Include="DataAccess\TupleToPropertiesTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\EntityService.cs" />
+    <Compile Include="Services\EntityService.cs" />
     <Compile Include="Server\Simply.cs" />
     <Compile Include="DataAccess\DefaultExceptionHandler.cs" />
     <None Include="Threading\NHLockingProvider.cs" />

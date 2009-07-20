@@ -26,6 +26,11 @@ namespace Simple.Services.Default
 
         }
 
+        public void Configure(object key)
+        {
+            DefaultHostConfig config = new DefaultHostConfig();
+            Configure(key, new DirectConfigSource<DefaultHostConfig>().Load(config));
+        }
         #endregion
     }
 }

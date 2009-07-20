@@ -161,6 +161,7 @@
     <Compile Include="UI\Windows\SingleInstance.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Log4net.alternative.config" />
     <None Include="Log4net.config">
     </None>
     <Content Include="ConfigFiles.xml" />

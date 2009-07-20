@@ -45,7 +45,10 @@ namespace Simple.ConfigSource
         {
             lock (Configs)
             {
-                Configs.Clear();
+                foreach (var item in Configs.Keys)
+                {
+                    Set(item, NullConfigSource<C>.Instance);
+                }
             }
         }
 

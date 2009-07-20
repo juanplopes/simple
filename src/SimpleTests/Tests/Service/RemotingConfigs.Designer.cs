@@ -62,6 +62,17 @@ namespace Simple.Tests.Service {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;remoting&gt;
+        ///	&lt;baseAddress&gt;tcp://localhost:%%PORT%%&lt;/baseAddress&gt;
+        ///&lt;/remoting&gt;.
+        /// </summary>
+        internal static string SimpleRemotingAny {
+            get {
+                return ResourceManager.GetString("SimpleRemotingAny", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;remoting&gt;
         ///	&lt;baseAddress&gt;tcp://localhost:8015&lt;/baseAddress&gt;
         ///&lt;/remoting&gt;.
         /// </summary>
@@ -73,7 +84,7 @@ namespace Simple.Tests.Service {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;remoting&gt;
-        ///	&lt;baseAddress&gt;tcp://localhost:8015&lt;/baseAddress&gt;
+        ///	&lt;baseAddress&gt;tcp://localhost:8020&lt;/baseAddress&gt;
         ///&lt;/remoting&gt;.
         /// </summary>
         internal static string SimpleRemotingConfig8020 {

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Patterns;
+﻿using Simple.Patterns;
 using Simple.ConfigSource;
-using Simple.Services;
 
 namespace Simple.Services.Remoting
 {

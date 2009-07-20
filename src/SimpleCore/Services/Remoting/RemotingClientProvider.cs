@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Simple.ConfigSource;
-using Simple.Services;
 using System.Runtime.Remoting;
 using log4net;
 using Simple.Client;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
+using System.Runtime.Remoting.Contexts;
 
 namespace Simple.Services.Remoting
 {
@@ -36,8 +32,21 @@ namespace Simple.Services.Remoting
             {
                 logger.DebugFormat("Constructed URI: {0}...", uriFinal);
 
-                return (MarshalByRefObject)RemotingServices.Connect(
-                    type, uriFinal.AbsoluteUri);
+                try
+                {
+                    var obj = RemotingServices.Connect(type, uriFinal.AbsoluteUri);
+                    obj.Equals(null);
+                   
+                    return obj;
+                }
+                catch (RemotingException e)
+                {
+                    throw new ServiceConnectionException(e.Message, e);
+                }
+                catch (NullReferenceException e)
+                {
+                    throw new ServiceConnectionException(e.Message, e);
+                }
             }
             throw new InvalidOperationException("Invalid uri pair in configuration: '" + 
                 uriBase.AbsoluteUri + "' and '" + relativeUri + "'.");
