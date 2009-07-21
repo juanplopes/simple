@@ -10,6 +10,7 @@ using SimpleLibrary.Config;
 using BasicLibrary.Configuration;
 using log4net;
 using System.Diagnostics;
+using BasicLibrary.Common;
 
 namespace SimpleLibrary.Rules
 {
@@ -38,9 +39,11 @@ namespace SimpleLibrary.Rules
                 }
                 catch (TargetInvocationException e)
                 {
-                    if (!Handle(e.InnerException))
+                    Exception e2 = ExHelper.ForReal(e);
+                    if (!Handle(e2))
                     {
-                        throw e.InnerException;
+                        ExHelper.LogAll(MainLogger.Get(target), e2);
+                        throw e2;
                     }
                 }
             }

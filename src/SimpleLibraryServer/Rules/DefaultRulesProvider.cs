@@ -9,6 +9,7 @@ using BasicLibrary.Logging;
 using log4net;
 using SimpleLibrary.ServiceModel;
 using BasicLibrary.DynamicProxy;
+using System.Diagnostics;
 
 namespace SimpleLibrary.Rules
 {
@@ -25,7 +26,8 @@ namespace SimpleLibrary.Rules
                 ImplementerClass = SearchForImplementerClass(asm);
         }
 
-        public DefaultRulesProvider() : this(SimpleLibraryConfig.Get().Business.ServerAssembly.LoadAssembly())
+        public DefaultRulesProvider()
+            : this(SimpleLibraryConfig.Get().Business.ServerAssembly.LoadAssembly())
         {
 
         }
@@ -50,19 +52,21 @@ namespace SimpleLibrary.Rules
         {
             T obj = (T)Activator.CreateInstance(ImplementerClass);
             T obj1 = (T)RulesProxyBuilder.Instance.WrapInstance(obj, typeof(T));
-            return (T)DynamicProxyFactory.Instance.CreateProxy(obj1, (o, m, p) =>
+            return (T)DynamicProxyFactory.Instance.CreateProxy(obj1, WrapExecution);
+        }
+
+        [DebuggerHidden]
+        protected object WrapExecution(object o, MethodBase m, object[] p)
+        {
+            try
             {
-                try
-                {
-                    SimpleContext.Get().Refresh(true);
-                    return m.Invoke(o, p);
-                }
-                catch (TargetInvocationException e)
-                {
-                    Logger.Error("Error calling rules: " + e.Message, e);
-                    throw ExHelper.ForReal(e);
-                }
-            });
+                SimpleContext.Get().Refresh(true);
+                return m.Invoke(o, p);
+            }
+            catch (TargetInvocationException e)
+            {
+                throw ExHelper.ForReal(e);
+            }
         }
 
         public T CreateProxy(T obj)
