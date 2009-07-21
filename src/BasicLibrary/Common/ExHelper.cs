@@ -23,7 +23,7 @@ namespace BasicLibrary.Common
                 else
                     log.WarnFormat("Error: {0}", e.Message);
 
-                log.DebugFormat("Exception", e);
+                log.Debug("Exception", e);
                 e = e.InnerException;
             }
         }
