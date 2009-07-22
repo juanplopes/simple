@@ -10,6 +10,7 @@ using Simple.Services.Remoting;
 using Simple.Tests.Service;
 using FluentNHibernate.Cfg;
 using Simple.Tests.Contracts;
+using NHibernate;
 
 namespace Simple.Tests.DataAccess
 {
