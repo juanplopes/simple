@@ -13,6 +13,7 @@ using Simple.Client;
 
 namespace Simple.Tests.Service
 {
+    [TestFixture]
     public class RemotingFactoryFixture : BaseFactoryFixture
     {
         protected override Guid GetSource()

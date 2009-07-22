@@ -23,7 +23,7 @@ namespace Simple.Tests.Contracts
                 Not.LazyLoad();
 
                 Id(e => e.Id).GeneratedBy.Identity();
-                Map(e => e.Nome);
+                Map(e => e.Nome).WithLengthOf(20);
             }
         }
     }

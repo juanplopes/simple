@@ -6,6 +6,8 @@ using Simple.ConfigSource;
 using NHibernate.Cfg;
 using NHibernate;
 using Simple.Patterns;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Simple.DataAccess
 {
@@ -29,6 +31,12 @@ namespace Simple.DataAccess
                 {
                     if (_sessionFactory == null)
                         _sessionFactory = NHConfiguration.BuildSessionFactory();
+
+                    //MemoryStream mem = new MemoryStream();
+                    //new BinaryFormatter().Serialize(mem, _sessionFactory);
+                    //mem.Seek(0, SeekOrigin.Begin);
+                    //_sessionFactory = (ISessionFactory)new BinaryFormatter().Deserialize(mem);
+
 
                     return _sessionFactory;
                 }
