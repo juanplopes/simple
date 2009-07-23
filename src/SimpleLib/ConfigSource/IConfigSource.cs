@@ -14,7 +14,8 @@ namespace Simple.ConfigSource
     {
         bool Loaded { get; }
         T Get();
-        void AddTransform(Func<T, T> func);
+        IConfigSource<T> AddTransform(Func<T, T> func);
+        IConfigSource<T> AddTransform(Action<T> func);
         bool Reload();
         event ConfigReloadedDelegate<T> Reloaded;
 

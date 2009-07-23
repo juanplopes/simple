@@ -64,13 +64,25 @@ namespace Simple.ConfigSource
 
         #region IConfigSource<T> Members
 
+        public IConfigSource<T> AddTransform(Action<T> func)
+        {
+            return AddTransform(x =>
+            {
+                func(x);
+                return x;
+            });
+        }
 
-        public void AddTransform(Func<T, T> func)
+
+
+        public IConfigSource<T> AddTransform(Func<T, T> func)
         {
             if (Loaded)
                 Cache = func(Cache);
 
             _transformations.Add(func);
+
+            return this;
         }
 
         #endregion

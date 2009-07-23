@@ -211,6 +211,92 @@ namespace Simple.Tests.ConfigSource
         }
 
         [Test]
+        public void UsingTransformation()
+        {
+            string mySample = @"<BasicTypesSampleWithoutAttr>
+                    <AString>whatever</AString>
+                  </BasicTypesSampleWithoutAttr>"; ;
+
+            var src = XmlConfig.LoadXml<BasicTypesSampleWithoutAttr>(mySample)
+                .AddTransform(x => x.AString = "42");
+
+            Assert.AreEqual("42", src.Get().AString);
+        }
+
+        [Test]
+        public void UsingTransformationWrapped()
+        {
+            string mySample = @"<BasicTypesSampleWithoutAttr>
+                    <AString>whatever</AString>
+                  </BasicTypesSampleWithoutAttr>"; ;
+
+            var src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>().Load(
+                XmlConfig.LoadXml<BasicTypesSampleWithoutAttr>(mySample)
+                .AddTransform(x => x.AString = "42"));
+
+            Assert.AreEqual("42", src.Get().AString);
+        }
+
+        [Test]
+        public void UsingTransformationLateInsert()
+        {
+            string mySample = @"<BasicTypesSampleWithoutAttr>
+                    <AString>whatever</AString>
+                  </BasicTypesSampleWithoutAttr>"; ;
+
+            var src = XmlConfig.LoadXml<BasicTypesSampleWithoutAttr>(mySample);
+            Assert.AreEqual("whatever", src.Get().AString);
+            src.AddTransform(x => x.AString = "42");
+            Assert.AreEqual("42", src.Get().AString);
+        }
+
+        [Test]
+        public void UsingTransformationWrappedLateInsert()
+        {
+            string mySample = @"<BasicTypesSampleWithoutAttr>
+                    <AString>whatever</AString>
+                  </BasicTypesSampleWithoutAttr>"; ;
+
+            var src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>().Load(
+                XmlConfig.LoadXml<BasicTypesSampleWithoutAttr>(mySample));
+            Assert.AreEqual("whatever", src.Get().AString);
+            src.AddTransform(x => x.AString = "42");
+            Assert.AreEqual("42", src.Get().AString);
+        }
+
+        [Test]
+        public void UsingTransformationEarlyInsert()
+        {
+            string mySample = @"<BasicTypesSampleWithoutAttr>
+                    <AString>whatever</AString>
+                  </BasicTypesSampleWithoutAttr>"; ;
+
+            var src = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
+            src.AddTransform(x => x.AString = "42");
+            Assert.IsNull(src.Get());
+
+            src.Load(mySample);
+            Assert.IsNotNull(src.Get());
+            Assert.AreEqual("42", src.Get().AString);
+        }
+
+        [Test]
+        public void UsingTransformationWrappedEarlyInsert()
+        {
+            string mySample = @"<BasicTypesSampleWithoutAttr>
+                    <AString>whatever</AString>
+                  </BasicTypesSampleWithoutAttr>"; ;
+
+            var src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>();
+            src.AddTransform(x => x.AString = "42");
+            Assert.IsNull(src.Get());
+
+            src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(mySample));
+            Assert.IsNotNull(src.Get());
+            Assert.AreEqual("42", src.Get().AString);
+        }
+
+        [Test]
         public void MissingAStringTest()
         {
             string brokenXml =

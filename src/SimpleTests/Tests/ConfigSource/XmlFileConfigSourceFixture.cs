@@ -87,6 +87,38 @@ namespace Simple.Tests.ConfigSource
 
             
         }
+
+
+        [Test]
+        public void SimpleLoadAndModifyTestWithTransformation()
+        {
+            using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>()
+                .LoadFile(TEST_FILE_NAME))
+            {
+                bool flag = false;
+                var cfg = src.Get();
+
+                src.Reloaded += x =>
+                {
+                    cfg = x;
+                    Assert.AreEqual(43, cfg.AnIntegral);
+                    Assert.AreEqual(44.44, cfg.AFloat, 0.001);
+                    flag = true;
+                };
+
+                XmlConfigSourceFixture.TestCreatedSimpleSample(cfg);
+                src.AddTransform(x => x.AFloat = 44.44f);
+
+                File.WriteAllText(TEST_FILE_NAME, SAMPLE_XML);
+
+                long time = DateTime.Now.Ticks;
+                while (!flag && new TimeSpan(DateTime.Now.Ticks - time).TotalSeconds < 3) ;
+
+                Assert.IsTrue(flag);
+            }
+
+
+        }
     }
 
     #region Samples
