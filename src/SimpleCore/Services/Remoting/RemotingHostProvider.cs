@@ -9,13 +9,14 @@ using System.Reflection;
 using Simple.Patterns;
 using System.Runtime.Remoting.Services;
 using System.Runtime.Remoting.Contexts;
+using System.Runtime.Remoting.Proxies;
 
 namespace Simple.Services.Remoting
 {
     public class RemotingHostProvider : Factory<RemotingConfig>, IServiceHostProvider, IDisposable
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
-        IList<Pair<Type, Type>> services = new List<Pair<Type, Type>>();
+        IList<object> services = new List<object>();
         bool started = false;
         
         IChannelReceiver channel = null;
@@ -37,20 +38,21 @@ namespace Simple.Services.Remoting
             }
         }
 
-        public void Host(Type type, Type contract)
+        public void Host(object server, Type contract)
         {
             lock (this)
             {
+                if (!(server is MarshalByRefObject)) throw new ArgumentException("The server class must inherit from MarshalByRefObject");
                 if (!started) Start();
 
-                services.Add(new Pair<Type, Type>(type, contract));
+                services.Add(server);
 
                 string key = ConfigCache.GetEndpointKey(contract);
-                logger.DebugFormat("Registering type {0} with contract {1} at endpoint {2}...", type.Name, contract.Name, key);
-                RemotingConfiguration.RegisterWellKnownServiceType(
-                    type, key, WellKnownObjectMode.Singleton);
+                logger.DebugFormat("Registering contract {0} at endpoint {1}...", contract.Name, key);
+                
+                RemotingServices.Marshal(server as MarshalByRefObject, key, contract);
 
-                logger.InfoFormat("{0} hosted:", key);
+                logger.InfoFormat("{0} hosted", key);
                 foreach (string url in channel.GetUrlsForUri(key))
                 {
                     logger.DebugFormat("* {0}.", url);
@@ -64,10 +66,16 @@ namespace Simple.Services.Remoting
             {
                 if (started)
                 {
+                    foreach (MarshalByRefObject obj in services)
+                        RemotingServices.Disconnect(obj);
+
                     channel.StopListening(null);
+
                     //Context.UnregisterDynamicProperty(DefaultDynamicProperty.PropertyName, null, null);
                     //ChannelServices.UnregisterChannel(channel);
                     started = false;
+
+
                 }
             }
         }
@@ -86,6 +94,7 @@ namespace Simple.Services.Remoting
 
                 started = true;
             }
+
 
         }
 

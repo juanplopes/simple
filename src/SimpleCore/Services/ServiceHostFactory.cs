@@ -7,6 +7,7 @@ using Simple.Client;
 using log4net;
 using System.Reflection;
 using Simple.Patterns;
+using Simple.DynamicProxy;
 
 namespace Simple.Services
 {
@@ -25,9 +26,18 @@ namespace Simple.Services
 
         public void Host(Type type)
         {
+            Host(type, null);
+        }
+
+        public void Host(Type type, IInterceptor interceptor)
+        {
             foreach (Type contract in GetContractsFromType(type))
             {
-                ConfigCache.Host(type, contract);
+                object server = Activator.CreateInstance(type);
+                if (interceptor != null)
+                    server = DynamicProxyFactory.Instance.CreateProxy(server, interceptor.Intercept);
+                
+                ConfigCache.Host(server, contract);
             }
         }
 
@@ -42,9 +52,14 @@ namespace Simple.Services
 
         public void HostAssemblyOf(Type type)
         {
+            HostAssemblyOf(type, null);
+        }
+
+        public void HostAssemblyOf(Type type, IInterceptor interceptor)
+        {
             foreach (Type t in Enumerable.Filter(type.Assembly.GetTypes(), t => t.IsClass && !t.IsAbstract))
             {
-                Host(t);
+                Host(t, interceptor);
             }
         }
 

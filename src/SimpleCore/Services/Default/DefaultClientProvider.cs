@@ -14,8 +14,7 @@ namespace Simple.Services.Default
         {
             try
             {
-                return Activator.CreateInstance(
-                    ServiceLocationFactory.Get(ConfigCache).Get(type));
+                return ServiceLocationFactory.Get(ConfigCache).Get(type);
             }
             catch (KeyNotFoundException e)
             {

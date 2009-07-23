@@ -10,9 +10,9 @@ namespace Simple.Services.Default
     {
         #region IServiceHostProvider Members
 
-        public void Host(Type type, Type contract)
+        public void Host(object server, Type contract)
         {
-            ServiceLocationFactory.Get(ConfigCache).Set(type, contract);
+            ServiceLocationFactory.Get(ConfigCache).Set(server, contract);
         }
 
         public void Start()

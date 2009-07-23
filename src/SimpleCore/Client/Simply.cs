@@ -52,6 +52,16 @@ namespace Simple.Client
             ServiceManager.HostAssemblyOf(ConfigKey, type);
         }
 
+        public void Host(Type type, IInterceptor interceptor)
+        {
+            ServiceManager.Host(ConfigKey, type, interceptor);
+        }
+
+        public void HostAssemblyOf(Type type, IInterceptor interceptor)
+        {
+            ServiceManager.HostAssemblyOf(ConfigKey, type, interceptor);
+        }
+
         public T Resolve<T>()
         {
             return ServiceManager.Connect<T>(ConfigKey);

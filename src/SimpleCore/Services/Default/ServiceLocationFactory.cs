@@ -8,17 +8,17 @@ namespace Simple.Services.Default
 {
     public class ServiceLocationFactory : AggregateFactory<ServiceLocationFactory>
     {
-        Dictionary<Type, Type> _classes = new Dictionary<Type, Type>();
+        Dictionary<Type, object> _classes = new Dictionary<Type, object>();
 
-        public void Set(Type type, Type contract)
+        public void Set(object server, Type contract)
         {
             lock (_classes)
             {
-                _classes[contract] = type;
+                _classes[contract] = server;
             }
         }
 
-        public Type Get(Type contract)
+        public object Get(Type contract)
         {
             lock (_classes)
             {

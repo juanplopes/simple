@@ -7,7 +7,7 @@ namespace Simple.Services
 {
     public interface IServiceHostProvider
     {
-        void Host(Type type, Type contract);
+        void Host(object server, Type contract);
         void Start();
         void Stop();
     }
@@ -15,7 +15,7 @@ namespace Simple.Services
     public class NullServiceHostProvider : IServiceHostProvider
     {
 
-        public void Host(Type type, Type contract)
+        public void Host(object server, Type contract)
         {
         }
 

@@ -44,6 +44,16 @@ namespace Simple.Services
             HostFactory(key).Host(type);
         }
 
+        public static void Host(Type type, IInterceptor interceptor)
+        {
+            HostFactory().Host(type, interceptor);
+        }
+
+        public static void Host(object key, Type type, IInterceptor interceptor)
+        {
+            HostFactory(key).Host(type, interceptor);
+        }
+
         public static void HostAssemblyOf(Type type)
         {
             HostFactory().HostAssemblyOf(type);
@@ -52,6 +62,16 @@ namespace Simple.Services
         public static void HostAssemblyOf(object key, Type type)
         {
             HostFactory(key).HostAssemblyOf(type);
+        }
+
+        public static void HostAssemblyOf(Type type, IInterceptor interceptor)
+        {
+            HostFactory().HostAssemblyOf(type, interceptor);
+        }
+
+        public static void HostAssemblyOf(object key, Type type, IInterceptor interceptor)
+        {
+            HostFactory(key).HostAssemblyOf(type, interceptor);
         }
 
 

@@ -96,9 +96,7 @@
     <Compile Include="Services\Default\DefaultHostSimply.cs" />
     <Compile Include="Services\Default\ServiceLocationFactory.cs" />
     <Compile Include="Services\IControlledService.cs" />
-    <Compile Include="Services\Remoting\DefaultDynamicProperty.cs" />
-    <Compile Include="Services\Remoting\DefaultDynamicSink.cs" />
-    <Compile Include="Services\Remoting\DefaultTrackingHandler.cs" />
+    <Compile Include="Services\IInterceptor.cs" />
     <Compile Include="Services\Remoting\RemotingClientProvider.cs" />
     <Compile Include="Services\Remoting\RemotingConfig.cs" />
     <Compile Include="Services\Remoting\RemotingHostProvider.cs" />
