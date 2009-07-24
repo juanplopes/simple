@@ -14,20 +14,19 @@ namespace Simple.Tests.Service
 {
     public abstract class BaseInterceptorFixture
     {
-        class Interceptor : IInterceptor
+        class Interceptor : BaseInterceptor
         {
             #region IInterceptor Members
 
-            public object Intercept(object obj, System.Reflection.MethodBase info, object[] parameters)
+            public override object Intercept(object target, MethodBase method, object[] args)
             {
-                var method = InvokerFactory.Do.Create(info);
-                if ((info as MethodInfo).ReturnType==typeof(int))
+                if ((method as MethodInfo).ReturnType==typeof(int))
                 {
                     return 42;
                 }
                 else
                 {
-                    return method.Invoke(obj, parameters);
+                    return Invoke(target, method, args);
                 }
             }
 
