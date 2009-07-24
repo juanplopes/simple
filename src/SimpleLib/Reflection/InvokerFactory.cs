@@ -4,52 +4,53 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.Reflection.Emit;
+using Simple.Patterns;
+using System.Linq.Expressions;
 
 namespace Simple.Reflection
 {
-    public class FastInvoker
-    {
-        public MethodInfo Method { get; protected set; }
-        protected FastInvokeHandler Handler { get; set; }
-        protected delegate object FastInvokeHandler(object target, object[] paramters);
-           
+    public delegate object InvocationDelegate(object target, params object[] args);
 
-        public FastInvoker(MethodBase method)
+    public class InvokerFactory : Singleton<InvokerFactory>
+    {
+        public InvocationDelegate Create(MethodBase method)
         {
             if (method is MethodInfo)
             {
-                Method = (MethodInfo)method;
-                Construct();
+                return Create(method as MethodInfo);
             }
             else
             {
-                throw new ArgumentException("Method must be real to be proxied.");
+                throw new ArgumentException("Cannot create with invalid methods.");
             }
         }
 
-        public FastInvoker(MethodInfo method)
+        public InvocationDelegate Create(MethodInfo method)
         {
-            Method = method;
-            Construct();
+            if (method == null) throw new ArgumentException("There is no method");
+
+            return GetMethodInvoker(method);
         }
 
-        protected void Construct()
+        private static InvocationDelegate GetMethodInvoker(MethodInfo methodInfo)
         {
-            DynamicMethod dynamicMethod = new DynamicMethod(string.Empty,
-                     typeof(object), new Type[] { typeof(object), 
-                     typeof(object[]) },
-                     Method.DeclaringType.Module, true);
+            DynamicMethod dynamicMethod = new DynamicMethod(string.Empty, typeof(object), 
+                new Type[] { typeof(object), typeof(object[]) }, methodInfo.DeclaringType.Module, true);
             ILGenerator il = dynamicMethod.GetILGenerator();
-            ParameterInfo[] ps = Method.GetParameters();
+            ParameterInfo[] ps = methodInfo.GetParameters();
             Type[] paramTypes = new Type[ps.Length];
             for (int i = 0; i < paramTypes.Length; i++)
             {
-                paramTypes[i] = ps[i].ParameterType;
+                if (ps[i].ParameterType.IsByRef)
+                    paramTypes[i] = ps[i].ParameterType.GetElementType();
+                else
+                    paramTypes[i] = ps[i].ParameterType;
             }
             LocalBuilder[] locals = new LocalBuilder[paramTypes.Length];
+
             for (int i = 0; i < paramTypes.Length; i++)
             {
-                locals[i] = il.DeclareLocal(paramTypes[i]);
+                locals[i] = il.DeclareLocal(paramTypes[i], true);
             }
             for (int i = 0; i < paramTypes.Length; i++)
             {
@@ -59,21 +60,42 @@ namespace Simple.Reflection
                 EmitCastToReference(il, paramTypes[i]);
                 il.Emit(OpCodes.Stloc, locals[i]);
             }
-            il.Emit(OpCodes.Ldarg_0);
+            if (!methodInfo.IsStatic)
+            {
+                il.Emit(OpCodes.Ldarg_0);
+            }
             for (int i = 0; i < paramTypes.Length; i++)
             {
-                il.Emit(OpCodes.Ldloc, locals[i]);
+                if (ps[i].ParameterType.IsByRef)
+                    il.Emit(OpCodes.Ldloca_S, locals[i]);
+                else
+                    il.Emit(OpCodes.Ldloc, locals[i]);
             }
-            il.EmitCall(OpCodes.Call, Method, null);
-            if (Method.ReturnType == typeof(void))
+            if (methodInfo.IsStatic)
+                il.EmitCall(OpCodes.Call, methodInfo, null);
+            else
+                il.EmitCall(OpCodes.Callvirt, methodInfo, null);
+            if (methodInfo.ReturnType == typeof(void))
                 il.Emit(OpCodes.Ldnull);
             else
-                EmitBoxIfNeeded(il, Method.ReturnType);
+                EmitBoxIfNeeded(il, methodInfo.ReturnType);
+
+            for (int i = 0; i < paramTypes.Length; i++)
+            {
+                if (ps[i].ParameterType.IsByRef)
+                {
+                    il.Emit(OpCodes.Ldarg_1);
+                    EmitFastInt(il, i);
+                    il.Emit(OpCodes.Ldloc, locals[i]);
+                    if (locals[i].LocalType.IsValueType)
+                        il.Emit(OpCodes.Box, locals[i].LocalType);
+                    il.Emit(OpCodes.Stelem_Ref);
+                }
+            }
+
             il.Emit(OpCodes.Ret);
-            FastInvokeHandler invoder =
-              (FastInvokeHandler)dynamicMethod.CreateDelegate(
-              typeof(FastInvokeHandler));
-            Handler = invoder;
+            InvocationDelegate invoder = (InvocationDelegate)dynamicMethod.CreateDelegate(typeof(InvocationDelegate));
+            return invoder;
         }
 
         private static void EmitCastToReference(ILGenerator il, System.Type type)
@@ -140,11 +162,6 @@ namespace Simple.Reflection
             {
                 il.Emit(OpCodes.Ldc_I4, value);
             }
-        }
-
-        public object Invoke(object target, params object[] parameters)
-        {
-            return Handler(target, parameters);
         }
     }
 }

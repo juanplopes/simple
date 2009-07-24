@@ -7,6 +7,8 @@ using Simple.Reflection;
 using NUnit.Framework;
 using Simple.Server;
 using Simple.ConfigSource;
+using System.Reflection;
+using System.Globalization;
 
 namespace Simple.Tests.Service
 {
@@ -18,14 +20,14 @@ namespace Simple.Tests.Service
 
             public object Intercept(object obj, System.Reflection.MethodBase info, object[] parameters)
             {
-                FastInvoker invoker = new FastInvoker(info);
-                if (invoker.Method.ReturnType == typeof(int))
+                var method = InvokerFactory.Do.Create(info);
+                if ((info as MethodInfo).ReturnType==typeof(int))
                 {
                     return 42;
                 }
                 else
                 {
-                    return invoker.Invoke(obj, parameters);
+                    return method.Invoke(obj, parameters);
                 }
             }
 
@@ -40,6 +42,12 @@ namespace Simple.Tests.Service
             int TestIntInt(int i);
             string TestStringInt(int i);
             void TestException();
+
+            void TestGenericsVoid<T>(T value) where T : IConvertible;
+            double TestGenerics<T>(T value) where T : IConvertible;
+            double TestRefParams(ref string test);
+            void TestOutParams(out string test);
+            string TestParams(int prim, params string[] ult);
         }
         public class TestService : MarshalByRefObject, ITestService
         {
@@ -50,6 +58,23 @@ namespace Simple.Tests.Service
             public int TestIntInt(int i) { return i; }
             public string TestStringInt(int i) { return i.ToString(); }
             public void TestException() { throw new ApplicationException("AAA"); }
+
+            public void TestGenericsVoid<T>(T value) where T : IConvertible
+            {
+                value.ToDouble(CultureInfo.InvariantCulture);
+            }
+            public double TestGenerics<T>(T value) where T : IConvertible
+            {
+                return value.ToDouble(CultureInfo.InvariantCulture);
+            }
+
+            public double TestRefParams(ref string test) { int res = int.Parse(test); test = "42"; return res; }
+            public void TestOutParams(out string test) { test = "42"; }
+
+            public string TestParams(int prim, params string[] ult)
+            {
+                return prim.ToString() + ult[ult.Length - 1];
+            }
         }
 
 
@@ -69,6 +94,45 @@ namespace Simple.Tests.Service
             Release(ConfigKey);
         }
 
+        [Test]
+        public void TestParams()
+        {
+            ITestService test = Simply.Get(ConfigKey).Resolve<ITestService>();
+            Assert.AreEqual("42", test.TestParams(4, "1", "2", "2", "4", "2"));
+        }
+
+        [Test]
+        public void TestGenerics()
+        {
+            ITestService test = Simply.Get(ConfigKey).Resolve<ITestService>();
+            Assert.AreEqual(42.5, test.TestGenerics("42.5"));
+        }
+
+        [Test]
+        public void TestGenericsVoid()
+        {
+            ITestService test = Simply.Get(ConfigKey).Resolve<ITestService>();
+            test.TestGenericsVoid("42.5");
+        }
+
+        [Test]
+        public void TestOutParams()
+        {
+            ITestService test = Simply.Get(ConfigKey).Resolve<ITestService>();
+            string res;
+            test.TestOutParams(out res);
+            Assert.AreEqual("42", res);
+        }
+
+        [Test]
+        public void TestRefParams()
+        {
+            ITestService test = Simply.Get(ConfigKey).Resolve<ITestService>();
+            string res = "10";
+            double intRes = test.TestRefParams(ref res);
+            Assert.AreEqual(10.0, intRes);
+            Assert.AreEqual("42", res);
+        }
 
         [Test]
         public void TestVoid()

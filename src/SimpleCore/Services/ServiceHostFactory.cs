@@ -19,6 +19,7 @@ namespace Simple.Services
         {
         }
 
+
         protected override void OnClearConfig()
         {
             ConfigCache = new NullServiceHostProvider();
@@ -61,6 +62,16 @@ namespace Simple.Services
             {
                 Host(t, interceptor);
             }
+        }
+
+        public void StartServer()
+        {
+            ConfigCache.Start();
+        }
+
+        public void StopServer()
+        {
+            ConfigCache.Stop();
         }
 
         #endregion

@@ -28,7 +28,7 @@ namespace Simple.Tests.Service
 
         protected override void Release(Guid guid)
         {
-            SourceManager.Do.Clear<RemotingConfig>();
+            Simply.Get(guid).StopServer();
         }
     }
 }

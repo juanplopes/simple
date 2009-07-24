@@ -90,5 +90,25 @@ namespace Simple.Services
             return ClientFactory(key).Resolve(type);
         }
 
+
+        public static void StartServer()
+        {
+            HostFactory().StartServer();
+        }
+
+        public static void StartServer(object key)
+        {
+            HostFactory(key).StartServer();
+        }
+
+        public static void StopServer()
+        {
+            HostFactory().StopServer();
+        }
+
+        public static void StopServer(object key)
+        {
+            HostFactory(key).StopServer();
+        }
     }
 }

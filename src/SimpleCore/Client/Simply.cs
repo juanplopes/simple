@@ -42,6 +42,17 @@ namespace Simple.Client
         #endregion
 
         #region Services
+
+        public void StartServer()
+        {
+            ServiceManager.StartServer(ConfigKey);
+        }
+
+        public void StopServer()
+        {
+            ServiceManager.StopServer(ConfigKey);
+        }
+
         public void Host(Type type)
         {
             ServiceManager.Host(ConfigKey, type);
