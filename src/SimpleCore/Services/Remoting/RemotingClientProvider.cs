@@ -33,6 +33,7 @@ namespace Simple.Services.Remoting
 
                 try
                 {
+                    ConfigCache.TryRegisterClientChannel();
                     var obj = RemotingServices.Connect(type, uriFinal.AbsoluteUri);
                     obj.Equals(null);
                    

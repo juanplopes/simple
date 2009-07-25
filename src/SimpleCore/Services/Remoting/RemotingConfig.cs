@@ -44,17 +44,36 @@ namespace Simple.Services.Remoting
         public IChannelReceiver GetChannel()
         {
             Uri uri = GetUriFromAddressBase();
-
             Simply.Do.Log(this).DebugFormat("Creating channel for URI {0}...", uri);
             switch (uri.Scheme.ToLower())
             {
                 case "tcp":
                     return new TcpServerChannel(null, uri.Port);
                 case "http":
-                    return new HttpServerChannel(null, uri.Port);
+                    return new HttpServerChannel(null, uri.Port, new BinaryServerFormatterSinkProvider());
                 default:
                     throw new ArgumentException("Invalid scheme: " + uri.Scheme);
             }
+        }
+
+        public void TryRegisterClientChannel()
+        {
+            Uri uri = GetUriFromAddressBase();
+            Simply.Do.Log(this).DebugFormat("Creating client channel for URI {0}...", uri);
+            IChannelSender sender = null;
+            switch (uri.Scheme.ToLower())
+            {
+                case "tcp":
+                    sender = new TcpClientChannel();
+                    break;
+                case "http":
+                    sender = new HttpClientChannel("http", new BinaryClientFormatterSinkProvider());
+                    break;
+                default:
+                    throw new ArgumentException("Invalid scheme: " + uri.Scheme);
+            }
+            if (ChannelServices.GetChannel(sender.ChannelName) == null)
+                ChannelServices.RegisterChannel(sender, false);
         }
     }
 }

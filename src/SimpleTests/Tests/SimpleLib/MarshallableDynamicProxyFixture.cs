@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple.DynamicProxy;
+using Simple.Reflection;
 
 namespace Simple.Tests.SimpleLib
 {
@@ -18,7 +19,7 @@ namespace Simple.Tests.SimpleLib
             public int TestIntParamReturn(int param) { return param; }
             public T TestGenericParamReturn<T>(T param) { return param; }
             public void TestRefAndOut(ref int p1, out int p2) { p2 = p1; p1 = 42; }
-
+            public void TestException() { throw new InvalidCastException(); }
         }
 
         [Test]
@@ -76,6 +77,23 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual("42", server.TestGenericParamReturn("4"));
         }
 
+        [Test, ExpectedException(typeof(InvalidCastException))]
+        public void TestException()
+        {
+            SimpleServer server = new SimpleServer();
+
+            server = (SimpleServer)DynamicProxyFactory.Instance.CreateMarshallableProxy(server,
+                (o, m, p) =>
+                {
+                    var invoker = InvokerFactory.Do.Create(m);
+                    invoker.Invoke(o, p);
+                    return null;
+                });
+
+            server.TestException();
+        }
+
+
         [Test]
         public void TestRefAndOut()
         {
@@ -88,7 +106,7 @@ namespace Simple.Tests.SimpleLib
 
             server = (SimpleServer)DynamicProxyFactory.Instance.CreateMarshallableProxy(server,
                 (o, m, p) => { p[0] = 41; p[1] = 42; return null; });
-            
+
             server.TestRefAndOut(ref a, out b);
             Assert.AreEqual(41, a);
             Assert.AreEqual(42, b);
