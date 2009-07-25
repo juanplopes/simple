@@ -104,6 +104,10 @@
     <Compile Include="Services\Default\ServiceLocationFactory.cs" />
     <Compile Include="Services\IControlledService.cs" />
     <Compile Include="Services\IInterceptor.cs" />
+    <Compile Include="Services\Remoting\ChannelSelector.cs" />
+    <Compile Include="Services\Remoting\Channels\TcpChannelHandler.cs" />
+    <Compile Include="Services\Remoting\Channels\HttpChannelHandler.cs" />
+    <Compile Include="Services\Remoting\Channels\IChannelHandler.cs" />
     <Compile Include="Services\Remoting\RemotingClientProvider.cs" />
     <Compile Include="Services\Remoting\RemotingConfig.cs" />
     <Compile Include="Services\Remoting\RemotingHostProvider.cs" />
