@@ -47,7 +47,7 @@ namespace Simple.DynamicProxy
 	/// The implementation for a dynamic proxy. Should not be instantiated directly, but rather through the
 	/// DynamicProxyFactory
 	/// </summary>
-	public class DynamicProxyImpl : RealProxy, IDynamicProxy, IRemotingTypeInfo {
+	public class InterfaceDynamicProxyImpl : RealProxy, IDynamicProxy, IRemotingTypeInfo {
 		/// <summary>
 		/// The object we are the proxy for
 		/// </summary>
@@ -71,7 +71,7 @@ namespace Simple.DynamicProxy
 		/// <param name="proxyTarget">The object to proxy</param>
 		/// <param name="strict">Should type support (for casts) be strict or loose</param>
 		/// <param name="supportedTypes">A List of supported types. Only used if strict is true. May be null</param>
-		protected internal DynamicProxyImpl(object proxyTarget, InvocationDelegate invocationHandler, bool strict, Type[] supportedTypes) : base(typeof(IDynamicProxy)) {
+		protected internal InterfaceDynamicProxyImpl(object proxyTarget, InvocationDelegate invocationHandler, bool strict, Type[] supportedTypes) : base(typeof(IDynamicProxy)) {
 			this.proxyTarget = proxyTarget;
 			this.invocationHandler = invocationHandler;
 			this.strict = strict;

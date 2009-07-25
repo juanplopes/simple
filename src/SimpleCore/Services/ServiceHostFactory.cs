@@ -44,7 +44,7 @@ namespace Simple.Services
 
         protected object ProxyObject(object target, IInterceptor interceptor, Type contract)
         {
-            return DynamicProxyFactory.Instance.CreateProxy(target, interceptor.Intercept);
+            return ConfigCache.ProxyObject(target, interceptor);
         }
 
         protected IEnumerable<Type> GetContractsFromType(Type type)

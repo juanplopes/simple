@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.ConfigSource;
+using Simple.DynamicProxy;
 
 namespace Simple.Services.Default
 {
@@ -32,6 +33,11 @@ namespace Simple.Services.Default
         protected override void OnClearConfig()
         {
             ServiceLocationFactory.Get(ConfigCache).Clear();
+        }
+
+        public object ProxyObject(object obj, IInterceptor interceptor)
+        {
+            return DynamicProxyFactory.Instance.CreateProxy(obj, interceptor.Intercept);
         }
     }
 }

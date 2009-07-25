@@ -60,7 +60,7 @@
     <Compile Include="ConfigSource\DefaultConfigAttribute.cs" />
     <Compile Include="ConfigSource\DirectConfigSource.cs" />
     <Compile Include="ConfigSource\ISimply.cs" />
-    <Compile Include="DynamicProxy\DPObjRef.cs" />
+    <Compile Include="DynamicProxy\MarshallableDynamicProxyImpl.cs" />
     <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netConfig.cs" />
     <Compile Include="ConfigSource\FactoryManager.cs" />
@@ -95,7 +95,7 @@
       <DependentUpon>DefaultConfigResource.resx</DependentUpon>
     </Compile>
     <Compile Include="DynamicProxy\DynamicProxyFactory.cs" />
-    <Compile Include="DynamicProxy\DynamicProxyImpl.cs" />
+    <Compile Include="DynamicProxy\InterfaceDynamicProxyImpl.cs" />
     <Compile Include="DynamicProxy\IDynamicProxy.cs" />
     <Compile Include="IO\CultureAttribute.cs" />
     <Compile Include="IO\DateFormatter.cs" />

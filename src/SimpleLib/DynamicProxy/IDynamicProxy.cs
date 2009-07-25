@@ -69,7 +69,6 @@ namespace Simple.DynamicProxy
         object ProxyTarget
         {
             get;
-            set;
         }
 
         /// <summary>

@@ -121,6 +121,7 @@
     <Compile Include="Tests\ConfigSource\FactoryFixture.cs" />
     <Compile Include="Tests\ConfigSource\LoggerFactoryFixture.cs" />
     <Compile Include="Tests\SimpleLib\InvokerFactoryFixture.cs" />
+    <Compile Include="Tests\SimpleLib\MarshallableDynamicProxyFixture.cs" />
     <Compile Include="Tests\SimpleLib\MiscFixture.cs" />
     <Compile Include="Tests\SimpleLib\PrimeNumbersFixture.cs" />
     <Compile Include="Tests\SimpleLib\StringFragmenterFixture.cs" />

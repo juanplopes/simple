@@ -10,6 +10,7 @@ namespace Simple.Services
         void Host(object server, Type contract);
         void Start();
         void Stop();
+        object ProxyObject(object obj, IInterceptor interceptor);
     }
 
     public class NullServiceHostProvider : IServiceHostProvider
@@ -26,6 +27,11 @@ namespace Simple.Services
         public void Stop()
         {
 
+        }
+
+        public object ProxyObject(object obj, IInterceptor interceptor)
+        {
+            return obj;
         }
 
     }

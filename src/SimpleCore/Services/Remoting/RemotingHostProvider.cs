@@ -10,6 +10,7 @@ using System.Runtime.Remoting.Services;
 using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Proxies;
 using Simple.Services.Default;
+using Simple.DynamicProxy;
 
 namespace Simple.Services.Remoting
 {
@@ -81,5 +82,11 @@ namespace Simple.Services.Remoting
 
         }
 
+        public object ProxyObject(object obj, IInterceptor interceptor)
+        {
+            if (!(obj is MarshalByRefObject)) throw new ArgumentException("Object must be a MarshalByRefObject");
+
+            return DynamicProxyFactory.Instance.CreateMarshallableProxy((MarshalByRefObject)obj, interceptor.Intercept);
+        }
     }
 }
