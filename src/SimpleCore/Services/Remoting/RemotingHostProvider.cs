@@ -42,7 +42,7 @@ namespace Simple.Services.Remoting
         {
             lock (this)
             {
-                if (!(server is MarshalByRefObject)) throw new ArgumentException("The server class must inherit from MarshalByRefObject");
+                //if (!(server is MarshalByRefObject)) throw new ArgumentException("The server class must inherit from MarshalByRefObject");
                 if (!started) Start();
 
                 factory.Set(server, contract);

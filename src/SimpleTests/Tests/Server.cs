@@ -44,6 +44,8 @@ namespace Simple.Tests
                 }
                 else if (args[0] == RemotingInterceptorTest)
                 {
+                    var ev = NamedEvents.OpenOrCreate(RemotingInterceptorTest, false, EventResetMode.ManualReset);
+
                     Guid guid = Guid.NewGuid();
 
                     RemotingSimply.Do.Configure(guid,
@@ -52,6 +54,8 @@ namespace Simple.Tests
                     Simply.Get(guid).Host(typeof(BaseInterceptorFixture.TestService), 
                         new BaseInterceptorFixture.Interceptor());
                     Console.ReadLine();
+
+                    ev.Set();
                 }
             }
             //            NUnit.Gui.AppEntry.Main(new string[] { Assembly.GetExecutingAssembly().Location });

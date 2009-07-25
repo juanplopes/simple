@@ -94,6 +94,16 @@ namespace Simple.Tests.Service
         }
 
         [Test]
+        public void SerializeComplexType()
+        {
+            Guid guid = GetSource();
+
+            ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
+            Assert.AreEqual("whatever", service.GetComplexType().Oi);
+            Assert.AreEqual(42, service.GetComplexType().Tchau);
+        }
+
+        [Test]
         public void TestCreateSameServiceTwice()
         {
             for (int i = 0; i < 3; i++)
@@ -121,6 +131,7 @@ namespace Simple.Tests.Service
     {
         string OtherString();
         IFailService GetOtherService(int number);
+        ComplexType GetComplexType();
     }
 
     public class FailConnectService : MarshalByRefObject, IFailService
@@ -129,6 +140,13 @@ namespace Simple.Tests.Service
         {
             return 84;
         }
+    }
+
+    [Serializable]
+    public class ComplexType
+    {
+        public string Oi { get; set; }
+        public int Tchau { get; set; }
     }
 
     public class SimpleService : MarshalByRefObject, ISimpleService, ISecondService
@@ -168,6 +186,20 @@ namespace Simple.Tests.Service
         public IFailService GetOtherService(int number)
         {
             return new FailConnectService();
+        }
+
+        #endregion
+
+        #region ISecondService Members
+
+
+        public ComplexType GetComplexType()
+        {
+            return new ComplexType()
+            {
+                Oi = "whatever",
+                Tchau = 42
+            };
         }
 
         #endregion

@@ -7,6 +7,7 @@ using log4net;
 using System.Reflection;
 using Simple.Patterns;
 using Simple.DynamicProxy;
+using Castle.DynamicProxy;
 
 namespace Simple.Services
 {
@@ -35,10 +36,15 @@ namespace Simple.Services
             {
                 object server = Activator.CreateInstance(type);
                 if (interceptor != null)
-                    server = DynamicProxyFactory.Instance.CreateProxy(server, interceptor.Intercept);
-                
+                    server = ProxyObject(server, interceptor, contract);
+
                 ConfigCache.Host(server, contract);
             }
+        }
+
+        protected object ProxyObject(object target, IInterceptor interceptor, Type contract)
+        {
+            return DynamicProxyFactory.Instance.CreateProxy(target, interceptor.Intercept);
         }
 
         protected IEnumerable<Type> GetContractsFromType(Type type)
