@@ -23,5 +23,12 @@ namespace Simple.Services.Remoting
         }
 
         #endregion
+
+        public void ReleaseConfig(object key)
+        {
+            SourceManager.Do.Remove<RemotingConfig>(key);
+            SourceManager.Do.Remove<IServiceHostProvider>(key);
+            SourceManager.Do.Remove<IServiceClientProvider>(key);
+        }
     }
 }

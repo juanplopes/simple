@@ -13,9 +13,10 @@ using Simple.Threading;
 
 namespace Simple.Tests.Service
 {
-    [TestFixture]
-    public class RemotingInterceptorFixture : BaseInterceptorFixture
+    public abstract class BaseRemotingInterceptorFixture : BaseInterceptorFixture
     {
+        public abstract Uri Uri { get; }
+
         Process process;
 
         [TestFixtureSetUp]
@@ -24,12 +25,14 @@ namespace Simple.Tests.Service
             process = Process.Start(new ProcessStartInfo()
             {
                 FileName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath,
-                Arguments = Server.RemotingInterceptorTest,
-                WindowStyle = ProcessWindowStyle.Normal
+                Arguments = string.Join(" ", new string[] {
+                    Server.RemotingInterceptorTest,
+                    Uri.ToString()}),
+                WindowStyle = ProcessWindowStyle.Minimized
             });
             NamedEvents.OpenOrWait(Server.RemotingInterceptorTest);
         }
-        
+
         [TestFixtureTearDown]
         public void ClassTeardown()
         {
@@ -42,14 +45,14 @@ namespace Simple.Tests.Service
             Guid guid = Guid.NewGuid();
 
             RemotingSimply.Do.Configure(guid,
-                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4012)));
+                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(Uri)));
 
             return guid;
         }
 
         protected override void Release(Guid guid)
         {
-            
+
         }
     }
 }

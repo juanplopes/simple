@@ -12,15 +12,16 @@ using System.Reflection;
 
 namespace Simple.Tests.Service
 {
-    [TestFixture]
-    public class SelfRemotingInterceptorFixture : BaseInterceptorFixture
+    public abstract class BaseSelfRemotingInterceptorFixture : BaseInterceptorFixture
     {
+        public abstract Uri Uri { get; }
+
         protected override Guid Configure()
         {
             Guid guid = Guid.NewGuid();
 
             RemotingSimply.Do.Configure(guid,
-                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4004)));
+                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(Uri)));
             Simply.Get(guid).Host(typeof(TestService), new Interceptor());
 
 

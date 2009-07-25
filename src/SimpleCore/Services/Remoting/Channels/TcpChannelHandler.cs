@@ -12,14 +12,14 @@ namespace Simple.Services.Remoting.Channels
     {
         #region IChannelHandler Members
 
-        public IChannelReceiver CreateServerChannel(int port)
+        public IChannelReceiver CreateServerChannel(Uri uri)
         {
-            return CreateServerChannel(DefaultName, port);
+            return CreateServerChannel(DefaultName, uri);
         }
 
-        public IChannelReceiver CreateServerChannel(string name, int port)
+        public IChannelReceiver CreateServerChannel(string name, Uri uri)
         {
-            return new TcpServerChannel(name, port, new BinaryServerFormatterSinkProvider());
+            return new TcpServerChannel(name, uri.Port, new BinaryServerFormatterSinkProvider());
         }
 
         public IChannelSender CreateClientChannel()

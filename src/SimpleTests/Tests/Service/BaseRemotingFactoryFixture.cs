@@ -13,15 +13,16 @@ using Simple.Threading;
 
 namespace Simple.Tests.Service
 {
-    [TestFixture]
-    public class RemotingFactoryFixture : BaseFactoryFixture
+    public abstract class BaseRemotingFactoryFixture : BaseFactoryFixture
     {
+        public abstract Uri Uri { get; }
+
         protected override Guid GetSource()
         {
             Guid guid = Guid.NewGuid();
 
             RemotingSimply.Do.Configure(guid,
-                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4002)));
+                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(Uri)));
 
             return guid;
         }
@@ -41,8 +42,10 @@ namespace Simple.Tests.Service
             process = Process.Start(new ProcessStartInfo()
             {
                 FileName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath,
-                Arguments = Server.RemotingTest,
-                WindowStyle = ProcessWindowStyle.Normal
+                Arguments = string.Join(" ", new string[] {
+                    Server.RemotingTest,
+                    Uri.ToString()}),
+                WindowStyle = ProcessWindowStyle.Minimized
             });
             NamedEvents.OpenOrWait(Server.RemotingTest).WaitOne();
         }

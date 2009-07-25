@@ -29,7 +29,7 @@ namespace Simple.Tests.Service
             Assert.AreEqual("whatever", service.GetString());
 
             ReleaseSource(guid);
-            
+
             service = Simply.Get(guid).Resolve<ISimpleService>();
             Assert.AreEqual(0, service.GetInt32());
             Assert.AreEqual(null, service.GetString());
@@ -39,10 +39,15 @@ namespace Simple.Tests.Service
         public void TestFailConnect()
         {
             Guid guid = GetSource();
-
-            IFailService service = Simply.Get(guid).Resolve<IFailService>();
-
-            Assert.AreEqual(84, service.FailInt());
+            try
+            {
+                IFailService service = Simply.Get(guid).Resolve<IFailService>();
+                Assert.AreEqual(84, service.FailInt());
+            }
+            finally
+            {
+                ReleaseSource(guid);
+            }
         }
 
         [Test]
@@ -65,10 +70,9 @@ namespace Simple.Tests.Service
         public void ConnectToSecondServiceTest()
         {
             Guid guid = GetSource();
-
             ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
-
             Assert.AreEqual("42", service.OtherString());
+            ReleaseSource(guid);
         }
 
         [Test]
@@ -81,6 +85,8 @@ namespace Simple.Tests.Service
                 ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
                 Assert.AreEqual("42", service.OtherString());
             }
+            ReleaseSource(guid);
+
         }
 
         [Test]
@@ -91,6 +97,8 @@ namespace Simple.Tests.Service
             ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
             IFailService serviceFail = service.GetOtherService(123);
             Assert.AreEqual(84, serviceFail.FailInt());
+            ReleaseSource(guid);
+
         }
 
         [Test]
@@ -101,6 +109,8 @@ namespace Simple.Tests.Service
             ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
             Assert.AreEqual("whatever", service.GetComplexType().Oi);
             Assert.AreEqual(42, service.GetComplexType().Tchau);
+            ReleaseSource(guid);
+
         }
 
         [Test]
@@ -110,7 +120,7 @@ namespace Simple.Tests.Service
             {
                 SimpleServiceMarshalingTest();
             }
-           
+
         }
     }
 

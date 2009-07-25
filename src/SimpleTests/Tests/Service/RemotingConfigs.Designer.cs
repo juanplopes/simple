@@ -62,7 +62,7 @@ namespace Simple.Tests.Service {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;remoting&gt;
-        ///	&lt;baseAddress&gt;tcp://localhost:%%PORT%%&lt;/baseAddress&gt;
+        ///	&lt;baseAddress&gt;%%PROTOCOL%%://127.0.0.1:%%PORT%%&lt;/baseAddress&gt;
         ///&lt;/remoting&gt;.
         /// </summary>
         internal static string SimpleRemotingAny {

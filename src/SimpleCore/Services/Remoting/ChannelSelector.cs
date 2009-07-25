@@ -14,6 +14,7 @@ namespace Simple.Services.Remoting
         {
             AddHandler(new HttpChannelHandler());
             AddHandler(new TcpChannelHandler());
+            AddHandler(new IpcChannelHandler());
         }
         protected void AddHandler(IChannelHandler handler)
         {

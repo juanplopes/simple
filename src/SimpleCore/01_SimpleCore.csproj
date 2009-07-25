@@ -105,6 +105,7 @@
     <Compile Include="Services\IControlledService.cs" />
     <Compile Include="Services\IInterceptor.cs" />
     <Compile Include="Services\Remoting\ChannelSelector.cs" />
+    <Compile Include="Services\Remoting\Channels\IpcChannelHandler.cs" />
     <Compile Include="Services\Remoting\Channels\TcpChannelHandler.cs" />
     <Compile Include="Services\Remoting\Channels\HttpChannelHandler.cs" />
     <Compile Include="Services\Remoting\Channels\IChannelHandler.cs" />

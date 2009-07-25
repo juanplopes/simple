@@ -12,32 +12,26 @@ using System.Reflection;
 
 namespace Simple.Tests.Service
 {
-    [TestFixture]
-    public class SelfRemotingFactoryFixture : BaseFactoryFixture
+    public abstract class BaseSelfRemotingFactoryFixture : BaseFactoryFixture
     {
+        public abstract Uri Uri { get; }
+
         protected override Guid GetSource()
         {
             Guid guid = Guid.NewGuid();
 
             RemotingSimply.Do.Configure(guid,
-                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4003)));
+                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(Uri)));
             Simply.Get(guid).Host(typeof(SimpleService));
 
 
             return guid;
         }
 
-        [TearDown]
-        public void ReleaseRemoting()
-        {
-            SourceManager.Do.Clear<RemotingConfig>();
-        }
-
         protected override void ReleaseSource(Guid guid)
         {
-            SourceManager.Do.Remove<RemotingConfig>(guid);
-            SourceManager.Do.Remove<IServiceHostProvider>(guid);
-            SourceManager.Do.Remove<IServiceClientProvider>(guid);
+            Simply.Get(guid).StopServer();
+            RemotingSimply.Do.ReleaseConfig(guid);
         }
     }
 }

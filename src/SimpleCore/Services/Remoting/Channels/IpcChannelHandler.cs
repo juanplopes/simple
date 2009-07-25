@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
+using System.Runtime.Remoting.Channels.Tcp;
+using System.Runtime.Remoting.Channels.Ipc;
+using System.Runtime.Serialization.Formatters;
 
 namespace Simple.Services.Remoting.Channels
 {
-    public class HttpChannelHandler : IChannelHandler
+    public class IpcChannelHandler : IChannelHandler
     {
         #region IChannelHandler Members
 
@@ -18,7 +21,9 @@ namespace Simple.Services.Remoting.Channels
 
         public IChannelReceiver CreateServerChannel(string name, Uri uri)
         {
-            return new HttpServerChannel(name, uri.Port, new BinaryServerFormatterSinkProvider());
+            var sink = new BinaryServerFormatterSinkProvider();
+            sink.TypeFilterLevel = TypeFilterLevel.Full;
+            return new IpcServerChannel(name, uri.Host,sink);
         }
 
         public IChannelSender CreateClientChannel()
@@ -28,17 +33,17 @@ namespace Simple.Services.Remoting.Channels
 
         public IChannelSender CreateClientChannel(string name)
         {
-            return new HttpClientChannel(name, new BinaryClientFormatterSinkProvider());
+            return new IpcClientChannel(name, new BinaryClientFormatterSinkProvider());
         }
 
         public string DefaultName
         {
-            get { return "http"; }
+            get { return "ipc"; }
         }
 
         public string Scheme
         {
-            get { return "http"; }
+            get { return "ipc"; }
         }
 
         #endregion

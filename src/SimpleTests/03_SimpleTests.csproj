@@ -88,20 +88,23 @@
   <ItemGroup>
     <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
+    <Compile Include="Tests\Service\IpcRemotingFixtures.cs" />
+    <Compile Include="Tests\Service\TcpRemotingFixtures.cs" />
+    <Compile Include="Tests\Service\HttpRemotingFixtures.cs" />
     <Compile Include="Tests\Service\BaseInterceptorFixture.cs" />
-    <Compile Include="Tests\Service\RemotingInterceptorFixture.cs" />
-    <Compile Include="Tests\Service\SelfRemotingInterceptorFixture.cs" />
+    <Compile Include="Tests\Service\BaseRemotingInterceptorFixture.cs" />
+    <Compile Include="Tests\Service\BaseSelfRemotingInterceptorFixture.cs" />
     <Compile Include="Tests\Service\DefaultInterceptorFixture.cs" />
     <Compile Include="Tests\Service\Helper.cs" />
+    <Compile Include="Tests\Service\BaseSelfRemotingFactoryFixture.cs" />
+    <Compile Include="Tests\Service\DefaultFactoryFixture.cs" />
+    <Compile Include="Tests\Service\BaseFactoryFixture.cs" />
+    <Compile Include="Tests\Service\BaseRemotingFactoryFixture.cs" />
     <Compile Include="Tests\Service\RemotingConfigs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RemotingConfigs.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Service\SelfRemotingFactoryFixture.cs" />
-    <Compile Include="Tests\Service\DefaultFactoryFixture.cs" />
-    <Compile Include="Tests\Service\BaseFactoryFixture.cs" />
-    <Compile Include="Tests\Service\RemotingFactoryFixture.cs" />
     <Compile Include="Tests\Service\ServiceConfigFixture.cs" />
     <Compile Include="Tests\DataAccess\NHConfigFixture.cs" />
     <Compile Include="Tests\DataAccess\NHConfigurations.Designer.cs">
@@ -195,6 +198,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\Service\RemotingConfigs.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>RemotingConfigs.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

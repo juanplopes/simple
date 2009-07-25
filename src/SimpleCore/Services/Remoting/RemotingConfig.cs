@@ -44,7 +44,7 @@ namespace Simple.Services.Remoting
         {
             Uri uri = GetUriFromAddressBase();
             Simply.Do.Log(this).DebugFormat("Creating channel for URI {0}...", uri);
-            return ChannelSelector.Do.GetHandler(uri).CreateServerChannel(null, uri.Port);
+            return ChannelSelector.Do.GetHandler(uri).CreateServerChannel(null, uri);
         }
 
         public void TryRegisterClientChannel()
