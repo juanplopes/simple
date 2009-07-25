@@ -84,9 +84,10 @@ namespace Simple.DynamicProxy
 		/// <param name="requestedType"></param>
 		/// <returns>Nothing</returns>
 		/// <exception cref="NotSupportedException">CreateObjRef() for DynamicProxy isn't supported</exception>
-        //public override ObjRef CreateObjRef(System.Type type) {
-        //    throw new NotSupportedException("ObjRef for DynamicProxy isn't supported");
-        //}
+        public override ObjRef CreateObjRef(System.Type type)
+        {
+            throw new NotSupportedException("ObjRef for DynamicProxy isn't supported");
+        }
 
 		/// <summary>
 		/// Checks whether the proxy representing the specified object type can be cast to the type represented by the IRemotingTypeInfo interface

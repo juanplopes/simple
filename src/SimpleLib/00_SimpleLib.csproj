@@ -60,6 +60,7 @@
     <Compile Include="ConfigSource\DefaultConfigAttribute.cs" />
     <Compile Include="ConfigSource\DirectConfigSource.cs" />
     <Compile Include="ConfigSource\ISimply.cs" />
+    <Compile Include="DynamicProxy\DPObjRef.cs" />
     <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netConfig.cs" />
     <Compile Include="ConfigSource\FactoryManager.cs" />
