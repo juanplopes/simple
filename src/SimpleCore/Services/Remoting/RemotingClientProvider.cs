@@ -4,9 +4,6 @@ using System.Runtime.Remoting;
 using log4net;
 using System.Reflection;
 using System.Runtime.Remoting.Contexts;
-using Simple.Services.Default;
-using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Tcp;
 
 namespace Simple.Services.Remoting
 {
@@ -26,27 +23,32 @@ namespace Simple.Services.Remoting
         {
             logger.DebugFormat("Creating remoting proxy to type {0}...", type.Name);
 
-            Uri uri = ConfigCache.GetUriFromAddressBase();
-            Uri.TryCreate(uri, RemotingConfig.DefaultRemotingUrl, out uri);
+            Uri uriBase = ConfigCache.GetUriFromAddressBase();
+            string relativeUri = ConfigCache.GetEndpointKey(type);
+            Uri uriFinal;
 
-            logger.DebugFormat("Resolving at URI: {0}...", uri);
-
-            try
+            if (Uri.TryCreate(uriBase, relativeUri, out uriFinal))
             {
-                var factory = (IServiceLocationFactory)RemotingServices
-                    .Connect(typeof(IServiceLocationFactory), uri.AbsoluteUri);
+                logger.DebugFormat("Constructed URI: {0}...", uriFinal);
 
-                return factory.Get(type);
+                try
+                {
+                    var obj = RemotingServices.Connect(type, uriFinal.AbsoluteUri);
+                    obj.Equals(null);
+                   
+                    return obj;
+                }
+                catch (RemotingException e)
+                {
+                    throw new ServiceConnectionException(e.Message, e);
+                }
+                catch (NullReferenceException e)
+                {
+                    throw new ServiceConnectionException(e.Message, e);
+                }
             }
-            catch (RemotingException e)
-            {
-                throw new ServiceConnectionException(e.Message, e);
-            }
-            catch (NullReferenceException e)
-            {
-                throw new ServiceConnectionException(e.Message, e);
-            }
-
+            throw new InvalidOperationException("Invalid uri pair in configuration: '" + 
+                uriBase.AbsoluteUri + "' and '" + relativeUri + "'.");
         }
     }
 }

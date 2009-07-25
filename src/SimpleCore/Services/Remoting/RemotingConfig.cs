@@ -18,51 +18,40 @@ namespace Simple.Services.Remoting
     [XmlRoot("remoting"), Serializable]
     public class RemotingConfig
     {
-        public const string DefaultRemotingUrl = "activator";
+        public const string MaskVariable = "$typename";
 
         [XmlElement("baseAddress")]
         public string BaseAddress { get; set; }
 
+        [XmlElement("endpointMask"), DefaultValue(MaskVariable)]
+        public string EndpointMask { get; set; }
+
+        [XmlElement("objectMode"), DefaultValue(WellKnownObjectMode.SingleCall)]
+        public WellKnownObjectMode ObjectMode { get; set; }
+
+        public string GetEndpointKey(Type type)
+        {
+            string mask = EndpointMask ?? MaskVariable;
+
+            return mask.Replace(MaskVariable, type.Name);
+        }
 
         public Uri GetUriFromAddressBase()
         {
             return new Uri(BaseAddress, UriKind.Absolute);
         }
 
-        public IChannelReceiver GetServerChannel()
+        public IChannelReceiver GetChannel()
         {
             Uri uri = GetUriFromAddressBase();
 
-            Simply.Do.Log(this).DebugFormat("Creating SERVER channel for URI {0}...", uri);
-
+            Simply.Do.Log(this).DebugFormat("Creating channel for URI {0}...", uri);
             switch (uri.Scheme.ToLower())
             {
                 case "tcp":
                     return new TcpServerChannel(null, uri.Port);
                 case "http":
                     return new HttpServerChannel(null, uri.Port);
-                default:
-                    throw new ArgumentException("Invalid scheme: " + uri.Scheme);
-            }
-        }
-
-        public string GetChannelName()
-        {
-            return GetUriFromAddressBase().Scheme.ToLower();
-        }
-
-        public IChannelSender GetClientChannel()
-        {
-            Uri uri = GetUriFromAddressBase();
-
-            Simply.Do.Log(this).DebugFormat("Creating CLIENT channel for URI {0}...", uri);
-
-            switch (uri.Scheme.ToLower())
-            {
-                case "tcp":
-                    return new TcpClientChannel();
-                case "http":
-                    return new HttpClientChannel();
                 default:
                     throw new ArgumentException("Invalid scheme: " + uri.Scheme);
             }

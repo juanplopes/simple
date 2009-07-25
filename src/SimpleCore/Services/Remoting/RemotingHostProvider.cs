@@ -9,7 +9,6 @@ using Simple.Patterns;
 using System.Runtime.Remoting.Services;
 using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Proxies;
-using Simple.Services.Default;
 using Simple.DynamicProxy;
 
 namespace Simple.Services.Remoting
@@ -17,9 +16,9 @@ namespace Simple.Services.Remoting
     public class RemotingHostProvider : Factory<RemotingConfig>, IServiceHostProvider, IDisposable
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
-        ServiceLocationFactory factory = new ServiceLocationFactory();
-        
+        IList<object> services = new List<object>();
         bool started = false;
+        
         IChannelReceiver channel = null;
 
         protected override void OnConfig(RemotingConfig config)
@@ -43,12 +42,21 @@ namespace Simple.Services.Remoting
         {
             lock (this)
             {
-                //if (!(server is MarshalByRefObject)) throw new ArgumentException("The server class must inherit from MarshalByRefObject");
+                if (!(server is MarshalByRefObject)) throw new ArgumentException("The server class must inherit from MarshalByRefObject");
                 if (!started) Start();
 
-                factory.Set(server, contract);
+                services.Add(server);
 
-                logger.DebugFormat("Registering contract {0}...", contract.Name);
+                string key = ConfigCache.GetEndpointKey(contract);
+                logger.DebugFormat("Registering contract {0} at endpoint {1}...", contract.Name, key);
+                
+                RemotingServices.Marshal(server as MarshalByRefObject, key, contract);
+
+                logger.InfoFormat("{0} hosted", key);
+                foreach (string url in channel.GetUrlsForUri(key))
+                {
+                    logger.DebugFormat("* {0}.", url);
+                }
             }
         }
 
@@ -58,10 +66,17 @@ namespace Simple.Services.Remoting
             {
                 if (started)
                 {
+                    foreach (MarshalByRefObject obj in services)
+                        RemotingServices.Disconnect(obj);
+
                     channel.StopListening(null);
-                    RemotingServices.Disconnect(factory);
                     ChannelServices.UnregisterChannel(channel);
+
+                    //Context.UnregisterDynamicProperty(DefaultDynamicProperty.PropertyName, null, null);
+                    //ChannelServices.UnregisterChannel(channel);
                     started = false;
+
+
                 }
             }
         }
@@ -72,21 +87,28 @@ namespace Simple.Services.Remoting
             lock (this)
             {
                 logger.DebugFormat("Initializing Remoting Channel...");
-                RemotingServices.Marshal(factory, RemotingConfig.DefaultRemotingUrl, typeof(IServiceLocationFactory));
-                channel = ConfigCache.GetServerChannel();
-                channel.StartListening(null);
+
+                channel = ConfigCache.GetChannel();
                 ChannelServices.RegisterChannel(channel, false);
+                
+                channel.StartListening(null);
+
                 started = true;
             }
 
 
         }
 
+
+        #region IServiceHostProvider Members
+
+
         public object ProxyObject(object obj, IInterceptor interceptor)
         {
-            if (!(obj is MarshalByRefObject)) throw new ArgumentException("Object must be a MarshalByRefObject");
-
+            if (!(obj is MarshalByRefObject)) throw new ArgumentException("obj must be a MarshalByRefObject");
             return DynamicProxyFactory.Instance.CreateMarshallableProxy((MarshalByRefObject)obj, interceptor.Intercept);
         }
+
+        #endregion
     }
 }
