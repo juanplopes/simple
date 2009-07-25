@@ -72,6 +72,18 @@ namespace Simple.Tests.Service
         }
 
         [Test]
+        public void TestManyCalls()
+        {
+            Guid guid = GetSource();
+
+            for (int i = 0; i < 50; i++)
+            {
+                ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
+                Assert.AreEqual("42", service.OtherString());
+            }
+        }
+
+        [Test]
         public void MarshalOtherServiceTest()
         {
             Guid guid = GetSource();

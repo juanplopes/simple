@@ -149,6 +149,7 @@
     <Compile Include="Threading\CriticalRegion.cs" />
     <Compile Include="Threading\IDataStoreLockingProvider.cs" />
     <Compile Include="Threading\IDataStoreLockToken.cs" />
+    <Compile Include="Threading\NamedEvents.cs" />
     <Compile Include="Threading\SqlLockToken.cs" />
     <Compile Include="Threading\SqlLockingProvider.cs" />
     <Compile Include="Threading\ILockToken.cs" />

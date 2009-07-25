@@ -13,6 +13,7 @@ using Simple.ConfigSource;
 using Simple.Tests.Service;
 using Simple.Services;
 using System.Threading;
+using Simple.Threading;
 
 
 namespace Simple.Tests
@@ -29,12 +30,16 @@ namespace Simple.Tests
             {
                 if (args[0] == RemotingTest)
                 {
+                    var ev = NamedEvents.OpenOrCreate(RemotingTest, false, EventResetMode.ManualReset);
+
                     Guid guid = Guid.NewGuid();
 
                     RemotingSimply.Do.Configure(guid,
                         XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4002)));
 
                     Simply.Get(guid).Host(typeof(SimpleService));
+
+                    ev.Set();
                     Console.ReadLine();
                 }
                 else if (args[0] == RemotingInterceptorTest)

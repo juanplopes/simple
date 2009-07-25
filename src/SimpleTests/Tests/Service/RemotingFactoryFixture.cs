@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
+using Simple.Threading;
 
 namespace Simple.Tests.Service
 {
@@ -43,30 +44,7 @@ namespace Simple.Tests.Service
                 Arguments = Server.RemotingTest,
                 WindowStyle = ProcessWindowStyle.Normal
             });
-            
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            Guid guid = GetSource();
-
-            int i = 0;
-            int count = 0;
-            while (i++ < 30 && count < 3)
-            {
-                try
-                {
-                    ISimpleService service = Simply.Get(guid).Resolve<ISimpleService>();
-                    service.GetInt32();
-                    count++;
-                }
-                catch (Exception e)
-                {
-                    Simply.Do.Log(this).Error("ERROR", e);
-                    Thread.Sleep(500);
-                }
-            }
+            NamedEvents.OpenOrWait(Server.RemotingTest).WaitOne();
         }
 
         [TestFixtureTearDown]
