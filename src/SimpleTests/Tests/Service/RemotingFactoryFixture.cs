@@ -42,7 +42,7 @@ namespace Simple.Tests.Service
             {
                 FileName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath,
                 Arguments = Server.RemotingTest,
-                WindowStyle = ProcessWindowStyle.Hidden
+                WindowStyle = ProcessWindowStyle.Normal
             });
             Guid guid = GetSource();
 
@@ -56,8 +56,9 @@ namespace Simple.Tests.Service
                     service.GetInt32();
                     count++;
                 }
-                catch
+                catch (Exception e)
                 {
+                    Simply.Do.Log(this).Error("ERROR", e);
                     Thread.Sleep(500);
                 }
             }

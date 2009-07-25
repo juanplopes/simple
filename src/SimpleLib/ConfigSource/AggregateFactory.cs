@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simple.ConfigSource
 {
-    public class AggregateFactory<THIS>
+    public class AggregateFactory<THIS> : MarshalByRefObject
         where THIS : AggregateFactory<THIS>, new()
     {
         protected AggregateFactory()

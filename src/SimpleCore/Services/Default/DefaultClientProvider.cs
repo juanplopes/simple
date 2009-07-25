@@ -12,14 +12,7 @@ namespace Simple.Services.Default
 
         public object Create(Type type)
         {
-            try
-            {
-                return ServiceLocationFactory.Get(ConfigCache).Get(type);
-            }
-            catch (KeyNotFoundException e)
-            {
-                throw new ServiceConnectionException(e.Message, e);
-            }
+            return ServiceLocationFactory.Get(ConfigCache).Get(type);
         }
 
         #endregion

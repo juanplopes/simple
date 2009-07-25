@@ -10,15 +10,16 @@ using Simple.Patterns;
 using System.Runtime.Remoting.Services;
 using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Proxies;
+using Simple.Services.Default;
 
 namespace Simple.Services.Remoting
 {
     public class RemotingHostProvider : Factory<RemotingConfig>, IServiceHostProvider, IDisposable
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
-        IList<object> services = new List<object>();
-        bool started = false;
+        ServiceLocationFactory factory = new ServiceLocationFactory();
         
+        bool started = false;
         IChannelReceiver channel = null;
 
         protected override void OnConfig(RemotingConfig config)
@@ -45,18 +46,9 @@ namespace Simple.Services.Remoting
                 if (!(server is MarshalByRefObject)) throw new ArgumentException("The server class must inherit from MarshalByRefObject");
                 if (!started) Start();
 
-                services.Add(server);
+                factory.Set(server, contract);
 
-                string key = ConfigCache.GetEndpointKey(contract);
-                logger.DebugFormat("Registering contract {0} at endpoint {1}...", contract.Name, key);
-                
-                RemotingServices.Marshal(server as MarshalByRefObject, key, contract);
-
-                logger.InfoFormat("{0} hosted", key);
-                foreach (string url in channel.GetUrlsForUri(key))
-                {
-                    logger.DebugFormat("* {0}.", url);
-                }
+                logger.DebugFormat("Registering contract {0}...", contract.Name);
             }
         }
 
@@ -66,16 +58,10 @@ namespace Simple.Services.Remoting
             {
                 if (started)
                 {
-                    foreach (MarshalByRefObject obj in services)
-                        RemotingServices.Disconnect(obj);
-
                     channel.StopListening(null);
-
-                    //Context.UnregisterDynamicProperty(DefaultDynamicProperty.PropertyName, null, null);
-                    //ChannelServices.UnregisterChannel(channel);
+                    RemotingServices.Disconnect(factory);
+                    ChannelServices.UnregisterChannel(channel);
                     started = false;
-
-
                 }
             }
         }
@@ -86,12 +72,10 @@ namespace Simple.Services.Remoting
             lock (this)
             {
                 logger.DebugFormat("Initializing Remoting Channel...");
-
                 channel = ConfigCache.GetChannel();
-                // ChannelServices.RegisterChannel(channel, false);
-                
+                ChannelServices.RegisterChannel(channel, false);
+                RemotingServices.Marshal(factory, RemotingConfig.DefaultRemotingUrl, typeof(IServiceLocationFactory));
                 channel.StartListening(null);
-
                 started = true;
             }
 

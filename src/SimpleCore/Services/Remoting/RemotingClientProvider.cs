@@ -5,6 +5,7 @@ using log4net;
 using Simple.Client;
 using System.Reflection;
 using System.Runtime.Remoting.Contexts;
+using Simple.Services.Default;
 
 namespace Simple.Services.Remoting
 {
@@ -24,32 +25,27 @@ namespace Simple.Services.Remoting
         {
             logger.DebugFormat("Creating remoting proxy to type {0}...", type.Name);
 
-            Uri uriBase = ConfigCache.GetUriFromAddressBase();
-            string relativeUri = ConfigCache.GetEndpointKey(type);
-            Uri uriFinal;
+            Uri uri = ConfigCache.GetUriFromAddressBase();
+            Uri.TryCreate(uri, RemotingConfig.DefaultRemotingUrl, out uri);
 
-            if (Uri.TryCreate(uriBase, relativeUri, out uriFinal))
+            logger.DebugFormat("Resolving at URI: {0}...", uri);
+
+            try
             {
-                logger.DebugFormat("Constructed URI: {0}...", uriFinal);
+                var factory = (IServiceLocationFactory)RemotingServices
+                    .Connect(typeof(IServiceLocationFactory), uri.AbsoluteUri);
 
-                try
-                {
-                    var obj = RemotingServices.Connect(type, uriFinal.AbsoluteUri);
-                    obj.Equals(null);
-                   
-                    return obj;
-                }
-                catch (RemotingException e)
-                {
-                    throw new ServiceConnectionException(e.Message, e);
-                }
-                catch (NullReferenceException e)
-                {
-                    throw new ServiceConnectionException(e.Message, e);
-                }
+                return factory.Get(type);
             }
-            throw new InvalidOperationException("Invalid uri pair in configuration: '" + 
-                uriBase.AbsoluteUri + "' and '" + relativeUri + "'.");
+            catch (RemotingException e)
+            {
+                throw new ServiceConnectionException(e.Message, e);
+            }
+            catch (NullReferenceException e)
+            {
+                throw new ServiceConnectionException(e.Message, e);
+            }
+
         }
     }
 }
