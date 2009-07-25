@@ -12,7 +12,7 @@ namespace Simple.Tests.Service
     [TestFixture]
     public class DefaultFactoryFixture : BaseFactoryFixture
     {
-        protected override Guid GetSource()
+        protected override Guid Configure()
         {
             Guid guid = new Guid();
             DefaultHostSimply.Do.Configure(guid);
@@ -20,8 +20,9 @@ namespace Simple.Tests.Service
             return guid;
         }
 
-        protected override void ReleaseSource(Guid guid)
+        protected override void Release(Guid guid)
         {
+            Simply.Get(guid).StopServer();
             SourceManager.Do.Remove<DefaultHostConfig>(guid);
             SourceManager.Do.Remove<IServiceHostProvider>(guid);
             SourceManager.Do.Remove<IServiceClientProvider>(guid);

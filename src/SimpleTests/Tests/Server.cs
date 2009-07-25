@@ -53,9 +53,10 @@ namespace Simple.Tests
 
                     Simply.Get(guid).Host(typeof(BaseInterceptorFixture.TestService), 
                         new BaseInterceptorFixture.Interceptor());
-                    Console.ReadLine();
 
                     ev.Set();
+
+                    Console.ReadLine();
                 }
             }
             //            NUnit.Gui.AppEntry.Main(new string[] { Assembly.GetExecutingAssembly().Location });

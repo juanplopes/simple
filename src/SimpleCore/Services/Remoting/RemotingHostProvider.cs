@@ -69,9 +69,9 @@ namespace Simple.Services.Remoting
                     foreach (MarshalByRefObject obj in services)
                         RemotingServices.Disconnect(obj);
 
-                    channel.StopListening(null);
                     ChannelServices.UnregisterChannel(channel);
-
+                    channel.StopListening(null);
+                    
                     //Context.UnregisterDynamicProperty(DefaultDynamicProperty.PropertyName, null, null);
                     //ChannelServices.UnregisterChannel(channel);
                     started = false;

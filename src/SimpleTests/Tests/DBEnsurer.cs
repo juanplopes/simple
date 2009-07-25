@@ -12,6 +12,7 @@ using Simple.Tests.DataAccess;
 using Simple.Services.Remoting;
 using Simple.Tests.Service;
 using Simple.Services.Default;
+using Simple.Services;
 
 namespace Simple.Tests
 {
@@ -32,7 +33,7 @@ namespace Simple.Tests
             NHibernateSimply.Do.MapAssemblyOf<Empresa.Map>(key);
 
             DefaultHostSimply.Do.Configure(key, new DirectConfigSource<DefaultHostConfig>());
-            Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer));
+            Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer), new DefaultInterceptor(typeof(DBEnsurer)));
         }
 
         public static Empresa E1 = null;

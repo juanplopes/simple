@@ -15,101 +15,98 @@ namespace Simple.Tests.Service
 {
     public abstract class BaseFactoryFixture
     {
-        protected abstract Guid GetSource();
-        protected abstract void ReleaseSource(Guid guid);
+        protected abstract Guid Configure();
+        protected abstract void Release(Guid guid);
+        protected Guid ConfigKey { get; set; }
+
+        [TestFixtureSetUp]
+        public void Setup()
+        {
+            ConfigKey = Configure();
+        }
+
+        [TestFixtureTearDown]
+        public void Teardown()
+        {
+            Release(ConfigKey);
+        }
+
 
         [Test]
         public void SimpleServiceMarshalingTest()
         {
-            Guid guid = GetSource();
-
-            ISimpleService service = Simply.Get(guid).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
 
             Assert.AreEqual(42, service.GetInt32());
             Assert.AreEqual("whatever", service.GetString());
-
-            ReleaseSource(guid);
-
-            service = Simply.Get(guid).Resolve<ISimpleService>();
-            Assert.AreEqual(0, service.GetInt32());
-            Assert.AreEqual(null, service.GetString());
         }
 
-        [Test, ExpectedException(typeof(ServiceConnectionException))]
+        [Test, ExpectedException]
         public void TestFailConnect()
         {
-            Guid guid = GetSource();
+            IFailService service = Simply.Get(ConfigKey).Resolve<IFailService>();
+            Assert.AreEqual(84, service.FailInt());
+        }
+
+        [Test]
+        public void TestPostFailConnectState()
+        {
+            bool ex = false;
             try
             {
-                IFailService service = Simply.Get(guid).Resolve<IFailService>();
-                Assert.AreEqual(84, service.FailInt());
+                IFailService service = Simply.Get(ConfigKey).Resolve<IFailService>();
+                service.FailInt();
             }
-            finally
+            catch (Exception)
             {
-                ReleaseSource(guid);
+                ex = true;
             }
+
+            Assert.IsTrue(ex);
+            ISecondService service2 = Simply.Get(ConfigKey).Resolve<ISecondService>();
+            Assert.AreEqual("42", service2.OtherString());
         }
 
         [Test]
         public void SimpleBigMarshalingTest()
         {
-            Guid guid = GetSource();
-
-            ISimpleService service = Simply.Get(guid).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
 
             Assert.AreEqual(500000, service.GetByteArray(500000).Length);
-
-            ReleaseSource(guid);
-
-            service = Simply.Get(guid).Resolve<ISimpleService>();
-            Assert.AreEqual(null, service.GetByteArray(100));
-
         }
 
         [Test]
         public void ConnectToSecondServiceTest()
         {
-            Guid guid = GetSource();
-            ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
+            ISecondService service = Simply.Get(ConfigKey).Resolve<ISecondService>();
             Assert.AreEqual("42", service.OtherString());
-            ReleaseSource(guid);
         }
 
         [Test]
         public void TestManyCalls()
         {
-            Guid guid = GetSource();
-
             for (int i = 0; i < 50; i++)
             {
-                ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
+                Simply.Do.Log(this).DebugFormat("Running {0}...", i);
+                ISecondService service = Simply.Get(ConfigKey).Resolve<ISecondService>();
                 Assert.AreEqual("42", service.OtherString());
             }
-            ReleaseSource(guid);
-
         }
 
         [Test]
         public void MarshalOtherServiceTest()
         {
-            Guid guid = GetSource();
-
-            ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
+            ISecondService service = Simply.Get(ConfigKey).Resolve<ISecondService>();
             IFailService serviceFail = service.GetOtherService(123);
             Assert.AreEqual(84, serviceFail.FailInt());
-            ReleaseSource(guid);
-
         }
 
         [Test]
         public void SerializeComplexType()
         {
-            Guid guid = GetSource();
-
-            ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
+            ISecondService service = Simply.Get(ConfigKey).Resolve<ISecondService>();
             Assert.AreEqual("whatever", service.GetComplexType().Oi);
             Assert.AreEqual(42, service.GetComplexType().Tchau);
-            ReleaseSource(guid);
 
         }
 

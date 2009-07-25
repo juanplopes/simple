@@ -4,6 +4,7 @@ using System.Runtime.Remoting;
 using log4net;
 using System.Reflection;
 using System.Runtime.Remoting.Contexts;
+using System.Runtime.Remoting.Channels;
 
 namespace Simple.Services.Remoting
 {
@@ -27,28 +28,18 @@ namespace Simple.Services.Remoting
             string relativeUri = ConfigCache.GetEndpointKey(type);
             Uri uriFinal;
 
+            object obj = null;
+
             if (Uri.TryCreate(uriBase, relativeUri, out uriFinal))
             {
                 logger.DebugFormat("Constructed URI: {0}...", uriFinal);
 
-                try
-                {
-                    ConfigCache.TryRegisterClientChannel();
-                    var obj = RemotingServices.Connect(type, uriFinal.AbsoluteUri);
-                    obj.Equals(null);
-                   
-                    return obj;
-                }
-                catch (RemotingException e)
-                {
-                    throw new ServiceConnectionException(e.Message, e);
-                }
-                catch (NullReferenceException e)
-                {
-                    throw new ServiceConnectionException(e.Message, e);
-                }
+                ConfigCache.TryRegisterClientChannel();
+                obj = RemotingServices.Connect(type, uriFinal.AbsoluteUri);
+
+                return obj;
             }
-            throw new InvalidOperationException("Invalid uri pair in configuration: '" + 
+            throw new InvalidOperationException("Invalid uri pair in configuration: '" +
                 uriBase.AbsoluteUri + "' and '" + relativeUri + "'.");
         }
     }

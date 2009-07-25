@@ -30,7 +30,7 @@ namespace Simple.Tests.Service
                     Uri.ToString()}),
                 WindowStyle = ProcessWindowStyle.Minimized
             });
-            NamedEvents.OpenOrWait(Server.RemotingInterceptorTest);
+            NamedEvents.OpenOrWait(Server.RemotingInterceptorTest).WaitOne();
         }
 
         [TestFixtureTearDown]

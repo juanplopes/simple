@@ -18,7 +18,8 @@ namespace Simple.Threading
             {
 
                 ewh = EventWaitHandle.OpenExisting(name);
-
+                ewh.Close();
+                ewh = new EventWaitHandle(initialState, mode, name);
             }
 
             catch (WaitHandleCannotBeOpenedException)

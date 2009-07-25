@@ -16,7 +16,7 @@ namespace Simple.Tests.Service
     {
         public abstract Uri Uri { get; }
 
-        protected override Guid GetSource()
+        protected override Guid Configure()
         {
             Guid guid = Guid.NewGuid();
 
@@ -24,11 +24,10 @@ namespace Simple.Tests.Service
                 XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(Uri)));
             Simply.Get(guid).Host(typeof(SimpleService));
 
-
             return guid;
         }
 
-        protected override void ReleaseSource(Guid guid)
+        protected override void Release(Guid guid)
         {
             Simply.Get(guid).StopServer();
             RemotingSimply.Do.ReleaseConfig(guid);

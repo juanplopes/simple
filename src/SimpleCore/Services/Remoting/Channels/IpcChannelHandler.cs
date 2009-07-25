@@ -7,6 +7,7 @@ using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels.Ipc;
 using System.Runtime.Serialization.Formatters;
+using System.Collections;
 
 namespace Simple.Services.Remoting.Channels
 {
@@ -23,7 +24,12 @@ namespace Simple.Services.Remoting.Channels
         {
             var sink = new BinaryServerFormatterSinkProvider();
             sink.TypeFilterLevel = TypeFilterLevel.Full;
-            return new IpcServerChannel(name, uri.Host,sink);
+
+            IDictionary props = new Hashtable();
+            props.Add("portName", uri.Host);
+            props.Add("exclusiveAddressUse", false);
+
+            return new IpcServerChannel(props, sink);
         }
 
         public IChannelSender CreateClientChannel()

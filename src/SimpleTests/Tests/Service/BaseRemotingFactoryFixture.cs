@@ -17,7 +17,7 @@ namespace Simple.Tests.Service
     {
         public abstract Uri Uri { get; }
 
-        protected override Guid GetSource()
+        protected override Guid Configure()
         {
             Guid guid = Guid.NewGuid();
 
@@ -27,7 +27,7 @@ namespace Simple.Tests.Service
             return guid;
         }
 
-        protected override void ReleaseSource(Guid guid)
+        protected override void Release(Guid guid)
         {
             SourceManager.Do.Remove<RemotingConfig>(guid);
             SourceManager.Do.Remove<IServiceHostProvider>(guid);
@@ -56,5 +56,7 @@ namespace Simple.Tests.Service
             process.Kill();
             SourceManager.Do.Clear<RemotingConfig>();
         }
+
+        
     }
 }
