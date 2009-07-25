@@ -14,6 +14,7 @@ namespace Simple.Tests.Service
         {
             Guid guid = Guid.NewGuid();
             DefaultHostSimply.Do.Configure(guid);
+            Simply.Get(guid).Host(typeof(TestService), new Interceptor());
             return guid;
         }
 

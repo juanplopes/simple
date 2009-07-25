@@ -11,7 +11,7 @@ namespace Simple.ConfigSource
         protected AggregateFactory()
         {
         }
-        protected object ConfigKey { get; private set; }
+        public object ConfigKey { get; private set; }
 
         static Dictionary<object, THIS> _instances = new Dictionary<object, THIS>();
         public static THIS Do

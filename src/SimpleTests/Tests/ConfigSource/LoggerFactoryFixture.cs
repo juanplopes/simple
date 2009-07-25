@@ -20,7 +20,7 @@ namespace Simple.Tests.ConfigSource
         [Test]
         public void NullLoggerTests()
         {
-            LoggerManager.Get(this).Debug("Teste");
+            Simply.Do.Log(this).Debug("Teste");
         }
     }
 }

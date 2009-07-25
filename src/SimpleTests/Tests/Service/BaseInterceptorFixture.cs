@@ -5,7 +5,6 @@ using System.Text;
 using Simple.Services;
 using Simple.Reflection;
 using NUnit.Framework;
-using Simple.Server;
 using Simple.ConfigSource;
 using System.Reflection;
 using System.Globalization;
@@ -14,7 +13,7 @@ namespace Simple.Tests.Service
 {
     public abstract class BaseInterceptorFixture
     {
-        class Interceptor : BaseInterceptor
+        public class Interceptor : BaseInterceptor
         {
             #region IInterceptor Members
 
@@ -84,7 +83,6 @@ namespace Simple.Tests.Service
         public void Setup()
         {
             ConfigKey = Configure();
-            Simply.Get(ConfigKey).Host(typeof(TestService), new Interceptor());
         }
 
         [TestFixtureTearDown]

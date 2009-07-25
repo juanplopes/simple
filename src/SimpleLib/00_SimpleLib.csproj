@@ -107,7 +107,7 @@
     <Compile Include="IO\StringOffsetAttribute.cs" />
     <Compile Include="Logging\Log4netFactory.cs" />
     <Compile Include="Logging\NullLog.cs" />
-    <Compile Include="Logging\LoggerManager.cs" />
+    <Compile Include="Logging\Log4netSimplyExtensions.cs" />
     <Compile Include="Patterns\WorkingDays.cs" />
     <Compile Include="Common\EnumTypeAttribute.cs" />
     <Compile Include="Patterns\IWorkingDaysProvider.cs" />
@@ -120,6 +120,7 @@
     <Compile Include="Reflection\TypesHelper.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
     <Compile Include="Persistence\ExecutionContext.cs" />
+    <Compile Include="Simply.cs" />
     <Compile Include="Threading\IInitializable.cs" />
     <Compile Include="Patterns\Enumerable.cs" />
     <Compile Include="Persistence\GenericInstanceState.cs" />

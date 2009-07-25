@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\Context\DataContextFactory.cs" />
     <Compile Include="DataAccess\Context\DataContext.cs" />
+    <Compile Include="DataAccess\Context\DataContextSimplyExtensions.cs" />
     <Compile Include="DataAccess\Context\IDataContext.cs" />
     <Compile Include="DataAccess\Context\IDataContextFactory.cs" />
     <Compile Include="DataAccess\INHibernateFactory.cs" />
@@ -93,7 +94,6 @@
     <Compile Include="DataAccess\TupleToPropertiesTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EntityService.cs" />
-    <Compile Include="Server\Simply.cs" />
     <Compile Include="DataAccess\DefaultExceptionHandler.cs" />
     <None Include="Threading\NHLockingProvider.cs" />
     <None Include="Threading\NHLockToken.cs" />

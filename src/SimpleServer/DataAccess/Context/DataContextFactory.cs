@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Simple.Patterns;
 using Simple.ConfigSource;
-using Simple.Server;
 using Simple.Threading;
 
 namespace Simple.DataAccess.Context

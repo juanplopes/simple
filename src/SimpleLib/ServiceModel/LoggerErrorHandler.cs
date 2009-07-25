@@ -12,7 +12,7 @@ namespace Simple.ServiceModel
 {
     public class LoggerErrorHandler : IErrorHandler
     {
-        protected static ILog Logger = LoggerManager.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected static ILog Logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
         #region IErrorHandler Members
 

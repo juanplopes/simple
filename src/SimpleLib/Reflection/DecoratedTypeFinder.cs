@@ -10,7 +10,7 @@ namespace Simple.Reflecion
 {
     public static class DecoratedTypeFinder
     {
-        private static ILog Logger = LoggerManager.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        private static ILog Logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
         public static IList<Type> Locate(Assembly assembly, Type attributeAttribute, bool mustBeConcrete)
         {

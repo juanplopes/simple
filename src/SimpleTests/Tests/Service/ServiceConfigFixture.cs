@@ -5,7 +5,6 @@ using System.Text;
 using NUnit.Framework;
 using Simple.ConfigSource;
 using Simple.Services;
-using Simple.Client;
 
 namespace Simple.Tests.Service
 {

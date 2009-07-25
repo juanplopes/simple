@@ -14,7 +14,7 @@ namespace Simple.ServiceModel
 {
     public class WCFHostingHelper : ServiceBase, IHostingHelper
     {
-        protected static ILog Logger = LoggerManager.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected static ILog Logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
         IList<ServiceHost> glstServiceHosts = new List<ServiceHost>();
         public void Register(Type ptypServiceType)

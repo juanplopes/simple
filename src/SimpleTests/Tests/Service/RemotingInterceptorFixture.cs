@@ -13,25 +13,8 @@ using System.Reflection;
 namespace Simple.Tests.Service
 {
     [TestFixture]
-    public class RemotingFactoryFixture : BaseFactoryFixture
+    public class RemotingInterceptorFixture : BaseInterceptorFixture
     {
-        protected override Guid GetSource()
-        {
-            Guid guid = Guid.NewGuid();
-
-            RemotingSimply.Do.Configure(guid,
-                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4002)));
-
-            return guid;
-        }
-
-        protected override void ReleaseSource(Guid guid)
-        {
-            SourceManager.Do.Remove<RemotingConfig>(guid);
-            SourceManager.Do.Remove<IServiceHostProvider>(guid);
-            SourceManager.Do.Remove<IServiceClientProvider>(guid);
-        }
-
         Process process;
 
         [TestFixtureSetUp]
@@ -40,16 +23,16 @@ namespace Simple.Tests.Service
             process = Process.Start(new ProcessStartInfo()
             {
                 FileName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath,
-                Arguments = Server.RemotingTest,
+                Arguments = Server.RemotingInterceptorTest,
                 WindowStyle = ProcessWindowStyle.Normal
             });
             
         }
 
         [SetUp]
-        public void Setup()
+        public void SetupEach()
         {
-            Guid guid = GetSource();
+            Guid guid = this.ConfigKey;
 
             int i = 0;
             int count = 0;
@@ -57,8 +40,8 @@ namespace Simple.Tests.Service
             {
                 try
                 {
-                    ISimpleService service = Simply.Get(guid).Resolve<ISimpleService>();
-                    service.GetInt32();
+                    ITestService service = Simply.Get(guid).Resolve<ITestService>();
+                    service.TestInt();
                     count++;
                 }
                 catch (Exception e)
@@ -74,6 +57,21 @@ namespace Simple.Tests.Service
         {
             process.Kill();
             SourceManager.Do.Clear<RemotingConfig>();
+        }
+
+        protected override Guid Configure()
+        {
+            Guid guid = Guid.NewGuid();
+
+            RemotingSimply.Do.Configure(guid,
+                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4012)));
+
+            return guid;
+        }
+
+        protected override void Release(Guid guid)
+        {
+            
         }
     }
 }

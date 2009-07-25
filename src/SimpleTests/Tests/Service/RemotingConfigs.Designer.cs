@@ -70,27 +70,5 @@ namespace Simple.Tests.Service {
                 return ResourceManager.GetString("SimpleRemotingAny", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;remoting&gt;
-        ///	&lt;baseAddress&gt;tcp://localhost:8015&lt;/baseAddress&gt;
-        ///&lt;/remoting&gt;.
-        /// </summary>
-        internal static string SimpleRemotingConfig {
-            get {
-                return ResourceManager.GetString("SimpleRemotingConfig", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;remoting&gt;
-        ///	&lt;baseAddress&gt;tcp://localhost:8020&lt;/baseAddress&gt;
-        ///&lt;/remoting&gt;.
-        /// </summary>
-        internal static string SimpleRemotingConfig8020 {
-            get {
-                return ResourceManager.GetString("SimpleRemotingConfig8020", resourceCulture);
-            }
-        }
     }
 }

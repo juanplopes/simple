@@ -121,10 +121,4 @@
   <data name="SimpleRemotingAny" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\resources\simpleremotingany.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="SimpleRemotingConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\SimpleRemotingConfig.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
-  </data>
-  <data name="SimpleRemotingConfig8020" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\SimpleRemotingConfig8020.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
 </root>

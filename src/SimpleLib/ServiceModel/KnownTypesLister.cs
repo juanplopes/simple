@@ -20,7 +20,7 @@ namespace Simple.ServiceModel
     public class KnownTypesLister
     {
         protected static Dictionary<Assembly, IList<Type>> Cache { get; set; }
-        protected static ILog Logger = LoggerManager.Get(MethodInfo.GetCurrentMethod().DeclaringType);
+        protected static ILog Logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
         static KnownTypesLister()
         {

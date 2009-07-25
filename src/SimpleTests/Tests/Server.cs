@@ -12,7 +12,6 @@ using Simple.Services.Remoting;
 using Simple.ConfigSource;
 using Simple.Tests.Service;
 using Simple.Services;
-using Simple.Server;
 using System.Threading;
 
 
@@ -20,7 +19,8 @@ namespace Simple.Tests
 {
     public class Server
     {
-        public const string RemotingTest="remotingtest";
+        public const string RemotingTest = "remotingtest";
+        public const string RemotingInterceptorTest = "remotinginterceptortest";
 
         [STAThread]
         static int Main(string[] args)
@@ -32,13 +32,24 @@ namespace Simple.Tests
                     Guid guid = Guid.NewGuid();
 
                     RemotingSimply.Do.Configure(guid,
-                        XmlConfig.LoadXml<RemotingConfig>(RemotingConfigs.SimpleRemotingConfig));
+                        XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4002)));
 
                     Simply.Get(guid).Host(typeof(SimpleService));
                     Console.ReadLine();
                 }
+                else if (args[0] == RemotingInterceptorTest)
+                {
+                    Guid guid = Guid.NewGuid();
+
+                    RemotingSimply.Do.Configure(guid,
+                        XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4012)));
+
+                    Simply.Get(guid).Host(typeof(BaseInterceptorFixture.TestService), 
+                        new BaseInterceptorFixture.Interceptor());
+                    Console.ReadLine();
+                }
             }
-//            NUnit.Gui.AppEntry.Main(new string[] { Assembly.GetExecutingAssembly().Location });
+            //            NUnit.Gui.AppEntry.Main(new string[] { Assembly.GetExecutingAssembly().Location });
 
             return 0;
         }

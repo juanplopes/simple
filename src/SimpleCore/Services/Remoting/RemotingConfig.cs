@@ -6,7 +6,6 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting;
 using System.ComponentModel;
-using Simple.Client;
 
 namespace Simple.Services.Remoting
 {
@@ -30,22 +29,40 @@ namespace Simple.Services.Remoting
             return new Uri(BaseAddress, UriKind.Absolute);
         }
 
-        public IChannelReceiver GetChannel()
+        public IChannelReceiver GetServerChannel()
         {
             Uri uri = GetUriFromAddressBase();
 
-            Simply.Do.Log(this).DebugFormat("Creating channel for URI {0}...", uri);
-
-            System.Collections.IDictionary dict = new System.Collections.Hashtable();
-            dict["port"] = uri.Port;
-            dict["name"] = null;
+            Simply.Do.Log(this).DebugFormat("Creating SERVER channel for URI {0}...", uri);
 
             switch (uri.Scheme.ToLower())
             {
                 case "tcp":
-                    return new TcpChannel(dict, null, null);
+                    return new TcpServerChannel(null, uri.Port);
                 case "http":
-                    return new HttpChannel(dict, null, null);
+                    return new HttpServerChannel(null, uri.Port);
+                default:
+                    throw new ArgumentException("Invalid scheme: " + uri.Scheme);
+            }
+        }
+
+        public string GetChannelName()
+        {
+            return GetUriFromAddressBase().Scheme.ToLower();
+        }
+
+        public IChannelSender GetClientChannel()
+        {
+            Uri uri = GetUriFromAddressBase();
+
+            Simply.Do.Log(this).DebugFormat("Creating CLIENT channel for URI {0}...", uri);
+
+            switch (uri.Scheme.ToLower())
+            {
+                case "tcp":
+                    return new TcpClientChannel();
+                case "http":
+                    return new HttpClientChannel();
                 default:
                     throw new ArgumentException("Invalid scheme: " + uri.Scheme);
             }

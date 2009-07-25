@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.ConfigSource;
-using Simple.Client;
 
 namespace Simple.Services.Default
 {
@@ -31,12 +30,18 @@ namespace Simple.Services.Default
         {
             try
             {
-                Simply.Do.Log(this).DebugFormat("Retrieving server object for contract {0}...", contract.Name);
-                return _classes[contract];
+                lock (_classes)
+                {
+                    Simply.Do.Log(this).DebugFormat("Retrieving server object for contract {0}...", contract.Name);
+                    return _classes[contract];
+                }
             }
             catch (KeyNotFoundException e)
             {
-                throw new ServiceConnectionException(e.Message, e);
+                lock (_classes)
+                {
+                    throw new ServiceConnectionException(e.Message, e);
+                }
             }
         }
 

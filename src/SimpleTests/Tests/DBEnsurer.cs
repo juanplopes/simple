@@ -11,7 +11,6 @@ using Simple.ConfigSource;
 using Simple.Tests.DataAccess;
 using Simple.Services.Remoting;
 using Simple.Tests.Service;
-using Simple.Server;
 using Simple.Services.Default;
 
 namespace Simple.Tests

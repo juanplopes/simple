@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Simple.Services.Default;
 using Simple.ConfigSource;
-using Simple.Client;
 using Simple.Services;
 using NUnit.Framework;
 

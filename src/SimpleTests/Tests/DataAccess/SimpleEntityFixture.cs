@@ -11,7 +11,6 @@ using Simple.ConfigSource;
 using Simple.Services.Remoting;
 using Simple.Tests.Service;
 using Simple.DataAccess.Context;
-using Simple.Server;
 using NHibernate;
 
 namespace Simple.Tests.DataAccess

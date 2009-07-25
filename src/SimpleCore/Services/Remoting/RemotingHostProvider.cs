@@ -4,7 +4,6 @@ using Simple.ConfigSource;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting;
 using log4net;
-using Simple.Client;
 using System.Reflection;
 using Simple.Patterns;
 using System.Runtime.Remoting.Services;
@@ -72,10 +71,10 @@ namespace Simple.Services.Remoting
             lock (this)
             {
                 logger.DebugFormat("Initializing Remoting Channel...");
-                channel = ConfigCache.GetChannel();
-                ChannelServices.RegisterChannel(channel, false);
                 RemotingServices.Marshal(factory, RemotingConfig.DefaultRemotingUrl, typeof(IServiceLocationFactory));
+                channel = ConfigCache.GetServerChannel();
                 channel.StartListening(null);
+                ChannelServices.RegisterChannel(channel, false);
                 started = true;
             }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Simple.ConfigSource;
 using Simple.Reflection;
-using Simple.Client;
 using log4net;
 using System.Reflection;
 using Simple.Patterns;

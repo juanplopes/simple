@@ -9,7 +9,6 @@ using NUnit.Framework;
 using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
-using Simple.Client;
 
 namespace Simple.Tests.Service
 {
@@ -21,7 +20,7 @@ namespace Simple.Tests.Service
             Guid guid = Guid.NewGuid();
 
             RemotingSimply.Do.Configure(guid,
-                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(9999)));
+                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(4003)));
             Simply.Get(guid).Host(typeof(SimpleService));
 
 

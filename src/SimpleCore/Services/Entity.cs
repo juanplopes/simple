@@ -5,7 +5,6 @@ using Simple.Filters;
 using Simple.DataAccess;
 using Simple.Reflection;
 using Simple.ConfigSource;
-using Simple.Client;
 
 namespace Simple.Services
 {

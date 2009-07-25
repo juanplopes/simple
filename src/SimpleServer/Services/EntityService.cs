@@ -10,7 +10,6 @@ using Simple.Logging;
 using System.Runtime.Serialization;
 using log4net;
 using System.Linq;
-using Simple.Server;
 using Simple.ConfigSource;
 using System.Runtime.Remoting.Proxies;
 
@@ -31,7 +30,7 @@ namespace Simple.Services
             get
             {
                 if (_logger == null)
-                    _logger = LoggerManager.Get(this);
+                    _logger = Simply.Do.Log(this);
                 return _logger;
             }
         }

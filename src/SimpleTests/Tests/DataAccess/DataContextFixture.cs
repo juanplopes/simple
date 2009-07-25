@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple.DataAccess.Context;
-using Simple.Server;
 using NHibernate;
 using Simple.Tests.Contracts;
 

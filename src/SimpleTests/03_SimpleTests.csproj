@@ -89,6 +89,7 @@
     <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
     <Compile Include="Tests\Service\BaseInterceptorFixture.cs" />
+    <Compile Include="Tests\Service\RemotingInterceptorFixture.cs" />
     <Compile Include="Tests\Service\SelfRemotingInterceptorFixture.cs" />
     <Compile Include="Tests\Service\DefaultInterceptorFixture.cs" />
     <Compile Include="Tests\Service\Helper.cs" />
@@ -146,8 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\NHConfig1.xml" />
-    <Content Include="Resources\SimpleRemotingConfig.xml" />
-    <Content Include="Resources\SimpleRemotingConfig8020.xml" />
     <None Include="Resources\SimpleRemotingAny.xml" />
     <Content Include="Tests.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

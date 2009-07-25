@@ -27,7 +27,7 @@ namespace Simple.ConfigSource
             {
                 if (Active)
                 {
-                    LoggerManager.Get(this).DebugFormat("The watch in file {0} has raised.", XmlFile.Parameter.Name);
+                    Simply.Do.Log(this).DebugFormat("The watch in file {0} has raised.", XmlFile.Parameter.Name);
                     InvokeReload();
                 }
             }
@@ -59,7 +59,7 @@ namespace Simple.ConfigSource
             {
                 if (XmlFile.Parameter == null) throw new InvalidOperationException("Cannot reload a non-loaded source");
 
-                LoggerManager.Get(this).DebugFormat("Reloading file {0}...", XmlFile.Parameter.Name);
+                Simply.Do.Log(this).DebugFormat("Reloading file {0}...", XmlFile.Parameter.Name);
 
                 try
                 {
@@ -77,7 +77,7 @@ namespace Simple.ConfigSource
         {
             lock (this)
             {
-                LoggerManager.Get(this).DebugFormat("Disposing configurator for {0}...", typeof(T));
+                Simply.Do.Log(this).DebugFormat("Disposing configurator for {0}...", typeof(T));
                 Active = false;
                 Watcher.Dispose();
             }
@@ -89,7 +89,7 @@ namespace Simple.ConfigSource
         {
             lock (this)
             {
-                LoggerManager.Get(this).DebugFormat("Loading XMLConfig for class {0}...", typeof(T).Name);
+                Simply.Do.Log(this).DebugFormat("Loading XMLConfig for class {0}...", typeof(T).Name);
 
                 SetXmlFileInfo(input.Parameter);
 

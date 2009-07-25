@@ -2,10 +2,11 @@
 using Simple.ConfigSource;
 using System.Runtime.Remoting;
 using log4net;
-using Simple.Client;
 using System.Reflection;
 using System.Runtime.Remoting.Contexts;
 using Simple.Services.Default;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting.Channels.Tcp;
 
 namespace Simple.Services.Remoting
 {

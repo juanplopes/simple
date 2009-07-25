@@ -6,7 +6,6 @@ using NUnit.Framework;
 using Simple.Services;
 using Simple.ConfigSource;
 using Simple.Services.Remoting;
-using Simple.Server;
 using System.Runtime.Remoting;
 using System.Diagnostics;
 using System.Reflection;
@@ -73,6 +72,16 @@ namespace Simple.Tests.Service
         }
 
         [Test]
+        public void MarshalOtherServiceTest()
+        {
+            Guid guid = GetSource();
+
+            ISecondService service = Simply.Get(guid).Resolve<ISecondService>();
+            IFailService serviceFail = service.GetOtherService(123);
+            Assert.AreEqual(84, serviceFail.FailInt());
+        }
+
+        [Test]
         public void TestCreateSameServiceTwice()
         {
             for (int i = 0; i < 3; i++)
@@ -99,9 +108,10 @@ namespace Simple.Tests.Service
     public interface ISecondService : IService
     {
         string OtherString();
+        IFailService GetOtherService(int number);
     }
 
-    public class FailConnectService : IFailService
+    public class FailConnectService : MarshalByRefObject, IFailService
     {
         public int FailInt()
         {
@@ -136,6 +146,16 @@ namespace Simple.Tests.Service
         public string OtherString()
         {
             return "42";
+        }
+
+        #endregion
+
+        #region ISecondService Members
+
+
+        public IFailService GetOtherService(int number)
+        {
+            return new FailConnectService();
         }
 
         #endregion
