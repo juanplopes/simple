@@ -23,7 +23,7 @@ namespace Simple.Tests.DataAccess
             NHibernateSimply.Do.Configure(this,
                 XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
 
-            SchemaExport exp = new SchemaExport(SessionManager.GetConfig(this));
+            SchemaExport exp = new SchemaExport(Simply.Get(this).GetNHibernateConfig());
             exp.Drop(true, true);
             exp.Create(true, true);
         }
@@ -54,6 +54,17 @@ namespace Simple.Tests.DataAccess
             var factory = factories[this];
 
             Assert.AreEqual(2, factory.NHConfiguration.ClassMappings.Count);
+        }
+        [Test]
+        public void TestMapEntityAssembly()
+        {
+            NHibernateSimply.Do.Configure(this,
+                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
+            NHibernateSimply.Do.MapAssemblyOf<Empresa>(this);
+
+            var config = Simply.Get(this).GetNHibernateConfig();
+
+            Assert.AreEqual(4, config.ClassMappings.Count);
         }
     }
 }

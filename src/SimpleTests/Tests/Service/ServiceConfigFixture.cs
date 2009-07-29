@@ -9,7 +9,7 @@ using Simple.Services;
 namespace Simple.Tests.Service
 {
     [TestFixture]
-    public class ServiceObjectsFixture
+    public class ServiceConfigFixture
     {
         [Test]
         public void TestNullServiceCreation()
@@ -28,6 +28,29 @@ namespace Simple.Tests.Service
             var svc = Simply.Do.Resolve<ITestClientConnector>();
             svc.TestVoid();
         }
+
+        [Test]
+        public void TestRefCall()
+        {
+            SourceManager.Do.Remove<IServiceClientProvider>(this);
+            var svc = Simply.Do.Resolve<ITestClientConnector>();
+
+            int a = 42;
+            svc.TestRefMethod(ref a);
+            Assert.AreEqual(42, a);
+        }
+
+
+        [Test]
+        public void TestOutCall()
+        {
+            SourceManager.Do.Remove<IServiceClientProvider>(this);
+            var svc = Simply.Do.Resolve<ITestClientConnector>();
+
+            int a;
+            svc.TestOutMethod(out a);
+            Assert.AreEqual(0, a);
+        }
     }
 
     public interface ITestClientConnector
@@ -35,5 +58,8 @@ namespace Simple.Tests.Service
         int TestInt();
         string TestString();
         void TestVoid();
+        void TestRefMethod(ref int a);
+        void TestOutMethod(out int a);
+
     }
 }

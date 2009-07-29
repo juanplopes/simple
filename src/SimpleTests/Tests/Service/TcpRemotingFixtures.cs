@@ -13,6 +13,7 @@ namespace Simple.Tests.Service
     }
 
     [TestFixture]
+    [Explicit("not stable")]
     public class TcpRemotingFactoryFixture : BaseRemotingFactoryFixture
     {
         public override Uri Uri
@@ -22,6 +23,7 @@ namespace Simple.Tests.Service
     }
 
     [TestFixture]
+    [Explicit("not stable")]
     public class TcpSelfRemotingFactoryFixture : BaseSelfRemotingFactoryFixture
     {
         public override Uri Uri
@@ -32,6 +34,7 @@ namespace Simple.Tests.Service
     }
 
     [TestFixture]
+    [Explicit("not stable")]
     public class TcpRemotingInterceptorFixture : BaseRemotingInterceptorFixture
     {
         public override Uri Uri
@@ -42,6 +45,7 @@ namespace Simple.Tests.Service
     }
 
     [TestFixture]
+    [Explicit("not stable")]
     public class TcpSelfRemotingInterceptorFixture : BaseSelfRemotingInterceptorFixture
     {
         public override Uri Uri

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple;
+using Simple.Logging;
 
 [SetUpFixture]
 public class SetupFixture
@@ -11,6 +12,7 @@ public class SetupFixture
     [SetUp]
     public void Setup()
     {
+        Log4netSimply.Do.Default();
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
     }
 

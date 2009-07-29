@@ -12,7 +12,8 @@ namespace Simple.Tests.Service
         public const string StartPort = "localserver";
     }
 
-    [TestFixture, Explicit]
+    [TestFixture]
+    [Explicit("not stable")]
     public class IpcRemotingFactoryFixture : BaseRemotingFactoryFixture
     {
         public override Uri Uri
@@ -22,7 +23,8 @@ namespace Simple.Tests.Service
 
     }
 
-    [TestFixture, Explicit]
+    [TestFixture]
+    [Explicit("not stable")]
     public class IpcSelfRemotingFactoryFixture : BaseSelfRemotingFactoryFixture
     {
         public override Uri Uri
@@ -32,7 +34,8 @@ namespace Simple.Tests.Service
 
     }
 
-    [TestFixture, Explicit]
+    [TestFixture]
+    [Explicit("not stable")]
     public class IpcRemotingInterceptorFixture : BaseRemotingInterceptorFixture
     {
         public override Uri Uri
@@ -41,7 +44,8 @@ namespace Simple.Tests.Service
         }
     }
 
-    [TestFixture, Explicit]
+    [TestFixture]
+    [Explicit("not stable")]
     public class IpcSelfRemotingInterceptorFixture : BaseSelfRemotingInterceptorFixture
     {
         public override Uri Uri

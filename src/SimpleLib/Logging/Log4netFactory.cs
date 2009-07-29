@@ -19,10 +19,7 @@ namespace Simple.Logging
 
         protected override void OnClearConfig()
         {
-            IConfigSource<Log4netConfig> source = new XmlConfigSource<Log4netConfig>().Load(
-                DefaultConfigResource.Log4netConfig);
-
-            OnConfig(source.Get());
+            LogManager.ResetConfiguration();
         }
 
         public ILog Log(string name)

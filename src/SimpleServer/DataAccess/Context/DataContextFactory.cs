@@ -17,7 +17,7 @@ namespace Simple.DataAccess.Context
             var contextList = GetContextList();
             var curContext = GetContext(false);
 
-            var context = new DataContext(() => SessionManager.OpenSession(ConfigKey),
+            var context = new DataContext(() => Simply.Get(ConfigKey).OpenSession(),
                 curContext != null ? curContext.Session : null);
             contextList.AddLast(context);
 
@@ -69,7 +69,7 @@ namespace Simple.DataAccess.Context
             var context = GetContext(false);
             if (context == null)
             {
-                return SessionManager.OpenSession(ConfigKey);
+                throw new InvalidOperationException("There is no open datacontext");
             }
             else
             {

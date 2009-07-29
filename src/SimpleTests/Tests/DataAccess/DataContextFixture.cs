@@ -6,23 +6,19 @@ using NUnit.Framework;
 using Simple.DataAccess.Context;
 using NHibernate;
 using Simple.Tests.Contracts;
+using Simple.Tests.DataAccess.Samples;
 
 namespace Simple.Tests.DataAccess
 {
     [TestFixture]
-    public class DataContextFixture
+    public class DataContextFixture : BaseDataFixture
     {
-        [TestFixtureSetUp]
-        public void SetupFixture()
+        public override bool OpenDataContext
         {
-            DBEnsurer.Configure(typeof(DBEnsurer));
-        }
-
-        [SetUp]
-        public void TestSetup()
-        {
-            using(var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
-                DBEnsurer.Ensure(typeof(DBEnsurer));
+            get
+            {
+                return false;
+            }
         }
 
 
@@ -30,12 +26,12 @@ namespace Simple.Tests.DataAccess
         public void SimpleDataContextTest()
         {
             ISession s1, s2, s3, s4;
-            using (var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
+            using (var dx = GetSimply().EnterContext())
             {
                 s1 = dx.Session;
                 Assert.IsTrue(s1.IsOpen);
 
-                using (var dx2 = Simply.Get(typeof(DBEnsurer)).EnterContext())
+                using (var dx2 = GetSimply().EnterContext())
                 {
                     s2 = dx2.Session;
                     Assert.AreEqual(s1, s2);
@@ -61,7 +57,7 @@ namespace Simple.Tests.DataAccess
         {
             try
             {
-                using (var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
+                using (var dx = GetSimply().EnterContext())
                 {
                     var s1 = dx.Session;
                     s1.Close();
@@ -69,7 +65,7 @@ namespace Simple.Tests.DataAccess
             }
             catch (InvalidOperationException) { }
 
-            using (var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
+            using (var dx = GetSimply().EnterContext())
             {
                 var s1 = dx.Session;
                 Assert.IsTrue(dx.IsOpen);
@@ -79,9 +75,9 @@ namespace Simple.Tests.DataAccess
         [Test, ExpectedException(typeof(InvalidOperationException))]
         public void TryCloseMainSessionTest()
         {
-            using (var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
+            using (var dx = GetSimply().EnterContext())
             {
-                using (var dx2 = Simply.Get(typeof(DBEnsurer)).EnterContext())
+                using (var dx2 = GetSimply().EnterContext())
                 {
                     dx2.Session.Close();
                 }
@@ -91,9 +87,11 @@ namespace Simple.Tests.DataAccess
         [Test, ExpectedException(typeof(ObjectDisposedException))]
         public void NestedTransactions()
         {
-            using (var dx = Simply.Get(typeof(DBEnsurer)).EnterContext())
+            using (var dx = GetSimply().EnterContext())
             {
-                Empresa e = Empresa.Load(DBEnsurer.E1.Id);
+                var sample = new SimpleFourEntityInsert();
+
+                Empresa e = Empresa.Load(sample.Empresa.Id);
 
                 using (var tx1 = dx.Session.BeginTransaction())
                 {
@@ -102,13 +100,13 @@ namespace Simple.Tests.DataAccess
                         e.Nome = this.GetType().GUID.ToString();
                         e.SaveOrUpdate();
 
-                        e = Empresa.Load(DBEnsurer.E1.Id);
+                        e = Empresa.Load(sample.Empresa.Id);
                         Assert.AreEqual(this.GetType().GUID.ToString(), e.Nome);
 
                         tx2.Commit();
                     }
 
-                    e = Empresa.Load(DBEnsurer.E1.Id);
+                    e = Empresa.Load(sample.Empresa.Id);
                     Assert.AreEqual(this.GetType().GUID.ToString(), e.Nome);
 
                     tx1.Rollback();

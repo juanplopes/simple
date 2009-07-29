@@ -83,7 +83,7 @@
     <Compile Include="DataAccess\ISimpleInterceptor.cs" />
     <Compile Include="DataAccess\NHibernateFactory.cs" />
     <Compile Include="DataAccess\NHibernateSimply.cs" />
-    <Compile Include="DataAccess\SessionManager.cs" />
+    <Compile Include="DataAccess\NHibernateSimplyExtensions.cs" />
     <Compile Include="DataAccess\SimpleTransformers.cs" />
     <Compile Include="DataAccess\TimestampType.cs" />
     <Compile Include="DataAccess\TupleToConstructorTransformer.cs" />

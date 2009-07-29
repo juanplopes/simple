@@ -64,6 +64,7 @@
     <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netConfig.cs" />
     <Compile Include="ConfigSource\FactoryManager.cs" />
+    <Compile Include="Logging\Log4netSimply.cs" />
     <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />
     <Compile Include="Patterns\DictionaryWrapper.cs" />
     <Compile Include="Patterns\TransformationList.cs" />

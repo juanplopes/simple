@@ -13,7 +13,7 @@ namespace Simple.Services
         where T : Entity<T, R>
         where R : class, IEntityService<T>
     {
-        public static R Service
+        public static R Do
         {
             get
             {
@@ -28,22 +28,22 @@ namespace Simple.Services
 
         public static int CountByFilter(Filter filter)
         {
-            return Service.CountByFilter(filter);
+            return Do.CountByFilter(filter);
         }
 
         public static T Load(object id)
         {
-            return Service.Load(id);
+            return Do.Load(id);
         }
 
         public static T LoadByFilter(Filter filter)
         {
-            return Service.LoadByFilter(filter);
+            return Do.LoadByFilter(filter);
         }
 
         public static T LoadByExample(T example)
         {
-            return Service.LoadByExample(example);
+            return Do.LoadByExample(example);
         }
 
         public static IList<T> ListAll()
@@ -53,7 +53,7 @@ namespace Simple.Services
 
         public static IList<T> ListAll(OrderByCollection orderBy)
         {
-            return Service.ListAll(orderBy);
+            return Do.ListAll(orderBy);
         }
 
         public static IList<T> ListByFilter(Filter filter)
@@ -63,35 +63,35 @@ namespace Simple.Services
 
         public static IList<T> ListByFilter(Filter filter, OrderByCollection orderBy)
         {
-            return Service.ListByFilter(filter, orderBy);
+            return Do.ListByFilter(filter, orderBy);
         }
 
         public static IList<T> ListByExample(T example)
         {
-            return Service.ListByExample(example);
+            return Do.ListByExample(example);
         }
 
         public static Page<T> PaginateByFilter(Filter filter, OrderByCollection orderBy, int skip, int take)
         {
-            return Service.PaginateByFilter(filter, orderBy, skip, take);
+            return Do.PaginateByFilter(filter, orderBy, skip, take);
         }
 
         public static Page<T> PaginateByFilter(Filter filter, int skip, int take)
         {
-            return Service.PaginateByFilter(filter, OrderBy.None(), skip, take);
+            return Do.PaginateByFilter(filter, OrderBy.None(), skip, take);
         }
 
         public static Page<T> PaginateAll(OrderByCollection orderBy, int skip, int take)
         {
-            return Service.PaginateAll(orderBy, skip, take);
+            return Do.PaginateAll(orderBy, skip, take);
         }
 
         public static Page<T> PaginateAll(int skip, int take)
         {
-            return Service.PaginateAll(OrderBy.None(), skip, take);
+            return Do.PaginateAll(OrderBy.None(), skip, take);
         }
 
-        protected T ThisAsT
+        protected virtual T ThisAsT
         {
             get
             {
@@ -100,40 +100,40 @@ namespace Simple.Services
             }
         }
 
-        public T Persist()
+        public virtual T Persist()
         {
-            return Service.Persist(ThisAsT);
+            return Do.Persist(ThisAsT);
         }
 
-        public T Save()
+        public virtual T Save()
         {
-            return Service.Save(ThisAsT);
+            return Do.Save(ThisAsT);
         }
 
-        public T Update()
+        public virtual T Update()
         {
-            return Service.Update(ThisAsT);
+            return Do.Update(ThisAsT);
         }
 
-        public void Delete()
+        public virtual void Delete()
         {
-            Service.Delete(ThisAsT);
+            Do.Delete(ThisAsT);
         }
 
         public static void DeleteById(object id)
         {
-            Service.DeleteById(id);
+            Do.DeleteById(id);
         }
 
         public static int DeleteByFilter(Filter filter)
         {
-            return Service.DeleteByFilter(filter);
+            return Do.DeleteByFilter(filter);
         }
 
 
-        public T SaveOrUpdate()
+        public virtual T SaveOrUpdate()
         {
-            return Service.SaveOrUpdate(ThisAsT);
+            return Do.SaveOrUpdate(ThisAsT);
         }
     }
 }

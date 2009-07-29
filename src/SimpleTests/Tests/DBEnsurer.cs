@@ -18,12 +18,20 @@ namespace Simple.Tests
 {
     public class DBEnsurer
     {
+        private static bool _alreadyExecuted = false;
+        private static object _lock = new object();
+
         public static void Ensure(object key)
         {
-            SchemaExport exp = new SchemaExport(SessionManager.GetConfig(key));
-            exp.Drop(true, true);
-            exp.Create(true, true);
-            InsertTestData();
+            lock (_lock)
+                if (!_alreadyExecuted)
+                {
+                    DBEnsurer.Configure(typeof(DBEnsurer));
+                    SchemaExport exp = new SchemaExport(Simply.Get(key).GetNHibernateConfig());
+                    exp.Drop(true, true);
+                    exp.Create(true, true);
+                    _alreadyExecuted = true;
+                }
         }
 
         public static void Configure(object key)
@@ -32,45 +40,8 @@ namespace Simple.Tests
                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
             NHibernateSimply.Do.MapAssemblyOf<Empresa.Map>(key);
 
-            DefaultHostSimply.Do.Configure(key, new DirectConfigSource<DefaultHostConfig>());
-            Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer), new DefaultInterceptor(typeof(DBEnsurer)));
+            DefaultHostSimply.Do.Configure(key);
+            Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer), new DefaultInterceptor(key));
         }
-
-        public static Empresa E1 = null;
-        public static Funcionario F1 = null;
-        public static EmpresaFuncionario EF1 = null;
-
-        public static void InsertTestData()
-        {
-            E1 = new Empresa()
-            {
-                Nome = "E1"
-            };
-            E1 = E1.Save();
-            
-
-            F1 = new Funcionario()
-            {
-                Nome = "F1"
-            };
-            F1 = F1.Save();
-
-            EF1 = new EmpresaFuncionario()
-            {
-                Empresa = E1,
-                Funcionario = F1
-            };
-            EF1 = EF1.Save();
-        }
-
-        public static void AssertStillOk()
-        {
-            Assert.AreEqual(1, Empresa.CountByFilter(BooleanExpression.True));
-            Assert.AreEqual(1, Funcionario.CountByFilter(BooleanExpression.True));
-            Assert.AreEqual(1, EmpresaFuncionario.CountByFilter(BooleanExpression.True));
-        }
-
-
-
     }
 }

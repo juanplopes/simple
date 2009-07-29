@@ -87,8 +87,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SetupFixture.cs" />
+    <Compile Include="Tests\%40Contracts\IRelEmpresaFuncionarioRules.cs" />
+    <Compile Include="Tests\%40Contracts\RelEmpresaFuncionario.cs" />
+    <Compile Include="Tests\%40Server\RelEmpresaFuncionarioRules.cs" />
+    <Compile Include="Tests\DataAccess\BaseDataFixture.cs" />
     <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
+    <Compile Include="Tests\DataAccess\Samples\SimpleFourEntityInsert.cs" />
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
+    <Compile Include="Tests\Service\ChannelSelectorFixture.cs" />
     <Compile Include="Tests\Service\IpcRemotingFixtures.cs" />
     <Compile Include="Tests\Service\TcpRemotingFixtures.cs" />
     <Compile Include="Tests\Service\HttpRemotingFixtures.cs" />
