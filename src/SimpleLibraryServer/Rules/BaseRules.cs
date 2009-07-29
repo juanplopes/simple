@@ -97,7 +97,7 @@ namespace SimpleLibrary.Rules
         public virtual T Save(T entity)
         {
             var dao = GetDao();
-            dao.Merge(ref entity);
+//            dao.Merge(ref entity);
             dao.Save(entity);
             return entity;
         }
