@@ -88,26 +88,36 @@ namespace SimpleLibrary.Rules
 
         public virtual T SaveOrUpdate(T entity)
         {
-            GetDao().SaveOrUpdate(entity);
+            var dao = GetDao();
+            dao.Merge(ref entity);
+            dao.SaveOrUpdate(entity);
             return entity;
         }
 
         public virtual T Save(T entity)
         {
-            GetDao().Save(entity);
+            var dao = GetDao();
+            dao.Merge(ref entity);
+            dao.Save(entity);
             return entity;
         }
 
         public virtual T Update(T entity)
         {
-            GetDao().Update(entity);
+            var dao = GetDao();
+            dao.Merge(ref entity);
+            dao.Update(entity);
             return entity;
+
         }
 
         public virtual T Persist(T entity)
         {
-            GetDao().Persist(entity);
+            var dao = GetDao();
+            dao.Merge(ref entity);
+            dao.Persist(entity);
             return entity;
+
         }
 
         public IList<T> ListAll(OrderByCollection order)
@@ -122,7 +132,9 @@ namespace SimpleLibrary.Rules
 
         public virtual void Delete(T entity)
         {
-            GetDao().Delete(entity);
+            var dao = GetDao();
+            dao.Merge(ref entity);
+            dao.Delete(entity);
         }
 
         public virtual void DeleteById(object id)

@@ -82,6 +82,11 @@ namespace SimpleLibrary.DataAccess
             return criteria;
         }
 
+        public void Merge(ref T obj)
+        {
+            obj = (T)Session.Merge(obj);
+        }
+
         protected virtual bool DefaultFlush
         {
             get { return true; }
