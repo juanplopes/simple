@@ -12,7 +12,7 @@ public class SetupFixture
     [SetUp]
     public void Setup()
     {
-        Log4netSimply.Do.Default();
+        Log4netSimply.Do.Mute();
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
     }
 
