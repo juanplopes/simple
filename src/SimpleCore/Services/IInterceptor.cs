@@ -12,15 +12,37 @@ namespace Simple.Services
         object Intercept(object target, MethodBase method, object[] args);
     }
 
-    public class BaseInterceptor : IInterceptor
+    public class DefaultInterceptor : IInterceptor
     {
         IDictionary<MethodBase, InvocationDelegate> _cache = new Dictionary<MethodBase, InvocationDelegate>();
+        Func<CallHookArgs, IEnumerable<ICallHook>> Hooks { get; set; }
+
+        public DefaultInterceptor(Func<CallHookArgs, IEnumerable<ICallHook>> hooks)
+        {
+            Hooks = hooks;
+        }
 
         #region IInterceptor Members
 
         public virtual object Intercept(object target, MethodBase method, object[] args)
         {
-            return Invoke(target, method, args);
+            var hookArgs = new CallHookArgs(target, method, args);
+            var methodHooks = Hooks(hookArgs);
+
+            try
+            {
+                foreach (var hook in methodHooks) hook.Before();
+
+                hookArgs.Return = Invoke(target, method, args);
+
+                foreach (var hook in methodHooks) hook.AfterSuccess();
+
+                return hookArgs.Return;
+            }
+            finally
+            {
+                foreach (var hook in methodHooks) hook.Finally();
+            }
         }
 
         protected object Invoke(object target, MethodBase method, object[] args)

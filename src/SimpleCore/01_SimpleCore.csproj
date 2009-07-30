@@ -102,6 +102,7 @@
     <Compile Include="Services\Default\DefaultHostConfig.cs" />
     <Compile Include="Services\Default\DefaultHostSimply.cs" />
     <Compile Include="Services\Default\ServiceLocationFactory.cs" />
+    <Compile Include="Services\ICallHook.cs" />
     <Compile Include="Services\IControlledService.cs" />
     <Compile Include="Services\IInterceptor.cs" />
     <Compile Include="Services\Remoting\ChannelSelector.cs" />

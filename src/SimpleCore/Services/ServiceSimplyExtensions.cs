@@ -31,19 +31,19 @@ namespace Simple
             HostFactory(simply).Host(type);
         }
 
-        public static void Host(this Simply simply, Type type, IInterceptor interceptor)
-        {
-            HostFactory(simply).Host(type, interceptor);
-        }
-
         public static void HostAssemblyOf(this Simply simply, Type type)
         {
             HostFactory(simply).HostAssemblyOf(type);
         }
 
-        public static void HostAssemblyOf(this Simply simply, Type type, IInterceptor interceptor)
+        public static void ClearServerHooks(this Simply simply)
         {
-            HostFactory(simply).HostAssemblyOf(type, interceptor);
+            HostFactory(simply).ClearHooks();
+        }
+
+        public static void AddServerHook(this Simply simply, Func<CallHookArgs, ICallHook> hookCreator)
+        {
+            HostFactory(simply).AddHook(hookCreator);
         }
 
         public static T Resolve<T>(this Simply simply)

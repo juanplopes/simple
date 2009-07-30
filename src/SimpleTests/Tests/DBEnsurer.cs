@@ -41,7 +41,8 @@ namespace Simple.Tests
             NHibernateSimply.Do.MapAssemblyOf<Empresa.Map>(key);
 
             DefaultHostSimply.Do.Configure(key);
-            Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer), new DefaultInterceptor(key));
+            Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer));
+            Simply.Get(key).AddServerHook(x => new DefaultCallHook(x, key));
         }
     }
 }

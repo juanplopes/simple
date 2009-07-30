@@ -11,69 +11,18 @@ using System.Globalization;
 
 namespace Simple.Tests.Service
 {
-    public abstract class BaseInterceptorFixture
+    public abstract partial class BaseInterceptorFixture
     {
-        public class Interceptor : BaseInterceptor
+        public static void ConfigureSvcs(Guid guid)
         {
-            #region IInterceptor Members
+            Simply.Get(guid).Host(typeof(TestService));
+            Simply.Get(guid).Host(typeof(OtherService));
 
-            public override object Intercept(object target, MethodBase method, object[] args)
-            {
-                if ((method as MethodInfo).ReturnType==typeof(int))
-                {
-                    return 42;
-                }
-                else
-                {
-                    return Invoke(target, method, args);
-                }
-            }
-
-            #endregion
+            Simply.Get(guid).AddServerHook(x => new TestCallHook(x));
+            Simply.Get(guid).AddServerHook(TestCallHookString.MyFunc);
         }
-        public interface ITestService : IService
-        {
-            void TestVoid();
-            int TestInt();
-            string TestString();
-            void TestVoidInt(int i);
-            int TestIntInt(int i);
-            string TestStringInt(int i);
-            void TestException();
 
-            void TestGenericsVoid<T>(T value) where T : IConvertible;
-            double TestGenerics<T>(T value) where T : IConvertible;
-            double TestRefParams(ref string test);
-            void TestOutParams(out string test);
-            string TestParams(int prim, params string[] ult);
-        }
-        public class TestService : MarshalByRefObject, ITestService
-        {
-            public void TestVoid() { }
-            public int TestInt() { return 10; }
-            public string TestString() { return "10"; }
-            public void TestVoidInt(int i) { }
-            public int TestIntInt(int i) { return i; }
-            public string TestStringInt(int i) { return i.ToString(); }
-            public void TestException() { throw new ApplicationException("AAA"); }
-
-            public void TestGenericsVoid<T>(T value) where T : IConvertible
-            {
-                value.ToDouble(CultureInfo.InvariantCulture);
-            }
-            public double TestGenerics<T>(T value) where T : IConvertible
-            {
-                return value.ToDouble(CultureInfo.InvariantCulture);
-            }
-
-            public double TestRefParams(ref string test) { int res = int.Parse(test); test = "42"; return res; }
-            public void TestOutParams(out string test) { test = "42"; }
-
-            public string TestParams(int prim, params string[] ult)
-            {
-                return prim.ToString() + ult[ult.Length - 1];
-            }
-        }
+        
 
 
         protected abstract Guid Configure();
@@ -110,6 +59,31 @@ namespace Simple.Tests.Service
         {
             ITestService test = Simply.Get(ConfigKey).Resolve<ITestService>();
             test.TestGenericsVoid("42.5");
+        }
+
+        [Test]
+        public void TestSelectiveHook()
+        {
+            ITestService test = Simply.Get(ConfigKey).Resolve<ITestService>();
+            Assert.AreNotEqual("123456", test.TestString());
+
+            IOtherService other = Simply.Get(ConfigKey).Resolve<IOtherService>();
+            Assert.AreEqual("123456", other.SomeStringFunction());
+        }
+
+        [Test]
+        public void TestNonHookedException()
+        {
+            IOtherService other = new OtherService();
+            Assert.AreEqual(42.42f, other.ExceptionFunction());
+        }
+
+
+        [Test, ExpectedException(typeof(ArgumentException))]
+        public void TestHookException()
+        {
+            IOtherService other = Simply.Get(ConfigKey).Resolve<IOtherService>();
+            other.ExceptionFunction();
         }
 
         [Test]

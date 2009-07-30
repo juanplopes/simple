@@ -51,8 +51,7 @@ namespace Simple.Tests
                     RemotingSimply.Do.Configure(guid,
                         XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(new Uri(args[1]))));
 
-                    Simply.Get(guid).Host(typeof(BaseInterceptorFixture.TestService), 
-                        new BaseInterceptorFixture.Interceptor());
+                    BaseInterceptorFixture.ConfigureSvcs(guid);
 
                     ev.Set();
 

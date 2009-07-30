@@ -94,6 +94,7 @@
     <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
     <Compile Include="Tests\DataAccess\Samples\SimpleFourEntityInsert.cs" />
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
+    <Compile Include="Tests\Service\BaseInterceptorFixture.samples.cs" />
     <Compile Include="Tests\Service\ChannelSelectorFixture.cs" />
     <Compile Include="Tests\Service\IpcRemotingFixtures.cs" />
     <Compile Include="Tests\Service\TcpRemotingFixtures.cs" />

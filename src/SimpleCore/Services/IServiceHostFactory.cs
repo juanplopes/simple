@@ -5,9 +5,9 @@ namespace Simple.Services
     {
         void StartServer();
         void Host(Type type);
-        void Host(Type type, IInterceptor interceptor);
         void HostAssemblyOf(Type type);
-        void HostAssemblyOf(Type type, IInterceptor interceptor);
+        void ClearHooks();
+        void AddHook(Func<CallHookArgs, ICallHook> hookCreator);
         void StopServer();
     }
 }

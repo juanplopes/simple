@@ -22,8 +22,8 @@ namespace Simple.Tests.Service
 
             RemotingSimply.Do.Configure(guid,
                 XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(Uri)));
-            Simply.Get(guid).Host(typeof(TestService), new Interceptor());
 
+            ConfigureSvcs(guid);
 
             return guid;
         }
