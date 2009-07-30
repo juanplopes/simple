@@ -50,6 +50,14 @@ namespace Simple.Tests.Service
                     throw new ArgumentException();
                 }
             }
+
+            public override void Finally()
+            {
+                if (CallArgs.Return is DateTime)
+                {
+                    throw new ArithmeticException();
+                }
+            }
         }
         public interface ITestService : IService
         {
@@ -72,6 +80,7 @@ namespace Simple.Tests.Service
         {
             string SomeStringFunction();
             double ExceptionFunction();
+            DateTime ThrowOnFinally();
         }
 
         public class OtherService : MarshalByRefObject, IOtherService
@@ -84,6 +93,10 @@ namespace Simple.Tests.Service
             public double ExceptionFunction()
             {
                 return 42.42f;
+            }
+            public DateTime ThrowOnFinally()
+            {
+                return new DateTime(2009, 09, 09);
             }
         }
 

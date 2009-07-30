@@ -22,7 +22,7 @@ namespace Simple.Tests.Service
             Simply.Get(guid).AddServerHook(TestCallHookString.MyFunc);
         }
 
-        
+
 
 
         protected abstract Guid Configure();
@@ -78,12 +78,26 @@ namespace Simple.Tests.Service
             Assert.AreEqual(42.42f, other.ExceptionFunction());
         }
 
+        [Test]
+        public void TestNonHookedExceptionOnFinally()
+        {
+            IOtherService other = new OtherService();
+            Assert.AreEqual(new DateTime(2009, 09, 09), other.ThrowOnFinally());
+        }
 
         [Test, ExpectedException(typeof(ArgumentException))]
         public void TestHookException()
         {
             IOtherService other = Simply.Get(ConfigKey).Resolve<IOtherService>();
             other.ExceptionFunction();
+        }
+
+
+        [Test, ExpectedException(typeof(ArithmeticException))]
+        public void TestHookExceptionOnFinally()
+        {
+            IOtherService other = Simply.Get(ConfigKey).Resolve<IOtherService>();
+            other.ThrowOnFinally();
         }
 
         [Test]
