@@ -1,28 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Simple.ConfigSource;
+using Simple.Patterns;
 
 namespace Simple.Services
 {
     public class ServiceClientFactory : Factory<IServiceClientProvider>, Simple.Services.IServiceClientFactory
     {
-        protected override void OnConfig(IServiceClientProvider config) { }
+        protected IList<Func<CallHookArgs, ICallHook>> CallHookCreators { get; set; }
+
+        protected override void OnConfig(IServiceClientProvider config)
+        {
+            ClearHooks();
+        }
+
+
+
 
         protected override void OnClearConfig()
         {
             ConfigCache = new NullServiceClientProvider();
+            ClearHooks();
         }
 
         public T Resolve<T>()
         {
-            return (T)ConfigCache.Create(typeof(T));
+            return (T)Resolve(typeof(T));
         }
 
         public object Resolve(Type type)
         {
-            return ConfigCache.Create(type);
+            return ConfigCache.ProxyObject(ConfigCache.Create(type), new DefaultInterceptor(GetHooks));
         }
+
+        #region IServiceClientFactory Members
+
+        protected IEnumerable<ICallHook> GetHooks(CallHookArgs args)
+        {
+            foreach (var hook in Enumerable.Convert(CallHookCreators, x => x(args)))
+            {
+                if (hook != null) yield return hook;
+            }
+        }
+
+        public void AddHook(Func<CallHookArgs, ICallHook> hookCreator)
+        {
+            CallHookCreators.Add(hookCreator);
+        }
+
+        public void ClearHooks()
+        {
+            CallHookCreators = new List<Func<CallHookArgs, ICallHook>>();
+        }
+
+        #endregion
     }
 }

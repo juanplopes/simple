@@ -12,6 +12,26 @@ using System.Reflection;
 
 namespace Simple.Tests.Service
 {
+    public abstract class BaseSelfRemotingServerInterceptorFixture : BaseSelfRemotingInterceptorFixture
+    {
+        protected override Guid Configure()
+        {
+            Guid guid = base.Configure();
+            ConfigureServerHooks(guid);
+            return guid;
+        }
+    }
+
+    public abstract class BaseSelfRemotingClientInterceptorFixture : BaseSelfRemotingInterceptorFixture
+    {
+        protected override Guid Configure()
+        {
+            Guid guid = base.Configure();
+            ConfigureClientHooks(guid);
+            return guid;
+        }
+    }
+
     public abstract class BaseSelfRemotingInterceptorFixture : BaseInterceptorFixture
     {
         public abstract Uri Uri { get; }
@@ -23,7 +43,7 @@ namespace Simple.Tests.Service
             RemotingSimply.Do.Configure(guid,
                 XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(Uri)));
 
-            ConfigureSvcs(guid);
+            ConfigureSvcsWithoutHooks(guid);
 
             return guid;
         }

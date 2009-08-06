@@ -46,6 +46,16 @@ namespace Simple
             HostFactory(simply).AddHook(hookCreator);
         }
 
+        public static void ClearClientHooks(this Simply simply)
+        {
+            ClientFactory(simply).ClearHooks();
+        }
+
+        public static void AddClientHook(this Simply simply, Func<CallHookArgs, ICallHook> hookCreator)
+        {
+            ClientFactory(simply).AddHook(hookCreator);
+        }
+
         public static T Resolve<T>(this Simply simply)
         {
             return ClientFactory(simply).Resolve<T>();

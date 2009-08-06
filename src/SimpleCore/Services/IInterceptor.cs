@@ -29,19 +29,21 @@ namespace Simple.Services
             var hookArgs = new CallHookArgs(target, method, args);
             var methodHooks = Hooks(hookArgs);
 
+            var list = new List<ICallHook>(methodHooks);
+
             try
             {
-                foreach (var hook in methodHooks) hook.Before();
+                foreach (var hook in Enumerable.Reverse(list)) hook.Before();
 
                 hookArgs.Return = Invoke(target, method, args);
 
-                foreach (var hook in methodHooks) hook.AfterSuccess();
+                foreach (var hook in list) hook.AfterSuccess();
 
                 return hookArgs.Return;
             }
             finally
             {
-                foreach (var hook in methodHooks) hook.Finally();
+                foreach (var hook in list) hook.Finally();
             }
         }
 

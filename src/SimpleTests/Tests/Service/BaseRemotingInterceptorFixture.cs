@@ -13,9 +13,34 @@ using Simple.Threading;
 
 namespace Simple.Tests.Service
 {
+    public abstract class BaseRemotingServerInterceptorFixture : BaseRemotingInterceptorFixture
+    {
+        public override string ExecutionKey
+        {
+            get { return Server.RemotingServerInterceptorTest; }
+        }
+    }
+
+    public abstract class BaseRemotingClientInterceptorFixture : BaseRemotingInterceptorFixture
+    {
+
+        protected override Guid Configure()
+        {
+            Guid guid = base.Configure();
+            ConfigureClientHooks(guid);
+            return guid;
+        }
+
+        public override string ExecutionKey
+        {
+            get { return Server.RemotingClientInterceptorTest; }
+        }
+    }
+
     public abstract class BaseRemotingInterceptorFixture : BaseInterceptorFixture
     {
         public abstract Uri Uri { get; }
+        public abstract string ExecutionKey { get; }
 
         Process process;
 
@@ -26,11 +51,11 @@ namespace Simple.Tests.Service
             {
                 FileName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath,
                 Arguments = string.Join(" ", new string[] {
-                    Server.RemotingInterceptorTest,
+                    ExecutionKey,
                     Uri.ToString()}),
                 WindowStyle = ProcessWindowStyle.Minimized
             });
-            NamedEvents.OpenOrWait(Server.RemotingInterceptorTest).WaitOne();
+            NamedEvents.OpenOrWait(ExecutionKey).WaitOne();
         }
 
         [TestFixtureTearDown]

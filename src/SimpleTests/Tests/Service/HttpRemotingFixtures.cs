@@ -33,7 +33,7 @@ namespace Simple.Tests.Service
     }
 
     [TestFixture]
-    public class HttpRemotingInterceptorFixture : BaseRemotingInterceptorFixture
+    public class HttpRemotingServerInterceptorFixture : BaseRemotingServerInterceptorFixture
     {
         public override Uri Uri
         {
@@ -42,13 +42,32 @@ namespace Simple.Tests.Service
     }
 
     [TestFixture]
-    public class HttpSelfRemotingInterceptorFixture : BaseSelfRemotingInterceptorFixture
+    public class HttpRemotingClientInterceptorFixture : BaseRemotingClientInterceptorFixture
     {
         public override Uri Uri
         {
             get { return Helper.MakeUri(HttpConstants.Scheme, HttpConstants.StartPort + 4); }
         }
+    }
+
+    [TestFixture]
+    public class HttpSelfRemotingServerInterceptorFixture : BaseSelfRemotingServerInterceptorFixture
+    {
+        public override Uri Uri
+        {
+            get { return Helper.MakeUri(HttpConstants.Scheme, HttpConstants.StartPort + 5); }
+        }
 
     }
+
+    [TestFixture]
+    public class HttpSelfRemotingClientInterceptorFixture : BaseSelfRemotingClientInterceptorFixture
+    {
+        public override Uri Uri
+        {
+            get { return Helper.MakeUri(HttpConstants.Scheme, HttpConstants.StartPort + 6); }
+        }
+    }
+
 
 }

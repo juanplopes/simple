@@ -5,5 +5,8 @@ namespace Simple.Services
     {
         object Resolve(Type type);
         T Resolve<T>();
+
+        void ClearHooks();
+        void AddHook(Func<CallHookArgs, ICallHook> hookCreator);
     }
 }

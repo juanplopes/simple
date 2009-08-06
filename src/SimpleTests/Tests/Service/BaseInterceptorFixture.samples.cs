@@ -27,7 +27,7 @@ namespace Simple.Tests.Service
         {
             public static Func<CallHookArgs, ICallHook> MyFunc = x =>
             {
-                if (x.Target is IOtherService)
+                if (typeof(IOtherService).IsAssignableFrom(x.Method.DeclaringType))
                 {
                     return new TestCallHookString(x);
                 }
@@ -59,6 +59,7 @@ namespace Simple.Tests.Service
                 }
             }
         }
+        
         public interface ITestService : IService
         {
             void TestVoid();
@@ -94,6 +95,7 @@ namespace Simple.Tests.Service
             {
                 return 42.42f;
             }
+
             public DateTime ThrowOnFinally()
             {
                 return new DateTime(2009, 09, 09);

@@ -21,7 +21,8 @@ namespace Simple.Tests
     public class Server
     {
         public const string RemotingTest = "remotingtest";
-        public const string RemotingInterceptorTest = "remotinginterceptortest";
+        public const string RemotingServerInterceptorTest = "remotingserverinterceptortest";
+        public const string RemotingClientInterceptorTest = "remotingclientinterceptortest";
 
         [STAThread]
         static int Main(string[] args)
@@ -42,9 +43,9 @@ namespace Simple.Tests
                     ev.Set();
                     Console.ReadLine();
                 }
-                else if (args[0] == RemotingInterceptorTest)
+                else if (args[0] == RemotingServerInterceptorTest)
                 {
-                    var ev = NamedEvents.OpenOrCreate(RemotingInterceptorTest, false, EventResetMode.ManualReset);
+                    var ev = NamedEvents.OpenOrCreate(RemotingServerInterceptorTest, false, EventResetMode.ManualReset);
 
                     Guid guid = Guid.NewGuid();
 
@@ -52,6 +53,21 @@ namespace Simple.Tests
                         XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(new Uri(args[1]))));
 
                     BaseInterceptorFixture.ConfigureSvcs(guid);
+
+                    ev.Set();
+
+                    Console.ReadLine();
+                }
+                else if (args[0] == RemotingClientInterceptorTest)
+                {
+                    var ev = NamedEvents.OpenOrCreate(RemotingClientInterceptorTest, false, EventResetMode.ManualReset);
+
+                    Guid guid = Guid.NewGuid();
+
+                    RemotingSimply.Do.Configure(guid,
+                        XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(new Uri(args[1]))));
+
+                    BaseInterceptorFixture.ConfigureSvcsWithoutHooks(guid);
 
                     ev.Set();
 

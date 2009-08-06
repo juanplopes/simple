@@ -4,18 +4,40 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple.Services.Default;
+using Simple.Services;
 
 namespace Simple.Tests.Service
 {
     [TestFixture]
-    public class DefaultInterceptorFixture : BaseInterceptorFixture
+    public class DefaultServerInterceptorFixture : DefaultInterceptorFixture
+    {
+        protected override Guid Configure()
+        {
+            Guid guid =  base.Configure();
+            ConfigureServerHooks(guid);
+            return guid;
+        }
+    }
+
+    [TestFixture]
+    public class DefaultClientInterceptorFixture : DefaultInterceptorFixture
+    {
+        protected override Guid Configure()
+        {
+            Guid guid = base.Configure();
+            ConfigureClientHooks(guid);
+            return guid;
+        }
+    }
+
+    public abstract class DefaultInterceptorFixture : BaseInterceptorFixture
     {
         protected override Guid Configure()
         {
             Guid guid = Guid.NewGuid();
             DefaultHostSimply.Do.Configure(guid);
 
-            ConfigureSvcs(guid);
+            ConfigureSvcsWithoutHooks(guid);
 
             return guid;
         }

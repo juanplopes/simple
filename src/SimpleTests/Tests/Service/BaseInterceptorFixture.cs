@@ -15,13 +15,27 @@ namespace Simple.Tests.Service
     {
         public static void ConfigureSvcs(Guid guid)
         {
+            ConfigureSvcsWithoutHooks(guid);
+            ConfigureServerHooks(guid);
+        }
+
+        public static void ConfigureSvcsWithoutHooks(Guid guid)
+        {
             Simply.Get(guid).Host(typeof(TestService));
             Simply.Get(guid).Host(typeof(OtherService));
+        }
 
+        public static void ConfigureClientHooks(Guid guid)
+        {
+            Simply.Get(guid).AddClientHook(x => new TestCallHook(x));
+            Simply.Get(guid).AddClientHook(TestCallHookString.MyFunc);
+        }
+
+        public static void ConfigureServerHooks(Guid guid)
+        {
             Simply.Get(guid).AddServerHook(x => new TestCallHook(x));
             Simply.Get(guid).AddServerHook(TestCallHookString.MyFunc);
         }
-
 
 
 

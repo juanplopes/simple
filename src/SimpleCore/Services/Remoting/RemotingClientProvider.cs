@@ -5,6 +5,7 @@ using log4net;
 using System.Reflection;
 using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Channels;
+using Simple.DynamicProxy;
 
 namespace Simple.Services.Remoting
 {
@@ -42,5 +43,11 @@ namespace Simple.Services.Remoting
             throw new InvalidOperationException("Invalid uri pair in configuration: '" +
                 uriBase.AbsoluteUri + "' and '" + relativeUri + "'.");
         }
+
+        public object ProxyObject(object obj, IInterceptor intercept)
+        {
+            return DynamicProxyFactory.Instance.CreateProxy(obj, intercept.Intercept);
+        }
+
     }
 }

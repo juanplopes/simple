@@ -36,21 +36,41 @@ namespace Simple.Tests.Service
 
     [TestFixture]
     [Explicit("not stable")]
-    public class IpcRemotingInterceptorFixture : BaseRemotingInterceptorFixture
+    public class IpcRemotingServerInterceptorFixture : BaseRemotingServerInterceptorFixture
     {
         public override Uri Uri
         {
             get { return Helper.MakeUri(IpcConstants.Scheme, IpcConstants.StartPort + 3); }
         }
     }
-
     [TestFixture]
     [Explicit("not stable")]
-    public class IpcSelfRemotingInterceptorFixture : BaseSelfRemotingInterceptorFixture
+    public class IpcRemotingClientInterceptorFixture : BaseRemotingClientInterceptorFixture
     {
         public override Uri Uri
         {
             get { return Helper.MakeUri(IpcConstants.Scheme, IpcConstants.StartPort + 4); }
+        }
+    }
+
+    [TestFixture]
+    [Explicit("not stable")]
+    public class IpcSelfRemotingServerInterceptorFixture : BaseSelfRemotingServerInterceptorFixture
+    {
+        public override Uri Uri
+        {
+            get { return Helper.MakeUri(IpcConstants.Scheme, IpcConstants.StartPort + 5); }
+        }
+
+    }
+
+    [TestFixture]
+    [Explicit("not stable")]
+    public class IpcSelfRemotingClientInterceptorFixture : BaseSelfRemotingClientInterceptorFixture
+    {
+        public override Uri Uri
+        {
+            get { return Helper.MakeUri(IpcConstants.Scheme, IpcConstants.StartPort + 6); }
         }
 
     }

@@ -22,6 +22,7 @@ namespace Simple.Services.Default
 
         public void Stop()
         {
+            ServiceLocationFactory.Get(ConfigCache).Clear();
         }
 
         #endregion

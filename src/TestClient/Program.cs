@@ -6,6 +6,8 @@ using Simple.Tests.Service;
 using Simple.Services.Remoting;
 using Simple.ConfigSource;
 using Simple.Logging;
+using System.Linq;
+using Simple.IO;
 namespace TestClient
 {
     class Program

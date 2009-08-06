@@ -35,7 +35,7 @@ namespace Simple.Tests.Service
 
     [TestFixture]
     [Explicit("not stable")]
-    public class TcpRemotingInterceptorFixture : BaseRemotingInterceptorFixture
+    public class TcpRemotingServerInterceptorFixture : BaseRemotingServerInterceptorFixture
     {
         public override Uri Uri
         {
@@ -46,7 +46,7 @@ namespace Simple.Tests.Service
 
     [TestFixture]
     [Explicit("not stable")]
-    public class TcpSelfRemotingInterceptorFixture : BaseSelfRemotingInterceptorFixture
+    public class TcpRemotingClientInterceptorFixture : BaseRemotingClientInterceptorFixture
     {
         public override Uri Uri
         {
@@ -54,5 +54,26 @@ namespace Simple.Tests.Service
         }
 
     }
+
+    [TestFixture]
+    [Explicit("not stable")]
+    public class TcpSelfRemotingServerInterceptorFixture : BaseSelfRemotingServerInterceptorFixture
+    {
+        public override Uri Uri
+        {
+            get { return Helper.MakeUri(TcpConstants.Scheme, TcpConstants.StartPort + 5); }
+        }
+
+    }
+    [TestFixture]
+    [Explicit("not stable")]
+    public class TcpSelfRemotingClientInterceptorFixture : BaseSelfRemotingClientInterceptorFixture
+    {
+        public override Uri Uri
+        {
+            get { return Helper.MakeUri(TcpConstants.Scheme, TcpConstants.StartPort + 6); }
+        }
+
+    } 
 
 }

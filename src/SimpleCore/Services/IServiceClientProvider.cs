@@ -11,6 +11,7 @@ namespace Simple.Services
     public interface IServiceClientProvider
     {
         object Create(Type type);
+        object ProxyObject(object obj, IInterceptor intercept);
     }
 
     public class NullServiceClientProvider : IServiceClientProvider
@@ -35,6 +36,12 @@ namespace Simple.Services
                 return _cache;
             }
         }
+
+        public object ProxyObject(object obj, IInterceptor intercept)
+        {
+            return obj;
+        }
+
 
         #endregion
     }
