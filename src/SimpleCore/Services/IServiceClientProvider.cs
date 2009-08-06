@@ -8,10 +8,15 @@ using Simple.Reflection;
 
 namespace Simple.Services
 {
-    public interface IServiceClientProvider
+    public interface IServiceCommonProvider
+    {
+        object ProxyObject(object obj, IInterceptor intercept);
+        ICallHeadersHandler HeaderHandler { get; }
+    }
+
+    public interface IServiceClientProvider : IServiceCommonProvider
     {
         object Create(Type type);
-        object ProxyObject(object obj, IInterceptor intercept);
     }
 
     public class NullServiceClientProvider : IServiceClientProvider
@@ -42,6 +47,16 @@ namespace Simple.Services
             return obj;
         }
 
+
+        #endregion
+
+        #region IServiceCommonProvider Members
+
+
+        public ICallHeadersHandler HeaderHandler
+        {
+            get { return new NullCallHeadersHandler(); }
+        }
 
         #endregion
     }

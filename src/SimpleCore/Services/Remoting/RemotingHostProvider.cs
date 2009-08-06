@@ -13,7 +13,7 @@ using Simple.DynamicProxy;
 
 namespace Simple.Services.Remoting
 {
-    public class RemotingHostProvider : Factory<RemotingConfig>, IServiceHostProvider, IDisposable
+    public class RemotingHostProvider : RemotingBaseProvider, IServiceHostProvider, IDisposable
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         IList<object> services = new List<object>();
@@ -98,17 +98,5 @@ namespace Simple.Services.Remoting
 
 
         }
-
-
-        #region IServiceHostProvider Members
-
-
-        public object ProxyObject(object obj, IInterceptor interceptor)
-        {
-            if (!(obj is MarshalByRefObject)) throw new ArgumentException("obj must be a MarshalByRefObject");
-            return DynamicProxyFactory.Instance.CreateMarshallableProxy((MarshalByRefObject)obj, interceptor.Intercept);
-        }
-
-        #endregion
     }
 }

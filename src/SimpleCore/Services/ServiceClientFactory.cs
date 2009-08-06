@@ -31,7 +31,7 @@ namespace Simple.Services
 
         public object Resolve(Type type)
         {
-            return ConfigCache.ProxyObject(ConfigCache.Create(type), new DefaultInterceptor(GetHooks));
+            return ConfigCache.ProxyObject(ConfigCache.Create(type), new DefaultInterceptor(GetHooks, ConfigCache.HeaderHandler, true));
         }
 
         #region IServiceClientFactory Members

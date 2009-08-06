@@ -9,7 +9,7 @@ using Simple.DynamicProxy;
 
 namespace Simple.Services.Remoting
 {
-    public class RemotingClientProvider : Factory<RemotingConfig>, IServiceClientProvider
+    public class RemotingClientProvider : RemotingBaseProvider, IServiceClientProvider
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
@@ -44,10 +44,10 @@ namespace Simple.Services.Remoting
                 uriBase.AbsoluteUri + "' and '" + relativeUri + "'.");
         }
 
-        public object ProxyObject(object obj, IInterceptor intercept)
+        public override object ProxyObject(object obj, IInterceptor intercept)
         {
             return DynamicProxyFactory.Instance.CreateProxy(obj, intercept.Intercept);
         }
-
+       
     }
 }

@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Simple.Services.Default
 {
-    public class DefaultHostConfig
+    public class DefaultHostConfig 
+
     {
     }
 }

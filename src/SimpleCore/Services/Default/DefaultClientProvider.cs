@@ -7,7 +7,7 @@ using Simple.DynamicProxy;
 
 namespace Simple.Services.Default
 {
-    public class DefaultClientProvider : Factory<DefaultHostConfig>, IServiceClientProvider
+    public class DefaultClientProvider : DefaultHostBaseProvider, IServiceClientProvider
     {
         #region IServiceClientProvider Members
 

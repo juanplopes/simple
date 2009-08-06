@@ -33,7 +33,7 @@ namespace Simple.Services
             foreach (Type contract in GetContractsFromType(type))
             {
                 object server = Activator.CreateInstance(type);
-                server = ProxyObject(server, new DefaultInterceptor(GetHooks), contract);
+                server = ProxyObject(server, new DefaultInterceptor(GetHooks, ConfigCache.HeaderHandler, false), contract);
                 ConfigCache.Host(server, contract);
             }
         }

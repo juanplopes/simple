@@ -8,12 +8,11 @@ namespace Simple.Services
 {
     delegate object ServiceHostInterceptor(object target, MethodBase method, object[] args);
 
-    public interface IServiceHostProvider
+    public interface IServiceHostProvider : IServiceCommonProvider
     {
         void Host(object server, Type contract);
         void Start();
         void Stop();
-        object ProxyObject(object obj, IInterceptor intercept);
     }
 
     public class NullServiceHostProvider : IServiceHostProvider
@@ -37,5 +36,10 @@ namespace Simple.Services
             return obj;
         }
 
+
+        public ICallHeadersHandler HeaderHandler
+        {
+            get { return new NullCallHeadersHandler(); }
+        }
     }
 }

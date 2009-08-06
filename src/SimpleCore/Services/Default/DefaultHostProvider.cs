@@ -7,7 +7,7 @@ using Simple.DynamicProxy;
 
 namespace Simple.Services.Default
 {
-    public class DefaultHostProvider : Factory<DefaultHostConfig>, IServiceHostProvider
+    public class DefaultHostProvider : DefaultHostBaseProvider, IServiceHostProvider
     {
         #region IServiceHostProvider Members
 
@@ -34,11 +34,6 @@ namespace Simple.Services.Default
         protected override void OnClearConfig()
         {
             ServiceLocationFactory.Get(ConfigCache).Clear();
-        }
-
-        public object ProxyObject(object obj, IInterceptor interceptor)
-        {
-            return DynamicProxyFactory.Instance.CreateProxy(obj, interceptor.Intercept);
         }
     }
 }
