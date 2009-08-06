@@ -97,7 +97,7 @@
     <Compile Include="Tests\Service\BaseInterceptorFixture.samples.cs" />
     <Compile Include="Tests\Service\ChannelSelectorFixture.cs" />
     <Compile Include="Tests\Service\IpcRemotingFixtures.cs" />
-    <Compile Include="Tests\Service\MiscServicesFixture.cs" />
+    <Compile Include="Tests\Service\HookOrderFixture.cs" />
     <Compile Include="Tests\Service\TcpRemotingFixtures.cs" />
     <Compile Include="Tests\Service\HttpRemotingFixtures.cs" />
     <Compile Include="Tests\Service\BaseInterceptorFixture.cs" />
