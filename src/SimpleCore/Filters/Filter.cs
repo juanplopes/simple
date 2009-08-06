@@ -23,5 +23,6 @@ namespace Simple.Filters
         {
             return new NotExpression(this);
         }
+
     }
 }
