@@ -10,6 +10,7 @@ using System.Runtime.Remoting;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
+using System.Security.Principal;
 
 namespace Simple.Tests.Service
 {
@@ -51,6 +52,14 @@ namespace Simple.Tests.Service
 
             CallHeaders.Do["returnMe"] = "1234";
             Assert.AreEqual("1234", service.TestHeaderPassing());
+        }
+
+        [Test]
+        public void WrongPassedIdentityTest()
+        {
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            SimpleContext.Get().Username = null;
+            Assert.IsFalse(service.TestPassedIdentity());
         }
 
         [Test]
@@ -158,6 +167,7 @@ namespace Simple.Tests.Service
         byte[] GetByteArray(int size);
         string TestHeaderPassing();
         int TestHeaderPassingAndReturning();
+        bool TestPassedIdentity();
     }
 
     public interface IFailService : IService
@@ -218,6 +228,13 @@ namespace Simple.Tests.Service
             CallHeaders.Do["returnMe"] =  a + 2;
             return a;
         }
+
+        public bool TestPassedIdentity()
+        {
+            var userName = SimpleContext.Get().Username;
+            return WindowsIdentity.GetCurrent().Name == userName;
+        }
+
         #endregion
 
 

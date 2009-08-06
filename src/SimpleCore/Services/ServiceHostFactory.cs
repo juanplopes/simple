@@ -14,18 +14,16 @@ namespace Simple.Services
     public class ServiceHostFactory : Factory<IServiceHostProvider>, Simple.Services.IServiceHostFactory
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
-        protected IList<Func<CallHookArgs, ICallHook>> CallHookCreators { get; set; }
+        protected IList<Func<CallHookArgs, ICallHook>> CallHookCreators = new List<Func<CallHookArgs, ICallHook>>();
 
         protected override void OnConfig(IServiceHostProvider config)
         {
-            ClearHooks();
         }
 
 
         protected override void OnClearConfig()
         {
             ConfigCache = new NullServiceHostProvider();
-            ClearHooks();
         }
 
         public void Host(Type type)

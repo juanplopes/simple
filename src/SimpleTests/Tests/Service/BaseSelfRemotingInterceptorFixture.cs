@@ -18,6 +18,7 @@ namespace Simple.Tests.Service
         {
             Guid guid = base.Configure();
             ConfigureServerHooks(guid);
+            ConfigureClientServerHooks(guid);
             return guid;
         }
     }

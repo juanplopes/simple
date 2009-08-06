@@ -19,6 +19,13 @@ namespace Simple.Tests.Service
         {
             get { return Server.RemotingServerInterceptorTest; }
         }
+
+        protected override Guid Configure()
+        {
+            Guid guid = base.Configure();
+            ConfigureClientServerHooks(guid);
+            return guid;
+        }
     }
 
     public abstract class BaseRemotingClientInterceptorFixture : BaseRemotingInterceptorFixture

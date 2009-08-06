@@ -8,20 +8,14 @@ namespace Simple.Services
 {
     public class ServiceClientFactory : Factory<IServiceClientProvider>, Simple.Services.IServiceClientFactory
     {
-        protected IList<Func<CallHookArgs, ICallHook>> CallHookCreators { get; set; }
+        protected IList<Func<CallHookArgs, ICallHook>> CallHookCreators = new List<Func<CallHookArgs, ICallHook>>();
 
         protected override void OnConfig(IServiceClientProvider config)
         {
-            ClearHooks();
         }
-
-
-
-
         protected override void OnClearConfig()
         {
             ConfigCache = new NullServiceClientProvider();
-            ClearHooks();
         }
 
         public T Resolve<T>()

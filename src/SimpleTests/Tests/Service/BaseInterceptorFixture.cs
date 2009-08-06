@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Simple.ConfigSource;
 using System.Reflection;
 using System.Globalization;
+using System.Security.Principal;
 
 namespace Simple.Tests.Service
 {
@@ -29,6 +30,12 @@ namespace Simple.Tests.Service
         {
             Simply.Get(guid).AddClientHook(x => new TestCallHook(x));
             Simply.Get(guid).AddClientHook(TestCallHookString.MyFunc);
+            ConfigureClientServerHooks(guid);
+        }
+
+        public static void ConfigureClientServerHooks(Guid guid)
+        {
+            Simply.Get(guid).AddClientHook(x => new WindowsIdentityInjector(x));
         }
 
         public static void ConfigureServerHooks(Guid guid)
@@ -60,6 +67,17 @@ namespace Simple.Tests.Service
             ITestService test = Simply.Get(ConfigKey).Resolve<ITestService>();
             Assert.AreEqual("42", test.TestParams(4, "1", "2", "2", "4", "2"));
         }
+
+
+
+        [Test]
+        public void TestIdentityMatch()
+        {
+            ITestService test = Simply.Get(ConfigKey).Resolve<ITestService>();
+            var ident = test.TestReturnIdentity();
+            Assert.AreEqual(WindowsIdentity.GetCurrent().Name, ident);
+        }
+
 
         [Test]
         public void TestGenerics()

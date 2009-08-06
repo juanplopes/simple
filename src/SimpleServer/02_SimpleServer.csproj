@@ -96,7 +96,6 @@
     <Compile Include="Services\DefaultCallHook.cs" />
     <Compile Include="Services\EntityService.cs" />
     <Compile Include="DataAccess\DefaultExceptionHandler.cs" />
-    <Compile Include="Services\InjectHttpUserCallHook.cs" />
     <None Include="Threading\NHLockingProvider.cs" />
     <None Include="Threading\NHLockToken.cs" />
     <None Include="Threading\SimpleInstanceState.cs" />

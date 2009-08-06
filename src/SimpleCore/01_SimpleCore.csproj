@@ -132,6 +132,7 @@
     <Compile Include="Services\ServiceConnectionException.cs" />
     <Compile Include="Services\ServiceHostFactory.cs" />
     <Compile Include="Services\ServiceSimplyExtensions.cs" />
+    <Compile Include="Services\SimpleContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DefaultConfigContent.resx">

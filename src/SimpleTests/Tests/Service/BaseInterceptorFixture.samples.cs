@@ -75,6 +75,8 @@ namespace Simple.Tests.Service
             double TestRefParams(ref string test);
             void TestOutParams(out string test);
             string TestParams(int prim, params string[] ult);
+
+            string TestReturnIdentity();
         }
 
         public interface IOtherService : IService
@@ -129,7 +131,10 @@ namespace Simple.Tests.Service
                 return prim.ToString() + ult[ult.Length - 1];
             }
 
-
+            public string TestReturnIdentity()
+            {
+                return SimpleContext.Get().Username;
+            }
         }
     }
 }
