@@ -41,6 +41,35 @@ namespace Simple.Tests.Service
             Assert.AreEqual("whatever", service.GetString());
         }
 
+        [Test]
+        public void HeaderPassingTest()
+        {
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+
+            CallHeaders.Do["returnMe"] = "123";
+            Assert.AreEqual("123", service.TestHeaderPassing());
+
+            CallHeaders.Do["returnMe"] = "1234";
+            Assert.AreEqual("1234", service.TestHeaderPassing());
+        }
+
+        [Test]
+        public void HeaderPassingAndReturningTest()
+        {
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+
+            CallHeaders.Do["returnMe"] = 12345;
+            Assert.AreEqual(12345, service.TestHeaderPassingAndReturning());
+            Assert.AreEqual(12347, CallHeaders.Do["returnMe"]);
+
+            CallHeaders.Do["returnMe"] = 666;
+            Assert.AreEqual(666, service.TestHeaderPassingAndReturning());
+            Assert.AreEqual(668, CallHeaders.Do["returnMe"]);
+
+        }
+
+
+
         [Test, ExpectedException]
         public void TestFailConnect()
         {
@@ -127,6 +156,8 @@ namespace Simple.Tests.Service
         string GetString();
         int GetInt32();
         byte[] GetByteArray(int size);
+        string TestHeaderPassing();
+        int TestHeaderPassingAndReturning();
     }
 
     public interface IFailService : IService
@@ -174,6 +205,18 @@ namespace Simple.Tests.Service
         public byte[] GetByteArray(int size)
         {
             return new byte[size];
+        }
+
+        public string TestHeaderPassing()
+        {
+            return (string)CallHeaders.Do["returnMe"];
+        }
+
+        public int TestHeaderPassingAndReturning()
+        {
+            int a = (int)CallHeaders.Do["returnMe"];
+            CallHeaders.Do["returnMe"] =  a + 2;
+            return a;
         }
         #endregion
 

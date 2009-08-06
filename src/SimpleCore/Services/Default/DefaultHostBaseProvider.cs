@@ -9,12 +9,12 @@ namespace Simple.Services.Default
 {
     public abstract class DefaultHostBaseProvider : Factory<DefaultHostConfig>, IServiceCommonProvider
     {
-        public object ProxyObject(object obj, IInterceptor intercept)
+        public virtual object ProxyObject(object obj, IInterceptor intercept)
         {
             return DynamicProxyFactory.Instance.CreateProxy(obj, intercept.Intercept);
         }
 
-        public ICallHeadersHandler HeaderHandler
+        public virtual ICallHeadersHandler HeaderHandler
         {
             get { return new NullCallHeadersHandler(); }
         }

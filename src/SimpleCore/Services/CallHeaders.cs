@@ -4,21 +4,51 @@ using System.Linq;
 using System.Text;
 using Simple.Patterns;
 using System.Collections;
+using Simple.Threading;
+using System.Runtime.Remoting.Messaging;
+using System.Runtime.Serialization;
 
 namespace Simple.Services
 {
-    public class CallHeaders : Hashtable
+    [Serializable]
+    public class CallHeaders : Hashtable, ILogicalThreadAffinative
     {
+        private static ThreadData data = new ThreadData();
+        private static object _store = new object();
+
         public static CallHeaders Do
         {
             get
             {
-                return Singleton<CallHeaders>.Do;
+                var headers = data.Get<CallHeaders>(_store);
+                if (headers == null)
+                {
+                    data.Set(_store, headers = new CallHeaders());
+                }
+                return headers;
             }
         }
         public static void Force(CallHeaders headers)
         {
-            Singleton<CallHeaders>.ForceInstance(headers);
+            data.Set(_store, headers);
+        }
+
+        public CallHeaders() : base() { }
+        public CallHeaders(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        public override object this[object key]
+        {
+            get
+            {
+                if (this.ContainsKey(key))
+                    return base[key];
+                else
+                    return null;
+            }
+            set
+            {
+                base[key] = value;
+            }
         }
     }
 }

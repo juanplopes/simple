@@ -29,7 +29,7 @@ namespace Simple.Services.Default
         #region IServiceClientProvider Members
 
 
-        public object ProxyObject(object obj, IInterceptor intercept)
+        public override object ProxyObject(object obj, IInterceptor intercept)
         {
             return DynamicProxyFactory.Instance.CreateProxy(obj, intercept.Intercept);
         }
