@@ -8,7 +8,7 @@ using Simple.Logging;
 using System.IO;
 
 [SetUpFixture]
-public class SetupFixture
+class SetupFixture
 {
     [SetUp]
     public void Setup()

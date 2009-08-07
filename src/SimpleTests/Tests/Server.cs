@@ -30,68 +30,52 @@ namespace Simple.Tests
         {
             if (args.Length > 0)
             {
-                if (args[0] == RemotingTest)
-                {
-                    var ev = NamedEvents.OpenOrCreate(RemotingTest, false, EventResetMode.ManualReset);
-
-                    Guid guid = Guid.NewGuid();
-
-                    Simply.Get(guid).Configure.Remoting()
-                        .FromXml(Helper.MakeConfig(new Uri(args[1])));
-
-                    Simply.Get(guid).Host(typeof(SimpleService));
-
-                    ev.Set();
-                    Console.ReadLine();
-                }
-                else if (args[0] == RemotingServerInterceptorTest)
-                {
-                    var ev = NamedEvents.OpenOrCreate(RemotingServerInterceptorTest, false, EventResetMode.ManualReset);
-
-                    Guid guid = Guid.NewGuid();
-
-                    Simply.Get(guid).Configure
-                        .Remoting().FromXml(Helper.MakeConfig(new Uri(args[1])));
-
-                    BaseInterceptorFixture.ConfigureSvcs(guid);
-
-                    ev.Set();
-
-                    Console.ReadLine();
-                }
-                else if (args[0] == RemotingClientInterceptorTest)
-                {
-                    var ev = NamedEvents.OpenOrCreate(RemotingClientInterceptorTest, false, EventResetMode.ManualReset);
-
-                    Guid guid = Guid.NewGuid();
-
-                    Simply.Get(guid).Configure
-                        .Remoting().FromXml(Helper.MakeConfig(new Uri(args[1])));
-
-                    BaseInterceptorFixture.ConfigureSvcsWithoutHooks(guid);
-
-                    ev.Set();
-
-                    Console.ReadLine();
-                }
+                ExecuteSamples(args);
+                return 0;
             }
-            else
+            
+            Simply simply = Simply.Get(NHConfig1.ConfigKey);
+
+            simply.Configure.Log4netToConsole();
+            simply.Configure
+               .NHibernate().FromXml(NHConfigurations.NHConfig1)
+               .MappingFromAssemblyOf<Category.Map>()
+               .RemotingDefault();
+
+            simply.AddServerHook(x => new DefaultCallHook(x, NHConfig1.ConfigKey));
+            simply.HostAssemblyOf(typeof(Category.Map));
+            Console.ReadLine();
+            return 0;
+        }
+
+        static void ExecuteSamples(string[] args)
+        {
+            SampleGenericPart(Server.RemotingTest, args,
+                g => Simply.Get(g).Host(typeof(SimpleService)));
+
+            SampleGenericPart(Server.RemotingServerInterceptorTest, args,
+                g => BaseInterceptorFixture.ConfigureSvcs(g));
+
+            SampleGenericPart(Server.RemotingClientInterceptorTest, args,
+                g => BaseInterceptorFixture.ConfigureSvcsWithoutHooks(g));
+        }
+
+        static void SampleGenericPart(string sampleName, string[] args, Action<Guid> configure)
+        {
+            if (args.Length > 0 && args[0] == sampleName)
             {
-                Simply simply = Simply.Get(NHConfig1.ConfigKey);
+                var ev = NamedEvents.OpenOrCreate(sampleName, false, EventResetMode.ManualReset);
 
-                simply.Configure.Log4netToConsole();
-                simply.Configure
-                   .NHibernate().FromXml(NHConfigurations.NHConfig1)
-                   .MappingFromAssemblyOf<Category.Map>()
-                   .RemotingDefault();
+                Guid guid = Guid.NewGuid();
 
-                simply.AddServerHook(x => new DefaultCallHook(x, NHConfig1.ConfigKey));
-                simply.HostAssemblyOf(typeof(Category.Map));
+                Simply.Get(guid).Configure.Remoting()
+                    .FromXml(Helper.MakeConfig(new Uri(args[1])));
+
+                configure(guid);
+
+                ev.Set();
                 Console.ReadLine();
             }
-            //            NUnit.Gui.AppEntry.Main(new string[] { Assembly.GetExecutingAssembly().Location });
-
-            return 0;
         }
     }
 }

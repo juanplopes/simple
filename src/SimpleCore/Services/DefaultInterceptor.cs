@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using Simple.Reflection;
+using log4net;
 
 
 namespace Simple.Services
@@ -26,8 +27,10 @@ namespace Simple.Services
 
         public virtual object Intercept(object target, MethodBase method, object[] args)
         {
-            var hookArgs = new CallHookArgs(target, method, args);
+            var hookArgs = new CallHookArgs(target, method, args, Client);
             var methodHooks = Hooks(hookArgs);
+
+            ILog logger = Simply.Do.Log(this);
 
             var list = new List<ICallHook>(methodHooks);
 
@@ -40,8 +43,13 @@ namespace Simple.Services
 
                 hookArgs.Return = Invoke(target, method, args);
 
+                logger.DebugFormat("Calling {0} in {1}...", method.Name, method.DeclaringType.Name);
+
                 if (Client) HeaderHandler.RecoverCallHeaders(target, method, args);
                 else HeaderHandler.InjectCallHeaders(target, method, args);
+
+                logger.DebugFormat("Returning from {0} in {1}...", method.Name, method.DeclaringType.Name);
+
 
                 foreach (var hook in list) hook.AfterSuccess();
 
@@ -49,6 +57,8 @@ namespace Simple.Services
             }
             finally
             {
+                logger.DebugFormat("Finalizing {0} in {1}...", method.Name, method.DeclaringType.Name);
+
                 foreach (var hook in list) hook.Finally();
             }
         }

@@ -10,17 +10,19 @@ namespace Simple.DataAccess.Context
     {
         #region IDataContext Members
 
-        protected Func<ISession> _creator = null;
+        protected Func<ISession> _mainCreator = null;
+        protected Func<ISession> _addCreator = null;
         protected bool _isMain = false;
         protected ISession _defaultSession = null;
         protected IList<ISession> _addSessions = new List<ISession>();
         protected bool _isOpen = false;
 
-        internal DataContext(Func<ISession> sessionCreator, ISession defaultSession)
+        internal DataContext(Func<ISession> mainSessionCreator,
+            Func<ISession> additionalSessionCreator, bool isMain)
         {
-            _creator = sessionCreator;
-            _isMain = defaultSession == null;
-            _defaultSession = defaultSession ?? sessionCreator();
+            _mainCreator = mainSessionCreator;
+            _addCreator = additionalSessionCreator;
+            _isMain = isMain;
             _isOpen = true;
         }
 
@@ -36,6 +38,9 @@ namespace Simple.DataAccess.Context
         {
             get
             {
+                if (_defaultSession == null)
+                    _defaultSession = _mainCreator();
+
                 return _defaultSession;
             }
         }
@@ -45,7 +50,7 @@ namespace Simple.DataAccess.Context
             lock (this)
             {
                 ISession ret = null;
-                _addSessions.Add(ret = _creator());
+                _addSessions.Add(ret = _addCreator());
                 return ret;
             }
         }
@@ -67,11 +72,14 @@ namespace Simple.DataAccess.Context
 
         protected void CloseMainSession()
         {
-            if (!_defaultSession.IsOpen)
-                throw new InvalidOperationException("You shoudn't close the main session. Correct your code right now");
+            if (_defaultSession != null)
+            {
+                if (!_defaultSession.IsOpen)
+                    throw new InvalidOperationException("You shoudn't close the main session. Correct your code right now");
 
-            _defaultSession.Clear();
-            _defaultSession.Close();
+                _defaultSession.Clear();
+                _defaultSession.Close();
+            }
         }
 
         protected void CloseAdditionalSessions()

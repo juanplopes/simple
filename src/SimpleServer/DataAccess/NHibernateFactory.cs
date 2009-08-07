@@ -15,6 +15,7 @@ namespace Simple.DataAccess
     {
         protected NHConfigurator ConfigHooks { get; set; }
         public NHConfigurator MappingHooks { get; protected set; }
+        protected object _lock = new object();
 
         public NHibernateFactory()
         {
@@ -27,7 +28,7 @@ namespace Simple.DataAccess
         {
             get
             {
-                lock (this)
+                lock (_lock)
                 {
                     if (_sessionFactory == null)
                         _sessionFactory = NHConfiguration.BuildSessionFactory();
@@ -48,7 +49,7 @@ namespace Simple.DataAccess
         {
             get
             {
-                lock (this)
+                lock (_lock)
                 {
                     if (_configuration == null)
                         _configuration = MappingHooks.Invoke(
@@ -66,7 +67,7 @@ namespace Simple.DataAccess
 
         protected override void OnConfig(NHConfigurator config)
         {
-            lock (this)
+            lock (_lock)
             {
                 ConfigHooks = config;
                 _configuration = null;
@@ -76,7 +77,7 @@ namespace Simple.DataAccess
 
         protected override void OnClearConfig()
         {
-            lock (this)
+            lock (_lock)
             {
                 ConfigHooks = new NHConfigurator();
                 _configuration = null;

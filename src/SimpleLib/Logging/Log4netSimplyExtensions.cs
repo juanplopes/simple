@@ -81,7 +81,7 @@ namespace Simple
 
         public static SimplyConfigure Log4net(this SimplyConfigure config, IConfigSource<Log4netConfig> source)
         {
-            SourceManager.Do.Register<Log4netConfig>(config.ConfigKey, source);
+            SourceManager.Do.Register<Log4netConfig>(null, source); //log4net better only one
             return config;
         }
 

@@ -6,17 +6,20 @@ using System.Reflection;
 
 namespace Simple.Services
 {
+    [Serializable]
     public class CallHookArgs
     {
-        public CallHookArgs(object target, MethodBase method, object[] args)
+        public CallHookArgs(object target, MethodBase method, object[] args, bool client)
         {
             Target = target;
             Method = method;
             Args = args;
+            Client = client;
         }
         public object Target { get; protected set; }
         public MethodBase Method { get; protected set; }
         public object[] Args { get; protected set; }
+        public bool Client { get; set; }
         public object Return { get; set; }
     }
 

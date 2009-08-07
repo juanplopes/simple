@@ -4,6 +4,7 @@ using System.Text;
 using Simple.Patterns;
 using Simple.ConfigSource;
 using Simple.Threading;
+using NHibernate;
 
 namespace Simple.DataAccess.Context
 {
@@ -17,8 +18,11 @@ namespace Simple.DataAccess.Context
             var contextList = GetContextList();
             var curContext = GetContext(false);
 
-            var context = new DataContext(() => Simply.Get(ConfigKey).OpenSession(),
-                curContext != null ? curContext.Session : null);
+            Func<ISession> addCreator = () => Simply.Get(ConfigKey).OpenSession();
+            Func<ISession> defCreator =
+                (curContext == null ? addCreator : () => curContext.Session);
+
+            var context = new DataContext(defCreator, addCreator, curContext == null);
             contextList.AddLast(context);
 
             return context;
