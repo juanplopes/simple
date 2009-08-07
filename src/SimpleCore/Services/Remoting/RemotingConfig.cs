@@ -33,7 +33,7 @@ namespace Simple.Services.Remoting
         public string GetEndpointKey(Type type)
         {
             string mask = EndpointMask ?? MaskVariable;
-            return mask.Replace(MaskVariable, type.Name + type.GetHashCode());
+            return mask.Replace(MaskVariable, TypesHelper.GetFlatClassName(type));
         }
 
         public Uri GetUriFromAddressBase()
