@@ -167,7 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Northwind.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\NHConfig1.xml" />
     <None Include="Resources\SimpleRemotingAny.xml" />
