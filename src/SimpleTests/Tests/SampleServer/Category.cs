@@ -10,7 +10,7 @@ using NHibernate.SqlTypes;
 
 namespace Simple.Tests.SampleServer
 {
-    [DefaultConfig(NHConfig1.ConfigKey)]
+    [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class Category : Entity<Category, ICategoryService>
     {
         public virtual int Id { get; set; }

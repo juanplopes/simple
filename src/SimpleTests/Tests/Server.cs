@@ -13,6 +13,8 @@ using Simple.Tests.Service;
 using Simple.Services;
 using System.Threading;
 using Simple.Threading;
+using Simple.Tests.DataAccess;
+using Simple.Tests.SampleServer;
 
 
 namespace Simple.Tests
@@ -72,6 +74,20 @@ namespace Simple.Tests
 
                     Console.ReadLine();
                 }
+            }
+            else
+            {
+                Simply simply = Simply.Get(NHConfig1.ConfigKey);
+
+                simply.Configure.Log4netToConsole();
+                simply.Configure
+                   .NHibernate().FromXml(NHConfigurations.NHConfig1)
+                   .MappingFromAssemblyOf<Category.Map>()
+                   .RemotingDefault();
+
+                simply.AddServerHook(x => new DefaultCallHook(x, NHConfig1.ConfigKey));
+                simply.HostAssemblyOf(typeof(Category.Map));
+                Console.ReadLine();
             }
             //            NUnit.Gui.AppEntry.Main(new string[] { Assembly.GetExecutingAssembly().Location });
 

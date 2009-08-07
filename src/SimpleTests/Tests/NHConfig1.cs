@@ -28,6 +28,8 @@ namespace Simple.Tests
             get { return simply; }
         }
 
+        public void Init() { }
+
         public NHConfig1()
         {
             object key = ConfigKey;
@@ -39,8 +41,8 @@ namespace Simple.Tests
                .MappingFromAssemblyOf<Category.Map>()
                .DefaultHost();
 
-            simply.HostAssemblyOf(typeof(NHConfig1));
             simply.AddServerHook(x => new DefaultCallHook(x, key));
+            simply.HostAssemblyOf(typeof(NHConfig1));
         }
     }
 

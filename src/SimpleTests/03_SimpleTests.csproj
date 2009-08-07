@@ -102,6 +102,7 @@
     <Compile Include="Tests\DataAccess\NorthwindCheckFixture.cs" />
     <Compile Include="Tests\DataAccess\BaseDataFixture.cs" />
     <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
+    <Compile Include="Tests\Experiences\ReflectionFixture.cs" />
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
     <Compile Include="Tests\SampleServer\Category.cs" />
     <Compile Include="Tests\SampleServer\Customer.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Tests\SimpleLib\BaseWorkingDaysFixture.cs" />
     <Compile Include="Tests\ConfigSource\FactoryFixture.cs" />
     <Compile Include="Tests\ConfigSource\LoggerFactoryFixture.cs" />
+    <Compile Include="Tests\SimpleLib\ClassNameHelperFixture.cs" />
     <Compile Include="Tests\SimpleLib\InvokerFactoryFixture.cs" />
     <Compile Include="Tests\SimpleLib\MarshallableDynamicProxyFixture.cs" />
     <Compile Include="Tests\SimpleLib\MiscFixture.cs" />

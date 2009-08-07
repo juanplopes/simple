@@ -1,0 +1,3 @@
+<remoting>
+	<baseAddress>http://localhost:9001</baseAddress>
+</remoting>

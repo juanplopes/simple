@@ -6,6 +6,7 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting;
 using System.ComponentModel;
+using Simple.Reflection;
 
 namespace Simple.Services.Remoting
 {
@@ -32,7 +33,7 @@ namespace Simple.Services.Remoting
         public string GetEndpointKey(Type type)
         {
             string mask = EndpointMask ?? MaskVariable;
-            return mask.Replace(MaskVariable, type.Name);
+            return mask.Replace(MaskVariable, type.Name + type.GetHashCode());
         }
 
         public Uri GetUriFromAddressBase()
