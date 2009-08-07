@@ -98,14 +98,12 @@
       <DependentUpon>Database.resx</DependentUpon>
     </Compile>
     <Compile Include="SetupFixture.cs" />
-    <Compile Include="Tests\%40Contracts\IRelEmpresaFuncionarioRules.cs" />
-    <Compile Include="Tests\%40Contracts\RelEmpresaFuncionario.cs" />
-    <Compile Include="Tests\%40Server\RelEmpresaFuncionarioRules.cs" />
     <Compile Include="Tests\ConfigSource\ConfiguratorInterfaceFixture.cs" />
+    <Compile Include="Tests\DataAccess\NorthwindCheckFixture.cs" />
     <Compile Include="Tests\DataAccess\BaseDataFixture.cs" />
     <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
-    <Compile Include="Tests\DataAccess\Samples\SimpleFourEntityInsert.cs" />
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
+    <Compile Include="Tests\SampleServer\Category.cs" />
     <Compile Include="Tests\Service\BaseInterceptorFixture.samples.cs" />
     <Compile Include="Tests\Service\ChannelSelectorFixture.cs" />
     <Compile Include="Tests\Service\IpcRemotingFixtures.cs" />
@@ -134,11 +132,7 @@
       <DependentUpon>NHConfigurations.resx</DependentUpon>
     </Compile>
     <Compile Include="Tests\SimpleLib\BaseWDProviderFixture.cs" />
-    <Compile Include="Tests\%40Contracts\IEmpresaFuncionarioRules.cs" />
-    <Compile Include="Tests\%40Contracts\IEmpresaRules.cs" />
-    <Compile Include="Tests\%40Contracts\IFuncionarioRules.cs" />
-    <Compile Include="Tests\DataAccess\SimpleEntityFixture.cs" />
-    <Compile Include="Tests\DBEnsurer.cs" />
+    <Compile Include="Tests\NHConfig1.cs" />
     <Compile Include="Tests\Server.cs" />
     <Compile Include="Tests\SimpleLib\AttributeCacheFixture.cs" />
     <Compile Include="Tests\SimpleLib\BaseWorkingDaysFixture.cs" />
@@ -152,18 +146,12 @@
     <Compile Include="Tests\SimpleLib\Sample\AttributeCacheClasses.cs" />
     <Compile Include="Tests\SimpleLib\Sample\TestStringClass.cs" />
     <Compile Include="Tests\SimpleLib\WorkingDaysFixture.cs" />
-    <Compile Include="Tests\DataAccess\FiltersFixture.cs" />
-    <Compile Include="Tests\%40Contracts\Empresa.cs" />
-    <Compile Include="Tests\%40Contracts\EmpresaFuncionario.cs" />
-    <Compile Include="Tests\%40Contracts\Funcionario.cs" />
     <Compile Include="Tests\Experiences\LambdaFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\SimpleLib\DynamicProxyFixture.cs" />
-    <Compile Include="Tests\%40Server\EmpresaFuncionarioRules.cs" />
-    <Compile Include="Tests\%40Server\EmpresaRules.cs" />
-    <Compile Include="Tests\%40Server\FuncionarioRules.cs" />
     <Compile Include="Tests\ConfigSource\XmlConfigSourceFixture.cs" />
     <Compile Include="Tests\ConfigSource\XmlFileConfigSourceFixture.cs" />
+    <Compile Include="Tests\SqlServerCeDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Northwind.sdf">
@@ -239,9 +227,6 @@
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
       <Name>02_SimpleServer</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\SampleServer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

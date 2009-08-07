@@ -30,6 +30,9 @@ namespace Simple.Services
         IList<T> ListByFilter(Filter filter, OrderByCollection order);
 
         [OperationContract]
+        int CountAll();
+
+        [OperationContract]
         int CountByFilter(Filter filter);
 
         [OperationContract]

@@ -5,33 +5,24 @@ using System.Text;
 using NUnit.Framework;
 using Simple.DataAccess.Context;
 using NHibernate;
-using Simple.Tests.Contracts;
-using Simple.Tests.DataAccess.Samples;
+using Simple.Tests.SampleServer;
 
 namespace Simple.Tests.DataAccess
 {
     [TestFixture]
     public class DataContextFixture : BaseDataFixture
     {
-        public override bool OpenDataContext
-        {
-            get
-            {
-                return false;
-            }
-        }
-
 
         [Test]
         public void SimpleDataContextTest()
         {
             ISession s1, s2, s3, s4;
-            using (var dx = GetSimply().EnterContext())
+            using (var dx = MySimply.EnterContext())
             {
                 s1 = dx.Session;
                 Assert.IsTrue(s1.IsOpen);
 
-                using (var dx2 = GetSimply().EnterContext())
+                using (var dx2 = MySimply.EnterContext())
                 {
                     s2 = dx2.Session;
                     Assert.AreEqual(s1, s2);
@@ -57,7 +48,7 @@ namespace Simple.Tests.DataAccess
         {
             try
             {
-                using (var dx = GetSimply().EnterContext())
+                using (var dx = MySimply.EnterContext())
                 {
                     var s1 = dx.Session;
                     s1.Close();
@@ -65,7 +56,7 @@ namespace Simple.Tests.DataAccess
             }
             catch (InvalidOperationException) { }
 
-            using (var dx = GetSimply().EnterContext())
+            using (var dx = MySimply.EnterContext())
             {
                 var s1 = dx.Session;
                 Assert.IsTrue(dx.IsOpen);
@@ -75,9 +66,9 @@ namespace Simple.Tests.DataAccess
         [Test, ExpectedException(typeof(InvalidOperationException))]
         public void TryCloseMainSessionTest()
         {
-            using (var dx = GetSimply().EnterContext())
+            using (var dx = MySimply.EnterContext())
             {
-                using (var dx2 = GetSimply().EnterContext())
+                using (var dx2 = MySimply.EnterContext())
                 {
                     dx2.Session.Close();
                 }
@@ -87,32 +78,30 @@ namespace Simple.Tests.DataAccess
         [Test, ExpectedException(typeof(ObjectDisposedException))]
         public void NestedTransactions()
         {
-            using (var dx = GetSimply().EnterContext())
+            using (var dx = MySimply.EnterContext())
             {
-                var sample = new SimpleFourEntityInsert();
-
-                Empresa e = Empresa.Load(sample.Empresa.Id);
+                Category c = Category.Load(1);
 
                 using (var tx1 = dx.Session.BeginTransaction())
                 {
                     using (var tx2 = dx.Session.BeginTransaction())
                     {
-                        e.Nome = this.GetType().GUID.ToString();
-                        e.SaveOrUpdate();
+                        c.Name = "NewName";
+                        c.SaveOrUpdate();
 
-                        e = Empresa.Load(sample.Empresa.Id);
-                        Assert.AreEqual(this.GetType().GUID.ToString(), e.Nome);
+                        c = Category.Load(1);
+                        Assert.AreEqual("NewName", c.Name);
 
                         tx2.Commit();
                     }
 
-                    e = Empresa.Load(sample.Empresa.Id);
-                    Assert.AreEqual(this.GetType().GUID.ToString(), e.Nome);
+                    c = Category.Load(1);
+                    Assert.AreEqual("NewName", c.Name);
 
                     tx1.Rollback();
                 }
 
-                Assert.AreNotEqual(this.GetType().GUID.ToString(), e.Nome);
+                Assert.AreNotEqual("NewName", c.Name);
             }
         }
     }

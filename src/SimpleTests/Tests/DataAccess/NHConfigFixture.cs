@@ -9,25 +9,14 @@ using Simple.DataAccess;
 using Simple.Services.Remoting;
 using Simple.Tests.Service;
 using FluentNHibernate.Cfg;
-using Simple.Tests.Contracts;
 using NHibernate;
+using Simple.Tests.SampleServer;
 
 namespace Simple.Tests.DataAccess
 {
     [TestFixture]
     public class NHConfigFixture
     {
-        [Test]
-        public void TestSchemaCreation()
-        {
-            Simply.Do.Configure.NHibernate().FromXml(NHConfigurations.NHConfig1);
-
-
-            SchemaExport exp = new SchemaExport(Simply.Get(this).GetNHibernateConfig());
-            exp.Drop(true, true);
-            exp.Create(true, true);
-        }
-
         [Test]
         public void TestLoadDialect()
         {
@@ -38,32 +27,31 @@ namespace Simple.Tests.DataAccess
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
             var factory = factories[this];
 
-            Assert.AreEqual("NHibernate.Dialect.SQLiteDialect", factory.NHConfiguration.GetProperty("dialect"));
+            Assert.AreEqual("NHibernate.Dialect.MsSqlCeDialect", factory.NHConfiguration.GetProperty("dialect"));
         }
 
         [Test]
         public void TestMapEntities()
         {
-            Simply.Do.Configure
+            Simply.Get(this).Configure
                 .NHibernate().FromXml(NHConfigurations.NHConfig1)
-                .Mapping<Empresa.Map>()
-                .Mapping<Funcionario.Map>();
+                .Mapping<Category.Map>();
                 
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
             var factory = factories[this];
 
-            Assert.AreEqual(2, factory.NHConfiguration.ClassMappings.Count);
+            Assert.AreEqual(1, factory.NHConfiguration.ClassMappings.Count);
         }
         [Test]
         public void TestMapEntityAssembly()
         {
-            Simply.Do.Configure
+            Simply.Get(this).Configure
                  .NHibernate().FromXml(NHConfigurations.NHConfig1)
-                 .MappingFromAssemblyOf<Empresa.Map>();
+                 .MappingFromAssemblyOf<Category.Map>();
 
             var config = Simply.Get(this).GetNHibernateConfig();
 
-            Assert.AreEqual(4, config.ClassMappings.Count);
+            Assert.AreEqual(1, config.ClassMappings.Count);
         }
     }
 }

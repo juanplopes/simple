@@ -13,7 +13,7 @@ public class SetupFixture
     [SetUp]
     public void Setup()
     {
-        Simply.Do.Release.Log4net();
+        Simply.Do.Configure.Log4netToConsole();
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
         File.WriteAllBytes("Northwind.sdf", Database.Northwind);

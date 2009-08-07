@@ -91,6 +91,11 @@ namespace Simple.Services
             return CreateCriteriaByFilter(filter, order).List<T>();
         }
 
+        public virtual int CountAll()
+        {
+            return CountByFilter(BooleanExpression.True);
+        }
+
         public virtual int CountByFilter(Filter filter)
         {
             return CriteriaTransformer.TransformToRowCount(

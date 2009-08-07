@@ -26,6 +26,11 @@ namespace Simple.Services
             if (!(entity is T)) throw new InvalidOperationException("Assertion failure. No idea what's happening.");
         }
 
+        public static int CountAll()
+        {
+            return Do.CountAll();
+        }
+
         public static int CountByFilter(Filter filter)
         {
             return Do.CountByFilter(filter);
