@@ -20,8 +20,7 @@ namespace Simple.Tests.Service
         {
             Guid guid = Guid.NewGuid();
 
-            RemotingSimply.Do.Configure(guid,
-                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(Uri)));
+            Simply.Get(guid).Configure.Remoting().FromXml(Helper.MakeConfig(Uri));
             Simply.Get(guid).Host(typeof(SimpleService));
 
             return guid;
@@ -30,7 +29,7 @@ namespace Simple.Tests.Service
         protected override void Release(Guid guid)
         {
             Simply.Get(guid).StopServer();
-            RemotingSimply.Do.ReleaseConfig(guid);
+            Simply.Get(guid).Release.Remoting();
         }
     }
 }

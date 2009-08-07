@@ -103,7 +103,7 @@
     <Compile Include="Services\Default\DefaultClientProvider.cs" />
     <Compile Include="Services\Default\DefaultHostBaseProvider.cs" />
     <Compile Include="Services\Default\DefaultHostConfig.cs" />
-    <Compile Include="Services\Default\DefaultHostSimply.cs" />
+    <Compile Include="Services\Default\DefaultHostSimplyExtensions.cs" />
     <Compile Include="Services\Default\ServiceLocationFactory.cs" />
     <Compile Include="Services\ICallHeadersHandler.cs" />
     <Compile Include="Services\ICallHook.cs" />
@@ -119,7 +119,7 @@
     <Compile Include="Services\Remoting\RemotingClientProvider.cs" />
     <Compile Include="Services\Remoting\RemotingConfig.cs" />
     <Compile Include="Services\Remoting\RemotingHostProvider.cs" />
-    <Compile Include="Services\Remoting\RemotingSimply.cs" />
+    <Compile Include="Services\Remoting\RemotingSimplyExtensions.cs" />
     <Compile Include="Services\Default\DefaultHostProvider.cs" />
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\Entity.cs" />

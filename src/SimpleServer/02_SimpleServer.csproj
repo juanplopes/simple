@@ -82,7 +82,6 @@
     <Compile Include="DataAccess\GenericInterceptor.cs" />
     <Compile Include="DataAccess\ISimpleInterceptor.cs" />
     <Compile Include="DataAccess\NHibernateFactory.cs" />
-    <Compile Include="DataAccess\NHibernateSimply.cs" />
     <Compile Include="DataAccess\NHibernateSimplyExtensions.cs" />
     <Compile Include="DataAccess\SimpleTransformers.cs" />
     <Compile Include="DataAccess\TimestampType.cs" />

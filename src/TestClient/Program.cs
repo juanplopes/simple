@@ -14,10 +14,6 @@ namespace TestClient
     {
         static void Main(string[] args)
         {
-            Log4netSimply.Do.Default();
-            RemotingSimply.Do.Configure(null, 
-                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(new Uri("http://localhost:8080"))));
-            
             Simply.Do.Host(typeof(SimpleService));
 
             for (int i = 0; i < 1000; i++)

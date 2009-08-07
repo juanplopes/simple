@@ -17,6 +17,5 @@ namespace Simple.ConfigSource
         }
 
         #endregion
-       
     }
 }

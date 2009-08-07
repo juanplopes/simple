@@ -93,7 +93,7 @@ namespace Simple.Tests.Service
         protected Guid Configure()
         {
             Guid guid = Guid.NewGuid();
-            DefaultHostSimply.Do.Configure(guid);
+            Simply.Get(guid).Configure.DefaultHost();
 
             Simply.Get(guid).Host(typeof(SimpleService));
             Simply.Get(guid).Host(typeof(BaseInterceptorFixture.TestService));

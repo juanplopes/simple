@@ -20,8 +20,8 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestSchemaCreation()
         {
-            NHibernateSimply.Do.Configure(this,
-                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
+            Simply.Do.Configure.NHibernate().FromXml(NHConfigurations.NHConfig1);
+
 
             SchemaExport exp = new SchemaExport(Simply.Get(this).GetNHibernateConfig());
             exp.Drop(true, true);
@@ -44,12 +44,11 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestMapEntities()
         {
-            NHibernateSimply.Do.Configure(this, 
-                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
-            NHibernateSimply.Do.Map<Empresa.Map>(this);
-            NHibernateSimply.Do.Map<Funcionario.Map>(this);
+            Simply.Do.Configure
+                .NHibernate().FromXml(NHConfigurations.NHConfig1)
+                .Mapping<Empresa.Map>()
+                .Mapping<Funcionario.Map>();
                 
-
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
             var factory = factories[this];
 
@@ -58,9 +57,9 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestMapEntityAssembly()
         {
-            NHibernateSimply.Do.Configure(this,
-                XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
-            NHibernateSimply.Do.MapAssemblyOf<Empresa>(this);
+            Simply.Do.Configure
+                 .NHibernate().FromXml(NHConfigurations.NHConfig1)
+                 .MappingFromAssemblyOf<Empresa.Map>();
 
             var config = Simply.Get(this).GetNHibernateConfig();
 

@@ -43,6 +43,29 @@ namespace Simple.Tests.Service
         }
 
         [Test]
+        public void SimpleMethodOverloadTest()
+        {
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            Assert.AreEqual(10, service.GetOverloadedMethod(10));
+            Assert.AreEqual(15, service.GetOverloadedMethod(10, 5));
+        }
+
+        [Test]
+        public void SimplePropertyTest()
+        {
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            Assert.AreEqual(555, service.SimpleProp);
+        }
+
+        [Test]
+        public void SimpleIndexedPropertyTest()
+        {
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            Assert.AreEqual("12345", service[12345]);
+        }
+
+
+        [Test]
         public void HeaderPassingTest()
         {
             ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
@@ -165,9 +188,14 @@ namespace Simple.Tests.Service
         string GetString();
         int GetInt32();
         byte[] GetByteArray(int size);
+        int GetOverloadedMethod(int value);
+        int GetOverloadedMethod(int value, int value2);
+
         string TestHeaderPassing();
         int TestHeaderPassingAndReturning();
         bool TestPassedIdentity();
+        string this[int index] { get; }
+        int SimpleProp { get; }
     }
 
     public interface IFailService : IService
@@ -202,6 +230,16 @@ namespace Simple.Tests.Service
 
         #region ISimpleService Members
 
+        public string this[int index]
+        {
+            get
+            {
+                return index.ToString();
+            }
+        }
+
+        public int SimpleProp { get { return 555; } }
+
         public string GetString()
         {
             return "whatever";
@@ -210,6 +248,16 @@ namespace Simple.Tests.Service
         public int GetInt32()
         {
             return 42;
+        }
+
+        public int GetOverloadedMethod(int value)
+        {
+            return value;
+        }
+
+        public int GetOverloadedMethod(int value, int value2)
+        {
+            return value + value2;
         }
 
         public byte[] GetByteArray(int size)

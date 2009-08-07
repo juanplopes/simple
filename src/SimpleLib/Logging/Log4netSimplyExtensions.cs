@@ -10,6 +10,7 @@ namespace Simple
 {
     public static class Log4netSimplyExtensions
     {
+        #region Simply
         private static FactoryManager<Log4netFactory, Log4netConfig> manager =
             new FactoryManager<Log4netFactory, Log4netConfig>(() => new Log4netFactory());
 
@@ -58,6 +59,38 @@ namespace Simple
             {
                 return Singleton<NullLog>.Instance;
             }
+        }
+        #endregion
+        #region Configure
+        public static SimplyConfigure Log4netToConsole(this SimplyConfigure config)
+        {
+            IConfigSource<Log4netConfig> source =
+                XmlConfig.LoadXml<Log4netConfig>(DefaultConfigResource.Log4netConfig);
+            return Log4net(config, source);
+        }
+
+        public static IConfiguratorInterface<SimplyConfigure> Log4net(this SimplyConfigure config)
+        {
+            return new ConfiguratorInterface<Log4netConfig, SimplyConfigure>(x => Log4net(config, x));
+        }
+
+        public static SimplyConfigure Log4net(this SimplyConfigure config, string file)
+        {
+            return Log4net(config, XmlConfig.LoadFile<Log4netConfig>(file));
+        }
+
+        public static SimplyConfigure Log4net(this SimplyConfigure config, IConfigSource<Log4netConfig> source)
+        {
+            SourceManager.Do.Register<Log4netConfig>(config.ConfigKey, source);
+            return config;
+        }
+
+        #endregion
+
+        public static SimplyRelease Log4net(this SimplyRelease config)
+        {
+            SourceManager.Do.Register<Log4netConfig>(config.ConfigKey, NullConfigSource<Log4netConfig>.Instance);
+            return config;
         }
 
     }

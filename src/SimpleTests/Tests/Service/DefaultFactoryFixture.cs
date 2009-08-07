@@ -15,7 +15,9 @@ namespace Simple.Tests.Service
         protected override Guid Configure()
         {
             Guid guid = new Guid();
-            DefaultHostSimply.Do.Configure(guid);
+
+            Simply.Get(guid).Configure.DefaultHost();
+
             Simply.Get(guid).Host(typeof(SimpleService));
             return guid;
         }
@@ -23,9 +25,8 @@ namespace Simple.Tests.Service
         protected override void Release(Guid guid)
         {
             Simply.Get(guid).StopServer();
-            SourceManager.Do.Remove<DefaultHostConfig>(guid);
-            SourceManager.Do.Remove<IServiceHostProvider>(guid);
-            SourceManager.Do.Remove<IServiceClientProvider>(guid);
+            
+            Simply.Get(guid).Release.DefaultHost();
         }
     }
 }

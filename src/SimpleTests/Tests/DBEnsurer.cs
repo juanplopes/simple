@@ -36,11 +36,12 @@ namespace Simple.Tests
 
         public static void Configure(object key)
         {
-            NHibernateSimply.Do.Configure(key,
-               XmlConfig.LoadXml<NHibernateConfig>(NHConfigurations.NHConfig1));
-            NHibernateSimply.Do.MapAssemblyOf<Empresa.Map>(key);
+            Simply.Get(key).Configure
+                .NHibernate().FromXml(NHConfigurations.NHConfig1)
+                .MappingFromAssemblyOf<Empresa.Map>()
+                .DefaultHost();
 
-            DefaultHostSimply.Do.Configure(key);
+
             Simply.Get(key).HostAssemblyOf(typeof(DBEnsurer));
             Simply.Get(key).AddServerHook(x => new DefaultCallHook(x, key));
         }

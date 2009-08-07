@@ -35,8 +35,8 @@ namespace Simple.Tests
 
                     Guid guid = Guid.NewGuid();
 
-                    RemotingSimply.Do.Configure(guid,
-                        XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(new Uri(args[1]))));
+                    Simply.Get(guid).Configure.Remoting()
+                        .FromXml(Helper.MakeConfig(new Uri(args[1])));
 
                     Simply.Get(guid).Host(typeof(SimpleService));
 
@@ -49,8 +49,8 @@ namespace Simple.Tests
 
                     Guid guid = Guid.NewGuid();
 
-                    RemotingSimply.Do.Configure(guid,
-                        XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(new Uri(args[1]))));
+                    Simply.Get(guid).Configure
+                        .Remoting().FromXml(Helper.MakeConfig(new Uri(args[1])));
 
                     BaseInterceptorFixture.ConfigureSvcs(guid);
 
@@ -64,8 +64,8 @@ namespace Simple.Tests
 
                     Guid guid = Guid.NewGuid();
 
-                    RemotingSimply.Do.Configure(guid,
-                        XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(new Uri(args[1]))));
+                    Simply.Get(guid).Configure
+                        .Remoting().FromXml(Helper.MakeConfig(new Uri(args[1])));
 
                     BaseInterceptorFixture.ConfigureSvcsWithoutHooks(guid);
 

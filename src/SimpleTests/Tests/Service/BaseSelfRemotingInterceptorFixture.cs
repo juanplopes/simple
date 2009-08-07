@@ -41,8 +41,8 @@ namespace Simple.Tests.Service
         {
             Guid guid = Guid.NewGuid();
 
-            RemotingSimply.Do.Configure(guid,
-                XmlConfig.LoadXml<RemotingConfig>(Helper.MakeConfig(Uri)));
+            Simply.Get(guid).Configure
+                .Remoting().FromXml(Helper.MakeConfig(Uri));
 
             ConfigureSvcsWithoutHooks(guid);
 
