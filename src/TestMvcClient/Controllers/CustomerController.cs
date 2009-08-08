@@ -16,9 +16,6 @@ namespace TestMvcClient.Controllers
 
         public ActionResult Index()
         {
-            var c = Customer.Load(1);
-            c.Region.ToString();
-
             return View(Customer.ListAll());
         }
 
