@@ -22,9 +22,9 @@ namespace TestMvcClient.Controllers
         //
         // GET: /Customer/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            return View(Customer.Load(id));
         }
 
         //
@@ -43,7 +43,7 @@ namespace TestMvcClient.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                customer.Save();
 
                 return RedirectToAction("Index");
             }
@@ -56,20 +56,20 @@ namespace TestMvcClient.Controllers
         //
         // GET: /Customer/Edit/5
  
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            return View(Customer.Load(id));
         }
 
         //
         // POST: /Customer/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Customer c)
         {
             try
             {
-                // TODO: Add update logic here
+                c.Update();
  
                 return RedirectToAction("Index");
             }

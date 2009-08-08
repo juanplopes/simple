@@ -38,18 +38,17 @@ namespace Simple.Services
             {
                 foreach (var hook in Enumerable.Reverse(list)) hook.Before();
 
+                logger.DebugFormat("Calling {0} in {1}...", method.Name, method.DeclaringType.Name);
+
                 if (Client) HeaderHandler.InjectCallHeaders(target, method, args);
                 else HeaderHandler.RecoverCallHeaders(target, method, args);
 
                 hookArgs.Return = Invoke(target, method, args);
 
-                logger.DebugFormat("Calling {0} in {1}...", method.Name, method.DeclaringType.Name);
-
                 if (Client) HeaderHandler.RecoverCallHeaders(target, method, args);
                 else HeaderHandler.InjectCallHeaders(target, method, args);
 
                 logger.DebugFormat("Returning from {0} in {1}...", method.Name, method.DeclaringType.Name);
-
 
                 foreach (var hook in list) hook.AfterSuccess();
 

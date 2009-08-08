@@ -30,6 +30,8 @@ namespace Simple.Tests.SampleServer
             public Map()
             {
                 WithTable("Customers");
+                Not.LazyLoad();
+
                 Id(x => x.Id, "CustomerID");
                 Map(x => x.CompanyName);
                 Map(x => x.ContactName);

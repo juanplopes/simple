@@ -11,7 +11,7 @@ using System.Runtime.Serialization;
 namespace Simple.Services
 {
     [Serializable]
-    public class CallHeaders : Hashtable, ILogicalThreadAffinative
+    public class CallHeaders : ILogicalThreadAffinative
     {
         private static ThreadData data = new ThreadData();
         private static object _store = new object();
@@ -28,27 +28,38 @@ namespace Simple.Services
                 return headers;
             }
         }
-        public static void Force(CallHeaders headers)
+
+        public Hashtable Data { get; protected set; }
+
+        public void Force(Hashtable headers)
         {
-            data.Set(_store, headers);
+            Data = headers;
         }
 
-        public CallHeaders() : base() { }
-        public CallHeaders(SerializationInfo info, StreamingContext context) : base(info, context) { }
-
-        public override object this[object key]
+        public object Get(object key)
         {
-            get
-            {
-                if (this.ContainsKey(key))
-                    return base[key];
-                else
-                    return null;
-            }
-            set
-            {
-                base[key] = value;
-            }
+            if (Data.Contains(key))
+                return Data[key];
+            else
+                return null;
         }
+
+        public void Set(object key, object value)
+        {
+            Data[key] = value;
+        }
+
+        public void Clear()
+        {
+            Data.Clear();
+        }
+
+        public object this[object key]
+        {
+            get { return Get(key); }
+            set { Set(key, value); }
+        }
+
+        public int Count { get { return Data.Count; } }
     }
 }

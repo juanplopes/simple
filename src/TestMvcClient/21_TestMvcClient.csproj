@@ -118,6 +118,8 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Views\Customer\Create.aspx" />
+    <Content Include="Views\Customer\Details.aspx" />
+    <Content Include="Views\Customer\Edit.aspx" />
     <Content Include="Views\Customer\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Content\Site.css" />
