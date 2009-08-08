@@ -8,19 +8,16 @@ using Simple.ConfigSource;
 using Simple.Logging;
 using System.Linq;
 using Simple.IO;
+using Simple.Tests.SampleServer;
+using Simple.Tests;
 namespace TestClient
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Simply.Do.Host(typeof(SimpleService));
-
-            for (int i = 0; i < 1000; i++)
-            {
-                var client = Simply.Do.Resolve<ISimpleService>();
-                client.GetInt32();
-            }
+            Simply.Get(NHConfig1.ConfigKey).Configure.RemotingDefault();
+            var c = Customer.Load(1);
         }
     }
 }

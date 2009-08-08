@@ -23,10 +23,10 @@ namespace Simple.Tests.SampleServer
             public Map()
             {
                 WithTable("Categories");
-                Id(x => x.Id, "[Category ID]").GeneratedBy.Identity();
-                Map(x => x.Name, "[Category Name]");
-                Map(x => x.Description, "Description");
-                Map(x => x.Picture, "Picture");
+                Id(x => x.Id, "CategoryID").GeneratedBy.Identity();
+                Map(x => x.Name, "CategoryName");
+                Map(x => x.Description);
+                Map(x => x.Picture);
             }
         }
     }

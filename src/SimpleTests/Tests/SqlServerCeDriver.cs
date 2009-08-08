@@ -20,5 +20,10 @@ namespace Simple.Tests
                 parameter.SqlDbType = SqlDbType.Image;
             }
         }
+
+        public override IDbConnection CreateConnection()
+        {
+            return base.CreateConnection();
+        }
     } 
 }

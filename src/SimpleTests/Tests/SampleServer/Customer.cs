@@ -30,13 +30,13 @@ namespace Simple.Tests.SampleServer
             public Map()
             {
                 WithTable("Customers");
-                Id(x => x.Id, "[Customer ID]");
-                Map(x => x.CompanyName, "[Company Name]");
-                Map(x => x.ContactName, "[Contact Name]");
+                Id(x => x.Id, "CustomerID");
+                Map(x => x.CompanyName);
+                Map(x => x.ContactName);
                 Map(x => x.Address);
                 Map(x => x.City);
                 Map(x => x.Region);
-                Map(x => x.PostalCode, "[Postal Code]");
+                Map(x => x.PostalCode);
                 Map(x => x.Country);
                 Map(x => x.Phone);
                 Map(x => x.Fax);

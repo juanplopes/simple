@@ -15,6 +15,7 @@ using System.Threading;
 using Simple.Threading;
 using Simple.Tests.DataAccess;
 using Simple.Tests.SampleServer;
+using System.IO;
 
 
 namespace Simple.Tests
@@ -35,6 +36,7 @@ namespace Simple.Tests
             }
             
             Simply simply = Simply.Get(NHConfig1.ConfigKey);
+            File.WriteAllBytes("Northwind.sdf", Database.Northwind);
 
             simply.Configure.Log4netToConsole();
             simply.Configure

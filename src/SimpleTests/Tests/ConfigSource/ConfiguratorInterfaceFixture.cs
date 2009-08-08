@@ -12,7 +12,7 @@ namespace Simple.Tests.ConfigSource
     public class ConfiguratorInterfaceFixture
     {
         [Test]
-        public void LoadFromFileTest()
+        public void LoadFromXmlTest()
         {
             IConfigSource<BasicTypesSampleWithoutAttr> source = null;
             new ConfiguratorInterface<BasicTypesSampleWithoutAttr, int>(
