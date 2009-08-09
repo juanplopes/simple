@@ -33,8 +33,7 @@ namespace Simple.Services
                 {
                     _cache = DynamicProxyFactory.Instance.CreateProxy(null, (o, m, p) =>
                     {
-                        Type retType = ((MethodInfo)m).ReturnType;
-                        return TypesHelper.GetBoxedDefaultInstance(retType);
+                        throw new NotImplementedException();
                     });
                 }
 

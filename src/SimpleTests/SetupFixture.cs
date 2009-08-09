@@ -16,7 +16,7 @@ class SetupFixture
         Simply.Do.Configure.Log4netToConsole();
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-        File.WriteAllBytes("Northwind.sdf", Database.Northwind);
+        File.WriteAllBytes("Northwind.sl3", Database.Northwind);
     }
 
     void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

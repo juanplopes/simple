@@ -82,8 +82,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <Private>True</Private>
+    <Reference Include="System.Data.SQLite, Version=1.0.61.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\System.Data.SQLite.DLL</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.ServiceModel">
@@ -106,6 +107,8 @@
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
     <Compile Include="Tests\SampleServer\Category.cs" />
     <Compile Include="Tests\SampleServer\Customer.cs" />
+    <Compile Include="Tests\SampleServer\Product.cs" />
+    <Compile Include="Tests\SampleServer\Supplier.cs" />
     <Compile Include="Tests\Service\BaseInterceptorFixture.samples.cs" />
     <Compile Include="Tests\Service\ChannelSelectorFixture.cs" />
     <Compile Include="Tests\Service\IpcRemotingFixtures.cs" />
@@ -154,12 +157,10 @@
     <Compile Include="Tests\SimpleLib\DynamicProxyFixture.cs" />
     <Compile Include="Tests\ConfigSource\XmlConfigSourceFixture.cs" />
     <Compile Include="Tests\ConfigSource\XmlFileConfigSourceFixture.cs" />
-    <Compile Include="Tests\SqlServerCeDriver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Northwind.sdf">
-    </Content>
     <Content Include="Resources\NHConfig1.xml" />
+    <None Include="Resources\Northwind.sl3" />
     <None Include="Resources\SimpleRemotingAny.xml" />
   </ItemGroup>
   <ItemGroup>

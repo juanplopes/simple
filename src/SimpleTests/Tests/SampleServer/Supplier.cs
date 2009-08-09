@@ -5,15 +5,13 @@ using System.Text;
 using FluentNHibernate.Mapping;
 using Simple.Services;
 using Simple.ConfigSource;
-using NHibernate;
-using NHibernate.SqlTypes;
 
 namespace Simple.Tests.SampleServer
 {
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
-    public class Customer : Entity<Customer, ICustomerService>
+    public class Supplier : Entity<Supplier, ISupplierService>
     {
-        public virtual string Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual string CompanyName { get; set; }
         public virtual string ContactName { get; set; }
         public virtual string ContactTitle { get; set; }
@@ -24,15 +22,16 @@ namespace Simple.Tests.SampleServer
         public virtual string Country { get; set; }
         public virtual string Phone { get; set; }
         public virtual string Fax { get; set; }
+        public virtual string HomePage { get; set; }
 
-        public class Map : ClassMap<Customer>
+        public class Map : ClassMap<Supplier>
         {
             public Map()
             {
-                WithTable("Customers");
+                WithTable("Suppliers");
                 Not.LazyLoad();
 
-                Id(x => x.Id, "CustomerID");
+                Id(x => x.Id, "SupplierID");
                 Map(x => x.CompanyName);
                 Map(x => x.ContactName);
                 Map(x => x.ContactTitle);
@@ -43,10 +42,13 @@ namespace Simple.Tests.SampleServer
                 Map(x => x.Country);
                 Map(x => x.Phone);
                 Map(x => x.Fax);
+                Map(x => x.HomePage);
             }
         }
     }
 
-    public interface ICustomerService : IEntityService<Customer> { }
-    public class CustomerService : EntityService<Customer>, ICustomerService { }
+
+    public interface ISupplierService : IEntityService<Supplier> { }
+    public class SupplierService : EntityService<Supplier>, ISupplierService { }
+
 }

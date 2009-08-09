@@ -27,7 +27,7 @@ namespace Simple.Tests.DataAccess
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
             var factory = factories[this];
 
-            Assert.AreEqual("NHibernate.Dialect.MsSqlCeDialect", factory.NHConfiguration.GetProperty("dialect"));
+            Assert.AreEqual("NHibernate.Dialect.SQLiteDialect", factory.NHConfiguration.GetProperty("dialect"));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Simple.Tests.DataAccess
 
             var config = Simply.Get(this).GetNHibernateConfig();
 
-            Assert.AreEqual(2, config.ClassMappings.Count);
+            Assert.AreEqual(4, config.ClassMappings.Count);
         }
     }
 }

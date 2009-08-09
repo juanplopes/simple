@@ -14,14 +14,29 @@ namespace Simple.Tests.DataAccess
         public void CheckCategories()
         {
             Assert.AreEqual(8, Category.CountAll());
-            Category.ListAll();
+            Category.PaginateAll(0, 1);
         }
 
         [Test]
         public void CheckCustomer()
         {
             Assert.AreEqual(91, Customer.CountAll());
-            Customer.ListAll();
+            Customer.PaginateAll(0, 1);
         }
+
+        [Test]
+        public void CheckProducts()
+        {
+            Assert.AreEqual(77, Product.CountAll());
+            Product.PaginateAll(0, 1);
+        }
+
+        [Test]
+        public void CheckSuppliers()
+        {
+            Assert.AreEqual(29, Supplier.CountAll());
+            Supplier.PaginateAll(0, 1);
+        }
+
     }
 }

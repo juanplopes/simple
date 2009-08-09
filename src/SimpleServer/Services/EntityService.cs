@@ -110,7 +110,7 @@ namespace Simple.Services
 
         public virtual Page<T> PaginateAll(OrderByCollection order, int skip, int take)
         {
-            return this.PaginateAll(order, skip, take);
+            return this.PaginateByFilter(BooleanExpression.True, order, skip, take);
         }
         protected virtual ICriteria CreateCriteriaByFilter(Filter filter, OrderByCollection order)
         {
