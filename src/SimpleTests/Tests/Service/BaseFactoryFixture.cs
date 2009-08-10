@@ -11,6 +11,8 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using System.Security.Principal;
+using Simple.Expressions;
+using System.Linq.Expressions;
 
 namespace Simple.Tests.Service
 {
@@ -30,6 +32,17 @@ namespace Simple.Tests.Service
         public void Teardown()
         {
             Release(ConfigKey);
+        }
+
+        [Test]
+        public void SimpleExpressionSerializationTest()
+        {
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            Expression<Predicate<int>> pred = i => i == 42;
+            EditableExpression expr = EditableExpression.CreateEditableExpression(pred);
+                 
+            Assert.IsFalse(service.TestExpression(expr, 41));
+            Assert.IsTrue(service.TestExpression(expr, 42));
         }
 
 
@@ -196,6 +209,7 @@ namespace Simple.Tests.Service
         bool TestPassedIdentity();
         string this[int index] { get; }
         int SimpleProp { get; }
+        bool TestExpression(EditableExpression expr, int value);
     }
 
     public interface IFailService : IService
@@ -273,7 +287,7 @@ namespace Simple.Tests.Service
         public int TestHeaderPassingAndReturning()
         {
             int a = (int)CallHeaders.Do["returnMe"];
-            CallHeaders.Do["returnMe"] =  a + 2;
+            CallHeaders.Do["returnMe"] = a + 2;
             return a;
         }
 
@@ -315,6 +329,16 @@ namespace Simple.Tests.Service
                 Oi = "whatever",
                 Tchau = 42
             };
+        }
+
+        #endregion
+
+        #region ISimpleService Members
+
+
+        public bool TestExpression(EditableExpression expr, int value)
+        {
+            return ((Expression<Predicate<int>>)expr.ToExpression()).Compile()(value);
         }
 
         #endregion

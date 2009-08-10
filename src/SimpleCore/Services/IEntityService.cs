@@ -5,6 +5,7 @@ using System.Text;
 using System.ServiceModel;
 using Simple.DataAccess;
 using Simple.Filters;
+using System.Linq.Expressions;
 
 namespace Simple.Services
 {
