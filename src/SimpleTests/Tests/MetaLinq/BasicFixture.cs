@@ -92,5 +92,13 @@ namespace Simple.Tests.MetaLinq
             int x = 42;
             TestIt(y => x.ToString() == y , "41");
         }
+
+        [Test]
+        public void TestArrayCreation()
+        {
+            int h=10;
+            TestIt(y => new int[h+y], 5);
+        }
+
     }
 }
