@@ -5,6 +5,8 @@ using Simple.Filters;
 using Simple.DataAccess;
 using Simple.Reflection;
 using Simple.ConfigSource;
+using System.Linq.Expressions;
+using Simple.Expressions;
 
 namespace Simple.Services
 {
@@ -44,6 +46,11 @@ namespace Simple.Services
         public static T LoadByFilter(Filter filter)
         {
             return Do.LoadByFilter(filter);
+        }
+
+        public static T LoadByExpression(Expression<Func<T, bool>> expr)
+        {
+            return Do.LoadByExpression(EditableExpression.CreateEditableExpression(expr));
         }
 
         public static T LoadByExample(T example)

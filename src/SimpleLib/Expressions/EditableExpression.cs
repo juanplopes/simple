@@ -82,7 +82,14 @@ namespace Simple.Expressions
             else if (ex is LambdaExpression) return new EditableLambdaExpression(ex as LambdaExpression);
             else if (ex is ParameterExpression) return new EditableParameterExpression(ex as ParameterExpression);
             else if (ex is ListInitExpression) return new EditableListInitExpression(ex as ListInitExpression);
-            else if (ex is MemberExpression) return new EditableMemberExpression(ex as MemberExpression);
+            else if (ex is MemberExpression && (ex as MemberExpression).Member.DeclaringType.IsSerializable)
+            {
+                return new EditableMemberExpression(ex as MemberExpression);
+            }
+            else if (ex is MemberExpression && !(ex as MemberExpression).Member.DeclaringType.IsSerializable)
+            {
+                return new EditableConstantExpression(Expression.Lambda(ex).Compile().DynamicInvoke());
+            }
             else if (ex is MemberInitExpression) return new EditableMemberInitExpression(ex as MemberInitExpression);
             else if (ex is MethodCallExpression) return new EditableMethodCallExpression(ex as MethodCallExpression);
             else if (ex is NewArrayExpression) return new EditableNewArrayExpression(ex as NewArrayExpression);

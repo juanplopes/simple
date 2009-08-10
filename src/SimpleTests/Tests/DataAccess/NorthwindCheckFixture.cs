@@ -29,6 +29,10 @@ namespace Simple.Tests.DataAccess
         {
             Assert.AreEqual(77, Product.CountAll());
             Product.PaginateAll(0, 1);
+
+            Product p = Product.Load(2);
+            Assert.IsNotNull(p.Category); Assert.AreEqual("Beverages", p.Category.Name);
+            Assert.IsNotNull(p.Supplier); Assert.AreEqual("Exotic Liquids", p.Supplier.CompanyName);
         }
 
         [Test]

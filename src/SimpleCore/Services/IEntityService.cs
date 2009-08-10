@@ -6,6 +6,7 @@ using System.ServiceModel;
 using Simple.DataAccess;
 using Simple.Filters;
 using System.Linq.Expressions;
+using Simple.Expressions;
 
 namespace Simple.Services
 {
@@ -20,6 +21,9 @@ namespace Simple.Services
 
         [OperationContract]
         T LoadByFilter(Filter filter);
+
+        [OperationContract]
+        T LoadByExpression(EditableExpression expression);
 
         [OperationContract]
         IList<T> ListAll(OrderByCollection order);

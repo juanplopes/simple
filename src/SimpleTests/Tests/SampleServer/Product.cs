@@ -27,11 +27,12 @@ namespace Simple.Tests.SampleServer
             public Map()
             {
                 WithTable("Products");
+                Not.LazyLoad();
 
                 Id(x => x.Id, "ProductID");
                 Map(x => x.Name, "ProductName");
-                HasOne(x => x.Supplier).WithForeignKey("SupplierID");
-                HasOne(x => x.Category).WithForeignKey("CategoryID");
+                References(x => x.Supplier, "SupplierID").Not.LazyLoad();
+                References(x => x.Category, "CategoryID").Not.LazyLoad() ;
                 Map(x => x.QuantityPerUnit);
                 Map(x => x.UnitPrice);
                 Map(x => x.UnitsInStock);

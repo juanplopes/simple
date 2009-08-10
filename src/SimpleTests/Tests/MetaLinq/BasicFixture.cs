@@ -83,7 +83,14 @@ namespace Simple.Tests.MetaLinq
         public void TestStackReference()
         {
             int x = 42;
-            TestIt(y => x==y, 41);
+            TestIt(y => x == y, 41);
+        }
+
+        [Test]
+        public void TestStackMethodCall()
+        {
+            int x = 42;
+            TestIt(y => x.ToString() == y , "41");
         }
     }
 }

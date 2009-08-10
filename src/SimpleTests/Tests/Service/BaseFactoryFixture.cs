@@ -45,6 +45,17 @@ namespace Simple.Tests.Service
             Assert.IsTrue(service.TestExpression(expr, 42));
         }
 
+        [Test]
+        public void StackReferenceExpressionSerializationTest()
+        {
+            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            int hh = 42;
+            Expression<Predicate<int>> pred = i => i == hh;
+            EditableExpression expr = EditableExpression.CreateEditableExpression(pred);
+
+            Assert.IsFalse(service.TestExpression(expr, 41));
+            Assert.IsTrue(service.TestExpression(expr, 42));
+        }
 
         [Test]
         public void SimpleServiceMarshalingTest()

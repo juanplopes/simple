@@ -12,6 +12,7 @@ using log4net;
 using System.Linq;
 using Simple.ConfigSource;
 using System.Runtime.Remoting.Proxies;
+using System.Linq.Expressions;
 
 namespace Simple.Services
 {
@@ -162,5 +163,16 @@ namespace Simple.Services
             ICriteria criteria = CreateCriteriaByFilter(filter, null);
             return GetDao().DeleteByCriteria(criteria);
         }
+
+        #region IEntityService<T> Members
+
+
+        public T LoadByExpression(Simple.Expressions.EditableExpression expression)
+        {
+            var whereClause = (Expression<Func<T, bool>>)expression.ToExpression();
+            return Linq().Where(whereClause).FirstOrDefault();
+        }
+
+        #endregion
     }
 }

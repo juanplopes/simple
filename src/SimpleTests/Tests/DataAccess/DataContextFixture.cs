@@ -82,6 +82,8 @@ namespace Simple.Tests.DataAccess
             {
                 Category c = Category.Load(1);
 
+                string saveOldName = c.Name;
+
                 using (var tx1 = dx.Session.BeginTransaction())
                 {
                     using (var tx2 = dx.Session.BeginTransaction())
@@ -98,10 +100,20 @@ namespace Simple.Tests.DataAccess
                     c = Category.Load(1);
                     Assert.AreEqual("NewName", c.Name);
 
+                    using (var tx2 = dx.Session.BeginTransaction())
+                    {
+                        c = Category.Load(1);
+                        c.Name = saveOldName;
+                        c.Update();
+
+                        tx2.Commit();
+                    }
+
                     tx1.Rollback();
                 }
 
                 Assert.AreNotEqual("NewName", c.Name);
+
             }
         }
     }
