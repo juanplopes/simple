@@ -20,7 +20,7 @@ namespace Simple.Common
 
         public static int ModRound(int p, int q)
         {
-            return (int)ModRound(p, q);
+            return (int)(p - RealMod(p, q));
         }
 
         public static void Swap<T>(ref T a, ref T b)

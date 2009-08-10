@@ -48,6 +48,7 @@ namespace Simple.DynamicProxy
                 return constructionResponse;
             }
             IMethodCallMessage methodMessage = new MethodCallMessageWrapper((IMethodCallMessage)message);
+            
             MethodBase method = methodMessage.MethodBase;
 
             object returnValue = null;

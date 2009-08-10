@@ -27,7 +27,7 @@ namespace Simple.Common
         protected static IEnumerable<int> _primes =
             new LazyEnumerable<int>(GetPrimesEnumerable(TopSieveNumber)).Activate();
 
-        public static IEnumerable<int> GetPrimesEnumrable()
+        public static IEnumerable<int> GetPrimesEnumerable()
         {
             return _primes;
         }

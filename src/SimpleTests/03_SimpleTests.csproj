@@ -144,10 +144,11 @@
     <Compile Include="Tests\ConfigSource\FactoryFixture.cs" />
     <Compile Include="Tests\ConfigSource\LoggerFactoryFixture.cs" />
     <Compile Include="Tests\SimpleLib\ClassNameHelperFixture.cs" />
+    <Compile Include="Tests\SimpleLib\EnumTypeFixture.cs" />
     <Compile Include="Tests\SimpleLib\InvokerFactoryFixture.cs" />
     <Compile Include="Tests\SimpleLib\MarshallableDynamicProxyFixture.cs" />
     <Compile Include="Tests\SimpleLib\MiscFixture.cs" />
-    <Compile Include="Tests\SimpleLib\PrimeNumbersFixture.cs" />
+    <Compile Include="Tests\SimpleLib\MathHelperFixture.cs" />
     <Compile Include="Tests\SimpleLib\StringFragmenterFixture.cs" />
     <Compile Include="Tests\SimpleLib\Sample\AttributeCacheClasses.cs" />
     <Compile Include="Tests\SimpleLib\Sample\TestStringClass.cs" />

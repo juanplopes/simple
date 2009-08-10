@@ -83,7 +83,7 @@ namespace Simple.Reflection
             if (obj == null) return 1;
             if (!_entityType.IsAssignableFrom(obj.GetType())) return -1;
 
-            IEnumerator<int> primes = PrimeNumbers.GetPrimesEnumrable().GetEnumerator();
+            IEnumerator<int> primes = PrimeNumbers.GetPrimesEnumerable().GetEnumerator();
             int res = 1;
 
             var ignore = ToDic(toIgnore);
