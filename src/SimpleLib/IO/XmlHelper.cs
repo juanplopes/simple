@@ -10,16 +10,7 @@ namespace Simple.IO
 {
     public class XmlHelper
     {
-        public static string QuickSerialize(object obj)
-        {
-            XmlSerializer serializer = new XmlSerializer(obj.GetType());
-            MemoryStream stream = new MemoryStream();
-            serializer.Serialize(stream, obj);
-            StreamReader reader = new StreamReader(stream);
-            stream.Seek(0, SeekOrigin.Begin);
-            return reader.ReadToEnd();
-        }
-
+        
         public static Stream GetStream(string xml)
         {
             MemoryStream stream = new MemoryStream();

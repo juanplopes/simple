@@ -109,6 +109,7 @@
     <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
     <Compile Include="Tests\Experiences\ReflectionFixture.cs" />
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
+    <Compile Include="Tests\MetaLinq\BasicFixture.cs" />
     <Compile Include="Tests\SampleServer\Category.cs" />
     <Compile Include="Tests\SampleServer\Customer.cs" />
     <Compile Include="Tests\SampleServer\Product.cs" />

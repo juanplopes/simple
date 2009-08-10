@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace Simple.Expressions
 {
+    [Serializable]
     public class EditableMemberInfoCollection : List<string>
     {
         public EditableMemberInfoCollection() : base() { }

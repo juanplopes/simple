@@ -88,6 +88,13 @@
     <Compile Include="Expressions\EditableMemberBinding.cs" />
     <Compile Include="Expressions\EditableMemberListBinding.cs" />
     <Compile Include="Expressions\EditableMemberMemberBinding.cs" />
+    <Compile Include="IO\Serialization\BinarySimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\DataContractSimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\ISimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\NetDataContractSimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\SimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\StreamHelper.cs" />
+    <Compile Include="IO\Serialization\XmlSimpleSerializer.cs" />
     <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netConfig.cs" />
     <Compile Include="ConfigSource\FactoryManager.cs" />

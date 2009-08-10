@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using Simple.Common;
+using Simple.IO.Serialization;
 
 namespace Simple.Persistence
 {
@@ -11,18 +13,12 @@ namespace Simple.Persistence
     {
         public string ToBase64String()
         {
-            BinaryFormatter lobjSerializer = new BinaryFormatter();
-            MemoryStream lobjStream = new MemoryStream();
-            lobjSerializer.Serialize(lobjStream, this);
-
-            return Convert.ToBase64String(lobjStream.GetBuffer());
+            return Convert.ToBase64String(SimpleSerializer.Binary().Serialize(this));
         }
 
         public static T FromBase64String(string pstrBase64)
         {
-            BinaryFormatter lobjDeserializer = new BinaryFormatter();
-            MemoryStream lobjStream = new MemoryStream(Convert.FromBase64String(pstrBase64));
-            return (T)lobjDeserializer.Deserialize(lobjStream);
+            return (T)SimpleSerializer.Binary().Deserialize(Convert.FromBase64String(pstrBase64));
         }
     }
 }
