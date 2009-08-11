@@ -41,7 +41,15 @@ namespace SimpleLibrary.DataAccess
                     PersistenceFault.ReasonType.ObjectNotFound,
                     e.Message).Throw();
                 return true;
-
+            }
+            else if (e is TransientObjectException)
+            {
+                new PersistenceFault(PersistenceFault.ReasonType.TransientObject, e.Message).Throw();
+                return true;
+            }
+            else if (e is UnresolvableObjectException)
+            {
+                new PersistenceFault(PersistenceFault.ReasonType.ObjectNotFound, e.Message).Throw();
             }
             return false;
         }

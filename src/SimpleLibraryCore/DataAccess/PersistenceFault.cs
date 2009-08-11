@@ -15,7 +15,8 @@ namespace SimpleLibrary.DataAccess
         {
             OptimisticLockFailed,
             ADOException,
-            ObjectNotFound
+            ObjectNotFound,
+            TransientObject
         }
 
         public PersistenceFault() : base() { }
