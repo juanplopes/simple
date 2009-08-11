@@ -8,20 +8,23 @@ using Simple.Expressions;
 namespace Simple.Entities
 {
     [Serializable]
-    public class OrderByCollection : List<OrderBy>
+    public class OrderBy<T> : List<OrderByItem>
     {
-        public OrderByCollection Asc<T, O>(Expression<Func<T, O>> expr)
+        public OrderBy<T> Asc<O>(Expression<Func<T, O>> expr)
         {
-            this.Add(new OrderBy(EditableExpression.CreateEditableExpression(expr), false));
-
+            this.Add(new OrderByItem(EditableExpression.CreateEditableExpression(expr), false));
             return this;
         }
 
-        public OrderByCollection Desc<T, O>(Expression<Func<T, O>> expr)
+        public OrderBy<T> Desc<O>(Expression<Func<T, O>> expr)
         {
-            this.Add(new OrderBy(EditableExpression.CreateEditableExpression(expr), true));
-
+            this.Add(new OrderByItem(EditableExpression.CreateEditableExpression(expr), true));
             return this;
+        }
+
+        public OrderBy<T> None
+        {
+            get { return this; }
         }
     }
 }

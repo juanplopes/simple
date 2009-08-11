@@ -17,13 +17,13 @@ namespace Simple.Entities
         T Load(object id);
 
         [OperationContract]
-        T FindByFilter(EditableExpression filter, OrderByCollection orderBy);
+        T FindByFilter(EditableExpression filter, OrderBy<T> orderBy);
 
         [OperationContract]
-        IList<T> List(OrderByCollection order);
+        IList<T> List(OrderBy<T> order);
 
         [OperationContract]
-        IList<T> ListByFilter(EditableExpression filter, OrderByCollection order);
+        IList<T> ListByFilter(EditableExpression filter, OrderBy<T> order);
 
         [OperationContract]
         int Count();
@@ -32,10 +32,10 @@ namespace Simple.Entities
         int CountByFilter(EditableExpression filter);
 
         [OperationContract]
-        Page<T> Paginate(OrderByCollection order, int skip, int take);
+        Page<T> Paginate(OrderBy<T> order, int skip, int take);
 
         [OperationContract]
-        Page<T> PaginateByFilter(EditableExpression filter, OrderByCollection order, int skip, int take);
+        Page<T> PaginateByFilter(EditableExpression filter, OrderBy<T> order, int skip, int take);
 
         [OperationContract]
         void DeleteById(object id);

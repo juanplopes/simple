@@ -55,52 +55,52 @@ namespace Simple.Entities
 
         public T Find(Expression<Func<T, bool>> filter)
         {
-            return Rules.FindByFilter(filter.ToEditable(), OrderBy.None);
+            return Rules.FindByFilter(filter.ToEditable(), new OrderBy<T>());
         }
 
-        public T Find(Expression<Func<T, bool>> filter, OrderByCollection orderBy)
+        public T Find(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy)
         {
-            return Rules.FindByFilter(filter.ToEditable(), orderBy);
+            return Rules.FindByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()));
         }
 
 
         public IList<T> List()
         {
-            return Rules.List(OrderBy.None);
+            return Rules.List(new OrderBy<T>());
         }
 
-        public IList<T> List(OrderByCollection orderBy)
+        public IList<T> List(Func<OrderBy<T>, OrderBy<T>> orderBy)
         {
-            return Rules.List(orderBy);
+            return Rules.List(orderBy(new OrderBy<T>()));
         }
 
         public IList<T> List(Expression<Func<T, bool>> filter)
         {
-            return Rules.ListByFilter(filter.ToEditable(), OrderBy.None);
+            return Rules.ListByFilter(filter.ToEditable(), new OrderBy<T>());
         }
 
-        public IList<T> List(Expression<Func<T, bool>> filter, OrderByCollection orderBy)
+        public IList<T> List(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy)
         {
-            return Rules.ListByFilter(filter.ToEditable(), orderBy);
+            return Rules.ListByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()));
         }
 
         public Page<T> Paginate(Expression<Func<T, bool>> filter, int skip, int take)
         {
-            return Rules.PaginateByFilter(filter.ToEditable(), OrderBy.None, skip, take);
+            return Rules.PaginateByFilter(filter.ToEditable(), new OrderBy<T>(), skip, take);
         }
 
-        public Page<T> Paginate(Expression<Func<T, bool>> filter, OrderByCollection orderBy, int skip, int take)
+        public Page<T> Paginate(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
         {
-            return Rules.PaginateByFilter(filter.ToEditable(), orderBy, skip, take);
+            return Rules.PaginateByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()), skip, take);
         }
 
         public Page<T> Paginate(int skip, int take)
         {
-            return Rules.Paginate(OrderBy.None, skip, take);
+            return Rules.Paginate(new OrderBy<T>(), skip, take);
         }
-        public Page<T> Paginate(OrderByCollection orderBy, int skip, int take)
+        public Page<T> Paginate(Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
         {
-            return Rules.Paginate(orderBy, skip, take);
+            return Rules.Paginate(orderBy(new OrderBy<T>()), skip, take);
         }
 
         public void Delete(object id)

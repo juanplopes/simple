@@ -181,17 +181,17 @@ namespace Simple.Entities
             throw new NotImplementedException();
         }
 
-        public T FindByFilter(Simple.Expressions.EditableExpression filter, OrderByCollection orderBy)
+        public T FindByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> orderBy)
         {
             throw new NotImplementedException();
         }
 
-        public IList<T> List(OrderByCollection order)
+        public IList<T> List(OrderBy<T> order)
         {
             throw new NotImplementedException();
         }
 
-        public IList<T> ListByFilter(Simple.Expressions.EditableExpression filter, OrderByCollection order)
+        public IList<T> ListByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order)
         {
             throw new NotImplementedException();
         }
@@ -206,12 +206,12 @@ namespace Simple.Entities
             throw new NotImplementedException();
         }
 
-        public Page<T> Paginate(OrderByCollection order, int skip, int take)
+        public Page<T> Paginate(OrderBy<T> order, int skip, int take)
         {
             throw new NotImplementedException();
         }
 
-        public Page<T> PaginateByFilter(Simple.Expressions.EditableExpression filter, OrderByCollection order, int skip, int take)
+        public Page<T> PaginateByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order, int skip, int take)
         {
             throw new NotImplementedException();
         }
