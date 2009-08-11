@@ -12,6 +12,8 @@ using System.Linq;
 using Simple.ConfigSource;
 using System.Runtime.Remoting.Proxies;
 using System.Linq.Expressions;
+using Simple.Services;
+using Simple.Expressions;
 
 namespace Simple.Entities
 {
@@ -39,8 +41,25 @@ namespace Simple.Entities
         {
             get
             {
-                return DefaultConfigAttribute.GetKey(typeof(T));
+                return SimpleContext.Get().ConfigKey ?? DefaultConfigAttribute.GetKey(typeof(T));
             }
+        }
+
+        protected virtual D GetDao()
+        {
+            D dao = new D();
+            dao.Session = Simply.Do[ConfigKey].GetSession();
+            return dao;
+        }
+
+        protected virtual IOrderedQueryable<Q> Linq<Q>()
+        {
+            return GetDao().Linq<Q>();
+        }
+
+        protected virtual IOrderedQueryable<T> Linq()
+        {
+            return GetDao().Linq();
         }
 
         //public bool HeartBeat()
@@ -49,22 +68,7 @@ namespace Simple.Entities
         //    return true;
         //}
 
-        //protected virtual D GetDao()
-        //{
-        //    D dao = new D();
-        //    dao.Session = Simply.Do[ConfigKey].GetSession();
-        //    return dao;
-        //}
-
-        //protected virtual IOrderedQueryable<Q> Linq<Q>()
-        //{
-        //    return GetDao().Linq<Q>();
-        //}
-
-        //protected virtual IOrderedQueryable<T> Linq()
-        //{
-        //    return GetDao().Linq();
-        //}
+       
 
         //public virtual T Load(object id)
         //{
@@ -178,32 +182,64 @@ namespace Simple.Entities
 
         public T Load(object id)
         {
-            throw new NotImplementedException();
+            return GetDao().Load(id);
         }
 
-        public T FindByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> orderBy)
+        protected IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy, int? skip, int? take)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = Linq();
+
+            if (filter != null)
+                return query.Where((Expression<Func<T, bool>>)filter.ToExpression());
+
+            if (orderBy != null && orderBy.Count > 0)
+            {
+                IOrderedQueryable<T> tempQuery;
+                if (orderBy[0].Backwards)
+                    tempQuery = query.OrderByDescending(orderBy[0].ToExpression<T>());
+                else
+                    tempQuery = query.OrderBy(orderBy[0].ToExpression<T>());
+
+                for (int i = 1; i < orderBy.Count; i++)
+                {
+                    if (orderBy[i].Backwards)
+                        tempQuery = tempQuery.ThenByDescending(orderBy[i].ToExpression<T>());
+                    else
+                        tempQuery = tempQuery.ThenBy(orderBy[i].ToExpression<T>());
+
+                }
+                query = tempQuery;
+            }
+
+            if (skip.HasValue) query = query.Skip(skip.Value);
+            if (take.HasValue) query = query.Take(take.Value);
+
+            return query;
+        }
+
+        public T FindByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order)
+        {
+            return GetDefaultQueriable(filter, order, null, null).FirstOrDefault();
         }
 
         public IList<T> List(OrderBy<T> order)
         {
-            throw new NotImplementedException();
+            return GetDefaultQueriable(null, order, null, null).ToList();
         }
 
         public IList<T> ListByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order)
         {
-            throw new NotImplementedException();
+            return GetDefaultQueriable(filter, order, null, null).ToList();
         }
 
         public int Count()
         {
-            throw new NotImplementedException();
+            return GetDefaultQueriable(null, null, null, null).Count();
         }
 
         public int CountByFilter(Simple.Expressions.EditableExpression filter)
         {
-            throw new NotImplementedException();
+            return GetDefaultQueriable(filter, null, null, null).Count();
         }
 
         public Page<T> Paginate(OrderBy<T> order, int skip, int take)

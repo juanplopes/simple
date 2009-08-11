@@ -10,13 +10,13 @@ namespace Simple.Entities
     [Serializable]
     public class OrderBy<T> : List<OrderByItem>
     {
-        public OrderBy<T> Asc<O>(Expression<Func<T, O>> expr)
+        public OrderBy<T> Asc(Expression<Func<T, object>> expr)
         {
             this.Add(new OrderByItem(EditableExpression.CreateEditableExpression(expr), false));
             return this;
         }
 
-        public OrderBy<T> Desc<O>(Expression<Func<T, O>> expr)
+        public OrderBy<T> Desc<O>(Expression<Func<T, object>> expr)
         {
             this.Add(new OrderByItem(EditableExpression.CreateEditableExpression(expr), true));
             return this;

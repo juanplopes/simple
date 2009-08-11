@@ -108,13 +108,6 @@ namespace Simple.DataAccess
             return Session.CreateMultiCriteria();
         }
 
-        public T LoadByExample(T example)
-        {
-            ICriteria criteria = CreateCriteria();
-            criteria.Add(Example.Create(example));
-            return criteria.UniqueResult<T>();
-        }
-
         public IList<T> ListByExample(T example)
         {
             ICriteria criteria = CreateCriteria();
@@ -203,6 +196,11 @@ namespace Simple.DataAccess
             }
             if (flush) Session.Flush();
             return list.Count;
+        }
+
+        public T Merge(T entity)
+        {
+            return (T)Session.Merge(entity);
         }
 
         public virtual object TestMethod(object obj)

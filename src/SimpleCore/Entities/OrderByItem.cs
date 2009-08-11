@@ -20,5 +20,10 @@ namespace Simple.Entities
         }
 
         public OrderByItem(EditableExpression expr) : this(expr, false) { }
+
+        public Expression<Func<T, object>> ToExpression<T>()
+        {
+            return (Expression<Func<T, object>>)Expression.ToExpression();
+        }
     }
 }

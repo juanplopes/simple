@@ -34,6 +34,7 @@ namespace Simple.Services
     public class SimpleContext
     {
         public string Username { get; set; }
+        public object ConfigKey { get; set; }
 
         public static SimpleContext Get()
         {
