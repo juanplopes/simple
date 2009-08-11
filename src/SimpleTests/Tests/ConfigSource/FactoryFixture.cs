@@ -57,6 +57,22 @@ namespace Simple.Tests.ConfigSource
         }
 
         [Test]
+        public void BestKeyOfTests()
+        {
+            Assert.AreEqual(1, SourceManager.Do.BestKeyOf(1, SourceManager.Do.DefaultKey, 3));
+            Assert.AreEqual(1, SourceManager.Do.BestKeyOf(1, null, 3));
+
+            Assert.AreEqual(2, SourceManager.Do.BestKeyOf(null, 2, 3));
+            Assert.AreEqual(2, SourceManager.Do.BestKeyOf(SourceManager.Do.DefaultKey, 2, 3));
+
+            Assert.AreEqual(3, SourceManager.Do.BestKeyOf(null, SourceManager.Do.DefaultKey, 3));
+            Assert.AreEqual(3, SourceManager.Do.BestKeyOf(SourceManager.Do.DefaultKey, null, 3));
+
+            Assert.AreEqual(null, SourceManager.Do.BestKeyOf(null, SourceManager.Do.DefaultKey, null));
+            Assert.AreEqual(SourceManager.Do.DefaultKey, SourceManager.Do.BestKeyOf(null, null, SourceManager.Do.DefaultKey));
+        }
+
+        [Test]
         public void RedoSourcesFactoredTest()
         {
             IConfigSource<BasicTypesSampleWithoutAttr> src =

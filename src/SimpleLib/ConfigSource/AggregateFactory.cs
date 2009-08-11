@@ -13,6 +13,12 @@ namespace Simple.ConfigSource
         }
         public object ConfigKey { get; private set; }
 
+
+        protected object BestKeyOf(params object[] keys)
+        {
+            return SourceManager.Do.BestKeyOf(keys);
+        }
+
         static Dictionary<object, THIS> _instances = new Dictionary<object, THIS>();
         public static THIS Do
         {

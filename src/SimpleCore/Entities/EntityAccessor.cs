@@ -6,6 +6,7 @@ using Simple.ConfigSource;
 using System.Linq.Expressions;
 using Simple.Expressions;
 using Simple.DataAccess;
+using Simple.Services;
 
 namespace Simple.Entities
 {
@@ -24,13 +25,14 @@ namespace Simple.Entities
         {
             get
             {
-                return DefaultConfigAttribute.GetKey(typeof(T));
+                return BestKeyOf(ConfigKey, DefaultConfigAttribute.GetKey(typeof(T)));
             }
         }
 
         protected R Rules
         {
-            get { return Simply.Do[ConfigKey ?? DefaultKey].Resolve<R>(); }
+            get { return 
+                Simply.Do[DefaultKey].Resolve<R>(); }
         }
 
         public R GetService()

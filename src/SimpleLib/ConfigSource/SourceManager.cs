@@ -99,5 +99,16 @@ namespace Simple.ConfigSource
         {
             factory.Init(SourceFor<C>.Do.Get(key));
         }
+
+        public object BestKeyOf(params object[] keys)
+        {
+            object ret = null;
+            foreach (object obj in keys)
+            {
+                ret = obj;
+                if (ret != null && ret != SourceManager.Do.DefaultKey) break;
+            }
+            return ret;
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace Simple.Entities
         {
             get
             {
-                return SimpleContext.Get().ConfigKey ?? DefaultConfigAttribute.GetKey(typeof(T));
+                return SourceManager.Do.BestKeyOf(SimpleContext.Get().ConfigKey, DefaultConfigAttribute.GetKey(typeof(T)));
             }
         }
 
@@ -244,47 +244,61 @@ namespace Simple.Entities
 
         public Page<T> Paginate(OrderBy<T> order, int skip, int take)
         {
-            throw new NotImplementedException();
+            IQueryable<T> q = GetDefaultQueriable(null, order, skip, take);
+
+            return new Page<T>(q.ToList(), q.Count());
         }
 
         public Page<T> PaginateByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order, int skip, int take)
         {
-            throw new NotImplementedException();
+            IQueryable<T> q = GetDefaultQueriable(filter, order, skip, take);
+
+            return new Page<T>(q.ToList(), q.Count());
         }
 
         public void DeleteById(object id)
         {
-            throw new NotImplementedException();
+            GetDao().Delete(Load(id));
         }
 
         public int DeleteByFilter(Simple.Expressions.EditableExpression filter)
         {
-            throw new NotImplementedException();
+            int res = 0;
+            foreach (var entity in ListByFilter(filter, null))
+            {
+                GetDao().Delete(entity);
+                res++;
+            }
+            return res;
         }
 
         public T SaveOrUpdate(T entity)
         {
-            throw new NotImplementedException();
+            GetDao().SaveOrUpdate(entity);
+            return entity;
         }
 
         public T Save(T entity)
         {
-            throw new NotImplementedException();
+            GetDao().Save(entity);
+            return entity;
         }
 
         public T Update(T entity)
         {
-            throw new NotImplementedException();
+            GetDao().Update(entity);
+            return entity;
         }
 
         public T Persist(T entity)
         {
-            throw new NotImplementedException();
+            GetDao().Persist(entity);
+            return entity;
         }
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            GetDao().Delete(entity);
         }
 
         #endregion
