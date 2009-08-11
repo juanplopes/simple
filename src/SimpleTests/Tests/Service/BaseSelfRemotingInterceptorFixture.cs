@@ -41,7 +41,7 @@ namespace Simple.Tests.Service
         {
             Guid guid = Guid.NewGuid();
 
-            Simply.Get(guid).Configure
+            Simply.Do[guid].Configure
                 .Remoting().FromXml(Helper.MakeConfig(Uri));
 
             ConfigureSvcsWithoutHooks(guid);
@@ -51,7 +51,7 @@ namespace Simple.Tests.Service
 
         protected override void Release(Guid guid)
         {
-            Simply.Get(guid).StopServer();
+            Simply.Do[guid].StopServer();
         }
     }
 }

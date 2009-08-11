@@ -13,7 +13,7 @@ namespace Simple.Tests.Service
     {
         public override Action<Guid, Func<CallHookArgs, ICallHook>> HookFunc1
         {
-            get { return (g, h) => { Simply.Get(g).AddServerHook(h); }; }
+            get { return (g, h) => { Simply.Do[g].AddServerHook(h); }; }
         }
 
         public override Action<Guid, Func<CallHookArgs, ICallHook>> HookFunc2
@@ -27,7 +27,7 @@ namespace Simple.Tests.Service
     {
         public override Action<Guid, Func<CallHookArgs, ICallHook>> HookFunc1
         {
-            get { return (g, h) => { Simply.Get(g).AddClientHook(h); }; }
+            get { return (g, h) => { Simply.Do[g].AddClientHook(h); }; }
         }
         public override Action<Guid, Func<CallHookArgs, ICallHook>> HookFunc2
         {
@@ -39,11 +39,11 @@ namespace Simple.Tests.Service
     {
         public override Action<Guid, Func<CallHookArgs, ICallHook>> HookFunc1
         {
-            get { return (g, h) => { Simply.Get(g).AddServerHook(h); }; }
+            get { return (g, h) => { Simply.Do[g].AddServerHook(h); }; }
         }
         public override Action<Guid, Func<CallHookArgs, ICallHook>> HookFunc2
         {
-            get { return (g, h) => { Simply.Get(g).AddClientHook(h); }; }
+            get { return (g, h) => { Simply.Do[g].AddClientHook(h); }; }
         }
     }
 
@@ -93,17 +93,17 @@ namespace Simple.Tests.Service
         protected Guid Configure()
         {
             Guid guid = Guid.NewGuid();
-            Simply.Get(guid).Configure.DefaultHost();
+            Simply.Do[guid].Configure.DefaultHost();
 
-            Simply.Get(guid).Host(typeof(SimpleService));
-            Simply.Get(guid).Host(typeof(BaseInterceptorFixture.TestService));
+            Simply.Do[guid].Host(typeof(SimpleService));
+            Simply.Do[guid].Host(typeof(BaseInterceptorFixture.TestService));
 
             return guid;
         }
 
         protected void Release(Guid guid)
         {
-            Simply.Get(guid).StopServer();
+            Simply.Do[guid].StopServer();
         }
 
         [Test]
@@ -111,10 +111,10 @@ namespace Simple.Tests.Service
         {
             Guid guid = Configure();
 
-            var svc1 = Simply.Get(guid).Resolve<ISimpleService>();
+            var svc1 = Simply.Do[guid].Resolve<ISimpleService>();
             Assert.AreEqual(42, svc1.GetInt32());
 
-            var svc2 = Simply.Get(guid).Resolve<BaseInterceptorFixture.ITestService>();
+            var svc2 = Simply.Do[guid].Resolve<BaseInterceptorFixture.ITestService>();
             Assert.AreEqual(1000, svc2.TestIntInt(1000));
             Assert.AreEqual(1001, svc2.TestIntInt(1001));
 
@@ -126,7 +126,7 @@ namespace Simple.Tests.Service
         {
             Guid guid = Configure();
             Release(guid);
-            var svc1 = Simply.Get(guid).Resolve<ISimpleService>();
+            var svc1 = Simply.Do[guid].Resolve<ISimpleService>();
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace Simple.Tests.Service
             HookFunc1(guid, x => new AddOneHook(x));
             HookFunc2(guid, x => new Set9998AfterHook(x));
 
-            var svc = Simply.Get(guid).Resolve<ISimpleService>();
+            var svc = Simply.Do[guid].Resolve<ISimpleService>();
             Assert.AreEqual(9998, svc.GetInt32());
 
             Release(guid);
@@ -149,7 +149,7 @@ namespace Simple.Tests.Service
             HookFunc1(guid, x => new Set9998AfterHook(x));
             HookFunc2(guid, x => new AddOneHook(x));
 
-            var svc = Simply.Get(guid).Resolve<ISimpleService>();
+            var svc = Simply.Do[guid].Resolve<ISimpleService>();
             Assert.AreEqual(9999, svc.GetInt32());
 
             Release(guid);
@@ -162,7 +162,7 @@ namespace Simple.Tests.Service
             HookFunc1(guid, x => new AddOneHook(x));
             HookFunc2(guid, x => new Set9998BeforeHook(x));
 
-            var svc = Simply.Get(guid).Resolve<BaseInterceptorFixture.ITestService>();
+            var svc = Simply.Do[guid].Resolve<BaseInterceptorFixture.ITestService>();
             Assert.AreEqual(10000, svc.TestIntInt(666));
 
             Release(guid);
@@ -175,7 +175,7 @@ namespace Simple.Tests.Service
             HookFunc1(guid, x => new Set9998BeforeHook(x));
             HookFunc2(guid, x => new AddOneHook(x));
 
-            var svc = Simply.Get(guid).Resolve<BaseInterceptorFixture.ITestService>();
+            var svc = Simply.Do[guid].Resolve<BaseInterceptorFixture.ITestService>();
             Assert.AreEqual(9999, svc.TestIntInt(777));
 
             Release(guid);

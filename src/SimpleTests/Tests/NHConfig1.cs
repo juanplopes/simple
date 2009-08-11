@@ -33,7 +33,7 @@ namespace Simple.Tests
         public NHConfig1()
         {
             object key = ConfigKey;
-            simply = Simply.Get(key);
+            simply = Simply.Do[key];
 
 
             simply.Configure

@@ -36,7 +36,7 @@ namespace Simple.Tests.Service
         protected override Guid Configure()
         {
             Guid guid = Guid.NewGuid();
-            Simply.Get(guid).Configure.DefaultHost();
+            Simply.Do[guid].Configure.DefaultHost();
 
             ConfigureSvcsWithoutHooks(guid);
 

@@ -13,7 +13,7 @@ namespace Simple.Services.Default
 
         public object Create(Type type)
         {
-            return ServiceLocationFactory.Get(ConfigCache).Get(type);
+            return ServiceLocationFactory.Do[ConfigCache].Get(type);
         }
 
         #endregion

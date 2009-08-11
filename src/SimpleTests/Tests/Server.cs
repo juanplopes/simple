@@ -35,7 +35,7 @@ namespace Simple.Tests
                 return 0;
             }
             
-            Simply simply = Simply.Get(NHConfig1.ConfigKey);
+            Simply simply = Simply.Do[NHConfig1.ConfigKey];
             File.WriteAllBytes("Northwind.sdf", Database.Northwind);
 
             simply.Configure.Log4netToConsole();
@@ -53,7 +53,7 @@ namespace Simple.Tests
         static void ExecuteSamples(string[] args)
         {
             SampleGenericPart(Server.RemotingTest, args,
-                g => Simply.Get(g).Host(typeof(SimpleService)));
+                g => Simply.Do[g].Host(typeof(SimpleService)));
 
             SampleGenericPart(Server.RemotingServerInterceptorTest, args,
                 g => BaseInterceptorFixture.ConfigureSvcs(g));
@@ -70,7 +70,7 @@ namespace Simple.Tests
 
                 Guid guid = Guid.NewGuid();
 
-                Simply.Get(guid).Configure.Remoting()
+                Simply.Do[guid].Configure.Remoting()
                     .FromXml(Helper.MakeConfig(new Uri(args[1])));
 
                 configure(guid);

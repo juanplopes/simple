@@ -69,34 +69,14 @@
     <Compile Include="DataAccess\Page.cs" />
     <Compile Include="DataAccess\PropertyDescriptionMapping.cs" />
     <Compile Include="DataAccess\SimpleEntityAttribute.cs" />
-    <Compile Include="DataAccess\SortExpressionAnalyzer.cs" />
     <Compile Include="DataAccess\PersistenceFault.cs" />
     <Compile Include="DefaultConfigContent.Designer.cs">
       <DependentUpon>DefaultConfigContent.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Filters\AndExpression.cs" />
-    <Compile Include="Filters\BetweenExpression.cs" />
-    <Compile Include="Filters\BinaryOperator.cs" />
-    <Compile Include="Filters\BooleanExpression.cs" />
-    <Compile Include="Filters\ExampleFilter.cs" />
-    <Compile Include="Filters\InExpression.cs" />
-    <Compile Include="Filters\IsNotNullExpression.cs" />
-    <Compile Include="Filters\IsNullExpression.cs" />
-    <Compile Include="Filters\LikeExpression.cs" />
-    <Compile Include="Filters\NotExpression.cs" />
-    <Compile Include="Filters\Operator.cs" />
-    <Compile Include="Filters\OrderBy.cs" />
-    <Compile Include="Filters\OrderByCollection.cs" />
-    <Compile Include="Filters\OrExpression.cs" />
-    <Compile Include="Filters\Expression.cs" />
-    <Compile Include="Filters\Filter.cs" />
-    <Compile Include="Filters\PropertyExpression.cs" />
-    <Compile Include="Filters\PropertyName.cs" />
-    <Compile Include="Filters\SimpleExpression.cs" />
-    <Compile Include="Filters\TypedPropertyExpression.cs" />
-    <Compile Include="Filters\UnaryOperator.cs" />
+    <Compile Include="Entities\OrderBy.cs" />
+    <Compile Include="Entities\OrderByCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CallHeaders.cs" />
     <Compile Include="Services\DefaultInterceptor.cs" />
@@ -105,9 +85,9 @@
     <Compile Include="Services\Default\DefaultHostConfig.cs" />
     <Compile Include="Services\Default\DefaultHostSimplyExtensions.cs" />
     <Compile Include="Services\Default\ServiceLocationFactory.cs" />
+    <Compile Include="Entities\EntityAccessor.cs" />
     <Compile Include="Services\ICallHeadersHandler.cs" />
     <Compile Include="Services\ICallHook.cs" />
-    <Compile Include="Services\IControlledService.cs" />
     <Compile Include="Services\IInterceptor.cs" />
     <Compile Include="Services\Remoting\CallContextCallHeadersHandler.cs" />
     <Compile Include="Services\Remoting\ChannelSelector.cs" />
@@ -121,8 +101,8 @@
     <Compile Include="Services\Remoting\RemotingHostProvider.cs" />
     <Compile Include="Services\Remoting\RemotingSimplyExtensions.cs" />
     <Compile Include="Services\Default\DefaultHostProvider.cs" />
-    <Compile Include="Services\IEntityService.cs" />
-    <Compile Include="Services\Entity.cs" />
+    <Compile Include="Entities\IEntityService.cs" />
+    <Compile Include="Entities\Entity.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\IServiceClientFactory.cs" />
     <Compile Include="Services\IServiceClientProvider.cs" />

@@ -13,7 +13,7 @@ namespace Simple.Services.Default
 
         public void Host(object server, Type contract)
         {
-            ServiceLocationFactory.Get(ConfigCache).Set(server, contract);
+            ServiceLocationFactory.Do[ConfigCache].Set(server, contract);
         }
 
         public void Start()
@@ -22,7 +22,7 @@ namespace Simple.Services.Default
 
         public void Stop()
         {
-            ServiceLocationFactory.Get(ConfigCache).Clear();
+            ServiceLocationFactory.Do[ConfigCache].Clear();
         }
 
         #endregion
@@ -33,7 +33,7 @@ namespace Simple.Services.Default
 
         protected override void OnClearConfig()
         {
-            ServiceLocationFactory.Get(ConfigCache).Clear();
+            ServiceLocationFactory.Do[ConfigCache].Clear();
         }
     }
 }

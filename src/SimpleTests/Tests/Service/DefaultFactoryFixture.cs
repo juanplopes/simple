@@ -16,17 +16,17 @@ namespace Simple.Tests.Service
         {
             Guid guid = new Guid();
 
-            Simply.Get(guid).Configure.DefaultHost();
+            Simply.Do[guid].Configure.DefaultHost();
 
-            Simply.Get(guid).Host(typeof(SimpleService));
+            Simply.Do[guid].Host(typeof(SimpleService));
             return guid;
         }
 
         protected override void Release(Guid guid)
         {
-            Simply.Get(guid).StopServer();
+            Simply.Do[guid].StopServer();
             
-            Simply.Get(guid).Release.DefaultHost();
+            Simply.Do[guid].Release.DefaultHost();
         }
     }
 }

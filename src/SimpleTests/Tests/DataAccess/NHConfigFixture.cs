@@ -33,7 +33,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestMapEntities()
         {
-            Simply.Get(this).Configure
+            Simply.Do[this].Configure
                 .NHibernate().FromXml(NHConfigurations.NHConfig1)
                 .Mapping<Category.Map>();
                 
@@ -45,11 +45,11 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestMapEntityAssembly()
         {
-            Simply.Get(this).Configure
+            Simply.Do[this].Configure
                  .NHibernate().FromXml(NHConfigurations.NHConfig1)
                  .MappingFromAssemblyOf<Category.Map>();
 
-            var config = Simply.Get(this).GetNHibernateConfig();
+            var config = Simply.Do[this].GetNHibernateConfig();
 
             Assert.AreEqual(4, config.ClassMappings.Count);
         }

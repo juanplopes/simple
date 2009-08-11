@@ -37,7 +37,7 @@ namespace Simple.Tests.Service
         [Test]
         public void SimpleExpressionSerializationTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             Expression<Predicate<int>> pred = i => i == 42;
             EditableExpression expr = EditableExpression.CreateEditableExpression(pred);
                  
@@ -48,7 +48,7 @@ namespace Simple.Tests.Service
         [Test]
         public void StackReferenceExpressionSerializationTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             int hh = 42;
             Expression<Predicate<int>> pred = i => i == hh;
             EditableExpression expr = EditableExpression.CreateEditableExpression(pred);
@@ -60,7 +60,7 @@ namespace Simple.Tests.Service
         [Test]
         public void SimpleServiceMarshalingTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
 
             Assert.AreEqual(42, service.GetInt32());
             Assert.AreEqual("whatever", service.GetString());
@@ -69,7 +69,7 @@ namespace Simple.Tests.Service
         [Test]
         public void SimpleMethodOverloadTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             Assert.AreEqual(10, service.GetOverloadedMethod(10));
             Assert.AreEqual(15, service.GetOverloadedMethod(10, 5));
         }
@@ -77,14 +77,14 @@ namespace Simple.Tests.Service
         [Test]
         public void SimplePropertyTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             Assert.AreEqual(555, service.SimpleProp);
         }
 
         [Test]
         public void SimpleIndexedPropertyTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             Assert.AreEqual("12345", service[12345]);
         }
 
@@ -92,7 +92,7 @@ namespace Simple.Tests.Service
         [Test]
         public void HeaderPassingTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
 
             CallHeaders.Do["returnMe"] = "123";
             Assert.AreEqual("123", service.TestHeaderPassing());
@@ -104,7 +104,7 @@ namespace Simple.Tests.Service
         [Test]
         public void WrongPassedIdentityTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             SimpleContext.Get().Username = null;
             Assert.IsFalse(service.TestPassedIdentity());
         }
@@ -112,7 +112,7 @@ namespace Simple.Tests.Service
         [Test]
         public void HeaderPassingAndReturningTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
 
             CallHeaders.Do["returnMe"] = 12345;
             Assert.AreEqual(12345, service.TestHeaderPassingAndReturning());
@@ -129,7 +129,7 @@ namespace Simple.Tests.Service
         [Test, ExpectedException]
         public void TestFailConnect()
         {
-            IFailService service = Simply.Get(ConfigKey).Resolve<IFailService>();
+            IFailService service = Simply.Do[ConfigKey].Resolve<IFailService>();
             Assert.AreEqual(84, service.FailInt());
         }
 
@@ -139,7 +139,7 @@ namespace Simple.Tests.Service
             bool ex = false;
             try
             {
-                IFailService service = Simply.Get(ConfigKey).Resolve<IFailService>();
+                IFailService service = Simply.Do[ConfigKey].Resolve<IFailService>();
                 service.FailInt();
             }
             catch (Exception)
@@ -148,14 +148,14 @@ namespace Simple.Tests.Service
             }
 
             Assert.IsTrue(ex);
-            ISecondService service2 = Simply.Get(ConfigKey).Resolve<ISecondService>();
+            ISecondService service2 = Simply.Do[ConfigKey].Resolve<ISecondService>();
             Assert.AreEqual("42", service2.OtherString());
         }
 
         [Test]
         public void SimpleBigMarshalingTest()
         {
-            ISimpleService service = Simply.Get(ConfigKey).Resolve<ISimpleService>();
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
 
             Assert.AreEqual(500000, service.GetByteArray(500000).Length);
         }
@@ -163,7 +163,7 @@ namespace Simple.Tests.Service
         [Test]
         public void ConnectToSecondServiceTest()
         {
-            ISecondService service = Simply.Get(ConfigKey).Resolve<ISecondService>();
+            ISecondService service = Simply.Do[ConfigKey].Resolve<ISecondService>();
             Assert.AreEqual("42", service.OtherString());
         }
 
@@ -173,7 +173,7 @@ namespace Simple.Tests.Service
             for (int i = 0; i < 50; i++)
             {
                 Simply.Do.Log(this).DebugFormat("Running {0}...", i);
-                ISecondService service = Simply.Get(ConfigKey).Resolve<ISecondService>();
+                ISecondService service = Simply.Do[ConfigKey].Resolve<ISecondService>();
                 Assert.AreEqual("42", service.OtherString());
             }
         }
@@ -181,7 +181,7 @@ namespace Simple.Tests.Service
         [Test]
         public void MarshalOtherServiceTest()
         {
-            ISecondService service = Simply.Get(ConfigKey).Resolve<ISecondService>();
+            ISecondService service = Simply.Do[ConfigKey].Resolve<ISecondService>();
             IFailService serviceFail = service.GetOtherService(123);
             Assert.AreEqual(84, serviceFail.FailInt());
         }
@@ -189,7 +189,7 @@ namespace Simple.Tests.Service
         [Test]
         public void SerializeComplexType()
         {
-            ISecondService service = Simply.Get(ConfigKey).Resolve<ISecondService>();
+            ISecondService service = Simply.Do[ConfigKey].Resolve<ISecondService>();
             Assert.AreEqual("whatever", service.GetComplexType().Oi);
             Assert.AreEqual(42, service.GetComplexType().Tchau);
 

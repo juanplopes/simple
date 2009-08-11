@@ -14,7 +14,7 @@ using Simple.ConfigSource;
 using System.Runtime.Remoting.Proxies;
 using System.Linq.Expressions;
 
-namespace Simple.Services
+namespace Simple.Entities
 {
     public class EntityService<T> : EntityService<T, EntityDao<T>>
     {
@@ -53,7 +53,7 @@ namespace Simple.Services
         protected virtual D GetDao()
         {
             D dao = new D();
-            dao.Session = Simply.Get(ConfigKey).GetSession();
+            dao.Session = Simply.Do[ConfigKey].GetSession();
             return dao;
         }
 

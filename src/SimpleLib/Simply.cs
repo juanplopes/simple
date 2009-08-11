@@ -12,7 +12,7 @@ namespace Simple
         {
             get
             {
-                return SimplyConfigure.Get(ConfigKey);
+                return SimplyConfigure.Do[ConfigKey];
             }
         }
 
@@ -20,7 +20,7 @@ namespace Simple
         {
             get
             {
-                return SimplyRelease.Get(ConfigKey);
+                return SimplyRelease.Do[ConfigKey];
             }
         }
     }

@@ -76,7 +76,7 @@ namespace Simple.Tests.Service
         {
             Guid guid = Guid.NewGuid();
 
-            Simply.Get(guid).Configure
+            Simply.Do[guid].Configure
                 .Remoting().FromXml(Helper.MakeConfig(Uri));
 
             return guid;

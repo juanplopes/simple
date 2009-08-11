@@ -20,14 +20,14 @@ namespace Simple.Tests.Service
         protected override Guid Configure()
         {
             Guid guid = Guid.NewGuid();
-            Simply.Get(guid).Configure.Remoting().FromXml(Helper.MakeConfig(Uri));
+            Simply.Do[guid].Configure.Remoting().FromXml(Helper.MakeConfig(Uri));
 
             return guid;
         }
 
         protected override void Release(Guid guid)
         {
-            Simply.Get(guid).Release.Remoting();
+            Simply.Do[guid].Release.Remoting();
         }
 
         Process process;

@@ -29,7 +29,7 @@ namespace TestMvcClient
         protected void Application_Start()
         {
             RegisterRoutes(RouteTable.Routes);
-            Simply.Get(NHConfig1.ConfigKey).Configure.RemotingDefault();
+            Simply.Do[NHConfig1.ConfigKey].Configure.RemotingDefault();
         }
     }
 }

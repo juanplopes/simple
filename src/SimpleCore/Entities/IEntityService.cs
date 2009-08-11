@@ -4,47 +4,44 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 using Simple.DataAccess;
-using Simple.Filters;
 using System.Linq.Expressions;
 using Simple.Expressions;
+using Simple.Services;
 
-namespace Simple.Services
+namespace Simple.Entities
 {
     [ServiceContract]
     public interface IEntityService<T> : IService
     {
         [OperationContract]
-        T LoadByExample(T example);
-
-        [OperationContract]
         T Load(object id);
 
         [OperationContract]
-        T LoadByFilter(Filter filter);
+        T FindByFilter(EditableExpression filter, OrderByCollection orderBy);
 
         [OperationContract]
-        T LoadByExpression(EditableExpression expression);
+        IList<T> List(OrderByCollection order);
 
         [OperationContract]
-        IList<T> ListAll(OrderByCollection order);
+        IList<T> ListByFilter(EditableExpression filter, OrderByCollection order);
 
         [OperationContract]
-        IList<T> ListByExample(T example);
+        int Count();
 
         [OperationContract]
-        IList<T> ListByFilter(Filter filter, OrderByCollection order);
+        int CountByFilter(EditableExpression filter);
 
         [OperationContract]
-        int CountAll();
+        Page<T> Paginate(OrderByCollection order, int skip, int take);
 
         [OperationContract]
-        int CountByFilter(Filter filter);
+        Page<T> PaginateByFilter(EditableExpression filter, OrderByCollection order, int skip, int take);
 
         [OperationContract]
-        Page<T> PaginateByFilter(Filter filter, OrderByCollection order, int skip, int take);
+        void DeleteById(object id);
 
         [OperationContract]
-        Page<T> PaginateAll(OrderByCollection order, int skip, int take);
+        int DeleteByFilter(EditableExpression filter);
 
         [OperationContract]
         T SaveOrUpdate(T entity);
@@ -60,11 +57,5 @@ namespace Simple.Services
 
         [OperationContract]
         void Delete(T entity);
-
-        [OperationContract]
-        void DeleteById(object id);
-
-        [OperationContract]
-        int DeleteByFilter(Filter filter);
     }
 }

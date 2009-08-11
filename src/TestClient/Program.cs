@@ -16,8 +16,7 @@ namespace TestClient
     {
         static void Main(string[] args)
         {
-            Simply.Get(NHConfig1.ConfigKey).Configure.RemotingDefault();
-            var c = Customer.Load(1);
+            Simply.Do[NHConfig1.ConfigKey].Configure.RemotingDefault();
         }
     }
 }

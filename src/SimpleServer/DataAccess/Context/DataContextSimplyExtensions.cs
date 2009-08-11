@@ -11,19 +11,19 @@ namespace Simple
     {
         public static IDataContext EnterContext(this Simply simple)
         {
-            return DataContextFactory.Get(simple.ConfigKey).EnterContext();
+            return DataContextFactory.Do[simple.ConfigKey].EnterContext();
         }
         public static IDataContext GetContext(this Simply simple)
         {
-            return DataContextFactory.Get(simple.ConfigKey).GetContext();
+            return DataContextFactory.Do[simple.ConfigKey].GetContext();
         }
         public static ISession GetSession(this Simply simple)
         {
-            return DataContextFactory.Get(simple.ConfigKey).GetSession();
+            return DataContextFactory.Do[simple.ConfigKey].GetSession();
         }
         public static ISession NewSession(this Simply simple)
         {
-            return DataContextFactory.Get(simple.ConfigKey).NewSession();
+            return DataContextFactory.Do[simple.ConfigKey].NewSession();
         }
 
     }

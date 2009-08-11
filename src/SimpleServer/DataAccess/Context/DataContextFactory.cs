@@ -18,7 +18,7 @@ namespace Simple.DataAccess.Context
             var contextList = GetContextList();
             var curContext = GetContext(false);
 
-            Func<ISession> addCreator = () => Simply.Get(ConfigKey).OpenSession();
+            Func<ISession> addCreator = () => Simply.Do[ConfigKey].OpenSession();
             Func<ISession> defCreator =
                 (curContext == null ? addCreator : () => curContext.Session);
 

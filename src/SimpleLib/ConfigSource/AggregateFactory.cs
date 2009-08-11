@@ -22,6 +22,11 @@ namespace Simple.ConfigSource
             }
         }
 
+        public THIS this[object key]
+        {
+            get { return Get(key); }
+        }
+
         public static THIS Get(object key)
         {
             lock (_instances)

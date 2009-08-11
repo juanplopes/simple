@@ -19,7 +19,7 @@ namespace Simple.Services
 
         public override void Before()
         {
-            Context = DataContextFactory.Get(ConfigKey).EnterContext();
+            Context = DataContextFactory.Do[ConfigKey].EnterContext();
         }
 
         public override void AfterSuccess()
