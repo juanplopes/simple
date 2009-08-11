@@ -21,12 +21,12 @@ namespace Simple.Entities
 
         public OrderBy(EditableExpression expr) : this(expr, false) { }
 
-        public static OrderByCollection Asc<T, O>(params Expression<Func<T, O>>[] expr)
+        public static OrderByCollection Asc<T, O>(Expression<Func<T, O>> expr)
         {
             return new OrderByCollection().Asc(expr);
         }
 
-        public static OrderByCollection Desc<T, O>(params Expression<Func<T, O>>[] expr)
+        public static OrderByCollection Desc<T, O>(Expression<Func<T, O>> expr)
         {
             return new OrderByCollection().Desc(expr);
         }

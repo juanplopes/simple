@@ -5,6 +5,7 @@ using System.Text;
 using Simple.ConfigSource;
 using FluentNHibernate.Mapping;
 using Simple.Services;
+using Simple.Entities;
 
 namespace Simple.Tests.SampleServer
 {

@@ -80,7 +80,7 @@ namespace Simple.Tests.DataAccess
         {
             using (var dx = MySimply.EnterContext())
             {
-                Category c = Category.Load(1);
+                Category c = Category.Do.Load(1);
 
                 string saveOldName = c.Name;
 
@@ -91,18 +91,18 @@ namespace Simple.Tests.DataAccess
                         c.Name = "NewName";
                         c.SaveOrUpdate();
 
-                        c = Category.Load(1);
+                        c = Category.Do.Load(1);
                         Assert.AreEqual("NewName", c.Name);
 
                         tx2.Commit();
                     }
 
-                    c = Category.Load(1);
+                    c = Category.Do.Load(1);
                     Assert.AreEqual("NewName", c.Name);
 
                     using (var tx2 = dx.Session.BeginTransaction())
                     {
-                        c = Category.Load(1);
+                        c = Category.Do.Load(1);
                         c.Name = saveOldName;
                         c.Update();
 

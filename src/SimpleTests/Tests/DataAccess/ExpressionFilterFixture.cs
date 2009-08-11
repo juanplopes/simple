@@ -13,7 +13,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestCustomerLoadById()
         {
-            var c = Customer.LoadByExpression(x => x.Id == "DRACD");
+            var c = Customer.Do.Find(x => x.Id == "DRACD");
             Assert.IsNotNull(c);
             Assert.AreEqual("Drachenblut Delikatessen", c.CompanyName);
         }
@@ -21,7 +21,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestCustomerLoadIdContains()
         {
-            var c = Customer.LoadByExpression(x => x.Id.Contains("DRACD"));
+            var c = Customer.Do.Find(x => x.Id.Contains("DRACD"));
             Assert.IsNotNull(c);
             Assert.AreEqual("Drachenblut Delikatessen", c.CompanyName);
         }
@@ -29,14 +29,14 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestCustomerLoadIdContainsFalse()
         {
-            var c = Customer.LoadByExpression(x => x.Id.Contains("DRACDasd"));
+            var c = Customer.Do.Find(x => x.Id.Contains("DRACDasd"));
             Assert.IsNull(c);
         }
 
         [Test]
         public void TestCustomerLoadMultipleColumn()
         {
-            var c = Customer.LoadByExpression(x => x.Id.Contains("DRACD") && x.Country == "Germany");
+            var c = Customer.Do.Find(x => x.Id.Contains("DRACD") && x.Country == "Germany");
             Assert.IsNotNull(c);
             Assert.AreEqual("Drachenblut Delikatessen", c.CompanyName);
         }
@@ -44,7 +44,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestProductLoadByIdAndCategory()
         {
-            var p = Product.LoadByExpression(x => x.Id == 2 && x.Category.Name == "Beverages");
+            var p = Product.Do.Find(x => x.Id == 2 && x.Category.Name == "Beverages");
             Assert.IsNotNull(p);
             Assert.AreEqual("Chang", p.Name);
         }
@@ -52,7 +52,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestProductLoadByIdAndCategoryFalse()
         {
-            var p = Product.LoadByExpression(x => x.Id == 2 && x.Category.Name == "OutroNome");
+            var p = Product.Do.Find(x => x.Id == 2 && x.Category.Name == "OutroNome");
             Assert.IsNull(p);
         }
     }

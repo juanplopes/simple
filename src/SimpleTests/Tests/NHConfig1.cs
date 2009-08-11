@@ -5,7 +5,6 @@ using System.Text;
 using NHibernate.Tool.hbm2ddl;
 using Simple.DataAccess;
 using NUnit.Framework;
-using Simple.Filters;
 using Simple.ConfigSource;
 using Simple.Tests.DataAccess;
 using Simple.Services.Remoting;

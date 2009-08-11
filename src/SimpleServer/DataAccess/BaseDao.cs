@@ -7,7 +7,6 @@ using NHibernate.Impl;
 using NHibernate.Engine;
 using System.Collections;
 using NHibernate.Criterion;
-using Simple.Filters;
 using System.Linq;
 using NHibernate.Linq;
 
@@ -73,16 +72,16 @@ namespace Simple.DataAccess
             return Linq<T>();
         }
 
-        public ICriteria ToCriteria(Filter filter, OrderByCollection order)
-        {
-            ICriteria criteria = this.CreateCriteria();
-            criteria.Add(CriteriaHelper.GetCriterion(filter));
+        //public ICriteria ToCriteria(Filter filter, OrderByCollection order)
+        //{
+        //    ICriteria criteria = this.CreateCriteria();
+        //    criteria.Add(CriteriaHelper.GetCriterion(filter));
 
-            if (order != null)
-                foreach (OrderBy o in order)
-                    criteria.AddOrder(CriteriaHelper.GetOrder(o));
-            return criteria;
-        }
+        //    if (order != null)
+        //        foreach (OrderBy o in order)
+        //            criteria.AddOrder(CriteriaHelper.GetOrder(o));
+        //    return criteria;
+        //}
 
         protected virtual bool DefaultFlush
         {

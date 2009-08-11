@@ -13,24 +13,24 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void CheckCategories()
         {
-            Assert.AreEqual(8, Category.CountAll());
-            Category.PaginateAll(0, 1);
+            Assert.AreEqual(8, Category.Do.Count());
+            Category.Do.Paginate(0, 1);
         }
 
         [Test]
         public void CheckCustomer()
         {
-            Assert.AreEqual(91, Customer.CountAll());
-            Customer.PaginateAll(0, 1);
+            Assert.AreEqual(91, Customer.Do.Count());
+            Customer.Do.Paginate(0, 1);
         }
 
         [Test]
         public void CheckProducts()
         {
-            Assert.AreEqual(77, Product.CountAll());
-            Product.PaginateAll(0, 1);
+            Assert.AreEqual(77, Product.Do.Count());
+            Product.Do.Paginate(0, 1);
 
-            Product p = Product.Load(2);
+            Product p = Product.Do.Load(2);
             Assert.IsNotNull(p.Category); Assert.AreEqual("Beverages", p.Category.Name);
             Assert.IsNotNull(p.Supplier); Assert.AreEqual("Exotic Liquids", p.Supplier.CompanyName);
         }
@@ -38,8 +38,8 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void CheckSuppliers()
         {
-            Assert.AreEqual(29, Supplier.CountAll());
-            Supplier.PaginateAll(0, 1);
+            Assert.AreEqual(29, Supplier.Do.Count());
+            Supplier.Do.Paginate(0, 1);
         }
 
     }

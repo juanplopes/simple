@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using Simple.Tests.SampleServer;
 using Simple;
+using Simple.Entities;
 
 namespace TestMvcClient.Controllers
 {
@@ -16,7 +17,7 @@ namespace TestMvcClient.Controllers
 
         public ActionResult Index()
         {
-            return View(Customer.ListAll());
+            return View(Customer.Do.List());
         }
 
         //
@@ -24,7 +25,7 @@ namespace TestMvcClient.Controllers
 
         public ActionResult Details(string id)
         {
-            return View(Customer.Load(id));
+            return View(Customer.Do.Load(id));
         }
 
         //
@@ -58,7 +59,7 @@ namespace TestMvcClient.Controllers
  
         public ActionResult Edit(string id)
         {
-            return View(Customer.Load(id));
+            return View(Customer.Do.Load(id));
         }
 
         //
