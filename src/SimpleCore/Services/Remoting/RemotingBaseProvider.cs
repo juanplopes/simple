@@ -18,5 +18,6 @@ namespace Simple.Services.Remoting
         {
             get { return new CallContextCallHeadersHandler(); }
         }
+
     }
 }

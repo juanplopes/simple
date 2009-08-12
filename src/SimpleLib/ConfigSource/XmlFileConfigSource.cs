@@ -80,6 +80,7 @@ namespace Simple.ConfigSource
                 Simply.Do.Log(this).DebugFormat("Disposing configurator for {0}...", typeof(T));
                 Active = false;
                 Watcher.Dispose();
+                base.Dispose();
             }
         }
 

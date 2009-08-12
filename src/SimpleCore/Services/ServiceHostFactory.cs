@@ -19,6 +19,12 @@ namespace Simple.Services
         protected override void OnConfig(IServiceHostProvider config)
         {
         }
+        
+        protected override void OnDisposeOldConfig()
+        {
+            this.StopServer();
+            base.OnDisposeOldConfig();
+        }
 
 
         protected override void OnClearConfig()

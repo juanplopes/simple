@@ -59,7 +59,6 @@ namespace Simple.ConfigSource
 
         public virtual void Dispose()
         {
-
         }
 
 

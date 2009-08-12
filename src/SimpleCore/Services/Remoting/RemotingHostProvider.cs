@@ -13,7 +13,7 @@ using Simple.DynamicProxy;
 
 namespace Simple.Services.Remoting
 {
-    public class RemotingHostProvider : RemotingBaseProvider, IServiceHostProvider, IDisposable
+    public class RemotingHostProvider : RemotingBaseProvider, IServiceHostProvider
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         IList<object> services = new List<object>();
@@ -28,6 +28,12 @@ namespace Simple.Services.Remoting
                 Stop();
                 Start();
             }
+        }
+
+        public override void Dispose()
+        {
+            this.Stop();
+            base.Dispose();
         }
 
         protected override void OnClearConfig()
@@ -60,6 +66,8 @@ namespace Simple.Services.Remoting
             }
         }
 
+        
+        
         public void Stop()
         {
             lock (this)

@@ -29,17 +29,22 @@ namespace Simple.ConfigSource
 
                 Source = source;
 
-                ConfigCache = Source.Get();
-                Config(ConfigCache);
+                Config(Source.Get());
+
                 source.Reloaded += Config;
             }
         }
+
+        protected virtual void OnDisposeOldConfig() {}
 
         protected void Config(T config)
         {
             lock (this)
             {
-                ConfigCache = config;
+                if (!object.Equals(default(T), config)) OnDisposeOldConfig();
+
+                ConfigCache = config ;
+
                 if (!object.Equals(default(T), config)) OnConfig(config);
                 else OnClearConfig();
             }
@@ -55,7 +60,7 @@ namespace Simple.ConfigSource
 
         #region IDisposable Members
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             Clear();
         }
