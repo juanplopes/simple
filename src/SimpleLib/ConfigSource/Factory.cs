@@ -41,7 +41,7 @@ namespace Simple.ConfigSource
         {
             lock (this)
             {
-                if (!object.Equals(default(T), config)) OnDisposeOldConfig();
+                if (!object.Equals(default(T), ConfigCache)) OnDisposeOldConfig();
 
                 ConfigCache = config ;
 
