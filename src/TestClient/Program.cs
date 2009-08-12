@@ -17,6 +17,10 @@ namespace TestClient
         static void Main(string[] args)
         {
             Simply.Do[NHConfig1.ConfigKey].Configure.RemotingDefault();
+            Category.Do.List(x => 
+                x.Name == "asd" 
+                || x.Picture.Length > 100 
+                && x.Description.Contains("mycat"));
         }
     }
 }
