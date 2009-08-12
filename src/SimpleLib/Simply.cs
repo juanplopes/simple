@@ -8,6 +8,8 @@ namespace Simple
 {
     public class Simply : AggregateFactory<Simply>
     {
+        public void Nop() { }
+
         public SimplyConfigure Configure
         {
             get

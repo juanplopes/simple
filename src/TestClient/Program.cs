@@ -12,15 +12,27 @@ using Simple.Tests.SampleServer;
 using Simple.Tests;
 namespace TestClient
 {
-    class Program
+    static class Program
     {
+        static void Times(this int n, Action<int> action)
+        {
+            for (int i = 0; i < n; i++)
+                action(i);
+        }
+
+        static TimeSpan Minutes(this int n)
+        {
+            return new TimeSpan(0, n, 0);
+        }
+
+        static DateTime Ago(this TimeSpan time)
+        {
+            return DateTime.Now.Subtract(time);
+        }
+
         static void Main(string[] args)
         {
-            Simply.Do[NHConfig1.ConfigKey].Configure.RemotingDefault();
-            Category.Do.List(x => 
-                x.Name == "asd" 
-                || x.Picture.Length > 100 
-                && x.Description.Contains("mycat"));
+            20.Minutes().Ago();
         }
     }
 }

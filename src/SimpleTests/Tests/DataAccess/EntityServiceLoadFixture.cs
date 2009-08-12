@@ -8,7 +8,7 @@ using Simple.Tests.SampleServer;
 namespace Simple.Tests.DataAccess
 {
     [TestFixture]
-    public class EntityServiceLoadFixture
+    public class EntityServiceLoadFixture : BaseDataFixture
     {
         [Test]
         public void TestLoadProductId1And2()
