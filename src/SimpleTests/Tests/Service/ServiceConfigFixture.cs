@@ -5,6 +5,8 @@ using System.Text;
 using NUnit.Framework;
 using Simple.ConfigSource;
 using Simple.Services;
+using System.Net;
+using System.Runtime.Remoting;
 
 namespace Simple.Tests.Service
 {
@@ -19,6 +21,46 @@ namespace Simple.Tests.Service
 
             Assert.AreEqual(0, svc.TestInt());
             Assert.AreEqual(null, svc.TestString());
+        }
+
+        [Test]
+        public void TestReconfigure()
+        {
+            Guid guid = Guid.NewGuid();
+
+            Simply.Do[guid].Configure.DefaultHost();
+            Simply.Do[guid].Host(typeof(SimpleService));
+
+            Assert.AreEqual(42, Simply.Do[guid].Resolve<ISimpleService>().GetInt32());
+
+            Simply.Do[guid].Configure.Remoting().FromXml(Helper.MakeConfig(Helper.MakeUri("http", 8001)));
+
+            Assert.AreEqual(42, Simply.Do[guid].Resolve<ISimpleService>().GetInt32());
+
+            Simply.Do[guid].Release.Remoting();
+        }
+
+        [Test]
+        public void TestUnconfigure()
+        {
+            Guid guid1 = Guid.NewGuid();
+            Guid guid2 = Guid.NewGuid();
+
+            Simply.Do[guid1].Configure.Remoting().FromXml(Helper.MakeConfig(Helper.MakeUri("http", 8002)));
+            Simply.Do[guid2].Configure.Remoting().FromXml(Helper.MakeConfig(Helper.MakeUri("http", 8002)));
+
+            Simply.Do[guid1].Host(typeof(SimpleService));
+            Assert.AreEqual(42, Simply.Do[guid2].Resolve<ISimpleService>().GetInt32());
+
+            Simply.Do[guid1].Configure.DefaultHost();
+
+            Assert.Throws(typeof(RemotingException), () =>
+            {
+                Assert.AreEqual(42, Simply.Do[guid2].Resolve<ISimpleService>().GetInt32());
+            });
+
+            Simply.Do[guid2].Configure.DefaultHost();
+            Assert.AreEqual(42, Simply.Do[guid2].Resolve<ISimpleService>().GetInt32());
         }
 
         [Test, ExpectedException(typeof(NotImplementedException))]

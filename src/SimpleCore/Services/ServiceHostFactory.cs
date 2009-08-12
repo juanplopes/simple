@@ -15,9 +15,14 @@ namespace Simple.Services
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         protected IList<Func<CallHookArgs, ICallHook>> CallHookCreators = new List<Func<CallHookArgs, ICallHook>>();
+        protected IList<Type> Services = new List<Type>();
 
         protected override void OnConfig(IServiceHostProvider config)
         {
+            foreach (Type type in Services)
+            {
+                Host(type);
+            }
         }
         
         protected override void OnDisposeOldConfig()
@@ -79,6 +84,7 @@ namespace Simple.Services
 
         public void StopServer()
         {
+            Services.Clear();
             ConfigCache.Stop();
         }
 

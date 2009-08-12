@@ -8,8 +8,14 @@ using Simple.Tests.SampleServer;
 namespace Simple.Tests.DataAccess
 {
     [TestFixture]
-    public class ExpressionFilterFixture 
+    public class ExpressionFilterFixture : BaseDataFixture
     {
+        [TestFixtureSetUp]
+        public void FixtureSetup()
+        {
+            MySimply.Log("Initializing");
+        }
+
         [Test]
         public void TestCustomerLoadById()
         {
