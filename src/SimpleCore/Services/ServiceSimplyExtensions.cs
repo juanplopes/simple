@@ -36,6 +36,11 @@ namespace Simple
             HostFactory(simply).HostAssemblyOf(type);
         }
 
+        public static void ClearHostedServices(this Simply simply)
+        {
+            HostFactory(simply).ClearHosted();
+        }
+
         public static void ClearServerHooks(this Simply simply)
         {
             HostFactory(simply).ClearHooks();

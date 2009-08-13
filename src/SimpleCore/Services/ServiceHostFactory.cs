@@ -15,7 +15,7 @@ namespace Simple.Services
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         protected IList<Func<CallHookArgs, ICallHook>> CallHookCreators = new List<Func<CallHookArgs, ICallHook>>();
-        protected IList<Type> Services = new List<Type>();
+        protected HashSet<Type> Services = new HashSet<Type>();
 
         protected override void OnConfig(IServiceHostProvider config)
         {
@@ -39,6 +39,7 @@ namespace Simple.Services
 
         public void Host(Type type)
         {
+            Services.Add(type);
             foreach (Type contract in GetContractsFromType(type))
             {
                 object server = Activator.CreateInstance(type);
@@ -84,8 +85,12 @@ namespace Simple.Services
 
         public void StopServer()
         {
-            Services.Clear();
             ConfigCache.Stop();
+        }
+
+        public void ClearHosted()
+        {
+            Services.Clear();
         }
 
         #endregion

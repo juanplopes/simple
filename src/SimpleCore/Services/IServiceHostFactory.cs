@@ -6,8 +6,9 @@ namespace Simple.Services
         void StartServer();
         void Host(Type type);
         void HostAssemblyOf(Type type);
-        void ClearHooks();
+        void ClearHosted();
         void AddHook(Func<CallHookArgs, ICallHook> hookCreator);
+        void ClearHooks();
         void StopServer();
     }
 }

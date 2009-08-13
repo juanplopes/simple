@@ -58,9 +58,6 @@ namespace Simple.Tests.Service
             {
                 Assert.AreEqual(42, Simply.Do[guid2].Resolve<ISimpleService>().GetInt32());
             });
-
-            Simply.Do[guid2].Configure.DefaultHost();
-            Assert.AreEqual(42, Simply.Do[guid2].Resolve<ISimpleService>().GetInt32());
         }
 
         [Test, ExpectedException(typeof(NotImplementedException))]
