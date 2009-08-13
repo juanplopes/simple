@@ -10,34 +10,32 @@ using System.Linq;
 using Simple.IO;
 using Simple.Tests.SampleServer;
 using Simple.Tests;
+using System.Collections.Generic;
 namespace TestClient
 {
     static class Program
     {
-        static void Times(this int n, Action<int> action)
-        {
-            for (int i = 0; i < n; i++)
-                action(i);
-        }
+        delegate void AddDelegate(string s);
 
-        static TimeSpan Minutes(this int n)
+        interface ITeste<T>
         {
-            return new TimeSpan(0, n, 0);
-        }
-
-        static TimeSpan Days(this int n)
-        {
-            return new TimeSpan(n, 0, 0, 0);
-        }
-
-        static DateTime Ago(this TimeSpan time)
-        {
-            return DateTime.Now.Subtract(time);
+            void Add(T n);
+            T Get(int index);
         }
 
         static void Main(string[] args)
         {
-            var customers = Customer.Do.List(x=>x.City == "Rio de Janeiro", o=>o.Asc(x=>x.City));
+            IList<string> s = new List<string>();
+            
+            
+            IList<object> o = new List<object>();
+
+            AddDelegate d = s.Add;
+            AddDelegate d2 = o.Add;
+            
+
+            o.Add(2);
+
         }
     }
 }

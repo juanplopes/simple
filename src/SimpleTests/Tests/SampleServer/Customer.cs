@@ -12,7 +12,7 @@ using Simple.Entities;
 namespace Simple.Tests.SampleServer
 {
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
-    public class Customer : Entity<Customer, ICustomerService>
+    public partial class Customer : Entity<Customer, ICustomerService>
     {
         public virtual string Id { get; set; }
         public virtual string CompanyName { get; set; }
@@ -25,6 +25,8 @@ namespace Simple.Tests.SampleServer
         public virtual string Country { get; set; }
         public virtual string Phone { get; set; }
         public virtual string Fax { get; set; }
+        public string Endereco { get; set; }
+
 
         public class Map : ClassMap<Customer>
         {
