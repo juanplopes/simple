@@ -23,7 +23,11 @@ namespace SimpleLibrary.ServiceModel
             binding.MaxReceivedMessageSize = element.MaxReceivedMessageSize;
             binding.ReceiveTimeout = element.GetReceiveTimeout();
             binding.ReaderQuotas.MaxArrayLength = int.MaxValue;
-            
+            binding.ReaderQuotas.MaxBytesPerRead = int.MaxValue;
+            binding.ReaderQuotas.MaxDepth = int.MaxValue;
+            binding.ReaderQuotas.MaxNameTableCharCount = int.MaxValue;
+            binding.ReaderQuotas.MaxStringContentLength = int.MaxValue;
+
             endpoint.Binding = binding;
         }
 
