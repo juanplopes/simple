@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple.Tests.SampleServer;
+using System.Linq.Expressions;
 
 namespace Simple.Tests.DataAccess
 {
@@ -34,9 +35,9 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestFindFirstCustomerTwoOrderFixture()
         {
-            var c = Customer.Do.Find(x => x.City=="Sao Paulo", 
-                o => o.Asc(x => x.ContactTitle).Desc(x=>x.ContactName));
-            
+            var c = Customer.Do.Find(x => x.City == "Sao Paulo",
+                o => o.Asc(x => x.ContactTitle).Desc(x => x.ContactName));
+
             Assert.AreEqual("QUEEN", c.Id);
         }
 
