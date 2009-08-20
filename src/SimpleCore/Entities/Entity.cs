@@ -22,12 +22,15 @@ namespace Simple.Entities
             }
         }
 
-        public static R Service()
+        public static R Service
         {
-            return Service(null);
+            get
+            {
+                return Do.GetService();
+            }
         }
 
-        public static R Service(object key)
+        public static R GetService(object key)
         {
             return EntityAccessor<T, R>.Do[key].GetService();
         }

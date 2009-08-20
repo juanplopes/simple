@@ -190,7 +190,7 @@ namespace Simple.Entities
             IQueryable<T> query = Linq();
 
             if (filter != null)
-                return query.Where((Expression<Func<T, bool>>)filter.ToExpression());
+                query = query.Where((Expression<Func<T, bool>>)filter.ToExpression());
 
             if (orderBy != null && orderBy.Count > 0)
             {

@@ -196,6 +196,16 @@ namespace Simple.Tests.Service
         }
 
         [Test]
+        public void TestSelfType()
+        {
+            SelfType type = new SelfType();
+            type.SelfProperty = type;
+
+            ISimpleService svc = Simply.Do[ConfigKey].Resolve<ISimpleService>();
+            Assert.IsTrue(svc.TestSelfType(type));
+        }
+
+        [Test]
         public void TestCreateSameServiceTwice()
         {
             for (int i = 0; i < 3; i++)
@@ -220,7 +230,9 @@ namespace Simple.Tests.Service
         bool TestPassedIdentity();
         string this[int index] { get; }
         int SimpleProp { get; }
+         
         bool TestExpression(EditableExpression expr, int value);
+        bool TestSelfType(SelfType selfObject);
     }
 
     public interface IFailService : IService
@@ -248,6 +260,12 @@ namespace Simple.Tests.Service
     {
         public string Oi { get; set; }
         public int Tchau { get; set; }
+    }
+
+    [Serializable]
+    public class SelfType
+    {
+        public SelfType SelfProperty { get; set; }
     }
 
     public class SimpleService : MarshalByRefObject, ISimpleService, ISecondService
@@ -350,6 +368,16 @@ namespace Simple.Tests.Service
         public bool TestExpression(EditableExpression expr, int value)
         {
             return ((Expression<Predicate<int>>)expr.ToExpression()).Compile()(value);
+        }
+
+        #endregion
+
+        #region ISimpleService Members
+
+
+        public bool TestSelfType(SelfType selfObject)
+        {
+            return object.ReferenceEquals(selfObject, selfObject.SelfProperty);
         }
 
         #endregion

@@ -16,7 +16,7 @@ namespace Simple.Entities
             return this;
         }
 
-        public OrderBy<T> Desc<O>(Expression<Func<T, object>> expr)
+        public OrderBy<T> Desc(Expression<Func<T, object>> expr)
         {
             this.Add(new OrderByItem(EditableExpression.CreateEditableExpression(expr), true));
             return this;
