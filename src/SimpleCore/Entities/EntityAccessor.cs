@@ -65,50 +65,74 @@ namespace Simple.Entities
             return Rules.FindByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()));
         }
 
-
+        #region List no order, no filter
         public IList<T> List()
         {
             return Rules.List(new OrderBy<T>());
         }
 
+        public Page<T> List(int top)
+        {
+            return Rules.Paginate(new OrderBy<T>(), null, top);
+        }
+
+        public Page<T> List(int skip, int take)
+        {
+            return Rules.Paginate(new OrderBy<T>(), skip, take);
+        }
+        #endregion
+
+        #region List yes order, no filter
         public IList<T> List(Func<OrderBy<T>, OrderBy<T>> orderBy)
         {
             return Rules.List(orderBy(new OrderBy<T>()));
         }
 
+        public Page<T> List(Func<OrderBy<T>, OrderBy<T>> orderBy, int top)
+        {
+            return Rules.Paginate(orderBy(new OrderBy<T>()), null, top);
+        }
+
+        public Page<T> List(Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
+        {
+            return Rules.Paginate(orderBy(new OrderBy<T>()), skip, take);
+        }
+        #endregion
+
+        #region List no order, yes filter
         public IList<T> List(Expression<Func<T, bool>> filter)
         {
             return Rules.ListByFilter(filter.ToEditable(), new OrderBy<T>());
         }
 
+        public Page<T> List(Expression<Func<T, bool>> filter, int top)
+        {
+            return Rules.PaginateByFilter(filter.ToEditable(), new OrderBy<T>(), null, top);
+        }
+
+        public Page<T> List(Expression<Func<T, bool>> filter, int skip, int take)
+        {
+            return Rules.PaginateByFilter(filter.ToEditable(), new OrderBy<T>(), skip, take);
+        }
+        #endregion
+
+        #region List yes order, yes filter
         public IList<T> List(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy)
         {
             return Rules.ListByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()));
         }
 
-        public Page<T> Paginate(Expression<Func<T, bool>> filter, int skip, int take)
-        {
-            return Rules.PaginateByFilter(filter.ToEditable(), new OrderBy<T>(), skip, take);
-        }
-
-        public Page<T> Paginate(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
+        public Page<T> List(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
         {
             return Rules.PaginateByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()), skip, take);
-        }
-
-        public Page<T> Paginate(int skip, int take)
-        {
-            return Rules.Paginate(new OrderBy<T>(), skip, take);
-        }
-        public Page<T> Paginate(Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
-        {
-            return Rules.Paginate(orderBy(new OrderBy<T>()), skip, take);
         }
 
         public void Delete(object id)
         {
             Rules.DeleteById(id);
         }
+        #endregion
+
 
         public int Delete(Expression<Func<T, bool>> filter)
         {

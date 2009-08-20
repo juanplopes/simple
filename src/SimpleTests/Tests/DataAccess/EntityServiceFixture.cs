@@ -45,10 +45,16 @@ namespace Simple.Tests.DataAccess
         public void TestListProductsByCategoryName()
         {
             var l = Product.Do.List(x => x.Category.Name == "Meat/Poultry");
+            
             Assert.AreEqual(6, l.Count);
             Assert.IsTrue(l.All(x => x.Category.Id == 6));
         }
 
-
+        [Test]
+        public void TestFindByTrueFielter()
+        {
+            var c = Customer.Do.Find(x => true);
+            Assert.AreEqual("ALFKI", c.Id);
+        }
     }
 }

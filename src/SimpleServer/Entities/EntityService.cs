@@ -242,14 +242,14 @@ namespace Simple.Entities
             return GetDefaultQueriable(filter, null, null, null).Count();
         }
 
-        public Page<T> Paginate(OrderBy<T> order, int skip, int take)
+        public Page<T> Paginate(OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(null, order, skip, take);
 
             return new Page<T>(q.ToList(), q.Count());
         }
 
-        public Page<T> PaginateByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order, int skip, int take)
+        public Page<T> PaginateByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(filter, order, skip, take);
 
