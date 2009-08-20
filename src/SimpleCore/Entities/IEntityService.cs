@@ -32,10 +32,10 @@ namespace Simple.Entities
         int CountByFilter(EditableExpression filter);
 
         [OperationContract]
-        Page<T> Paginate(OrderBy<T> order, int? skip, int? take);
+        IPage<T> Paginate(OrderBy<T> order, int? skip, int? take);
 
         [OperationContract]
-        Page<T> PaginateByFilter(EditableExpression filter, OrderBy<T> order, int? skip, int? take);
+        IPage<T> PaginateByFilter(EditableExpression filter, OrderBy<T> order, int? skip, int? take);
 
         [OperationContract]
         void DeleteById(object id);

@@ -10,7 +10,6 @@ namespace Simple.DataAccess
     [Serializable]
     public class Page<T> : ReadOnlyCollection<T>, IPage<T>
     {
-        [DataMember]
         public int TotalCount { get; private set; }
 
         public int TotalPages

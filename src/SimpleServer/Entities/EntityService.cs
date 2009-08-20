@@ -68,7 +68,7 @@ namespace Simple.Entities
         //    return true;
         //}
 
-       
+
 
         //public virtual T Load(object id)
         //{
@@ -185,7 +185,7 @@ namespace Simple.Entities
             return GetDao().Load(id);
         }
 
-        protected IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy, int? skip, int? take)
+        protected IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy)
         {
             IQueryable<T> query = Linq();
 
@@ -211,49 +211,53 @@ namespace Simple.Entities
                 query = tempQuery;
             }
 
+            return query;
+        }
+
+        protected IQueryable<T> SkipAndTake(IQueryable<T> query, int? skip, int? take)
+        {
             if (skip.HasValue) query = query.Skip(skip.Value);
             if (take.HasValue) query = query.Take(take.Value);
-
             return query;
         }
 
         public T FindByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order)
         {
-            return GetDefaultQueriable(filter, order, null, null).FirstOrDefault();
+            return GetDefaultQueriable(filter, order).FirstOrDefault();
         }
 
         public IList<T> List(OrderBy<T> order)
         {
-            return GetDefaultQueriable(null, order, null, null).ToList();
+            return GetDefaultQueriable(null, order).ToList();
         }
 
         public IList<T> ListByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order)
         {
-            return GetDefaultQueriable(filter, order, null, null).ToList();
+            return GetDefaultQueriable(filter, order).ToList();
         }
 
         public int Count()
         {
-            return GetDefaultQueriable(null, null, null, null).Count();
+            return GetDefaultQueriable(null, null).Count();
         }
 
         public int CountByFilter(Simple.Expressions.EditableExpression filter)
         {
-            return GetDefaultQueriable(filter, null, null, null).Count();
+            return GetDefaultQueriable(filter, null).Count();
         }
 
-        public Page<T> Paginate(OrderBy<T> order, int? skip, int? take)
+        public IPage<T> Paginate(OrderBy<T> order, int? skip, int? take)
         {
-            IQueryable<T> q = GetDefaultQueriable(null, order, skip, take);
+            IQueryable<T> q = GetDefaultQueriable(null, order);
 
-            return new Page<T>(q.ToList(), q.Count());
+            return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
         }
 
-        public Page<T> PaginateByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order, int? skip, int? take)
+        public IPage<T> PaginateByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order, int? skip, int? take)
         {
-            IQueryable<T> q = GetDefaultQueriable(filter, order, skip, take);
+            IQueryable<T> q = GetDefaultQueriable(filter, order);
 
-            return new Page<T>(q.ToList(), q.Count());
+            return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
         }
 
         public void DeleteById(object id)

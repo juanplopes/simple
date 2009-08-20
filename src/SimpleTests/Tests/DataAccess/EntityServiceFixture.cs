@@ -51,6 +51,15 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
+        public void TestListTop10ProductsAll()
+        {
+            var list = Product.Do.List(10);
+            Assert.AreEqual(10, list.Count);
+            Assert.AreEqual(77, list.TotalCount);
+        }
+
+
+        [Test]
         public void TestFindByTrueFielter()
         {
             var c = Customer.Do.Find(x => true);

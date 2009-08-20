@@ -39,6 +39,9 @@ namespace Simple.Tests.DataAccess
         public void CheckSuppliers()
         {
             Assert.AreEqual(29, Supplier.Do.Count());
+            Supplier.Do.List(x => x.Address == "whatever");
+            Supplier.Do.List(x => x.Address == "whatever", 10, 50);
+            Supplier.Do.List(x => x.Address == "whatever", o=>o.Asc(x=>x.ContactName), 10, 50);
             Supplier.Do.List(1);
         }
 
