@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using System.Security.Principal;
-using Simple.Expressions;
+using Simple.Expressions.Editable;
 using System.Linq.Expressions;
 
 namespace Simple.Tests.Service

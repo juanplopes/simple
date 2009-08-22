@@ -5,6 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Simple.Reflection;
 using System.Linq.Expressions;
+using Simple.Expressions;
 
 namespace Simple.Tests.SimpleLib
 {

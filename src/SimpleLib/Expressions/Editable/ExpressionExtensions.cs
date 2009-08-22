@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
 
-namespace Simple.Expressions
+namespace Simple.Expressions.Editable
 {
     public static class ExpressionExtension
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
 
-namespace Simple.Expressions
+namespace Simple.Expressions.Editable
 {
     [Serializable]
     public class EditableMemberBindingCollection : List<EditableMemberBinding>

@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace Simple.Expressions
+namespace Simple.Expressions.Editable
 {
     [Serializable]
     public class EditableUnaryExpression : EditableExpression

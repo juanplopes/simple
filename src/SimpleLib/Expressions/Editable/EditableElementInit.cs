@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Linq.Expressions;
 using System.Xml.Serialization;
 
-namespace Simple.Expressions
+namespace Simple.Expressions.Editable
 {
     [Serializable]
     public class EditableElementInit

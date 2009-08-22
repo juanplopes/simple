@@ -12,26 +12,26 @@ using Simple.Tests.SampleServer;
 using Simple.Tests;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Simple.Expressions;
 namespace TestClient
 {
     static class Program
     {
-        delegate void AddDelegate(string s);
-
-        interface ITeste<T>
-        {
-            void Add(T n);
-            T Get(int index);
-        }
-
         static void Main(string[] args)
         {
-            Expression<Func<Customer, bool>>. e;
-            
+            var f = Customer.Expr(true);
 
-            var expr = Customer.Expr(true);
-            expr = Expression.And(expr, Customer.Expr(x => x.Address == "2"));
+            f = f.And(x => x.CompanyName == "Living Consultoria");
+            f = f.And(x => x.Address == "Novo endereço");
+
+            f = Customer.And(f, x => x.City == "rio de janeiro");
+
+
+
         }
+
+
+
     }
 }
 

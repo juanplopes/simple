@@ -7,7 +7,7 @@ using log4net;
 using NHibernate.Linq;
 using Simple.ConfigSource;
 using Simple.DataAccess;
-using Simple.Expressions;
+using Simple.Expressions.Editable;
 using Simple.Services;
 using NHibernate;
 
@@ -101,7 +101,7 @@ namespace Simple.Entities
             return query;
         }
 
-        public T FindByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order)
+        public T FindByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).FirstOrDefault();
         }
@@ -111,7 +111,7 @@ namespace Simple.Entities
             return GetDefaultQueriable(null, order).ToList();
         }
 
-        public IList<T> ListByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order)
+        public IList<T> ListByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).ToList();
         }
@@ -121,7 +121,7 @@ namespace Simple.Entities
             return GetDefaultQueriable(null, null).Count();
         }
 
-        public int CountByFilter(Simple.Expressions.EditableExpression filter)
+        public int CountByFilter(Simple.Expressions.Editable.EditableExpression filter)
         {
             return GetDefaultQueriable(filter, null).Count();
         }
@@ -133,7 +133,7 @@ namespace Simple.Entities
             return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
         }
 
-        public IPage<T> PaginateByFilter(Simple.Expressions.EditableExpression filter, OrderBy<T> order, int? skip, int? take)
+        public IPage<T> PaginateByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(filter, order);
 
@@ -145,7 +145,7 @@ namespace Simple.Entities
             GetDao().Delete(Load(id));
         }
 
-        public int DeleteByFilter(Simple.Expressions.EditableExpression filter)
+        public int DeleteByFilter(Simple.Expressions.Editable.EditableExpression filter)
         {
             int res = 0;
             foreach (var entity in ListByFilter(filter, null))

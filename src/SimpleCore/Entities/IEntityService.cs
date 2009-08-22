@@ -5,7 +5,7 @@ using System.Text;
 using System.ServiceModel;
 using Simple.DataAccess;
 using System.Linq.Expressions;
-using Simple.Expressions;
+using Simple.Expressions.Editable;
 using Simple.Services;
 
 namespace Simple.Entities

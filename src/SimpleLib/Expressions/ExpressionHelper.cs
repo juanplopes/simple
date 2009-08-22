@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Linq.Expressions;
 using System.Reflection;
+using Simple.Reflection;
 
-namespace Simple.Reflection
+namespace Simple.Expressions
 {
     public class ExpressionHelper
     {

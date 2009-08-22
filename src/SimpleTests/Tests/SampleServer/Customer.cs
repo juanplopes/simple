@@ -8,6 +8,7 @@ using Simple.ConfigSource;
 using NHibernate;
 using NHibernate.SqlTypes;
 using Simple.Entities;
+using Simple.DataAccess;
 
 namespace Simple.Tests.SampleServer
 {

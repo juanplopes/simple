@@ -6,6 +6,7 @@ using Simple.DataAccess;
 using Simple.Reflection;
 using Simple.ConfigSource;
 using System.Linq.Expressions;
+using Simple.Expressions.Editable;
 using Simple.Expressions;
 
 namespace Simple.Entities

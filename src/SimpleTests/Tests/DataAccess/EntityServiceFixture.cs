@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using NUnit.Framework;
 using Simple.Tests.SampleServer;
+using Simple.Expressions;
 
 namespace Simple.Tests.DataAccess
 {

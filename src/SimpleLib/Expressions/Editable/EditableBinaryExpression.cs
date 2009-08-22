@@ -5,7 +5,7 @@ using System.Text;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 
-namespace Simple.Expressions
+namespace Simple.Expressions.Editable
 {
     [Serializable]
     public class EditableBinaryExpression : EditableExpression

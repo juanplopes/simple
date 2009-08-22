@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Linq.Expressions;
 
-namespace Simple.Expressions
+namespace Simple.Expressions.Editable
 {
     [Serializable]
     public class EditableMemberAssignment : EditableMemberBinding

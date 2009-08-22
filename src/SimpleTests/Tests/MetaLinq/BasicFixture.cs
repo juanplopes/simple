@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using System.Linq.Expressions;
-using Simple.Expressions;
+using Simple.Expressions.Editable;
 using System.Xml.Serialization;
 using Simple.Common;
 using Simple.IO;
