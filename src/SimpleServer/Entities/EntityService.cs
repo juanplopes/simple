@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using System.Text;
-using Simple.DataAccess;
-using NHibernate;
-using Simple.ServiceModel;
-using Simple.Logging;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using log4net;
-using System.Linq;
+using NHibernate.Linq;
 using Simple.ConfigSource;
-using System.Runtime.Remoting.Proxies;
-using System.Linq.Expressions;
-using Simple.Services;
+using Simple.DataAccess;
 using Simple.Expressions;
+using Simple.Services;
+using NHibernate;
 
 namespace Simple.Entities
 {
@@ -61,122 +57,6 @@ namespace Simple.Entities
         {
             return GetDao().Linq();
         }
-
-        //public bool HeartBeat()
-        //{
-        //    Logger.Debug("Heartbeat: " + typeof(T).Name);
-        //    return true;
-        //}
-
-
-
-        //public virtual T Load(object id)
-        //{
-        //    return GetDao().Load(id);
-        //}
-
-        //public virtual T LoadByExample(T example)
-        //{
-        //    return GetDao().LoadByExample(example);
-        //}
-
-        //public virtual T LoadByFilter(Filter filter)
-        //{
-        //    return CreateCriteriaByFilter(filter, null).UniqueResult<T>();
-        //}
-
-        //public virtual IList<T> ListByExample(T example)
-        //{
-        //    return GetDao().ListByExample(example);
-        //}
-
-        //public virtual IList<T> ListByFilter(Filter filter, OrderByCollection order)
-        //{
-        //    return CreateCriteriaByFilter(filter, order).List<T>();
-        //}
-
-        //public virtual int CountAll()
-        //{
-        //    return CountByFilter(BooleanExpression.True);
-        //}
-
-        //public virtual int CountByFilter(Filter filter)
-        //{
-        //    return CriteriaTransformer.TransformToRowCount(
-        //        CreateCriteriaByFilter(filter, OrderBy.None())).UniqueResult<int>();
-        //}
-
-        //public virtual Page<T> PaginateByFilter(Filter filter, OrderByCollection order, int skip, int take)
-        //{
-        //    ICriteria criteria = CreateCriteriaByFilter(filter, order);
-        //    return Extensions.Paginate<T>(criteria, skip, take);
-        //}
-
-        //public virtual Page<T> PaginateAll(OrderByCollection order, int skip, int take)
-        //{
-        //    return this.PaginateByFilter(BooleanExpression.True, order, skip, take);
-        //}
-        //protected virtual ICriteria CreateCriteriaByFilter(Filter filter, OrderByCollection order)
-        //{
-        //    D dao = GetDao();
-        //    return dao.ToCriteria(filter, order);
-        //}
-
-        //public virtual T SaveOrUpdate(T entity)
-        //{
-        //    GetDao().SaveOrUpdate(entity);
-        //    return entity;
-        //}
-
-        //public virtual T Save(T entity)
-        //{
-        //    GetDao().Save(entity);
-        //    return entity;
-        //}
-
-        //public virtual T Update(T entity)
-        //{
-        //    GetDao().Update(entity);
-        //    return entity;
-        //}
-
-        //public virtual T Persist(T entity)
-        //{
-        //    GetDao().Persist(entity);
-        //    return entity;
-        //}
-
-        //public IList<T> ListAll(OrderByCollection order)
-        //{
-        //    return this.ListByFilter(BooleanExpression.True, order);
-        //}
-
-        //public virtual void Delete(T entity)
-        //{
-        //    GetDao().Delete(entity);
-        //}
-
-        //public virtual void DeleteById(object id)
-        //{
-        //    GetDao().DeleteById(id);
-        //}
-
-        //public virtual int DeleteByFilter(Filter filter)
-        //{
-        //    ICriteria criteria = CreateCriteriaByFilter(filter, null);
-        //    return GetDao().DeleteByCriteria(criteria);
-        //}
-
-        //#region IEntityService<T> Members
-
-
-        //public T LoadByExpression(Simple.Expressions.EditableExpression expression)
-        //{
-        //    var whereClause = (Expression<Func<T, bool>>)expression.ToExpression();
-        //    return Linq().Where(whereClause).FirstOrDefault();
-        //}
-
-        //#endregion
 
         #region IEntityService<T> Members
 

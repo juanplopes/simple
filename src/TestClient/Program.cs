@@ -11,6 +11,7 @@ using Simple.IO;
 using Simple.Tests.SampleServer;
 using Simple.Tests;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 namespace TestClient
 {
     static class Program
@@ -25,17 +26,11 @@ namespace TestClient
 
         static void Main(string[] args)
         {
-            IList<string> s = new List<string>();
-            
-            
-            IList<object> o = new List<object>();
-
-            AddDelegate d = s.Add;
-            AddDelegate d2 = o.Add;
+            Expression<Func<Customer, bool>>. e;
             
 
-            o.Add(2);
-
+            var expr = Customer.Expr(true);
+            expr = Expression.And(expr, Customer.Expr(x => x.Address == "2"));
         }
     }
 }

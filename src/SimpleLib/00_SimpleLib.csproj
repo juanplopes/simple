@@ -146,6 +146,7 @@
     <Compile Include="Patterns\WorkingDays.cs" />
     <Compile Include="Common\EnumTypeAttribute.cs" />
     <Compile Include="Patterns\IWorkingDaysProvider.cs" />
+    <Compile Include="Reflection\ExpressionHelper.cs" />
     <Compile Include="Reflection\InvokerFactory.cs" />
     <Compile Include="Reflection\ICastable.cs" />
     <Compile Include="IO\StringUtils.cs" />

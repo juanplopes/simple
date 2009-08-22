@@ -19,21 +19,67 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
-        public void TestFindFirstCustomerFixture()
+        public void TestFindFirstCustomer()
         {
             var c = Customer.Do.Find(x => x.CompanyName.StartsWith("B"));
             Assert.AreEqual("BERGS", c.Id);
         }
 
         [Test]
-        public void TestFindFirstCustomerReverseIdOrderFixture()
+        public void TestFindFirstCustomerWithOUTAndExpression()
+        {
+            var f = Customer.Expr(x => (true && x.CompanyName.StartsWith("a")) && x.Country == "Mexico");
+
+            var c = Customer.Do.Find(f, o => o.Desc(x => x.Id));
+
+            Assert.AreEqual("ANTON", c.Id);
+        }
+
+        [Test]
+        public void TestFindFirstCustomerWithAndExpression()
+        {
+            var f = Customer.Expr(true);
+
+            f = Customer.And(f, x => x.CompanyName.StartsWith("a"));
+            f = Customer.And(f, x => x.Country == "Mexico");
+
+            var c = Customer.Do.Find(f, o => o.Desc(x => x.Id));
+
+            Assert.AreEqual("ANTON", c.Id);
+        }
+
+        [Test]
+        public void TestFindFirstCustomerWithOUTOrExpression()
+        {
+            var f = Customer.Expr(x => (true && x.CompanyName.StartsWith("a")) || x.Country == "Mexico");
+
+            var c = Customer.Do.Find(f, o => o.Desc(x => x.Id));
+
+            Assert.AreEqual("TORTU", c.Id);
+        }
+
+        [Test]
+        public void TestFindFirstCustomerWithOrExpression()
+        {
+            var f = Customer.Expr(true);
+
+            f = Customer.Or(f, x => x.CompanyName.StartsWith("a"));
+            f = Customer.Or(f, x => x.Country == "Mexico");
+
+            var c = Customer.Do.Find(f, o => o.Desc(x => x.Id));
+
+            Assert.AreEqual("TORTU", c.Id);
+        }
+
+        [Test]
+        public void TestFindFirstCustomerReverseIdOrder()
         {
             var c = Customer.Do.Find(x => x.CompanyName.StartsWith("B"), o => o.Desc(x => x.Id));
             Assert.AreEqual("BSBEV", c.Id);
         }
 
         [Test]
-        public void TestFindFirstCustomerTwoOrderFixture()
+        public void TestFindFirstCustomerTwoOrder()
         {
             var c = Customer.Do.Find(x => x.City == "Sao Paulo",
                 o => o.Asc(x => x.ContactTitle).Desc(x => x.ContactName));
