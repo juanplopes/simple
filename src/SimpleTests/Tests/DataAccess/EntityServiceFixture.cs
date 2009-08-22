@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using NUnit.Framework;
 using Simple.Tests.SampleServer;
-using System.Linq.Expressions;
 
 namespace Simple.Tests.DataAccess
 {
@@ -51,7 +47,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestFindFirstCustomerWithOUTOrExpression()
         {
-            var f = Customer.Expr(x => (true && x.CompanyName.StartsWith("a")) || x.Country == "Mexico");
+            var f = Customer.Expr(x => (false || x.CompanyName.StartsWith("a")) || x.Country == "Mexico");
 
             var c = Customer.Do.Find(f, o => o.Desc(x => x.Id));
 
@@ -61,10 +57,10 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestFindFirstCustomerWithOrExpression()
         {
-            var f = Customer.Expr(true);
+            var f = Customer.Expr(false);
 
-            f = Customer.Or(f, x => x.CompanyName.StartsWith("a"));
-            f = Customer.Or(f, x => x.Country == "Mexico");
+            f = f.Or(x => x.CompanyName.StartsWith("a"));
+            f = f.Or(x => x.Country == "Mexico");
 
             var c = Customer.Do.Find(f, o => o.Desc(x => x.Id));
 

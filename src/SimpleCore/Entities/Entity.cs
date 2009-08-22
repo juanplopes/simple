@@ -39,7 +39,7 @@ namespace Simple.Entities
         #region Expressions
         public static Expression<Func<T, bool>> Expr(bool value)
         {
-            return x => true;
+            return x => value;
         }
 
         public static Expression<Func<T, bool>> Expr(Expression<Func<T, bool>> expr)
@@ -49,18 +49,12 @@ namespace Simple.Entities
 
         public static Expression<Func<T, bool>> And(Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
         {
-            var p = left.Parameters
-                .Select(x=>Expression.Parameter(x.Type, x.Name)).ToArray();
-            
-            Expression body = Expression.And(
-                Expression.Invoke(left, p), Expression.Invoke(right, p));
-
-            return Expression.Lambda<Func<T, bool>>(body, p);
+            return PredicateBuilder.And(left, right);
         }
 
         public static Expression<Func<T, bool>> Or(Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
         {
-            return Expression.Lambda<Func<T, bool>>(Expression.Or(left.Body, right.Body), left.Parameters);
+            return PredicateBuilder.Or(left, right);
         }
 
 

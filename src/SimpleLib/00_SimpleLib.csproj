@@ -153,6 +153,7 @@
     <Compile Include="IO\EmailTemplate.cs" />
     <Compile Include="Reflection\AttributeCache.cs" />
     <Compile Include="Reflection\EntityHelper.cs" />
+    <Compile Include="Reflection\PredicateBuilder.cs" />
     <Compile Include="Reflection\TypesHelper.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
     <Compile Include="Persistence\ExecutionContext.cs" />
