@@ -30,7 +30,7 @@ namespace Simple.Tests.SampleServer
                 WithTable("Products");
                 Not.LazyLoad();
 
-                Id(x => x.Id, "ProductID");
+                Id(x => x.Id, "ProductID").GeneratedBy.Increment();
                 Map(x => x.Name, "ProductName");
                 References(x => x.Supplier, "SupplierID").Not.LazyLoad();
                 References(x => x.Category, "CategoryID").Not.LazyLoad() ;

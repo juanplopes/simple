@@ -55,6 +55,16 @@ namespace Simple.Entities
             return Rules.Load(id);
         }
 
+        public T Refresh(T entity)
+        {
+            return Rules.Refresh(entity);
+        }
+
+        public T Merge(T entity)
+        {
+            return Rules.Merge(entity);
+        }
+
         public T Find(Expression<Func<T, bool>> filter)
         {
             return Rules.FindByFilter(filter.ToEditable(), new OrderBy<T>());

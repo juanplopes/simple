@@ -13,14 +13,8 @@ using NHibernate;
 
 namespace Simple.Entities
 {
-    public class EntityService<T> : EntityService<T, EntityDao<T>>
-    {
-
-    }
-
     [KnownType(typeof(Page<>))]
-    public class EntityService<T, D> : MarshalByRefObject, IEntityService<T>
-        where D : EntityDao<T>, new()
+    public class EntityService<T> : MarshalByRefObject, IEntityService<T>
     {
         private ILog _logger = null;
         protected ILog Logger
@@ -41,28 +35,40 @@ namespace Simple.Entities
             }
         }
 
-        protected virtual D GetDao()
+        protected ISession Session
         {
-            D dao = new D();
-            dao.Session = Simply.Do[ConfigKey].GetSession();
-            return dao;
+            get
+            {
+                return Simply.Do[ConfigKey].GetSession();
+            }
         }
 
         protected virtual IOrderedQueryable<Q> Linq<Q>()
         {
-            return GetDao().Linq<Q>();
+            return Session.Linq<Q>();
         }
 
         protected virtual IOrderedQueryable<T> Linq()
         {
-            return GetDao().Linq();
+            return Linq<T>();
         }
 
         #region IEntityService<T> Members
 
         public T Load(object id)
         {
-            return GetDao().Load(id);
+            return Session.Load<T>(id);
+        }
+
+        public T Refresh(T entity)
+        {
+            Session.Refresh(entity);
+            return entity;
+        }
+
+        public T Merge(T entity)
+        {
+            return (T)Session.Merge(entity);
         }
 
         protected IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy)
@@ -142,7 +148,8 @@ namespace Simple.Entities
 
         public void DeleteById(object id)
         {
-            GetDao().Delete(Load(id));
+            Session.Delete(Load(id));
+            Session.Flush();
         }
 
         public int DeleteByFilter(Simple.Expressions.Editable.EditableExpression filter)
@@ -150,39 +157,45 @@ namespace Simple.Entities
             int res = 0;
             foreach (var entity in ListByFilter(filter, null))
             {
-                GetDao().Delete(entity);
+                Session.Delete(entity);
                 res++;
             }
+            Session.Flush();
             return res;
         }
 
         public T SaveOrUpdate(T entity)
         {
-            GetDao().SaveOrUpdate(entity);
+            Session.SaveOrUpdate(entity);
+            Session.Flush();
             return entity;
         }
 
         public T Save(T entity)
         {
-            GetDao().Save(entity);
+            Session.Save(entity);
+            Session.Flush();
             return entity;
         }
 
         public T Update(T entity)
         {
-            GetDao().Update(entity);
+            Session.Update(entity);
+            Session.Flush();
             return entity;
         }
 
         public T Persist(T entity)
         {
-            GetDao().Persist(entity);
+            Session.Persist(entity);
+            Session.Flush();
             return entity;
         }
 
         public void Delete(T entity)
         {
-            GetDao().Delete(entity);
+            Session.Delete(entity);
+            Session.Flush();
         }
 
         #endregion

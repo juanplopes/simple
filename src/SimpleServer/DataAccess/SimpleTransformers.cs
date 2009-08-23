@@ -23,6 +23,7 @@ namespace Simple.DataAccess
             return new TupleToPropertiesTransformer(t);
         }
         public static TupleToPropertiesTransformer ByProperties<T>()
+            where T : new()
         {
             return ByProperties(typeof(T));
         }

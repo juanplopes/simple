@@ -287,5 +287,51 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual(1, c);
         }
 
+        [Test]
+        public void TestRefreshEntity()
+        {
+            var c = Customer.Do.Load("BLAUS");
+            Assert.AreEqual("Hanna Moos", c.ContactName);
+
+            c.ContactName = "WHATEVER";
+
+            c = c.Refresh();
+            Assert.AreEqual("Hanna Moos", c.ContactName);
+        }
+
+        [Test]
+        public void TestMergeEntity()
+        {
+            var c = Customer.Do.Load("BLAUS");
+
+            var c2 = c.Clone();
+            c2.CompanyName = "WHATEVER";
+            Assert.Throws<NonUniqueObjectException>(() => c2.SaveOrUpdate());
+
+            c2 = c2.Merge();
+            c2.SaveOrUpdate();
+
+            var c3 = Customer.Do.Load("BLAUS");
+            Assert.AreEqual("WHATEVER", c3.CompanyName); 
+
+        }
+
+        [Test]
+        public void TestCreateIdBySaveProduct()
+        {
+            var p = Product.Do.Load(1).Clone();
+            p.Id = 0;
+            p = p.Save();
+            Assert.AreNotEqual(0, p.Id);
+        }
+
+        [Test]
+        public void TestCreateIdBySaveOrUpdateProduct()
+        {
+            var p = Product.Do.Load(1).Clone();
+            p.Id = 0;
+            p = p.SaveOrUpdate();
+            Assert.AreNotEqual(0, p.Id);
+        }
     }
 }

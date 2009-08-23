@@ -17,6 +17,12 @@ namespace Simple.Entities
         T Load(object id);
 
         [OperationContract]
+        T Refresh(T entity);
+
+        [OperationContract]
+        T Merge(T entity);
+
+        [OperationContract]
         T FindByFilter(EditableExpression filter, OrderBy<T> orderBy);
 
         [OperationContract]

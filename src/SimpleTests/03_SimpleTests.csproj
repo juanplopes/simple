@@ -101,6 +101,7 @@
     <Compile Include="SetupFixture.cs" />
     <Compile Include="Tests\ConfigSource\ConfiguratorInterfaceFixture.cs" />
     <Compile Include="Tests\DataAccess\EntityServiceFixture.cs" />
+    <Compile Include="Tests\DataAccess\EntityTransformersFixture.cs" />
     <Compile Include="Tests\DataAccess\ExpressionFilterFixture.cs" />
     <Compile Include="Tests\DataAccess\NorthwindCheckFixture.cs" />
     <Compile Include="Tests\DataAccess\BaseDataFixture.cs" />

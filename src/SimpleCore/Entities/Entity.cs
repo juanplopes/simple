@@ -81,6 +81,16 @@ namespace Simple.Entities
             return (T)this.MemberwiseClone();
         }
 
+        public virtual T Refresh()
+        {
+            return Do.Refresh(ThisAsT);
+        }
+
+        public virtual T Merge()
+        {
+            return Do.Merge(ThisAsT);
+        }
+
         public virtual T Persist()
         {
             return Do.Persist(ThisAsT);
