@@ -10,44 +10,64 @@ namespace Simple.Expressions
 {
     public class ExpressionHelper
     {
-        public static string GetPropertyName<T, P>(Expression<Func<T, P>> expr)
+        public static string GetMemberName<T, P>(Expression<Func<T, P>> expr)
         {
-            if (!(expr.Body is MemberExpression)) throw new ArgumentException("Expression must be MemberExpression");
-            return GetPropertyName(expr.Body as MemberExpression);
+            return GetMemberName(expr.Body);
         }
 
-        public static string GetPropertyName(MemberExpression expr)
+        public static string GetMemberName(Expression expr)
         {
-            if (expr.Member.MemberType != System.Reflection.MemberTypes.Property)
-                throw new ArgumentException("MemberExpression must be PropertyExpression");
-
-            string test = expr.Member.Name;
-            if (expr.Expression is MemberExpression) test = GetPropertyName(expr.Expression as MemberExpression) + "." + test;
-            return test;
+            return string.Join(".", GetMemberPath(expr).ToArray());
         }
 
-        public static object SetValue(MemberExpression expr, object target, object value, bool newInstance)
+        public static IEnumerable<string> GetMemberPath(Expression expr)
         {
-            try
+            LinkedList<string> answer = new LinkedList<string>();
+            while (expr != null &&  
+                  (expr.NodeType == ExpressionType.MemberAccess ||
+                  expr.NodeType == ExpressionType.Call ||
+                  expr.NodeType == ExpressionType.Convert))
             {
-                Expression exprChild = expr.Expression;
-                if (exprChild is MemberExpression)
-                    target = SetValue(exprChild as MemberExpression , target, null, true);
-
-                PropertyInfo prop = (PropertyInfo)expr.Member;
-                if (newInstance)
-                    value = Activator.CreateInstance(prop.PropertyType);
-                else
-                    value = Convert.ChangeType(value, prop.PropertyType);
-
-                MethodCache.Do.GetInvoker(prop.GetSetMethod()).Invoke(target, value, null);
-                return value;
+                if (ExpressionType.MemberAccess == expr.NodeType)
+                {
+                    answer.AddFirst((expr as MemberExpression).Member.Name);
+                    expr = (expr as MemberExpression).Expression;
+                }
+                else if (ExpressionType.Convert == expr.NodeType)
+                {
+                    expr = (expr as UnaryExpression).Operand;
+                }
+                else if (ExpressionType.Call == expr.NodeType)
+                {
+                    answer.AddFirst((expr as MethodCallExpression).Method.Name);
+                    expr = (expr as MethodCallExpression).Object;
+                }
             }
-            catch (FormatException)
-            {
-                return null;
-            }
+            return answer;
         }
-        
+
+        public static void SetValue(MemberExpression expr, object target, object value)
+        {
+            IEnumerable<string> path = GetMemberPath(expr);
+            PropertyInfo prop = null;
+
+            if (path.Count() == 0) throw new InvalidOperationException("Invalid lambda");
+
+            foreach (var node in path)
+            {
+                if (prop != null)
+                {
+                    object temp = Activator.CreateInstance(prop.PropertyType);
+                    MethodCache.Do.GetSetter(prop)(target, temp, null);
+                    target = temp;
+                }
+
+                prop = target.GetType().GetProperty(node);
+                if (prop == null) throw new InvalidOperationException("Cannot have method on the way");
+            }
+
+            MethodCache.Do.GetSetter(prop)(target,
+                Convert.ChangeType(value, prop.PropertyType), null);
+        }
     }
 }

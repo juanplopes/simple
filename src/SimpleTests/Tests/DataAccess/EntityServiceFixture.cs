@@ -128,6 +128,13 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
+        public void TestFindLastProduct()
+        {
+            var p = Product.Do.Find(x => true, o => o.Desc(x => x.Id));
+            Assert.AreEqual(77, p.Id);
+        }
+
+        [Test]
         public void TestFindByTrueFilter()
         {
             AssertQuery(x => x.Take(1), Customer.Do.Find(x => true));

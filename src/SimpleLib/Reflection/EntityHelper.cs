@@ -34,9 +34,9 @@ namespace Simple.Reflection
             return this;
         }
 
-        public EntityHelper AddID<T, P>(Expression<Func<T, P>> expr)
+        public EntityHelper AddID<T>(Expression<Func<T, object>> expr)
         {
-            AddID(ExpressionHelper.GetPropertyName(expr));
+            AddID(ExpressionHelper.GetMemberName(expr));
             return this;
         }
 

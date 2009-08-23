@@ -33,6 +33,7 @@ namespace Simple.Tests.SimpleLib
         {
             public D(int a) { Value = a; }
             public int Value { get; set; }
+            public int GetValue() { return this.Value; }
         }
 
 
@@ -41,15 +42,22 @@ namespace Simple.Tests.SimpleLib
         [Test]
         public void TestSimplePropertyName()
         {
-            var propName = ExpressionHelper.GetPropertyName((A a) => a.BProp);
+            var propName = ExpressionHelper.GetMemberName((A a) => a.BProp);
             Assert.AreEqual("BProp", propName);
         }
 
         [Test]
         public void TestNestedPropertyName()
         {
-            var propName = ExpressionHelper.GetPropertyName((A a) => a.BProp.CProp.IntProp);
+            var propName = ExpressionHelper.GetMemberName((A a) => a.BProp.CProp.IntProp);
             Assert.AreEqual("BProp.CProp.IntProp", propName);
+        }
+
+        [Test]
+        public void TestNestedMethodName()
+        {
+            var propName = ExpressionHelper.GetMemberName((A a) => a.BProp.CProp.DProp.GetValue());
+            Assert.AreEqual("BProp.CProp.DProp.GetValue", propName);
         }
 
         [Test]
@@ -58,12 +66,23 @@ namespace Simple.Tests.SimpleLib
             Expression<Func<A, B>> lambda = x => x.BProp;
 
             A a = new A();
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new B() { Diff = 42 }, false);
+            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new B() { Diff = 42 });
 
 
             Assert.IsNotNull(a.BProp);
             Assert.AreEqual(42, a.BProp.Diff);
         }
+
+        [Test, ExpectedException(typeof(InvalidOperationException))]
+        public void FailSettingMethod()
+        {
+            Expression<Func<A, int>> lambda = x => x.BProp.CProp.DProp.GetValue();
+
+            A a = new A();
+
+            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 50);
+        }
+
 
         [Test]
         public void TestSimplePropertySetNewInstance()
@@ -71,7 +90,7 @@ namespace Simple.Tests.SimpleLib
             Expression<Func<A, B>> lambda = x => x.BProp;
 
             A a = new A();
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, null, true);
+            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new B());
 
 
             Assert.IsNotNull(a.BProp);
@@ -84,7 +103,7 @@ namespace Simple.Tests.SimpleLib
             Expression<Func<A, int>> lambda = x => x.BProp.CProp.IntProp;
 
             A a = new A();
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 42, false);
+            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 42);
 
             Assert.IsNotNull(a.BProp);
             Assert.AreEqual(0, a.BProp.Diff);
@@ -98,7 +117,7 @@ namespace Simple.Tests.SimpleLib
             Expression<Func<A, int>> lambda = x => x.BProp.CProp.DProp.Value;
 
             A a = new A();
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 42, false);
+            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 42);
 
         }
 
