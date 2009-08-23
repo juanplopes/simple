@@ -10,10 +10,10 @@ using Simple.Common;
 using Simple.IO;
 using Simple.IO.Serialization;
 
-namespace Simple.Tests.MetaLinq
+namespace Simple.Tests.SimpleLib
 {
     [TestFixture]
-    public class BasicFixture
+    public class MetaLinqFixture
     {
         public void TestIt<TRet>(Expression<Func<TRet>> expr)
         {

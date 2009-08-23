@@ -11,7 +11,7 @@ namespace Simple.Services
 {
     public class DefaultInterceptor : IInterceptor
     {
-        IDictionary<MethodBase, InvocationDelegate> _cache = new Dictionary<MethodBase, InvocationDelegate>();
+        MethodCache _cache = new MethodCache();
         Func<CallHookArgs, IEnumerable<ICallHook>> Hooks { get; set; }
         bool Client { get; set; }
         ICallHeadersHandler HeaderHandler { get; set; }
@@ -69,16 +69,7 @@ namespace Simple.Services
 
         protected InvocationDelegate GetInvocationDelegate(MethodBase method)
         {
-            lock (_cache)
-            {
-                InvocationDelegate del;
-                if (!_cache.TryGetValue(method, out del))
-                {
-                    _cache[method] = del = InvokerFactory.Do.Create(method);
-                }
-                return del;
-
-            }
+            return _cache.GetInvoker(method);
         }
 
         #endregion

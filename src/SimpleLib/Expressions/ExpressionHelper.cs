@@ -40,7 +40,7 @@ namespace Simple.Expressions
                 else
                     value = Convert.ChangeType(value, prop.PropertyType);
 
-                InvokerFactory.Do.Create(prop.GetSetMethod()).Invoke(target, value, null);
+                MethodCache.Do.GetInvoker(prop.GetSetMethod()).Invoke(target, value, null);
                 return value;
             }
             catch (FormatException)

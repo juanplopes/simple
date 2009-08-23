@@ -38,6 +38,11 @@ namespace Simple.Entities
         }
 
         #region Expressions
+        public static string Prop<P>(Expression<Func<T, P>> expr)
+        {
+            return ExpressionHelper.GetPropertyName(expr);
+        }
+
         public static Expression<Func<T, bool>> Expr(bool value)
         {
             return x => value;

@@ -154,6 +154,7 @@
     <Compile Include="Reflection\AttributeCache.cs" />
     <Compile Include="Reflection\EntityHelper.cs" />
     <Compile Include="Expressions\PredicateBuilder.cs" />
+    <Compile Include="Reflection\MethodCache.cs" />
     <Compile Include="Reflection\TypesHelper.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
     <Compile Include="Persistence\ExecutionContext.cs" />

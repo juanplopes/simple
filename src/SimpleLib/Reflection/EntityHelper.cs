@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using Simple.Common;
+using System.Linq.Expressions;
+using Simple.Expressions;
 
 namespace Simple.Reflection
 {
     public class EntityHelper
     {
+        protected MethodCache _cache = new MethodCache();
         protected List<string> _ids = new List<string>();
         protected Type _entityType = null;
         protected object _obj = null;
@@ -25,9 +28,16 @@ namespace Simple.Reflection
             _obj = obj;
         }
 
-        public void AddID(params string[] propName)
+        public EntityHelper AddID(string propName)
         {
-            _ids.AddRange(propName);
+            _ids.Add(propName);
+            return this;
+        }
+
+        public EntityHelper AddID<T, P>(Expression<Func<T, P>> expr)
+        {
+            AddID(ExpressionHelper.GetPropertyName(expr));
+            return this;
         }
 
         public void AddAllProperties()
@@ -60,8 +70,9 @@ namespace Simple.Reflection
                 if (ignore.ContainsKey(idProp)) continue;
 
                 PropertyInfo info = _entityType.GetProperty(idProp);
-                object value1 = info.GetValue(obj1, null);
-                object value2 = info.GetValue(obj2, null);
+                InvocationDelegate getter = _cache.GetGetter(info);
+                object value1 = getter(obj1, null);
+                object value2 = getter(obj2, null);
 
                 if (value1 == null ^ value2 == null) return false;
                 if (value1 != null && value2 != null && !value1.Equals(value2)) return false;
