@@ -51,7 +51,7 @@ namespace Simple.Tests.DataAccess
 
             var config = Simply.Do[this].GetNHibernateConfig();
 
-            Assert.AreEqual(4, config.ClassMappings.Count);
+            Assert.AreEqual(8, config.ClassMappings.Count);
         }
     }
 }

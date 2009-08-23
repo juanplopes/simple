@@ -35,11 +35,6 @@ namespace Simple.Tests.DataAccess
             public string SampleString { get; set; }
         }
 
-        protected ISession Session
-        {
-            get { return MySimply.GetSession(); }
-        }
-
         [Test]
         public void TestSQLQueryByConstructorSample1()
         {

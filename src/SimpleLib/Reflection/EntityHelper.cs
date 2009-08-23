@@ -8,6 +8,16 @@ using Simple.Expressions;
 
 namespace Simple.Reflection
 {
+    public class EntityHelper<T> : EntityHelper
+    {
+        public EntityHelper(params Expression<Func<T, object>>[] ids)
+            : base(typeof(T))
+        {
+            foreach (var id in ids)
+                AddID<T>(id);
+        }
+    }
+
     public class EntityHelper
     {
         protected MethodCache _cache = new MethodCache();

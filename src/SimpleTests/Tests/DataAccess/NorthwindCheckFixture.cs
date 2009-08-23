@@ -39,11 +39,47 @@ namespace Simple.Tests.DataAccess
         public void CheckSuppliers()
         {
             Assert.AreEqual(29, Supplier.Do.Count());
-            Supplier.Do.List(x => x.Address == "whatever");
-            Supplier.Do.List(x => x.Address == "whatever", 10, 50);
-            Supplier.Do.List(x => x.Address == "whatever", o=>o.Asc(x=>x.ContactName), 10, 50);
             Supplier.Do.List(1);
         }
 
+        [Test]
+        public void CheckRegions()
+        {
+            Assert.AreEqual(4, Region.Do.Count());
+            Region.Do.List(1);
+        }
+
+        [Test]
+        public void CheckTerritories()
+        {
+            Assert.AreEqual(53, Territory.Do.Count());
+            Territory.Do.List(1);
+            var t = Territory.Do.Load("03049");
+            Assert.AreEqual(3, t.Region.Id);
+        }
+
+        [Test]
+        public void CheckEmployees()
+        {
+            Assert.AreEqual(9, Employee.Do.Count());
+            Employee.Do.List(1);
+        }
+
+        [Test]
+        public void CheckEmployeeTerritories()
+        {
+            Assert.AreEqual(49, EmployeeTerritory.Do.Count());
+            EmployeeTerritory.Do.Find(x => x.Territory.Id == "85014" && x.Employee.Id == 6);
+        }
+
+        [Test]
+        public void CheckEmployeeTerritoriesEquality()
+        {
+            var t = EmployeeTerritory.Do.List(1)[0];
+            var t2 = t.Clone();
+
+            Assert.IsFalse(object.ReferenceEquals(t, t2));
+            Assert.IsTrue(t.Equals(t2));
+        }
     }
 }

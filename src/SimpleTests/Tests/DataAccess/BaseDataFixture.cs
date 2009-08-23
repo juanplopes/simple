@@ -42,5 +42,7 @@ namespace Simple.Tests.DataAccess
                 return NHConfig1.Do.Simply;
             }
         }
+
+        public ISession Session { get { return MySimply.GetSession(); } }
     }
 }

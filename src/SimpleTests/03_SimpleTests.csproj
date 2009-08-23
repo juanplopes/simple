@@ -103,11 +103,16 @@
     <Compile Include="Tests\DataAccess\EntityServiceFixture.cs" />
     <Compile Include="Tests\DataAccess\EntityTransformersFixture.cs" />
     <Compile Include="Tests\DataAccess\ExpressionFilterFixture.cs" />
+    <Compile Include="Tests\DataAccess\NHLinqFixture.cs" />
     <Compile Include="Tests\DataAccess\NorthwindCheckFixture.cs" />
     <Compile Include="Tests\DataAccess\BaseDataFixture.cs" />
     <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
     <Compile Include="Tests\Experiences\ReflectionFixture.cs" />
     <Compile Include="Tests\Experiences\RemotingFixture.cs" />
+    <Compile Include="Tests\SampleServer\EmployeeTerritories.cs" />
+    <Compile Include="Tests\SampleServer\Region.cs" />
+    <Compile Include="Tests\SampleServer\Territory.cs" />
+    <Compile Include="Tests\SampleServer\Employee.cs" />
     <Compile Include="Tests\SimpleLib\EntityHelperFixture.cs" />
     <Compile Include="Tests\SimpleLib\MetaLinqFixture.cs" />
     <Compile Include="Tests\SampleServer\Category.cs" />

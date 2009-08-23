@@ -26,7 +26,6 @@ namespace Simple.Tests.SampleServer
         public virtual string Country { get; set; }
         public virtual string Phone { get; set; }
         public virtual string Fax { get; set; }
-        public virtual string Endereco { get; set; }
 
 
         public class Map : ClassMap<Customer>
