@@ -12,6 +12,13 @@ namespace Simple.Tests.DataAccess
     [TestFixture]
     public class DataContextFixture : BaseDataFixture
     {
+        protected override bool OpenOwnTx
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         [Test]
         public void SimpleDataContextTest()

@@ -63,7 +63,7 @@ namespace Simple.Entities
 
         protected static void EnsureThisType(Entity<T, R> entity)
         {
-            if (!(entity is T)) throw new InvalidOperationException("Assertion failure. No idea what's happening.");
+            if (!(entity is T)) throw new InvalidOperationException("Assertion failure. No idea what's happening. This must be T");
         }
 
         protected virtual T ThisAsT
@@ -73,6 +73,12 @@ namespace Simple.Entities
                 EnsureThisType(this);
                 return this as T;
             }
+        }
+
+        public virtual T Clone()
+        {
+            EnsureThisType(this);
+            return (T)this.MemberwiseClone();
         }
 
         public virtual T Persist()
