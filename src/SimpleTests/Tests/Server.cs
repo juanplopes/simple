@@ -16,6 +16,7 @@ using Simple.Threading;
 using Simple.Tests.DataAccess;
 using Simple.Tests.SampleServer;
 using System.IO;
+using NHibernate.Tool.hbm2ddl;
 
 
 namespace Simple.Tests
@@ -34,18 +35,7 @@ namespace Simple.Tests
                 ExecuteSamples(args);
                 return 0;
             }
-            
-            Simply simply = Simply.Do[NHConfig1.ConfigKey];
-            File.WriteAllBytes("Northwind.sdf", Database.Northwind);
 
-            simply.Configure.Log4netToConsole();
-            simply.Configure
-               .NHibernate().FromXml(NHConfigurations.NHConfig1)
-               .MappingFromAssemblyOf<Category.Map>()
-               .RemotingDefault();
-
-            simply.AddServerHook(x => new DefaultCallHook(x, NHConfig1.ConfigKey));
-            simply.HostAssemblyOf(typeof(Category.Map));
             Console.ReadLine();
             return 0;
         }
@@ -76,7 +66,6 @@ namespace Simple.Tests
                 configure(guid);
 
                 ev.Set();
-                Console.ReadLine();
             }
         }
     }

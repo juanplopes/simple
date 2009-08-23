@@ -34,7 +34,7 @@ namespace TestMvcClient.Controllers
         public ActionResult Create()
         {
             return View();
-        } 
+        }
 
         //
         // POST: /Customer/Create
@@ -56,7 +56,7 @@ namespace TestMvcClient.Controllers
 
         //
         // GET: /Customer/Edit/5
- 
+
         public ActionResult Edit(string id)
         {
             return View(Customer.Do.Load(id));
@@ -71,7 +71,7 @@ namespace TestMvcClient.Controllers
             try
             {
                 c.Update();
- 
+
                 return RedirectToAction("Index");
             }
             catch

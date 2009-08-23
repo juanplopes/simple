@@ -1,18 +1,17 @@
 <%@ Assembly Name="SimpleTests" %>
+
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Simple.Tests.SampleServer.Customer>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Index
+    Index
 </asp:Content>
-
-
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-    <h2>Index</h2>
-
+    <h2>
+        Index</h2>
     <table>
         <tr>
-            <th></th>
+            <th>
+            </th>
             <th>
                 Id
             </th>
@@ -47,12 +46,12 @@
                 Fax
             </th>
         </tr>
-
-    <% foreach (var item in Model) { %>
-    
+        <% foreach (var item in Model)
+           { %>
         <tr>
             <td>
-                <%= Html.ActionLink("Edit", "Edit", new { id=item.Id }) %> |
+                <%= Html.ActionLink("Edit", "Edit", new { id=item.Id }) %>
+                |
                 <%= Html.ActionLink("Details", "Details", new { id = item.Id })%>
             </td>
             <td>
@@ -89,14 +88,9 @@
                 <%= Html.Encode(item.Fax) %>
             </td>
         </tr>
-    
-    <% } %>
-
+        <% } %>
     </table>
-
     <p>
         <%= Html.ActionLink("Create New", "Create") %>
     </p>
-
 </asp:Content>
-
