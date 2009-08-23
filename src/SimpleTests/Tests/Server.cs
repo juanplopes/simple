@@ -31,10 +31,7 @@ namespace Simple.Tests
         static int Main(string[] args)
         {
             if (args.Length > 0)
-            {
                 ExecuteSamples(args);
-                return 0;
-            }
 
             Console.ReadLine();
             return 0;
