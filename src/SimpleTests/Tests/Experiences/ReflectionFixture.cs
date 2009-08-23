@@ -32,5 +32,21 @@ namespace Simple.Tests.Experiences
             Assert.AreNotEqual(hash2, hash3);
             Assert.AreNotEqual(hash1, hash3);
         }
+
+        class Sample1 {
+            public string Prop { get; set; }
+        }
+
+        [Test]
+        public void TestSetterReturnsAlwaysTheSameMethod()
+        {
+            Type t = typeof(Sample1);
+
+            var m1 = t.GetProperty("Prop").GetSetMethod();
+            var m2 = t.GetProperty("Prop").GetSetMethod();
+
+            Assert.AreEqual(m1, m2);
+        }
     }
 }
+
