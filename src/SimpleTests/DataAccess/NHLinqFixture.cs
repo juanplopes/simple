@@ -16,7 +16,8 @@ namespace Simple.Tests.DataAccess
         {
             var mapping = Session.Linq<EmployeeTerritory>();
 
-            var q = mapping.GroupBy(x => x.Employee.Id).Select(x => new { x.Key, Count = x.Count() });
+            var q = mapping.GroupBy(x => x.Employee.Id)
+                .Select(x => new { x.Key, Count = x.Count() });
 
             var list = q.ToDictionary(x => x.Key);
 

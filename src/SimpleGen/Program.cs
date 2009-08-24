@@ -15,6 +15,8 @@ namespace Simple.Generator
                 File.ReadAllBytes("NorthwindSampleModel.dbml")) as Database;
             
             return 0;
+
+
         }
     }
 }
