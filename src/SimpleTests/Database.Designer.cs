@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Simple {
+namespace Simple.Tests {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Simple {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Simple.Database", typeof(Database).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Simple.Tests.Database", typeof(Database).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

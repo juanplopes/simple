@@ -8,7 +8,7 @@
     <ProjectGuid>{B244B1EF-812D-4BDC-8BB7-E5ECAD0AACB1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simple</RootNamespace>
+    <RootNamespace>Simple.Tests</RootNamespace>
     <AssemblyName>SimpleTests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -99,77 +99,67 @@
       <DependentUpon>Database.resx</DependentUpon>
     </Compile>
     <Compile Include="SetupFixture.cs" />
-    <Compile Include="Tests\ConfigSource\ConfiguratorInterfaceFixture.cs" />
-    <Compile Include="Tests\DataAccess\EntityServiceFixture.cs" />
-    <Compile Include="Tests\DataAccess\EntityTransformersFixture.cs" />
-    <Compile Include="Tests\DataAccess\ExpressionFilterFixture.cs" />
-    <Compile Include="Tests\DataAccess\NHLinqFixture.cs" />
-    <Compile Include="Tests\DataAccess\NorthwindCheckFixture.cs" />
-    <Compile Include="Tests\DataAccess\BaseDataFixture.cs" />
-    <Compile Include="Tests\DataAccess\DataContextFixture.cs" />
-    <Compile Include="Tests\Experiences\ReflectionFixture.cs" />
-    <Compile Include="Tests\Experiences\RemotingFixture.cs" />
-    <Compile Include="Tests\SampleServer\EmployeeTerritories.cs" />
-    <Compile Include="Tests\SampleServer\Region.cs" />
-    <Compile Include="Tests\SampleServer\Territory.cs" />
-    <Compile Include="Tests\SampleServer\Employee.cs" />
-    <Compile Include="Tests\SimpleLib\EntityHelperFixture.cs" />
-    <Compile Include="Tests\SimpleLib\MetaLinqFixture.cs" />
-    <Compile Include="Tests\SampleServer\Category.cs" />
-    <Compile Include="Tests\SampleServer\Customer.cs" />
-    <Compile Include="Tests\SampleServer\Product.cs" />
-    <Compile Include="Tests\SampleServer\Supplier.cs" />
-    <Compile Include="Tests\Service\BaseInterceptorFixture.samples.cs" />
-    <Compile Include="Tests\Service\ChannelSelectorFixture.cs" />
-    <Compile Include="Tests\Service\IpcRemotingFixtures.cs" />
-    <Compile Include="Tests\Service\HookOrderFixture.cs" />
-    <Compile Include="Tests\Service\TcpRemotingFixtures.cs" />
-    <Compile Include="Tests\Service\HttpRemotingFixtures.cs" />
-    <Compile Include="Tests\Service\BaseInterceptorFixture.cs" />
-    <Compile Include="Tests\Service\BaseRemotingInterceptorFixture.cs" />
-    <Compile Include="Tests\Service\BaseSelfRemotingInterceptorFixture.cs" />
-    <Compile Include="Tests\Service\DefaultInterceptorFixture.cs" />
-    <Compile Include="Tests\Service\Helper.cs" />
-    <Compile Include="Tests\Service\BaseSelfRemotingFactoryFixture.cs" />
-    <Compile Include="Tests\Service\DefaultFactoryFixture.cs" />
-    <Compile Include="Tests\Service\BaseFactoryFixture.cs" />
-    <Compile Include="Tests\Service\BaseRemotingFactoryFixture.cs" />
-    <Compile Include="Tests\Service\RemotingConfigs.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RemotingConfigs.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Tests\Service\ServiceConfigFixture.cs" />
-    <Compile Include="Tests\DataAccess\NHConfigFixture.cs" />
-    <Compile Include="Tests\DataAccess\NHConfigurations.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NHConfigurations.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Tests\SimpleLib\BaseWDProviderFixture.cs" />
-    <Compile Include="Tests\NHConfig1.cs" />
-    <Compile Include="Tests\Server.cs" />
-    <Compile Include="Tests\SimpleLib\AttributeCacheFixture.cs" />
-    <Compile Include="Tests\SimpleLib\BaseWorkingDaysFixture.cs" />
-    <Compile Include="Tests\ConfigSource\FactoryFixture.cs" />
-    <Compile Include="Tests\ConfigSource\LoggerFactoryFixture.cs" />
-    <Compile Include="Tests\SimpleLib\ClassNameHelperFixture.cs" />
-    <Compile Include="Tests\SimpleLib\EnumTypeFixture.cs" />
-    <Compile Include="Tests\SimpleLib\ExpressionHelperFixture.cs" />
-    <Compile Include="Tests\SimpleLib\InvokerFactoryFixture.cs" />
-    <Compile Include="Tests\SimpleLib\MarshallableDynamicProxyFixture.cs" />
-    <Compile Include="Tests\SimpleLib\MethodCacheFixture.cs" />
-    <Compile Include="Tests\SimpleLib\MiscFixture.cs" />
-    <Compile Include="Tests\SimpleLib\MathHelperFixture.cs" />
-    <Compile Include="Tests\SimpleLib\StringFragmenterFixture.cs" />
-    <Compile Include="Tests\SimpleLib\Sample\AttributeCacheClasses.cs" />
-    <Compile Include="Tests\SimpleLib\Sample\TestStringClass.cs" />
-    <Compile Include="Tests\SimpleLib\WorkingDaysFixture.cs" />
-    <Compile Include="Tests\Experiences\LambdaFixture.cs" />
+    <Compile Include="ConfigSource\ConfiguratorInterfaceFixture.cs" />
+    <Compile Include="DataAccess\EntityServiceFixture.cs" />
+    <Compile Include="DataAccess\EntityTransformersFixture.cs" />
+    <Compile Include="DataAccess\ExpressionFilterFixture.cs" />
+    <Compile Include="DataAccess\NHLinqFixture.cs" />
+    <Compile Include="DataAccess\NorthwindCheckFixture.cs" />
+    <Compile Include="DataAccess\BaseDataFixture.cs" />
+    <Compile Include="DataAccess\DataContextFixture.cs" />
+    <Compile Include="Experiences\ReflectionFixture.cs" />
+    <Compile Include="Experiences\RemotingFixture.cs" />
+    <Compile Include="SampleServer\EmployeeTerritories.cs" />
+    <Compile Include="SampleServer\Region.cs" />
+    <Compile Include="SampleServer\Territory.cs" />
+    <Compile Include="SampleServer\Employee.cs" />
+    <Compile Include="SimpleLib\AttributeCacheFixture.cs" />
+    <Compile Include="SimpleLib\BaseWDProviderFixture.cs" />
+    <Compile Include="SimpleLib\BaseWorkingDaysFixture.cs" />
+    <Compile Include="SimpleLib\ClassNameHelperFixture.cs" />
+    <Compile Include="SimpleLib\DynamicProxyFixture.cs" />
+    <Compile Include="SimpleLib\EntityHelperFixture.cs" />
+    <Compile Include="SimpleLib\EnumTypeFixture.cs" />
+    <Compile Include="SimpleLib\ExpressionHelperFixture.cs" />
+    <Compile Include="SimpleLib\InvokerFactoryFixture.cs" />
+    <Compile Include="SimpleLib\MarshallableDynamicProxyFixture.cs" />
+    <Compile Include="SimpleLib\MathHelperFixture.cs" />
+    <Compile Include="SimpleLib\MetaLinqFixture.cs" />
+    <Compile Include="SimpleLib\MethodCacheFixture.cs" />
+    <Compile Include="SimpleLib\MiscFixture.cs" />
+    <Compile Include="SimpleLib\Sample\AttributeCacheClasses.cs" />
+    <Compile Include="SimpleLib\Sample\TestStringClass.cs" />
+    <Compile Include="SimpleLib\StringFragmenterFixture.cs" />
+    <Compile Include="SimpleLib\WorkingDaysFixture.cs" />
+    <Compile Include="SampleServer\Category.cs" />
+    <Compile Include="SampleServer\Customer.cs" />
+    <Compile Include="SampleServer\Product.cs" />
+    <Compile Include="SampleServer\Supplier.cs" />
+    <Compile Include="Service\BaseInterceptorFixture.samples.cs" />
+    <Compile Include="Service\ChannelSelectorFixture.cs" />
+    <Compile Include="Service\IpcRemotingFixtures.cs" />
+    <Compile Include="Service\HookOrderFixture.cs" />
+    <Compile Include="Service\TcpRemotingFixtures.cs" />
+    <Compile Include="Service\HttpRemotingFixtures.cs" />
+    <Compile Include="Service\BaseInterceptorFixture.cs" />
+    <Compile Include="Service\BaseRemotingInterceptorFixture.cs" />
+    <Compile Include="Service\BaseSelfRemotingInterceptorFixture.cs" />
+    <Compile Include="Service\DefaultInterceptorFixture.cs" />
+    <Compile Include="Service\Helper.cs" />
+    <Compile Include="Service\BaseSelfRemotingFactoryFixture.cs" />
+    <Compile Include="Service\DefaultFactoryFixture.cs" />
+    <Compile Include="Service\BaseFactoryFixture.cs" />
+    <Compile Include="Service\BaseRemotingFactoryFixture.cs" />
+    <Compile Include="Service\ServiceConfigFixture.cs" />
+    <Compile Include="DataAccess\NHConfigFixture.cs" />
+    <Compile Include="NHConfig1.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="ConfigSource\FactoryFixture.cs" />
+    <Compile Include="ConfigSource\LoggerFactoryFixture.cs" />
+    <Compile Include="Experiences\LambdaFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\SimpleLib\DynamicProxyFixture.cs" />
-    <Compile Include="Tests\ConfigSource\XmlConfigSourceFixture.cs" />
-    <Compile Include="Tests\ConfigSource\XmlFileConfigSourceFixture.cs" />
+    <Compile Include="ConfigSource\XmlConfigSourceFixture.cs" />
+    <Compile Include="ConfigSource\XmlFileConfigSourceFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\NHConfig1.xml" />
@@ -221,14 +211,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Database.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\DataAccess\NHConfigurations.resx">
+    <EmbeddedResource Include="DataAccess\NHConfigurations.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>NHConfigurations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\Service\RemotingConfigs.resx">
+    <EmbeddedResource Include="Service\RemotingConfigs.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>RemotingConfigs.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +232,9 @@
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
       <Name>02_SimpleServer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SimpleLib\TestClasses\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
