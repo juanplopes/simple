@@ -93,10 +93,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\NHConfigurations.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NHConfigurations.resx</DependentUpon>
+    </Compile>
     <Compile Include="Database.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Service\RemotingConfigs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RemotingConfigs.resx</DependentUpon>
     </Compile>
     <Compile Include="SetupFixture.cs" />
     <Compile Include="ConfigSource\ConfiguratorInterfaceFixture.cs" />
@@ -213,10 +223,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataAccess\NHConfigurations.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NHConfigurations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Service\RemotingConfigs.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>RemotingConfigs.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

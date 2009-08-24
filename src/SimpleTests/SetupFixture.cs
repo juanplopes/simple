@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Simple;
 using Simple.Logging;
 using System.IO;
+using Simple.Tests;
+using Simple;
 
 [SetUpFixture]
 class SetupFixture

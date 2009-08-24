@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_SimpleCore", "SimpleCore\01_SimpleCore.csproj", "{07D16BE0-3436-4B72-A34F-D6E1E1A02473}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "99_SimpleGen", "SimpleGen\99_SimpleGen.csproj", "{1CF67527-73B0-41E4-88D1-EC9FA0FD3B11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10_SimpleGen", "SimpleGen\10_SimpleGen.csproj", "{1CF67527-73B0-41E4-88D1-EC9FA0FD3B11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_SimpleLib", "SimpleLib\00_SimpleLib.csproj", "{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}"
 EndProject
@@ -30,6 +30,7 @@ Global
 		{07D16BE0-3436-4B72-A34F-D6E1E1A02473}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07D16BE0-3436-4B72-A34F-D6E1E1A02473}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1CF67527-73B0-41E4-88D1-EC9FA0FD3B11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CF67527-73B0-41E4-88D1-EC9FA0FD3B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CF67527-73B0-41E4-88D1-EC9FA0FD3B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CF67527-73B0-41E4-88D1-EC9FA0FD3B11}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
