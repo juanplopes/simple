@@ -46,9 +46,20 @@ namespace Simple
         #endregion
         #region Configure
 
-        public static IConfiguratorInterface<SimplyConfigure> NHibernate(this SimplyConfigure config)
+        public static IConfiguratorInterface<NHibernateConfig, SimplyConfigure> NHibernate(this SimplyConfigure config)
         {
             return new ConfiguratorInterface<NHibernateConfig, SimplyConfigure>(x => NHibernate(config, x));
+        }
+
+        public static SimplyConfigure NHibernate(this SimplyConfigure config, Func<Configuration, Configuration> configurator)
+        {
+            NHConfigurator hooks = new NHConfigurator();
+            hooks.Add(configurator);
+
+            SourceManager.Do.Register(config.ConfigKey,
+                new DirectConfigSource<NHConfigurator>().Load(hooks));
+
+            return config;
         }
 
         public static SimplyConfigure NHibernate(this SimplyConfigure config, IConfigSource<NHibernateConfig> source)

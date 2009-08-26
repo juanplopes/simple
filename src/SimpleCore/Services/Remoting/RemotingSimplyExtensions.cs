@@ -12,7 +12,7 @@ namespace Simple
             return Remoting(config).FromXml(DefaultConfigContent.RemotingConfig);
         }
 
-        public static IConfiguratorInterface<SimplyConfigure> Remoting(this SimplyConfigure config)
+        public static IConfiguratorInterface<RemotingConfig, SimplyConfigure> Remoting(this SimplyConfigure config)
         {
             return new ConfiguratorInterface<RemotingConfig, SimplyConfigure>(x => Remoting(config, x));
         }

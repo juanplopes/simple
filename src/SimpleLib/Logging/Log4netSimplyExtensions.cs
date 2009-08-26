@@ -69,7 +69,7 @@ namespace Simple
             return Log4net(config, source);
         }
 
-        public static IConfiguratorInterface<SimplyConfigure> Log4net(this SimplyConfigure config)
+        public static IConfiguratorInterface<Log4netConfig, SimplyConfigure> Log4net(this SimplyConfigure config)
         {
             return new ConfiguratorInterface<Log4netConfig, SimplyConfigure>(x => Log4net(config, x));
         }

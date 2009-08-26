@@ -13,6 +13,8 @@ using Simple.Services.Default;
 using Simple.Services;
 using Simple.Patterns;
 using Simple.Tests.SampleServer;
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
 
 namespace Simple.Tests
 {
@@ -34,9 +36,11 @@ namespace Simple.Tests
             object key = ConfigKey;
             simply = Simply.Do[key];
 
-
             simply.Configure
-               .NHibernate().FromXml(NHConfigurations.NHConfig1)
+                .NHibernate(x=>
+                    Fluently.Configure(x)
+                        .Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3"))
+                   .BuildConfiguration())
                .MappingFromAssemblyOf<Category.Map>()
                .DefaultHost();
 

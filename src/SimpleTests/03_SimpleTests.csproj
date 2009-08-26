@@ -49,6 +49,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.1.0.39271, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Castle.DynamicProxy2.dll</HintPath>
@@ -56,6 +64,10 @@
     <Reference Include="FluentNHibernate, Version=0.1.0.538, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -93,11 +105,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\NHConfigurations.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NHConfigurations.resx</DependentUpon>
-    </Compile>
     <Compile Include="Database.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,7 +168,7 @@
     <Compile Include="Service\BaseFactoryFixture.cs" />
     <Compile Include="Service\BaseRemotingFactoryFixture.cs" />
     <Compile Include="Service\ServiceConfigFixture.cs" />
-    <Compile Include="DataAccess\NHConfigFixture.cs" />
+    <Content Include="DataAccess\NHConfigFixture.cs" />
     <Compile Include="NHConfig1.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="ConfigSource\FactoryFixture.cs" />
@@ -172,7 +179,6 @@
     <Compile Include="ConfigSource\XmlFileConfigSourceFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\NHConfig1.xml" />
     <None Include="Resources\Northwind.sl3" />
     <None Include="Resources\SimpleRemotingAny.xml" />
   </ItemGroup>
@@ -220,10 +226,6 @@
     <EmbeddedResource Include="Database.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Database.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataAccess\NHConfigurations.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>NHConfigurations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Service\RemotingConfigs.resx">
       <Generator>ResXFileCodeGenerator</Generator>

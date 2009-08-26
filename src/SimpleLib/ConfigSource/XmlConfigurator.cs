@@ -6,14 +6,15 @@ using System.IO;
 
 namespace Simple.ConfigSource
 {
-    public interface IConfiguratorInterface<R>
+    public interface IConfiguratorInterface<T, R>
     {
         R FromFile(string file);
         R FromXml(string xml);
         R FromStream(Stream stream);
+        R FromInstance(T config);
     }
 
-    public class ConfiguratorInterface<T, R> : IConfiguratorInterface<R>
+    public class ConfiguratorInterface<T, R> : IConfiguratorInterface<T, R>
     {
         public delegate R ConfiguratorDelegate(IConfigSource<T> source);
 
