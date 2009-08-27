@@ -168,7 +168,7 @@
     <Compile Include="Service\BaseFactoryFixture.cs" />
     <Compile Include="Service\BaseRemotingFactoryFixture.cs" />
     <Compile Include="Service\ServiceConfigFixture.cs" />
-    <Content Include="DataAccess\NHConfigFixture.cs" />
+    <Compile Include="DataAccess\NHConfigFixture.cs" />
     <Compile Include="NHConfig1.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="ConfigSource\FactoryFixture.cs" />

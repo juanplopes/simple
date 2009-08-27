@@ -1,0 +1,15 @@
+<#
+// <copyright file="DataClasses1.tt" company="Living Consultoria">
+//  Copyright © Living Consultoria. All Rights Reserved.
+// </copyright>
+#>
+<#@ template language="C#v3.5" hostspecific="True" #>
+<#@ output extension="log" #>
+<#@ include file="T4Toolbox.tt" #>
+<#@ include file="T4Toolbox\LinqToSql.tt" #>
+<#
+	// Generate entity classes from a LINQ to SQL class model (.dbml file)
+	LinqToSqlGenerator generator = new LinqToSqlGenerator();
+	generator.DbmlFile = "NorthwindSampleModel.dbml";
+	generator.Run();
+#>

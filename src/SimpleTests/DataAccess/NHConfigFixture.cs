@@ -11,6 +11,7 @@ using Simple.Tests.Service;
 using FluentNHibernate.Cfg;
 using NHibernate;
 using Simple.Tests.SampleServer;
+using FluentNHibernate.Cfg.Db;
 
 namespace Simple.Tests.DataAccess
 {
@@ -20,23 +21,23 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestLoadDialect()
         {
-            SourceManager.Do.Remove<NHConfigurator>();
-            SourceManager.Do.Register(this, new NHibernateConfigSource().Load(
-                new XmlFileConfigSource<NHibernateConfig>().Load(NHConfigurations.NHConfig1)));
+            Simply.Do[this].Configure.NHibernteFluently(x =>
+               x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")));
+
 
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
             var factory = factories[this];
 
-            Assert.AreEqual("NHibernate.Dialect.SQLiteDialect", factory.NHConfiguration.GetProperty("dialect"));
+            Assert.IsTrue(factory.NHConfiguration.GetProperty("dialect").StartsWith("NHibernate.Dialect.SQLiteDialect"));
         }
 
         [Test]
         public void TestMapEntities()
         {
-            Simply.Do[this].Configure
-                .NHibernate().FromXml(NHConfigurations.NHConfig1)
+            Simply.Do[this].Configure.NHibernteFluently(x =>
+                    x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")))
                 .Mapping<Category.Map>();
-                
+
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
             var factory = factories[this];
 
@@ -45,9 +46,9 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestMapEntityAssembly()
         {
-            Simply.Do[this].Configure
-                 .NHibernate().FromXml(NHConfigurations.NHConfig1)
-                 .MappingFromAssemblyOf<Category.Map>();
+            Simply.Do[this].Configure.NHibernteFluently(x =>
+               x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")))
+            .MappingFromAssemblyOf<Category.Map>();
 
             var config = Simply.Do[this].GetNHibernateConfig();
 

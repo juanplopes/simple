@@ -51,6 +51,11 @@ namespace Simple
             return new ConfiguratorInterface<NHibernateConfig, SimplyConfigure>(x => NHibernate(config, x));
         }
 
+        public static SimplyConfigure NHibernteFluently(this SimplyConfigure config, Func<FluentConfiguration, FluentConfiguration> func)
+        {
+            return NHibernate(config, x => func(Fluently.Configure(x)).BuildConfiguration());
+        }
+
         public static SimplyConfigure NHibernate(this SimplyConfigure config, Func<Configuration, Configuration> configurator)
         {
             NHConfigurator hooks = new NHConfigurator();

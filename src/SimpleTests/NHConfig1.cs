@@ -36,11 +36,12 @@ namespace Simple.Tests
             object key = ConfigKey;
             simply = Simply.Do[key];
 
+
+
+
             simply.Configure
-                .NHibernate(x=>
-                    Fluently.Configure(x)
-                        .Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3"))
-                   .BuildConfiguration())
+                .NHibernteFluently(x=>
+                    x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")))
                .MappingFromAssemblyOf<Category.Map>()
                .DefaultHost();
 
