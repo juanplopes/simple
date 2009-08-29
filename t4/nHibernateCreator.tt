@@ -1,0 +1,37 @@
+<#@ template language="C#v3.5" hostspecific="True" debug="True" #>
+<#@ output extension=".log" #>
+<#@ Import Namespace="System" #>
+<#@ include file="Templates\nHibernateGenerator.ttinclude" #>
+<#
+// <copyright file="nHibernateCreator.tt" company="Data.Common.DbSchema">
+//
+//  Data.Common.DbSchema - http://dbschema.codeplex.com
+//
+//  The contents of this file are subject to the New BSD
+//  License (the "License"); you may not use this file
+//  except in compliance with the License. You may obtain a copy of
+//  the License at http://www.opensource.org/licenses/bsd-license.php
+//
+//  Software distributed under the License is distributed on an 
+//  "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+//  implied. See the License for the specific language governing
+//  rights and limitations under the License.
+//
+// </copyright>
+
+    const string Namespace = "ConsoleApplication1.Domain";
+    const string ConnectionName = "Northwind";
+
+    // This is a list of tables you don't want generated
+    string[] ExcludedTables = new string[] { "sysdiagrams" };
+
+    // Code Generation starts here...
+    nHibernateGenerator generator = new nHibernateGenerator();
+    generator.Namespace = Namespace;
+    generator.ConnectionName = ConnectionName;
+    generator.ExcludedTables = ExcludedTables;
+	generator.BaseClassName = "Simple.Entities.Entity<%s>";
+    generator.Context = this;
+    generator.Run();
+
+#>

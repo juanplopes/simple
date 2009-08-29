@@ -1,0 +1,116 @@
+﻿<#+
+// <copyright file="nHibernateCreator.tt" company="George J. Capnias">
+//
+//  The contents of this file are subject to the Mozilla Public
+//  License Version 1.1 (the "License"); you may not use this file
+//  except in compliance with the License. You may obtain a copy of
+//  the License at http://www.mozilla.org/MPL/
+//
+//  Software distributed under the License is distributed on an 
+//  "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+//  implied. See the License for the specific language governing
+//  rights and limitations under the License.
+//
+// </copyright>
+
+public class nHibernateCfgTemplate : Template
+{
+    string _ConnectionString;
+    string _ProviderName;
+    string _AssemblyName;
+
+    public string ConnectionString
+    {
+        get { return _ConnectionString; }
+        set { _ConnectionString = value; }
+    }
+
+    public string ProviderName
+    {
+        get { return _ProviderName; }
+        set { _ProviderName = value; }
+    }
+
+    public string AssemblyName
+    {
+        get { return _AssemblyName; }
+        set { _AssemblyName = value; }
+    }
+
+    public string DriverClass
+    {
+        get
+        {
+            string _driver;
+            switch (this.ProviderName.ToLower())
+            {
+                case "system.data.sqlserverce.3.5":
+                case "system.data.sqlserverce":
+                    _driver = "NHibernate.Driver.SqlServerCeDriver";
+                    break;
+
+                case "mysql.data.mysqlclient":
+                    _driver = "NHibernate.Driver.MySqlDataDriver";
+                    break;
+
+                case "npgsql":
+                    _driver = "NHibernate.Driver.NpgsqlDriver";
+                    break;
+                    
+                default:
+                    _driver = "NHibernate.Driver.SqlClientDriver";
+                    break;
+            }
+
+            return _driver;
+        }
+    }
+
+    private string Dialect
+    {
+        get
+        {
+            string _dialect;
+            switch (this.ProviderName.ToLower())
+            {
+                case "system.data.sqlserverce.3.5":
+                case "system.data.sqlserverce":
+                    _dialect = "NHibernate.Dialect.MsSqlCeDialect";
+                    break;
+
+                case "mysql.data.mysqlclient":
+                    _dialect = "NHibernate.Dialect.MySQL5Dialect";
+                    break;
+
+                case "npgsql":
+                    _dialect = "NHibernate.Dialect.PostgreSQL82Dialect";
+                    break;
+
+                default:
+                    _dialect = "NHibernate.Dialect.MsSql2005Dialect";
+                    break;
+            }
+
+            return _dialect;
+        }
+    }
+
+    
+	protected override void RenderCore()
+	{
+#>
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory>
+    <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
+    <property name="dialect"><#=this.Dialect #></property>
+    <property name="connection.driver_class"><#=this.DriverClass #></property>
+    <property name="connection.connection_string"><#=this.ConnectionString #></property>    
+    <property name="show_sql">true</property>
+    <mapping assembly="<#=this.AssemblyName #>" />
+  </session-factory>
+</hibernate-configuration>
+<#+
+	}
+}
+#>

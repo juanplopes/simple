@@ -1,0 +1,71 @@
+﻿<#+
+// <copyright file="nHibernateHelperTemplate.tt" company="George J. Capnias">
+//
+//  The contents of this file are subject to the Mozilla Public
+//  License Version 1.1 (the "License"); you may not use this file
+//  except in compliance with the License. You may obtain a copy of
+//  the License at http://www.mozilla.org/MPL/
+//
+//  Software distributed under the License is distributed on an 
+//  "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+//  implied. See the License for the specific language governing
+//  rights and limitations under the License.
+//
+// </copyright>
+
+public class nHibernateSessionManager : Template
+{
+    private string _Namespace;
+
+    public string Namespace
+    {
+        get { return _Namespace; }
+        set { _Namespace = value; }
+    }
+	
+
+	protected override void RenderCore()
+	{
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using NHibernate;
+using NHibernate.Cfg;
+
+namespace <#=this.Namespace #>
+{
+    public class NHibernateSessionManager
+    {
+        private ISessionFactory _sessionFactory;
+
+        public static NHibernateSessionManager Instance
+        {
+            get { return InnerClass.NHibernateSessionManager; }
+        }
+
+        private NHibernateSessionManager()
+        {
+            Configuration configuration = new Configuration();
+            configuration.Configure();
+            _sessionFactory = configuration.BuildSessionFactory();
+        }
+
+        /// <summary>
+        /// Assists with ensuring thread-safe, lazy singleton
+        /// </summary>
+        private class InnerClass
+        {
+            internal static readonly NHibernateSessionManager NHibernateSessionManager = new NHibernateSessionManager();
+
+            static InnerClass() { }
+        }
+
+    }
+}
+<#+
+	}
+}
+#>

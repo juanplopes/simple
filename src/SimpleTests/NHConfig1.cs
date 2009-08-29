@@ -38,7 +38,6 @@ namespace Simple.Tests
 
 
 
-
             simply.Configure
                 .NHibernteFluently(x=>
                     x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")))

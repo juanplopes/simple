@@ -11,6 +11,12 @@ using Simple.Expressions;
 
 namespace Simple.Entities
 {
+    public class Entity<T> : Entity<T, IEntityService<T>>
+        where T:Entity<T, IEntityService<T>>
+    {
+
+    }
+
     [Serializable]
     public class Entity<T, R>
         where T : Entity<T, R>

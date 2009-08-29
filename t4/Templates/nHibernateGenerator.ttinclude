@@ -1,0 +1,262 @@
+<#@ assembly name="System.Configuration" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.Common" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Configuration" #>
+<#@ import namespace="System.Linq" #>
+<#@ include file="Templates\T4Toolbox.ttinclude" #>
+<#@ include file="Templates\Data.Common.ttinclude" #>
+<#@ include file="Templates\Inflector.ttinclude" #>
+<#@ include file="Templates\nHibernatePOCOsTemplate.ttinclude" #>
+<#@ include file="Templates\nHibernateMappingTemplate.ttinclude" #>
+<#@ include file="Templates\nHibernateCfgTemplate.ttinclude" #>
+<#+
+// <copyright file="nHibernateGenerator.tt" company="Data.Common.DbSchema">
+//
+//
+//  Data.Common.DbSchema - http://dbschema.codeplex.com
+//
+//  The contents of this file are subject to the New BSD
+//  License (the "License"); you may not use this file
+//  except in compliance with the License. You may obtain a copy of
+//  the License at http://www.opensource.org/licenses/bsd-license.php
+//
+//  Software distributed under the License is distributed on an 
+//  "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+//  implied. See the License for the specific language governing
+//  rights and limitations under the License.
+//
+// </copyright>
+
+public static class Utilities
+{
+    public static string CleanUp(string propertyToFilter){
+        string propertyName = string.Empty;
+        string[] nameParts = propertyToFilter.Replace(' ', '_').Split('_');
+
+        foreach (string namePart in nameParts)
+        {
+            propertyName += namePart.Substring(0, 1).ToUpper() + namePart.Substring(1);
+        }
+
+        if (string.IsNullOrEmpty(propertyName))
+            throw new Exception("Cannot fix the property name!");
+
+        return propertyName;
+    }
+
+    public static string CleanNullOrEmpty(object propertyToFilter)
+    {
+        string propertyValue = null;
+        if (propertyToFilter != DBNull.Value)
+        {
+            if (!string.IsNullOrEmpty(propertyToFilter.ToString()))
+                propertyValue = propertyToFilter.ToString();
+        }
+
+        return propertyValue;
+    }
+}
+
+public class nHibernateGenerator : Generator
+{
+    private string _Namespace;
+    private string _ConnectionName;
+    private string _ConnectionString;
+    private string _ProviderName;
+    private string[] _ExcludedTables;
+    private GeneratedTextTransformation _Context = null;
+    private System.Configuration.Configuration _AppConfig;
+
+    public nHibernateGenerator()
+    {
+        System.Configuration.ExeConfigurationFileMap configFile = new System.Configuration.ExeConfigurationFileMap();
+        configFile.ExeConfigFilename = GetConfigPath();
+        _AppConfig = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configFile, ConfigurationUserLevel.None);
+    }
+
+    private string GetConfigPath()
+    {
+        EnvDTE.Project project = TransformationContext.Project;
+        foreach (EnvDTE.ProjectItem item in project.ProjectItems)
+        {
+            // if it is the app.config file, then open it up
+            if (string.Compare(item.Name, "App.config", true) == 0)
+            {
+                return GetProjectPath() + "\\" + item.Name;
+            }
+
+            // if it is the web.config file, then open it up
+            if (string.Compare(item.Name, "Web.config", true) == 0)
+            {
+                return GetProjectPath() + "\\" + item.Name;
+            }
+        }
+        return string.Empty;
+    }
+
+    private string GetProjectPath()
+    {
+        EnvDTE.Project project = TransformationContext.Project;
+        System.IO.FileInfo info = new System.IO.FileInfo(project.FullName);
+        return info.Directory.FullName;
+    }
+
+    private bool IsExcluded(string tableName)
+    {
+        return false;
+    }
+
+    #region ' Properties '
+
+    public string Namespace
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_Namespace))
+                _Namespace = TransformationContext.Project.Properties.Item("DefaultNamespace").Value.ToString();
+            return _Namespace;
+        }
+        set { _Namespace = value; }
+    }
+
+    public string ConnectionName
+    {
+        get
+        {
+            if(string.IsNullOrEmpty(_ConnectionName))
+                _ConnectionName = "LocalSqlServer";
+            return _ConnectionName;
+        }
+        set { _ConnectionName = value; }
+    }
+
+    public string ConnectionString
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_ConnectionString))
+                _ConnectionString = _AppConfig.ConnectionStrings.ConnectionStrings[_ConnectionName].ConnectionString;
+            return _ConnectionString;
+        }
+        set { _ConnectionString = value; }
+    }
+
+    public string ProviderName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_ProviderName))
+                _ProviderName = _AppConfig.ConnectionStrings.ConnectionStrings[_ConnectionName].ProviderName;
+            return _ProviderName;
+        }
+        set { _ProviderName = value; }
+    }
+
+    public string[] ExcludedTables
+    {
+        get { return _ExcludedTables; }
+        set { _ExcludedTables = value; }
+    }
+
+    public GeneratedTextTransformation Context
+    {
+        get { return _Context; }
+        set { _Context = value; }
+    }
+
+    public System.Configuration.Configuration AppConfig
+    {
+        get { return _AppConfig; }
+        set { _AppConfig = value; }
+    }
+
+    public string AssemblyName
+    {
+        get { return TransformationContext.Project.Properties.Item("AssemblyName").Value.ToString(); }
+    }
+
+	public string BaseClassName { get; set ;}
+	
+	
+    #endregion
+
+    protected override void RunCore()
+    {
+        DbSchema schema = new DbSchema(this.ConnectionString, this.ProviderName);
+        this.Context.WriteLine("Starting... (" + DateTime.Now.ToString() + ")");
+        this.Context.WriteLine(string.Format("Provider: {0}", this.ProviderName));
+
+        DataTable tables = schema.GetLogicalTables();
+        this.Context.WriteLine(string.Format("Tables valid for domain objects: {0}", tables.Rows.Count));
+
+        foreach (DataRow tableRow in tables.Rows)
+        {
+            string tableSchema = Utilities.CleanNullOrEmpty(tableRow["TABLE_SCHEMA"]);
+            string tableName = tableRow["TABLE_NAME"].ToString();
+            string tableClassName = Inflector.MakeSingular(Utilities.CleanUp(tableName));
+            string tableType = tableRow["TABLE_TYPE"].ToString().ToUpper();
+
+            if (!this.ExcludedTables.Contains(tableName.ToLower()))
+            {
+                this.Context.WriteLine(string.Format("Generating class for table <{0}>...", tableName));
+
+                /// Generate a POCO for the table
+                nHibernatePOCOsTemplate pocoTemplate = new nHibernatePOCOsTemplate();
+                pocoTemplate.Schema = schema;
+                pocoTemplate.Namespace = this.Namespace;
+                pocoTemplate.TableSchema = tableSchema;
+                pocoTemplate.TableName = tableName;
+                pocoTemplate.TableClassName = tableClassName;
+				pocoTemplate.BaseClassTemplate = this.BaseClassName ?? "Simple.Entities.Entity<%s>";
+                pocoTemplate.TablePrimaryKeys = schema.GetTablePrimaryKeyColumns(tableSchema, tableName);
+                pocoTemplate.TableFields = schema.GetTableFields(tableSchema, tableName);
+                pocoTemplate.TableOneToManyRelations = schema.GetTableOneToManyRelations(tableSchema, tableName);
+                pocoTemplate.TableManyToOneRelations = schema.GetTableManyToOneRelations(tableSchema, tableName);                
+                pocoTemplate.TableManyToManyRelations = schema.GetTableManyToManyRelations(tableSchema, tableName);
+                string filename = tableClassName + ".cs";
+                pocoTemplate.OutputFile = filename;
+                pocoTemplate.Render();
+
+                this.Context.WriteLine(string.Format("Generating mapping file for table <{0}>...", tableName));
+
+                /// Generate a mapping file for the table
+                nHibernateMappingTemplate mappingTemplate = new nHibernateMappingTemplate();
+                mappingTemplate.Schema = schema;
+                mappingTemplate.Namespace = this.Namespace;
+                mappingTemplate.TableSchema = tableSchema;
+                mappingTemplate.TableName = tableName;
+                mappingTemplate.TableClassName = tableClassName;
+                mappingTemplate.TablePrimaryKeys = schema.GetTablePrimaryKeyColumns(tableSchema, tableName);
+                mappingTemplate.TableFields = schema.GetTableFields(tableSchema, tableName);
+                mappingTemplate.TableOneToManyRelations = schema.GetTableOneToManyRelations(tableSchema, tableName);
+                mappingTemplate.TableManyToOneRelations = schema.GetTableManyToOneRelations(tableSchema, tableName);
+                mappingTemplate.TableManyToManyRelations = schema.GetTableManyToManyRelations(tableSchema, tableName);
+                mappingTemplate.AssemblyName = this.AssemblyName;
+                mappingTemplate.Context = this.Context;
+                mappingTemplate.OutputFile = tableClassName + ".hbm.xml";
+                mappingTemplate.Render();
+
+            }
+        }
+
+//        nHibernateCfgTemplate configurationTempate = new nHibernateCfgTemplate();
+//        configurationTempate.AssemblyName = this.AssemblyName;
+//        configurationTempate.ConnectionString = this.ConnectionString;
+//        configurationTempate.ProviderName = this.ProviderName;
+//        configurationTempate.OutputFile = "hibernate.cfg.xml";
+//        configurationTempate.Render();
+
+        //nHibernateSessionManager SessionManagerTemplate = new nHibernateSessionManager();
+        //SessionManagerTemplate.Namespace = this.Namespace;
+        //SessionManagerTemplate.OutputFile = "NHibernateSessionManager.cs";
+        //SessionManagerTemplate.Render();
+
+        this.Context.WriteLine("Ended... (" + DateTime.Now.ToString() + ")");
+
+    }
+}
+#>

@@ -1,0 +1,257 @@
+<#@ Import Namespace="System.Data" #>
+<#@ Import Namespace="System.Data.Common" #>
+<#+
+// <copyright file="nHibernatePOCOsTemplate.tt" company="Data.Common.DbSchema">
+//
+//  Data.Common.DbSchema - http://dbschema.codeplex.com
+//
+//  The contents of this file are subject to the New BSD
+//  License (the "License"); you may not use this file
+//  except in compliance with the License. You may obtain a copy of
+//  the License at http://www.opensource.org/licenses/bsd-license.php
+//
+//  Software distributed under the License is distributed on an 
+//  "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+//  implied. See the License for the specific language governing
+//  rights and limitations under the License.
+//
+// </copyright>
+
+public class nHibernatePOCOsTemplate : Template
+{
+    private string _Namespace;
+    private string _TableSchema;
+    private string _TableName;
+    private string _TableClassName;
+	private string _BaseClassTemplate;
+    private DbSchema _Schema;
+    private DataTable _TablePrimaryKeys;
+    private DataTable _TableFields;
+    private DataTable _TableManyToManyRelations;
+    private DataTable _TableManyToOneRelations;
+    private DataTable _TableOneToManyRelations;
+
+    #region ' Properties '
+
+    public string Namespace
+    {
+        get { return _Namespace; }
+        set { _Namespace = value; }
+    }
+
+    public DbSchema Schema
+    {
+        get { return _Schema; }
+        set { _Schema = value; }
+    }
+
+    public string TableSchema
+    {
+        get { return _TableSchema; }
+        set { _TableSchema = value; }
+    }
+
+    public string TableName
+    {
+        get { return _TableName; }
+        set { _TableName = value; }
+    }
+
+    public string TableClassName
+    {
+        get { return _TableClassName; }
+        set { _TableClassName = value; }
+    }
+
+    public DataTable TableFields
+    {
+        get { return _TableFields; }
+        set { _TableFields = value; }
+    }
+
+    public DataTable TablePrimaryKeys
+    {
+        get { return _TablePrimaryKeys; }
+        set { _TablePrimaryKeys = value; }
+    }
+
+    public DataTable TableManyToManyRelations
+    {
+        get { return _TableManyToManyRelations; }
+        set { _TableManyToManyRelations = value; }
+    }
+
+    public DataTable TableManyToOneRelations
+    {
+        get { return _TableManyToOneRelations; }
+        set { _TableManyToOneRelations = value; }
+    }
+
+    public DataTable TableOneToManyRelations
+    {
+        get { return _TableOneToManyRelations; }
+        set { _TableOneToManyRelations = value; }
+    }
+
+	public string BaseClassTemplate 
+	{
+		get { return _BaseClassTemplate; }
+		set { _BaseClassTemplate = value; }
+	}
+	
+    #endregion
+
+    private string TableNameHash(string tableSchema, string tableName)
+    {
+        if (!string.IsNullOrEmpty(tableSchema))
+            return string.Format("{0}.{1}", tableSchema, tableName).ToLower();
+        else
+            return string.Format("{0}", tableName).ToLower();
+    }
+
+    protected override void RenderCore()
+    {
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace <#=this.Namespace #>
+{
+    public partial class <#=this.TableClassName #> : <#= this.BaseClassTemplate.Replace("%s", this.TableClassName) #>
+    {
+        public <#=this.TableClassName #>()
+        {  }
+
+        #region ' Properties '
+
+<#+
+        foreach (DataRow columnRow in this.TablePrimaryKeys.Rows)
+        {
+            Type columnType = (Type)columnRow["DataType"];
+            bool IsNullable = (bool)columnRow["AllowDBNull"];
+            string systemType = this.Schema.GetPropertyType(columnType.ToString(), IsNullable);
+            string columnPropertyName = Utilities.CleanUp(columnRow["ColumnName"].ToString());
+#>
+        // Primary Key
+        private <#=systemType #> _<#=columnPropertyName #>;
+        public virtual <#=systemType #> <#=columnPropertyName #>
+        {
+            get{ return _<#=columnPropertyName #>; }
+            set{ _<#=columnPropertyName #> = value; }
+        }
+
+<#+
+        }
+
+        foreach (DataRow columnRow in this.TableFields.Rows)
+        {
+            Type columnType = (Type)columnRow["DataType"];
+            bool IsNullable = (bool)columnRow["AllowDBNull"];
+            string systemType = Schema.GetPropertyType(columnType.ToString(), IsNullable);
+            string columnPropertyName = Utilities.CleanUp(columnRow["ColumnName"].ToString());
+#>
+        private <#=systemType #> _<#=columnPropertyName #>;
+        public virtual <#=systemType #> <#=columnPropertyName #>
+        {
+            get{ return _<#=columnPropertyName #>; }
+            set{ _<#=columnPropertyName #> = value; }
+        }
+
+<#+
+        }
+
+/*        foreach (DataRow columnRow in this.TableOneToManyRelations.Rows)
+        {
+            string tableName = columnRow["FK_TABLE_NAME"].ToString();
+            string className = Inflector.MakeSingular(Utilities.CleanUp(tableName));
+            string propertyName = Inflector.MakePlural(Utilities.CleanUp(tableName));
+#>
+        // One-To-Many Relation
+        private IList<<#=className #>> _<#=propertyName #> = new List<<#=className #>>();
+        public virtual IList<<#=className #>> <#=propertyName #>
+        {
+            get{ return _<#=propertyName #>; }
+            set{ _<#=propertyName #> = value; }
+        }
+
+<#+
+        }*/
+
+        foreach (DataRow columnRow in this.TableManyToOneRelations.Rows)
+        {
+            string tableName = columnRow["PK_TABLE_NAME"].ToString();
+            string className = Inflector.MakeSingular(Utilities.CleanUp(tableName));
+            string propertyName = Inflector.MakeSingular(Utilities.CleanUp(tableName));
+            if (propertyName == this.TableClassName)
+                propertyName += "Member";
+#>
+        // Many-To-One Relation
+        private <#=className #> _<#=propertyName #>;
+        public virtual <#=className #> <#=propertyName #>
+        {
+            get{ return _<#=propertyName #>; }
+            set{ _<#=propertyName #> = value; }
+        }
+
+
+<#+
+        }
+/*
+        foreach (DataRow relationRow in this.TableManyToManyRelations.Rows)
+        {
+            string fkTableSchema = Utilities.CleanNullOrEmpty(relationRow["FK_TABLE_SCHEMA"]);
+            string fkTableName = relationRow["FK_TABLE_NAME"].ToString();
+            DataTable otherManyToManyRelations = this.Schema.GetTableManyToOneRelations(fkTableSchema, fkTableName);
+            foreach (DataRow manytomanyRow in otherManyToManyRelations.Rows)
+            {
+                string otherTableSchema = Utilities.CleanNullOrEmpty(manytomanyRow["PK_TABLE_SCHEMA"]);
+                string otherTableName = manytomanyRow["PK_TABLE_NAME"].ToString();
+                if (this.TableNameHash(this.TableSchema, this.TableName) != this.TableNameHash(otherTableSchema, otherTableName))
+                {
+                    string className = Inflector.MakeSingular(Utilities.CleanUp(otherTableName));
+                    string propertyName = Inflector.MakePlural(Utilities.CleanUp(otherTableName));
+#>
+        // Many-To-Many Relation
+        private IList<<#=className #>> _<#=propertyName #> = new List<<#=className #>>();
+        public virtual IList<<#=className #>> <#=propertyName #>
+        {
+            get{ return _<#=propertyName #>; }
+            set{ _<#=propertyName #> = value; }
+        }
+
+<#+
+
+                }
+            }
+        }*/
+#>
+        #endregion
+
+<#+
+        if (this.TablePrimaryKeys.Rows.Count > 1)
+        {
+#>
+        #region ' Overrides '
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        #endregion
+<#+
+        }
+#>
+    }
+}
+<#+
+    }
+}
+#>
