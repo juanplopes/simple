@@ -1,2 +1,1 @@
-util\ilmerge bin\SimpleCore.dll bin\Castle.Core.dll bin\Castle.DynamicProxy2.dll bin\Antlr3.Runtime.dll bin\NHibernate.Validator.dll bin\NHibernate.Validator.Specific bin\NHibernate.ByteCode.Castle.dll bin\FluentNHibernate.dll bin\Iesi.Collections.dll bin\log4net.dll bin\NHibernate.dll bin\NHibernate.Linq.dll  bin\SimpleLib.dll bin\SimpleServer.dll /out:Simple.dll
-pause
+util\ilmerge bin\SimpleCore.dll bin\Castle.Core.dll bin\Castle.DynamicProxy2.dll bin\Antlr3.Runtime.dll bin\NHibernate.Validator.dll bin\NHibernate.Validator.Specific.dll bin\NHibernate.ByteCode.Castle.dll bin\FluentNHibernate.dll bin\Iesi.Collections.dll bin\log4net.dll bin\NHibernate.dll bin\NHibernate.Linq.dll  bin\SimpleLib.dll bin\SimpleServer.dll /out:Simple.dll
