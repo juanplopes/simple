@@ -7,6 +7,7 @@ using Simple.DataAccess;
 using System.Linq.Expressions;
 using Simple.Expressions.Editable;
 using Simple.Services;
+using NHibernate.Validator.Engine;
 
 namespace Simple.Entities
 {
@@ -63,5 +64,12 @@ namespace Simple.Entities
 
         [OperationContract]
         void Delete(T entity);
+
+        [OperationContract]
+        IList<InvalidValue> Validate(T entity);
+
+        [OperationContract]
+        IList<InvalidValue> ValidateProperty(string propName, object value);
+
     }
 }

@@ -10,6 +10,7 @@ using Simple.DataAccess;
 using Simple.Expressions.Editable;
 using Simple.Services;
 using NHibernate;
+using NHibernate.Validator.Engine;
 
 namespace Simple.Entities
 {
@@ -35,11 +36,19 @@ namespace Simple.Entities
             }
         }
 
+        protected Simply MySimply
+        {
+            get
+            {
+                return Simply.Do[ConfigKey];
+            }
+        }
+
         protected ISession Session
         {
             get
             {
-                return Simply.Do[ConfigKey].GetSession();
+                return MySimply.GetSession();
             }
         }
 
@@ -196,6 +205,21 @@ namespace Simple.Entities
         {
             Session.Delete(entity);
             Session.Flush();
+        }
+
+        #endregion
+
+        #region IEntityService<T> Members
+
+
+        public virtual IList<InvalidValue> Validate(T entity)
+        {
+            return MySimply.Validate(entity);
+        }
+
+        public virtual IList<InvalidValue> ValidateProperty(string propName, object value)
+        {
+            return MySimply.Validate(typeof(T), propName, value);
         }
 
         #endregion

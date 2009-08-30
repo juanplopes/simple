@@ -36,7 +36,7 @@ namespace Simple.Tests.SampleServer
                 Not.LazyLoad();
 
                 Id(x => x.Id, "CustomerID");
-                Map(x => x.CompanyName);
+                Map(x => x.CompanyName).WithLengthOf(40);
                 Map(x => x.ContactName);
                 Map(x => x.ContactTitle);
                 Map(x => x.Address);

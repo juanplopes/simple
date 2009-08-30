@@ -8,6 +8,7 @@ using Simple.ConfigSource;
 using System.Linq.Expressions;
 using Simple.Expressions.Editable;
 using Simple.Expressions;
+using NHibernate.Validator.Engine;
 
 namespace Simple.Entities
 {
@@ -126,5 +127,72 @@ namespace Simple.Entities
         {
             return Do.SaveOrUpdate(ThisAsT);
         }
+
+        #region IEntity<T> Members
+
+        T IEntity<T>.Clone()
+        {
+            throw new NotImplementedException();
+        }
+
+        T IEntity<T>.Refresh()
+        {
+            throw new NotImplementedException();
+        }
+
+        T IEntity<T>.Merge()
+        {
+            throw new NotImplementedException();
+        }
+
+        T IEntity<T>.Persist()
+        {
+            throw new NotImplementedException();
+        }
+
+        T IEntity<T>.Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        T IEntity<T>.Update()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IEntity<T>.Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        T IEntity<T>.SaveOrUpdate()
+        {
+            throw new NotImplementedException();
+        }
+
+       
+
+        #endregion
+
+        #region IEntity<T> Members
+
+
+        public virtual IList<InvalidValue> Validate()
+        {
+            return Do.Validate(ThisAsT);
+        }
+
+        public virtual IList<InvalidValue> Validate(string propName)
+        {
+            return Do.Validate(propName, MethodCache.Do.GetGetter(typeof(T).GetProperty(propName))
+                (this, null));
+        }
+
+        public virtual IList<InvalidValue> Validate<P>(Expression<Func<T, P>> expr)
+        {
+            return Do.Validate(expr, expr.Compile()(ThisAsT));
+        }
+
+        #endregion
     }
 }

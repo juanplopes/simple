@@ -340,5 +340,16 @@ namespace Simple.Tests.DataAccess
             p = p.SaveOrUpdate();
             Assert.AreNotEqual(0, p.Id);
         }
+
+        [Test]
+        public void TestValidateOnSave()
+        {
+            var c = Customer.Do.List(1).FirstOrDefault();
+            Assert.IsNotNull(c);
+
+            c.CompanyName = new string('0', 42);
+            c.Save();
+        }
+
     }
 }
