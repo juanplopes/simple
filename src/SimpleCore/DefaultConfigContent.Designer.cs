@@ -62,35 +62,12 @@ namespace Simple {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;remoting&gt;
-        ///	&lt;baseAddress&gt;http://localhost:9001&lt;/baseAddress&gt;
+        ///	&lt;baseAddress&gt;http://localhost:9001/&lt;/baseAddress&gt;
         ///&lt;/remoting&gt;.
         /// </summary>
         internal static string RemotingConfig {
             get {
                 return ResourceManager.GetString("RemotingConfig", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;simple&gt;
-        ///  &lt;business&gt;
-        ///    &lt;rulesFactoryType name=&quot;Simple.Rules.DefaultRulesProvider`1,SimpleServer&quot;/&gt;
-        ///    &lt;rulesFactoryType name=&quot;Simple.ServiceModel.ServiceRulesProvider`1,SimpleCore&quot;/&gt;
-        ///
-        ///    &lt;filters ignoreCaseDefault=&quot;false&quot;/&gt;
-        ///
-        ///    &lt;exceptionHandling&gt;
-        ///      &lt;type name=&quot;Simple.DataAccess.DefaultExceptionHandler,SimpleServer&quot;/&gt;
-        ///    &lt;/exceptionHandling&gt;
-        ///  &lt;/business&gt;
-        ///
-        ///  &lt;serviceModel&gt;
-        ///    &lt;defaultBaseAddress&gt;net.tcp://localhost:9001/&lt;/defaultBaseAddress&gt;        /// [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SimpleConfig {
-            get {
-                return ResourceManager.GetString("SimpleConfig", resourceCulture);
             }
         }
     }

@@ -20,7 +20,8 @@ namespace Simple.Tests.Service
         protected override Guid Configure()
         {
             Guid guid = Guid.NewGuid();
-            Simply.Do[guid].Configure.Remoting().FromXml(Helper.MakeConfig(Uri));
+
+            Simply.Do[guid].Configure.Remoting(Uri.ToString());
 
             return guid;
         }

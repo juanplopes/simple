@@ -17,6 +17,11 @@ namespace Simple
             return new ConfiguratorInterface<RemotingConfig, SimplyConfigure>(x => Remoting(config, x));
         }
 
+        public static SimplyConfigure Remoting(this SimplyConfigure config, string baseUrl)
+        {
+            return Remoting(config).FromInstance(new RemotingConfig() { BaseAddress = baseUrl });
+        }
+
         public static SimplyConfigure Remoting(this SimplyConfigure config, IConfigSource<RemotingConfig> source)
         {
             SourceManager.Do.Register(config.ConfigKey, source);

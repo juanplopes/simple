@@ -18,7 +18,7 @@ namespace Simple.Entities
     }
 
     [Serializable]
-    public class Entity<T, R>
+    public class Entity<T, R> : IEntity<T>
         where T : Entity<T, R>
         where R : class, IEntityService<T>
     {
