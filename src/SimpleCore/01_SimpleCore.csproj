@@ -49,6 +49,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.Validator.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.Validator.Specific, Version=1.2.0.2001, Culture=neutral, PublicKeyToken=70154e18752585bd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NHibernate.Validator.Specific.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -120,6 +124,9 @@
     <Compile Include="Services\ServiceHostFactory.cs" />
     <Compile Include="Services\ServiceSimplyExtensions.cs" />
     <Compile Include="Services\SimpleContext.cs" />
+    <Compile Include="Validation\ValidationException.cs" />
+    <Compile Include="Validation\ValidationSimpleExtensions.cs" />
+    <Compile Include="Validation\ValidatorEngineFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DefaultConfigContent.resx">

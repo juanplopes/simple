@@ -8,9 +8,6 @@ using NHibernate;
 using Simple.Patterns;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using NHibernate.Validator.Engine;
-using NHibernate.Validator.Cfg;
-using NHibernate.Validator.Cfg.Loquacious;
 using System.Reflection;
 
 namespace Simple.DataAccess
@@ -34,30 +31,12 @@ namespace Simple.DataAccess
             {
                 lock (_lock)
                 {
-                    if (_sessionFactory == null) 
+                    if (_sessionFactory == null)
+                    {
                         _sessionFactory = NHConfiguration.BuildSessionFactory();
-
-                    //MemoryStream mem = new MemoryStream();
-                    //new BinaryFormatter().Serialize(mem, _sessionFactory);
-                    //mem.Seek(0, SeekOrigin.Begin);
-                    //_sessionFactory = (ISessionFactory)new BinaryFormatter().Deserialize(mem);
-
+                    }
 
                     return _sessionFactory;
-                }
-            }
-        }
-
-        private ValidatorEngine _validator = null;
-        public virtual ValidatorEngine Validator
-        {
-            get
-            {
-                lock (_lock)
-                {
-                    if (_validator == null)
-                        throw new AssertionFailure("Validator shouldn't be null. Might be a Simple.NET bug.");
-                    return _validator;
                 }
             }
         }
@@ -73,11 +52,6 @@ namespace Simple.DataAccess
                     {
                         _configuration = MappingHooks.Invoke(
                             ConfigHooks.Invoke(new Configuration()));
-
-                        _validator = new ValidatorEngine();
-                        _validator.Configure();
-                        ValidatorInitializer.Initialize(_configuration, _validator);
-
                     }
                     return _configuration;
                 }
@@ -96,7 +70,6 @@ namespace Simple.DataAccess
                 ConfigHooks = config;
                 _configuration = null;
                 _sessionFactory = null;
-                _validator = null;
             }
         }
 

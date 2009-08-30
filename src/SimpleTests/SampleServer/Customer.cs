@@ -9,6 +9,7 @@ using NHibernate;
 using NHibernate.SqlTypes;
 using Simple.Entities;
 using Simple.DataAccess;
+using NHibernate.Validator.Cfg.Loquacious;
 
 namespace Simple.Tests.SampleServer
 {
@@ -36,7 +37,7 @@ namespace Simple.Tests.SampleServer
                 Not.LazyLoad();
 
                 Id(x => x.Id, "CustomerID");
-                Map(x => x.CompanyName).WithLengthOf(40);
+                Map(x => x.CompanyName);
                 Map(x => x.ContactName);
                 Map(x => x.ContactTitle);
                 Map(x => x.Address);
@@ -46,6 +47,15 @@ namespace Simple.Tests.SampleServer
                 Map(x => x.Country);
                 Map(x => x.Phone);
                 Map(x => x.Fax);
+            }
+        }
+
+        public class Validator : ValidationDef<Customer>
+        {
+            public Validator()
+            {
+                Define(x => x.CompanyName).MaxLength(40);
+                Define(x => x.ContactName).MaxLength(30);
             }
         }
     }

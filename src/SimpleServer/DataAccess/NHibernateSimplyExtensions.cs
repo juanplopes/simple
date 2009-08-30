@@ -9,7 +9,6 @@ using NHibernate.Cfg;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Mapping;
 using System.Reflection;
-using NHibernate.Validator.Engine;
 using System.Linq.Expressions;
 using Simple.Expressions;
 
@@ -46,20 +45,7 @@ namespace Simple
         {
             return Factory(simply).SessionFactory;
         }
-        public static InvalidValue[] Validate(this Simply simply, object obj)
-        {
-            return Factory(simply).Validator.Validate(obj);
-        }
-        public static InvalidValue[] Validate(this Simply simply, Type type, string propName, object value)
-        {
-            return Factory(simply).Validator.ValidatePropertyValue(type, propName, value);
-        }
-        public static InvalidValue[] Validate<T, P>(this Simply simply, T obj, Expression<Func<T, P>> expr)
-            where T : class
-        {
-            return Factory(simply).Validator.ValidatePropertyValue(obj, expr);
-        }
-
+        
 
         #endregion
         #region Configure

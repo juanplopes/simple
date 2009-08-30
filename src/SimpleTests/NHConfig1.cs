@@ -15,6 +15,7 @@ using Simple.Patterns;
 using Simple.Tests.SampleServer;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using System.Reflection;
 
 namespace Simple.Tests
 {
@@ -42,10 +43,13 @@ namespace Simple.Tests
                 .NHibernteFluently(x=>
                     x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")))
                .MappingFromAssemblyOf<Category.Map>()
+               .Validator(typeof(Category.Map).Assembly)
                .DefaultHost();
 
             simply.AddServerHook(x => new DefaultCallHook(x, key));
             simply.HostAssemblyOf(typeof(NHConfig1));
+            
+
         }
     }
 

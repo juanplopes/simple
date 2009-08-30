@@ -11,6 +11,7 @@ using Simple.Expressions.Editable;
 using Simple.Services;
 using NHibernate;
 using NHibernate.Validator.Engine;
+using Simple.Validation;
 
 namespace Simple.Entities
 {
@@ -60,6 +61,15 @@ namespace Simple.Entities
         protected virtual IOrderedQueryable<T> Linq()
         {
             return Linq<T>();
+        }
+
+        protected virtual bool ValidateOnSave { get { return true; } }
+        protected virtual void ValidateAndThrow(T obj)
+        {
+            var list = MySimply.Validate(obj);
+            if (list.Length > 0)
+                throw new ValidationException(list);
+
         }
 
         #region IEntityService<T> Members
@@ -175,6 +185,7 @@ namespace Simple.Entities
 
         public T SaveOrUpdate(T entity)
         {
+            if (ValidateOnSave) ValidateAndThrow(entity);
             Session.SaveOrUpdate(entity);
             Session.Flush();
             return entity;
@@ -182,6 +193,7 @@ namespace Simple.Entities
 
         public T Save(T entity)
         {
+            if (ValidateOnSave) ValidateAndThrow(entity);
             Session.Save(entity);
             Session.Flush();
             return entity;
@@ -189,6 +201,7 @@ namespace Simple.Entities
 
         public T Update(T entity)
         {
+            if (ValidateOnSave) ValidateAndThrow(entity);
             Session.Update(entity);
             Session.Flush();
             return entity;
@@ -196,6 +209,7 @@ namespace Simple.Entities
 
         public T Persist(T entity)
         {
+            if (ValidateOnSave) ValidateAndThrow(entity);
             Session.Persist(entity);
             Session.Flush();
             return entity;

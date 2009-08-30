@@ -319,7 +319,7 @@ namespace Simple.Tests.DataAccess
             c2.SaveOrUpdate();
 
             var c3 = Customer.Do.Load("BLAUS");
-            Assert.AreEqual("WHATEVER", c3.CompanyName); 
+            Assert.AreEqual("WHATEVER", c3.CompanyName);
 
         }
 
@@ -341,15 +341,7 @@ namespace Simple.Tests.DataAccess
             Assert.AreNotEqual(0, p.Id);
         }
 
-        [Test]
-        public void TestValidateOnSave()
-        {
-            var c = Customer.Do.List(1).FirstOrDefault();
-            Assert.IsNotNull(c);
-
-            c.CompanyName = new string('0', 42);
-            c.Save();
-        }
+        
 
     }
 }
