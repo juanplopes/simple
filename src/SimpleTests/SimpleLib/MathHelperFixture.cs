@@ -31,5 +31,39 @@ namespace Simple.Tests.SimpleLib
             Assert.AreEqual(9L, MathHelper.ModRound(10L, 3L));
             Assert.AreEqual(100L, MathHelper.ModRound(106L, 100L));
         }
+
+        [Test]
+        public void NegativeModRound()
+        {
+            Assert.AreEqual(-12, MathHelper.ModRound(-10, 4));
+            Assert.AreEqual(-12, MathHelper.ModRound(-10, 3));
+            Assert.AreEqual(-200, MathHelper.ModRound(-106, 100));
+
+            Assert.AreEqual(-12L, MathHelper.ModRound(-10L, 4L));
+            Assert.AreEqual(-12L, MathHelper.ModRound(-10L, 3L));
+            Assert.AreEqual(-200L, MathHelper.ModRound(-106L, 100L));
+        }
+
+        [Test]
+        public void TestRealMod()
+        {
+            Assert.AreEqual(2, MathHelper.RealMod(10, 4));
+            Assert.AreEqual(2, MathHelper.RealMod(-10, 4));
+
+            Assert.AreEqual(1, MathHelper.RealMod(10, 3));
+            Assert.AreEqual(2, MathHelper.RealMod(-10, 3));
+
+            Assert.AreEqual(6, MathHelper.RealMod(106, 100));
+            Assert.AreEqual(94, MathHelper.RealMod(-106, 100));
+        }
+
+        [Test]
+        public void TestFloatEqTests()
+        {
+            Assert.IsTrue(MathHelper.FloatEq(10.099m, 10m, 0.1m));
+            Assert.IsFalse(MathHelper.FloatEq(10.1m, 10m, 0.1m));
+
+            Assert.IsTrue(MathHelper.FloatEq(10.099, 10, 0.1));
+        }
     }
 }
