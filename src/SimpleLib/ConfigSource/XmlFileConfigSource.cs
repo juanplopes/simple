@@ -7,6 +7,7 @@ using System.Threading;
 using System.ComponentModel;
 using Simple.Logging;
 using System.Xml;
+using System.Reflection;
 
 namespace Simple.ConfigSource
 {
@@ -50,7 +51,27 @@ namespace Simple.ConfigSource
 
         public virtual IConfigSource<T> LoadFile(string fileName)
         {
-            return Load(new FileInfo(fileName));
+            Assembly currentAssemly = Assembly.GetExecutingAssembly();
+
+            var simplePath = ConfigExists(fileName);
+            var codeBasePath = ConfigExists(Path.Combine(Path.GetDirectoryName(currentAssemly.CodeBase), fileName));
+            var locationPath = ConfigExists(Path.Combine(Path.GetDirectoryName(currentAssemly.Location), fileName));
+
+            var realPath = simplePath ?? codeBasePath ?? locationPath ?? new FileInfo(fileName);
+
+            return Load(realPath);
+        }
+
+        private FileInfo ConfigExists(string file)
+        {
+            try
+            {
+                file = new Uri(file).AbsolutePath;
+            }
+            catch { }
+
+            var info = new FileInfo(file);
+            return info.Exists ? info : null;
         }
 
         public override bool Reload()

@@ -22,11 +22,15 @@ namespace Simple.Tests.ConfigSource
                     <AFloat>43.43</AFloat>
                   </BasicTypesSampleWithoutAttr>";
 
+        protected string currentDirectory = null;
 
         [SetUp]
         public void Setup()
         {
             File.WriteAllText(TEST_FILE_NAME, XmlConfigSourceFixture.SAMPLE_XML);
+
+            currentDirectory = Environment.CurrentDirectory;
+            Environment.CurrentDirectory = Path.Combine(Environment.CurrentDirectory, "..");
         }
 
         [TestFixtureTearDown]
@@ -42,7 +46,7 @@ namespace Simple.Tests.ConfigSource
         {
             using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
             {
-                var cfg = src.Load(new FileInfo(TEST_FILE_NAME)).Get();
+                var cfg = src.Load(TEST_FILE_NAME).Get();
                 XmlConfigSourceFixture.TestCreatedSimpleSample(cfg);
             }
         }
@@ -77,7 +81,7 @@ namespace Simple.Tests.ConfigSource
 
                 XmlConfigSourceFixture.TestCreatedSimpleSample(cfg);
 
-                File.WriteAllText(TEST_FILE_NAME, SAMPLE_XML);
+                File.WriteAllText(Path.Combine(currentDirectory, TEST_FILE_NAME), SAMPLE_XML);
 
                 long time = DateTime.Now.Ticks;
                 while (!flag && new TimeSpan(DateTime.Now.Ticks - time).TotalSeconds < 3) ;
@@ -109,7 +113,7 @@ namespace Simple.Tests.ConfigSource
                 XmlConfigSourceFixture.TestCreatedSimpleSample(cfg);
                 src.AddTransform(x => x.AFloat = 44.44f);
 
-                File.WriteAllText(TEST_FILE_NAME, SAMPLE_XML);
+                File.WriteAllText(Path.Combine(currentDirectory, TEST_FILE_NAME), SAMPLE_XML);
 
                 long time = DateTime.Now.Ticks;
                 while (!flag && new TimeSpan(DateTime.Now.Ticks - time).TotalSeconds < 3) ;
