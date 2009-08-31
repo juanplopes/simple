@@ -7,6 +7,7 @@ using NUnit.Framework;
 using NHibernate;
 using NHibernate.Validator.Engine;
 using Simple.Validation;
+using Simple.IO.Serialization;
 
 namespace Simple.Tests.DataAccess
 {
@@ -29,6 +30,23 @@ namespace Simple.Tests.DataAccess
             MySimply.GetSession().Clear();
             Assert.Throws<ValidationException>(() => c.Persist());
             MySimply.GetSession().Clear();
+        }
+
+        [Test]
+        public void TestSerializeValidationException()
+        {
+            var c = Customer.Do.List(1).FirstOrDefault();
+            Assert.IsNotNull(c);
+
+            c.CompanyName = new string('0', 42);
+            c.ContactName = new string('0', 42);
+
+            var obj = new ValidationException(c.Validate().ToArray());
+            var bytes = SimpleSerializer.Binary().Serialize(obj);
+            var obj2 = SimpleSerializer.Binary().Deserialize(bytes) as ValidationException;
+
+            Assert.IsNotNull(obj2.InvalidValues);
+            Assert.AreEqual(obj.InvalidValues.Count, obj2.InvalidValues.Count);
         }
 
         protected void GenericTest(Func<Customer, IList<InvalidValue>> func, params string[] props)
