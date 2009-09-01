@@ -19,30 +19,12 @@ namespace Simple.Entities
     }
 
     [Serializable]
-    public class Entity<T, R> : IEntity<T>
+    public partial class Entity<T, R> : IEntity<T>
         where T : Entity<T, R>
         where R : class, IEntityService<T>
     {
-        public static EntityAccessor<T, R> Do
-        {
-            get
-            {
-                return EntityAccessor<T, R>.Do;
-            }
-        }
+        
 
-        public static R Service
-        {
-            get
-            {
-                return Do.GetService();
-            }
-        }
-
-        public static R GetService(object key)
-        {
-            return EntityAccessor<T, R>.Do[key].GetService();
-        }
 
         #region Expressions
         public static string Prop<P>(Expression<Func<T, P>> expr)
@@ -87,6 +69,7 @@ namespace Simple.Entities
             }
         }
 
+
         public virtual T Clone()
         {
             EnsureThisType(this);
@@ -95,104 +78,53 @@ namespace Simple.Entities
 
         public virtual T Refresh()
         {
-            return Do.Refresh(ThisAsT);
+            return Service.Refresh(ThisAsT);
         }
 
         public virtual T Merge()
         {
-            return Do.Merge(ThisAsT);
+            return Service.Merge(ThisAsT);
         }
 
         public virtual T Persist()
         {
-            return Do.Persist(ThisAsT);
+            return Service.Persist(ThisAsT);
         }
 
         public virtual T Save()
         {
-            return Do.Save(ThisAsT);
+            return Service.Save(ThisAsT);
         }
 
         public virtual T Update()
         {
-            return Do.Update(ThisAsT);
+            return Service.Update(ThisAsT);
         }
 
         public virtual void Delete()
         {
-            Do.Delete(ThisAsT);
+            Service.Delete(ThisAsT);
         }
 
         public virtual T SaveOrUpdate()
         {
-            return Do.SaveOrUpdate(ThisAsT);
+            return Service.SaveOrUpdate(ThisAsT);
         }
-
-        #region IEntity<T> Members
-
-        T IEntity<T>.Clone()
-        {
-            throw new NotImplementedException();
-        }
-
-        T IEntity<T>.Refresh()
-        {
-            throw new NotImplementedException();
-        }
-
-        T IEntity<T>.Merge()
-        {
-            throw new NotImplementedException();
-        }
-
-        T IEntity<T>.Persist()
-        {
-            throw new NotImplementedException();
-        }
-
-        T IEntity<T>.Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        T IEntity<T>.Update()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEntity<T>.Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        T IEntity<T>.SaveOrUpdate()
-        {
-            throw new NotImplementedException();
-        }
-
-       
-
-        #endregion
-
-        #region IEntity<T> Members
-
 
         public virtual IList<InvalidValue> Validate()
         {
-            return Do.Validate(ThisAsT);
+            return Service.Validate(ThisAsT);
         }
 
         public virtual IList<InvalidValue> Validate(string propName)
         {
-            return Do.Validate(propName, MethodCache.Do.GetGetter(typeof(T).GetProperty(propName))
+            return Service.ValidateProperty(propName, MethodCache.Do.GetGetter(typeof(T).GetProperty(propName))
                 (this, null));
         }
 
         public virtual IList<InvalidValue> Validate<P>(Expression<Func<T, P>> expr)
         {
-            return Do.Validate(expr, expr.Compile()(ThisAsT));
+            return Service.ValidateProperty(ExpressionHelper.GetMemberName(expr), expr.Compile()(ThisAsT));
         }
-
-        #endregion
     }
 }

@@ -16,7 +16,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestValidateOnSave()
         {
-            var c = Customer.Do.List(1).FirstOrDefault();
+            var c = Customer.List(1).FirstOrDefault();
             Assert.IsNotNull(c);
 
             c.CompanyName = new string('0', 42);
@@ -35,7 +35,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestSerializeValidationException()
         {
-            var c = Customer.Do.List(1).FirstOrDefault();
+            var c = Customer.List(1).FirstOrDefault();
             Assert.IsNotNull(c);
 
             c.CompanyName = new string('0', 42);
@@ -51,7 +51,7 @@ namespace Simple.Tests.DataAccess
 
         protected void GenericTest(Func<Customer, IList<InvalidValue>> func, params string[] props)
         {
-            var c = Customer.Do.List(1).FirstOrDefault();
+            var c = Customer.List(1).FirstOrDefault();
             Assert.IsNotNull(c);
 
             c.CompanyName = new string('0', 42);
@@ -77,12 +77,6 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
-        public void TestAccessorValidation()
-        {
-            GenericTest(x => Customer.Do.Validate(x), "CompanyName", "ContactName");
-        }
-
-        [Test]
         public void TestServicePropertyValidation()
         {
             GenericTest(x => Customer.Service.ValidateProperty("CompanyName", x.CompanyName),
@@ -94,13 +88,7 @@ namespace Simple.Tests.DataAccess
         {
             GenericTest(x => x.Validate(c => c.CompanyName), "CompanyName");
         }
-
-        [Test]
-        public void TestDirectAccessorValidation()
-        {
-            GenericTest(x => Customer.Do.Validate(c => c.CompanyName, x.CompanyName),
-                "CompanyName");
-        }
+       
     }
 }
 

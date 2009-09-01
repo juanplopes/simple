@@ -54,15 +54,15 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestLoadById()
         {
-            AssertQuery(x => x.Where(o => o.Id == "BERGS"), Customer.Do.Load("BERGS"));
-            AssertQuery(x => x.Where(o => o.Id == "ANTON"), Customer.Do.Load("ANTON"));
+            AssertQuery(x => x.Where(o => o.Id == "BERGS"), Customer.Load("BERGS"));
+            AssertQuery(x => x.Where(o => o.Id == "ANTON"), Customer.Load("ANTON"));
         }
 
         [Test]
         public void TestFindFirstByStartsWithFilter()
         {
             var f = Customer.Expr(x => x.CompanyName.StartsWith("B"));
-            AssertQuery(x => x.Where(f).Take(1), Customer.Do.Find(f));
+            AssertQuery(x => x.Where(f).Take(1), Customer.Find(f));
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Simple.Tests.DataAccess
 
 
             AssertQuery(x => x.Where(f2).OrderByDescending(o => o.Id).Take(1),
-                Customer.Do.Find(f, o => o.Desc(x => x.Id)));
+                Customer.Find(f, o => o.Desc(x => x.Id)));
         }
 
 
@@ -91,7 +91,7 @@ namespace Simple.Tests.DataAccess
 
 
             AssertQuery(x => x.Where(f2).OrderByDescending(o => o.Id).Take(1),
-                Customer.Do.Find(f, o => o.Desc(x => x.Id)));
+                Customer.Find(f, o => o.Desc(x => x.Id)));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace Simple.Tests.DataAccess
         {
             var f = Customer.Expr(x => x.CompanyName.StartsWith("B"));
             AssertQuery(x => x.Where(f).OrderByDescending(o => o.Id).Take(1),
-                Customer.Do.Find(f, o => o.Desc(x => x.Id)));
+                Customer.Find(f, o => o.Desc(x => x.Id)));
         }
 
         [Test]
@@ -107,13 +107,13 @@ namespace Simple.Tests.DataAccess
         {
             var f = Customer.Expr(x => x.City == "Sao Paulo");
             AssertQuery(x => x.Where(f).OrderBy(o => o.ContactTitle).ThenByDescending(o => o.ContactName).Take(1),
-                Customer.Do.Find(f, o => o.Asc(x => x.ContactTitle).Desc(x => x.ContactName)));
+                Customer.Find(f, o => o.Asc(x => x.ContactTitle).Desc(x => x.ContactName)));
         }
 
         [Test]
         public void TestListProductsByCategoryName()
         {
-            var l = Product.Do.List(x => x.Category.Name == "Meat/Poultry");
+            var l = Product.List(x => x.Category.Name == "Meat/Poultry");
 
             Assert.AreEqual(6, l.Count);
             Assert.IsTrue(l.All(x => x.Category.Id == 6));
@@ -122,7 +122,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestListTop10ProductsAll()
         {
-            var list = Product.Do.List(10);
+            var list = Product.List(10);
             Assert.AreEqual(10, list.Count);
             Assert.AreEqual(77, list.TotalCount);
         }
@@ -130,74 +130,74 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestFindLastProduct()
         {
-            var p = Product.Do.Find(x => true, o => o.Desc(x => x.Id));
+            var p = Product.Find(x => true, o => o.Desc(x => x.Id));
             Assert.AreEqual(77, p.Id);
         }
 
         [Test]
         public void TestFindByTrueFilter()
         {
-            AssertQuery(x => x.Take(1), Customer.Do.Find(x => true));
+            AssertQuery(x => x.Take(1), Customer.Find(x => true));
         }
 
         [Test]
         public void TestListAll()
         {
-            AssertQuery(x => x, Customer.Do.List().ToArray());
+            AssertQuery(x => x, Customer.List().ToArray());
         }
 
         [Test]
         public void TestListAllTop10()
         {
-            AssertQuery(x => x, 0, 10, Customer.Do.List(10));
+            AssertQuery(x => x, 0, 10, Customer.List(10));
         }
 
         [Test]
         public void TestListAllSkip20Take10()
         {
-            AssertQuery(x => x, 20, 10, Customer.Do.List(20, 10));
+            AssertQuery(x => x, 20, 10, Customer.List(20, 10));
         }
 
         [Test]
         public void TestListByFilter()
         {
             var f = Customer.Expr(x => x.Region != null);
-            AssertQuery(x => x.Where(f), Customer.Do.List(f).ToArray());
+            AssertQuery(x => x.Where(f), Customer.List(f).ToArray());
         }
 
         [Test]
         public void TestListByFilterTop10()
         {
             var f = Customer.Expr(x => x.Region != null);
-            AssertQuery(x => x.Where(f), 0, 10, Customer.Do.List(f, 10));
+            AssertQuery(x => x.Where(f), 0, 10, Customer.List(f, 10));
         }
 
         [Test]
         public void TestListByFilterSkip20Take10()
         {
             var f = Customer.Expr(x => x.Region != null);
-            AssertQuery(x => x.Where(f), 20, 10, Customer.Do.List(f, 20, 10));
+            AssertQuery(x => x.Where(f), 20, 10, Customer.List(f, 20, 10));
         }
 
         [Test]
         public void TestListWithOrder()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax),
-                Customer.Do.List(o => o.Desc(x => x.Id).Asc(x => x.Fax)).ToArray());
+                Customer.List(o => o.Desc(x => x.Id).Asc(x => x.Fax)).ToArray());
         }
 
         [Test]
         public void TestListWithOrderTop10()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax), 0, 10,
-                Customer.Do.List(o => o.Desc(x => x.Id).Asc(x => x.Fax), 10));
+                Customer.List(o => o.Desc(x => x.Id).Asc(x => x.Fax), 10));
         }
 
         [Test]
         public void TestListWithOrderSkip20Take10()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax), 20, 10,
-                Customer.Do.List(o => o.Desc(x => x.Id).Asc(x => x.Fax), 20, 10));
+                Customer.List(o => o.Desc(x => x.Id).Asc(x => x.Fax), 20, 10));
         }
 
         [Test]
@@ -206,7 +206,7 @@ namespace Simple.Tests.DataAccess
             var f = Customer.Expr(x => x.Region != null);
 
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax).Where(f),
-                Customer.Do.List(f, o => o.Desc(x => x.Id).Asc(x => x.Fax)).ToArray());
+                Customer.List(f, o => o.Desc(x => x.Id).Asc(x => x.Fax)).ToArray());
         }
 
         [Test]
@@ -215,7 +215,7 @@ namespace Simple.Tests.DataAccess
             var f = Customer.Expr(x => x.Region != null);
 
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax).Where(f), 0, 10,
-                Customer.Do.List(f, o => o.Desc(x => x.Id).Asc(x => x.Fax), 10));
+                Customer.List(f, o => o.Desc(x => x.Id).Asc(x => x.Fax), 10));
         }
 
         [Test]
@@ -224,17 +224,17 @@ namespace Simple.Tests.DataAccess
             var f = Customer.Expr(x => x.Region != null);
 
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax).Where(f), 20, 10,
-                Customer.Do.List(f, o => o.Desc(x => x.Id).Asc(x => x.Fax), 20, 10));
+                Customer.List(f, o => o.Desc(x => x.Id).Asc(x => x.Fax), 20, 10));
         }
 
         [Test]
         public void TestSmartUpdate()
         {
-            var c = Customer.Do.Load("OLDWO");
+            var c = Customer.Load("OLDWO");
             c.CompanyName = "WHATEVER";
             c.Update();
 
-            var c3 = Customer.Do.Load("OLDWO");
+            var c3 = Customer.Load("OLDWO");
 
             Assert.AreEqual(c.CompanyName, c.CompanyName);
         }
@@ -242,12 +242,12 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestServiceUpdate()
         {
-            var c = Customer.Do.Load("OLDWO");
+            var c = Customer.Load("OLDWO");
             c.CompanyName = "WHATEVER2";
 
             Customer.Service.Update(c);
 
-            var c3 = Customer.Do.Load("OLDWO");
+            var c3 = Customer.Load("OLDWO");
 
             Assert.AreEqual(c.CompanyName, c.CompanyName);
         }
@@ -255,12 +255,12 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestSaveNew()
         {
-            var c = Customer.Do.Load("OLDWO").Clone();
+            var c = Customer.Load("OLDWO").Clone();
             c.CompanyName = "WHATEVER3";
             c.Id = "AAAAA";
             c.Save();
 
-            var c3 = Customer.Do.Load("AAAAA");
+            var c3 = Customer.Load("AAAAA");
 
             Assert.AreEqual(c.CompanyName, c.CompanyName);
         }
@@ -268,36 +268,36 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestDeleteOne()
         {
-            Customer.Do.Load("OLDWO").Delete();
-            Assert.Throws<ObjectNotFoundException>(() => Customer.Do.Load("OLDWO"));
+            Customer.Load("OLDWO").Delete();
+            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OLDWO"));
         }
 
         [Test]
         public void TestDeleteOneByFilter()
         {
-            int count = Customer.Do.Delete(x => x.ContactName == "Yvonne Moncada");
+            int count = Customer.Delete(x => x.ContactName == "Yvonne Moncada");
             Assert.AreEqual(1, count);
-            Assert.Throws<ObjectNotFoundException>(() => Customer.Do.Load("OCEAN"));
+            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OCEAN"));
         }
 
         [Test]
         public void TestDeleteOneById()
         {
-            Customer.Do.Delete("AROUT");
-            Assert.Throws<ObjectNotFoundException>(() => Customer.Do.Load("AROUT"));
+            Customer.Delete("AROUT");
+            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("AROUT"));
         }
 
         [Test]
         public void TestCountByFilter()
         {
-            int c = Customer.Do.Count(x => x.Id == "AROUT");
+            int c = Customer.Count(x => x.Id == "AROUT");
             Assert.AreEqual(1, c);
         }
 
         [Test]
         public void TestRefreshEntity()
         {
-            var c = Customer.Do.Load("BLAUS");
+            var c = Customer.Load("BLAUS");
             Assert.AreEqual("Hanna Moos", c.ContactName);
 
             c.ContactName = "WHATEVER";
@@ -309,7 +309,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestMergeEntity()
         {
-            var c = Customer.Do.Load("BLAUS");
+            var c = Customer.Load("BLAUS");
 
             var c2 = c.Clone();
             c2.CompanyName = "WHATEVER";
@@ -318,7 +318,7 @@ namespace Simple.Tests.DataAccess
             c2 = c2.Merge();
             c2.SaveOrUpdate();
 
-            var c3 = Customer.Do.Load("BLAUS");
+            var c3 = Customer.Load("BLAUS");
             Assert.AreEqual("WHATEVER", c3.CompanyName);
 
         }
@@ -326,7 +326,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestCreateIdBySaveProduct()
         {
-            var p = Product.Do.Load(1).Clone();
+            var p = Product.Load(1).Clone();
             p.Id = 0;
             p = p.Save();
             Assert.AreNotEqual(0, p.Id);
@@ -335,7 +335,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestCreateIdBySaveOrUpdateProduct()
         {
-            var p = Product.Do.Load(1).Clone();
+            var p = Product.Load(1).Clone();
             p.Id = 0;
             p = p.SaveOrUpdate();
             Assert.AreNotEqual(0, p.Id);
