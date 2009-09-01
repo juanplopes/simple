@@ -13,7 +13,7 @@ namespace Simple.ConfigSource
 {
     public class XmlFileConfigSource<T> :
         XmlConfigSource<T>,
-        IFileConfigSource<T>,
+        IXmlFileConfigSource<T>,
         IConfigSource<T, XPathParameter<FileInfo>>
     {
         public XPathParameter<FileInfo> XmlFile { get; set; }
@@ -51,6 +51,11 @@ namespace Simple.ConfigSource
 
         public virtual IConfigSource<T> LoadFile(string fileName)
         {
+            return LoadFile(fileName, null);
+        }
+
+        public virtual IConfigSource<T> LoadFile(string fileName, string xPath)
+        {
             Assembly currentAssemly = Assembly.GetExecutingAssembly();
 
             var simplePath = ConfigExists(fileName);
@@ -59,7 +64,7 @@ namespace Simple.ConfigSource
 
             var realPath = simplePath ?? codeBasePath ?? locationPath ?? new FileInfo(fileName);
 
-            return Load(realPath);
+            return Load(new XPathParameter<FileInfo>(realPath, xPath));
         }
 
         private FileInfo ConfigExists(string file)

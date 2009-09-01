@@ -59,7 +59,7 @@
     <Compile Include="ConfigSource\AggregateFactory.cs" />
     <Compile Include="ConfigSource\DefaultConfigAttribute.cs" />
     <Compile Include="ConfigSource\DirectConfigSource.cs" />
-    <Compile Include="ConfigSource\XmlConfigurator.cs" />
+    <Compile Include="ConfigSource\ConfiguratorInterface.cs" />
     <Compile Include="DynamicProxy\MarshallableDynamicProxyImpl.cs" />
     <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
     <Compile Include="Expressions\Editable\EditableExpressionCollection.cs" />
@@ -114,7 +114,6 @@
     <Compile Include="ConfigSource\IWrappedConfigSource.cs" />
     <Compile Include="ConfigSource\IConfigSource.cs" />
     <Compile Include="ConfigSource\IFactory.cs" />
-    <Compile Include="ConfigSource\IFactoryContract.cs" />
     <Compile Include="ConfigSource\IXmlContentHolder.cs" />
     <Compile Include="ConfigSource\NullConfigSource.cs" />
     <Compile Include="ConfigSource\SourceManager.cs" />

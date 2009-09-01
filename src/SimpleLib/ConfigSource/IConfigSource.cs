@@ -21,9 +21,10 @@ namespace Simple.ConfigSource
 
     }
 
-    public interface IFileConfigSource<T> : IConfigSource<T>
+    public interface IXmlFileConfigSource<T> : IConfigSource<T>
     {
         IConfigSource<T> LoadFile(string fileName);
+        IConfigSource<T> LoadFile(string fileName, string xPath);
     }
 
 

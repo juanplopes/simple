@@ -46,7 +46,7 @@ namespace Simple.Tests.ConfigSource
         {
             using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
             {
-                var cfg = src.Load(TEST_FILE_NAME).Get();
+                var cfg = src.LoadFile(TEST_FILE_NAME).Get();
                 XmlConfigSourceFixture.TestCreatedSimpleSample(cfg);
             }
         }
