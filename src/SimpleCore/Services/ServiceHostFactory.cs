@@ -70,12 +70,18 @@ namespace Simple.Services
 
         #region IServiceHostFactory Members
 
-        public void HostAssemblyOf(Type type)
+        public void HostAssembly(Assembly asm)
         {
-            foreach (Type t in Enumerable.Filter(type.Assembly.GetTypes(), t => t.IsClass && !t.IsAbstract))
+            foreach (Type t in Enumerable.Filter(asm.GetTypes(), t => t.IsClass && !t.IsAbstract))
             {
                 Host(t);
             }
+
+        }
+
+        public void HostAssemblyOf(Type type)
+        {
+            HostAssembly(type.Assembly);
         }
 
         public void StartServer()

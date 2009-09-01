@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.ConfigSource;
 using Simple.Services;
+using System.Reflection;
 
 namespace Simple
 {
@@ -30,6 +31,12 @@ namespace Simple
         {
             HostFactory(simply).Host(type);
         }
+
+        public static void HostAssembly(this Simply simply, Assembly asm)
+        {
+            HostFactory(simply).HostAssembly(asm);
+        }
+
 
         public static void HostAssemblyOf(this Simply simply, Type type)
         {
