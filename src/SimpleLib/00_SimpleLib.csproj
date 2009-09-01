@@ -167,19 +167,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Patterns\SafeDictionary.cs" />
     <Compile Include="Reflection\CastingHelper.cs" />
-    <Compile Include="ServiceModel\ErrorBehaviorExtension.cs" />
-    <Compile Include="ServiceModel\ErrorServiceBehavior.cs" />
-    <Compile Include="ServiceModel\HostingFactory.cs" />
-    <Compile Include="ServiceModel\IHostingHelper.cs" />
-    <Compile Include="ServiceModel\KnownTypesLister.cs" />
-    <Compile Include="ServiceModel\LoggerErrorHandler.cs" />
-    <Compile Include="ServiceModel\ServiceProcessInstallerExtended.cs">
+    <Compile Include="Hosting\SimpleController.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ServiceModel\WCFHostingHelper.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ServiceModel\WCFWindowsServiceInstaller.cs">
+    <Compile Include="Hosting\SimpleInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Threading\BaseLockingProvider.cs" />
