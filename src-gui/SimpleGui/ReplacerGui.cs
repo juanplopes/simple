@@ -25,7 +25,7 @@ namespace SimpleGui
                 ReplacerLogic.DefaultExecute(Environment.CurrentDirectory, "SampleProject", txtCatalog.Text.Trim());
                 ReplacerLogic.DefaultExecute(Environment.CurrentDirectory, "sample-project", txtIISUrl.Text.Trim());
 
-                MessageBox.Show("Done!");
+                MessageBox.Show("Done!", "Message");
                 this.Close();
             }
         }
