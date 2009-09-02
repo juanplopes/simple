@@ -910,11 +910,11 @@ public static class Utilities
 {
     public static string CleanUp(string propertyToFilter){
         string propertyName = string.Empty;
-        string[] nameParts = propertyToFilter.Replace(' ', '_').Split('_');
+        string[] nameParts = propertyToFilter.Replace(' ', '_').Split(new[]{'_'}, StringSplitOptions.RemoveEmptyEntries);
 
         foreach (string namePart in nameParts)
         {
-            propertyName += namePart.Substring(0, 1).ToUpper() + namePart.Substring(1);
+            propertyName += namePart.Substring(0, 1).ToUpper() + namePart.Substring(1).ToLower();
         }
 
         if (string.IsNullOrEmpty(propertyName))
