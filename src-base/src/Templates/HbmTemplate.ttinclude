@@ -28,7 +28,7 @@ public class HbmTemplate : TableTemplate
 #>
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="<#=this.EntityNamespace #>" assembly="<#=this.AssemblyName #>">
-    <class name="<#=this.EntityNamespace #>.<#=this.TableClassName #>, <#=this.AssemblyName #>" table="<#=fullTableName #>" lazy="false">
+    <class name="<#=this.EntityNamespace #>.<#=this.TableClassName #>, <#=this.AssemblyName #>" table="<#=this.TableName#>" schema="<#=this.TableSchema#>" lazy="false">
 <#+
         if (this.TablePrimaryKeys.Rows.Count > 1)
         {
