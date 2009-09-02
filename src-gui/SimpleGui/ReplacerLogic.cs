@@ -12,7 +12,7 @@ namespace SimpleGui
         {
             Execute(path, find, replace,
                 "cmd", "csproj", "sln", "xml", "txt", "config", 
-                "cs", "aspx", "resx", "tt", "ttinclude");
+                "cs", "aspx", "resx", "tt", "ttinclude", "asax");
         }
 
         public static void Execute(string path, string find, string replace, params string[] extensions)

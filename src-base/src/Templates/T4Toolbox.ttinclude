@@ -914,7 +914,9 @@ public static class Utilities
 
         foreach (string namePart in nameParts)
         {
-            propertyName += namePart.Substring(0, 1).ToUpper() + namePart.Substring(1).ToLower();
+			string temp = namePart;
+			if (namePart.ToUpper() == namePart) temp = namePart.ToLower();
+            propertyName += temp.Substring(0, 1).ToUpper() + temp.Substring(1);
         }
 
         if (string.IsNullOrEmpty(propertyName))

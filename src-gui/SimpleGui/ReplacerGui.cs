@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
+using System.IO;
 
 namespace SimpleGui
 {
@@ -19,11 +20,13 @@ namespace SimpleGui
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string message = "Replacer will be executed at: " + path + Environment.NewLine + "Are you sure?";
+            if (MessageBox.Show(message, "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                ReplacerLogic.DefaultExecute(Environment.CurrentDirectory, "Sample.Project", txtNamespace.Text.Trim());
-                ReplacerLogic.DefaultExecute(Environment.CurrentDirectory, "SampleProject", txtCatalog.Text.Trim());
-                ReplacerLogic.DefaultExecute(Environment.CurrentDirectory, "sample-project", txtIISUrl.Text.Trim());
+                ReplacerLogic.DefaultExecute(path, "Sample.Project", txtNamespace.Text.Trim());
+                ReplacerLogic.DefaultExecute(path, "SampleProject", txtCatalog.Text.Trim());
+                ReplacerLogic.DefaultExecute(path, "sample-project", txtIISUrl.Text.Trim());
 
                 MessageBox.Show("Done!", "Message");
                 this.Close();
