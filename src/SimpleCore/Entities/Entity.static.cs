@@ -64,34 +64,35 @@ namespace Simple.Entities
         }
 
         #region List no order, no filter
-        public static IList<T> List()
+        public static IList<T> ListAll()
         {
             return Service.List(new OrderBy<T>());
         }
 
-        public static IPage<T> List(int top)
+        public static IPage<T> ListAll(int top)
         {
             return Service.Paginate(new OrderBy<T>(), null, top);
         }
 
-        public static IPage<T> List(int skip, int take)
+        public static IPage<T> ListAll(int skip, int take)
         {
             return Service.Paginate(new OrderBy<T>(), skip, take);
         }
         #endregion
 
+
         #region List yes order, no filter
-        public static IList<T> List(Func<OrderBy<T>, OrderBy<T>> orderBy)
+        public static IList<T> ListAll(Func<OrderBy<T>, OrderBy<T>> orderBy)
         {
             return Service.List(orderBy(new OrderBy<T>()));
         }
 
-        public static IPage<T> List(Func<OrderBy<T>, OrderBy<T>> orderBy, int top)
+        public static IPage<T> ListAll(Func<OrderBy<T>, OrderBy<T>> orderBy, int top)
         {
             return Service.Paginate(orderBy(new OrderBy<T>()), null, top);
         }
 
-        public static IPage<T> List(Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
+        public static IPage<T> ListAll(Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
         {
             return Service.Paginate(orderBy(new OrderBy<T>()), skip, take);
         }

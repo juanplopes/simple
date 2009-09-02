@@ -16,7 +16,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestValidateOnSave()
         {
-            var c = Customer.List(1).FirstOrDefault();
+            var c = Customer.ListAll(1).FirstOrDefault();
             Assert.IsNotNull(c);
 
             c.CompanyName = new string('0', 42);
@@ -35,7 +35,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestSerializeValidationException()
         {
-            var c = Customer.List(1).FirstOrDefault();
+            var c = Customer.ListAll(1).FirstOrDefault();
             Assert.IsNotNull(c);
 
             c.CompanyName = new string('0', 42);
@@ -51,7 +51,7 @@ namespace Simple.Tests.DataAccess
 
         protected void GenericTest(Func<Customer, IList<InvalidValue>> func, params string[] props)
         {
-            var c = Customer.List(1).FirstOrDefault();
+            var c = Customer.ListAll(1).FirstOrDefault();
             Assert.IsNotNull(c);
 
             c.CompanyName = new string('0', 42);

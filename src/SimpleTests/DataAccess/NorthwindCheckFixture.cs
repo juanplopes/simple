@@ -14,21 +14,21 @@ namespace Simple.Tests.DataAccess
         public void CheckCategories()
         {
             Assert.AreEqual(8, Category.Count());
-            Category.List(1);
+            Category.ListAll(1);
         }
 
         [Test]
         public void CheckCustomer()
         {
             Assert.AreEqual(91, Customer.Count());
-            Customer.List(1);
+            Customer.ListAll(1);
         }
 
         [Test]
         public void CheckProducts()
         {
             Assert.AreEqual(77, Product.Count());
-            Product.List(1);
+            Product.ListAll(1);
 
             Product p = Product.Load(2);
             Assert.IsNotNull(p.Category); Assert.AreEqual("Beverages", p.Category.Name);
@@ -39,21 +39,21 @@ namespace Simple.Tests.DataAccess
         public void CheckSuppliers()
         {
             Assert.AreEqual(29, Supplier.Count());
-            Supplier.List(1);
+            Supplier.ListAll(1);
         }
 
         [Test]
         public void CheckRegions()
         {
             Assert.AreEqual(4, Region.Count());
-            Region.List(1);
+            Region.ListAll(1);
         }
 
         [Test]
         public void CheckTerritories()
         {
             Assert.AreEqual(53, Territory.Count());
-            Territory.List(1);
+            Territory.ListAll(1);
             var t = Territory.Load("03049");
             Assert.AreEqual(3, t.Region.Id);
         }
@@ -62,7 +62,7 @@ namespace Simple.Tests.DataAccess
         public void CheckEmployees()
         {
             Assert.AreEqual(9, Employee.Count());
-            Employee.List(1);
+            Employee.ListAll(1);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void CheckEmployeeTerritoriesEquality()
         {
-            var t = EmployeeTerritory.List(1)[0];
+            var t = EmployeeTerritory.ListAll(1)[0];
             var t2 = t.Clone();
 
             Assert.IsFalse(object.ReferenceEquals(t, t2));

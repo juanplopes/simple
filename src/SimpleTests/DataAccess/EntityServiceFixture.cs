@@ -122,7 +122,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestListTop10ProductsAll()
         {
-            var list = Product.List(10);
+            var list = Product.ListAll(10);
             Assert.AreEqual(10, list.Count);
             Assert.AreEqual(77, list.TotalCount);
         }
@@ -143,19 +143,19 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestListAll()
         {
-            AssertQuery(x => x, Customer.List().ToArray());
+            AssertQuery(x => x, Customer.ListAll().ToArray());
         }
 
         [Test]
         public void TestListAllTop10()
         {
-            AssertQuery(x => x, 0, 10, Customer.List(10));
+            AssertQuery(x => x, 0, 10, Customer.ListAll(10));
         }
 
         [Test]
         public void TestListAllSkip20Take10()
         {
-            AssertQuery(x => x, 20, 10, Customer.List(20, 10));
+            AssertQuery(x => x, 20, 10, Customer.ListAll(20, 10));
         }
 
         [Test]
@@ -183,21 +183,21 @@ namespace Simple.Tests.DataAccess
         public void TestListWithOrder()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax),
-                Customer.List(o => o.Desc(x => x.Id).Asc(x => x.Fax)).ToArray());
+                Customer.ListAll(o => o.Desc(x => x.Id).Asc(x => x.Fax)).ToArray());
         }
 
         [Test]
         public void TestListWithOrderTop10()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax), 0, 10,
-                Customer.List(o => o.Desc(x => x.Id).Asc(x => x.Fax), 10));
+                Customer.ListAll(o => o.Desc(x => x.Id).Asc(x => x.Fax), 10));
         }
 
         [Test]
         public void TestListWithOrderSkip20Take10()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax), 20, 10,
-                Customer.List(o => o.Desc(x => x.Id).Asc(x => x.Fax), 20, 10));
+                Customer.ListAll(o => o.Desc(x => x.Id).Asc(x => x.Fax), 20, 10));
         }
 
         [Test]
