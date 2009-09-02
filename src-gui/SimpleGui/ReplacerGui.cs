@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace SimpleGui
 {
@@ -18,7 +19,15 @@ namespace SimpleGui
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("teste");
+            if (MessageBox.Show("Are you sure?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                ReplacerLogic.DefaultExecute(Environment.CurrentDirectory, "Sample.Project", txtNamespace.Text.Trim());
+                ReplacerLogic.DefaultExecute(Environment.CurrentDirectory, "SampleProject", txtCatalog.Text.Trim());
+                ReplacerLogic.DefaultExecute(Environment.CurrentDirectory, "sample-project", txtIISUrl.Text.Trim());
+
+                MessageBox.Show("Done!");
+                this.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -42,5 +51,12 @@ namespace SimpleGui
             }
         }
 
+        private void txtNamespace_TextChanged(object sender, EventArgs e)
+        {
+            txtCatalog.Text = txtNamespace.Text.Replace(".", "");
+            txtIISUrl.Text = txtNamespace.Text.Replace(".", "-").ToLower();
+        }
+
+       
     }
 }

@@ -31,12 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReplacerGui));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txtNamespace = new System.Windows.Forms.TextBox();
-            this.txtConnectionString = new System.Windows.Forms.TextBox();
             this.txtIISUrl = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnMore = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtCatalog = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,26 +61,14 @@
             this.txtNamespace.Size = new System.Drawing.Size(264, 28);
             this.txtNamespace.TabIndex = 2;
             this.txtNamespace.Text = "Sample.Project";
-            // 
-            // txtConnectionString
-            // 
-            this.txtConnectionString.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.txtConnectionString.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtConnectionString.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtConnectionString.Location = new System.Drawing.Point(12, 198);
-            this.txtConnectionString.Multiline = true;
-            this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.Size = new System.Drawing.Size(449, 56);
-            this.txtConnectionString.TabIndex = 3;
-            this.txtConnectionString.Text = "DataSource = .\\SQLExpress; Integrated Security=SSPI; Initial Catalog=SampleProjec" +
-                "t";
+            this.txtNamespace.TextChanged += new System.EventHandler(this.txtNamespace_TextChanged);
             // 
             // txtIISUrl
             // 
             this.txtIISUrl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.txtIISUrl.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtIISUrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIISUrl.Location = new System.Drawing.Point(210, 257);
+            this.txtIISUrl.Location = new System.Drawing.Point(210, 235);
             this.txtIISUrl.Name = "txtIISUrl";
             this.txtIISUrl.Size = new System.Drawing.Size(251, 28);
             this.txtIISUrl.TabIndex = 4;
@@ -87,11 +76,10 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label1.Location = new System.Drawing.Point(12, 257);
+            this.label1.Location = new System.Drawing.Point(12, 234);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(192, 29);
             this.label1.TabIndex = 5;
@@ -131,6 +119,28 @@
             this.btnMore.UseVisualStyleBackColor = true;
             this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
             // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.label2.Location = new System.Drawing.Point(12, 201);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(192, 29);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Initial Catalog=";
+            // 
+            // txtCatalog
+            // 
+            this.txtCatalog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.txtCatalog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCatalog.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCatalog.Location = new System.Drawing.Point(210, 202);
+            this.txtCatalog.Name = "txtCatalog";
+            this.txtCatalog.Size = new System.Drawing.Size(251, 28);
+            this.txtCatalog.TabIndex = 10;
+            this.txtCatalog.Text = "SampleProject";
+            // 
             // ReplacerGui
             // 
             this.AcceptButton = this.btnOk;
@@ -138,14 +148,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(469, 185);
+            this.ClientSize = new System.Drawing.Size(469, 184);
             this.ControlBox = false;
+            this.Controls.Add(this.txtCatalog);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnMore);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtIISUrl);
-            this.Controls.Add(this.txtConnectionString);
             this.Controls.Add(this.txtNamespace);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -161,12 +172,13 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox txtNamespace;
-        private System.Windows.Forms.TextBox txtConnectionString;
         private System.Windows.Forms.TextBox txtIISUrl;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnMore;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtCatalog;
     }
 }
 
