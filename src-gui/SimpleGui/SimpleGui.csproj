@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -53,13 +57,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CompressedFile.resx</DependentUpon>
     </Compile>
-    <Compile Include="ExtractorGui.cs">
+    <Compile Include="ReplacerGui.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExtractorGui.Designer.cs">
-      <DependentUpon>ExtractorGui.cs</DependentUpon>
+    <Compile Include="ReplacerGui.Designer.cs">
+      <DependentUpon>ReplacerGui.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExtractorLogic.cs" />
+    <Compile Include="ReplacerLogic.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CompressedFile.resx">
@@ -70,6 +74,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReplacerGui.resx">
+      <DependentUpon>ReplacerGui.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

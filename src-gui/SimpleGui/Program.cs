@@ -15,7 +15,8 @@ namespace SimpleGui
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ExtractorGui());
+            Application.Run(new ReplacerGui());
         }
+
     }
 }
