@@ -506,10 +506,10 @@
 
         virtual public string QualifiedTableName(string tableSchema, string tableName)
         {
-//            if (!string.IsNullOrEmpty(tableSchema))
- //               return string.Format("{0}.{1}", tableSchema, tableName);
-  //          else
-                return string.Format("{0}", tableName);
+            if (!string.IsNullOrEmpty(tableSchema))
+                return string.Format("[{0}].[{1}]", tableSchema, tableName);
+            else
+                return string.Format("[{0}]", tableName);
         }
 
         virtual public DataTable GetProcedures()

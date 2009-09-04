@@ -24,7 +24,6 @@ public class HbmTemplate : TableTemplate
 	
     protected override void RenderCore()
     {
-        string fullTableName = this.Schema.QualifiedTableName(this.TableSchema, this.TableName);
 #>
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="<#=this.EntityNamespace #>" assembly="<#=this.AssemblyName #>">
