@@ -1,2 +1,0 @@
-lib\migrator\Migrator.Console SqlServer "Data Source=.\sqlexpress;Integrated Security=SSPI;Initial Catalog=SampleProject" migrations\Sample.Project.Migrations.dll
-lib\migrator\Migrator.Console SqlServer "Data Source=.\sqlexpress;Integrated Security=SSPI;Initial Catalog=SampleProjectTests" migrations\Sample.Project.Migrations.dll

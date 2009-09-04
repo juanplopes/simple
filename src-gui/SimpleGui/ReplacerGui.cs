@@ -60,6 +60,12 @@ namespace SimpleGui
             txtIISUrl.Text = txtNamespace.Text.Replace(".", "-").ToLower();
         }
 
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        {
+            if (txtNamespace.Text.ToLower() == "dirtyhack")
+                new SimpleOtherGui().Show();
+        }
+
        
     }
 }
