@@ -1,5 +1,6 @@
 Name "Simple.Net"
 OutFile "Simple.exe"
+Icon "..\doc\SimpleIcon.ico"
 RequestExecutionLevel user
 
 Section
