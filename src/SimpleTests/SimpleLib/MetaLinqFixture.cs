@@ -90,14 +90,20 @@ namespace Simple.Tests.SimpleLib
         public void TestStackMethodCall()
         {
             int x = 42;
-            TestIt(y => x.ToString() == y , "41");
+            TestIt(y => x.ToString() == y, "41");
+        }
+        [Test]
+        public void TestStackPropertyCall()
+        {
+            var x = new[] { 1, 2, 3 };
+            TestIt(y => y == x.Length, 412);
         }
 
         [Test]
         public void TestArrayCreation()
         {
-            int h=10;
-            TestIt(y => new int[h+y], 5);
+            int h = 10;
+            TestIt(y => new int[h + y], 5);
         }
 
     }

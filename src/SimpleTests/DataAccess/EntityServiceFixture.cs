@@ -59,6 +59,14 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
+        public void TestFindFirstByInsideId()
+        {
+            var c = new Customer() { Id = "BERGS" };
+            var f = Customer.Expr(x => x.Id == c.Id);
+            AssertQuery(x => x.Where(f).Take(1), Customer.Find(f));
+        }
+
+        [Test]
         public void TestFindFirstByStartsWithFilter()
         {
             var f = Customer.Expr(x => x.CompanyName.StartsWith("B"));
@@ -117,6 +125,16 @@ namespace Simple.Tests.DataAccess
 
             Assert.AreEqual(6, l.Count);
             Assert.IsTrue(l.All(x => x.Category.Id == 6));
+        }
+
+        public void TestListProductsByCategoryId()
+        {
+            var c = Category.Find(x=>x.Name == "Meat/Poutrly");
+            Assert.IsNotNull(c);
+
+            var p = Product.List(x=>x.Category.Id == c.Id);
+            Assert.AreEqual(6, p.Count);
+            Assert.IsTrue(p.All(x=>x.Category.Id == 6));
         }
 
         [Test]
@@ -341,7 +359,7 @@ namespace Simple.Tests.DataAccess
             Assert.AreNotEqual(0, p.Id);
         }
 
-        
+
 
     }
 }
