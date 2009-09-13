@@ -101,6 +101,12 @@ namespace Simple.DynamicProxy
             return new InterfaceDynamicProxyImpl(target, invocationHandler, strict, supportedTypes).GetTransparentProxy();
         }
 
+        public object CreateMarshallableProxy(Type type, MarshalByRefObject target, InvocationDelegate invocationHandler)
+        {
+            return new MarshallableDynamicProxyImpl(type, target, invocationHandler).GetTransparentProxy();
+        }
+
+
         public object CreateMarshallableProxy(MarshalByRefObject target, InvocationDelegate invocationHandler)
         {
             return new MarshallableDynamicProxyImpl(target, invocationHandler).GetTransparentProxy();

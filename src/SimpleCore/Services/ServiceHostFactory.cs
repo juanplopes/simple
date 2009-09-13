@@ -58,7 +58,7 @@ namespace Simple.Services
 
         protected object ProxyObject(object target, IInterceptor interceptor, Type contract)
         {
-            return ConfigCache.ProxyObject(target, interceptor);
+            return ConfigCache.ProxyObject(target, contract, interceptor);
         }
 
         protected IEnumerable<Type> GetContractsFromType(Type type)

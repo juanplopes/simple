@@ -31,7 +31,7 @@ namespace Simple.Services
 
         }
 
-        public object ProxyObject(object obj, IInterceptor interceptor)
+        public object ProxyObject(object obj, Type type, IInterceptor interceptor)
         {
             return obj;
         }

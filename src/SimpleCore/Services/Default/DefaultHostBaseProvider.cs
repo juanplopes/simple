@@ -9,7 +9,7 @@ namespace Simple.Services.Default
 {
     public abstract class DefaultHostBaseProvider : Factory<DefaultHostConfig>, IServiceCommonProvider
     {
-        public virtual object ProxyObject(object obj, IInterceptor intercept)
+        public virtual object ProxyObject(object obj, Type type, IInterceptor intercept)
         {
             return DynamicProxyFactory.Instance.CreateProxy(obj, intercept.Intercept);
         }

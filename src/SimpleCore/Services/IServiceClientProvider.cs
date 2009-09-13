@@ -10,7 +10,7 @@ namespace Simple.Services
 {
     public interface IServiceCommonProvider
     {
-        object ProxyObject(object obj, IInterceptor intercept);
+        object ProxyObject(object obj, Type contract, IInterceptor intercept);
         ICallHeadersHandler HeaderHandler { get; }
     }
 
@@ -41,7 +41,7 @@ namespace Simple.Services
             }
         }
 
-        public object ProxyObject(object obj, IInterceptor intercept)
+        public object ProxyObject(object obj, Type type, IInterceptor intercept)
         {
             return obj;
         }

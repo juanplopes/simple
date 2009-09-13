@@ -66,24 +66,31 @@ namespace Simple.DynamicProxy
             myObjRef.URI = URI;
             return myObjRef;
         }
-        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
         }
-        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+        
+        
         public class CustomObjRef : ObjRef
         {
+            public MarshalByRefObject RealObject { get; set; }
+
             public CustomObjRef(MarshalByRefObject obj, Type type)
                 : base(obj, type)
             {
+                RealObject = obj;
             }
 
-            [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
             public override void GetObjectData(SerializationInfo info,
                                                StreamingContext context)
             {
                 base.GetObjectData(info, context);
+            }
+
+            public override object GetRealObject(StreamingContext context)
+            {
+                return this.RealObject;
             }
         }
         public bool Strict
