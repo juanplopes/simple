@@ -17,7 +17,9 @@ namespace Simple.Tests.SimpleLib
             public string GetString() { return "4"; }
             public void TestVoid(int param) { }
             public int TestIntParamReturn(int param) { return param; }
-            public T TestGenericParamReturn<T>(T param) { return param; }
+            public T TestGenericParamReturn<T>(T param) { 
+                return param; 
+            }
             public void TestRefAndOut(ref int p1, out int p2) { p2 = p1; p1 = 42; }
             public void TestException() { throw new InvalidCastException(); }
         }

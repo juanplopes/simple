@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Simple.Services;
 using System.Globalization;
+using NUnit.Framework;
+using Simple.DynamicProxy;
 
 namespace Simple.Tests.Service
 {
@@ -64,6 +66,8 @@ namespace Simple.Tests.Service
         {
             void TestVoid();
             int TestInt();
+            int TestGenericInt<T>(T value) where T : IConvertible;
+
             string TestString();
             void TestVoidInt(int i);
             int TestIntInt(int i);
@@ -77,6 +81,7 @@ namespace Simple.Tests.Service
             string TestParams(int prim, params string[] ult);
 
             string TestReturnIdentity();
+            string TestReturnIdentity<T>();
         }
 
         public interface IOtherService : IService
@@ -104,7 +109,7 @@ namespace Simple.Tests.Service
             }
         }
 
-        public class TestService : MarshalByRefObject, ITestService
+        public class TestService : MarshalByRefObject, ITestService, ICloneable
         {
             public void TestVoid() { }
             public int TestInt() { return 10; }
@@ -116,6 +121,7 @@ namespace Simple.Tests.Service
 
             public void TestGenericsVoid<T>(T value) where T : IConvertible
             {
+                Assert.IsFalse(this is IDynamicProxy);
                 value.ToDouble(CultureInfo.InvariantCulture);
             }
             public double TestGenerics<T>(T value) where T : IConvertible
@@ -135,6 +141,25 @@ namespace Simple.Tests.Service
             {
                 return SimpleContext.Get().Username;
             }
+
+            public string TestReturnIdentity<T>()
+            {
+                return SimpleContext.Get().Username;
+            }
+
+            public int TestGenericInt<T>(T value) where T : IConvertible
+            {
+                return Convert.ToInt32(value);
+            }
+
+            #region ICloneable Members
+
+            public object Clone()
+            {
+                return this.MemberwiseClone();
+            }
+
+            #endregion
         }
     }
 }

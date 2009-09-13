@@ -78,6 +78,14 @@ namespace Simple.Tests.Service
             Assert.AreEqual(WindowsIdentity.GetCurrent().Name, ident);
         }
 
+        [Test]
+        public void TestIdentityMatchGenerics()
+        {
+            ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
+            var ident = test.TestReturnIdentity<double>();
+            Assert.AreEqual(WindowsIdentity.GetCurrent().Name, ident);
+        }
+
 
         [Test]
         public void TestGenerics()
@@ -163,6 +171,13 @@ namespace Simple.Tests.Service
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
             Assert.AreEqual(42, test.TestInt());
+        }
+
+        [Test]
+        public void TestGenericInt()
+        {
+            ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
+            Assert.AreEqual(42, test.TestGenericInt("44"));
         }
 
         [Test]
