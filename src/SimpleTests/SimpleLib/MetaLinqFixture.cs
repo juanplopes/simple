@@ -42,7 +42,7 @@ namespace Simple.Tests.SimpleLib
 
         public void TestItInternalInternal<T, TRet>(Expression<T> expr, Func<T, TRet> howToCall, ISimpleSerializer serializer)
         {
-            var expr1 = EditableExpression.CreateEditableExpression(expr);
+            var expr1 = EditableExpression.CreateEditableExpression(expr, true);
             byte[] data = serializer.Serialize(expr1);
             EditableExpression expr2 = (EditableExpression)serializer.Deserialize(data);
             T func2 = ((Expression<T>)expr2.ToExpression()).Compile();
@@ -105,6 +105,80 @@ namespace Simple.Tests.SimpleLib
             int h = 10;
             TestIt(y => new int[h + y], 5);
         }
+
+        [Serializable]
+        public class SerializableClass
+        {
+            public int MyInt { get; set; }
+        }
+
+        public class NonSerialiableClass
+        {
+            public int NonInt { get; set; }
+        }
+
+        public class NonSerialzableLevel2
+        {
+            public NonSerialiableClass ItsStillNotSerialiable { get; set; }
+        }
+
+        public class SerialiableLevel2Tricky
+        {
+            public NonSerialiableClass ItsTricky { get; set; }
+        }
+
+        [Test]
+        public void TestSerializableStackReference()
+        {
+            SerializableClass c = new SerializableClass() { MyInt = 2 };
+
+            TestIt(y => new int[c.MyInt + y], 4);
+        }
+
+        [Test]
+        public void TestNonSerializableStackReference()
+        {
+            NonSerialiableClass c = new NonSerialiableClass() { NonInt = 2 };
+
+            TestIt(y => new int[c.NonInt + y], 4);
+        }
+
+        [Test]
+        public void TestSerialiableParameter()
+        {
+            TestIt(y => y.MyInt == 42, new SerializableClass() { MyInt = 42 });
+        }
+
+        [Test]
+        public void TestNonSerialiableParameter()
+        {
+            TestIt(y => y.NonInt == 52, new NonSerialiableClass() { NonInt = 52 });
+        }
+
+        [Test]
+        public void TestNonSerialiableParameterLevel2()
+        {
+            TestIt(y => y.ItsStillNotSerialiable.NonInt == 52, new NonSerialzableLevel2()
+            {
+                ItsStillNotSerialiable = new NonSerialiableClass()
+                {
+                    NonInt = 52
+                }
+            });
+        }
+
+        [Test]
+        public void TestSerialiableParameterLevel2Tricky()
+        {
+            TestIt(y => y.ItsTricky.NonInt == 52, new SerialiableLevel2Tricky()
+            {
+                ItsTricky = new NonSerialiableClass()
+                {
+                    NonInt = 52
+                }
+            });
+        }
+
 
     }
 }

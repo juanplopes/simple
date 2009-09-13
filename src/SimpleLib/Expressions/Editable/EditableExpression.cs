@@ -10,15 +10,15 @@ namespace Simple.Expressions.Editable
 {
     [Serializable]
     public abstract class EditableExpression
-    {        
+    {
         public abstract ExpressionType NodeType { get; set; }
 
         [IgnoreDataMember]
-        public Type Type { get; set;}
+        public Type Type { get; set; }
         public string TypeName
         {
             get
-            {                
+            {
                 if (Type == null)
                     return null;
 
@@ -34,7 +34,7 @@ namespace Simple.Expressions.Editable
         // Ctors
         public EditableExpression() { } //allow for non parameterized creation for all expressions
 
-        public EditableExpression(Type type) 
+        public EditableExpression(Type type)
         {
             Type = type;
         }
@@ -73,8 +73,15 @@ namespace Simple.Expressions.Editable
             return new EditableLambdaExpression(lambEx);
         }
 
-        public static EditableExpression CreateEditableExpression(Expression ex)
+        internal static EditableExpression CreateEditableExpression(Expression ex)
         {
+            return CreateEditableExpression(ex, false);
+        }
+
+        public static EditableExpression CreateEditableExpression(Expression ex, bool funcletize)
+        {
+            if (funcletize) ex = Evaluator.PartialEval(ex);
+
             if (ex is ConstantExpression) return new EditableConstantExpression(ex as ConstantExpression);
             else if (ex is BinaryExpression) return new EditableBinaryExpression(ex as BinaryExpression);
             else if (ex is ConditionalExpression) return new EditableConditionalExpression(ex as ConditionalExpression);
@@ -82,14 +89,7 @@ namespace Simple.Expressions.Editable
             else if (ex is LambdaExpression) return new EditableLambdaExpression(ex as LambdaExpression);
             else if (ex is ParameterExpression) return new EditableParameterExpression(ex as ParameterExpression);
             else if (ex is ListInitExpression) return new EditableListInitExpression(ex as ListInitExpression);
-            else if (ex is MemberExpression && (ex as MemberExpression).Member.DeclaringType.IsSerializable)
-            {
-                return new EditableMemberExpression(ex as MemberExpression);
-            }
-            else if (ex is MemberExpression && !(ex as MemberExpression).Member.DeclaringType.IsSerializable)
-            {
-                return new EditableConstantExpression(Expression.Lambda(ex).Compile().DynamicInvoke());
-            }
+            else if (ex is MemberExpression) return new EditableMemberExpression(ex as MemberExpression);
             else if (ex is MemberInitExpression) return new EditableMemberInitExpression(ex as MemberInitExpression);
             else if (ex is MethodCallExpression) return new EditableMethodCallExpression(ex as MethodCallExpression);
             else if (ex is NewArrayExpression) return new EditableNewArrayExpression(ex as NewArrayExpression);

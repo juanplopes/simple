@@ -88,6 +88,8 @@
     <Compile Include="Expressions\Editable\EditableMemberBinding.cs" />
     <Compile Include="Expressions\Editable\EditableMemberListBinding.cs" />
     <Compile Include="Expressions\Editable\EditableMemberMemberBinding.cs" />
+    <Compile Include="Expressions\Evaluator.cs" />
+    <Compile Include="Expressions\ExpressionVisitor.cs" />
     <Compile Include="IO\Serialization\BinarySimpleSerializer.cs" />
     <Compile Include="IO\Serialization\DataContractSimpleSerializer.cs" />
     <Compile Include="IO\Serialization\ISimpleSerializer.cs" />

@@ -35,7 +35,7 @@ namespace Simple.Entities
 
         public static int Count(Expression<Func<T, bool>> filter)
         {
-            return Service.CountByFilter(filter.ToEditable());
+            return Service.CountByFilter(filter.ToSerializable());
         }
 
         public static T Load(object id)
@@ -55,12 +55,12 @@ namespace Simple.Entities
 
         public static T Find(Expression<Func<T, bool>> filter)
         {
-            return Service.FindByFilter(filter.ToEditable(), new OrderBy<T>());
+            return Service.FindByFilter(filter.ToSerializable(), new OrderBy<T>());
         }
 
         public static T Find(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy)
         {
-            return Service.FindByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()));
+            return Service.FindByFilter(filter.ToSerializable(), orderBy(new OrderBy<T>()));
         }
 
         #region List no order, no filter
@@ -101,34 +101,34 @@ namespace Simple.Entities
         #region List no order, yes filter
         public static IList<T> List(Expression<Func<T, bool>> filter)
         {
-            return Service.ListByFilter(filter.ToEditable(), new OrderBy<T>());
+            return Service.ListByFilter(filter.ToSerializable(), new OrderBy<T>());
         }
 
         public static IPage<T> List(Expression<Func<T, bool>> filter, int top)
         {
-            return Service.PaginateByFilter(filter.ToEditable(), new OrderBy<T>(), null, top);
+            return Service.PaginateByFilter(filter.ToSerializable(), new OrderBy<T>(), null, top);
         }
 
         public static IPage<T> List(Expression<Func<T, bool>> filter, int skip, int take)
         {
-            return Service.PaginateByFilter(filter.ToEditable(), new OrderBy<T>(), skip, take);
+            return Service.PaginateByFilter(filter.ToSerializable(), new OrderBy<T>(), skip, take);
         }
         #endregion
 
         #region List yes order, yes filter
         public static IList<T> List(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy)
         {
-            return Service.ListByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()));
+            return Service.ListByFilter(filter.ToSerializable(), orderBy(new OrderBy<T>()));
         }
 
         public static IPage<T> List(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy, int top)
         {
-            return Service.PaginateByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()), 0, top);
+            return Service.PaginateByFilter(filter.ToSerializable(), orderBy(new OrderBy<T>()), 0, top);
         }
 
         public static IPage<T> List(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
         {
-            return Service.PaginateByFilter(filter.ToEditable(), orderBy(new OrderBy<T>()), skip, take);
+            return Service.PaginateByFilter(filter.ToSerializable(), orderBy(new OrderBy<T>()), skip, take);
         }
 
 
@@ -137,7 +137,7 @@ namespace Simple.Entities
 
         public static int Delete(Expression<Func<T, bool>> filter)
         {
-            return Service.DeleteByFilter(filter.ToEditable());
+            return Service.DeleteByFilter(filter.ToSerializable());
         }
 
         public static void Delete(object id)

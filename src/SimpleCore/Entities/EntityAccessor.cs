@@ -14,10 +14,16 @@ namespace Simple.Entities
 {
     internal static class ExpressionExtensions
     {
-        public static EditableExpression ToEditable(this Expression expr)
+        public static EditableExpression ToSerializable(this Expression expr)
         {
-            return EditableExpression.CreateEditableExpression(expr);
+            return ToEditable(expr, true);
         }
+
+        public static EditableExpression ToEditable(this Expression expr, bool funcletize)
+        {
+            return EditableExpression.CreateEditableExpression(expr, funcletize);
+        }
+
     }
 
     public class EntityAccessor<T, R> : AggregateFactory<EntityAccessor<T, R>>

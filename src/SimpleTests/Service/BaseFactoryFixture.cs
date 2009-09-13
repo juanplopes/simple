@@ -39,7 +39,7 @@ namespace Simple.Tests.Service
         {
             ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             Expression<Predicate<int>> pred = i => i == 42;
-            EditableExpression expr = EditableExpression.CreateEditableExpression(pred);
+            EditableExpression expr = EditableExpression.CreateEditableExpression(pred, true);
                  
             Assert.IsFalse(service.TestExpression(expr, 41));
             Assert.IsTrue(service.TestExpression(expr, 42));
@@ -51,7 +51,7 @@ namespace Simple.Tests.Service
             ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             int hh = 42;
             Expression<Predicate<int>> pred = i => i == hh;
-            EditableExpression expr = EditableExpression.CreateEditableExpression(pred);
+            EditableExpression expr = EditableExpression.CreateEditableExpression(pred, true);
 
             Assert.IsFalse(service.TestExpression(expr, 41));
             Assert.IsTrue(service.TestExpression(expr, 42));
