@@ -64,7 +64,7 @@ namespace Simple.Entities
         }
 
         protected virtual bool ValidateOnSave { get { return true; } }
-        protected virtual void ValidateAndThrow(T obj)
+        protected virtual void ValidateAndThrow(object obj)
         {
             var list = MySimply.Validate(obj);
             if (list.Length > 0)
