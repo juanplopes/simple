@@ -153,6 +153,14 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
+        public void TestListProductsOrderingByOtherField()
+        {
+            var p = Product.ListAll(o=>o.Desc(x=>x.Category.Name));
+            var p2 = Product.ListAll().OrderByDescending(x => x.Category.Name);
+            Assert.IsTrue(p.SequenceEqual(p2));
+        }
+
+        [Test]
         public void TestFindByTrueFilter()
         {
             AssertQuery(x => x.Take(1), Customer.Find(x => true));
