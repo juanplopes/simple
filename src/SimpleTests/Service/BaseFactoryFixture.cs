@@ -40,7 +40,7 @@ namespace Simple.Tests.Service
             ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             Expression<Predicate<int>> pred = i => i == 42;
             EditableExpression expr = EditableExpression.CreateEditableExpression(pred, true);
-                 
+
             Assert.IsFalse(service.TestExpression(expr, 41));
             Assert.IsTrue(service.TestExpression(expr, 42));
         }
@@ -131,6 +131,22 @@ namespace Simple.Tests.Service
         {
             IFailService service = Simply.Do[ConfigKey].Resolve<IFailService>();
             Assert.AreEqual(84, service.FailInt());
+        }
+
+        [Test]
+        public void TestFailConnectNotFailingWithTemporaryContext()
+        {
+            using (Simply.Do[ConfigKey].AddTemporaryReplacement(typeof(IFailService), new FailConnectService()))
+            {
+                IFailService service = Simply.Do[ConfigKey].Resolve<IFailService>();
+                Assert.AreEqual(84, service.FailInt());
+            }
+
+            Assert.That(() =>
+            {
+                IFailService service = Simply.Do[ConfigKey].Resolve<IFailService>();
+                Assert.AreEqual(84, service.FailInt());
+            }, Throws.Exception);
         }
 
         [Test]
@@ -230,7 +246,7 @@ namespace Simple.Tests.Service
         bool TestPassedIdentity();
         string this[int index] { get; }
         int SimpleProp { get; }
-         
+
         bool TestExpression(EditableExpression expr, int value);
         bool TestSelfType(SelfType selfObject);
     }

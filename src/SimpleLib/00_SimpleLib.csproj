@@ -101,6 +101,7 @@
     <Compile Include="Logging\Log4netConfig.cs" />
     <Compile Include="ConfigSource\FactoryManager.cs" />
     <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />
+    <Compile Include="Patterns\DisposableAction.cs" />
     <Compile Include="Patterns\ThreadSingleton.cs" />
     <Compile Include="Patterns\DictionaryWrapper.cs" />
     <Compile Include="Patterns\TransformationList.cs" />

@@ -29,6 +29,19 @@ namespace Simple.Tests.SimpleLib
         }
 
         [Test]
+        public void DisposableActionTest()
+        {
+            int x = 20;
+
+            using (new DisposableAction(() => x++))
+            {
+                Assert.AreEqual(20, x);
+            }
+
+            Assert.AreEqual(21, x);
+        }
+
+        [Test]
         public void ThreadSingletonTest()
         {
             ThreadSingletonSample.Do.Test = 2;

@@ -9,6 +9,7 @@ namespace Simple.Services
     public class ServiceClientFactory : Factory<IServiceClientProvider>, Simple.Services.IServiceClientFactory
     {
         protected IList<Func<CallHookArgs, ICallHook>> CallHookCreators = new List<Func<CallHookArgs, ICallHook>>();
+        protected IDictionary<Type, object> Replacements = new Dictionary<Type, object>();
 
         protected override void OnConfig(IServiceClientProvider config)
         {
@@ -25,6 +26,8 @@ namespace Simple.Services
 
         public object Resolve(Type type)
         {
+            if (Replacements.ContainsKey(type)) return Replacements[type];
+
             return ConfigCache.ProxyObject(ConfigCache.Create(type), type, new DefaultInterceptor(GetHooks, ConfigCache.HeaderHandler, true));
         }
 
@@ -46,6 +49,12 @@ namespace Simple.Services
         public void ClearHooks()
         {
             CallHookCreators = new List<Func<CallHookArgs, ICallHook>>();
+        }
+
+        public DisposableAction AddTemporaryReplacement(Type type, object service)
+        {
+            Replacements[type] = service;
+            return new DisposableAction(() => Replacements.Remove(type));
         }
 
         #endregion

@@ -5,6 +5,7 @@ using System.Text;
 using Simple.ConfigSource;
 using Simple.Services;
 using System.Reflection;
+using Simple.Patterns;
 
 namespace Simple
 {
@@ -36,7 +37,6 @@ namespace Simple
         {
             HostFactory(simply).HostAssembly(asm);
         }
-
 
         public static void HostAssemblyOf(this Simply simply, Type type)
         {
@@ -76,6 +76,11 @@ namespace Simple
         public static object Resolve(this Simply simply, Type type)
         {
             return ClientFactory(simply).Resolve(type);
+        }
+
+        public static DisposableAction AddTemporaryReplacement(this Simply simply, Type type, object server)
+        {
+            return ClientFactory(simply).AddTemporaryReplacement(type, server);
         }
 
         public static void StartServer(this Simply simply)

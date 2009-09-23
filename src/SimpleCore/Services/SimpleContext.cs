@@ -13,9 +13,19 @@ namespace Simple.Services
         public HttpIdentityInjector(CallHookArgs args) : base(args) { }
         public override void Before()
         {
-            var ident = HttpContext.Current.User.Identity;
-            SimpleContext.Get().Username = ident.IsAuthenticated ?
-                ident.Name : null;
+            try
+            {
+                var ident = HttpContext.Current.User.Identity;
+
+                SimpleContext.Get().Username = ident.IsAuthenticated ?
+                    ident.Name : null;
+            }
+            catch (NullReferenceException)
+            {
+                Simply.Do.Log("NullReference skipped");
+            }
+
+
         }
     }
 
@@ -24,9 +34,16 @@ namespace Simple.Services
         public WindowsIdentityInjector(CallHookArgs args) : base(args) { }
         public override void Before()
         {
-            var ident = WindowsIdentity.GetCurrent();
-            SimpleContext.Get().Username = ident.IsAuthenticated ?
-                ident.Name : null;
+            try
+            {
+                var ident = WindowsIdentity.GetCurrent();
+                SimpleContext.Get().Username = ident.IsAuthenticated ?
+                    ident.Name : null;
+            }
+            catch (NullReferenceException)
+            {
+                Simply.Do.Log("NullReference skipped");
+            }
         }
     }
 
