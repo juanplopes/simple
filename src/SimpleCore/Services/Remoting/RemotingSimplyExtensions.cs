@@ -24,26 +24,26 @@ namespace Simple
 
         public static SimplyConfigure Remoting(this SimplyConfigure config, IConfigSource<RemotingConfig> source)
         {
-            SourceManager.Do.Register(config.ConfigKey, source);
+            config.The(source);
 
             var hostProvider = new RemotingHostProvider();
             var clientProvider = new RemotingClientProvider();
 
-            SourceManager.Do.AttachFactory(config.ConfigKey, hostProvider);
-            SourceManager.Do.AttachFactory(config.ConfigKey, clientProvider);
+            config.Factory(hostProvider);
+            config.Factory(clientProvider);
 
-            SourceManager.Do.Register(config.ConfigKey, new DirectConfigSource<IServiceHostProvider>().Load(hostProvider));
-            SourceManager.Do.Register(config.ConfigKey, new DirectConfigSource<IServiceClientProvider>().Load(clientProvider));
+            config.The<IServiceHostProvider>().FromInstance(hostProvider);
+            config.The<IServiceClientProvider>().FromInstance(clientProvider);
 
             return config;
         }
 
-        public static SimplyRelease Remoting(this SimplyRelease config)
+        public static SimplyRelease Remoting(this SimplyRelease release)
         {
-            SourceManager.Do.Remove<RemotingConfig>(config.ConfigKey);
-            SourceManager.Do.Remove<IServiceHostProvider>(config.ConfigKey);
-            SourceManager.Do.Remove<IServiceClientProvider>(config.ConfigKey);
-            return config;
+            release.The<RemotingConfig>();
+            release.The<IServiceHostProvider>();
+            release.The<IServiceClientProvider>();
+            return release;
         }
 
 

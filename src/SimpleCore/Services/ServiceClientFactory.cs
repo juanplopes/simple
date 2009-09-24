@@ -51,7 +51,7 @@ namespace Simple.Services
             CallHookCreators = new List<Func<CallHookArgs, ICallHook>>();
         }
 
-        public DisposableAction AddTemporaryReplacement(Type type, object service)
+        public DisposableAction BeginServiceMockContext(Type type, object service)
         {
             Replacements[type] = service;
             return new DisposableAction(() => Replacements.Remove(type));

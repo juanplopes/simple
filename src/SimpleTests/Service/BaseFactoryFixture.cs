@@ -136,7 +136,7 @@ namespace Simple.Tests.Service
         [Test]
         public void TestFailConnectNotFailingWithTemporaryContext()
         {
-            using (Simply.Do[ConfigKey].AddTemporaryReplacement(typeof(IFailService), new FailConnectService()))
+            using (Simply.Do[ConfigKey].EnterServiceMockContext(typeof(IFailService), new FailConnectService()))
             {
                 IFailService service = Simply.Do[ConfigKey].Resolve<IFailService>();
                 Assert.AreEqual(84, service.FailInt());

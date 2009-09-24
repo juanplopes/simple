@@ -16,26 +16,33 @@ namespace Simple
 
         public static SimplyConfigure DefaultHost(this SimplyConfigure config, IConfigSource<DefaultHostConfig> source)
         {
-            SourceManager.Do.Register(config.ConfigKey, source);
+            config.The(source);
+            //SourceManager.Do.Register(config.ConfigKey, source);
 
             var hostProvider = new DefaultHostProvider();
-            SourceManager.Do.AttachFactory(config.ConfigKey, hostProvider);
-
             var clientProvider = new DefaultClientProvider();
-            SourceManager.Do.AttachFactory(config.ConfigKey, clientProvider);
 
-            SourceManager.Do.Register(config.ConfigKey, new DirectConfigSource<IServiceHostProvider>().Load(hostProvider));
-            SourceManager.Do.Register(config.ConfigKey, new DirectConfigSource<IServiceClientProvider>().Load(clientProvider));
+            config.Factory(hostProvider);
+            config.Factory(clientProvider);
+
+            //SourceManager.Do.AttachFactory(config.ConfigKey, hostProvider);
+            //SourceManager.Do.AttachFactory(config.ConfigKey, clientProvider);
+
+            config.The<IServiceHostProvider>().FromInstance(hostProvider);
+            config.The<IServiceClientProvider>().FromInstance(clientProvider);
+
+            //SourceManager.Do.Register(config.ConfigKey, new DirectConfigSource<IServiceHostProvider>().Load(hostProvider));
+            //SourceManager.Do.Register(config.ConfigKey, new DirectConfigSource<IServiceClientProvider>().Load(clientProvider));
 
             return config;
         }
 
-        public static SimplyRelease DefaultHost(this SimplyRelease config)
+        public static SimplyRelease DefaultHost(this SimplyRelease release)
         {
-            SourceManager.Do.Remove<DefaultHostConfig>(config.ConfigKey);
-            SourceManager.Do.Remove<IServiceHostProvider>(config.ConfigKey);
-            SourceManager.Do.Remove<IServiceClientProvider>(config.ConfigKey);
-            return config;
+            release.The<DefaultHostConfig>();
+            release.The<IServiceHostProvider>();
+            release.The<IServiceClientProvider>();
+            return release;
         }
 
 

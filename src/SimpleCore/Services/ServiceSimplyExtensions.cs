@@ -78,9 +78,9 @@ namespace Simple
             return ClientFactory(simply).Resolve(type);
         }
 
-        public static DisposableAction AddTemporaryReplacement(this Simply simply, Type type, object server)
+        public static DisposableAction EnterServiceMockContext(this Simply simply, Type type, object server)
         {
-            return ClientFactory(simply).AddTemporaryReplacement(type, server);
+            return ClientFactory(simply).BeginServiceMockContext(type, server);
         }
 
         public static void StartServer(this Simply simply)
