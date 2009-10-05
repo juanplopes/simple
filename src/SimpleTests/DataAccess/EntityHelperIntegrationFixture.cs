@@ -11,6 +11,26 @@ namespace Simple.Tests.DataAccess
     public class EntityHelperIntegrationFixture
     {
         [Test]
+        public void TestEqualityOnNoKey()
+        {
+            var t1 = new Category();
+            t1.Id = 12;
+            var t2 = new Category();
+            t2.Id = 12;
+            var t3 = new Category();
+            t3.Id = 13;
+
+            Assert.AreNotEqual(t1, t2);
+            Assert.AreNotEqual(t2, t1);
+
+            Assert.AreNotEqual(t1, t3);
+            Assert.AreNotEqual(t3, t1);
+
+            Assert.AreNotEqual(t2, t3);
+            Assert.AreNotEqual(t3, t2);
+        }
+
+        [Test]
         public void TestEqualityOnSimpleKey()
         {
             Territory t1 = new Territory();
@@ -31,6 +51,26 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
+        public void TestHashCodeOnNoKey()
+        {
+            var t1 = new Category();
+            t1.Id = 12;
+            var t2 = new Category();
+            t2.Id = 12;
+            var t3 = new Category();
+            t3.Id = 13;
+
+            Assert.AreNotEqual(t1.GetHashCode(), t2.GetHashCode());
+            Assert.AreNotEqual(t2.GetHashCode(), t1.GetHashCode());
+
+            Assert.AreNotEqual(t1.GetHashCode(), t3.GetHashCode());
+            Assert.AreNotEqual(t3.GetHashCode(), t1.GetHashCode());
+
+            Assert.AreNotEqual(t2.GetHashCode(), t3.GetHashCode());
+            Assert.AreNotEqual(t3.GetHashCode(), t2.GetHashCode());
+        }
+
+        [Test]
         public void TestHashCodeOnSimpleKey()
         {
             Territory t1 = new Territory();
@@ -48,6 +88,18 @@ namespace Simple.Tests.DataAccess
 
             Assert.AreNotEqual(t2.GetHashCode(), t3.GetHashCode());
             Assert.AreNotEqual(t3.GetHashCode(), t2.GetHashCode());
+        }
+
+        [Test]
+        public void TestToStringOnNoKey()
+        {
+            Category t1 = new Category();
+            t1.Id = 12;
+            Category t2 = new Category();
+            t2.Id = 13;
+
+            Assert.AreEqual(t1.GetType().FullName, t1.ToString());
+            Assert.AreEqual(t2.GetType().FullName, t2.ToString());
         }
 
         [Test]
