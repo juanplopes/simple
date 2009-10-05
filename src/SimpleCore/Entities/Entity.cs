@@ -9,11 +9,12 @@ using System.Linq.Expressions;
 using Simple.Expressions.Editable;
 using Simple.Expressions;
 using NHibernate.Validator.Engine;
+using Simple.Patterns;
 
 namespace Simple.Entities
 {
     public class Entity<T> : Entity<T, IEntityService<T>>
-        where T:Entity<T, IEntityService<T>>
+        where T : Entity<T, IEntityService<T>>
     {
 
     }
@@ -23,8 +24,38 @@ namespace Simple.Entities
         where T : Entity<T, R>
         where R : class, IEntityService<T>
     {
-        
+        public static EntityHelper<T> Identifiers
+        {
+            get
+            {
+                return Singleton<EntityHelper<T>>.Instance;
+            }
+        }
 
+
+        public override int GetHashCode()
+        {
+            if (Identifiers.HasIdentifiers)
+                return Identifiers.ObjectGetHashCode(this);
+            else
+                return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (Identifiers.HasIdentifiers)
+                return Identifiers.ObjectEquals(this, obj);
+            else
+                return base.Equals(obj);
+        }
+
+        public override string ToString()
+        {
+            if (Identifiers.HasIdentifiers)
+                return Identifiers.ObjectToString(this);
+            else
+                return base.ToString();
+        }
 
         #region Expressions
         public static string Prop<P>(Expression<Func<T, P>> expr)

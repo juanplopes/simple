@@ -12,21 +12,16 @@ namespace Simple.Tests.SampleServer
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class EmployeeTerritory : Entity<EmployeeTerritory, IEmployeeTerritoryService>
     {
-        static EntityHelper<EmployeeTerritory> _helper =
-            new EntityHelper<EmployeeTerritory>(x => x.Territory, x => x.Employee);
-        
+        static EmployeeTerritory()
+        {
+            Identifiers
+                .AddID(x => x.Employee)
+                .AddID(x => x.Territory);
+        }
+
+
         public virtual Employee Employee { get; set; }
         public virtual Territory Territory { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            return _helper.ObjectEquals(this, obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return _helper.ObjectGetHashCode(this);
-        }
 
         public class Map : ClassMap<EmployeeTerritory>
         {

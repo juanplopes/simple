@@ -11,6 +11,12 @@ namespace Simple.Tests.SampleServer
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class Employee : Entity<Employee, IEmployeeService>
     {
+        static Employee()
+        {
+            Identifiers.AddID(x => x.Id);
+        }
+
+
         public virtual int Id { get; set; }
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }

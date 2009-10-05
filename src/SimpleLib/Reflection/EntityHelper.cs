@@ -10,11 +10,22 @@ namespace Simple.Reflection
 {
     public class EntityHelper<T> : EntityHelper
     {
+        public EntityHelper()
+            : this(new Expression<Func<T, object>>[0])
+        {
+        }
+
         public EntityHelper(params Expression<Func<T, object>>[] ids)
             : base(typeof(T))
         {
             foreach (var id in ids)
                 AddID<T>(id);
+        }
+
+        public EntityHelper<T> AddID(Expression<Func<T, object>> expr)
+        {
+            this.AddID<T>(expr);
+            return this;
         }
     }
 
@@ -24,6 +35,8 @@ namespace Simple.Reflection
         protected List<string> _ids = new List<string>();
         protected Type _entityType = null;
         protected object _obj = null;
+
+        public bool HasIdentifiers { get { return _ids.Count > 0; } }
 
         public EntityHelper(Type entityType)
         {
@@ -116,7 +129,8 @@ namespace Simple.Reflection
                 PropertyInfo info = _entityType.GetProperty(idProp);
                 if (info == null) throw new InvalidOperationException("Property not found: " + idProp);
 
-                object value = info.GetValue(obj, null);
+                InvocationDelegate getter = _cache.GetGetter(info);
+                object value = getter(obj, null);
                 if (value != null)
                 {
                     res *= (value.GetHashCode() * primes.Current);
@@ -151,7 +165,7 @@ namespace Simple.Reflection
                 response[i] = _ids[i] + "=" + GetToString(_entityType.GetProperty(_ids[i]).GetValue(obj, null));
             }
 
-            return string.Join(" | ", response);
+            return "(" + string.Join(" | ", response) + ")";
         }
 
         public string ObjectToString(params string[] toIgnore)

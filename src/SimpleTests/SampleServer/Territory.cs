@@ -11,6 +11,12 @@ namespace Simple.Tests.SampleServer
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class Territory : Entity<Territory, ITerritoryService>
     {
+        static Territory()
+        {
+            Identifiers
+                .AddID(x => x.Id);
+        }
+
         public virtual string Id { get; set; }
         public virtual string Description { get; set; }
         public virtual Region Region { get; set; }

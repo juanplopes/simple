@@ -109,6 +109,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\EntityHelperIntegrationFixture.cs" />
     <Compile Include="DataAccess\ValidationFixture.cs" />
     <Compile Include="Database.Designer.cs">
       <AutoGen>True</AutoGen>

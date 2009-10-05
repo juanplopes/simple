@@ -26,7 +26,7 @@ namespace Simple.Tests.SimpleLib
         {
             Sample1 obj1 = new Sample1();
             Sample1 obj2 = new Sample1();
-            
+
             EntityHelper helper = new EntityHelper(obj1);
             helper.AddID((Sample1 x) => x.IntProp);
             helper.AddID((Sample1 x) => x.StringProp);
@@ -75,6 +75,39 @@ namespace Simple.Tests.SimpleLib
         }
 
         [Test]
+        public void TestToStringSingleKey()
+        {
+            var obj1 = new Sample1();
+            var helper = new EntityHelper<Sample1>(x => x.IntProp);
+            obj1.IntProp = 123;
+
+            Assert.AreEqual("(IntProp=123)", helper.ObjectToString(obj1));
+        }
+
+        [Test]
+        public void TestToStringMultipleKey()
+        {
+            var obj1 = new Sample1();
+            var helper = new EntityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
+            obj1.IntProp = 123;
+            obj1.StringProp = "asd";
+
+            Assert.AreEqual("(IntProp=123 | StringProp=asd)", helper.ObjectToString(obj1));
+        }
+
+        [Test]
+        public void TestToStringMultipleKeyWithNullKey()
+        {
+            var obj1 = new Sample1();
+            var helper = new EntityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
+            obj1.IntProp = 123;
+            obj1.StringProp = null;
+
+            Assert.AreEqual("(IntProp=123 | StringProp=<null>)", helper.ObjectToString(obj1));
+        }
+
+
+        [Test]
         public void TestInheritanceOuter()
         {
             Sample1 obj1 = new Sample1();
@@ -117,7 +150,7 @@ namespace Simple.Tests.SimpleLib
             Sample1 obj2 = new Sample1();
 
             EntityHelper helper = new EntityHelper(typeof(Sample1));
-            
+
             Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
 
             obj2 = null;
