@@ -27,13 +27,19 @@ namespace SimpleLauncher
 
         static void Start(string file)
         {
+            string dir = Path.GetDirectoryName(file);
+            Console.WriteLine("Loading " + file + "...");
+            Console.WriteLine("Current directory: " + dir);
+
             if (p != null) p.Kill();
 
             var newFile = Path.GetTempFileName();
             File.Copy(file, newFile, true);
+
             var info = new ProcessStartInfo() {
                 FileName = newFile,
-                UseShellExecute = false
+                UseShellExecute = false,
+                WorkingDirectory = dir               
             };
             p = Process.Start(info);
         }
