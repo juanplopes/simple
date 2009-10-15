@@ -21,6 +21,10 @@ namespace Simple
         {
             return DataContextFactory.Do[simple.ConfigKey].GetSession();
         }
+        public static ITransaction BeginTransaction(this Simply simple)
+        {
+            return simple.GetSession().BeginTransaction();
+        }
         public static ISession NewSession(this Simply simple)
         {
             return DataContextFactory.Do[simple.ConfigKey].NewSession();
