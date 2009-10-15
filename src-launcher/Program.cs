@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
+using System.ComponentModel;
 
 namespace SimpleLauncher
 {
@@ -12,34 +14,69 @@ namespace SimpleLauncher
         static Process p = null;
         static void Main(string[] args)
         {
-            string path = Path.GetFullPath(args[0]);
-            string dir = Path.GetDirectoryName(path);
-            string file = Path.GetFileName(path);
-            var watcher = new FileSystemWatcher(dir, file);
-            Start(path);
+            if (args.Length != 2)
+            {
+                Console.WriteLine("Wrong number of arguments. Expected 2: <directory> <file>");
+                return;
+            }
+
+
+            string dirPath = Path.GetFullPath(args[0]);
+            string filePath = args[1];
+            string fullPath = Path.Combine(dirPath, filePath);
+
+            var watcher = new FileSystemWatcher(dirPath);
+            watcher.IncludeSubdirectories = true;
+
+            var timer = new Timer((x) =>
+            {
+                Start(dirPath, filePath);    
+            });
+            timer.Change(1000, Timeout.Infinite);
+            
             watcher.Changed += (o, p) =>
             {
-                Start(p.FullPath);
+                timer.Change(1000, Timeout.Infinite);
             };
             watcher.EnableRaisingEvents = true;
             while (true) Console.ReadLine();
         }
 
-        static void Start(string file)
+        static void CopyDirectory(string src, string dst)
         {
-            string dir = Path.GetDirectoryName(file);
+
+            if (dst[dst.Length - 1] != Path.DirectorySeparatorChar)
+                dst += Path.DirectorySeparatorChar;
+            if (!Directory.Exists(dst)) Directory.CreateDirectory(dst);
+            var files = Directory.GetFileSystemEntries(src);
+            foreach (string Element in files)
+            {
+                if (Directory.Exists(Element))
+                    CopyDirectory(Element, dst + Path.GetFileName(Element));
+                else
+                    File.Copy(Element, dst + Path.GetFileName(Element), true);
+
+            }
+
+        }
+
+
+        static void Start(string dir, string file)
+        {
             Console.WriteLine("Loading " + file + "...");
             Console.WriteLine("Current directory: " + dir);
 
             if (p != null) p.Kill();
 
             var newFile = Path.GetTempFileName();
-            File.Copy(file, newFile, true);
+            File.Delete(newFile);
+            CopyDirectory(dir, newFile);
 
-            var info = new ProcessStartInfo() {
-                FileName = newFile,
+            var info = new ProcessStartInfo()
+            {
+                FileName = Path.Combine(newFile, file),
                 UseShellExecute = false,
-                WorkingDirectory = dir               
+                WorkingDirectory = dir
             };
             p = Process.Start(info);
         }
