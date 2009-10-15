@@ -14,7 +14,7 @@ namespace SimpleLauncher
         static Process p = null;
         static void Main(string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length < 2)
             {
                 Console.WriteLine("Wrong number of arguments. Expected 2: <directory> <file>");
                 return;
@@ -24,19 +24,25 @@ namespace SimpleLauncher
             string dirPath = Path.GetFullPath(args[0]);
             string filePath = args[1];
             string fullPath = Path.Combine(dirPath, filePath);
+            var watchExt = args.Skip(2).ToList();
 
             var watcher = new FileSystemWatcher(dirPath);
             watcher.IncludeSubdirectories = true;
 
             var timer = new Timer((x) =>
             {
-                Start(dirPath, filePath);    
+                Start(dirPath, filePath);
             });
             timer.Change(1000, Timeout.Infinite);
-            
+
             watcher.Changed += (o, p) =>
             {
-                timer.Change(1000, Timeout.Infinite);
+                Console.WriteLine("Detected change of: " + p.FullPath);
+                if (watchExt.Any(y => p.Name.EndsWith(y)) || watchExt.Count == 0)
+                {
+                    Console.WriteLine("Catching...");
+                    timer.Change(1000, Timeout.Infinite);
+                }
             };
             watcher.EnableRaisingEvents = true;
             while (true) Console.ReadLine();
