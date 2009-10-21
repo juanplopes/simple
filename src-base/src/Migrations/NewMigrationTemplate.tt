@@ -1,0 +1,59 @@
+<#@ template language="C#v3.5" hostspecific="True" debug="True" #>
+<#@ output extension=".log" #>
+<#@ assembly name="System.Core" #>
+<#@ include file="..\Templates\T4ToolBox.ttinclude" #>
+<# 
+	var g = new NewMigrationGenerator();
+	g.Timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+	g.Name = "UntitledMigration";
+	//g.Run();
+#>
+<#+
+public class NewMigrationGenerator : Generator
+{
+	public string Timestamp { get; set; }
+	public string Name { get; set; }
+	public string OutputFile { get { return Timestamp + "_" + Name + ".cs"; } }
+	
+	protected override void RunCore()
+	{
+		NewMigrationTemplate template = new NewMigrationTemplate();
+		template.OutputFile = OutputFile;
+		template.Timestamp = Timestamp;
+		template.Render();
+	}
+}
+public class NewMigrationTemplate : Template
+{
+	public string Timestamp { get; set; }
+	protected override void RenderCore()
+	{
+		#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Migrator.Framework;
+using Migrator.Fluent;
+using System.Data;
+
+namespace Sample.Project.Migrations
+{
+    [Migration(<#= this.Timestamp #>)]
+    public class Migration<#= this.Timestamp #> : FluentMigration
+    {
+        public override void Up()
+        {
+		}
+
+		public override void Down()
+        {
+        }
+    }
+
+}
+
+<#+
+	}
+}
+#>
