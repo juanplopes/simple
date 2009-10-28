@@ -9,6 +9,6 @@ namespace Simple.DataAccess
     public interface IPage<T> : IList<T>
     {
         int TotalCount { get; }
-        int TotalPages { get; }
+        int TotalPages(int pageSize);
     }
 }
