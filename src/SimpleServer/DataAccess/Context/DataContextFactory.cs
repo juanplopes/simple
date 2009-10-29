@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Simple.Patterns;
 using Simple.ConfigSource;
-using Simple.Threading;
+using Simple.Common;
 using NHibernate;
 
 namespace Simple.DataAccess.Context

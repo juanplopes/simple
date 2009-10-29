@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Patterns;
 using System.Collections;
-using Simple.Threading;
+using Simple.Common;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization;
 

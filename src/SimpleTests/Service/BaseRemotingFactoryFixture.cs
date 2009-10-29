@@ -9,7 +9,7 @@ using NUnit.Framework;
 using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
-using Simple.Threading;
+using Simple.Common;
 
 namespace Simple.Tests.Service
 {

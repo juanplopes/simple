@@ -12,7 +12,7 @@ using Simple.ConfigSource;
 using Simple.Tests.Service;
 using Simple.Services;
 using System.Threading;
-using Simple.Threading;
+using Simple.Common;
 using Simple.Tests.DataAccess;
 using Simple.Tests.SampleServer;
 using System.IO;

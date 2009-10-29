@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\NamedEvents.cs" />
     <Compile Include="ConfigSource\AggregateFactory.cs" />
     <Compile Include="ConfigSource\DefaultConfigAttribute.cs" />
     <Compile Include="ConfigSource\DirectConfigSource.cs" />
@@ -160,13 +161,8 @@
     <Compile Include="Reflection\MethodCache.cs" />
     <Compile Include="Reflection\TypesHelper.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
-    <Compile Include="Persistence\ExecutionContext.cs" />
     <Compile Include="Simply.cs" />
-    <Compile Include="Threading\IInitializable.cs" />
     <Compile Include="Patterns\Enumerable.cs" />
-    <Compile Include="Persistence\GenericInstanceState.cs" />
-    <Compile Include="Persistence\PageController.cs" />
-    <Compile Include="Persistence\SelfSerializableClass.cs" />
     <Compile Include="IO\XmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Patterns\SafeDictionary.cs" />
@@ -177,19 +173,7 @@
     <Compile Include="Hosting\SimpleInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Threading\BaseLockingProvider.cs" />
-    <Compile Include="Threading\CriticalRegion.cs" />
-    <Compile Include="Threading\IDataStoreLockingProvider.cs" />
-    <Compile Include="Threading\IDataStoreLockToken.cs" />
-    <Compile Include="Threading\NamedEvents.cs" />
-    <Compile Include="Threading\SqlLockToken.cs" />
-    <Compile Include="Threading\SqlLockingProvider.cs" />
-    <Compile Include="Threading\ILockToken.cs" />
-    <Compile Include="Threading\ILockingProvider.cs" />
-    <Compile Include="Threading\BaseLockToken.cs" />
-    <Compile Include="Threading\ThreadData.cs" />
-    <Compile Include="Threading\TimeoutValues.cs" />
-    <Compile Include="Threading\UnableToAcquireLockException.cs" />
+    <Compile Include="Common\ThreadData.cs" />
     <Compile Include="UI\Web\ControlStateHelper.cs">
     </Compile>
     <Compile Include="UI\Windows\KeyboardHook.cs" />
