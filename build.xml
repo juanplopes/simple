@@ -58,8 +58,8 @@
 
   <Target Name="Merge" DependsOnTargets="Build">
     <ItemGroup>
-      <MergeItems Include="$(BuildCore)\SimpleLib.dll"/>
       <MergeItems Include="$(BuildCore)\SimpleCore.dll"/>
+      <MergeItems Include="$(BuildCore)\SimpleLib.dll"/>
       <MergeItems Include="$(BuildCore)\SimpleServer.dll"/>
       <MergeItems Include="$(BuildCore)\Castle.Core.dll"/>
       <MergeItems Include="$(BuildCore)\Castle.DynamicProxy2.dll"/>
