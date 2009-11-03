@@ -1,0 +1,42 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <BuildCore>bin</BuildCore>
+    <SourceCore>src</SourceCore>
+    <Package>pkg</Package>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SolutionFile Include="src\Simple.sln" />
+
+    <AssembliesToMerge 
+      Include="$(BuildCore)\*.dll" 
+      Exclude="**\System.Data.SQLite.dll;**\nunit.framework.dll">
+    </AssembliesToMerge>
+  </ItemGroup>
+
+  <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
+
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean; Build"></CallTarget>
+  </Target>
+
+  <Target Name="Clean">
+    <MSBuild Projects="@(SolutionFile)" Targets="Clean"/>
+    <RemoveDir Directories="$(BuildCore)" ContinueOnError="true"></RemoveDir>
+    <RemoveDir Directories="$(Package)" ContinueOnError="true"></RemoveDir>
+  </Target>
+
+  <Target Name="Build">
+    <MSBuild Projects="@(SolutionFile)"/>
+  </Target>
+
+  <Target Name="Merge" DependsOnTargets="Rebuild;Test">
+    <MakeDir Directories="$(Package)"></MakeDir>
+    <ILMerge OutputFile="$(Package)\Simple.dll" 
+             InputAssemblies="@(AssembliesToMerge)" ToolPath="util\ilmerge"></ILMerge>
+  </Target>
+
+  <Target Name="Test" DependsOnTargets="Build">
+    <Nunit Assemblies="$(BuildCore)\SimpleTests.exe" ToolPath="util\nunit"></Nunit>
+  </Target>
+</Project>

@@ -166,9 +166,9 @@ namespace Simple.Tests.SimpleLib
 		}
 
     	private object InvocationHandler(object target, MethodBase method, object[] parameters) {
-			Console.WriteLine("Before: " + method.Name);
+			//Console.WriteLine("Before: " + method.Name);
 			object result = method.Invoke(target, parameters);
-			Console.WriteLine("After: " + method.Name);
+			//Console.WriteLine("After: " + method.Name);
 			return result;
 		}
 
@@ -205,42 +205,42 @@ namespace Simple.Tests.SimpleLib
 
         public void Method1()
         {
-            Console.WriteLine("    Method 1 called");
+            //Console.WriteLine("    Method 1 called");
         }
 
         public string Method2()
         {
-            Console.WriteLine("    Method 2 called, returning 'Hello World!'");
+            //Console.WriteLine("    Method 2 called, returning 'Hello World!'");
             return "Hello World!";
         }
 
         public int Method3()
         {
-            Console.WriteLine("    Method 3 called, returning 10000");
+            //Console.WriteLine("    Method 3 called, returning 10000");
             return 10000;
         }
 
         public int Method4(int inValue)
         {
-            Console.WriteLine("    Method 4 called, returning inValue: " + inValue);
+            //Console.WriteLine("    Method 4 called, returning inValue: " + inValue);
             return inValue;
         }
 
         public void Method5(int inValue, out int outValue)
         {
-            Console.WriteLine("    Method 5 called. Setting outValue to the value of the inValue: " + inValue);
+            //Console.WriteLine("    Method 5 called. Setting outValue to the value of the inValue: " + inValue);
             outValue = inValue;
         }
 
         public void Method6(ref int value)
         {
-            Console.WriteLine("    Method 5 called. Changing value from: " + value + " to: 98765");
+            //Console.WriteLine("    Method 5 called. Changing value from: " + value + " to: 98765");
             value = 98765;
         }
 
         public void ImplementedMethod()
         {
-            Console.WriteLine("Implemented method called");
+            //Console.WriteLine("Implemented method called");
         }
 
     }
