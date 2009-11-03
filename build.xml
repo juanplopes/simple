@@ -3,42 +3,65 @@
     <BuildCore>bin</BuildCore>
     <SourceCore>src</SourceCore>
     <Package>pkg</Package>
+    <LogFile>build.log</LogFile>
+    <SourceBase>src-base</SourceBase>
+    <SourceBaseLib>$(SourceBase)\lib</SourceBaseLib>
   </PropertyGroup>
 
   <ItemGroup>
     <SolutionFile Include="src\Simple.sln" />
-
-    <AssembliesToMerge 
-      Include="$(BuildCore)\*.dll" 
-      Exclude="**\System.Data.SQLite.dll;**\nunit.framework.dll">
-    </AssembliesToMerge>
   </ItemGroup>
 
   <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
 
-  <Target Name="Rebuild">
-    <CallTarget Targets="Clean; Build"></CallTarget>
-  </Target>
-
   <Target Name="Clean">
+    <CreateItem></CreateItem>
     <MSBuild Projects="@(SolutionFile)" Targets="Clean"/>
-    <RemoveDir Directories="$(BuildCore)" ContinueOnError="true"></RemoveDir>
-    <RemoveDir Directories="$(Package)" ContinueOnError="true"></RemoveDir>
+    <RemoveDir Directories="$(BuildCore)" ContinueOnError="true"/>
+    <RemoveDir Directories="$(Package)" ContinueOnError="true"/>
+    <Delete Files="$(LogFile)"></Delete>
   </Target>
 
   <Target Name="Build">
     <MSBuild Projects="@(SolutionFile)"/>
   </Target>
-
-  <Target Name="Merge" DependsOnTargets="Rebuild;Test">
-    <MakeDir Directories="$(Package)"></MakeDir>
-    <ILMerge OutputFile="$(Package)\Simple.dll" 
-             InputAssemblies="@(AssembliesToMerge)" 
-             ToolPath="util\ilmerge"
-             Logfile="ilmerge.log"></ILMerge>
+  
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean; Build"></CallTarget>
   </Target>
 
   <Target Name="Test" DependsOnTargets="Build">
-    <Nunit Assemblies="$(BuildCore)\SimpleTests.exe" ToolPath="util\nunit"></Nunit>
+    <Nunit Assemblies="$(BuildCore)\SimpleTests.exe" ToolPath="util\nunit"/>
   </Target>
+
+  <Target Name="Merge" DependsOnTargets="Build">
+    <ItemGroup>
+      <MergeItems Include="$(BuildCore)\SimpleLib.dll"/>
+      <MergeItems Include="$(BuildCore)\SimpleCore.dll"/>
+      <MergeItems Include="$(BuildCore)\SimpleServer.dll"/>
+      <MergeItems Include="$(BuildCore)\Castle.Core.dll"/>
+      <MergeItems Include="$(BuildCore)\Castle.DynamicProxy2.dll"/>
+      <MergeItems Include="$(BuildCore)\Antlr3.Runtime.dll"/>
+      <MergeItems Include="$(BuildCore)\NHibernate.Validator.dll"/>
+      <MergeItems Include="$(BuildCore)\NHibernate.Validator.Specific.dll"/>
+      <MergeItems Include="$(BuildCore)\NHibernate.ByteCode.Castle.dll"/>
+      <MergeItems Include="$(BuildCore)\FluentNHibernate.dll"/>
+      <MergeItems Include="$(BuildCore)\Iesi.Collections.dll"/>
+      <MergeItems Include="$(BuildCore)\log4net.dll"/>
+      <MergeItems Include="$(BuildCore)\NHibernate.dll"/>
+      <MergeItems Include="$(BuildCore)\NHibernate.Linq.dll"/>
+    </ItemGroup>
+    
+    <MakeDir Directories="$(Package)"></MakeDir>
+    <ILMerge OutputFile="$(Package)\Simple.dll"
+             InputAssemblies="@(MergeItems)"
+             ToolPath="util\ilmerge"
+             Logfile="$(LogFile)"/>
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Merge">
+    <Copy SourceFiles="$(Package)\Simple.dll" DestinationFolder="$(SourceBaseLib)"/>
+    <Exec Command="util\nsis\makensis src-base\Extractor.nsi &quot;/XOutFile ..\$(Package)\Simple.exe&quot;"/>
+  </Target>
+  
 </Project>

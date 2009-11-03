@@ -13,7 +13,7 @@ Page instfiles
 
 Section
   SetOutPath $INSTDIR
-  File /r /x _svn /x bin /x obj /x *.nsi *.*
+  File /r /x _svn /x bin /x obj /x *.nsi /x Simple.exe *.* 
   ExecWait $OUTDIR\SimpleGui.exe
   Delete $OUTDIR\SimpleGui.exe
 SectionEnd
