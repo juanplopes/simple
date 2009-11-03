@@ -22,7 +22,20 @@
     <Delete Files="$(LogFile)"></Delete>
   </Target>
 
-  <Target Name="Build">
+  <Target Name="GenerateAssemblyInfo">
+    <AssemblyInfo CodeLanguage="CS"
+               OutputFile="$(SourceCore)\GlobalInfo.cs"
+               AssemblyCompany="Living Consultoria"
+               AssemblyProduct="Simple.Net"
+               AssemblyCopyright="Copyright (c) Living Consultoria 2009"
+               AssemblyTrademark=""
+               ComVisible="false"
+               CLSCompliant="true"
+               AssemblyVersion="1.0.0.0"
+               AssemblyFileVersion="1.0.0.0" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets ="GenerateAssemblyInfo">
     <MSBuild Projects="@(SolutionFile)"/>
   </Target>
   
@@ -59,9 +72,19 @@
              Logfile="$(LogFile)"/>
   </Target>
 
-  <Target Name="Package" DependsOnTargets="Rebuild;Test;Merge">
+  <Target Name="GenerateTag">
+    <Time Format="yyyyMMddhh">
+      <Output TaskParameter="FormattedTime" PropertyName="BuildTag" />
+    </Time>
+    <Message Text="Build tag: $(BuildTag)"/>
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="GenerateTag;Rebuild;Test;Merge">
     <Copy SourceFiles="$(Package)\Simple.dll" DestinationFolder="$(SourceBaseLib)"/>
     <Exec Command="util\nsis\makensis src-base\Extractor.nsi &quot;/XOutFile ..\$(Package)\Simple.exe&quot;"/>
+
+    <Zip Files="$(Package)\Simple.dll" WorkingDirectory="$(Package)" ZipFileName="Simple-lib-$(BuildTag).zip"/>
+    <Zip Files="$(Package)\Simple.exe" WorkingDirectory="$(Package)" ZipFileName="Simple-pkg-$(BuildTag).zip"/>
   </Target>
   
 </Project>
