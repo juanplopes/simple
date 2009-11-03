@@ -74,6 +74,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
     <Compile Include="DataAccess\Context\DataContextFactory.cs" />
     <Compile Include="DataAccess\Context\DataContext.cs" />
     <Compile Include="DataAccess\Context\DataContextSimplyExtensions.cs" />

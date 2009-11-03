@@ -71,6 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
     <Compile Include="DataAccess\EntityTransformer.cs" />
     <Compile Include="DataAccess\IPage.cs" />
     <Compile Include="DataAccess\MappedProperty.cs" />

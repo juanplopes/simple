@@ -109,6 +109,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
     <Compile Include="DataAccess\EntityHelperIntegrationFixture.cs" />
     <Compile Include="DataAccess\ValidationFixture.cs" />
     <Compile Include="Database.Designer.cs">

@@ -18,8 +18,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Simple.Net")]
 [assembly: AssemblyCopyright("Copyright (c) Living Consultoria 2009")]
 [assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: CLSCompliant(false)]
+[assembly: AssemblyVersion("2.0.911.30206")]
+[assembly: AssemblyFileVersion("2.0.911.30206")]
 
 
