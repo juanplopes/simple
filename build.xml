@@ -59,7 +59,7 @@
              Logfile="$(LogFile)"/>
   </Target>
 
-  <Target Name="Package" DependsOnTargets="Merge">
+  <Target Name="Package" DependsOnTargets="Test;Merge">
     <Copy SourceFiles="$(Package)\Simple.dll" DestinationFolder="$(SourceBaseLib)"/>
     <Exec Command="util\nsis\makensis src-base\Extractor.nsi &quot;/XOutFile ..\$(Package)\Simple.exe&quot;"/>
   </Target>
