@@ -33,7 +33,9 @@
   <Target Name="Merge" DependsOnTargets="Rebuild;Test">
     <MakeDir Directories="$(Package)"></MakeDir>
     <ILMerge OutputFile="$(Package)\Simple.dll" 
-             InputAssemblies="@(AssembliesToMerge)" ToolPath="util\ilmerge"></ILMerge>
+             InputAssemblies="@(AssembliesToMerge)" 
+             ToolPath="util\ilmerge"
+             Logfile="ilmerge.log"></ILMerge>
   </Target>
 
   <Target Name="Test" DependsOnTargets="Build">
