@@ -84,9 +84,6 @@
   <Target Name="Package" DependsOnTargets="GenerateTag;Rebuild;Test;Merge">
     <Copy SourceFiles="$(Package)\Simple.dll" DestinationFolder="$(SourceBaseLib)"/>
     <Exec Command="util\nsis\makensis src-base\Extractor.nsi &quot;/XOutFile ..\$(Package)\Simple.exe&quot;"/>
-
-    <Zip Files="$(Package)\Simple.dll" WorkingDirectory="$(Package)" ZipFileName="$(Package)\Simple-$(ProductVersion).$(BuildTag)-lib.zip"/>
-    <Copy SourceFiles="$(Package)\Simple.exe" DestinationFiles="$(Package)\Simple-$(ProductVersion).$(BuildTag).exe"/>
   </Target>
   
 </Project>
