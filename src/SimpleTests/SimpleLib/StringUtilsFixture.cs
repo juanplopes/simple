@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NUnit.Framework;
+using Simple.IO;
+using System.Text.RegularExpressions;
+
+namespace Simple.Tests.SimpleLib
+{
+    [TestFixture]
+    public class StringUtilsFixture
+    {
+        [Test]
+        public void TestRemovePortugueseDiacritics()
+        {
+            Assert.AreEqual("cao", StringUtils.RemoveDiacritics("cão"));
+            Assert.AreEqual("acao", StringUtils.RemoveDiacritics("ação"));
+            Assert.AreEqual("aeiouaeiouao", StringUtils.RemoveDiacritics("áéíóúâêîôûãõ"));
+        }
+
+        [Test]
+        public void TestRemoveCrazyDiacritics()
+        {
+            Assert.AreEqual("aEn", StringUtils.RemoveDiacritics("áÈñ"));
+            Assert.AreEqual("uayCu", StringUtils.RemoveDiacritics("üåÿĈǜ"));
+        }
+
+        [Test]
+        public void TestSplitSimpleIdValueString()
+        {
+            var res = StringUtils.Split("12 - algum texto", x=>Regex.IsMatch(x.ToString(), "[a-z0-9]")).ToArray();
+
+            Assert.AreEqual(3, res.Length);
+            CollectionAssert.Contains(res, "12");
+            CollectionAssert.Contains(res, "algum");
+            CollectionAssert.Contains(res, "texto");
+        }
+
+        [Test]
+        public void TestSplitCrazyValues()
+        {
+            var res = StringUtils.Split("aà:[]b", "[a-z0-9]").ToArray();
+
+            Assert.AreEqual(2, res.Length);
+            CollectionAssert.Contains(res, "a");
+            CollectionAssert.Contains(res, "b");
+        }
+    }
+}

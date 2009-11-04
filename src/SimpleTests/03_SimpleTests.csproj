@@ -157,6 +157,7 @@
     <Compile Include="SimpleLib\Sample\AttributeCacheClasses.cs" />
     <Compile Include="SimpleLib\Sample\TestStringClass.cs" />
     <Compile Include="SimpleLib\StringFragmenterFixture.cs" />
+    <Compile Include="SimpleLib\StringUtilsFixture.cs" />
     <Compile Include="SimpleLib\WorkingDaysFixture.cs" />
     <Compile Include="SampleServer\Category.cs" />
     <Compile Include="SampleServer\Customer.cs" />
