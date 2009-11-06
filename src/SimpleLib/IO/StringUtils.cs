@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Simple.IO
 {
@@ -11,7 +12,7 @@ namespace Simple.IO
         public static string RemoveDiacritics(string s)
         {
             String normalizedString = s.Normalize(NormalizationForm.FormD);
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder(s.Length);
 
             for (int i = 0; i < normalizedString.Length; i++)
             {

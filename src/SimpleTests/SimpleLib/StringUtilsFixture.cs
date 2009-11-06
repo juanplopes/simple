@@ -20,6 +20,14 @@ namespace Simple.Tests.SimpleLib
         }
 
         [Test]
+        public void TestWontRemoveSpaces()
+        {
+            Assert.AreEqual("cao sarnento", StringUtils.RemoveDiacritics("cão sarnento"));
+            Assert.AreEqual("acao e aventura", StringUtils.RemoveDiacritics("ação e aventura"));
+            Assert.AreEqual("aeiou aeiou ao", StringUtils.RemoveDiacritics("áéíóú âêîôû ãõ"));
+        }
+
+        [Test]
         public void TestRemoveCrazyDiacritics()
         {
             Assert.AreEqual("aEn", StringUtils.RemoveDiacritics("áÈñ"));
