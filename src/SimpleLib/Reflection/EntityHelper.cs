@@ -117,7 +117,6 @@ namespace Simple.Reflection
             if (obj == null) return 1;
             if (!_entityType.IsAssignableFrom(obj.GetType())) return -1;
 
-            IEnumerator<int> primes = PrimeNumbers.GetPrimesEnumerable().GetEnumerator();
             int res = 1;
 
             var ignore = ToDic(toIgnore);
@@ -125,7 +124,6 @@ namespace Simple.Reflection
             {
                 if (ignore.ContainsKey(idProp)) continue;
 
-                primes.MoveNext();
                 PropertyInfo info = _entityType.GetProperty(idProp);
                 if (info == null) throw new InvalidOperationException("Property not found: " + idProp);
 
@@ -133,7 +131,7 @@ namespace Simple.Reflection
                 object value = getter(obj, null);
                 if (value != null)
                 {
-                    res *= (value.GetHashCode() * primes.Current);
+                    res ^= value.GetHashCode();
                 }
             }
             return res;

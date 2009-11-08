@@ -148,6 +148,7 @@
     <Compile Include="SimpleLib\EntityHelperFixture.cs" />
     <Compile Include="SimpleLib\EnumTypeFixture.cs" />
     <Compile Include="SimpleLib\ExpressionHelperFixture.cs" />
+    <Compile Include="SimpleLib\FileLocatorFixture.cs" />
     <Compile Include="SimpleLib\InvokerFactoryFixture.cs" />
     <Compile Include="SimpleLib\MarshallableDynamicProxyFixture.cs" />
     <Compile Include="SimpleLib\MathHelperFixture.cs" />
