@@ -24,7 +24,7 @@
   </Target>
 
   <Target Name="GenerateTag">
-    <Time Format="yMM.dhhmm">
+    <Time Format="yMM.dhh">
       <Output TaskParameter="FormattedTime" PropertyName="BuildTag" />
     </Time>
 
