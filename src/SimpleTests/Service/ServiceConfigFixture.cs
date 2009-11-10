@@ -33,7 +33,7 @@ namespace Simple.Tests.Service
 
             Assert.AreEqual(42, Simply.Do[guid].Resolve<ISimpleService>().GetInt32());
 
-            Simply.Do[guid].Configure.Remoting().FromXml(Helper.MakeConfig(Helper.MakeUri("http", 8001)));
+            Simply.Do[guid].Configure.Remoting().FromXmlString(Helper.MakeConfig(Helper.MakeUri("http", 8001)));
 
             Assert.AreEqual(42, Simply.Do[guid].Resolve<ISimpleService>().GetInt32());
 
@@ -46,8 +46,8 @@ namespace Simple.Tests.Service
             Guid guid1 = Guid.NewGuid();
             Guid guid2 = Guid.NewGuid();
 
-            Simply.Do[guid1].Configure.Remoting().FromXml(Helper.MakeConfig(Helper.MakeUri("http", 8002)));
-            Simply.Do[guid2].Configure.Remoting().FromXml(Helper.MakeConfig(Helper.MakeUri("http", 8002)));
+            Simply.Do[guid1].Configure.Remoting().FromXmlString(Helper.MakeConfig(Helper.MakeUri("http", 8002)));
+            Simply.Do[guid2].Configure.Remoting().FromXmlString(Helper.MakeConfig(Helper.MakeUri("http", 8002)));
 
             Simply.Do[guid1].Host(typeof(SimpleService));
             Assert.AreEqual(42, Simply.Do[guid2].Resolve<ISimpleService>().GetInt32());

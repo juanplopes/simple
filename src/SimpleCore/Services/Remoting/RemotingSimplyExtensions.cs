@@ -9,7 +9,7 @@ namespace Simple
     {
         public static SimplyConfigure RemotingDefault(this SimplyConfigure config)
         {
-            return Remoting(config).FromXml(DefaultConfigContent.RemotingConfig);
+            return Remoting(config).FromXmlString(DefaultConfigContent.RemotingConfig);
         }
 
         public static IConfiguratorInterface<RemotingConfig, SimplyConfigure> Remoting(this SimplyConfigure config)

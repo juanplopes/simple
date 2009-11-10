@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\release\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -74,6 +74,7 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="ConfigDef.cs" />
     <Compile Include="DataAccess\EntityTransformer.cs" />
     <Compile Include="DataAccess\IPage.cs" />
     <Compile Include="DataAccess\MappedProperty.cs" />

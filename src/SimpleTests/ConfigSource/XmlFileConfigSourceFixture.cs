@@ -7,6 +7,8 @@ using System.IO;
 using Simple.ConfigSource;
 using System.Xml;
 using System.Xml.Serialization;
+using Simple.IO;
+using System.Reflection;
 
 namespace Simple.Tests.ConfigSource
 {
@@ -23,6 +25,7 @@ namespace Simple.Tests.ConfigSource
                   </BasicTypesSampleWithoutAttr>";
 
         protected string currentDirectory = null;
+        protected FileLocator paths = new FileLocator();
 
         [SetUp]
         public void Setup()
@@ -31,6 +34,8 @@ namespace Simple.Tests.ConfigSource
 
             currentDirectory = Environment.CurrentDirectory;
             Environment.CurrentDirectory = Path.Combine(Environment.CurrentDirectory, "..");
+            paths.AddDefaults(Assembly.GetExecutingAssembly());
+
         }
 
         [TestFixtureTearDown]
@@ -46,7 +51,7 @@ namespace Simple.Tests.ConfigSource
         {
             using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>())
             {
-                var cfg = src.LoadFile(TEST_FILE_NAME).Get();
+                var cfg = src.LoadFile(paths.Find(TEST_FILE_NAME)).Get();
                 XmlConfigSourceFixture.TestCreatedSimpleSample(cfg);
             }
         }
@@ -66,7 +71,7 @@ namespace Simple.Tests.ConfigSource
         public void SimpleLoadAndModifyTest()
         {
             using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>()
-                .LoadFile(TEST_FILE_NAME))
+                .LoadFile(paths.Find(TEST_FILE_NAME)))
             {
                 bool flag = false;
                 var cfg = src.Get();
@@ -89,7 +94,7 @@ namespace Simple.Tests.ConfigSource
                 Assert.IsTrue(flag);
             }
 
-            
+
         }
 
 
@@ -97,7 +102,7 @@ namespace Simple.Tests.ConfigSource
         public void SimpleLoadAndModifyTestWithTransformation()
         {
             using (var src = new XmlFileConfigSource<BasicTypesSampleWithoutAttr>()
-                .LoadFile(TEST_FILE_NAME))
+                .LoadFile(paths.Find(TEST_FILE_NAME)))
             {
                 bool flag = false;
                 var cfg = src.Get();
@@ -130,7 +135,7 @@ namespace Simple.Tests.ConfigSource
     public class Test1
     {
         [XmlElement("s")]
-        public string  S { get; set; }
+        public string S { get; set; }
         [XmlElement("i")]
         public int I { get; set; }
     }

@@ -8,10 +8,10 @@ namespace Simple.ConfigSource
 {
     public interface IConfiguratorInterface<T, R>
     {
-        R FromFile(string file);
-        R FromFile(string file, string xPath);
-        R FromXml(string xml);
-        R FromXml(string xml, string xPath);
+        R FromXmlFile(string file);
+        R FromXmlFile(string file, string xPath);
+        R FromXmlString(string xml);
+        R FromXmlString(string xml, string xPath);
         R FromStream(Stream stream);
         R FromStream(Stream stream, string xPath);
         R FromInstance(T config);
@@ -33,20 +33,20 @@ namespace Simple.ConfigSource
             return Configurator(new DirectConfigSource<T>().Load(config));
         }
 
-        public R FromFile(string file)
+        public R FromXmlFile(string file)
         {
             return Configurator(XmlConfig.LoadFile<T>(file));
         }
-        public R FromFile(string file, string xPath)
+        public R FromXmlFile(string file, string xPath)
         {
             return Configurator(XmlConfig.LoadFile<T>(file, xPath));
         }
 
-        public R FromXml(string xml)
+        public R FromXmlString(string xml)
         {
             return Configurator(XmlConfig.LoadXml<T>(xml));
         }
-        public R FromXml(string xml, string xPath)
+        public R FromXmlString(string xml, string xPath)
         {
             return Configurator(XmlConfig.LoadXml<T>(xml, xPath));
         }

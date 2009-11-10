@@ -16,7 +16,7 @@ namespace Simple.Tests.ConfigSource
         {
             IConfigSource<BasicTypesSampleWithoutAttr> source = null;
             new ConfiguratorInterface<BasicTypesSampleWithoutAttr, int>(
-                x => { source = x; return 1; }).FromXml(XmlConfigSourceFixture.SAMPLE_XML);
+                x => { source = x; return 1; }).FromXmlString(XmlConfigSourceFixture.SAMPLE_XML);
 
             Assert.IsNotNull(source);
             var value = source.Get();

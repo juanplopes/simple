@@ -56,34 +56,15 @@ namespace Simple.ConfigSource
 
         public virtual IConfigSource<T> LoadFile(string fileName, string xPath)
         {
-            Assembly currentAssemly = Assembly.GetExecutingAssembly();
-
-            var simplePath = ConfigExists(fileName);
-            var codeBasePath = ConfigExists(Path.Combine(Path.GetDirectoryName(currentAssemly.CodeBase), fileName));
-            var locationPath = ConfigExists(Path.Combine(Path.GetDirectoryName(currentAssemly.Location), fileName));
-
-            var realPath = simplePath ?? codeBasePath ?? locationPath ?? new FileInfo(fileName);
-
-            return Load(new XPathParameter<FileInfo>(realPath, xPath));
-        }
-
-        private FileInfo ConfigExists(string file)
-        {
-            try
-            {
-                file = new Uri(file).AbsolutePath;
-            }
-            catch { }
-
-            var info = new FileInfo(file);
-            return info.Exists ? info : null;
+            return Load(new XPathParameter<FileInfo>(new FileInfo(fileName), xPath));
         }
 
         public override bool Reload()
         {
             lock (this)
             {
-                if (XmlFile.Parameter == null) throw new InvalidOperationException("Cannot reload a non-loaded source");
+                if (XmlFile.Parameter == null) 
+                    throw new InvalidOperationException("Cannot reload a non-loaded source");
 
                 Simply.Do.Log(this).DebugFormat("Reloading file {0}...", XmlFile.Parameter.Name);
 

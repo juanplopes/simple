@@ -20,7 +20,7 @@ namespace Simple.Tests.Service
         {
             Guid guid = Guid.NewGuid();
 
-            Simply.Do[guid].Configure.Remoting().FromXml(Helper.MakeConfig(Uri));
+            Simply.Do[guid].Configure.Remoting().FromXmlString(Helper.MakeConfig(Uri));
             Simply.Do[guid].Host(typeof(SimpleService));
 
             return guid;

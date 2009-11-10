@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace Simple.IO
 {
@@ -23,6 +24,13 @@ namespace Simple.IO
                 throw new FileNotFoundException(string.Format("Search locations: {0}", string.Join(", ", this.ToArray())));
 
             return path;
+        }
+
+        public void AddDefaults(Assembly asm)
+        {
+            this.Add(".");
+            this.Add(Path.GetDirectoryName(asm.Location));
+            this.Add(Path.GetDirectoryName(Uri.UnescapeDataString(new Uri(asm.CodeBase).AbsolutePath)));
         }
 
         public string Find(string file)

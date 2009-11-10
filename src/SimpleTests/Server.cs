@@ -58,7 +58,7 @@ namespace Simple.Tests
                 Guid guid = Guid.NewGuid();
 
                 Simply.Do[guid].Configure.Remoting()
-                    .FromXml(Helper.MakeConfig(new Uri(args[1])));
+                    .FromXmlString(Helper.MakeConfig(new Uri(args[1])));
 
                 configure(guid);
 
