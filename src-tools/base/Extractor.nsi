@@ -1,6 +1,6 @@
 Name "Simple.Net project"
 OutFile "Simple.exe"
-Icon "..\doc\SimpleIcon.ico"
+Icon "..\..\doc\SimpleIcon.ico"
 RequestExecutionLevel user
 AutoCloseWindow true
 BrandingText "juanplopes@gmail.com"

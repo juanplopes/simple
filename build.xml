@@ -4,7 +4,7 @@
     <SourceCore>src</SourceCore>
     <Package>pkg</Package>
     <LogFile>build.log</LogFile>
-    <SourceBase>src-base</SourceBase>
+    <SourceBase>src-tools\base</SourceBase>
     <SourceBaseLib>$(SourceBase)\lib</SourceBaseLib>
     <ProductVersion>2.0</ProductVersion>
   </PropertyGroup>
@@ -83,7 +83,7 @@
 
   <Target Name="Package" DependsOnTargets="GenerateTag;Rebuild;Test;Merge">
     <Copy SourceFiles="$(Package)\Simple.dll" DestinationFolder="$(SourceBaseLib)"/>
-    <Exec Command="util\nsis\makensis src-base\Extractor.nsi &quot;/XOutFile ..\$(Package)\Simple.exe&quot;"/>
+    <Exec Command="util\nsis\makensis $(SourceBase)\Extractor.nsi &quot;/XOutFile ..\..\$(Package)\Simple.exe&quot;"/>
   </Target>
   
 </Project>
