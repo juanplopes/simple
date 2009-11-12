@@ -58,14 +58,18 @@ namespace Simple
         }
 
         protected abstract void InitLocations(FileLocator paths);
-        protected abstract void ConfigClient();
-        protected abstract void ConfigServer();
+        public abstract void ConfigClient();
+        public abstract void ConfigServer();
 
-        protected string CodeBase(string path)
+        protected string CodeBase(params string[] pathComponents)
         {
-            return Path.Combine(
-                Path.GetDirectoryName(Uri.UnescapeDataString(
-                new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath)), path);
+            string ret = Path.GetDirectoryName(Uri.UnescapeDataString(
+                new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath));
+
+            foreach(string component in pathComponents)
+                ret = Path.Combine(ret, component);
+
+            return ret;
         }
 
         public void StartClient()
