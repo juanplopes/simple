@@ -15,10 +15,10 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("Your Company Name")]
-[assembly: AssemblyProduct("Conspirarte")]
+[assembly: AssemblyProduct("Sample.Project")]
 [assembly: AssemblyCopyright("Copyright (c) Your Company Name (Year)")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.0.911.1612")]
-[assembly: AssemblyFileVersion("1.0.911.1612")]
+[assembly: AssemblyVersion("1.0.911.1601")]
+[assembly: AssemblyFileVersion("1.0.911.1601")]
 
 
