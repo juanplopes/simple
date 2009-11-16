@@ -32,6 +32,17 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
+        public void TestGetConnectionString()
+        {
+            Simply.Do[this].Configure.NHibernteFluently(x =>
+               x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")));
+            var cs = Simply.Do[this].GetConnectionString();
+
+            StringAssert.Contains("Northwind.sl3", cs);
+
+        }
+
+        [Test]
         public void TestMapEntities()
         {
             Simply.Do[this].Configure.NHibernteFluently(x =>

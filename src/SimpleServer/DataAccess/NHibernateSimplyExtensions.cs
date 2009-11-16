@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using Simple.DataAccess;
 using Simple.ConfigSource;
-using NHibernate;
+using NH = NHibernate;
 using NHibernate.Cfg;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Mapping;
 using System.Reflection;
 using System.Linq.Expressions;
 using Simple.Expressions;
+using NHibernate;
 
 namespace Simple
 {
@@ -40,6 +41,10 @@ namespace Simple
         public static Configuration GetNHibernateConfig(this Simply simply)
         {
             return Factory(simply).NHConfiguration;
+        }
+        public static string GetConnectionString(this Simply simply)
+        {
+            return GetNHibernateConfig(simply).GetProperty(NH.Cfg.Environment.ConnectionString);
         }
         public static ISessionFactory GetSessionFactory(this Simply simply)
         {
