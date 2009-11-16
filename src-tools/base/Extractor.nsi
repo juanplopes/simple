@@ -13,8 +13,8 @@ Page instfiles
 
 Section
   SetOutPath $INSTDIR
-  File /r lib\Simple.dll 
   File /r /x _svn /x bin /x obj /x *.nsi /x Simple.exe /x Simple.dll *.* 
+  File /oname=lib\Simple.dll lib\Simple.dll 
   ExecWait $OUTDIR\SimpleGui.exe
   Delete $OUTDIR\SimpleGui.exe
 SectionEnd
