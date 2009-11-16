@@ -8,8 +8,8 @@ using Simple;
 using NHibernate.Tool.hbm2ddl;
 using System.Xml.Linq;
 using System.Xml;
-using Sample.Project.Environment.Development;
 using System.Reflection;
+using Conspirarte.Environment;
 
 namespace Sample.Project
 {
@@ -17,8 +17,7 @@ namespace Sample.Project
     {
         static void Main(string[] args)
         {
-            Default.ConfigureServer();
-            Simply.Do.InitServer(Assembly.GetExecutingAssembly());
+            new Default(Default.Main).StartServer(Assembly.GetExecutingAssembly());
         }
     }
 }

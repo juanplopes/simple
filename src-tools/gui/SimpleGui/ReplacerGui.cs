@@ -27,6 +27,8 @@ namespace SimpleGui
                 ReplacerLogic.DefaultExecute(path, "Sample.Project", txtNamespace.Text.Trim());
                 ReplacerLogic.DefaultExecute(path, "SampleProject", txtCatalog.Text.Trim());
                 ReplacerLogic.DefaultExecute(path, "sample-project", txtIISUrl.Text.Trim());
+                ReplacerLogic.DefaultExecute(path, "sampleprojectsvc", txtSvcName.Text.Trim());
+
 
                 MessageBox.Show("Done!", "Message");
                 this.Close();
@@ -43,7 +45,7 @@ namespace SimpleGui
             if (btnMore.Tag == null)
             {
                 btnMore.Text = "Less";
-                this.Height = 296;
+                this.Height = 316;
                 btnMore.Tag = new object();
             }
             else
@@ -58,6 +60,7 @@ namespace SimpleGui
         {
             txtCatalog.Text = txtNamespace.Text.Replace(".", "");
             txtIISUrl.Text = txtNamespace.Text.Replace(".", "-").ToLower();
+            txtSvcName.Text = txtNamespace.Text.Replace(".", "").ToLower() + "svc";
         }
 
         private void pictureBox1_DoubleClick(object sender, EventArgs e)

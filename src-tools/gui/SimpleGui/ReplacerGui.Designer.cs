@@ -38,6 +38,8 @@
             this.btnMore = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtCatalog = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtSvcName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -142,6 +144,28 @@
             this.txtCatalog.TabIndex = 10;
             this.txtCatalog.Text = "SampleProject";
             // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.label3.Location = new System.Drawing.Point(12, 266);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(192, 29);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Service name:";
+            // 
+            // txtSvcName
+            // 
+            this.txtSvcName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.txtSvcName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSvcName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSvcName.Location = new System.Drawing.Point(210, 266);
+            this.txtSvcName.Name = "txtSvcName";
+            this.txtSvcName.Size = new System.Drawing.Size(251, 28);
+            this.txtSvcName.TabIndex = 4;
+            this.txtSvcName.Text = "sampleprojectsvc";
+            // 
             // ReplacerGui
             // 
             this.AcceptButton = this.btnOk;
@@ -151,12 +175,14 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(469, 184);
             this.ControlBox = false;
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtCatalog);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnMore);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtSvcName);
             this.Controls.Add(this.txtIISUrl);
             this.Controls.Add(this.txtNamespace);
             this.Controls.Add(this.pictureBox1);
@@ -180,6 +206,8 @@
         private System.Windows.Forms.Button btnMore;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtCatalog;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtSvcName;
     }
 }
 

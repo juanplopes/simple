@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Sample.Project.Environment.Development;
 using Simple;
+using Conspirarte.Environment;
 
 namespace Sample.Project.SampleData
 {
@@ -11,9 +11,9 @@ namespace Sample.Project.SampleData
     {
         static void Main(string[] args)
         {
-            Default.ConfigureServer();
-            Simply.Do.Configure.DefaultHost();
-            Simply.Do.InitServer(typeof(ServerStarter).Assembly, false);
+            new Default(Default.Main).StartServer(
+                typeof(ServerStarter).Assembly, false,
+                x => x.Configure.DefaultHost());
 
             Samples.Init();
         }

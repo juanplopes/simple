@@ -12,7 +12,7 @@ namespace Sample.Project
     {
         public ServerInstaller()
         {
-            ServiceName = "sample-projectsvc";
+            ServiceName = "sampleprojectsvc";
             DisplayName = "Conspirate Business Server";
         }
     }

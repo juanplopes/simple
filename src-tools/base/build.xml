@@ -1,0 +1,91 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <SourceDir>src</SourceDir>
+    <BuildDir>build</BuildDir>
+
+    <BuildBase>..\..\</BuildBase>
+
+    <Configdir>$(BuildDir)\cfg\</Configdir>
+    
+    <ServerDir>$(BuildDir)\server\</ServerDir>
+    <ServerBuildDir>$(BuildBase)$(ServerDir)</ServerBuildDir>
+    
+    <UIDir>$(BuildDir)\ui\</UIDir>
+    <UIBuildDir>$(BuildBase)$(UIDir)</UIBuildDir>
+
+    <ProductVersion>1.0</ProductVersion>
+    <Configuration>Release</Configuration>
+
+    <TestAssembly>$(ServerDir)\Conspirarte.Tests.exe</TestAssembly>
+    <MigrationsAssembly>$(ServerDir)\Conspirarte.Migrations.exe</MigrationsAssembly>
+    <SamplesAssembly1>$(ServerDir)\Conspirarte.SampleData.exe</SamplesAssembly1>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SolutionFile Include="$(SourceDir)\Solution.sln" />
+    <WebProject Include="$(SourceDir)\UserInterface\*.csproj"/>
+  </ItemGroup>
+
+  <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
+
+  <Target Name="Clean">
+    <CreateItem></CreateItem>
+    <MSBuild Projects="@(SolutionFile)" Targets="Clean"/>
+    <RemoveDir Directories="$(BuildDir)" ContinueOnError="true"/>
+    <Delete Files="$(LogFile)"></Delete>
+  </Target>
+
+  <Target Name="GenerateTag">
+    <Time Format="yMM.dhh">
+      <Output TaskParameter="FormattedTime" PropertyName="BuildTag" />
+    </Time>
+
+    <Message Text="Build tag: $(BuildTag)"/>
+  </Target>
+
+  <Target Name="GenerateAssemblyInfo" DependsOnTargets="GenerateTag">
+    <AssemblyInfo CodeLanguage="CS"
+               OutputFile="$(SourceDir)\GlobalInfo.cs"
+               AssemblyCompany="Your Company Name"
+               AssemblyProduct="Conspirarte"
+               AssemblyCopyright="Copyright (c) Your Company Name (Year)"
+               AssemblyTrademark=""
+               ComVisible="false"
+               AssemblyVersion="$(ProductVersion).$(BuildTag)"
+               AssemblyFileVersion="$(ProductVersion).$(BuildTag)" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="GenerateAssemblyInfo">
+    <MSBuild Projects="@(SolutionFile)" 
+             Properties="OutDir=$(ServerBuildDir);WebProjectOutputDir=$(UIBuildDir);Configuration=$(Configuration)"/>
+  </Target>
+
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean; Build"></CallTarget>
+  </Target>
+
+  <Target Name="Test" DependsOnTargets="Rebuild">
+    <Nunit Assemblies="$(TestAssembly)" ToolPath="util\nunit"/>
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Rebuild">
+    <ItemGroup>
+      <PackageDirsToClean Include="$(ServerDir)\Environment" />
+      <PackageFilesToClean Include="$(UIDir)\bin\*.config" />
+      <PackageConfigBase Include="$(ServerDir)\Environment\Production\*.*"/>
+    </ItemGroup>
+   
+    <MakeDir Directories="$(ConfigDir)"/>
+    <Copy SourceFiles="@(PackageConfigBase)" DestinationFolder="$(ConfigDir)"/>
+    <Delete Files ="@(PackageFilesToClean)" ContinueOnError="true" />
+    <RemoveDir Directories="@(PackageDirsToClean)" Condition="true" />
+  </Target>
+  
+  <Target Name="Db:Migrate" DependsOnTargets="Build">
+    <Exec Command="$(MigrationsAssembly)"></Exec>
+  </Target>
+
+  <Target Name="Db:SampleData" DependsOnTargets="Build">
+    <Exec Command="$(SamplesAssembly1)"></Exec>
+  </Target>
+</Project>

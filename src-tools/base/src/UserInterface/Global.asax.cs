@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Sample.Project.Environment.Development;
+using Conspirarte.Environment;
 
 namespace Sample.Project.UserInterface
 {
@@ -27,7 +27,7 @@ namespace Sample.Project.UserInterface
 
         protected void Application_Start()
         {
-            Default.ConfigureClient();
+            new Default(Default.Main).StartClient();
             RegisterRoutes(RouteTable.Routes);
         }
     }

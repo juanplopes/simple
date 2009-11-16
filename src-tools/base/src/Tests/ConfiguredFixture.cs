@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple;
-using Sample.Project.Environment.Test;
 using Simple.Patterns;
 using Sample.Project.SampleData;
+using Conspirarte.Environment;
+using Conspirarte.Migrations;
 
 namespace Sample.Project.Tests
 {
@@ -23,19 +24,15 @@ namespace Sample.Project.Tests
     {
         public ConfigurationEnsurer()
         {
-            Default.ConfigureServer();
-            Simply.Do.InitServer(typeof(ServerStarter).Assembly, false);
+            new Default(Default.Test).StartServer(typeof(ServerStarter).Assembly, false);
         }
 
         public void Ensure() { }
 
         public void ReMigrate()
         {
-            var cfg = Simply.Do.GetNHibernateConfig();
-            var cs = cfg.GetProperty("connection.connection_string");
-            var mig = new Migrator.Migrator("SqlServer", cs, typeof(Migrations.MigrationPlaceHolder).Assembly, false);
-            mig.MigrateTo(1);
-            mig.MigrateToLastVersion();
+            MigratorProgram.Migrate(Default.MigrationProvider, 1);
+            MigratorProgram.Migrate(Default.MigrationProvider, null);
 
         }
     }

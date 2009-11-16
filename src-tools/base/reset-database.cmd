@@ -1,4 +1,3 @@
-osql -E -S .\sqlexpress -d master -i sql/DropDatabases.sql > log.txt
-osql -E -S .\sqlexpress -d master -i sql/CreateDatabases.sql >> log.txt
-call migrate
-call sample-data
+osql -E -S .\sqlexpress -d master -i sql/DropDatabases.sql
+osql -E -S .\sqlexpress -d master -i sql/CreateDatabases.sql
+build "db:migrate;db:sampledata"
