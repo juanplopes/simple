@@ -16,9 +16,9 @@
     <ProductVersion>1.0</ProductVersion>
     <Configuration>Release</Configuration>
 
-    <TestAssembly>$(ServerDir)\Conspirarte.Tests.exe</TestAssembly>
-    <MigrationsAssembly>$(ServerDir)\Conspirarte.Migrations.exe</MigrationsAssembly>
-    <SamplesAssembly1>$(ServerDir)\Conspirarte.SampleData.exe</SamplesAssembly1>
+    <TestAssembly>$(ServerDir)\Sample.Project.Tests.exe</TestAssembly>
+    <MigrationsAssembly>$(ServerDir)\Sample.Project.Migrations.exe</MigrationsAssembly>
+    <SamplesAssembly1>$(ServerDir)\Sample.Project.SampleData.exe</SamplesAssembly1>
   </PropertyGroup>
 
   <ItemGroup>
@@ -47,7 +47,7 @@
     <AssemblyInfo CodeLanguage="CS"
                OutputFile="$(SourceDir)\GlobalInfo.cs"
                AssemblyCompany="Your Company Name"
-               AssemblyProduct="Conspirarte"
+               AssemblyProduct="Sample.Project"
                AssemblyCopyright="Copyright (c) Your Company Name (Year)"
                AssemblyTrademark=""
                ComVisible="false"
