@@ -1,1 +1,1 @@
-build Package Release
+call build Package Release
