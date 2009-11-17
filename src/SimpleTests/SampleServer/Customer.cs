@@ -60,6 +60,26 @@ namespace Simple.Tests.SampleServer
         }
     }
 
-    public interface ICustomerService : IEntityService<Customer> { }
-    public class CustomerService : EntityService<Customer>, ICustomerService { }
+    public interface ICustomerService : IEntityService<Customer>
+    {
+        void DeleteTwoCustomers();
+    }
+    public class CustomerService : EntityService<Customer>, ICustomerService
+    {
+        [RequiresTransaction]
+        public void DeleteTwoCustomers()
+        {
+            var two = Linq().Take(2).ToList();
+
+            foreach (var cust in two)
+            {
+                cust.Delete();
+            }
+
+            throw new Exception("sample exception");
+        }
+
+
+    }
+
 }

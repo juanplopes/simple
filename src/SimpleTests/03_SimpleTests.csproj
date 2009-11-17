@@ -113,6 +113,7 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="DataAccess\EntityHelperIntegrationFixture.cs" />
+    <Compile Include="DataAccess\TransactionHookFixture.cs" />
     <Compile Include="DataAccess\ValidationFixture.cs" />
     <Compile Include="Database.Designer.cs">
       <AutoGen>True</AutoGen>

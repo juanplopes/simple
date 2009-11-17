@@ -46,6 +46,7 @@ namespace Simple.Tests
                .Validator(typeof(Category.Map).Assembly)
                .DefaultHost();
 
+            simply.AddServerHook(x => new TransactionCallHook(x, key));
             simply.AddServerHook(x => new DefaultCallHook(x, key));
             simply.HostAssemblyOf(typeof(NHConfig1));
             

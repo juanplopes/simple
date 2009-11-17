@@ -13,16 +13,26 @@ namespace Simple.Services
 
     public class TransactionCallHook : BaseCallHook
     {
+        public object ConfigKey { get; protected set; }
 
-        public TransactionCallHook(CallHookArgs args) : base(args) { }
+        public TransactionCallHook(CallHookArgs args)
+            : this(args, null) { }
+
+
+        public TransactionCallHook(CallHookArgs args, object key)
+            : base(args)
+        {
+            ConfigKey = key;
+        }
 
         ITransaction tx = null;
 
         public override void Before()
         {
+            var currTx= Simply.Do[ConfigKey].GetSession().Transaction;
             if (this.CallArgs.Method.IsDefined(typeof(RequiresTransactionAttribute), true) &&
-                Simply.Do.GetSession().Transaction == null)
-                tx = Simply.Do.BeginTransaction();
+                currTx == null || !currTx.IsActive || currTx.WasCommitted || currTx.WasRolledBack)
+                    tx = Simply.Do[ConfigKey].BeginTransaction();
         }
 
         public override void AfterSuccess()
