@@ -97,6 +97,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DefaultCallHook.cs" />
     <Compile Include="Entities\EntityService.cs" />
+    <Compile Include="Services\TransactionCallHook.cs" />
     <None Include="Threading\NHLockingProvider.cs" />
     <None Include="Threading\NHLockToken.cs" />
     <None Include="Threading\SimpleInstanceState.cs" />
