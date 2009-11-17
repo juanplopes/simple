@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Conspirarte.Environment;
+using Sample.Project.Environment;
 using Simple;
 
 namespace Conspirarte.Migrations

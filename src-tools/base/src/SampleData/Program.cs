@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple;
-using Conspirarte.Environment;
+using Sample.Project.Environment;
 
 namespace Sample.Project.SampleData
 {

@@ -9,7 +9,7 @@ using NHibernate.Tool.hbm2ddl;
 using System.Xml.Linq;
 using System.Xml;
 using System.Reflection;
-using Conspirarte.Environment;
+using Sample.Project.Environment;
 
 namespace Sample.Project
 {

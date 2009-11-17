@@ -7,9 +7,8 @@ using Simple.IO;
 using System.Reflection;
 using Simple.Services;
 using System.IO;
-using Sample.Project.Environment;
 
-namespace Conspirarte.Environment
+namespace Sample.Project.Environment
 {
     public class Default : ConfigDef
     {

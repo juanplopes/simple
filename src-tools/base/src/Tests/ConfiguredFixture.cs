@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple;
 using Simple.Patterns;
 using Sample.Project.SampleData;
-using Conspirarte.Environment;
+using Sample.Project.Environment;
 using Conspirarte.Migrations;
 
 namespace Sample.Project.Tests
