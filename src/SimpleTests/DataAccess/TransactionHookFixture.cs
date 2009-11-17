@@ -22,13 +22,16 @@ namespace Simple.Tests.DataAccess
         public void TestDeleteWithinTransaction()
         {
             using (MySimply.EnterContext())
-            using (MySimply.BeginTransaction())
+            using (var tx = MySimply.BeginTransaction())
             {
                 int c = Customer.Count();
                 Assert.Throws<Exception>(() => Customer.Service.DeleteTwoCustomers());
                 int c2 = Customer.Count();
-
                 Assert.AreEqual(2, c - c2);
+                tx.Rollback();
+
+                int c3 = Customer.Count();
+                Assert.AreEqual(0, c - c3);
             }
         }
 
