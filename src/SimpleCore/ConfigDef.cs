@@ -82,12 +82,25 @@ namespace Simple
             StartServer(asm, true, null);
         }
 
+        public void StartServer<T>()
+        {
+            StartServer<T>(true, null);
+        }
 
         public void StartServer(Assembly asm, bool wait)
         {
             StartServer(asm, wait, null);
         }
 
+        public void StartServer<T>(bool wait)
+        {
+            StartServer<T>(wait, null);
+        }
+
+        public void StartServer<T>(bool wait, Action<Simply> overrides)
+        {
+            StartServer(typeof(T).Assembly, wait, overrides);
+        }
 
         public void StartServer(Assembly asm, bool wait, Action<Simply> overrides)
         {
