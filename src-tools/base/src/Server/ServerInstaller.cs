@@ -10,9 +10,10 @@ namespace Sample.Project
     [RunInstaller(true)]
     public class ServerInstaller : SimpleInstaller
     {
+        public const string MainServiceName = "sampleprojectsvc";
         public ServerInstaller()
         {
-            ServiceName = "sampleprojectsvc";
+            ServiceName = MainServiceName;
             DisplayName = "Conspirate Business Server";
         }
     }

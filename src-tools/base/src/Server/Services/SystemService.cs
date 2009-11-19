@@ -20,7 +20,7 @@ namespace Sample.Project.Services
 
             runner.Run("Windows Service installed", "Installed",
                 x => x.WarnUnless(ServiceController.GetServices()
-                    .Count(y => y.ServiceName == "conspirartesvc") == 1, "Not installed"));
+                    .Count(y => y.ServiceName == ServerInstaller.MainServiceName) == 1, "Not installed"));
 
             return new List<TaskRunner.Result>(runner.Results);
         }

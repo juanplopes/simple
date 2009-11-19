@@ -29,10 +29,13 @@ namespace Simple.Services
 
         public override void Before()
         {
-            var currTx= Simply.Do[ConfigKey].GetSession().Transaction;
-            if (this.CallArgs.Method.IsDefined(typeof(RequiresTransactionAttribute), true) &&
-                currTx == null || !currTx.IsActive || currTx.WasCommitted || currTx.WasRolledBack)
+
+            if (this.CallArgs.Method.IsDefined(typeof(RequiresTransactionAttribute), true))
+            {
+                var currTx = Simply.Do[ConfigKey].GetSession().Transaction;
+                if (currTx == null || !currTx.IsActive || currTx.WasCommitted || currTx.WasRolledBack)
                     tx = Simply.Do[ConfigKey].BeginTransaction();
+            }
         }
 
         public override void AfterSuccess()
