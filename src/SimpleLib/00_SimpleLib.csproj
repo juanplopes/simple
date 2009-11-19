@@ -107,6 +107,7 @@
     <Compile Include="ConfigSource\FactoryManager.cs" />
     <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />
     <Compile Include="Patterns\DisposableAction.cs" />
+    <Compile Include="Patterns\TaskRunner.cs" />
     <Compile Include="Patterns\ThreadSingleton.cs" />
     <Compile Include="Patterns\DictionaryWrapper.cs" />
     <Compile Include="Patterns\TransformationList.cs" />
