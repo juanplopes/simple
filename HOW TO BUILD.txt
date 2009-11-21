@@ -1,7 +1,0 @@
-You can always build using Visual Studio, but for deployment
-prefer to run MSBuild against build.xml.
-
-The default target is "Build", but if you're planning to create
-a release package, use the target "Package", which will create
-a folder called "pkg" with the DLL and self extractable EXE
-inside.
