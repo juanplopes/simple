@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace Simple.IO.Serialization
 {
-    public class NetDataContractSimpleSerializer : ISimpleSerializer
+    public class NetDataContractSimpleSerializer : ISimpleSerializer, ISimpleStringSerializer
     {
 
         public byte[] Serialize(object graph)
@@ -23,5 +23,18 @@ namespace Simple.IO.Serialization
                 s => new NetDataContractSerializer().Deserialize(s));
         }
 
+        #region ISimpleStringSerializer Members
+
+        public string SerializeToString(object graph)
+        {
+            return Encoding.UTF8.GetString(Serialize(graph));
+        }
+
+        public object DeserializeFromString(string data)
+        {
+            return Deserialize(Encoding.UTF8.GetBytes(data));
+        }
+
+        #endregion
     }
 }

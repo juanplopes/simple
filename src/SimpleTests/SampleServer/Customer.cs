@@ -62,6 +62,7 @@ namespace Simple.Tests.SampleServer
 
     public interface ICustomerService : IEntityService<Customer>
     {
+        [RequiresTransaction]
         void DeleteTwoCustomers();
     }
     public class CustomerService : EntityService<Customer>, ICustomerService

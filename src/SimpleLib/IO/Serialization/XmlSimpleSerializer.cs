@@ -7,14 +7,13 @@ using System.IO;
 
 namespace Simple.IO.Serialization
 {
-    public class XmlSimpleSerializer : ISimpleSerializer
+    public class XmlSimpleSerializer : ISimpleSerializer, ISimpleStringSerializer
     {
-        public Type Type { get; set; }
+        public Type Type { get; protected set; }
         public XmlSimpleSerializer(Type type)
         {
             Type = type;
         }
-
 
         public byte[] Serialize(object graph)
         {
@@ -28,5 +27,19 @@ namespace Simple.IO.Serialization
                 s => new XmlSerializer(Type).Deserialize(s));
         }
 
+
+        #region ISimpleStringSerializer Members
+
+        public string SerializeToString(object graph)
+        {
+            return Encoding.UTF8.GetString(Serialize(graph));
+        }
+
+        public object DeserializeFromString(string data)
+        {
+            return Deserialize(Encoding.UTF8.GetBytes(data));
+        }
+
+        #endregion
     }
 }

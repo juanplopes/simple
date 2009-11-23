@@ -33,7 +33,7 @@ namespace Simple.Services
             if (this.CallArgs.Method.IsDefined(typeof(RequiresTransactionAttribute), true))
             {
                 var currTx = Simply.Do[ConfigKey].GetSession().Transaction;
-                if (currTx == null || !currTx.IsActive || currTx.WasCommitted || currTx.WasRolledBack)
+                if (currTx == null || !currTx.IsActive)
                     tx = Simply.Do[ConfigKey].BeginTransaction();
             }
         }

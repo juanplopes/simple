@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Simple.IO.Serialization
 {
-    public class DataContractSimpleSerializer : ISimpleSerializer
+    public class DataContractSimpleSerializer : ISimpleSerializer, ISimpleStringSerializer
     {
         public Type Type { get; set; }
         public DataContractSimpleSerializer(Type type)
@@ -28,5 +28,18 @@ namespace Simple.IO.Serialization
                 s => new DataContractSerializer(Type).ReadObject(s));
         }
 
+        #region ISimpleStringSerializer Members
+
+        public string SerializeToString(object graph)
+        {
+            return Encoding.UTF8.GetString(Serialize(graph));
+        }
+
+        public object DeserializeFromString(string data)
+        {
+            return Deserialize(Encoding.UTF8.GetBytes(data));
+        }
+
+        #endregion
     }
 }

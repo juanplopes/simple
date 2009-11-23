@@ -158,6 +158,11 @@
     <Compile Include="SimpleLib\MiscFixture.cs" />
     <Compile Include="SimpleLib\Sample\AttributeCacheClasses.cs" />
     <Compile Include="SimpleLib\Sample\TestStringClass.cs" />
+    <Compile Include="SimpleLib\Serializers\BaseSerializerFixture.cs" />
+    <Compile Include="SimpleLib\Serializers\BinarySerializerFixture.cs" />
+    <Compile Include="SimpleLib\Serializers\DataContractSerializerFixture.cs" />
+    <Compile Include="SimpleLib\Serializers\NetDataContractSerializerFixture.cs" />
+    <Compile Include="SimpleLib\Serializers\XmlSerializerFixture.cs" />
     <Compile Include="SimpleLib\StringFragmenterFixture.cs" />
     <Compile Include="SimpleLib\StringUtilsFixture.cs" />
     <Compile Include="SimpleLib\TaskRunnerFixture.cs" />
@@ -259,9 +264,6 @@
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
       <Name>02_SimpleServer</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SimpleLib\TestClasses\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

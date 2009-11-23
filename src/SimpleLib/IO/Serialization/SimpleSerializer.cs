@@ -12,9 +12,15 @@ namespace Simple.IO.Serialization
             return new BinarySimpleSerializer();
         }
 
+
+        public static XmlSimpleSerializer Xml(Type type)
+        {
+            return new XmlSimpleSerializer(type);
+        }
+
         public static XmlSimpleSerializer Xml<T>()
         {
-            return new XmlSimpleSerializer(typeof(T));
+            return Xml(typeof(T));
         }
 
         public static DataContractSimpleSerializer DataContract<T>()
