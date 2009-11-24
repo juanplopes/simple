@@ -16,6 +16,7 @@ using Simple.Tests.SampleServer;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using System.Reflection;
+using System.IO;
 
 namespace Simple.Tests
 {
@@ -37,11 +38,13 @@ namespace Simple.Tests
             object key = ConfigKey;
             simply = Simply.Do[key];
 
+            string temp = Path.GetTempFileName();
 
+            File.WriteAllBytes(temp, Database.Northwind);
 
             simply.Configure
                 .NHibernteFluently(x=>
-                    x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")))
+                    x.Database(SQLiteConfiguration.Standard.UsingFile(temp)))
                .MappingFromAssemblyOf<Category.Map>()
                .Validator(typeof(Category.Map).Assembly)
                .DefaultHost();

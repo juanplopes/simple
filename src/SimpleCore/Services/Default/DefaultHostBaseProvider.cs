@@ -11,7 +11,7 @@ namespace Simple.Services.Default
     {
         public virtual object ProxyObject(object obj, Type type, IInterceptor intercept)
         {
-            return DynamicProxyFactory.Instance.CreateProxy(obj, intercept.Intercept);
+            return DynamicProxyFactory.Instance.CreateMarshallableProxy((MarshalByRefObject)obj, intercept.Intercept);
         }
 
         public virtual ICallHeadersHandler HeaderHandler

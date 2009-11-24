@@ -126,7 +126,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RemotingConfigs.resx</DependentUpon>
     </Compile>
-    <Compile Include="SetupFixture.cs" />
     <Compile Include="ConfigSource\ConfiguratorInterfaceFixture.cs" />
     <Compile Include="DataAccess\EntityServiceFixture.cs" />
     <Compile Include="DataAccess\EntityTransformersFixture.cs" />
