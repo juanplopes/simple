@@ -18,6 +18,13 @@ namespace Simple.Tests.Service
             ConfigureClientServerHooks(guid);
             return guid;
         }
+
+        [Test, Ignore("fails for default provider")]
+        public override void TestFindAttributeInConcreteClass()
+        {
+            base.TestFindAttributeInConcreteClass();
+        }
+
     }
 
     [TestFixture]
@@ -46,11 +53,6 @@ namespace Simple.Tests.Service
         protected override void Release(Guid guid)
         {
         }
-        
-        [Test, Ignore("fails for default provider")]
-        public override void TestFindAttributeInConcreteClass()
-        {
-            base.TestFindAttributeInConcreteClass();
-        }
+       
     }
 }

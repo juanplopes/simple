@@ -6,11 +6,18 @@ using Simple.Services;
 using System.Globalization;
 using NUnit.Framework;
 using Simple.DynamicProxy;
+using System.Linq.Expressions;
+using Simple.Expressions;
 
 namespace Simple.Tests.Service
 {
     public partial class BaseInterceptorFixture
     {
+        public static Func<CallHookArgs, ICallHook> HookFunc<T>(Func<CallHookArgs, ICallHook> hook)
+        {
+            return x=>typeof(T).IsAssignableFrom(x.Method.DeclaringType) ? hook(x) : null;
+        }
+
         public class FindMeAttribute : Attribute { }
 
         public class AttributeFinderCallHook : BaseCallHook
@@ -40,18 +47,6 @@ namespace Simple.Tests.Service
 
         public class TestCallHookString : BaseCallHook
         {
-            public static Func<CallHookArgs, ICallHook> MyFunc = x =>
-            {
-                if (typeof(IOtherService).IsAssignableFrom(x.Method.DeclaringType))
-                {
-                    return new TestCallHookString(x);
-                }
-                else
-                {
-                    return null;
-                }
-            };
-
             public TestCallHookString(CallHookArgs args) : base(args) { }
 
             public override void AfterSuccess()
@@ -80,54 +75,56 @@ namespace Simple.Tests.Service
             bool FindMe();
         }
 
+        public interface ITestService : IService
+        {
+            void ReturnVoid();
+            void ReturnVoid(int i);
+            void ReturnVoidG<T>(T value) where T : IConvertible;
+            void ReturnVoid(out string test);
+
+            void ThrowException();
+
+            int ReturnInt();
+            int ReturnIntG<T>(T value) where T : IConvertible;
+            int ReturnInt(int i);
+
+            string ReturnString();
+            string ReturnString(int prim, params string[] ult);
+            string ReturnString(int i);
+
+            double ReturnDoubleG<T>(T value) where T : IConvertible;
+            double ReturnDouble(ref string test);
+
+            string ReturnIdentityString();
+            string ReturnIdentityStringG<T>();
+        }
+
+        public interface IOtherService : IService
+        {
+            string ReturnString();
+            double ThrowException();
+            DateTime ThrowExceptionOnFinally();
+        }
+
         public class FindMeService : MarshalByRefObject, IFindMeService
         {
             [FindMe]
             public bool FindMe() { return false; }
         }
 
-        public interface ITestService : IService
-        {
-            void TestVoid();
-            int TestInt();
-            int TestGenericInt<T>(T value) where T : IConvertible;
-
-            string TestString();
-            void TestVoidInt(int i);
-            int TestIntInt(int i);
-            string TestStringInt(int i);
-            void TestException();
-
-            void TestGenericsVoid<T>(T value) where T : IConvertible;
-            double TestGenerics<T>(T value) where T : IConvertible;
-            double TestRefParams(ref string test);
-            void TestOutParams(out string test);
-            string TestParams(int prim, params string[] ult);
-
-            string TestReturnIdentity();
-            string TestReturnIdentity<T>();
-        }
-
-        public interface IOtherService : IService
-        {
-            string SomeStringFunction();
-            double ExceptionFunction();
-            DateTime ThrowOnFinally();
-        }
-
         public class OtherService : MarshalByRefObject, IOtherService
         {
-            public string SomeStringFunction()
+            public string ReturnString()
             {
                 return "NOT123456";
             }
 
-            public double ExceptionFunction()
+            public double ThrowException()
             {
                 return 42.42f;
             }
 
-            public DateTime ThrowOnFinally()
+            public DateTime ThrowExceptionOnFinally()
             {
                 return new DateTime(2009, 09, 09);
             }
@@ -135,43 +132,43 @@ namespace Simple.Tests.Service
 
         public class TestService : MarshalByRefObject, ITestService, ICloneable
         {
-            public void TestVoid() { }
-            public int TestInt() { return 10; }
-            public string TestString() { return "10"; }
-            public void TestVoidInt(int i) { }
-            public int TestIntInt(int i) { return i; }
-            public string TestStringInt(int i) { return i.ToString(); }
-            public void TestException() { throw new ApplicationException("AAA"); }
+            public void ReturnVoid() { }
+            public int ReturnInt() { return 10; }
+            public string ReturnString() { return "10"; }
+            public void ReturnVoid(int i) { }
+            public int ReturnInt(int i) { return i; }
+            public string ReturnString(int i) { return i.ToString(); }
+            public void ThrowException() { throw new ApplicationException("AAA"); }
 
-            public void TestGenericsVoid<T>(T value) where T : IConvertible
+            public void ReturnVoidG<T>(T value) where T : IConvertible
             {
                 Assert.IsFalse(this is IDynamicProxy);
                 value.ToDouble(CultureInfo.InvariantCulture);
             }
-            public double TestGenerics<T>(T value) where T : IConvertible
+            public double ReturnDoubleG<T>(T value) where T : IConvertible
             {
                 return value.ToDouble(CultureInfo.InvariantCulture);
             }
 
-            public double TestRefParams(ref string test) { int res = int.Parse(test); test = "42"; return res; }
-            public void TestOutParams(out string test) { test = "42"; }
+            public double ReturnDouble(ref string test) { int res = int.Parse(test); test = "42"; return res; }
+            public void ReturnVoid(out string test) { test = "42"; }
 
-            public string TestParams(int prim, params string[] ult)
+            public string ReturnString(int prim, params string[] ult)
             {
                 return prim.ToString() + ult[ult.Length - 1];
             }
 
-            public string TestReturnIdentity()
+            public string ReturnIdentityString()
             {
                 return SimpleContext.Get().Username;
             }
 
-            public string TestReturnIdentity<T>()
+            public string ReturnIdentityStringG<T>()
             {
                 return SimpleContext.Get().Username;
             }
 
-            public int TestGenericInt<T>(T value) where T : IConvertible
+            public int ReturnIntG<T>(T value) where T : IConvertible
             {
                 return Convert.ToInt32(value);
             }

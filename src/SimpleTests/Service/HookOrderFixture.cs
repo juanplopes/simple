@@ -115,8 +115,8 @@ namespace Simple.Tests.Service
             Assert.AreEqual(42, svc1.GetInt32());
 
             var svc2 = Simply.Do[guid].Resolve<BaseInterceptorFixture.ITestService>();
-            Assert.AreEqual(1000, svc2.TestIntInt(1000));
-            Assert.AreEqual(1001, svc2.TestIntInt(1001));
+            Assert.AreEqual(1000, svc2.ReturnInt(1000));
+            Assert.AreEqual(1001, svc2.ReturnInt(1001));
 
             Release(guid);
         }
@@ -163,7 +163,7 @@ namespace Simple.Tests.Service
             HookFunc2(guid, x => new Set9998BeforeHook(x));
 
             var svc = Simply.Do[guid].Resolve<BaseInterceptorFixture.ITestService>();
-            Assert.AreEqual(10000, svc.TestIntInt(666));
+            Assert.AreEqual(10000, svc.ReturnInt(666));
 
             Release(guid);
         }
@@ -176,7 +176,7 @@ namespace Simple.Tests.Service
             HookFunc2(guid, x => new AddOneHook(x));
 
             var svc = Simply.Do[guid].Resolve<BaseInterceptorFixture.ITestService>();
-            Assert.AreEqual(9999, svc.TestIntInt(777));
+            Assert.AreEqual(9999, svc.ReturnInt(777));
 
             Release(guid);
         }

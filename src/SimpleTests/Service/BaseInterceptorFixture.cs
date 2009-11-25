@@ -29,9 +29,7 @@ namespace Simple.Tests.Service
 
         public static void ConfigureClientHooks(Guid guid)
         {
-            Simply.Do[guid].AddClientHook(x => new TestCallHook(x));
-            Simply.Do[guid].AddClientHook(x => (x.Method.DeclaringType == typeof(IFindMeService) ? new AttributeFinderCallHook(x) : null));
-            Simply.Do[guid].AddClientHook(TestCallHookString.MyFunc);
+            ConfigureGenericHooks(x => Simply.Do[guid].AddClientHook(x));
             ConfigureClientServerHooks(guid);
         }
 
@@ -42,12 +40,15 @@ namespace Simple.Tests.Service
 
         public static void ConfigureServerHooks(Guid guid)
         {
-            Simply.Do[guid].AddServerHook(x => new TestCallHook(x));
-            Simply.Do[guid].AddServerHook(x => (x.Target is IFindMeService ? new AttributeFinderCallHook(x) : null));
-            Simply.Do[guid].AddServerHook(TestCallHookString.MyFunc);
+            ConfigureGenericHooks(x => Simply.Do[guid].AddServerHook(x));
         }
 
-
+        public static void ConfigureGenericHooks(Action<Func<CallHookArgs, ICallHook>> action)
+        {
+            action(HookFunc<ITestService>(x => new TestCallHook(x)));
+            action(HookFunc<IFindMeService>(x => new AttributeFinderCallHook(x)));
+            action(HookFunc<IOtherService>(x => new TestCallHookString(x)));
+        }
 
         protected abstract Guid Configure();
         protected abstract void Release(Guid guid);
@@ -68,7 +69,7 @@ namespace Simple.Tests.Service
         public void TestParams()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual("42", test.TestParams(4, "1", "2", "2", "4", "2"));
+            Assert.AreEqual("42", test.ReturnString(4, "1", "2", "2", "4", "2"));
         }
 
         [Test]
@@ -82,7 +83,7 @@ namespace Simple.Tests.Service
         public void TestIdentityMatch()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            var ident = test.TestReturnIdentity();
+            var ident = test.ReturnIdentityString();
             Assert.AreEqual(WindowsIdentity.GetCurrent().Name, ident);
         }
 
@@ -90,7 +91,7 @@ namespace Simple.Tests.Service
         public void TestIdentityMatchGenerics()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            var ident = test.TestReturnIdentity<double>();
+            var ident = test.ReturnIdentityStringG<double>();
             Assert.AreEqual(WindowsIdentity.GetCurrent().Name, ident);
         }
 
@@ -99,45 +100,45 @@ namespace Simple.Tests.Service
         public void TestGenerics()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual(42.5, test.TestGenerics("42.5"));
+            Assert.AreEqual(42.5, test.ReturnDoubleG("42.5"));
         }
 
         [Test]
         public void TestGenericsVoid()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            test.TestGenericsVoid("42.5");
+            test.ReturnVoidG("42.5");
         }
 
         [Test]
         public void TestSelectiveHook()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreNotEqual("123456", test.TestString());
+            Assert.AreNotEqual("123456", test.ReturnString());
 
             IOtherService other = Simply.Do[ConfigKey].Resolve<IOtherService>();
-            Assert.AreEqual("123456", other.SomeStringFunction());
+            Assert.AreEqual("123456", other.ReturnString());
         }
 
         [Test]
         public void TestNonHookedException()
         {
             IOtherService other = new OtherService();
-            Assert.AreEqual(42.42f, other.ExceptionFunction());
+            Assert.AreEqual(42.42f, other.ThrowException());
         }
 
         [Test]
         public void TestNonHookedExceptionOnFinally()
         {
             IOtherService other = new OtherService();
-            Assert.AreEqual(new DateTime(2009, 09, 09), other.ThrowOnFinally());
+            Assert.AreEqual(new DateTime(2009, 09, 09), other.ThrowExceptionOnFinally());
         }
 
         [Test, ExpectedException(typeof(ArgumentException))]
         public void TestHookException()
         {
             IOtherService other = Simply.Do[ConfigKey].Resolve<IOtherService>();
-            other.ExceptionFunction();
+            other.ThrowException();
         }
 
 
@@ -145,7 +146,7 @@ namespace Simple.Tests.Service
         public void TestHookExceptionOnFinally()
         {
             IOtherService other = Simply.Do[ConfigKey].Resolve<IOtherService>();
-            other.ThrowOnFinally();
+            other.ThrowExceptionOnFinally();
         }
 
         [Test]
@@ -153,7 +154,7 @@ namespace Simple.Tests.Service
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
             string res;
-            test.TestOutParams(out res);
+            test.ReturnVoid(out res);
             Assert.AreEqual("42", res);
         }
 
@@ -162,7 +163,7 @@ namespace Simple.Tests.Service
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
             string res = "10";
-            double intRes = test.TestRefParams(ref res);
+            double intRes = test.ReturnDouble(ref res);
             Assert.AreEqual(10.0, intRes);
             Assert.AreEqual("42", res);
         }
@@ -171,56 +172,56 @@ namespace Simple.Tests.Service
         public void TestVoid()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            test.TestVoid();
+            test.ReturnVoid();
         }
 
         [Test]
         public void TestInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual(42, test.TestInt());
+            Assert.AreEqual(42, test.ReturnInt());
         }
 
-        [Test, Ignore("still cannot call some generic methods in service without error")]
-        public void TestGenericInt()
+        [Test]
+        public virtual void TestGenericInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual(42, test.TestGenericInt("44"));
+            Assert.AreEqual(42, test.ReturnIntG("44"));
         }
 
         [Test]
         public void TestString()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual("10", test.TestString());
+            Assert.AreEqual("10", test.ReturnString());
         }
 
         [Test]
         public void TestVoidInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            test.TestVoidInt(10);
+            test.ReturnVoid(10);
         }
 
         [Test]
         public void TestIntInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual(42, test.TestIntInt(30));
+            Assert.AreEqual(42, test.ReturnInt(30));
         }
 
         [Test]
         public void TestStringInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual("42", test.TestStringInt(42));
+            Assert.AreEqual("42", test.ReturnString(42));
         }
 
         [Test, ExpectedException(typeof(ApplicationException), ExpectedMessage = "AAA")]
         public void TestException()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            test.TestException();
+            test.ThrowException();
         }
 
     }
