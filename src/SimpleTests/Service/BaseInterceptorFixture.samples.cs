@@ -9,8 +9,21 @@ using Simple.DynamicProxy;
 
 namespace Simple.Tests.Service
 {
-    public partial class BaseInterceptorFixture 
+    public partial class BaseInterceptorFixture
     {
+        public class FindMeAttribute : Attribute { }
+
+        public class AttributeFinderCallHook : BaseCallHook
+        {
+            public AttributeFinderCallHook(CallHookArgs args) : base(args) { }
+
+            public override void AfterSuccess()
+            {
+                if (CallArgs.Method.IsDefined(typeof(FindMeAttribute), true) || CallArgs.Client)
+                    CallArgs.Return = true;
+            }
+        }
+
         public class TestCallHook : BaseCallHook
         {
             public TestCallHook(CallHookArgs args) : base(args) { }
@@ -61,7 +74,18 @@ namespace Simple.Tests.Service
                 }
             }
         }
-        
+
+        public interface IFindMeService : IService
+        {
+            bool FindMe();
+        }
+
+        public class FindMeService : MarshalByRefObject, IFindMeService
+        {
+            [FindMe]
+            public bool FindMe() { return false; }
+        }
+
         public interface ITestService : IService
         {
             void TestVoid();

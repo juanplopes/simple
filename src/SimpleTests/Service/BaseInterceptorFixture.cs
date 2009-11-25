@@ -24,11 +24,13 @@ namespace Simple.Tests.Service
         {
             Simply.Do[guid].Host(typeof(TestService));
             Simply.Do[guid].Host(typeof(OtherService));
+            Simply.Do[guid].Host(typeof(FindMeService));
         }
 
         public static void ConfigureClientHooks(Guid guid)
         {
             Simply.Do[guid].AddClientHook(x => new TestCallHook(x));
+            Simply.Do[guid].AddClientHook(x => (x.Method.DeclaringType == typeof(IFindMeService) ? new AttributeFinderCallHook(x) : null));
             Simply.Do[guid].AddClientHook(TestCallHookString.MyFunc);
             ConfigureClientServerHooks(guid);
         }
@@ -41,6 +43,7 @@ namespace Simple.Tests.Service
         public static void ConfigureServerHooks(Guid guid)
         {
             Simply.Do[guid].AddServerHook(x => new TestCallHook(x));
+            Simply.Do[guid].AddServerHook(x => (x.Target is IFindMeService ? new AttributeFinderCallHook(x) : null));
             Simply.Do[guid].AddServerHook(TestCallHookString.MyFunc);
         }
 
@@ -68,7 +71,12 @@ namespace Simple.Tests.Service
             Assert.AreEqual("42", test.TestParams(4, "1", "2", "2", "4", "2"));
         }
 
-
+        [Test]
+        public void TestFindAttributeInConcreteClass()
+        {
+            IFindMeService test = Simply.Do[ConfigKey].Resolve<IFindMeService>();
+            Assert.AreEqual(true, test.FindMe());
+        }
 
         [Test]
         public void TestIdentityMatch()
