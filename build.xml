@@ -62,7 +62,7 @@
     <CallTarget Targets="Clean; Build"></CallTarget>
   </Target>
 
-  <Target Name="Test" DependsOnTargets="Build">
+  <Target Name="Test" DependsOnTargets="Rebuild">
     <Nunit Assemblies="$(TestAssembly)" ToolPath="util\nunit"/>
   </Target>
 

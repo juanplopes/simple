@@ -72,7 +72,7 @@ namespace Simple.Tests.Service
         }
 
         [Test]
-        public void TestFindAttributeInConcreteClass()
+        public virtual void TestFindAttributeInConcreteClass()
         {
             IFindMeService test = Simply.Do[ConfigKey].Resolve<IFindMeService>();
             Assert.AreEqual(true, test.FindMe());
@@ -181,7 +181,7 @@ namespace Simple.Tests.Service
             Assert.AreEqual(42, test.TestInt());
         }
 
-        [Test, Explicit("Will fail")]
+        [Test, Ignore("still cannot call some generic methods in service without error")]
         public void TestGenericInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
