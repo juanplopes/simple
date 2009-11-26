@@ -29,11 +29,14 @@ namespace SimpleLauncher
             var watcher = new FileSystemWatcher(dirPath);
             watcher.IncludeSubdirectories = true;
 
+            foreach (string ext in watchExt)
+                Console.WriteLine("Watching extension: " + ext);
+
             var timer = new Timer((x) =>
             {
                 Start(dirPath, filePath);
             });
-            timer.Change(1000, Timeout.Infinite);
+            timer.Change(2500, Timeout.Infinite);
 
             watcher.Changed += (o, p) =>
             {
