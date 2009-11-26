@@ -33,7 +33,7 @@ namespace Simple.Tests.SampleServer
         {
             public Map()
             {
-                WithTable("Customers");
+                Table("Customers");
                 Not.LazyLoad();
 
                 Id(x => x.Id, "CustomerID");

@@ -27,12 +27,12 @@ namespace Simple.Tests.SampleServer
         {
             public Map()
             {
-                WithTable("EmployeeTerritories");
+                Table("EmployeeTerritories");
                 Not.LazyLoad();
 
-                UseCompositeId()
-                    .WithKeyReference(x => x.Employee, "EmployeeID")
-                    .WithKeyReference(x => x.Territory, "TerritoryID");
+                CompositeId()
+                    .KeyReference(x => x.Employee, "EmployeeID")
+                    .KeyReference(x => x.Territory, "TerritoryID");
 
                 References(x => x.Employee, "EmployeeID");
                 References(x => x.Territory, "TerritoryID");

@@ -26,7 +26,7 @@ namespace Simple.Tests.SampleServer
         {
             public Map()
             {
-                WithTable("Employees");
+                Table("Employees");
                 Not.LazyLoad();
 
                 Id(x => x.Id, "EmployeeID");

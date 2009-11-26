@@ -85,7 +85,6 @@
     <Compile Include="DataAccess\INHibernateFactory.cs" />
     <Compile Include="DataAccess\NHibernateConfig.cs" />
     <Compile Include="DataAccess\NHibernateConfigSource.cs" />
-    <Compile Include="DataAccess\Conventions\LazyConvention.cs" />
     <Compile Include="DataAccess\NHibernateFactory.cs" />
     <Compile Include="DataAccess\NHibernateSimplyExtensions.cs" />
     <Compile Include="DataAccess\SimpleTransformers.cs" />

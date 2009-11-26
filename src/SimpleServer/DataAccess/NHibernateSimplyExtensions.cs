@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Linq.Expressions;
 using Simple.Expressions;
 using NHibernate;
+using FluentNHibernate;
 
 namespace Simple
 {
@@ -103,7 +104,7 @@ namespace Simple
             });
         }
         public static SimplyConfigure Mapping<T>(this SimplyConfigure config)
-            where T : IClassMap
+            where T : IMappingProvider
         {
             return Mapping(config, typeof(T));
         }

@@ -25,7 +25,7 @@ namespace Simple.Tests.SampleServer
         {
             public Map()
             {
-                WithTable("Territories");
+                Table("Territories");
                 Not.LazyLoad();
 
                 Id(x => x.Id, "TerritoryID");

@@ -19,7 +19,7 @@ namespace Simple.Tests.SampleServer
         {
             public Map()
             {
-                WithTable("Region");
+                Table("Region");
                 Not.LazyLoad();
 
                 Id(x => x.Id, "RegionID");

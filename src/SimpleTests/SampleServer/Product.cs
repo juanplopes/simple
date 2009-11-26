@@ -27,7 +27,7 @@ namespace Simple.Tests.SampleServer
         {
             public Map()
             {
-                WithTable("Products");
+                Table("Products");
                 Not.LazyLoad();
 
                 Id(x => x.Id, "ProductID").GeneratedBy.Increment();
