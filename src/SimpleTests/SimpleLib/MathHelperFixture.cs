@@ -12,7 +12,9 @@ namespace Simple.Tests.SimpleLib
         [Test]
         public void FirstPrimes()
         {
-            List<int> primes = new List<int>(PrimeNumbers.GetPrimesEnumerable());
+            List<int> primes = new List<int>(MathHelper.GetPrimesEnumerable(12));
+            Assert.AreEqual(5, primes.Count);
+            
             Assert.AreEqual(2, primes[0]);
             Assert.AreEqual(3, primes[1]);
             Assert.AreEqual(5, primes[2]);

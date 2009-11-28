@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace Simple.Common
 {
@@ -33,7 +34,7 @@ namespace Simple.Common
         public static bool FloatEq(decimal a, decimal b, decimal delta)
         {
             return Math.Abs(a - b) < delta;
-        } 
+        }
 
         public static bool FloatEq(float a, float b, float delta)
         {
@@ -44,5 +45,23 @@ namespace Simple.Common
         {
             return Math.Abs(a - b) < delta;
         }
+
+        public static IEnumerable<int> GetPrimesEnumerable(int topSieveNumber)
+        {
+            BitArray sieve = new BitArray(topSieveNumber, true);
+            sieve[0] = false; sieve[1] = false;
+
+            int sqrTop = Convert.ToInt32(Math.Ceiling(Math.Sqrt(topSieveNumber))) + 1;
+
+            for (int i = 2; i < topSieveNumber; i++)
+                if (sieve[i])
+                {
+                    yield return i;
+                    for (int j = i * 2; j < topSieveNumber; j += i)
+                        sieve[j] = false;
+                }
+        }
+
+
     }
 }
