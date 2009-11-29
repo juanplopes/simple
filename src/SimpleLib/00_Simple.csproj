@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Simple</RootNamespace>
-    <AssemblyName>SimpleLib</AssemblyName>
+    <AssemblyName>Simple</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
@@ -176,10 +176,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Common\ThreadData.cs" />
-    <Compile Include="UI\Web\ControlStateHelper.cs">
-    </Compile>
-    <Compile Include="UI\Windows\KeyboardHook.cs" />
-    <Compile Include="UI\Windows\SingleInstance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Log4net.alternative.config" />
