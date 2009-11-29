@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Simple</RootNamespace>
-    <AssemblyName>SimpleServer</AssemblyName>
+    <AssemblyName>Simple.DataAccess</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
@@ -103,13 +103,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleLib\00_SimpleLib.csproj">
+    <ProjectReference Include="..\SimpleLib\00_Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
-      <Name>00_SimpleLib</Name>
+      <Name>00_Simple</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleCore\01_SimpleCore.csproj">
+    <ProjectReference Include="..\SimpleCore\01_Simple.Services.csproj">
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
-      <Name>01_SimpleCore</Name>
+      <Name>01_Simple.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

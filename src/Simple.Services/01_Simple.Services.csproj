@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Simple</RootNamespace>
-    <AssemblyName>SimpleCore</AssemblyName>
+    <AssemblyName>Simple.Services</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
@@ -137,9 +137,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleLib\00_SimpleLib.csproj">
+    <ProjectReference Include="..\SimpleLib\00_Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
-      <Name>00_SimpleLib</Name>
+      <Name>00_Simple</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
