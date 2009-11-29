@@ -29,6 +29,7 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual(count, result.TotalCount);
             var comp = q.Skip(skip).Take(take).ToList();
 
+            Assert.AreEqual((int)Math.Ceiling((decimal)q.Count() / take), result.TotalPages(take));
             Assert.AreEqual(comp.Count, result.Count);
             Assert.Greater(comp.Count, 0);
 

@@ -95,7 +95,7 @@
     <Compile Include="Services\Default\DefaultHostConfig.cs" />
     <Compile Include="Services\Default\DefaultHostSimplyExtensions.cs" />
     <Compile Include="Services\Default\ServiceLocationFactory.cs" />
-    <Compile Include="Entities\EntityAccessor.cs" />
+    <Compile Include="Entities\ExpressionExtensions.cs" />
     <Compile Include="Services\ICallHeadersHandler.cs" />
     <Compile Include="Services\ICallHook.cs" />
     <Compile Include="Services\IInterceptor.cs" />
@@ -137,7 +137,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleLib\00_Simple.csproj">
+    <ProjectReference Include="..\Simple\00_Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
       <Name>00_Simple</Name>
     </ProjectReference>

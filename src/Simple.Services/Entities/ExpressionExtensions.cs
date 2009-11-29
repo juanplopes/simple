@@ -25,11 +25,5 @@ namespace Simple.Entities
         }
 
     }
-
-    public class EntityAccessor<T, R> : AggregateFactory<EntityAccessor<T, R>>
-        where R : IEntityService<T>
-    {
-        
-
-    }
+   
 }

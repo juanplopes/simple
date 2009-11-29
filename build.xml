@@ -16,7 +16,7 @@
     <LogFile>build.log</LogFile>
     <ProductVersion>2.0</ProductVersion>
 
-    <TestAssembly>$(BuildDir)\SimpleTests.exe</TestAssembly>
+    <TestAssembly>$(BuildDir)\Simple.Tests.exe</TestAssembly>
   </PropertyGroup>
 
   <ItemGroup>
@@ -68,9 +68,9 @@
 
   <Target Name="Merge" DependsOnTargets="Build">
     <ItemGroup>
-      <MergeItems Include="$(BuildDir)\SimpleCore.dll"/>
-      <MergeItems Include="$(BuildDir)\SimpleLib.dll"/>
-      <MergeItems Include="$(BuildDir)\SimpleServer.dll"/>
+      <MergeItems Include="$(BuildDir)\Simple.dll"/>
+      <MergeItems Include="$(BuildDir)\Simple.Services.dll"/>
+      <MergeItems Include="$(BuildDir)\Simple.DataAccess.dll"/>
       <MergeItems Include="$(BuildDir)\Castle.Core.dll"/>
       <MergeItems Include="$(BuildDir)\Castle.DynamicProxy2.dll"/>
       <MergeItems Include="$(BuildDir)\Antlr3.Runtime.dll"/>

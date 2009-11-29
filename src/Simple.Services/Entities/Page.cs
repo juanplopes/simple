@@ -16,7 +16,7 @@ namespace Simple.DataAccess
         {
             if (pageSize > 0)
             {
-                return TotalCount / pageSize + ((TotalCount % pageSize == 0) ? 0 : 1);
+                return (int)Math.Ceiling((decimal)TotalCount / pageSize);
             }
             else
             {
