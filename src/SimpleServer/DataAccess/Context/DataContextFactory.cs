@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Simple.Patterns;
-using Simple.ConfigSource;
+using Simple.Config;
 using Simple.Common;
 using NHibernate;
 

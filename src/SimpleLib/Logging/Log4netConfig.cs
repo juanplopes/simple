@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Simple.ConfigSource;
+using Simple.Config;
 
 
 namespace Simple.Logging

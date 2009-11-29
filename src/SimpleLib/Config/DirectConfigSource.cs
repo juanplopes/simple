@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Patterns;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     public class DirectConfigSource<T> : ConfigSource<T>, IConfigSource<T,T>
     {

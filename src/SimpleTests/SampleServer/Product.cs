@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.ConfigSource;
+using Simple.Config;
 using FluentNHibernate.Mapping;
 using Simple.Services;
 using Simple.Entities;

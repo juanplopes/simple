@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Expressions;
-using Simple.ConfigSource;
+using Simple.Config;
 using System.Linq.Expressions;
 using Simple.DataAccess;
 

@@ -5,7 +5,7 @@ using System.Text;
 using Simple.IO;
 using System.IO;
 using System.Reflection;
-using Simple.ConfigSource;
+using Simple.Config;
 
 namespace Simple
 {

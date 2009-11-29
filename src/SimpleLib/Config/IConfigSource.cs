@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using Simple.Patterns;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     public delegate void ConfigReloadedDelegate<T>(T config);
 

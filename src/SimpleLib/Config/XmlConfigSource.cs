@@ -8,7 +8,7 @@ using System.Xml;
 using Simple.IO;
 using Simple.Reflection;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     public class XmlConfigSource<T> :
         ConfigSource<T>,

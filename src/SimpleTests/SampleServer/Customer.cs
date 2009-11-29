@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using FluentNHibernate.Mapping;
 using Simple.Services;
-using Simple.ConfigSource;
+using Simple.Config;
 using NHibernate;
 using NHibernate.SqlTypes;
 using Simple.Entities;

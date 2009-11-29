@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Reflection;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple=false, Inherited=true)]
     public class DefaultConfigAttribute : Attribute

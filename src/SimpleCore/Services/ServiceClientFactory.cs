@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Simple.ConfigSource;
+using Simple.Config;
 using Simple.Patterns;
 
 namespace Simple.Services

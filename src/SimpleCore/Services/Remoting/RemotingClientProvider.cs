@@ -1,5 +1,5 @@
 ﻿using System;
-using Simple.ConfigSource;
+using Simple.Config;
 using System.Runtime.Remoting;
 using log4net;
 using System.Reflection;

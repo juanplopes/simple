@@ -5,7 +5,7 @@ using System.Text;
 using Simple.Logging;
 using Simple.Patterns;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     internal class SourceFor<C> : Singleton<SourceFor<C>>
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Simple.ConfigSource;
+using Simple.Config;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;

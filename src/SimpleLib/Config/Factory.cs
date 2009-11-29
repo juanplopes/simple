@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     public abstract class Factory<T> : IFactory<T>, IDisposable
     {

@@ -9,7 +9,7 @@ using Simple.Logging;
 using System.Xml;
 using System.Reflection;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     public class XmlFileConfigSource<T> :
         XmlConfigSource<T>,

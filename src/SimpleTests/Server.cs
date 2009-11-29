@@ -8,7 +8,7 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Channels.Tcp;
 using Simple.Services.Remoting;
-using Simple.ConfigSource;
+using Simple.Config;
 using Simple.Tests.Service;
 using Simple.Services;
 using System.Threading;

@@ -2,7 +2,7 @@
 using log4net;
 using Simple.Logging;
 using System.Reflection;
-using Simple.ConfigSource;
+using Simple.Config;
 
 namespace Simple
 {

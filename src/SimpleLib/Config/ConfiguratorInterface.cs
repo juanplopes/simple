@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     public interface IConfiguratorInterface<T, R>
     {

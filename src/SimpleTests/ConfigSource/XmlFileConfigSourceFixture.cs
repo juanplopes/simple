@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using System.IO;
-using Simple.ConfigSource;
+using Simple.Config;
 using System.Xml;
 using System.Xml.Serialization;
 using Simple.IO;

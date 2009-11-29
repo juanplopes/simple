@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Simple.ConfigSource;
+using Simple.Config;
 using Simple.Reflection;
 using log4net;
 using System.Reflection;

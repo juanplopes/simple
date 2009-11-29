@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     public class AggregateFactory<THIS> : MarshalByRefObject
         where THIS : AggregateFactory<THIS>, new()

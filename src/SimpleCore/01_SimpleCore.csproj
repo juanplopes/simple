@@ -75,15 +75,8 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="ConfigDef.cs" />
-    <Compile Include="DataAccess\EntityTransformer.cs" />
-    <Compile Include="DataAccess\IPage.cs" />
-    <Compile Include="DataAccess\MappedProperty.cs" />
-    <Compile Include="DataAccess\GenericFault.cs" />
-    <Compile Include="DataAccess\IExceptionHandler.cs" />
-    <Compile Include="DataAccess\Page.cs" />
-    <Compile Include="DataAccess\PropertyDescriptionMapping.cs" />
-    <Compile Include="DataAccess\SimpleEntityAttribute.cs" />
-    <Compile Include="DataAccess\PersistenceFault.cs" />
+    <Compile Include="Entities\IPage.cs" />
+    <Compile Include="Entities\Page.cs" />
     <Compile Include="DefaultConfigContent.Designer.cs">
       <DependentUpon>DefaultConfigContent.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -93,7 +86,7 @@
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\OrderByItem.cs" />
     <Compile Include="Entities\OrderByCollection.cs" />
-    <Compile Include="Hosting\SimpleHostingExtensions.cs" />
+    <Compile Include="Services\SimpleHostingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CallHeaders.cs" />
     <Compile Include="Services\DefaultInterceptor.cs" />

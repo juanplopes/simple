@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Simple.ConfigSource;
+using Simple.Config;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting;
 using log4net;

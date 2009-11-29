@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.ConfigSource;
+using Simple.Config;
 using NUnit.Framework;
 using System.IO;
 using Simple.Logging;

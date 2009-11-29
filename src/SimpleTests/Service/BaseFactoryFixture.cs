@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple.Services;
-using Simple.ConfigSource;
+using Simple.Config;
 using Simple.Services.Remoting;
 using System.Runtime.Remoting;
 using System.Diagnostics;

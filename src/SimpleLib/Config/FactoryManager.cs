@@ -4,7 +4,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using Simple.Patterns;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     public class FactoryManager<F, C>
         where F : class, IFactory<C>

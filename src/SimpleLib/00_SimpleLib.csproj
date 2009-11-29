@@ -60,10 +60,10 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Common\NamedEvents.cs" />
-    <Compile Include="ConfigSource\AggregateFactory.cs" />
-    <Compile Include="ConfigSource\DefaultConfigAttribute.cs" />
-    <Compile Include="ConfigSource\DirectConfigSource.cs" />
-    <Compile Include="ConfigSource\ConfiguratorInterface.cs" />
+    <Compile Include="Config\AggregateFactory.cs" />
+    <Compile Include="Config\DefaultConfigAttribute.cs" />
+    <Compile Include="Config\DirectConfigSource.cs" />
+    <Compile Include="Config\ConfiguratorInterface.cs" />
     <Compile Include="DynamicProxy\MarshallableDynamicProxyImpl.cs" />
     <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
     <Compile Include="Expressions\Editable\EditableExpressionCollection.cs" />
@@ -104,7 +104,7 @@
     <Compile Include="IO\Serialization\XmlSimpleSerializer.cs" />
     <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netConfig.cs" />
-    <Compile Include="ConfigSource\FactoryManager.cs" />
+    <Compile Include="Config\FactoryManager.cs" />
     <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />
     <Compile Include="Patterns\DisposableAction.cs" />
     <Compile Include="Patterns\TaskRunner.cs" />
@@ -117,20 +117,19 @@
     <Compile Include="Common\MathHelper.cs" />
     <Compile Include="Patterns\Singleton.cs" />
     <Compile Include="Patterns\Tuples.cs" />
-    <Compile Include="ConfigSource\AggregateConfigSource.cs" />
-    <Compile Include="ConfigSource\ConfigSource.cs" />
-    <Compile Include="ConfigSource\Factory.cs" />
-    <Compile Include="ConfigSource\IWrappedConfigSource.cs" />
-    <Compile Include="ConfigSource\IConfigSource.cs" />
-    <Compile Include="ConfigSource\IFactory.cs" />
-    <Compile Include="ConfigSource\IXmlContentHolder.cs" />
-    <Compile Include="ConfigSource\NullConfigSource.cs" />
-    <Compile Include="ConfigSource\SourceManager.cs" />
-    <Compile Include="ConfigSource\WrappedConfigSource.cs" />
-    <Compile Include="ConfigSource\XmlConfig.cs" />
-    <Compile Include="ConfigSource\XmlConfigSource.cs" />
-    <Compile Include="ConfigSource\XmlFileConfigSource.cs" />
-    <Compile Include="ConfigSource\XPathParameter.cs" />
+    <Compile Include="Config\ConfigSource.cs" />
+    <Compile Include="Config\Factory.cs" />
+    <Compile Include="Config\IWrappedConfigSource.cs" />
+    <Compile Include="Config\IConfigSource.cs" />
+    <Compile Include="Config\IFactory.cs" />
+    <Compile Include="Config\IXmlContentHolder.cs" />
+    <Compile Include="Config\NullConfigSource.cs" />
+    <Compile Include="Config\SourceManager.cs" />
+    <Compile Include="Config\WrappedConfigSource.cs" />
+    <Compile Include="Config\XmlConfig.cs" />
+    <Compile Include="Config\XmlConfigSource.cs" />
+    <Compile Include="Config\XmlFileConfigSource.cs" />
+    <Compile Include="Config\XPathParameter.cs" />
     <Compile Include="DefaultConfigResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

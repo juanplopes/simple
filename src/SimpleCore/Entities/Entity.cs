@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 using Simple.DataAccess;
 using Simple.Reflection;
-using Simple.ConfigSource;
+using Simple.Config;
 using System.Linq.Expressions;
 using Simple.Expressions.Editable;
 using Simple.Expressions;

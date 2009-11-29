@@ -5,7 +5,7 @@ using System.Text;
 using Simple.Logging;
 using Simple.Patterns;
 
-namespace Simple.ConfigSource
+namespace Simple.Config
 {
     public delegate T ConfigHookDelegate<T>(T config);
 

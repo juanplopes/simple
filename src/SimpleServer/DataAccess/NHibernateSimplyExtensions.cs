@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.DataAccess;
-using Simple.ConfigSource;
+using Simple.Config;
 using NH = NHibernate;
 using NHibernate.Cfg;
 using FluentNHibernate.Cfg;
