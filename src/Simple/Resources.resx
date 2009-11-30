@@ -121,4 +121,7 @@
   <data name="Log4netConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Log4net.config;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Primes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>primes.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

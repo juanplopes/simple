@@ -65,7 +65,7 @@ namespace Simple
         public static SimplyConfigure Log4netToConsole(this SimplyConfigure config)
         {
             IConfigSource<Log4netConfig> source =
-                XmlConfig.LoadXml<Log4netConfig>(DefaultConfigResource.Log4netConfig);
+                XmlConfig.LoadXml<Log4netConfig>(Resources.Log4netConfig);
             return Log4net(config, source);
         }
 

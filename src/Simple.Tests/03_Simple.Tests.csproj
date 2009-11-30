@@ -139,7 +139,7 @@
     <Compile Include="SimpleLib\FileLocatorFixture.cs" />
     <Compile Include="SimpleLib\InvokerFactoryFixture.cs" />
     <Compile Include="SimpleLib\MarshallableDynamicProxyFixture.cs" />
-    <Compile Include="SimpleLib\MathHelperFixture.cs" />
+    <Compile Include="SimpleLib\SimpleMathFixture.cs" />
     <Compile Include="SimpleLib\MetaLinqFixture.cs" />
     <Compile Include="SimpleLib\MethodCacheFixture.cs" />
     <Compile Include="SimpleLib\MiscFixture.cs" />

@@ -60,6 +60,7 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Common\NamedEvents.cs" />
+    <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Config\AggregateFactory.cs" />
     <Compile Include="Config\DefaultConfigAttribute.cs" />
     <Compile Include="Config\DirectConfigSource.cs" />
@@ -114,7 +115,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\DecoratedTypeFinder.cs" />
     <Compile Include="Patterns\LazyEnumerable.cs" />
-    <Compile Include="Common\MathHelper.cs" />
+    <Compile Include="Common\SimpleMath.cs" />
     <Compile Include="Patterns\Singleton.cs" />
     <Compile Include="Patterns\Tuples.cs" />
     <Compile Include="Config\ConfigSource.cs" />
@@ -130,10 +131,10 @@
     <Compile Include="Config\XmlConfigSource.cs" />
     <Compile Include="Config\XmlFileConfigSource.cs" />
     <Compile Include="Config\XPathParameter.cs" />
-    <Compile Include="DefaultConfigResource.Designer.cs">
+    <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DefaultConfigResource.resx</DependentUpon>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="DynamicProxy\DynamicProxyFactory.cs" />
     <Compile Include="DynamicProxy\InterfaceDynamicProxyImpl.cs" />
@@ -181,13 +182,13 @@
     <None Include="Log4net.alternative.config" />
     <None Include="Log4net.config">
     </None>
-    <Content Include="ConfigFiles.xml" />
+    <None Include="Primes.bin" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DefaultConfigResource.resx">
+    <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>DefaultConfigResource.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

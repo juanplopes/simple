@@ -8,6 +8,8 @@ namespace Simple.Patterns
     public class LazyEnumerable<T> : IEnumerable<T>
     {
         private LinkedList<T> _cache;
+        protected LinkedList<T> Cache { get { return _cache; } }
+
         private IEnumerator<T> _enumerator;
 
 

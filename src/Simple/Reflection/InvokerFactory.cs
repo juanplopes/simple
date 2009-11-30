@@ -31,6 +31,9 @@ namespace Simple.Reflection
 
             return GetMethodInvoker(method);
         }
+     
+
+
 
         private static InvocationDelegate GetMethodInvoker(MethodInfo methodInfo)
         {
