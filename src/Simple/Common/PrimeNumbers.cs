@@ -50,7 +50,7 @@ namespace Simple.Common
                 return _sieve[number];
             else
             {
-                foreach (int i in _cache)
+                foreach (int i in this.Limit((int)Math.Floor(Math.Sqrt(number))))
                     if (number % i == 0) return false;
 
                 return true;

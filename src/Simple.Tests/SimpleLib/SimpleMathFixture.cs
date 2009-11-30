@@ -51,7 +51,20 @@ namespace Simple.Tests.SimpleLib
         }
 
         [Test]
-        public void TestLastOf()
+        public void TestLargeInt32PrimeNumbers()
+        {
+            Assert.IsFalse(SimpleMath.GetPrimes().IsPrime(982451652));
+            Assert.IsTrue(SimpleMath.GetPrimes().IsPrime(982451653));
+            Assert.IsFalse(SimpleMath.GetPrimes().IsPrime(982451654));
+
+            Assert.IsFalse(SimpleMath.GetPrimes().IsPrime(2147483628));
+            Assert.IsTrue(SimpleMath.GetPrimes().IsPrime(2147483629));
+            Assert.IsFalse(SimpleMath.GetPrimes().IsPrime(2147483630));
+        }
+
+
+        [Test]
+        public void TestLastOfCachedPrimes()
         {
             Assert.IsFalse(SimpleMath.GetPrimes().IsPrime(65520));
             Assert.IsTrue(SimpleMath.GetPrimes().IsPrime(65521));
