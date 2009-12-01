@@ -96,7 +96,7 @@ namespace Simple.Tests.Service
             double ReturnDouble(ref string test);
 
             string ReturnIdentityString();
-            string ReturnIdentityStringG<T>();
+            string ReturnIdentityStringG<T>(T data);
         }
 
         public interface IOtherService : IService
@@ -163,9 +163,9 @@ namespace Simple.Tests.Service
                 return SimpleContext.Get().Username;
             }
 
-            public string ReturnIdentityStringG<T>()
+            public string ReturnIdentityStringG<T>(T data)
             {
-                return SimpleContext.Get().Username;
+                return SimpleContext.Get().Username + data.ToString();
             }
 
             public int ReturnIntG<T>(T value) where T : IConvertible

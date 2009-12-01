@@ -91,10 +91,9 @@ namespace Simple.Tests.Service
         public void TestIdentityMatchGenerics()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            var ident = test.ReturnIdentityStringG<double>();
-            Assert.AreEqual(WindowsIdentity.GetCurrent().Name, ident);
+            var ident = test.ReturnIdentityStringG<double>(2);
+            Assert.AreEqual(WindowsIdentity.GetCurrent().Name+"2", ident);
         }
-
 
         [Test]
         public void TestGenerics()
