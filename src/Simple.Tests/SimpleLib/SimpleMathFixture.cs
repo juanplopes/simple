@@ -30,9 +30,9 @@ namespace Simple.Tests.SimpleLib
         }
 
         [Test]
-        public void TestNegativePrimes()
+        public void TestNoNegativePrimes()
         {
-            Assert.IsTrue(SimpleMath.GetPrimes().IsPrime(-11));
+            Assert.IsFalse(SimpleMath.GetPrimes().IsPrime(-11));
             Assert.IsFalse(SimpleMath.GetPrimes().IsPrime(-9));
         }
 
@@ -60,6 +60,19 @@ namespace Simple.Tests.SimpleLib
             Assert.IsFalse(SimpleMath.GetPrimes().IsPrime(2147483628));
             Assert.IsTrue(SimpleMath.GetPrimes().IsPrime(2147483629));
             Assert.IsFalse(SimpleMath.GetPrimes().IsPrime(2147483630));
+        }
+
+
+        [Test]
+        public void TestFactorization()
+        {
+            CollectionAssert.AreEqual(new[] { 2, 982451653 }, SimpleMath.GetPrimes().Factorize(2 * 982451653).ToList());
+
+            CollectionAssert.AreEqual(new[] { 2, 3, 3, 5, 13 }, SimpleMath.GetPrimes().Factorize(2 * 3 * 3 * 5 * 13).ToList());
+
+            CollectionAssert.AreEqual(new[] { 982451653 }, SimpleMath.GetPrimes().Factorize(982451653).ToList());
+
+            CollectionAssert.AreEqual(new[] { 2, 2, 65537 }, SimpleMath.GetPrimes().Factorize(2 * 2 * 65537).ToList());
         }
 
 

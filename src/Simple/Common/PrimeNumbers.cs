@@ -42,9 +42,31 @@ namespace Simple.Common
                 if (sieve[i]) yield return i;
         }
 
+        public IEnumerable<int> Factorize(int number)
+        {
+            int d, r;
+            foreach (int i in this.Limit((int)Math.Floor(Math.Sqrt(number))))
+            {
+                if (number == 1) yield break;
+
+                while (true)
+                {
+                    d = Math.DivRem(number, i, out r);
+                    if (r != 0) break;
+                    
+                    //r == 0
+                    yield return i;
+                    number = d;
+                }
+
+            }
+
+            yield return number;
+        }
+
         public bool IsPrime(int number)
         {
-            if (number < 0) number = -number;
+            if (number < 0) return false;
 
             if (number < _sieve.Length)
                 return _sieve[number];
