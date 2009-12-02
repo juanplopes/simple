@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Patterns\SingletonFixture.cs" />
     <Compile Include="Patterns\TransformationListFixture.cs" />
+    <Compile Include="Patterns\TuplesFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\RemotingConfigs.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -131,7 +132,7 @@
     <Compile Include="Reflection\AttributeCacheFixture.cs" />
     <Compile Include="Patterns\BaseWDProviderFixture.cs" />
     <Compile Include="Patterns\BaseWorkingDaysFixture.cs" />
-    <Compile Include="Reflection\ClassNameHelperFixture.cs" />
+    <Compile Include="Reflection\TypesHelperFixture.cs" />
     <Compile Include="DynamicProxy\DynamicProxyFixture.cs" />
     <Compile Include="Reflection\EntityHelperFixture.cs" />
     <Compile Include="Reflection\EnumTypeFixture.cs" />

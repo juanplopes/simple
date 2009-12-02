@@ -28,8 +28,8 @@ namespace Simple.Tests.Reflection
             MethodInfo m2 = t.GetMethod("Method");
             InvocationDelegate d2 = InvokerFactory.Do.Create(m1);
 
-            Assert.AreEqual(m1, m2);
-            Assert.AreNotEqual(d1, d2);
+            Assert.AreSame(m1, m2);
+            Assert.AreNotSame(d1, d2);
 
         }
 
@@ -44,8 +44,8 @@ namespace Simple.Tests.Reflection
             MethodInfo m2 = t.GetProperty("Prop").GetSetMethod();
             InvocationDelegate d2 = InvokerFactory.Do.Create(m1);
 
-            Assert.AreEqual(m1, m2);
-            Assert.AreNotEqual(d1, d2);
+            Assert.AreSame(m1, m2);
+            Assert.AreNotSame(d1, d2);
         }
 
         [Test]
@@ -60,8 +60,8 @@ namespace Simple.Tests.Reflection
             MethodInfo m2 = t.GetMethod("Method");
             InvocationDelegate d2 = cache.GetInvoker(m2);
 
-            Assert.AreEqual(m1, m2);
-            Assert.AreEqual(d1, d2);
+            Assert.AreSame(m1, m2);
+            Assert.AreSame(d1, d2);
 
         }
 
@@ -77,8 +77,8 @@ namespace Simple.Tests.Reflection
             PropertyInfo p2 = t.GetProperty("Prop");
             InvocationDelegate d2 = cache.GetGetter(p2);
 
-            Assert.AreEqual(p1, p2);
-            Assert.AreEqual(d1, d2);
+            Assert.AreSame(p1, p2);
+            Assert.AreSame(d1, d2);
         }
 
         [Test]
@@ -93,8 +93,8 @@ namespace Simple.Tests.Reflection
             PropertyInfo p2 = t.GetProperty("Prop");
             InvocationDelegate d2 = cache.GetSetter(p2);
 
-            Assert.AreEqual(p1, p2);
-            Assert.AreEqual(d1, d2);
+            Assert.AreSame(p1, p2);
+            Assert.AreSame(d1, d2);
         }
     }
 }

@@ -4,17 +4,54 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple.Reflection;
+using System.IO;
 
 namespace Simple.Tests.Reflection
 {
     [TestFixture]
-    public class ClassNameHelperFixture
+    public class TypesHelperFixture
     {
+        [Test]
+        public void CanCreateNewIntegerOrFloat()
+        {
+            Assert.AreEqual(0, TypesHelper.GetBoxedDefaultInstance(typeof(int)));
+            Assert.AreEqual(0f, TypesHelper.GetBoxedDefaultInstance(typeof(float)));
+
+            Assert.AreEqual(null, TypesHelper.GetBoxedDefaultInstance(typeof(int?)));
+            Assert.AreEqual(null, TypesHelper.GetBoxedDefaultInstance(typeof(float?)));
+        }
+
+        [Test]
+        public void CanCreateNewVoid()
+        {
+            Assert.AreEqual(null, TypesHelper.GetBoxedDefaultInstance(typeof(void)));
+        }
+        [Test]
+        public void CanCreateNewRefType()
+        {
+            Assert.AreEqual(null, TypesHelper.GetBoxedDefaultInstance(typeof(Console)));
+        }
+
+
+        [Test]
+        public void CanAssignToInterface()
+        {
+            Assert.IsTrue(TypesHelper.CanAssign(typeof(List<int>), typeof(IList<int>)));
+            Assert.IsFalse(TypesHelper.CanAssign(typeof(List<string>), typeof(IList<int>)));
+        }
+
+        [Test]
+        public void CanAssignToAbstractClass()
+        {
+            Assert.IsTrue(TypesHelper.CanAssign(typeof(MemoryStream), typeof(Stream)));
+            Assert.IsFalse(TypesHelper.CanAssign(typeof(Stream), typeof(MemoryStream)));
+        }
+
         [Test]
         public void NormalClassDefinitionName()
         {
-            string className = TypesHelper.GetRealClassName(typeof(ClassNameHelperFixture));
-            Assert.AreEqual("ClassNameHelperFixture", className);
+            string className = TypesHelper.GetRealClassName(typeof(TypesHelperFixture));
+            Assert.AreEqual("TypesHelperFixture", className);
         }
 
         [Test]
@@ -48,8 +85,8 @@ namespace Simple.Tests.Reflection
         [Test]
         public void FlatNormalClassDefinitionName()
         {
-            string className = TypesHelper.GetFlatClassName(typeof(ClassNameHelperFixture));
-            Assert.AreEqual("ClassNameHelperFixture", className);
+            string className = TypesHelper.GetFlatClassName(typeof(TypesHelperFixture));
+            Assert.AreEqual("TypesHelperFixture", className);
         }
 
         [Test]
