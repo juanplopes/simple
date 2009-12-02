@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <GCProjectName>uerj-projects</GCProjectName>
-    
+
     <BuildDir>build\</BuildDir>
     <BuildBase>..\..\</BuildBase>
     <BuildDir2>$(BuildBase)$(BuildDir)</BuildDir2>
@@ -40,7 +40,7 @@
     <Time Format="yMM.dhh">
       <Output TaskParameter="FormattedTime" PropertyName="BuildTag" />
     </Time>
-    
+
     <Message Text="Build tag: $(BuildTag)"/>
   </Target>
 
@@ -60,7 +60,7 @@
   <Target Name="Build" DependsOnTargets ="GenerateAssemblyInfo">
     <MSBuild Projects="@(SolutionFile)" Properties="Configuration=$(Configuration);OutDir=$(BuildDir2)"/>
   </Target>
-  
+
   <Target Name="Rebuild">
     <CallTarget Targets="Clean; Build"></CallTarget>
   </Target>
@@ -86,9 +86,9 @@
       <MergeItems Include="$(BuildDir)\NHibernate.dll"/>
       <MergeItems Include="$(BuildDir)\NHibernate.Linq.dll"/>
     </ItemGroup>
-    
+
     <MakeDir Directories="$(PackageDir)"></MakeDir>
-    
+
     <ILMerge OutputFile="$(PackageDir)\Simple.dll"
              InputAssemblies="@(MergeItems)"
              ToolPath="util\ilmerge"
@@ -98,16 +98,26 @@
   <Target Name="Package" DependsOnTargets="Rebuild;Merge">
     <Copy SourceFiles="$(PackageDir)\Simple.dll" DestinationFolder="$(SourceBaseLibDir)"/>
     <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile $(PackageDir2)\Simple.exe&quot;"/>
+    <Zip Files="$(PackageDir)\Simple.dll" ZipFileName="$(PackageDir)\Simple.zip" WorkingDirectory="$(PackageDir)"/>
   </Target>
 
   <Target Name="Publish" DependsOnTargets="Test;Package">
-     <UploadToGoogleCode
+    <UploadToGoogleCode
+     UserName="$(GCUsername)"
+     Password="$(GCPassword)"
+     ProjectName="$(GCProjectName)"
+     LocalFile="$(PackageDir)\Simple.zip"
+     TargetFileName="Simple-Nightly.zip"
+     Summary="Simple Library v$(ProductVersion).$(BuildTag) (nightly build)"
+      />
+
+    <UploadToGoogleCode
       UserName="$(GCUsername)"
       Password="$(GCPassword)"
       ProjectName="$(GCProjectName)"
       LocalFile="$(PackageDir)\Simple.exe"
-      TargetFileName="Simple-$(ProductVersion).$(BuildTag).exe"
-      Summary="Simple Executable v$(ProductVersion).$(BuildTag) (autobuild)"
+      TargetFileName="Simple-Nightly.exe"
+      Summary="Simple Project Starter v$(ProductVersion).$(BuildTag) (nightly build)"
       />
   </Target>
 </Project>
