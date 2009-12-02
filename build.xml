@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
-    <GCProjectName>uerj-projects</GCProjectName>
+    <GCProjectName>simpledotnet</GCProjectName>
 
     <BuildDir>build\</BuildDir>
     <BuildBase>..\..\</BuildBase>
@@ -108,7 +108,8 @@
      ProjectName="$(GCProjectName)"
      LocalFile="$(PackageDir)\Simple.zip"
      TargetFileName="Simple-Nightly.zip"
-     Summary="Simple Library v$(ProductVersion).$(BuildTag) (nightly build)"
+     Summary="Simple Library v$(ProductVersion).$(BuildTag)"
+     Labels="Nightly;Type-Package"
       />
 
     <UploadToGoogleCode
@@ -117,7 +118,8 @@
       ProjectName="$(GCProjectName)"
       LocalFile="$(PackageDir)\Simple.exe"
       TargetFileName="Simple-Nightly.exe"
-      Summary="Simple Project Starter v$(ProductVersion).$(BuildTag) (nightly build)"
+      Summary="Simple Project Starter v$(ProductVersion).$(BuildTag)"
+      Labels="Nightly;Type-Executable;Featured"
       />
   </Target>
 </Project>

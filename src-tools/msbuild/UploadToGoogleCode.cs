@@ -38,6 +38,8 @@ namespace Simple.Tools.MsBuild
         [Required]
         public string ProjectName { get; set; }
 
+        public string Labels { get; set; }
+
         /// <summary>
         /// Gets or sets the local path of the file to upload.
         /// </summary>
@@ -85,6 +87,25 @@ namespace Simple.Tools.MsBuild
                 WriteLine(stream, @"content-disposition: form-data; name=""summary""");
                 WriteLine(stream, "");
                 WriteLine(stream, Summary);
+
+
+                if (Labels != null)
+                {
+                    string[] labelArray = Labels.Split(';');
+
+                    if (labelArray != null && labelArray.Length > 0)
+                    {
+                        Log.LogMessage("Setting " + labelArray.Length + " label(s)");
+
+                        foreach (var label in labelArray)
+                        {
+                            WriteLine(stream, "--" + Boundary);
+                            WriteLine(stream, "content-disposition: form-data; name=\"label\"");
+                            WriteLine(stream, "");
+                            WriteLine(stream, (label ?? "").Trim());
+                        }
+                    }
+                }
 
                 Log.LogMessage("Sending file...");
                 WriteLine(stream, String.Concat("--", Boundary));
