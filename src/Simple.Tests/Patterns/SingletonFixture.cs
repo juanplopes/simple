@@ -3,44 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Simple.Patterns;
-using Simple.Reflection;
 using System.Threading;
+using Simple.Patterns;
 
 namespace Simple.Tests.Patterns
 {
     [TestFixture]
-    public class MiscFixture
+    public class SingletonFixture
     {
-        [Test]
-        public void TransformationListTest()
-        {
-            TransformationList<int> t = new TransformationList<int>();
-            Func<int, int> func = x => x + 1;
-
-            t.Add(func);
-            t.Add(x => x + 2);
-
-            Assert.AreEqual(4, t.Invoke(1));
-
-            t.Remove(func);
-
-            Assert.AreEqual(3, t.Invoke(1));
-        }
-
-        [Test]
-        public void DisposableActionTest()
-        {
-            int x = 20;
-
-            using (new DisposableAction(() => x++))
-            {
-                Assert.AreEqual(20, x);
-            }
-
-            Assert.AreEqual(21, x);
-        }
-
         [Test]
         public void ThreadSingletonTest()
         {
@@ -86,8 +56,5 @@ namespace Simple.Tests.Patterns
         {
             public int Test { get; set; }
         }
-
     }
-
-
 }

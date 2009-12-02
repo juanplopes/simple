@@ -108,6 +108,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.resx</DependentUpon>
     </Compile>
+    <Compile Include="Patterns\SingletonFixture.cs" />
+    <Compile Include="Patterns\TransformationListFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\RemotingConfigs.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -140,7 +142,7 @@
     <Compile Include="Common\SimpleMathFixture.cs" />
     <Compile Include="Expressions\MetaLinqFixture.cs" />
     <Compile Include="Reflection\MethodCacheFixture.cs" />
-    <Compile Include="Patterns\MiscFixture.cs" />
+    <Compile Include="Patterns\DisposableActionFixture.cs" />
     <Compile Include="IO\BaseSerializerFixture.cs" />
     <Compile Include="IO\BinarySerializerFixture.cs" />
     <Compile Include="IO\DataContractSerializerFixture.cs" />
