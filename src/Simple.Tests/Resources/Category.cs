@@ -9,7 +9,7 @@ using NHibernate;
 using NHibernate.SqlTypes;
 using Simple.Entities;
 
-namespace Simple.Tests.SampleServer
+namespace Simple.Tests.Resources
 {
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class Category : Entity<Category, ICategoryService>

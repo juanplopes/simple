@@ -7,7 +7,7 @@ using Simple.Config;
 using Simple.Services;
 using NUnit.Framework;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     [TestFixture]
     public class DefaultFactoryFixture : BaseFactoryFixture

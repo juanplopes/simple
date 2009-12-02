@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     public class HttpConstants
     {

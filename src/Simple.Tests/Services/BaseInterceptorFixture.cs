@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Globalization;
 using System.Security.Principal;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     public abstract partial class BaseInterceptorFixture
     {

@@ -5,14 +5,18 @@ using System.Text;
 using FluentNHibernate.Mapping;
 using Simple.Services;
 using Simple.Config;
+using NHibernate;
+using NHibernate.SqlTypes;
 using Simple.Entities;
+using Simple.DataAccess;
+using NHibernate.Validator.Cfg.Loquacious;
 
-namespace Simple.Tests.SampleServer
+namespace Simple.Tests.Resources
 {
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
-    public class Supplier : Entity<Supplier, ISupplierService>
+    public partial class Customer : Entity<Customer, ICustomerService>
     {
-        public virtual int Id { get; set; }
+        public virtual string Id { get; set; }
         public virtual string CompanyName { get; set; }
         public virtual string ContactName { get; set; }
         public virtual string ContactTitle { get; set; }
@@ -23,16 +27,16 @@ namespace Simple.Tests.SampleServer
         public virtual string Country { get; set; }
         public virtual string Phone { get; set; }
         public virtual string Fax { get; set; }
-        public virtual string HomePage { get; set; }
 
-        public class Map : ClassMap<Supplier>
+
+        public class Map : ClassMap<Customer>
         {
             public Map()
             {
-                Table("Suppliers");
+                Table("Customers");
                 Not.LazyLoad();
 
-                Id(x => x.Id, "SupplierID");
+                Id(x => x.Id, "CustomerID");
                 Map(x => x.CompanyName);
                 Map(x => x.ContactName);
                 Map(x => x.ContactTitle);
@@ -43,13 +47,40 @@ namespace Simple.Tests.SampleServer
                 Map(x => x.Country);
                 Map(x => x.Phone);
                 Map(x => x.Fax);
-                Map(x => x.HomePage);
+            }
+        }
+
+        public class Validator : ValidationDef<Customer>
+        {
+            public Validator()
+            {
+                Define(x => x.CompanyName).MaxLength(40);
+                Define(x => x.ContactName).MaxLength(30);
             }
         }
     }
 
+    public interface ICustomerService : IEntityService<Customer>
+    {
+        [RequiresTransaction]
+        void DeleteTwoCustomers();
+    }
+    public class CustomerService : EntityService<Customer>, ICustomerService
+    {
+        [RequiresTransaction]
+        public void DeleteTwoCustomers()
+        {
+            var two = Linq().Take(2).ToList();
 
-    public interface ISupplierService : IEntityService<Supplier> { }
-    public class SupplierService : EntityService<Supplier>, ISupplierService { }
+            foreach (var cust in two)
+            {
+                cust.Delete();
+            }
+
+            throw new Exception("sample exception");
+        }
+
+
+    }
 
 }

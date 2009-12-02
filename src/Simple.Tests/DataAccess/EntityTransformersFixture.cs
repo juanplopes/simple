@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.Tests.SampleServer;
+using Simple.Tests.Resources;
 using NUnit.Framework;
 using NHibernate;
 using Simple.DataAccess;

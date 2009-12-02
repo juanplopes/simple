@@ -8,7 +8,7 @@ using Simple.Services;
 using System.Net;
 using System.Runtime.Remoting;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     [TestFixture]
     public class ServiceConfigFixture

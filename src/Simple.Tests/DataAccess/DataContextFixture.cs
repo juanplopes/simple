@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Simple.DataAccess.Context;
 using NHibernate;
-using Simple.Tests.SampleServer;
+using Simple.Tests.Resources;
 
 namespace Simple.Tests.DataAccess
 {

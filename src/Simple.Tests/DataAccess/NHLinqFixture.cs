@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using NHibernate.Linq;
-using Simple.Tests.SampleServer;
+using Simple.Tests.Resources;
 
 namespace Simple.Tests.DataAccess
 {

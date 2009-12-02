@@ -6,7 +6,7 @@ using Simple.Config;
 using Simple.Entities;
 using FluentNHibernate.Mapping;
 
-namespace Simple.Tests.SampleServer
+namespace Simple.Tests.Resources
 {
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class Region : Entity<Region, IRegionService>

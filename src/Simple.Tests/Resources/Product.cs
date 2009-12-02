@@ -7,7 +7,7 @@ using FluentNHibernate.Mapping;
 using Simple.Services;
 using Simple.Entities;
 
-namespace Simple.Tests.SampleServer
+namespace Simple.Tests.Resources
 {
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class Product : Entity<Product, IProductService>

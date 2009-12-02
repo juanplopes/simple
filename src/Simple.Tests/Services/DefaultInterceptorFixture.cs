@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple.Services.Default;
 using Simple.Services;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     [TestFixture]
     public class DefaultServerInterceptorFixture : DefaultInterceptorFixture

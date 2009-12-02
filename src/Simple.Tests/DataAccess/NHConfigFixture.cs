@@ -7,10 +7,10 @@ using NHibernate.Tool.hbm2ddl;
 using Simple.Config;
 using Simple.DataAccess;
 using Simple.Services.Remoting;
-using Simple.Tests.Service;
+using Simple.Tests.Services;
 using FluentNHibernate.Cfg;
 using NHibernate;
-using Simple.Tests.SampleServer;
+using Simple.Tests.Resources;
 using FluentNHibernate.Cfg.Db;
 
 namespace Simple.Tests.DataAccess

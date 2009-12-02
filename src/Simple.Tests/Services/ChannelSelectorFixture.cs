@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple.Services.Remoting;
 using Simple.Services.Remoting.Channels;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     [TestFixture]
     public class ChannelSelectorFixture

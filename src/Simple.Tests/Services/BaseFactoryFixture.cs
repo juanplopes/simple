@@ -14,7 +14,7 @@ using System.Security.Principal;
 using Simple.Expressions.Editable;
 using System.Linq.Expressions;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     public abstract class BaseFactoryFixture
     {

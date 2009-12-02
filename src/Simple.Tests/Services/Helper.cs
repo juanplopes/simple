@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     public class Helper
     {

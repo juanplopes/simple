@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Simple.Tests.SampleServer;
+using Simple.Tests.Resources;
 using Simple.Expressions;
 using System.Collections.Generic;
 using System;

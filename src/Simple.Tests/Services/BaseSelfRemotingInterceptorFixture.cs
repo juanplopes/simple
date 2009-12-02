@@ -10,7 +10,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     public abstract class BaseSelfRemotingServerInterceptorFixture : BaseSelfRemotingInterceptorFixture
     {

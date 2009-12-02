@@ -9,12 +9,12 @@ using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Channels.Tcp;
 using Simple.Services.Remoting;
 using Simple.Config;
-using Simple.Tests.Service;
+using Simple.Tests.Services;
 using Simple.Services;
 using System.Threading;
 using Simple.Common;
 using Simple.Tests.DataAccess;
-using Simple.Tests.SampleServer;
+using Simple.Tests.Resources;
 using System.IO;
 using NHibernate.Tool.hbm2ddl;
 

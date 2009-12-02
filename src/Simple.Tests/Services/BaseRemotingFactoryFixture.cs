@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Simple.Common;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     public abstract class BaseRemotingFactoryFixture : BaseFactoryFixture
     {

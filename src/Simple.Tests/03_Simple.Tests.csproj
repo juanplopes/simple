@@ -109,7 +109,7 @@
       <DependentUpon>Database.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\RemotingConfigs.Designer.cs">
+    <Compile Include="Services\RemotingConfigs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RemotingConfigs.resx</DependentUpon>
@@ -122,10 +122,10 @@
     <Compile Include="DataAccess\NorthwindCheckFixture.cs" />
     <Compile Include="DataAccess\BaseDataFixture.cs" />
     <Compile Include="DataAccess\DataContextFixture.cs" />
-    <Compile Include="SampleServer\EmployeeTerritories.cs" />
-    <Compile Include="SampleServer\Region.cs" />
-    <Compile Include="SampleServer\Territory.cs" />
-    <Compile Include="SampleServer\Employee.cs" />
+    <Compile Include="Resources\EmployeeTerritories.cs" />
+    <Compile Include="Resources\Region.cs" />
+    <Compile Include="Resources\Territory.cs" />
+    <Compile Include="Resources\Employee.cs" />
     <Compile Include="SimpleLib\AttributeCacheFixture.cs" />
     <Compile Include="SimpleLib\BaseWDProviderFixture.cs" />
     <Compile Include="SimpleLib\BaseWorkingDaysFixture.cs" />
@@ -152,26 +152,26 @@
     <Compile Include="SimpleLib\StringUtilsFixture.cs" />
     <Compile Include="SimpleLib\TaskRunnerFixture.cs" />
     <Compile Include="SimpleLib\WorkingDaysFixture.cs" />
-    <Compile Include="SampleServer\Category.cs" />
-    <Compile Include="SampleServer\Customer.cs" />
-    <Compile Include="SampleServer\Product.cs" />
-    <Compile Include="SampleServer\Supplier.cs" />
-    <Compile Include="Service\BaseInterceptorFixture.samples.cs" />
-    <Compile Include="Service\ChannelSelectorFixture.cs" />
-    <Compile Include="Service\IpcRemotingFixtures.cs" />
-    <Compile Include="Service\HookOrderFixture.cs" />
-    <Compile Include="Service\TcpRemotingFixtures.cs" />
-    <Compile Include="Service\HttpRemotingFixtures.cs" />
-    <Compile Include="Service\BaseInterceptorFixture.cs" />
-    <Compile Include="Service\BaseRemotingInterceptorFixture.cs" />
-    <Compile Include="Service\BaseSelfRemotingInterceptorFixture.cs" />
-    <Compile Include="Service\DefaultInterceptorFixture.cs" />
-    <Compile Include="Service\Helper.cs" />
-    <Compile Include="Service\BaseSelfRemotingFactoryFixture.cs" />
-    <Compile Include="Service\DefaultFactoryFixture.cs" />
-    <Compile Include="Service\BaseFactoryFixture.cs" />
-    <Compile Include="Service\BaseRemotingFactoryFixture.cs" />
-    <Compile Include="Service\ServiceConfigFixture.cs" />
+    <Compile Include="Resources\Category.cs" />
+    <Compile Include="Resources\Customer.cs" />
+    <Compile Include="Resources\Product.cs" />
+    <Compile Include="Resources\Supplier.cs" />
+    <Compile Include="Services\BaseInterceptorFixture.samples.cs" />
+    <Compile Include="Services\ChannelSelectorFixture.cs" />
+    <Compile Include="Services\IpcRemotingFixtures.cs" />
+    <Compile Include="Services\HookOrderFixture.cs" />
+    <Compile Include="Services\TcpRemotingFixtures.cs" />
+    <Compile Include="Services\HttpRemotingFixtures.cs" />
+    <Compile Include="Services\BaseInterceptorFixture.cs" />
+    <Compile Include="Services\BaseRemotingInterceptorFixture.cs" />
+    <Compile Include="Services\BaseSelfRemotingInterceptorFixture.cs" />
+    <Compile Include="Services\DefaultInterceptorFixture.cs" />
+    <Compile Include="Services\Helper.cs" />
+    <Compile Include="Services\BaseSelfRemotingFactoryFixture.cs" />
+    <Compile Include="Services\DefaultFactoryFixture.cs" />
+    <Compile Include="Services\BaseFactoryFixture.cs" />
+    <Compile Include="Services\BaseRemotingFactoryFixture.cs" />
+    <Compile Include="Services\ServiceConfigFixture.cs" />
     <Compile Include="DataAccess\NHConfigFixture.cs" />
     <Compile Include="NHConfig1.cs" />
     <Compile Include="Server.cs" />
@@ -229,7 +229,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Database.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Service\RemotingConfigs.resx">
+    <EmbeddedResource Include="Services\RemotingConfigs.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>RemotingConfigs.Designer.cs</LastGenOutput>

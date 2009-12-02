@@ -9,7 +9,7 @@ using Simple.DynamicProxy;
 using System.Linq.Expressions;
 using Simple.Expressions;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     public partial class BaseInterceptorFixture
     {

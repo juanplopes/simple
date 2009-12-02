@@ -7,7 +7,7 @@ using Simple.Entities;
 using FluentNHibernate.Mapping;
 using Simple.Reflection;
 
-namespace Simple.Tests.SampleServer
+namespace Simple.Tests.Resources
 {
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class EmployeeTerritory : Entity<EmployeeTerritory, IEmployeeTerritoryService>

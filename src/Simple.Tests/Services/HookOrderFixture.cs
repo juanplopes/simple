@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple.Services;
 using Simple.Services.Default;
 
-namespace Simple.Tests.Service
+namespace Simple.Tests.Services
 {
     [TestFixture]
     public class HookOrderServerFixture : BaseHookOrderFixture
