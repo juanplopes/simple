@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.DataAccess.Context;
 using NHibernate;
+using System.Data;
 
 namespace Simple
 {
@@ -24,6 +25,10 @@ namespace Simple
         public static ITransaction BeginTransaction(this Simply simple)
         {
             return simple.GetSession().BeginTransaction();
+        }
+        public static ITransaction BeginTransaction(this Simply simple, IsolationLevel isolationLevel)
+        {
+            return simple.GetSession().BeginTransaction(isolationLevel);
         }
         public static ISession NewSession(this Simply simple)
         {
