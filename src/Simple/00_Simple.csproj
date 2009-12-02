@@ -113,7 +113,6 @@
     <Compile Include="Patterns\DictionaryWrapper.cs" />
     <Compile Include="Patterns\TransformationList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Patterns\LazyEnumerable.cs" />
     <Compile Include="Common\SimpleMath.cs" />
     <Compile Include="Patterns\Singleton.cs" />
     <Compile Include="Patterns\Tuples.cs" />
