@@ -152,7 +152,7 @@
     <Compile Include="Logging\NullLog.cs" />
     <Compile Include="Logging\Log4netSimplyExtensions.cs" />
     <Compile Include="Patterns\WorkingDays.cs" />
-    <Compile Include="Common\EnumTypeAttribute.cs" />
+    <Compile Include="Reflection\EnumTypeAttribute.cs" />
     <Compile Include="Patterns\IWorkingDaysProvider.cs" />
     <Compile Include="Expressions\ExpressionHelper.cs" />
     <Compile Include="Reflection\InvokerFactory.cs" />

@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System.Reflection;
 using Simple.Reflection;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Reflection
 {
     [TestFixture]
     public class MethodCacheFixture

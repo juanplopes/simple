@@ -5,7 +5,7 @@ using Simple.Common;
 using NUnit.Framework;
 using Simple.Patterns;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Patterns
 {
     public class TestProvider : IWorkingDaysProvider
     {

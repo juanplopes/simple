@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.IO.Serialization;
 using NUnit.Framework;
+using Simple.IO.Serialization;
 
-namespace Simple.Tests.SimpleLib.Serializers
+namespace Simple.Tests.Serialization
 {
     [TestFixture]
-    public class NetDataContractSerializerFixture : BaseSerializerFixture
+    public class BinarySerializerFixture : BaseSerializerFixture
     {
         protected override ISimpleSerializer GetSerializer<T>()
         {
-            return SimpleSerializer.NetDataContract();
+            return SimpleSerializer.Binary();
         }
 
         protected override ISimpleStringSerializer GetStringSerializer<T>()
         {
-            return SimpleSerializer.NetDataContract();
+            return SimpleSerializer.Binary();
         }
     }
 }

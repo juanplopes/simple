@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Simple.Common;
 using System.Linq;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Common
 {
     [TestFixture]
     public class SimpleMathFixture

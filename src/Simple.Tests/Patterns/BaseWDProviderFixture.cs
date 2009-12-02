@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Simple.Tests.SimpleLib;
 using Simple.Common;
 using Simple.Patterns;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Patterns
 {
     public class TestBaseProvider : BaseWorkingDaysProvider
     {

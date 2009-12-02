@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.Common;
+using Simple.Reflection;
 using NUnit.Framework;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Reflection
 {
     [TestFixture]
     public class EnumTypeFixture

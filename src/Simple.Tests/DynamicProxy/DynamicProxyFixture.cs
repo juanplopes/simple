@@ -42,7 +42,7 @@ using System.Reflection;
 using NUnit.Framework;
 using Simple.DynamicProxy;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.DynamicProxy
 {
 	/// <summary>
 	/// Unit test for the dynamic proxy

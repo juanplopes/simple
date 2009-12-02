@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple.IO;
 using System.Text.RegularExpressions;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.IO
 {
     [TestFixture]
     public class StringUtilsFixture

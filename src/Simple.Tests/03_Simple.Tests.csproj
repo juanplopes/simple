@@ -126,32 +126,30 @@
     <Compile Include="Resources\Region.cs" />
     <Compile Include="Resources\Territory.cs" />
     <Compile Include="Resources\Employee.cs" />
-    <Compile Include="SimpleLib\AttributeCacheFixture.cs" />
-    <Compile Include="SimpleLib\BaseWDProviderFixture.cs" />
-    <Compile Include="SimpleLib\BaseWorkingDaysFixture.cs" />
-    <Compile Include="SimpleLib\ClassNameHelperFixture.cs" />
-    <Compile Include="SimpleLib\DynamicProxyFixture.cs" />
-    <Compile Include="SimpleLib\EntityHelperFixture.cs" />
-    <Compile Include="SimpleLib\EnumTypeFixture.cs" />
-    <Compile Include="SimpleLib\ExpressionHelperFixture.cs" />
-    <Compile Include="SimpleLib\FileLocatorFixture.cs" />
-    <Compile Include="SimpleLib\InvokerFactoryFixture.cs" />
-    <Compile Include="SimpleLib\MarshallableDynamicProxyFixture.cs" />
-    <Compile Include="SimpleLib\SimpleMathFixture.cs" />
-    <Compile Include="SimpleLib\MetaLinqFixture.cs" />
-    <Compile Include="SimpleLib\MethodCacheFixture.cs" />
-    <Compile Include="SimpleLib\MiscFixture.cs" />
-    <Compile Include="SimpleLib\Sample\AttributeCacheClasses.cs" />
-    <Compile Include="SimpleLib\Sample\TestStringClass.cs" />
-    <Compile Include="SimpleLib\Serializers\BaseSerializerFixture.cs" />
-    <Compile Include="SimpleLib\Serializers\BinarySerializerFixture.cs" />
-    <Compile Include="SimpleLib\Serializers\DataContractSerializerFixture.cs" />
-    <Compile Include="SimpleLib\Serializers\NetDataContractSerializerFixture.cs" />
-    <Compile Include="SimpleLib\Serializers\XmlSerializerFixture.cs" />
-    <Compile Include="SimpleLib\StringFragmenterFixture.cs" />
-    <Compile Include="SimpleLib\StringUtilsFixture.cs" />
-    <Compile Include="SimpleLib\TaskRunnerFixture.cs" />
-    <Compile Include="SimpleLib\WorkingDaysFixture.cs" />
+    <Compile Include="Reflection\AttributeCacheFixture.cs" />
+    <Compile Include="Patterns\BaseWDProviderFixture.cs" />
+    <Compile Include="Patterns\BaseWorkingDaysFixture.cs" />
+    <Compile Include="Reflection\ClassNameHelperFixture.cs" />
+    <Compile Include="DynamicProxy\DynamicProxyFixture.cs" />
+    <Compile Include="Reflection\EntityHelperFixture.cs" />
+    <Compile Include="Reflection\EnumTypeFixture.cs" />
+    <Compile Include="Expressions\ExpressionHelperFixture.cs" />
+    <Compile Include="IO\FileLocatorFixture.cs" />
+    <Compile Include="Reflection\InvokerFactoryFixture.cs" />
+    <Compile Include="DynamicProxy\MarshallableDynamicProxyFixture.cs" />
+    <Compile Include="Common\SimpleMathFixture.cs" />
+    <Compile Include="Expressions\MetaLinqFixture.cs" />
+    <Compile Include="Reflection\MethodCacheFixture.cs" />
+    <Compile Include="Patterns\MiscFixture.cs" />
+    <Compile Include="IO\BaseSerializerFixture.cs" />
+    <Compile Include="IO\BinarySerializerFixture.cs" />
+    <Compile Include="IO\DataContractSerializerFixture.cs" />
+    <Compile Include="IO\NetDataContractSerializerFixture.cs" />
+    <Compile Include="IO\XmlSerializerFixture.cs" />
+    <Compile Include="IO\StringFragmenterFixture.cs" />
+    <Compile Include="IO\StringUtilsFixture.cs" />
+    <Compile Include="Patterns\TaskRunnerFixture.cs" />
+    <Compile Include="Patterns\WorkingDaysFixture.cs" />
     <Compile Include="Resources\Category.cs" />
     <Compile Include="Resources\Customer.cs" />
     <Compile Include="Resources\Product.cs" />
@@ -248,6 +246,9 @@
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
       <Name>02_Simple.DataAccess</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SimpleLib\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

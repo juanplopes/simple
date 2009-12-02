@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple.Reflection;
 using System.Globalization;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Reflection
 {
     [TestFixture]
     public class InvokerFactoryFixture

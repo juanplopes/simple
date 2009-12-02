@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 
-namespace Simple.Common
+namespace Simple.Reflection
 {
     [global::System.AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = true)]
     public sealed class EnumTypeAttribute : Attribute

@@ -10,7 +10,7 @@ using Simple.Common;
 using Simple.IO;
 using Simple.IO.Serialization;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Expressions
 {
     [TestFixture]
     public class MetaLinqFixture

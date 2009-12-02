@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System.IO;
 using Simple.IO;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.IO
 {
     [TestFixture]
     public class FileLocatorFixture

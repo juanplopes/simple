@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Simple.IO.Serialization;
 
-namespace Simple.Tests.SimpleLib.Serializers
+namespace Simple.Tests.Serialization
 {
     public abstract class BaseSerializerFixture
     {

@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Simple.Common;
 using Simple.Patterns;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Patterns
 {
     public abstract class BaseWorkingDaysFixture
     {

@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Simple.Patterns;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Patterns
 {
     [TestFixture]
     public class TaskRunnerFixture

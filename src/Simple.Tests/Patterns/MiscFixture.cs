@@ -7,7 +7,7 @@ using Simple.Patterns;
 using Simple.Reflection;
 using System.Threading;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Patterns
 {
     [TestFixture]
     public class MiscFixture

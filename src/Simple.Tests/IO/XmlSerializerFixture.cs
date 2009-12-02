@@ -5,19 +5,19 @@ using System.Text;
 using NUnit.Framework;
 using Simple.IO.Serialization;
 
-namespace Simple.Tests.SimpleLib.Serializers
+namespace Simple.Tests.Serialization
 {
-    [TestFixture]
-    public class BinarySerializerFixture : BaseSerializerFixture
+    [TestFixture] 
+    public class XmlSerializerFixture : BaseSerializerFixture
     {
         protected override ISimpleSerializer GetSerializer<T>()
         {
-            return SimpleSerializer.Binary();
+            return SimpleSerializer.Xml<T>();
         }
 
         protected override ISimpleStringSerializer GetStringSerializer<T>()
         {
-            return SimpleSerializer.Binary();
+            return SimpleSerializer.Xml<T>();
         }
     }
 }

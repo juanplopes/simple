@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 using Simple.IO;
-using Simple.Tests.SimpleLib.Sample;
 using System.IO;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.IO
 {
     [TestFixture]
     public class StringFragmenterFixture
@@ -138,6 +137,63 @@ namespace Simple.Tests.SimpleLib
                 Assert.AreEqual(98765, s.TestInt2);
                 Assert.AreEqual(43210m, s.TestDecimal2);
             }
+        }
+
+        public class TestStringClass1
+        {
+            [StringOffset(5), Formatter(typeof(NumericFormatter), "00000", 0)]
+            public int TestInt { get; set; }
+            [StringOffset(6), Formatter(typeof(NumericFormatter), "000000", 2)]
+            public decimal TestDecimal { get; set; }
+
+            [StringOffset(6), Formatter(typeof(NumericFormatter), "000000", 0)]
+            public int TestInt2 { get; set; }
+            [StringOffset(5), Formatter(typeof(NumericFormatter), "00000", 0)]
+            public decimal TestDecimal2 { get; set; }
+
+        }
+
+        [Simple.IO.Culture("pt-br")]
+        public class TestStringClass2
+        {
+            [StringOffset(0, 5)]
+            public int TestInt { get; set; }
+            [StringOffset(5, 6)]
+            public decimal TestDecimal { get; set; }
+
+            [StringOffset(6)]
+            public int TestInt2 { get; set; }
+
+            [StringOffset(5), Simple.IO.Culture("en-us")]
+            public decimal TestDecimal2 { get; set; }
+        }
+
+        [Simple.IO.Culture("pt-br")]
+        public class TestStringClass3
+        {
+            [StringOffset(0, 3)]
+            public int TestInt { get; set; }
+            [StringOffset(0, 5)]
+            public decimal TestDecimal { get; set; }
+
+            [StringOffset(0, 3)]
+            public int TestInt2 { get; set; }
+
+            [StringOffset(0, 10), Simple.IO.Culture("en-us")]
+            public decimal TestDecimal2 { get; set; }
+        }
+
+
+        [Simple.IO.Culture("pt-br")]
+        public class TestStringClass4
+        {
+            [StringOffset(0, 5), Formatter(typeof(NumericFormatter), "00000", 0)]
+            public int TestInt { get; set; }
+
+            [StringOffset(8)]
+            [Formatter(typeof(DateFormatter), "yyyyddMM")]
+            public DateTime TestDateTime { get; set; }
+
         }
     }
 }

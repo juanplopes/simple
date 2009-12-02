@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple.DynamicProxy;
 using Simple.Reflection;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.DynamicProxy
 {
     [TestFixture]
     public class MarshallableDynamicProxyFixture

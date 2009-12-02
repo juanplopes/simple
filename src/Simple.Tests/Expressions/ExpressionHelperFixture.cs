@@ -7,7 +7,7 @@ using Simple.Reflection;
 using System.Linq.Expressions;
 using Simple.Expressions;
 
-namespace Simple.Tests.SimpleLib
+namespace Simple.Tests.Expressions
 {
     [TestFixture]
     public class ExpressionHelperFixture
