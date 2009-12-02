@@ -165,9 +165,7 @@
     <Compile Include="Reflection\TypesHelper.cs" />
     <Compile Include="Reflection\UltraCaster.cs" />
     <Compile Include="Simply.cs" />
-    <Compile Include="Patterns\Enumerable.cs" />
     <Compile Include="IO\XmlHelper.cs" />
-    <Compile Include="Patterns\SafeDictionary.cs" />
     <Compile Include="Reflection\CastingHelper.cs" />
     <Compile Include="Hosting\SimpleController.cs">
       <SubType>Component</SubType>

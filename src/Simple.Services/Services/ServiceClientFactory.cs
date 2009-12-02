@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Simple.Config;
 using Simple.Patterns;
+using System.Linq;
 
 namespace Simple.Services
 {
@@ -35,7 +36,7 @@ namespace Simple.Services
 
         protected IEnumerable<ICallHook> GetHooks(CallHookArgs args)
         {
-            foreach (var hook in Enumerable.Convert(CallHookCreators, x => x(args)))
+            foreach (var hook in CallHookCreators.Select(x=>x(args)))
             {
                 if (hook != null) yield return hook;
             }

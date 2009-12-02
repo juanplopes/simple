@@ -4,6 +4,7 @@ using System.Text;
 using Simple.Config;
 using Simple.Reflection;
 using log4net;
+using System.Linq;
 using System.Reflection;
 using Simple.Patterns;
 using Simple.DynamicProxy;
@@ -50,7 +51,7 @@ namespace Simple.Services
 
         protected IEnumerable<ICallHook> GetHooks(CallHookArgs args)
         {
-            foreach (var hook in Enumerable.Convert(CallHookCreators, x => x(args)))
+            foreach (var hook in CallHookCreators.Select(x=>x(args)))
             {
                 if (hook != null) yield return hook;
             }
@@ -64,15 +65,15 @@ namespace Simple.Services
         protected IEnumerable<Type> GetContractsFromType(Type type)
         {
             Type[] interfaces = type.GetInterfaces();
-            return Enumerable.Filter(interfaces, 
-                t => typeof(IService).IsAssignableFrom(t) && !typeof(IService).Equals(t));
+            return interfaces.Where(x=>
+                typeof(IService).IsAssignableFrom(x) && !typeof(IService).Equals(x));
         }
 
         #region IServiceHostFactory Members
 
         public void HostAssembly(Assembly asm)
         {
-            foreach (Type t in Enumerable.Filter(asm.GetTypes(), t => t.IsClass && !t.IsAbstract))
+            foreach (Type t in asm.GetTypes().Where(t => t.IsClass && !t.IsAbstract))
             {
                 Host(t);
             }

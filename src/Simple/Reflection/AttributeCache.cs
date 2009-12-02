@@ -4,6 +4,7 @@ using System.Text;
 using System.Reflection;
 using Simple.Common;
 using Simple.Patterns;
+using System.Linq;
 
 namespace Simple.Reflection
 {
@@ -41,12 +42,12 @@ namespace Simple.Reflection
                         (Attribute[])member.GetCustomAttributes(typeof(T), true));
                 }
 
-                return Enumerable.Convert<Attribute, T>(l3rdLvlCache, x => (T)x);
+                return l3rdLvlCache.Select(x => (T)x);
             }
         }
 
         public IEnumerable<T> Enumerate<T>(MemberInfo member)
-            where T:Attribute
+            where T : Attribute
         {
             return Enumerate<T>(member, true);
         }
@@ -54,7 +55,7 @@ namespace Simple.Reflection
         public T First<T>(MemberInfo member, bool inherit)
             where T : Attribute
         {
-            return Enumerable.GetFirst<T>(Enumerate<T>(member, inherit));
+            return Enumerate<T>(member, inherit).FirstOrDefault();
         }
 
         public T First<T>(MemberInfo member)

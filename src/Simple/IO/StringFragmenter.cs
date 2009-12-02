@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Collections;
 using Simple.Patterns;
+using System.Linq;
 
 namespace Simple.IO
 {
@@ -15,8 +16,10 @@ namespace Simple.IO
     {
         private static CultureInfo GetCulture(MemberInfo member, CultureInfo defaultOne)
         {
-            CultureAttribute cultureAttr = Enumerable.GetFirst<CultureAttribute>(
-                member.GetCustomAttributes(typeof(CultureAttribute), true));
+            CultureAttribute cultureAttr =
+                member.GetCustomAttributes(typeof(CultureAttribute), true)
+                .OfType<CultureAttribute>().FirstOrDefault();
+
             if (cultureAttr != null)
                 return cultureAttr.Culture;
             else
@@ -26,8 +29,9 @@ namespace Simple.IO
 
         private static IFormatter GetParser(MemberInfo member, IFormatter defaultOne)
         {
-            FormatterAttribute parserAttr = Enumerable.GetFirst<FormatterAttribute>(
-                member.GetCustomAttributes(typeof(FormatterAttribute), true));
+            FormatterAttribute parserAttr = 
+                member.GetCustomAttributes(typeof(FormatterAttribute), true)
+                .OfType<FormatterAttribute>().FirstOrDefault();
             if (parserAttr != null)
                 return parserAttr.Instance;
             else
@@ -47,8 +51,9 @@ namespace Simple.IO
             int maxSize = 0;
             foreach (PropertyInfo prop in input.GetType().GetProperties())
             {
-                StringOffsetAttribute attr = Enumerable.GetFirst<StringOffsetAttribute>(
-                    prop.GetCustomAttributes(typeof(StringOffsetAttribute), true));
+                StringOffsetAttribute attr =
+                    prop.GetCustomAttributes(typeof(StringOffsetAttribute), true)
+                    .OfType<StringOffsetAttribute>().FirstOrDefault();
 
                 if (attr == null) continue;
 
@@ -90,8 +95,9 @@ namespace Simple.IO
             int lastEnd = -1;
             foreach (PropertyInfo prop in resultType.GetProperties())
             {
-                StringOffsetAttribute attr = Enumerable.GetFirst<StringOffsetAttribute>(
-                    prop.GetCustomAttributes(typeof(StringOffsetAttribute), true));
+                StringOffsetAttribute attr =
+                    prop.GetCustomAttributes(typeof(StringOffsetAttribute), true)
+                    .OfType<StringOffsetAttribute>().FirstOrDefault();
 
                 if (attr == null) continue;
 
@@ -180,7 +186,7 @@ namespace Simple.IO
         public static IEnumerable<T> Parse<T>(StreamReader input)
             where T : new()
         {
-            return Enumerable.ToLazy(ParseInternal<T>(input));
+            return ParseInternal<T>(input);
         }
 
         public static IEnumerable<T> Parse<T>(string[] input)
