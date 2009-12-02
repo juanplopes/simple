@@ -1,5 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
+    <GCProjectName>uerj-projects</GCProjectName>
+    
     <BuildDir>build\</BuildDir>
     <BuildBase>..\..\</BuildBase>
     <BuildDir2>$(BuildBase)$(BuildDir)</BuildDir2>
@@ -24,6 +26,7 @@
   </ItemGroup>
 
   <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
+  <Import Project="util\msbuild\Simple.Tools.MsBuild.Targets"/>
 
   <Target Name="Clean">
     <CreateItem></CreateItem>
@@ -37,7 +40,7 @@
     <Time Format="yMM.dhh">
       <Output TaskParameter="FormattedTime" PropertyName="BuildTag" />
     </Time>
-
+    
     <Message Text="Build tag: $(BuildTag)"/>
   </Target>
 
@@ -92,9 +95,19 @@
              Logfile="$(LogFile)"/>
   </Target>
 
-  <Target Name="Package" DependsOnTargets="GenerateTag;Rebuild;Merge">
+  <Target Name="Package" DependsOnTargets="Rebuild;Merge">
     <Copy SourceFiles="$(PackageDir)\Simple.dll" DestinationFolder="$(SourceBaseLibDir)"/>
     <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile $(PackageDir2)\Simple.exe&quot;"/>
   </Target>
-  
+
+  <Target Name="Publish" DependsOnTargets="Test;Package">
+     <UploadToGoogleCode
+      UserName="$(GCUsername)"
+      Password="$(GCPassword)"
+      ProjectName="$(GCProjectName)"
+      LocalFile="$(PackageDir)\Simple.exe"
+      TargetFileName="Simple-$(ProductVersion).$(BuildTag).exe"
+      Summary="Simple Executable v$(ProductVersion).$(BuildTag) (autobuild)"
+      />
+  </Target>
 </Project>

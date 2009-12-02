@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Tools.MsBuild", "Simple.Tools.MsBuild.csproj", "{DD32DDD0-04B6-47DD-97AC-1E72F1B18415}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD32DDD0-04B6-47DD-97AC-1E72F1B18415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD32DDD0-04B6-47DD-97AC-1E72F1B18415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD32DDD0-04B6-47DD-97AC-1E72F1B18415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD32DDD0-04B6-47DD-97AC-1E72F1B18415}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

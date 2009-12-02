@@ -1,0 +1,3 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask AssemblyFile="Simple.Tools.MsBuild.dll" TaskName="Simple.Tools.MsBuild.UploadToGoogleCode" />
+</Project>
