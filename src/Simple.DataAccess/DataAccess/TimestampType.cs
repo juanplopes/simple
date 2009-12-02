@@ -11,7 +11,7 @@ namespace Simple.DataAccess
     /// <summary>
     /// UserTypeTimestamp implements the Nhibernate BinaryType that is used to handle Nhibernate version . 
     /// </summary>
-    class TimestampType : NHibernate.UserTypes.IUserVersionType
+    public class TimestampType : NHibernate.UserTypes.IUserVersionType
     {
         #region IUserVersionType Members
 

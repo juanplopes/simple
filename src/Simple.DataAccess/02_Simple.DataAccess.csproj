@@ -99,10 +99,6 @@
     <Compile Include="Services\TransactionCallHook.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DefaultBinding.config">
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Simple\00_Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
       <Name>00_Simple</Name>
@@ -111,9 +107,6 @@
       <Project>{07D16BE0-3436-4B72-A34F-D6E1E1A02473}</Project>
       <Name>01_Simple.Services</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="NHLockEngine.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

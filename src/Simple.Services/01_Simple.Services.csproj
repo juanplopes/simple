@@ -143,9 +143,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Simple.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\RemotingConfig.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
