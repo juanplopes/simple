@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple.Config;
 using System.IO;
 
-namespace Simple.Tests.ConfigSource
+namespace Simple.Tests.Config
 {
     [TestFixture]
     public class ConfiguratorInterfaceFixture

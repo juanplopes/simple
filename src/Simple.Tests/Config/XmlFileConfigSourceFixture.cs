@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 using Simple.IO;
 using System.Reflection;
 
-namespace Simple.Tests.ConfigSource
+namespace Simple.Tests.Config
 {
     [TestFixture]
     public class XmlFileConfigSourceFixture

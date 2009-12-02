@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Simple.Logging;
 using Simple.Config;
 
-namespace Simple.Tests.ConfigSource
+namespace Simple.Tests.Config
 {
     [TestFixture]
     public class LoggerFactoryFixture

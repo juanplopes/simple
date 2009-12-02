@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
 
-namespace Simple.Tests.ConfigSource
+namespace Simple.Tests.Config
 {
     [TestFixture]
     public class XmlConfigSourceFixture
