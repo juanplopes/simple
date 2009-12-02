@@ -112,7 +112,6 @@
     <Compile Include="Patterns\TransformationListFixture.cs" />
     <Compile Include="Patterns\TuplesFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflection\UltraCasterFixture.cs" />
     <Compile Include="Services\RemotingConfigs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -150,7 +149,6 @@
     <Compile Include="IO\DataContractSerializerFixture.cs" />
     <Compile Include="IO\NetDataContractSerializerFixture.cs" />
     <Compile Include="IO\XmlSerializerFixture.cs" />
-    <Compile Include="IO\StringFragmenterFixture.cs" />
     <Compile Include="IO\StringUtilsFixture.cs" />
     <Compile Include="Patterns\TaskRunnerFixture.cs" />
     <Compile Include="Patterns\WorkingDaysFixture.cs" />

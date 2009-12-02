@@ -128,23 +128,9 @@
     <Compile Include="Config\XmlConfigSource.cs" />
     <Compile Include="Config\XmlFileConfigSource.cs" />
     <Compile Include="Config\XPathParameter.cs" />
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="DynamicProxy\DynamicProxyFactory.cs" />
     <Compile Include="DynamicProxy\InterfaceDynamicProxyImpl.cs" />
     <Compile Include="DynamicProxy\IDynamicProxy.cs" />
-    <Compile Include="IO\CultureAttribute.cs" />
-    <Compile Include="IO\DateFormatter.cs" />
-    <Compile Include="IO\DefaultFormatter.cs" />
-    <Compile Include="IO\ICorrectible.cs" />
-    <Compile Include="IO\IFormatter.cs" />
-    <Compile Include="IO\FormatterAttribute.cs" />
-    <Compile Include="IO\NumericFormatter.cs" />
-    <Compile Include="IO\StringFragmenter.cs" />
-    <Compile Include="IO\StringOffsetAttribute.cs" />
     <Compile Include="Logging\Log4netFactory.cs" />
     <Compile Include="Logging\NullLog.cs" />
     <Compile Include="Logging\Log4netSimplyExtensions.cs" />
@@ -153,18 +139,19 @@
     <Compile Include="Patterns\IWorkingDaysProvider.cs" />
     <Compile Include="Expressions\ExpressionHelper.cs" />
     <Compile Include="Reflection\InvokerFactory.cs" />
-    <Compile Include="Reflection\ICastable.cs" />
     <Compile Include="IO\StringUtils.cs" />
-    <Compile Include="IO\EmailTemplate.cs" />
     <Compile Include="Reflection\AttributeCache.cs" />
     <Compile Include="Reflection\EntityHelper.cs" />
     <Compile Include="Expressions\PredicateBuilder.cs" />
     <Compile Include="Reflection\MethodCache.cs" />
     <Compile Include="Reflection\TypesHelper.cs" />
-    <Compile Include="Reflection\UltraCaster.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Simply.cs" />
     <Compile Include="IO\XmlHelper.cs" />
-    <Compile Include="Reflection\CastingHelper.cs" />
     <Compile Include="Hosting\SimpleController.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -174,10 +161,10 @@
     <Compile Include="Common\ThreadData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Log4net.alternative.config" />
-    <None Include="Log4net.config">
+    <None Include="Resources\Log4net.alternative.config" />
+    <None Include="Resources\Log4net.config">
     </None>
-    <None Include="Primes.bin" />
+    <None Include="Resources\Primes.bin" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
