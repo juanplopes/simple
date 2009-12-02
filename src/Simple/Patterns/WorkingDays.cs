@@ -7,16 +7,13 @@ namespace Simple.Patterns
     public class WorkingDays : IWorkingDaysProvider
     {
         private static IDictionary<IWorkingDaysProvider, WorkingDays> instances;
-        public static WorkingDays Get(IWorkingDaysProvider pobjProvider)
+        public static WorkingDays Get(IWorkingDaysProvider key)
         {
-            try
-            {
-                return instances[pobjProvider];
-            }
-            catch (KeyNotFoundException)
-            {
-                return instances[pobjProvider] = new WorkingDays(pobjProvider);
-            }
+            WorkingDays w = null;
+            if (!instances.TryGetValue(key, out w))
+                instances[key] = w = new WorkingDays(key);
+            
+            return w;
         }
         static WorkingDays()
         {
