@@ -40,6 +40,8 @@ namespace Simple.Tools.MsBuild
 
         public string Labels { get; set; }
 
+        public int? Timeout { get; set; }
+
         /// <summary>
         /// Gets or sets the local path of the file to upload.
         /// </summary>
@@ -68,6 +70,7 @@ namespace Simple.Tools.MsBuild
         internal void Upload()
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(String.Format("https://{0}.googlecode.com/files", ProjectName));
+            request.Timeout = Timeout ?? int.MaxValue;
             request.Method = "POST";
             request.ContentType = String.Concat("multipart/form-data; boundary=" + Boundary);
             request.UserAgent = String.Concat("SimpleBuilder");
