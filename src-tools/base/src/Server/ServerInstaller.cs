@@ -14,7 +14,7 @@ namespace Sample.Project
         public ServerInstaller()
         {
             ServiceName = MainServiceName;
-            DisplayName = "Conspirate Business Server";
+            DisplayName = "SampleProject Business Server";
         }
     }
 }
