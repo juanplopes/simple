@@ -6,7 +6,7 @@ AutoCloseWindow true
 BrandingText "juanplopes@gmail.com"
 
 ;Default installation folder
-InstallDir "$EXEDIR\sample-project"
+InstallDir "$EXEDIR\sample-project\"
 
 Page directory
 Page instfiles
