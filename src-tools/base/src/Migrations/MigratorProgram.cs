@@ -5,7 +5,7 @@ using System.Text;
 using Sample.Project.Environment;
 using Simple;
 
-namespace Conspirarte.Migrations
+namespace Sample.Project.Migrations
 {
     public class MigratorProgram
     {

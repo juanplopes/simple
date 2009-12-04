@@ -7,7 +7,7 @@ using Simple;
 using Simple.Patterns;
 using Sample.Project.SampleData;
 using Sample.Project.Environment;
-using Conspirarte.Migrations;
+using Sample.Project.Migrations;
 
 namespace Sample.Project.Tests
 {

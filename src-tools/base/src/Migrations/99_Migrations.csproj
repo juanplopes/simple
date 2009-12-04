@@ -12,7 +12,7 @@
     <AssemblyName>Sample.Project.Migrations</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>Conspirarte.Migrations.MigratorProgram</StartupObject>
+    <StartupObject>Sample.Project.Migrations.MigratorProgram</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
