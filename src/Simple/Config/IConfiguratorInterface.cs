@@ -26,14 +26,14 @@ namespace Simple.Config
         /// <summary>
         /// Loads a configuration from xml string.
         /// </summary>
-        /// <param name="file">The string.</param>
+        /// <param name="xml">The string.</param>
         /// <returns>The return point.</returns>
         R FromXmlString(string xml);
 
         /// <summary>
         /// Loads a configuration from xml string and XPath.
         /// </summary>
-        /// <param name="file">The string.</param>
+        /// <param name="xml">The string.</param>
         /// <param name="xPath">The XPath.</param>
         /// <returns>The return point.</returns>
         R FromXmlString(string xml, string xPath);
@@ -41,13 +41,13 @@ namespace Simple.Config
         /// <summary>
         /// Loads a configuration from xml stream.
         /// </summary>
-        /// <param name="file">The stream.</param>
+        /// <param name="stream">The stream.</param>
         /// <returns>The return point.</returns>
         R FromStream(Stream stream);
         /// <summary>
         /// Loads a configuration from xml stream and XPath.
         /// </summary>
-        /// <param name="file">The stream.</param>
+        /// <param name="stream">The stream.</param>
         /// <param name="xPath">The XPath.</param>
         /// <returns>The return point.</returns>
         R FromStream(Stream stream, string xPath);
