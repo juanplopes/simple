@@ -5,12 +5,20 @@ using System.Text;
 
 namespace Simple.Config
 {
+    /// <summary>
+    /// Base class for config based factories.
+    /// </summary>
+    /// <typeparam name="THIS">The class itself (for static inheritance purposes).</typeparam>
     public class AggregateFactory<THIS> : MarshalByRefObject
         where THIS : AggregateFactory<THIS>, new()
     {
         protected AggregateFactory()
         {
         }
+
+        /// <summary>
+        /// The initialized configuration key object.
+        /// </summary>
         public object ConfigKey { get; private set; }
 
 
@@ -20,6 +28,10 @@ namespace Simple.Config
         }
 
         static Dictionary<object, THIS> _instances = new Dictionary<object, THIS>();
+        
+        /// <summary>
+        /// Singleton instance accessor.
+        /// </summary>
         public static THIS Do
         {
             get
@@ -28,11 +40,19 @@ namespace Simple.Config
             }
         }
 
+        /// <summary>
+        /// Projects the factory into another configuration key.
+        /// </summary>
         public THIS this[object key]
         {
             get { return Get(key); }
         }
 
+        /// <summary>
+        /// Gets an specific keyed configuration.
+        /// </summary>
+        /// <param name="key">The configuration key object.</param>
+        /// <returns>An instance of the factory.</returns>
         public static THIS Get(object key)
         {
             lock (_instances)
