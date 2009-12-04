@@ -5,21 +5,42 @@ using System.Text;
 
 namespace Simple.Config
 {
+    /// <summary>
+    /// Base class for all <see cref="IConfigSource<T>"/> bound factories.
+    /// </summary>
+    /// <typeparam name="T">The configuration type.</typeparam>
     public abstract class Factory<T> : IFactory<T>, IDisposable
     {
+        /// <summary>
+        /// Indicates whether the factory has a config source associated to it.
+        /// </summary>
         public bool Initialized
         {
             get { return Source != null; }
         }
 
+        /// <summary>
+        /// The configuration source associated to this factory.
+        /// </summary>
         protected IConfigSource<T> Source { get; set; }
+
+        /// <summary>
+        /// The last loaded config.
+        /// </summary>
         protected T ConfigCache { get; set; }
 
+        /// <summary>
+        /// Checks if this factory is initialized, throwing an exception if not.
+        /// </summary>
         public void CheckInitialized()
         {
             if (!(this as IFactory<T>).Initialized) throw new InvalidOperationException("Factory not initialized");
         }
 
+        /// <summary>
+        /// Initializes the factory using an instance of <see cref="IConfigSource<T>"/>.
+        /// </summary>
+        /// <param name="source">The source.</param>
         public void Init(IConfigSource<T> source)
         {
             lock (this)
@@ -50,6 +71,9 @@ namespace Simple.Config
             }
         }
 
+        /// <summary>
+        /// Clears the configuration, associating an instance of <see cref="NullConfigSource<T>"/>
+        /// </summary>
         public void Clear()
         {
             Init(new NullConfigSource<T>());
