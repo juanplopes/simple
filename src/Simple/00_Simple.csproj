@@ -65,6 +65,7 @@
     <Compile Include="Config\DefaultConfigAttribute.cs" />
     <Compile Include="Config\DirectConfigSource.cs" />
     <Compile Include="Config\ConfiguratorInterface.cs" />
+    <Compile Include="Config\IConfiguratorInterface.cs" />
     <Compile Include="DynamicProxy\MarshallableDynamicProxyImpl.cs" />
     <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
     <Compile Include="Expressions\Editable\EditableExpressionCollection.cs" />
