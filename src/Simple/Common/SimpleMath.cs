@@ -8,12 +8,19 @@ namespace Simple.Common
 {
     public class SimpleMath
     {
+        /// <summary>
+        /// Apply the real modular operation, returning values in range [0, q).
+        /// </summary>
+        /// <param name="p">The dividend.</param>
+        /// <param name="q">The divisor.</param>
+        /// <returns></returns>
         public static long RealMod(long p, long q)
         {
             long r = p % q;
             if (r < 0) return r + q;
             return r;
         }
+
 
         public static long ModRound(long p, long q)
         {
