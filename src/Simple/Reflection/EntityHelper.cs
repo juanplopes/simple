@@ -5,6 +5,7 @@ using System.Reflection;
 using Simple.Common;
 using System.Linq.Expressions;
 using Simple.Expressions;
+using System.Linq;
 
 namespace Simple.Reflection
 {
@@ -71,13 +72,9 @@ namespace Simple.Reflection
             }
         }
 
-        protected Dictionary<string, bool> ToDic(string[] props)
+        protected HashSet<string> ToHashSet(string[] props)
         {
-            Dictionary<string, bool> res = new Dictionary<string, bool>();
-            foreach (string s in props)
-                res[s] = true;
-
-            return res;
+            return new HashSet<string>(props);
         }
 
         public bool ObjectEquals(object obj1, object obj2, params string[] toIgnore)
@@ -87,10 +84,10 @@ namespace Simple.Reflection
             if (!_entityType.IsAssignableFrom(obj1.GetType())) return false;
             if (!_entityType.IsAssignableFrom(obj2.GetType())) return false;
 
-            var ignore = ToDic(toIgnore);
+            var ignore = ToHashSet(toIgnore);
             foreach (string idProp in _ids)
             {
-                if (ignore.ContainsKey(idProp)) continue;
+                if (ignore.Contains(idProp)) continue;
 
                 PropertyInfo info = _entityType.GetProperty(idProp);
                 InvocationDelegate getter = _cache.GetGetter(info);
@@ -119,10 +116,10 @@ namespace Simple.Reflection
 
             int res = 1;
 
-            var ignore = ToDic(toIgnore);
+            var ignore = ToHashSet(toIgnore);
             foreach (string idProp in _ids)
             {
-                if (ignore.ContainsKey(idProp)) continue;
+                if (ignore.Contains(idProp)) continue;
 
                 PropertyInfo info = _entityType.GetProperty(idProp);
                 if (info == null) throw new InvalidOperationException("Property not found: " + idProp);
@@ -155,10 +152,10 @@ namespace Simple.Reflection
 
             string[] response = new string[_ids.Count];
 
-            var ignore = ToDic(toIgnore);
+            var ignore = ToHashSet(toIgnore);
             for (int i = 0; i < _ids.Count; i++)
             {
-                if (ignore.ContainsKey(_ids[i])) continue;
+                if (ignore.Contains(_ids[i])) continue;
 
                 response[i] = _ids[i] + "=" + GetToString(_entityType.GetProperty(_ids[i]).GetValue(obj, null));
             }
