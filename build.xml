@@ -14,6 +14,7 @@
     <PackageDir2>$(BuildBase)$(PackageDir)</PackageDir2>
 
     <Configuration>Release</Configuration>
+    <Platform>Any CPU</Platform>
 
     <ProductVersion>2.0</ProductVersion>
 
@@ -28,8 +29,7 @@
   <Import Project="util\msbuild\Simple.Tools.MsBuild.Targets"/>
 
   <Target Name="Clean">
-    <CreateItem></CreateItem>
-    <MSBuild Projects="@(SolutionFile)" Targets="Clean"/>
+    <MSBuild Projects="@(SolutionFile)" Targets="Clean" Properties="Configuration=$(Configuration);Platform=$(Platform);OutDir=$(BuildDir2)"/>
     <RemoveDir Directories="$(BuildDir)" ContinueOnError="true"/>
     <RemoveDir Directories="$(PackageDir)" ContinueOnError="true"/>
     <Delete Files="$(LogFile)"></Delete>
@@ -57,7 +57,7 @@
   </Target>
 
   <Target Name="Build" DependsOnTargets ="GenerateAssemblyInfo">
-    <MSBuild Projects="@(SolutionFile)" Properties="Configuration=$(Configuration);OutDir=$(BuildDir2)"/>
+    <MSBuild Projects="@(SolutionFile)" Properties="Configuration=$(Configuration);Platform=$(Platform);OutDir=$(BuildDir2)"/>
   </Target>
 
   <Target Name="Rebuild">

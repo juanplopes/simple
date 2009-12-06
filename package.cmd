@@ -1,1 +1,1 @@
-call build Package Release
+call build Package /property:Configuration=Release
