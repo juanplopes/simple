@@ -1,4 +1,3 @@
-@echo off
 setlocal
 set BUILD_TARGET=%~1
 if "%1"=="" set /p BUILD_TARGET="Build Target: "
