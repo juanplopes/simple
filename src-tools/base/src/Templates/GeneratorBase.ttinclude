@@ -37,11 +37,15 @@ public class GeneratorBase : Generator
 	
 	public GeneratorBase(TableTemplate template) 
 	{
-		ExcludedTables = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-		ExcludedTables.Add("sysdiagrams");
+		ExcludedTables = new List<string>();
+		IncludedTables = new List<string>();
+		
+		IncludedTables.Add("%");
+		
 		ProviderName = "System.Data.SqlClient";
 		BaseClassName = "Simple.Entities.Entity<%s, I%sService>";
 		Template = template;
+		NHibernateFilePath= @"Environment\Development\NHibernate.config";
 	}
 	
     private bool IsExcluded(string tableName)
@@ -54,9 +58,11 @@ public class GeneratorBase : Generator
 	public TableTemplate Template { get; set; }
     public string ConnectionString { get; set ;}
     public string ProviderName { get; set; }
-    public HashSet<string> ExcludedTables { get; set; }
+	public IList<string> IncludedTables { get; set; }
+    public IList<string> ExcludedTables { get; set; }
     public GeneratedTextTransformation Context { get; set; }
 	public string OutputFileTemplate { get; set; }
+	public string NHibernateFilePath { get; set; }
 	
     public string AssemblyName
     {
@@ -70,9 +76,9 @@ public class GeneratorBase : Generator
     protected override void RunCore()
     {
 		this.ConnectionString = this.ConnectionString??
-			GetNHConnectionString(@"Environment\Development\NHibernate.config");
+			GetNHConnectionString(NHibernateFilePath);
 		
-        DbSchema schema = new DbSchema(this.ConnectionString, this.ProviderName);
+        DbSchema schema = new DbSchema(this.ConnectionString, this.ProviderName, IncludedTables.ToArray(), ExcludedTables.ToArray());
         
 		this.Context.WriteLine("Starting... (" + DateTime.Now.ToString() + ")");
         this.Context.WriteLine(string.Format("Provider: {0}", this.ProviderName));
@@ -87,25 +93,22 @@ public class GeneratorBase : Generator
             string tableClassName = Inflector.MakeSingular(Utilities.CleanUp(tableName));
             string tableType = tableRow["TABLE_TYPE"].ToString().ToUpper();
 
-            if (!IsExcluded(tableName))
-            {
-                this.Context.WriteLine(string.Format("Generating file for table <{0}>...", tableName));
+            this.Context.WriteLine(string.Format("Generating file for table <{0}>...", tableName));
 
-                /// Generate a mapping file for the table
-                Template.Schema = schema;
-                Template.TableSchema = tableSchema;
-                Template.TableName = tableName;
-                Template.TableClassName = tableClassName;
-                Template.TablePrimaryKeys = schema.GetTablePrimaryKeyColumns(tableSchema, tableName);
-                Template.TableFields = schema.GetTableFields(tableSchema, tableName);
-                Template.TableOneToManyRelations = schema.GetTableRelationsOneToMany(tableSchema, tableName);
-                Template.TableManyToOneRelations = schema.GetTableRelationsManyToOne(tableSchema, tableName);
-                Template.TableManyToManyRelations = schema.GetTableRelationsManyToMany(tableSchema, tableName);
-                Template.AssemblyName = this.AssemblyName;
-                Template.Context = this.Context;
-                Template.OutputFile = OutputFileTemplate.Replace("%s", tableClassName);
-                Template.Render();
-            }
+            /// Generate a mapping file for the table
+            Template.Schema = schema;
+            Template.TableSchema = tableSchema;
+            Template.TableName = tableName;
+            Template.TableClassName = tableClassName;
+            Template.TablePrimaryKeys = schema.GetTablePrimaryKeyColumns(tableSchema, tableName);
+            Template.TableFields = schema.GetTableFields(tableSchema, tableName);
+            Template.TableOneToManyRelations = schema.GetTableRelationsOneToMany(tableSchema, tableName);
+            Template.TableManyToOneRelations = schema.GetTableRelationsManyToOne(tableSchema, tableName);
+            Template.TableManyToManyRelations = schema.GetTableRelationsManyToMany(tableSchema, tableName);
+            Template.AssemblyName = this.AssemblyName;
+            Template.Context = this.Context;
+            Template.OutputFile = OutputFileTemplate.Replace("%s", tableClassName);
+            Template.Render();
         }
 
         this.Context.WriteLine("Ended... (" + DateTime.Now.ToString() + ")");

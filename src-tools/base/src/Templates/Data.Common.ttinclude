@@ -152,6 +152,8 @@
         private string _ConnectionName;
         private string _ConnectionString;
         private string _ProviderName;
+        private string _WhereClause;
+        
         private DbSchemaProvider _Provider;
         private Dictionary<string, DataTable> Cache = new Dictionary<string, DataTable>();
         private ArrayList dictionaryTablesManyToMany = new ArrayList();
@@ -178,23 +180,30 @@
 
         #region ' Constractors '
 
-        public DbSchema() :
-            this("LocalSqlServer")
-        { }
-
-        public DbSchema(string ConnectionName) :
-            this(ConnectionName, System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionName].ConnectionString, System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionName].ProviderName)
-        { }
 
         public DbSchema(string ConnectionString, string ProviderName) :
-            this(null, ConnectionString, ProviderName)
+            this(null, ConnectionString, ProviderName, new[] { "%" }, new string[0])
+        { }
+        
+           public DbSchema(string ConnectionString, string ProviderName, string[] includes) :
+            this(null, ConnectionString, ProviderName, includes, new string[0])
         { }
 
-        private DbSchema(string ConnectionName, string ConnectionString, string ProviderName)
+
+           public DbSchema(string ConnectionString, string ProviderName, string[] includes, string[] excludes) :
+            this(null, ConnectionString, ProviderName, includes, excludes)
+        { }
+
+        private DbSchema(string ConnectionName, string ConnectionString, string ProviderName, string[] includes, string[] excludes)
         {
             if (!string.IsNullOrEmpty(ConnectionString))
                 _ConnectionName = ConnectionName;
 
+			
+			_WhereClause = string.Join("OR", includes.Select(x=>"TABLE_NAME LIKE '" + x + "'").ToArray());
+			if (excludes.Length > 0)
+				_WhereClause += " AND " + string.Join("AND", excludes.Select(x=>"TABLE_NAME NOT LIKE  '" + x + "'").ToArray());
+				
             _ConnectionString = ConnectionString;
             _ProviderName = ProviderName;
             _Provider = GetSchemaProvider(_ConnectionString, _ProviderName);
@@ -229,7 +238,7 @@
             DataTable tbl = new DataTable("Tables");
             if (schemaTables.Rows.Count > 0)
             {
-                string WhereClause = "TABLE_TYPE = 'TABLE' OR TABLE_TYPE = 'BASE TABLE'";
+                string WhereClause = "(TABLE_TYPE = 'TABLE' OR TABLE_TYPE = 'BASE TABLE') AND (" + _WhereClause + ")";
                 tbl = schemaTables.Clone();
                 foreach (DataRow tblRow in schemaTables.Select(WhereClause))
                 {

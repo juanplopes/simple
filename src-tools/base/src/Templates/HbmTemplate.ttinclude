@@ -88,7 +88,9 @@ public class HbmTemplate : TableTemplate
  
         foreach (DataRow columnRow in this.TableFields.Rows)
         {
-			string strSqlType = columnRow["DataTypeName"].ToString();
+			string strSqlType = null;
+			if (columnRow.Table.Columns.Contains("DataTypeName"))
+				strSqlType = columnRow["DataTypeName"].ToString();
 			
             Type columnType = (Type)columnRow["DataType"];
             string nhibernateType = this.GetNHibernateType(columnType.ToString());
@@ -96,7 +98,7 @@ public class HbmTemplate : TableTemplate
             string columnPropertyName = Utilities.CleanUp(columnName);
 #>
         <property name="<#=columnPropertyName #>" type="<#=nhibernateType #>">
-            <column name="<#=columnName #>" sql-type="<#=strSqlType #>"/>
+            <column name="<#=columnName #>" <#+ if (strSqlType != null) { #> sql-type="<#=strSqlType #>" <#+ } #>/>
         </property>
 <#+
         }
