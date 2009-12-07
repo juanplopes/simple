@@ -77,7 +77,7 @@ public class GeneratorBase : Generator
 		this.Context.WriteLine("Starting... (" + DateTime.Now.ToString() + ")");
         this.Context.WriteLine(string.Format("Provider: {0}", this.ProviderName));
 
-        DataTable tables = schema.GetLogicalTables();
+        DataTable tables = schema.GetTables();
         this.Context.WriteLine(string.Format("Tables valid for domain objects: {0}", tables.Rows.Count));
 
         foreach (DataRow tableRow in tables.Rows)
@@ -98,9 +98,9 @@ public class GeneratorBase : Generator
                 Template.TableClassName = tableClassName;
                 Template.TablePrimaryKeys = schema.GetTablePrimaryKeyColumns(tableSchema, tableName);
                 Template.TableFields = schema.GetTableFields(tableSchema, tableName);
-                Template.TableOneToManyRelations = schema.GetTableOneToManyRelations(tableSchema, tableName);
-                Template.TableManyToOneRelations = schema.GetTableManyToOneRelations(tableSchema, tableName);
-                Template.TableManyToManyRelations = schema.GetTableManyToManyRelations(tableSchema, tableName);
+                Template.TableOneToManyRelations = schema.GetTableRelationsOneToMany(tableSchema, tableName);
+                Template.TableManyToOneRelations = schema.GetTableRelationsManyToOne(tableSchema, tableName);
+                Template.TableManyToManyRelations = schema.GetTableRelationsManyToMany(tableSchema, tableName);
                 Template.AssemblyName = this.AssemblyName;
                 Template.Context = this.Context;
                 Template.OutputFile = OutputFileTemplate.Replace("%s", tableClassName);
