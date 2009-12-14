@@ -49,6 +49,10 @@ namespace Simple.Config
             InvokeReload();
         }
 
+        /// <summary>
+        /// Does nothing. Only tells the config was reloaded to avoid exception.
+        /// </summary>
+        /// <returns>True, always.</returns>
         public override bool Reload()
         {
             return true;
