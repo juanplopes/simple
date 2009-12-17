@@ -148,75 +148,7 @@ namespace Simple.Meta
             return tbl;
         }
 
-        virtual public string GetPropertyType(string SystemType)
-        {
-            return GetPropertyType(SystemType, false);
-        }
-
-        virtual public string GetPropertyType(string SystemType, bool IsNullable)
-        {
-            string classType = string.Empty;
-            string[] systemType = SystemType.Split('.');
-            switch (systemType[1])
-            {
-                case "String":
-                    classType = "string";
-                    break;
-
-                case "SByte":
-                case "Boolean":
-                    classType = IsNullable ? "bool?" : "bool";
-                    break;
-
-                case "Byte":
-                    classType = IsNullable ? "byte?" : "byte";
-                    break;
-
-                case "Int16":
-                    classType = IsNullable ? "short?" : "short";
-                    break;
-
-                case "Int32":
-                    classType = IsNullable ? "int?" : "int";
-                    break;
-
-                case "Int64":
-                    classType = IsNullable ? "long?" : "long";
-                    break;
-
-                case "Decimal":
-                    classType = IsNullable ? "decimal?" : "decimal";
-                    break;
-
-                case "Double":
-                    classType = IsNullable ? "double?" : "double";
-                    break;
-
-                case "Single":
-                    classType = (IsNullable ? "float?" : "float");
-                    break;
-
-                case "DateTime":
-                    classType = (IsNullable ? "DateTime?" : "DateTime");
-                    break;
-
-                case "Guid":
-                case "Type":
-                    classType = systemType[1];
-                    break;
-
-                case "Byte[]":
-                    classType = "byte[]";
-                    break;
-
-                default:
-                    //throw new NotImplementedException("Not implemented type :" + SystemType);
-                    classType = SystemType;
-                    break;
-            }
-
-            return classType;
-        }
+       
 
         abstract public DbType GetDbColumnType(string providerDbType);
 

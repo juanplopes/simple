@@ -9,12 +9,13 @@ namespace Simple.Meta
     public class DbColumn : DbObject
     {
         public DbColumn(IDbSchemaProvider provider) : base(provider) { }
-        public DbColumn(IDbSchemaProvider provider, DataRow row) : this(provider)
+        public DbColumn(IDbSchemaProvider provider, DataRow row)
+            : this(provider)
         {
             this.AllowDBNull = (bool)row["AllowDBNull"];
             if (row.Table.Columns.Contains("BaseCatalogName"))
                 if (row["BaseCatalogName"] != DBNull.Value)
-                    this.BaseCatalogName = row["BaseCatalogName"].ToString();
+                    this.BaseCatalogName = (string)row["BaseCatalogName"];
             this.BaseColumnName = row["BaseColumnName"].ToString();
             if (row["BaseSchemaName"] != DBNull.Value)
                 this.BaseSchemaName = row["BaseSchemaName"].ToString();
@@ -22,7 +23,7 @@ namespace Simple.Meta
             this.ColumnName = row["ColumnName"].ToString();
             this.ColumnOrdinal = (int)row["ColumnOrdinal"];
             this.ColumnSize = (int)row["ColumnSize"];
-            this.DataType = row["DataType"].ToString();
+            this.DataType = (Type)row["DataType"];
             if (row.Table.Columns.Contains("IsAutoIncrement"))
                 this.IsAutoIncrement = (bool)row["IsAutoIncrement"];
             this.IsKey = (bool)row["IsKey"];
@@ -46,7 +47,7 @@ namespace Simple.Meta
         public string ColumnName { get; set; }
         public int ColumnOrdinal { get; set; }
         public int ColumnSize { get; set; }
-        public string DataType { get; set; }
+        public Type DataType { get; set; }
         public bool IsAutoIncrement { get; set; }
         public bool IsKey { get; set; }
         public bool IsLong { get; set; }
@@ -56,6 +57,15 @@ namespace Simple.Meta
         public int NumericPrecision { get; set; }
         public int NumericScale { get; set; }
         public string ProviderType { get; set; }
+
+        public string DisplayTypeName
+        {
+            get
+            {
+                return DataType.Name + (AllowDBNull && DataType.IsValueType ? "?" : "");
+            }
+        }
+
 
     }
 }

@@ -49,17 +49,12 @@ namespace Simple.Meta
 
         //#region ' Relations '
 
-        //private DataTable GetSchemaConstraints()
-        //{
-        //    string CacheKey = "Constraints";
-        //    if (Cache.Keys.Contains(CacheKey))
-        //        return Cache[CacheKey];
+        private DataTable GetSchemaConstraints()
+        {
+            DataTable tbl = Provider.GetConstraints();
 
-        //    DataTable tbl = _Provider.GetConstraints();
-
-        //    Cache.Add(CacheKey, tbl);
-        //    return tbl;
-        //}
+            return tbl;
+        }
 
         //public DataTable GetTableRelationsOneToMany(string tableSchema, string tableName)
         //{
@@ -208,29 +203,24 @@ namespace Simple.Meta
         //    return tbl;
         //}
 
-        //public DataTable GetTableRelationsByForeignKey(string tableSchema, string tableName)
-        //{
-        //    string CacheKey = "ForeignKeyRelations:" + _Provider.QualifiedTableName(tableSchema, tableName);
-        //    if (Cache.Keys.Contains(CacheKey))
-        //        return Cache[CacheKey];
+        public DataTable GetTableRelationsByForeignKey(string tableSchema, string tableName)
+        {
+            string WhereClause;
+            if (!string.IsNullOrEmpty(tableSchema))
+                WhereClause = string.Format("FK_TABLE_SCHEMA = '{0}' AND FK_TABLE_NAME = '{1}'", tableSchema, tableName);
+            else
+                WhereClause = string.Format("FK_TABLE_NAME = '{0}'", tableName);
 
-        //    string WhereClause;
-        //    if (!string.IsNullOrEmpty(tableSchema))
-        //        WhereClause = string.Format("FK_TABLE_SCHEMA = '{0}' AND FK_TABLE_NAME = '{1}'", tableSchema, tableName);
-        //    else
-        //        WhereClause = string.Format("FK_TABLE_NAME = '{0}'", tableName);
+            DataTable relations = GetSchemaConstraints();
+            DataRow[] fkRelations = (DataRow[])relations.Select(WhereClause);
+            DataTable tbl = relations.Clone();
+            foreach (DataRow relationRow in fkRelations)
+            {
+                tbl.ImportRow(relationRow);
+            }
 
-        //    DataTable relations = GetSchemaConstraints();
-        //    DataRow[] fkRelations = (DataRow[])relations.Select(WhereClause);
-        //    DataTable tbl = relations.Clone();
-        //    foreach (DataRow relationRow in fkRelations)
-        //    {
-        //        tbl.ImportRow(relationRow);
-        //    }
-
-        //    Cache.Add(CacheKey, tbl);
-        //    return tbl;
-        //}
+            return tbl;
+        }
 
         //#endregion
 
@@ -272,16 +262,6 @@ namespace Simple.Meta
 
 
         #region ' Helpers '
-
-        public string GetPropertyType(string SystemType)
-        {
-            return this.GetPropertyType(SystemType, false);
-        }
-
-        public string GetPropertyType(string SystemType, bool IsNullable)
-        {
-            return Provider.GetPropertyType(SystemType, IsNullable);
-        }
 
         public DbType GetDbColumnType(string providerDbType)
         {

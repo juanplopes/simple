@@ -26,8 +26,6 @@ namespace Simple.Meta
         DataTable GetProcedures();
         DataTable GetProcedureParameters(string procedureSchema, string procedureName);
         DbType GetDbColumnType(string providerDbType);
-        string GetPropertyType(string SystemType);
-        string GetPropertyType(string SystemType, bool IsNullable);
         string QualifiedTableName(string tableSchema, string tableName);
     }
 }
