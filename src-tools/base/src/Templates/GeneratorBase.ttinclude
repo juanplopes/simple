@@ -15,16 +15,37 @@
 <#@ include file="..\Templates\TableTemplate.ttinclude" #>
 
 <#+
+// <copyright file="nHibernateGenerator.tt" company="Data.Common.DbSchema">
+//
+//
+//  Data.Common.DbSchema - http://dbschema.codeplex.com
+//
+//  The contents of this file are subject to the New BSD
+//  License (the "License"); you may not use this file
+//  except in compliance with the License. You may obtain a copy of
+//  the License at http://www.opensource.org/licenses/bsd-license.php
+//
+//  Software distributed under the License is distributed on an 
+//  "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+//  implied. See the License for the specific language governing
+//  rights and limitations under the License.
+//
+// </copyright>
+
 public class GeneratorBase : Generator
 {
 	
 	public GeneratorBase(TableTemplate template) 
 	{
-		ExcludedTables = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-		ExcludedTables.Add("sysdiagrams");
+		ExcludedTables = new List<string>();
+		IncludedTables = new List<string>();
+		
+		IncludedTables.Add("%");
+		
 		ProviderName = "System.Data.SqlClient";
 		BaseClassName = "Simple.Entities.Entity<%s, I%sService>";
 		Template = template;
+		NHibernateFilePath= @"Environment\Development\NHibernate.config";
 	}
 	
     private bool IsExcluded(string tableName)
@@ -37,9 +58,11 @@ public class GeneratorBase : Generator
 	public TableTemplate Template { get; set; }
     public string ConnectionString { get; set ;}
     public string ProviderName { get; set; }
-    public HashSet<string> ExcludedTables { get; set; }
+	public IList<string> IncludedTables { get; set; }
+    public IList<string> ExcludedTables { get; set; }
     public GeneratedTextTransformation Context { get; set; }
 	public string OutputFileTemplate { get; set; }
+	public string NHibernateFilePath { get; set; }
 	
     public string AssemblyName
     {
@@ -53,14 +76,14 @@ public class GeneratorBase : Generator
     protected override void RunCore()
     {
 		this.ConnectionString = this.ConnectionString??
-			GetNHConnectionString(@"Environment\Development\NHibernate.config");
+			GetNHConnectionString(NHibernateFilePath);
 		
-        DbSchema schema = new DbSchema(this.ConnectionString, this.ProviderName);
+        DbSchema schema = new DbSchema(this.ConnectionString, this.ProviderName, IncludedTables.ToArray(), ExcludedTables.ToArray());
         
 		this.Context.WriteLine("Starting... (" + DateTime.Now.ToString() + ")");
         this.Context.WriteLine(string.Format("Provider: {0}", this.ProviderName));
 
-        DataTable tables = schema.GetLogicalTables();
+        DataTable tables = schema.GetTables();
         this.Context.WriteLine(string.Format("Tables valid for domain objects: {0}", tables.Rows.Count));
 
         foreach (DataRow tableRow in tables.Rows)
@@ -70,25 +93,22 @@ public class GeneratorBase : Generator
             string tableClassName = Inflector.MakeSingular(Utilities.CleanUp(tableName));
             string tableType = tableRow["TABLE_TYPE"].ToString().ToUpper();
 
-            if (!IsExcluded(tableName))
-            {
-                this.Context.WriteLine(string.Format("Generating file for table <{0}>...", tableName));
+            this.Context.WriteLine(string.Format("Generating file for table <{0}>...", tableName));
 
-                /// Generate a mapping file for the table
-                Template.Schema = schema;
-                Template.TableSchema = tableSchema;
-                Template.TableName = tableName;
-                Template.TableClassName = tableClassName;
-                Template.TablePrimaryKeys = schema.GetTablePrimaryKeyColumns(tableSchema, tableName);
-                Template.TableFields = schema.GetTableFields(tableSchema, tableName);
-                Template.TableOneToManyRelations = schema.GetTableOneToManyRelations(tableSchema, tableName);
-                Template.TableManyToOneRelations = schema.GetTableManyToOneRelations(tableSchema, tableName);
-                Template.TableManyToManyRelations = schema.GetTableManyToManyRelations(tableSchema, tableName);
-                Template.AssemblyName = this.AssemblyName;
-                Template.Context = this.Context;
-                Template.OutputFile = OutputFileTemplate.Replace("%s", tableClassName);
-                Template.Render();
-            }
+            /// Generate a mapping file for the table
+            Template.Schema = schema;
+            Template.TableSchema = tableSchema;
+            Template.TableName = tableName;
+            Template.TableClassName = tableClassName;
+            Template.TablePrimaryKeys = schema.GetTablePrimaryKeyColumns(tableSchema, tableName);
+            Template.TableFields = schema.GetTableFields(tableSchema, tableName);
+            Template.TableOneToManyRelations = schema.GetTableRelationsOneToMany(tableSchema, tableName);
+            Template.TableManyToOneRelations = schema.GetTableRelationsManyToOne(tableSchema, tableName);
+            Template.TableManyToManyRelations = schema.GetTableRelationsManyToMany(tableSchema, tableName);
+            Template.AssemblyName = this.AssemblyName;
+            Template.Context = this.Context;
+            Template.OutputFile = OutputFileTemplate.Replace("%s", tableClassName);
+            Template.Render();
         }
 
         this.Context.WriteLine("Ended... (" + DateTime.Now.ToString() + ")");
