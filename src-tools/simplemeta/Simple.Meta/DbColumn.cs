@@ -6,37 +6,36 @@ using System.Text;
 
 namespace Simple.Meta
 {
-    public class DbColumn
+    public class DbColumn : DbObject
     {
-        public DbColumn() { }
-
-        public DbColumn(DataRow ColumnRow)
+        public DbColumn(IDbSchemaProvider provider) : base(provider) { }
+        public DbColumn(IDbSchemaProvider provider, DataRow row) : this(provider)
         {
-            this.AllowDBNull = (bool)ColumnRow["AllowDBNull"];
-            if (ColumnRow.Table.Columns.Contains("BaseCatalogName"))
-                if (ColumnRow["BaseCatalogName"] != DBNull.Value)
-                    this.BaseCatalogName = ColumnRow["BaseCatalogName"].ToString();
-            this.BaseColumnName = ColumnRow["BaseColumnName"].ToString();
-            if (ColumnRow["BaseSchemaName"] != DBNull.Value)
-                this.BaseSchemaName = ColumnRow["BaseSchemaName"].ToString();
-            this.BaseTableName = ColumnRow["BaseTableName"].ToString();
-            this.ColumnName = ColumnRow["ColumnName"].ToString();
-            this.ColumnOrdinal = (int)ColumnRow["ColumnOrdinal"];
-            this.ColumnSize = (int)ColumnRow["ColumnSize"];
-            this.DataType = ColumnRow["DataType"].ToString();
-            if (ColumnRow.Table.Columns.Contains("IsAutoIncrement"))
-                this.IsAutoIncrement = (bool)ColumnRow["IsAutoIncrement"];
-            this.IsKey = (bool)ColumnRow["IsKey"];
-            this.IsLong = (bool)ColumnRow["IsLong"];
-            if (ColumnRow.Table.Columns.Contains("IsReadOnly"))
-                this.IsReadOnly = (bool)ColumnRow["IsReadOnly"];
-            if (ColumnRow.Table.Columns.Contains("IsRowVersion"))
-                this.IsRowVersion = (bool)ColumnRow["IsRowVersion"];
-            this.IsUnique = (bool)ColumnRow["IsUnique"];
-            this.NumericPrecision = Convert.ToInt32(ColumnRow["NumericPrecision"]);
-            this.NumericScale = Convert.ToInt32(ColumnRow["NumericScale"]);
-            if (ColumnRow.Table.Columns.Contains("ProviderType"))
-                this.ProviderType = ColumnRow["ProviderType"].ToString();
+            this.AllowDBNull = (bool)row["AllowDBNull"];
+            if (row.Table.Columns.Contains("BaseCatalogName"))
+                if (row["BaseCatalogName"] != DBNull.Value)
+                    this.BaseCatalogName = row["BaseCatalogName"].ToString();
+            this.BaseColumnName = row["BaseColumnName"].ToString();
+            if (row["BaseSchemaName"] != DBNull.Value)
+                this.BaseSchemaName = row["BaseSchemaName"].ToString();
+            this.BaseTableName = row["BaseTableName"].ToString();
+            this.ColumnName = row["ColumnName"].ToString();
+            this.ColumnOrdinal = (int)row["ColumnOrdinal"];
+            this.ColumnSize = (int)row["ColumnSize"];
+            this.DataType = row["DataType"].ToString();
+            if (row.Table.Columns.Contains("IsAutoIncrement"))
+                this.IsAutoIncrement = (bool)row["IsAutoIncrement"];
+            this.IsKey = (bool)row["IsKey"];
+            this.IsLong = (bool)row["IsLong"];
+            if (row.Table.Columns.Contains("IsReadOnly"))
+                this.IsReadOnly = (bool)row["IsReadOnly"];
+            if (row.Table.Columns.Contains("IsRowVersion"))
+                this.IsRowVersion = (bool)row["IsRowVersion"];
+            this.IsUnique = (bool)row["IsUnique"];
+            this.NumericPrecision = Convert.ToInt32(row["NumericPrecision"]);
+            this.NumericScale = Convert.ToInt32(row["NumericScale"]);
+            if (row.Table.Columns.Contains("ProviderType"))
+                this.ProviderType = row["ProviderType"].ToString();
         }
 
         public bool AllowDBNull { get; set; }

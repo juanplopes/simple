@@ -17,7 +17,7 @@ using System.Data;
 
 namespace Simple.Meta
 {
-    interface IDbSchemaProvider
+    public interface IDbSchemaProvider
     {
         string GetDatabaseName();
         DataTable GetSchemaTables();

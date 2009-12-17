@@ -46,20 +46,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbColumn.cs" />
+    <Compile Include="DbObject.cs" />
     <Compile Include="DbRelation.cs" />
     <Compile Include="DbSchema.cs" />
     <Compile Include="DbSchemaProvider.cs" />
     <Compile Include="DbTable.cs" />
     <Compile Include="IDbSchemaProvider.cs" />
-    <Compile Include="MySqlSchemaProvider.cs" />
-    <Compile Include="OleDbSchemaProvider.cs" />
-    <Compile Include="OracleSchemaProvider.cs" />
-    <Compile Include="PostgreSqlSchemaProvider.cs" />
+    <Compile Include="Providers\MySqlSchemaProvider.cs" />
+    <Compile Include="Providers\OleDbSchemaProvider.cs" />
+    <Compile Include="Providers\OracleSchemaProvider.cs" />
+    <Compile Include="Providers\PostgreSqlSchemaProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLiteSchemaProvider.cs" />
-    <Compile Include="SqlServerCeSchemaProvider.cs" />
-    <Compile Include="SqlServerSchemaProvider.cs" />
-    <Compile Include="VistaDBSchemaProvider.cs" />
+    <Compile Include="Providers\SQLiteSchemaProvider.cs" />
+    <Compile Include="Providers\SqlServerCeSchemaProvider.cs" />
+    <Compile Include="Providers\SqlServerSchemaProvider.cs" />
+    <Compile Include="Providers\VistaDBSchemaProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

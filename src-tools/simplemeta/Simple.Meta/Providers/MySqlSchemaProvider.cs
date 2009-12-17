@@ -17,7 +17,7 @@ using System.Data;
 using System.Data.Common;
 
 
-namespace Simple.Meta
+namespace Simple.Meta.Providers
 {
     public class MySqlSchemaProvider : DbSchemaProvider
     {

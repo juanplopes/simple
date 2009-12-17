@@ -18,7 +18,7 @@ using System.Data;
 using System.Data.Common;
 using System.Text.RegularExpressions;
 
-namespace Simple.Meta
+namespace Simple.Meta.Providers
 {
     public class SqlServerCeSchemaProvider : DbSchemaProvider
     {
