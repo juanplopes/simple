@@ -16,7 +16,7 @@ namespace Simple.Meta.Sample
             {
                 var relations = schema.GetTableRelationsByForeignKey(table.TableSchema, table.TableName);
                 Console.WriteLine(table.TableName);
-                foreach (var column in table.AllColumns)
+                foreach (var column in table.VisibleColumns)
                 {
                     Console.WriteLine("\t" + column.ColumnName + " ( " + column.DisplayTypeName + " ) ");
                 }

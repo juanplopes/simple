@@ -28,6 +28,10 @@ namespace Simple.Meta
                 this.IsAutoIncrement = (bool)row["IsAutoIncrement"];
             this.IsKey = (bool)row["IsKey"];
             this.IsLong = (bool)row["IsLong"];
+            
+            if (row.Table.Columns.Contains("IsHidden"))
+                this.IsHidden = (bool)row["IsHidden"];
+            
             if (row.Table.Columns.Contains("IsReadOnly"))
                 this.IsReadOnly = (bool)row["IsReadOnly"];
             if (row.Table.Columns.Contains("IsRowVersion"))
@@ -51,6 +55,7 @@ namespace Simple.Meta
         public bool IsAutoIncrement { get; set; }
         public bool IsKey { get; set; }
         public bool IsLong { get; set; }
+        public bool IsHidden { get; set; }
         public bool IsReadOnly { get; set; }
         public bool IsRowVersion { get; set; }
         public bool IsUnique { get; set; }

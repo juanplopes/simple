@@ -46,15 +46,17 @@ namespace Simple.Meta
             get
             {
                 DataTable tableColumns = GetSchemaColumns(TableSchema, TableName);
-                IEnumerable<DataRow> columns = null;
 
-                if (tableColumns.Columns.Contains("IsHidden"))
-                    columns = tableColumns.Select("IsHidden = 0 OR IsHidden IS NULL");
-                else
-                    columns = tableColumns.Rows.OfType<DataRow>();
-
-                foreach (var row in columns)
+                foreach (DataRow row in tableColumns.Rows)
                     yield return new DbColumn(Provider, row);
+            }
+        }
+
+        public IEnumerable<DbColumn> VisibleColumns
+        {
+            get
+            {
+                return AllColumns.Where(x => !x.IsHidden);
             }
         }
 
@@ -62,8 +64,7 @@ namespace Simple.Meta
         {
             get
             {
-                foreach (var row in GetSchemaColumns(TableSchema, TableName).Select("IsKey = true"))
-                    yield return new DbColumn(Provider, row);
+                return VisibleColumns.Where(x => x.IsKey);
             }
         }
 
@@ -71,16 +72,7 @@ namespace Simple.Meta
         {
             get
             {
-                var ignoreColumns = new HashSet<string>();
-                foreach (var column in PrimaryKeys)
-                    ignoreColumns.Add("'" + column.ColumnName + "'");
-
-                string where = "1=1";
-                if (ignoreColumns.Count > 0)
-                    where = "ColumnName NOT IN ( " + string.Join(", ", ignoreColumns.ToArray()) + " )";
-
-                foreach (var row in GetSchemaColumns(TableSchema, TableName).Select(where))
-                    yield return new DbColumn(Provider, row);
+                return VisibleColumns.Except(PrimaryKeys);
             }
         }
 
