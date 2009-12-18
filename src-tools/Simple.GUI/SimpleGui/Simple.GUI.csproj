@@ -8,8 +8,8 @@
     <ProjectGuid>{E45B5534-55FF-4E60-83D8-FE907F111F92}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleGui</RootNamespace>
-    <AssemblyName>SimpleGui</AssemblyName>
+    <RootNamespace>Simple.GUI</RootNamespace>
+    <AssemblyName>Simple.GUI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -71,6 +71,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
