@@ -16,7 +16,7 @@
 using System.Data;
 using System.Data.Common;
 
-namespace Simple.Schema.Providers
+namespace Simple.Meta.Providers
 {
     class PostgreSqlSchemaProvider : DbSchemaProvider
     {

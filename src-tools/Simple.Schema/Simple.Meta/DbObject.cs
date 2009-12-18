@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.Schema.Providers;
+using Simple.Meta.Providers;
 
-namespace Simple.Schema
+namespace Simple.Meta
 {
     public abstract class DbObject
     {
