@@ -54,7 +54,7 @@ namespace Schema.Metadata
                 yield return new DbRelation(Provider, row);
         }
 
-        protected IList<DbColumn> AllColumns
+        protected IEnumerable<DbColumn> AllColumns
         {
             //all columns including hidden
             get
@@ -74,7 +74,7 @@ namespace Schema.Metadata
             }
         }
 
-        public IList<DbRelation> ForeignKeyColumns
+        public IEnumerable<DbRelation> ForeignKeyColumns
         {
             //all outgoing relations
             get

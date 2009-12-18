@@ -41,6 +41,8 @@ namespace Schema.Metadata
             this.NumericScale = Convert.ToInt32(row["NumericScale"]);
             if (row.Table.Columns.Contains("ProviderType"))
                 this.ProviderType = row["ProviderType"].ToString();
+            
+            this.DataTypeName = row.Field<string>("DataTypeName");
         }
 
         public bool AllowDBNull { get; set; }
@@ -52,6 +54,7 @@ namespace Schema.Metadata
         public int ColumnOrdinal { get; set; }
         public int ColumnSize { get; set; }
         public Type DataType { get; set; }
+        public string DataTypeName { get; set; }
         public bool IsAutoIncrement { get; set; }
         public bool IsKey { get; set; }
         public bool IsLong { get; set; }
