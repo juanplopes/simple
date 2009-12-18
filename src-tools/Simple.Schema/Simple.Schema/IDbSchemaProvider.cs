@@ -15,7 +15,7 @@
 
 using System.Data;
 
-namespace Simple.Schema
+namespace Schema.Metadata
 {
     public interface IDbSchemaProvider
     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Simple.Schema")]
+[assembly: AssemblyTitle("Schema.Metadata")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Living Consultoria")]
-[assembly: AssemblyProduct("Simple.Schema")]
+[assembly: AssemblyProduct("Schema.Metadata")]
 [assembly: AssemblyCopyright("Copyright © Living Consultoria 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

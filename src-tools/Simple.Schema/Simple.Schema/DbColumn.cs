@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace Simple.Schema
+namespace Schema.Metadata
 {
     public class DbColumn : DbObject
     {

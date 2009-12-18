@@ -8,8 +8,8 @@
     <ProjectGuid>{E85AA453-A3F8-4C02-A6C8-8A2F158F4C04}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simple.Schema.Sample</RootNamespace>
-    <AssemblyName>Simple.Schema.Sample</AssemblyName>
+    <RootNamespace>Schema.Metadata.Sample</RootNamespace>
+    <AssemblyName>Schema.Metadata.Sample</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,9 +49,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Simple.Schema\Simple.Schema.csproj">
+    <ProjectReference Include="..\Simple.Schema\Schema.Metadata.csproj">
       <Project>{950D2279-BD4C-4338-BB07-3DD44F5FEAF7}</Project>
-      <Name>Simple.Meta</Name>
+      <Name>Schema.Metadata</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

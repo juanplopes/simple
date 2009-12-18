@@ -20,7 +20,7 @@ using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 
-namespace Simple.Schema.Providers
+namespace Schema.Metadata.Providers
 {
     public class OleDbSchemaProvider : DbSchemaProvider
     {

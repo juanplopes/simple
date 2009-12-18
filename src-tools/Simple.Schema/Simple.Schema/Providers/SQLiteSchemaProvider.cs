@@ -17,7 +17,7 @@ using System;
 using System.Data;
 using System.Data.Common;
 
-namespace Simple.Schema.Providers
+namespace Schema.Metadata.Providers
 {
     class SQLiteSchemaProvider : DbSchemaProvider
     {

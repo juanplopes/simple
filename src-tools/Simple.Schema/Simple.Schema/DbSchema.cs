@@ -19,7 +19,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 
-namespace Simple.Schema
+namespace Schema.Metadata
 {
     public class DbSchema : DbObject
     {
