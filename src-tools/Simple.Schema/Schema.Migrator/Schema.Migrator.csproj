@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E85AA453-A3F8-4C02-A6C8-8A2F158F4C04}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{AF1324F4-59D2-415E-9F7D-36B1E4F8CB27}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Schema.Metadata.Sample</RootNamespace>
-    <AssemblyName>Schema.Metadata.Sample</AssemblyName>
+    <RootNamespace>Schema.Migrator</RootNamespace>
+    <AssemblyName>Schema.Migrator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Migrator.Framework, Version=0.9.0.26940, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Migrator.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -45,14 +49,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Columns\ColumnChangeAction.cs" />
+    <Compile Include="Columns\ColumnAction.cs" />
+    <None Include="Tables\TableAction.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TableAction1.cs</LastGenOutput>
+    </None>
+    <Compile Include="Columns\ColumnCreateAction.cs" />
+    <Compile Include="Columns\ColumnDropAction.cs" />
+    <Compile Include="FluentMigration.cs" />
+    <Compile Include="ForeignKeys\ForeignKeyAddAction.cs" />
+    <Compile Include="ForeignKeys\ForeignKeyRemoveAction.cs" />
+    <Compile Include="IAction.cs" />
+    <Compile Include="InsideTableAction.cs" />
+    <Compile Include="Tables\TableAction1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableAction.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ForeignKeys\ForeignKeyAction.cs" />
+    <Compile Include="IConvention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables\TableChangeAction.cs" />
+    <Compile Include="Tables\TableAddAction.cs" />
+    <Compile Include="Tables\TableRemoveAction.cs" />
+    <Compile Include="Tables\TableAction.cs" />
+    <Compile Include="SchemaBuilder.cs" />
+    <Compile Include="UniqueConstraints\UniqueConstraintAction.cs" />
+    <Compile Include="UniqueConstraints\UniqueConstraintAddAction.cs" />
+    <Compile Include="UniqueConstraints\UniqueConstraintRemoveAction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Schema.Metadata\Schema.Metadata.csproj">
-      <Project>{950D2279-BD4C-4338-BB07-3DD44F5FEAF7}</Project>
-      <Name>Schema.Metadata</Name>
-    </ProjectReference>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
