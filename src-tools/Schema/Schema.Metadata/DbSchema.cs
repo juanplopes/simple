@@ -212,7 +212,7 @@ namespace Schema.Metadata
                 WhereClause = string.Format("FK_TABLE_NAME = '{0}'", tableName);
 
             DataTable relations = GetSchemaConstraints();
-            DataRow[] fkRelations = (DataRow[])relations.Select(WhereClause);
+            DataRow[] fkRelations = relations.Select(WhereClause);
             DataTable tbl = relations.Clone();
             foreach (DataRow relationRow in fkRelations)
             {

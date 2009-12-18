@@ -8,7 +8,8 @@ namespace Schema.Metadata
 {
     public class DbTable : DbObject
     {
-        private DataTable _columnCache = null;
+        private IList<DbColumn> _columnCache = null;
+        private IList<DbRelation> _fkCache = null;
 
         public DbTable(IDbSchemaProvider provider)
             : base(provider)
@@ -35,24 +36,45 @@ namespace Schema.Metadata
 
         #region ' Columns and Primary Keys '
 
-        private DataTable GetSchemaColumns(string tableSchema, string tableName)
+        private IEnumerable<DbColumn> GetSchemaColumns()
         {
-            if (_columnCache != null) return _columnCache;
-            return _columnCache = Provider.GetTableColumns(tableSchema, tableName);
+            foreach (DataRow row in Provider.GetTableColumns(TableSchema, TableName).Rows)
+                yield return new DbColumn(Provider, row);
         }
 
-        public IEnumerable<DbColumn> AllColumns
+        private IEnumerable<DbRelation> GetRelations()
+        {
+            string where;
+            if (!string.IsNullOrEmpty(TableSchema))
+                where = string.Format("FK_TABLE_SCHEMA = '{0}' AND FK_TABLE_NAME = '{1}'", TableSchema, TableName);
+            else
+                where = string.Format("FK_TABLE_NAME = '{0}'", TableName);
+
+            foreach (var row in Provider.GetConstraints().Select(where))
+                yield return new DbRelation(Provider, row);
+        }
+
+
+        protected IList<DbColumn> AllColumns
         {
             get
             {
-                DataTable tableColumns = GetSchemaColumns(TableSchema, TableName);
-
-                foreach (DataRow row in tableColumns.Rows)
-                    yield return new DbColumn(Provider, row);
+                if (_columnCache == null) _columnCache = GetSchemaColumns().ToList();
+                return _columnCache;
             }
         }
 
-        public IEnumerable<DbColumn> VisibleColumns
+        public IList<DbRelation> ForeignKeyColumns
+        {
+            get
+            {
+                if (_fkCache == null) _fkCache = GetRelations().ToList();
+                return _fkCache;
+            }
+        }
+
+
+        public IEnumerable<DbColumn> Columns
         {
             get
             {
@@ -60,20 +82,24 @@ namespace Schema.Metadata
             }
         }
 
-        public IEnumerable<DbColumn> PrimaryKeys
+        public IEnumerable<DbColumn> PrimaryKeyColumns
         {
             get
             {
-                return VisibleColumns.Where(x => x.IsKey);
+                return Columns.Where(x => x.IsKey);
             }
         }
 
-        public IEnumerable<DbColumn> FieldColumns
+        
+        public IEnumerable<DbColumn> GetFieldColumns()
         {
-            get
-            {
-                return VisibleColumns.Except(PrimaryKeys);
-            }
+            return Columns.Except(PrimaryKeyColumns);
+        }
+
+        public IEnumerable<DbForeignKey> GetForeignKeys()
+        {
+            var fks = ForeignKeyColumns;
+            return fks.GroupBy(x => x.FkName).Select(x => new DbForeignKey(Provider, x.Key, x.ToList()));
         }
 
         #endregion

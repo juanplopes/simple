@@ -3,11 +3,11 @@ using System.Data;
 
 namespace Schema.Metadata
 {
-    public class DbRelation
+    public class DbRelation : DbObject
     {
-        public DbRelation() { }
+        public DbRelation(IDbSchemaProvider provider) : base(provider) { }
 
-        public DbRelation(DataRow RelationRow)
+        public DbRelation(IDbSchemaProvider provider, DataRow RelationRow) : this(provider)
         {
             if (RelationRow["PK_TABLE_CATALOG"] != DBNull.Value)
                 this.PkTableCatalog = RelationRow["PK_TABLE_CATALOG"].ToString();
@@ -22,16 +22,19 @@ namespace Schema.Metadata
                 this.FkTableSchema = RelationRow["FK_TABLE_SCHEMA"].ToString();
             this.FkTableName = RelationRow["FK_TABLE_NAME"].ToString();
             this.FkColumnName = RelationRow["FK_COLUMN_NAME"].ToString();
-
+            this.FkName = RelationRow.Field<string>("FK_NAME");
         }
 
         public string PkTableCatalog { get; set; }
         public string PkTableSchema { get; set; }
         public string PkTableName { get; set; }
         public string PkColumnName { get; set; }
+        
         public string FkTableCatalog { get; set; }
         public string FkTableSchema { get; set; }
         public string FkTableName { get; set; }
         public string FkColumnName { get; set; }
+
+        public string FkName { get; set; }
     }
 }

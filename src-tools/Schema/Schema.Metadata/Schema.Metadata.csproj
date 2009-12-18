@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbColumn.cs" />
+    <Compile Include="DbForeignKey.cs" />
     <Compile Include="DbObject.cs" />
     <Compile Include="DbRelation.cs" />
     <Compile Include="DbSchema.cs" />
