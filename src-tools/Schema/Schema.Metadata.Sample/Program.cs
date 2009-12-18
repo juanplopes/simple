@@ -22,7 +22,7 @@ namespace Schema.Metadata.Sample
                     Console.WriteLine("\t>" + column.ColumnName + " ( " + column.DisplayTypeName + " ) ");
                 }
 
-                foreach (var column in table.GetFieldColumns())
+                foreach (var column in table.GetFields())
                 {
                     Console.WriteLine("\t" + column.ColumnName + " ( " + column.DisplayTypeName + " ) ");
                 }

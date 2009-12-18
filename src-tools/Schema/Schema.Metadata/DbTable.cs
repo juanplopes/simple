@@ -54,9 +54,9 @@ namespace Schema.Metadata
                 yield return new DbRelation(Provider, row);
         }
 
-
         protected IList<DbColumn> AllColumns
         {
+            //all columns including hidden
             get
             {
                 if (_columnCache == null) _columnCache = GetSchemaColumns().ToList();
@@ -64,8 +64,19 @@ namespace Schema.Metadata
             }
         }
 
+
+        public IEnumerable<DbColumn> Columns
+        {
+            //all columns, except hidden
+            get
+            {
+                return AllColumns.Where(x => !x.IsHidden);
+            }
+        }
+
         public IList<DbRelation> ForeignKeyColumns
         {
+            //all outgoing relations
             get
             {
                 if (_fkCache == null) _fkCache = GetRelations().ToList();
@@ -73,34 +84,39 @@ namespace Schema.Metadata
             }
         }
 
-
-        public IEnumerable<DbColumn> Columns
-        {
-            get
-            {
-                return AllColumns.Where(x => !x.IsHidden);
-            }
-        }
-
         public IEnumerable<DbColumn> PrimaryKeyColumns
         {
+            //all primary key columns
             get
             {
                 return Columns.Where(x => x.IsKey);
             }
         }
 
-        
-        public IEnumerable<DbColumn> GetFieldColumns()
+        public IEnumerable<DbColumn> GetKeyFields()
         {
-            return Columns.Except(PrimaryKeyColumns);
+            //all primary keys not included in a foreign key
+            var excluded = new HashSet<string>(ForeignKeyColumns.Select(x => x.FkColumnName));
+            return PrimaryKeyColumns.Where(x => !excluded.Contains(x.ColumnName));
+        }
+
+        public IEnumerable<DbColumn> GetFields()
+        {
+            //all columns except primary keys and foreign keys
+            var excluded = new HashSet<string>(
+                PrimaryKeyColumns.Select(x => x.ColumnName).Union(
+                ForeignKeyColumns.Select(x => x.FkColumnName)));
+
+            return Columns.Where(x => !excluded.Contains(x.ColumnName));
         }
 
         public IEnumerable<DbForeignKey> GetForeignKeys()
         {
+            //all foreign keys columns grouped by fk name
             var fks = ForeignKeyColumns;
             return fks.GroupBy(x => x.FkName).Select(x => new DbForeignKey(Provider, x.Key, x.ToList()));
         }
+
 
         #endregion
 

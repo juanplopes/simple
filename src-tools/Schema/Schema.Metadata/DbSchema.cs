@@ -202,26 +202,7 @@ namespace Schema.Metadata
         //    Cache.Add(CacheKey, tbl);
         //    return tbl;
         //}
-
-        public DataTable GetTableRelationsByForeignKey(string tableSchema, string tableName)
-        {
-            string WhereClause;
-            if (!string.IsNullOrEmpty(tableSchema))
-                WhereClause = string.Format("FK_TABLE_SCHEMA = '{0}' AND FK_TABLE_NAME = '{1}'", tableSchema, tableName);
-            else
-                WhereClause = string.Format("FK_TABLE_NAME = '{0}'", tableName);
-
-            DataTable relations = GetSchemaConstraints();
-            DataRow[] fkRelations = relations.Select(WhereClause);
-            DataTable tbl = relations.Clone();
-            foreach (DataRow relationRow in fkRelations)
-            {
-                tbl.ImportRow(relationRow);
-            }
-
-            return tbl;
-        }
-
+        
         //#endregion
 
         //#region ' Store Procedures '
