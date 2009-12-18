@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.ComponentModel;
 
-namespace SimpleLauncher
+namespace Simple.Launcher
 {
     class Program
     {

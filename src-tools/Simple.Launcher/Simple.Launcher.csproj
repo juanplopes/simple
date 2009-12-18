@@ -8,8 +8,8 @@
     <ProjectGuid>{72FAFFD6-0232-4DBB-81D5-754DFADE496E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleLauncher</RootNamespace>
-    <AssemblyName>SimpleLauncher</AssemblyName>
+    <RootNamespace>Simple.Launcher</RootNamespace>
+    <AssemblyName>Simple.Launcher</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
