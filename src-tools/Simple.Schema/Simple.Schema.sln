@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Meta", "Simple.Meta\Simple.Meta.csproj", "{950D2279-BD4C-4338-BB07-3DD44F5FEAF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Schema", "Simple.Schema\Simple.Schema.csproj", "{950D2279-BD4C-4338-BB07-3DD44F5FEAF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Meta.Sample", "Simple.Meta.Sample\Simple.Meta.Sample.csproj", "{E85AA453-A3F8-4C02-A6C8-8A2F158F4C04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Schema.Sample", "Simple.Schema.Sample\Simple.Schema.Sample.csproj", "{E85AA453-A3F8-4C02-A6C8-8A2F158F4C04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

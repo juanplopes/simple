@@ -16,7 +16,7 @@
 using System.Data;
 using System.Data.Common;
 
-namespace Simple.Meta.Providers
+namespace Simple.Schema.Providers
 {
     class SqlServerSchemaProvider : DbSchemaProvider
     {

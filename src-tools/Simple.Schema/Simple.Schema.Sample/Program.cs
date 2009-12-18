@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Simple.Meta.Sample
+namespace Simple.Schema.Sample
 {
     class Program
     {
