@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace Simple.Meta
+namespace Simple.Schema
 {
     public class DbTable : DbObject
     {

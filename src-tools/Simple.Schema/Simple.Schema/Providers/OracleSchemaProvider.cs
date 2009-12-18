@@ -20,7 +20,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 
-namespace Simple.Meta.Providers
+namespace Simple.Schema.Providers
 {
     class OracleSchemaProvider : DbSchemaProvider
     {

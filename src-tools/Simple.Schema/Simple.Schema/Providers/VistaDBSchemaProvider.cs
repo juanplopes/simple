@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Simple.Meta.Providers
+namespace Simple.Schema.Providers
 {
     public class VistaDBSchemaProvider : DbSchemaProvider
     {

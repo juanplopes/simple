@@ -18,7 +18,7 @@ using System.Data.Common;
 using System.Reflection;
 using System;
 
-namespace Simple.Meta
+namespace Simple.Schema
 {
     abstract public class DbSchemaProvider : IDbSchemaProvider
     {

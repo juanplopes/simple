@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace Simple.Meta
+namespace Simple.Schema
 {
     public class DbRelation
     {

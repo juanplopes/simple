@@ -8,8 +8,8 @@
     <ProjectGuid>{950D2279-BD4C-4338-BB07-3DD44F5FEAF7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simple.Meta</RootNamespace>
-    <AssemblyName>Simple.Meta</AssemblyName>
+    <RootNamespace>Simple.Schema</RootNamespace>
+    <AssemblyName>Simple.Schema</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
