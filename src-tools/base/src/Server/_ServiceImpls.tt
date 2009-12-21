@@ -4,8 +4,8 @@
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
 <#
 	var template = new ServiceImplTemplate();
-	template.EntityNamespace = "Conspirarte.Domain";
-	template.ServiceContractsNamespace = template.ServiceImplNamespace = "Conspirarte.Services";
+	template.EntityNamespace = "Sample.Project.Domain";
+	template.ServiceContractsNamespace = template.ServiceImplNamespace = "Sample.Project.Services";
 	template.PreserveFile = true;
 	template.OutputFileTemplate = @"Services\%sService.cs";
     template.Context = this;

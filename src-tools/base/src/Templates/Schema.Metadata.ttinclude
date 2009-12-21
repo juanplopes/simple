@@ -402,11 +402,11 @@
         public IEnumerable<DbTable> GetGeneric(IList<string> included, IList<string> excluded, params string[] types)
         {
             var incString = included.Count > 0 ?
-                string.Join(" OR ", included.Select(x => "TABLE_NAME LIKE '" + x + "'").ToArray()) :
+                string.Join(" OR ", included.Select(x => GetTableWhereClause("LIKE", x)).ToArray()) :
                 "1=1";
 
             var excString = excluded.Count > 0 ?
-                string.Join(" AND ", excluded.Select(x => "TABLE_NAME NOT LIKE '" + x + "'").ToArray()):
+                string.Join(" AND ", excluded.Select(x => GetTableWhereClause("NOT LIKE", x)).ToArray()) :
                 "1=1";
 
             var typesString = types.Length > 0 ?
@@ -415,6 +415,18 @@
 
             foreach (var row in GetSchemaTables().Select(string.Format("({0}) AND ({1}) AND ({2})", incString, excString, typesString)))
                 yield return new DbTable(Provider, row);
+        }
+
+        protected string GetTableWhereClause(string op, string tableName)
+        {
+            var columns = new[] { "TABLE_NAME", "TABLE_SCHEMA", "TABLE_CATALOG" };
+            var names = tableName.Split('.').Reverse().ToList();
+
+            var clauses = new List<string>();
+            for (int i = 0; i < columns.Length && i < names.Count; i++)
+                clauses.Add(string.Format("{0} {1} '{2}'", columns[i], op, names[i]));
+
+            return "(" + string.Join(" AND ", clauses.ToArray()) + ")";
         }
 
         #region ' Helpers '

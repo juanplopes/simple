@@ -4,8 +4,8 @@
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
 <#
 	var template = new ValidatorTemplate();
-	template.EntityNamespace = "Conspirarte.Domain";
-	template.ValidatorNamespace = "Conspirarte.Validators";
+	template.EntityNamespace = "Sample.Project.Domain";
+	template.ValidatorNamespace = "Sample.Project.Validators";
 	template.OutputFileTemplate = @"Validators\%sValidator.cs";
     template.Context = this;
 	template.PreserveFile = true;

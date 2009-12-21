@@ -4,7 +4,7 @@
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
 <#
     var template = new HbmTemplate();
-    template.EntityNamespace = "Conspirarte.Domain";
+    template.EntityNamespace = "Sample.Project.Domain";
     template.OutputFileTemplate = @"Domain\Generated\%s.hbm.xml";
     template.Context = this;
 

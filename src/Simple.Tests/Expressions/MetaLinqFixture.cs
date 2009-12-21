@@ -74,6 +74,13 @@ namespace Simple.Tests.Expressions
         }
 
         [Test]
+        public void TestConditionalAssertionWithNullableFields()
+        {
+            TestIt((decimal? x, decimal y) => x > y, 2, 3);
+        }
+
+
+        [Test]
         public void TestMethodCall()
         {
             TestIt((x, y) => int.Parse(x) == y, "3", 3);
