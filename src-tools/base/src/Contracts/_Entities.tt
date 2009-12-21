@@ -57,11 +57,11 @@ namespace <#=this.EntityNamespace #>
 		{
 			Identifiers
 <#+ foreach (var field in Table.GetKeyFields()) { #>
-				.AddID(x => x.<#= GetFieldName(field) #>)<#+ } 
-#>
+				.AddID(x => x.<#= GetFieldName(field) #>)
+<#+ } #>
 <#+ foreach (var field in Table.GetManyToOneFields().Where(x => x.IsKey)) { #>
-				.AddID(x => x.<#= GetFieldName(field) #>)<#+ } 
-#>;
+				.AddID(x => x.<#= GetFieldName(field) #>)
+<#+ } #>;
 		}
 		
 		partial void Initialize();
