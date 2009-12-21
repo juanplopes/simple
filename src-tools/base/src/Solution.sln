@@ -11,16 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_Tests", "Tests\05_Tests.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{91DCC91C-3439-4064-B79D-A8FAFDE78983}"
 	ProjectSection(SolutionItems) = preProject
-		Templates\Data.Common.ttinclude = Templates\Data.Common.ttinclude
-		Templates\EntityTemplate.ttinclude = Templates\EntityTemplate.ttinclude
 		Templates\GeneratorBase.ttinclude = Templates\GeneratorBase.ttinclude
-		Templates\HbmTemplate.ttinclude = Templates\HbmTemplate.ttinclude
 		Templates\Inflector.ttinclude = Templates\Inflector.ttinclude
-		Templates\ServiceImplTemplate.ttinclude = Templates\ServiceImplTemplate.ttinclude
-		Templates\ServiceInterfaceTemplate.ttinclude = Templates\ServiceInterfaceTemplate.ttinclude
+		Templates\Schema.Metadata.ttinclude = Templates\Schema.Metadata.ttinclude
 		Templates\T4Toolbox.ttinclude = Templates\T4Toolbox.ttinclude
 		Templates\TableTemplate.ttinclude = Templates\TableTemplate.ttinclude
-		Templates\ValidatorTemplate.ttinclude = Templates\ValidatorTemplate.ttinclude
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_SampleData", "SampleData\04_SampleData.csproj", "{7980805D-169F-4726-BFFB-AAA8462E8196}"

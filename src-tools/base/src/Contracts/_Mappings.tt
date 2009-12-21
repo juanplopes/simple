@@ -2,15 +2,68 @@
 <#@ output extension=".log" #>
 <#@ Import Namespace="System" #>
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
-<#@ include file="..\Templates\HbmTemplate.ttinclude" #>
 <#
-	var template = new HbmTemplate();
-	template.EntityNamespace = "Sample.Project.Domain";
+    var template = new HbmTemplate();
+    template.EntityNamespace = "Conspirarte.Domain";
+    template.OutputFileTemplate = @"Domain\Generated\%s.hbm.xml";
+    template.Context = this;
 
-    var generator = new GeneratorBase(template);
-    generator.ExcludedTables.Add("SchemaInfo");
-	generator.OutputFileTemplate = @"Domain\Generated\%s.hbm.xml";
-    generator.Context = this;
-    generator.Run();
-
+    new GeneratorBase(template).Run();
 #>
+<#+
+public class HbmTemplate : TableTemplate
+{
+    public string EntityNamespace { get; set; }
+
+    protected override void RenderCore()
+    {
+        RefreshOutputFile();
+#>
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="<#=this.EntityNamespace #>" assembly="<#=this.AssemblyName #>">
+  <class name="<#= EntityNamespace #>.<#= GetTableClassName() #>, <#= AssemblyName #>" table="<#= Table.TableName#>" schema="<#=Table.TableSchema#>" lazy="false">
+<#+ if (Table.PrimaryKeyColumns.Count() > 1) { #>
+    <composite-id>
+<#+ foreach (var field in Table.GetKeyFields()) { #>
+      <key-property name="<#= GetFieldName(field) #>" column="<#= field.ColumnName #>" />
+<#+ } #>
+<#+ foreach (var field in Table.GetManyToOneFields().Where(x => x.IsKey)) { #>
+      <key-many-to-one name="<#= GetFieldName(field) #>">
+<#+ foreach (var column in field.Columns) { #>
+        <column name="<#= column.FkColumnName #>"/>
+<#+ } #>
+      </key-many-to-one>
+<#+ } #>
+    </composite-id>  
+<#+ } else { #>
+<#+ foreach (var field in Table.GetKeyFields()) { #>
+    <id name="<#= GetFieldName(field) #>" column="<#= field.ColumnName #>">
+      <generator class="native" />
+    </id>
+<#+ } #>
+<#+ foreach (var field in Table.GetManyToOneFields().Where(x => x.IsKey)) { #>
+    <id name="<#= GetFieldName(field) #>">
+<#+ foreach (var column in field.Columns) { #>
+        <column name="<#= column.FkColumnName #>"/>
+<#+ } #>
+      <generator class="assigned" />
+    </id>
+<#+ } #>
+<#+ } #>
+ 
+<#+ foreach (var field in Table.GetFields()) { #>
+    <property name="<#= GetFieldName(field) #>">
+      <column name="<#= field.ColumnName #>" <#+ if (field.DataTypeName != null) { #> sql-type="<#=field.DataTypeName #>" <#+ } #>/>
+    </property>
+<#+ } #>
+
+<#+ foreach (var field in Table.GetManyToOneFields().Where(x => !x.IsKey)) { #>
+    <many-to-one name="<#= GetFieldName(field) #>" lazy="false">
+<#+ foreach (var column in field.Columns) { #>
+      <column name="<#= column.FkColumnName #>"/>
+<#+ } #>
+    </many-to-one>
+<#+ }#>
+  </class>
+</hibernate-mapping>
+<#+ } } #>

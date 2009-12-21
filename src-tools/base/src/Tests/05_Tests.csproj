@@ -35,10 +35,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\migrator\Migrator.dll</HintPath>
     </Reference>
-    <Reference Include="Migrator.Fluent, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\migrator\Migrator.Fluent.dll</HintPath>
-    </Reference>
     <Reference Include="Migrator.Framework, Version=0.9.0.26940, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\migrator\Migrator.Framework.dll</HintPath>
@@ -46,6 +42,10 @@
     <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Schema.Migrator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\migrator\Schema.Migrator.dll</HintPath>
     </Reference>
     <Reference Include="Simple, Version=1.0.3530.21817, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

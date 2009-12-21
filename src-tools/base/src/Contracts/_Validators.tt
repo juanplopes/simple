@@ -2,16 +2,42 @@
 <#@ output extension=".log" #>
 <#@ Import Namespace="System" #>
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
-<#@ include file="..\Templates\ValidatorTemplate.ttinclude" #>
 <#
 	var template = new ValidatorTemplate();
-	template.EntityNamespace = "Sample.Project.Domain";
-	template.ValidatorNamespace = "Sample.Project.Validators";
+	template.EntityNamespace = "Conspirarte.Domain";
+	template.ValidatorNamespace = "Conspirarte.Validators";
+	template.OutputFileTemplate = @"Validators\%sValidator.cs";
+    template.Context = this;
 	template.PreserveFile = true;
 	
-    var generator = new GeneratorBase(template);
-    generator.ExcludedTables.Add("SchemaInfo");
-	generator.OutputFileTemplate = @"Validators\%sValidator.cs";
-    generator.Context = this;
-    generator.Run();
+    new GeneratorBase(template).Run();
 #>
+<#+
+public class ValidatorTemplate : TableTemplate
+{
+	public string EntityNamespace { get; set; }
+	public string ValidatorNamespace { get; set; }
+	
+    protected override void RenderCore()
+    {
+		RefreshOutputFile();
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using <#= EntityNamespace #>;
+using NHibernate.Validator.Cfg.Loquacious;
+
+namespace <#=this.ValidatorNamespace #>
+{
+    public class <#= GetTableClassName() #>Validator : ValidationDef<#="<" + GetTableClassName() + ">" #>
+    {
+        public <#= GetTableClassName() #>Validator()
+        {
+        }
+    }
+}
+
+<#+ } 
+}#>

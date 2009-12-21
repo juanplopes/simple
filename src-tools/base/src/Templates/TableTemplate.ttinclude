@@ -1,60 +1,49 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Globalization" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
+<#@ include file="..\Templates\Inflector.ttinclude" #>
 <#+
 	public abstract class TableTemplate : Template
 	{
-        public string TableSchema { get; set; }
-    	public string TableName { get; set; }
-    	public string TableClassName { get; set; }
-        public DbSchema Schema { get; set; }
+        public DbTable Table { get; set; }
     	public string AssemblyName { get; set; }
-    	public DataTable TablePrimaryKeys { get; set; }
-        public DataTable TableFields { get; set; }
-        public DataTable TableOneToManyRelations { get; set; }
-        public DataTable TableManyToOneRelations { get; set; }
-        public DataTable TableManyToManyRelations { get; set; }
         public GeneratedTextTransformation Context { get; set; }
+		public string OutputFileTemplate { get; set; }
 		
-	    protected string TableNameHash(string tableSchema, string tableName)
+		public void RefreshOutputFile() 
 		{
-			if (!string.IsNullOrEmpty(tableSchema))
-				return string.Format("{0}.{1}", tableSchema, tableName).ToLower();
+			this.OutputFile = OutputFileTemplate.Replace("%s", GetTableClassName());
+		}
+		
+		public string GetTableClassName() 
+		{
+			return GetTableClassName(Table.TableName);
+	    }
+		
+	    public string GetTableClassName(string table) {
+			return Inflector.MakeSingular(Utilities.CleanUp(table));
+	    }
+    
+    
+  	    public string GetFieldType(DbColumn column) {
+			return column.GetDisplayTypeName(column.IsKey);
+	    }
+
+	    public string GetFieldName(DbColumn column) {
+			return Utilities.CleanUp(column.ColumnName);
+	    }
+	    
+	    
+	    public string GetFieldType(DbForeignKey fk) {
+			return GetTableClassName(fk.Columns[0].PkTableName);
+	    }
+	    
+	    public string GetFieldName(DbForeignKey fk) {
+			if (fk.Columns.Count == 1) 
+				return Utilities.CleanUp(Utilities.ReplaceId(fk.Columns[0].FkColumnName));
 			else
-				return string.Format("{0}", tableName).ToLower();
-		}
-	
-		protected string GetNHibernateType(string SystemType)
-		{
-			string classType = string.Empty;
-			string[] nhibernateType = SystemType.Split('.');
-			switch (nhibernateType[1])
-			{
-				case "Byte[]":
-					classType = "BinaryBlob";
-					break;
-	
-				case "DateTime":
-				case "String":
-				case "Boolean":
-				case "Byte":
-				case "Int16":
-				case "Int32":
-				case "Int64":
-				case "Decimal":
-				case "Double":
-				case "Guid":
-				case "Type":
-					classType = nhibernateType[1];
-					break;
-	
-				default:
-					//throw new NotImplementedException("Not implemented type :" + SystemType);
-					classType = SystemType;
-					break;
-			}
-	
-			return classType;
-		}
+				return GetTableClassName(fk.Columns[0].PkTableName);
+			
+	    }
 	}
 #>

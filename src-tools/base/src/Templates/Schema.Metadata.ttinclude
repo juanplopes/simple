@@ -1,8 +1,8 @@
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="System.Data" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
+<#@ import namespace="System.Data" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.Collections" #>
 <#@ import namespace="System.Configuration" #>
@@ -12,7 +12,7 @@
 <#@ import namespace="System.Data.OleDb" #>
 <#+
 //
-//  Data.Common.DbSchema - http://dbschema.codeplex.com
+//  Schema.Metadata.DbSchema - http://dbschema.codeplex.com
 //
 //  The contents of this file are subject to the New BSD
 //  License (the "License"); you may not use this file
@@ -26,23 +26,96 @@
 //
 
 
-	// Data.Common.DbTable
+	// Schema.Metadata.DbObject
 
-    public class DbTable
+    public abstract class DbObject
     {
-        public DbTable() { }
+        public IDbSchemaProvider Provider { get; protected set; }
 
-        public DbTable(DataRow TableRow)
+        public DbObject(IDbSchemaProvider provider)
         {
-            if (TableRow.Table.Columns.Contains("TABLE_CATALOG"))
-                if (TableRow["TABLE_CATALOG"] != DBNull.Value)
-                    this.TableCatalog = TableRow["TABLE_CATALOG"].ToString();
-            if (TableRow.Table.Columns.Contains("TABLE_SCHEMA"))
-                if (TableRow["TABLE_SCHEMA"] != DBNull.Value)
-                    this.TableSchema = TableRow["TABLE_SCHEMA"].ToString();
-            this.TableName = TableRow["TABLE_NAME"].ToString();
-            this.TableType = TableRow["TABLE_TYPE"].ToString();
+            this.Provider = provider;
+        }
 
+        public DbObject(string connectionString, string provider) :
+            this(GetSchemaProvider(connectionString, provider))
+        {
+
+        }
+
+        public T GetValue<T>(DataRow row, string key)
+        {
+            return GetValue<T>(row, key, false);
+        }
+
+        public T GetValue<T>(DataRow row, string key, bool required)
+        {
+            if (!required && !row.Table.Columns.Contains(key)) return default(T);
+            object value = row[key];
+            if (value == DBNull.Value) return default(T);
+            if (value is IConvertible && !(value is T)) return (T)Convert.ChangeType(value, typeof(T));
+            else return (T)value;
+
+        }
+
+        private static DbSchemaProvider GetSchemaProvider(string connectionString, string providerName)
+        {
+            switch (providerName.ToLower())
+            {
+                case "system.data.sqlserverce.3.5":
+                case "system.data.sqlserverce":
+                    return new SqlServerCeSchemaProvider(connectionString, providerName);
+
+                case "system.data.oledb":
+                    return new OleDbSchemaProvider(connectionString, providerName);
+
+                case "system.data.sqlclient":
+                    return new SqlServerSchemaProvider(connectionString, providerName);
+
+                case "mysql.data.mysqlclient":
+                    return new MySqlSchemaProvider(connectionString, providerName);
+
+                case "npgsql":
+                    return new PostgreSqlSchemaProvider(connectionString, providerName);
+
+                case "system.data.sqlite":
+                    return new SQLiteSchemaProvider(connectionString, providerName);
+
+                case "system.data.oracleclient":
+                case "oracle.dataaccess.client":
+                    return new OracleSchemaProvider(connectionString, providerName);
+
+                case "vistadb.net20":
+                    return new VistaDBSchemaProvider(connectionString, providerName);
+
+                default:
+                    throw new NotImplementedException("The provider '" + providerName + "' is not implemented!");
+
+            }
+        }
+    }
+
+
+	// Schema.Metadata.DbTable
+
+    public class DbTable : DbObject
+    {
+        private IList<DbColumn> _columnCache = null;
+        private IList<DbRelation> _outFkCache = null;
+        private IList<DbRelation> _inFkCache = null;
+
+        public DbTable(IDbSchemaProvider provider)
+            : base(provider)
+        {
+        }
+
+        public DbTable(IDbSchemaProvider provider, DataRow row)
+            : this(provider)
+        {
+            TableCatalog = GetValue<string>(row, "TABLE_CATALOG");
+            TableSchema = GetValue<string>(row, "TABLE_SCHEMA");
+            TableName = GetValue<string>(row, "TABLE_NAME");
+            TableType = GetValue<string>(row, "TABLE_TYPE");
         }
 
         public string TableCatalog { get; set; }
@@ -50,42 +123,146 @@
         public string TableName { get; set; }
         public string TableType { get; set; }
 
+        public string QualifiedTableName
+        {
+            get
+            {
+                return Provider.QualifiedTableName(this.TableSchema, this.TableName);
+            }
+        }
+
+        #region ' Columns and Primary Keys '
+
+        private IEnumerable<DbColumn> GetSchemaColumns()
+        {
+            foreach (DataRow row in Provider.GetTableColumns(TableSchema, TableName).Rows)
+                yield return new DbColumn(Provider, row);
+        }
+
+        private IEnumerable<DbRelation> GetRelations(string type)
+        {
+            string where = string.Format(type + "_TABLE_NAME = '{0}' AND PK_ORDINAL_POSITION = FK_ORDINAL_POSITION", TableName);
+
+            if (!string.IsNullOrEmpty(TableSchema))
+                where += string.Format(" AND " + type + "_TABLE_SCHEMA = '{0}'", TableSchema);
+
+            foreach (var row in Provider.GetConstraints().Select(where))
+                yield return new DbRelation(Provider, row);
+        }
+
+        protected IEnumerable<DbColumn> AllColumns
+        {
+            //all columns including hidden
+            get
+            {
+                if (_columnCache == null) _columnCache = GetSchemaColumns().ToList();
+                return _columnCache;
+            }
+        }
+
+
+        public IEnumerable<DbColumn> Columns
+        {
+            //all columns, except hidden
+            get
+            {
+                return AllColumns.Where(x => !x.IsHidden);
+            }
+        }
+
+        public IEnumerable<DbRelation> ManyToOneColumns
+        {
+            //all outgoing relations
+            get
+            {
+                if (_outFkCache == null) _outFkCache = GetRelations("FK").ToList();
+                return _outFkCache;
+            }
+        }
+
+        public IEnumerable<DbRelation> OneToManyColumns
+        {
+            //all outgoing relations
+            get
+            {
+                if (_inFkCache == null) _inFkCache = GetRelations("PK").ToList();
+                return _inFkCache;
+            }
+        }
+
+        public IEnumerable<DbColumn> PrimaryKeyColumns
+        {
+            //all primary key columns
+            get
+            {
+                return Columns.Where(x => x.IsKey);
+            }
+        }
+
+        public IEnumerable<DbColumn> GetKeyFields()
+        {
+            //all primary keys not included in a foreign key
+            var excluded = new HashSet<string>(ManyToOneColumns.Select(x => x.FkColumnName));
+            return PrimaryKeyColumns.Where(x => !excluded.Contains(x.ColumnName));
+        }
+
+        public IEnumerable<DbColumn> GetFields()
+        {
+            //all columns except primary keys and foreign keys
+            var excluded = new HashSet<string>(
+                PrimaryKeyColumns.Select(x => x.ColumnName).Union(
+                ManyToOneColumns.Select(x => x.FkColumnName)));
+
+            return Columns.Where(x => !excluded.Contains(x.ColumnName));
+        }
+
+        public IEnumerable<DbForeignKey> GetManyToOneFields()
+        {
+            //all foreign keys columns grouped by fk name
+            HashSet<string> keys = new HashSet<string>(PrimaryKeyColumns.Select(x=>x.ColumnName));
+            return ManyToOneColumns.GroupBy(x => x.FkName).Select(x => new DbForeignKey(Provider, x.Key, x.Any(y=>keys.Contains(y.FkColumnName)), x.ToList()));
+        }
+
+        public IEnumerable<DbForeignKey> GetOneToManyFields()
+        {
+            //all foreign keys columns grouped by fk name
+            return OneToManyColumns.GroupBy(x => x.FkName).Select(x => new DbForeignKey(Provider, x.Key, false, x.ToList()));
+        }
+
+
+        #endregion
+
     }
 
 
-	// Data.Common.DbColumn
+	// Schema.Metadata.DbColumn
 
-    public class DbColumn
+    public class DbColumn : DbObject
     {
-        public DbColumn() { }
-
-        public DbColumn(DataRow ColumnRow)
+        public DbColumn(IDbSchemaProvider provider) : base(provider) { }
+        public DbColumn(IDbSchemaProvider provider, DataRow row)
+            : this(provider)
         {
-            this.AllowDBNull = (bool)ColumnRow["AllowDBNull"];
-            if (ColumnRow.Table.Columns.Contains("BaseCatalogName"))
-                if (ColumnRow["BaseCatalogName"] != DBNull.Value)
-                    this.BaseCatalogName = ColumnRow["BaseCatalogName"].ToString();
-            this.BaseColumnName = ColumnRow["BaseColumnName"].ToString();
-            if (ColumnRow["BaseSchemaName"] != DBNull.Value)
-                this.BaseSchemaName = ColumnRow["BaseSchemaName"].ToString();
-            this.BaseTableName = ColumnRow["BaseTableName"].ToString();
-            this.ColumnName = ColumnRow["ColumnName"].ToString();
-            this.ColumnOrdinal = (int)ColumnRow["ColumnOrdinal"];
-            this.ColumnSize = (int)ColumnRow["ColumnSize"];
-            this.DataType = ColumnRow["DataType"].ToString();
-            if (ColumnRow.Table.Columns.Contains("IsAutoIncrement"))
-                this.IsAutoIncrement = (bool)ColumnRow["IsAutoIncrement"];
-            this.IsKey = (bool)ColumnRow["IsKey"];
-            this.IsLong = (bool)ColumnRow["IsLong"];
-            if (ColumnRow.Table.Columns.Contains("IsReadOnly"))
-                this.IsReadOnly = (bool)ColumnRow["IsReadOnly"];
-            if (ColumnRow.Table.Columns.Contains("IsRowVersion"))
-                this.IsRowVersion = (bool)ColumnRow["IsRowVersion"];
-            this.IsUnique = (bool)ColumnRow["IsUnique"];
-            this.NumericPrecision = Convert.ToInt32(ColumnRow["NumericPrecision"]);
-            this.NumericScale = Convert.ToInt32(ColumnRow["NumericScale"]);
-            if (ColumnRow.Table.Columns.Contains("ProviderType"))
-                this.ProviderType = ColumnRow["ProviderType"].ToString();
+            AllowDBNull = GetValue<bool>(row, "AllowDBNull");
+            BaseCatalogName = GetValue<string>(row, "BaseCatalogName");
+            BaseColumnName = GetValue<string>(row, "BaseColumnName");
+            BaseSchemaName = GetValue<string>(row, "BaseSchemaName");
+            BaseTableName = GetValue<string>(row, "BaseTableName");
+            ColumnName = GetValue<string>(row, "ColumnName");
+            ColumnOrdinal = GetValue<int>(row, "ColumnOrdinal");
+            ColumnSize = GetValue<int>(row, "ColumnSize");
+            DataType = GetValue<Type>(row, "DataType");
+            IsAutoIncrement = GetValue<bool>(row, "IsAutoIncrement");
+            IsKey = GetValue<bool>(row, "IsKey");
+            IsLong = GetValue<bool>(row, "IsLong");
+            IsHidden = GetValue<bool>(row, "IsHidden");
+            IsReadOnly = GetValue<bool>(row, "IsReadOnly");
+            IsRowVersion = GetValue<bool>(row, "IsRowVersion");
+            IsUnique = GetValue<bool>(row, "IsUnique");
+            NumericPrecision = GetValue<int>(row, "NumericPrecision");
+            NumericScale = GetValue<int>(row, "NumericScale");
+            ProviderType = GetValue<string>(row, "ProviderType");
+            DataTypeName = GetValue<string>(row, "DataTypeName");
         }
 
         public bool AllowDBNull { get; set; }
@@ -96,10 +273,12 @@
         public string ColumnName { get; set; }
         public int ColumnOrdinal { get; set; }
         public int ColumnSize { get; set; }
-        public string DataType { get; set; }
+        public Type DataType { get; set; }
+        public string DataTypeName { get; set; }
         public bool IsAutoIncrement { get; set; }
         public bool IsKey { get; set; }
         public bool IsLong { get; set; }
+        public bool IsHidden { get; set; }
         public bool IsReadOnly { get; set; }
         public bool IsRowVersion { get; set; }
         public bool IsUnique { get; set; }
@@ -107,620 +286,157 @@
         public int NumericScale { get; set; }
         public string ProviderType { get; set; }
 
+        public string GetDisplayTypeName()
+        {
+            return GetDisplayTypeName(false);
+        }
+        
+        public string GetDisplayTypeName(bool forceNullable)
+        {
+            return DataType.Name + ((AllowDBNull || forceNullable) && DataType.IsValueType ? "?" : "");
+        }
     }
 
 
-	// Data.Common.DbRelation
+	// Schema.Metadata.DbRelation
 
-    public class DbRelation
+    public class DbRelation : DbObject
     {
-        public DbRelation() { }
+        public DbRelation(IDbSchemaProvider provider) : base(provider) { }
 
-        public DbRelation(DataRow RelationRow)
+        public DbRelation(IDbSchemaProvider provider, DataRow row) : this(provider)
         {
-            if (RelationRow["PK_TABLE_CATALOG"] != DBNull.Value)
-                this.PkTableCatalog = RelationRow["PK_TABLE_CATALOG"].ToString();
-            if (RelationRow["PK_TABLE_SCHEMA"] != DBNull.Value)
-                this.PkTableSchema = RelationRow["PK_TABLE_SCHEMA"].ToString();
-            this.PkTableName = RelationRow["PK_TABLE_NAME"].ToString();
-            this.PkColumnName = RelationRow["PK_COLUMN_NAME"].ToString();
+            PkTableCatalog = GetValue<string>(row, "PK_TABLE_CATALOG");
+            PkTableSchema = GetValue<string>(row, "PK_TABLE_SCHEMA");
+            PkTableName = GetValue<string>(row, "PK_TABLE_NAME");
+            PkColumnName = GetValue<string>(row, "PK_COLUMN_NAME");
 
-            if (RelationRow["FK_TABLE_CATALOG"] != DBNull.Value)
-                this.FkTableCatalog = RelationRow["FK_TABLE_CATALOG"].ToString();
-            if (RelationRow["FK_TABLE_SCHEMA"] != DBNull.Value)
-                this.FkTableSchema = RelationRow["FK_TABLE_SCHEMA"].ToString();
-            this.FkTableName = RelationRow["FK_TABLE_NAME"].ToString();
-            this.FkColumnName = RelationRow["FK_COLUMN_NAME"].ToString();
+            FkTableCatalog = GetValue<string>(row, "FK_TABLE_CATALOG");
+            FkTableSchema = GetValue<string>(row, "FK_TABLE_SCHEMA");
+            FkTableName = GetValue<string>(row, "FK_TABLE_NAME");
+            FkColumnName = GetValue<string>(row, "FK_COLUMN_NAME");
 
+            FkName = GetValue<string>(row, "FK_NAME");
         }
 
         public string PkTableCatalog { get; set; }
         public string PkTableSchema { get; set; }
         public string PkTableName { get; set; }
         public string PkColumnName { get; set; }
+        
         public string FkTableCatalog { get; set; }
         public string FkTableSchema { get; set; }
         public string FkTableName { get; set; }
         public string FkColumnName { get; set; }
+
+        public string FkName { get; set; }
     }
 
 
-	// Data.Common.DbSchema
+	// Schema.Metadata.DbForeignKey
 
-    public class DbSchema
+    public class DbForeignKey : DbObject
     {
-        private string _ConnectionName;
-        private string _ConnectionString;
-        private string _ProviderName;
-        private string _WhereClause;
-        
-        private DbSchemaProvider _Provider;
-        private Dictionary<string, DataTable> Cache = new Dictionary<string, DataTable>();
-        private ArrayList dictionaryTablesManyToMany = new ArrayList();
-        private ArrayList dictionaryTablesOneToOne = new ArrayList();
+        public string FkName { get; set; }
+        public bool IsKey { get; set; }
+        public IList<DbRelation> Columns { get; protected set; }
 
-        #region ' Properties '
+        public DbForeignKey(IDbSchemaProvider provider) : base(provider) { }
 
-        public string ConnectionName
+        public DbForeignKey(IDbSchemaProvider provider, string name, bool isKey, IList<DbRelation> columns)
+            : this(provider)
         {
-            get { return _ConnectionName; }
+            this.Columns = columns;
+            this.FkName = name;
+            this.IsKey = isKey;
         }
+    }
 
-        public string ConnectionString
+
+	// Schema.Metadata.DbSchema
+
+    public class DbSchema : DbObject
+    {
+        private DataTable _tableCache = null;
+        public DbSchema(string connectionString, string provider)
+            : base(connectionString, provider)
         {
-            get { return _ConnectionString; }
         }
-
-        public string ProviderName
-        {
-            get { return _ProviderName; }
-        }
-
-        #endregion
-
-        #region ' Constractors '
-
-
-        public DbSchema(string ConnectionString, string ProviderName) :
-            this(null, ConnectionString, ProviderName, new[] { "%" }, new string[0])
-        { }
-        
-           public DbSchema(string ConnectionString, string ProviderName, string[] includes) :
-            this(null, ConnectionString, ProviderName, includes, new string[0])
-        { }
-
-
-           public DbSchema(string ConnectionString, string ProviderName, string[] includes, string[] excludes) :
-            this(null, ConnectionString, ProviderName, includes, excludes)
-        { }
-
-        private DbSchema(string ConnectionName, string ConnectionString, string ProviderName, string[] includes, string[] excludes)
-        {
-            if (!string.IsNullOrEmpty(ConnectionString))
-                _ConnectionName = ConnectionName;
-
-			
-			_WhereClause = string.Join("OR", includes.Select(x=>"TABLE_NAME LIKE '" + x + "'").ToArray());
-			if (excludes.Length > 0)
-				_WhereClause += " AND " + string.Join("AND", excludes.Select(x=>"TABLE_NAME NOT LIKE  '" + x + "'").ToArray());
-				
-            _ConnectionString = ConnectionString;
-            _ProviderName = ProviderName;
-            _Provider = GetSchemaProvider(_ConnectionString, _ProviderName);
-            DiscoverTableRelations();
-        }
-
-        #endregion
-
-        #region ' Methods '
-
-        #region ' Tables and Views '
 
         private DataTable GetSchemaTables()
         {
-            string CacheKey = "SchemaTables";
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable tbl = _Provider.GetSchemaTables();
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
+            if (_tableCache != null) return _tableCache;
+            return _tableCache = Provider.GetSchemaTables();
         }
 
-        public DataTable GetTables()
+        public IEnumerable<DbTable> GetTables()
         {
-            string CacheKey = "Tables";
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable schemaTables = GetSchemaTables();
-            DataTable tbl = new DataTable("Tables");
-            if (schemaTables.Rows.Count > 0)
-            {
-                string WhereClause = "(TABLE_TYPE = 'TABLE' OR TABLE_TYPE = 'BASE TABLE') AND (" + _WhereClause + ")";
-                tbl = schemaTables.Clone();
-                foreach (DataRow tblRow in schemaTables.Select(WhereClause))
-                {
-                    tbl.ImportRow(tblRow);
-                }
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
+            return GetTables("%");
         }
 
-        public DataTable GetViews()
+        public IEnumerable<DbTable> GetTables(params string[] included)
         {
-            string CacheKey = "Views";
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable schemaTables = GetSchemaTables();
-            DataTable tbl = new DataTable("Views");
-            if (schemaTables.Rows.Count > 0)
-            {
-                string WhereClause = "TABLE_TYPE = 'VIEW'";
-                tbl = schemaTables.Clone();
-                foreach (DataRow tblRow in schemaTables.Select(WhereClause))
-                {
-                    tbl.ImportRow(tblRow);
-                }
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
+            return GetTables(included, new string[] { });
         }
 
-        public DataTable GetTablesAndViews()
+        public IEnumerable<DbTable> GetTables(IList<string> included, IList<string> excluded)
         {
-            string CacheKey = "TablesAndViews";
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable schemaTables = GetSchemaTables();
-            DataTable tbl = new DataTable("TablesAndViews");
-            if (schemaTables.Rows.Count > 0)
-            {
-                string WhereClause = "TABLE_TYPE = 'TABLE' OR TABLE_TYPE = 'BASE TABLE' OR TABLE_TYPE = 'VIEW'";
-                tbl = schemaTables.Clone();
-                foreach (DataRow tblRow in schemaTables.Select(WhereClause))
-                {
-                    tbl.ImportRow(tblRow);
-                }
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
+            return GetGeneric(included, excluded, "TABLE", "BASE TABLE");
         }
 
-        public DataTable GetTablesLogical()
+        public IEnumerable<DbTable> GetViews()
         {
-            string CacheKey = "LogicalTables";
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DiscoverTableRelations();
-
-            return GetTablesLogical();
+            return GetViews("%");
         }
 
-        public DataTable GetTablesManyToMany()
+        public IEnumerable<DbTable> GetViews(params string[] included)
         {
-            string CacheKey = "ManyToManyTables";
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DiscoverTableRelations();
-
-            return GetTablesManyToMany();
+            return GetViews(included, new string[] { });
         }
 
-        private void DiscoverTableRelations()
+        public IEnumerable<DbTable> GetViews(IList<string> included, IList<string> excluded)
         {
-            DataTable schemaTables = GetTables();
-            DataTable tblManyToMany = new DataTable("ManyToManyTables");
-            tblManyToMany = schemaTables.Clone();
-            DataTable tblLogical = new DataTable("LogicalTables");
-            tblLogical = schemaTables.Clone();
-
-            dictionaryTablesManyToMany.Clear();
-            foreach (DataRow tableRow in schemaTables.Rows)
-            {
-                string tableSchema = null;
-                if (tableRow["TABLE_SCHEMA"] != DBNull.Value)
-                    tableSchema = tableRow["TABLE_SCHEMA"].ToString();
-                string tableName = tableRow["TABLE_NAME"].ToString();
-
-                // Discover Many-to-Many relations
-                int foreignKeyRelationsCount = GetTableRelationsByForeignKey(tableSchema, tableName).Rows.Count;
-                int tableColumnsCount = GetTableColumns(tableSchema, tableName).Rows.Count;
-                int primaryKeyColumnsCount = GetTablePrimaryKeyColumns(tableSchema, tableName).Rows.Count;
-
-                if ((foreignKeyRelationsCount == tableColumnsCount) || (primaryKeyColumnsCount + foreignKeyRelationsCount == tableColumnsCount))
-                {
-                    dictionaryTablesManyToMany.Add(_Provider.QualifiedTableName(tableSchema, tableName));
-                    tblManyToMany.ImportRow(tableRow);
-                }
-                else
-                    tblLogical.ImportRow(tableRow);
-
-
-            }
-
-            Cache.Add("ManyToManyTables", tblManyToMany);
-            Cache.Add("LogicalTables", tblLogical);
+            return GetGeneric(included, excluded, "VIEW");
         }
 
-        #endregion
-
-        #region ' Columns and Primary Keys '
-
-        public DataTable GetTableColumns(string tableSchema, string tableName)
+        public IEnumerable<DbTable> GetGeneric(IList<string> included, IList<string> excluded, params string[] types)
         {
-            string CacheKey = "Columns:" + _Provider.QualifiedTableName(tableSchema, tableName);
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
+            var incString = included.Count > 0 ?
+                string.Join(" OR ", included.Select(x => "TABLE_NAME LIKE '" + x + "'").ToArray()) :
+                "1=1";
 
-            DataTable tbl = new DataTable();
-            DataTable tableColumns = _Provider.GetTableColumns(tableSchema, tableName);
-            if (tableColumns.Columns.Contains("IsHidden"))
-            {
-                if (tableColumns.Select("IsHidden = 1").Length > 0)
-                {
-                    tbl = tableColumns.Clone();
-                    foreach (DataRow columnRow in tableColumns.Select("IsHidden = 0 OR IsHidden IS NULL"))
-                    {
-                        tbl.ImportRow(columnRow);
-                    }
-                }
-                else
-                    tbl = tableColumns;
-            }
-            else
-                tbl = tableColumns;
+            var excString = excluded.Count > 0 ?
+                string.Join(" AND ", excluded.Select(x => "TABLE_NAME NOT LIKE '" + x + "'").ToArray()):
+                "1=1";
 
-            Cache.Add(CacheKey, tbl);
-            return tbl;
+            var typesString = types.Length > 0 ?
+                string.Join(" OR ", types.Select(x => "TABLE_TYPE = '" + x + "'").ToArray()) :
+                "1=1";
+
+            foreach (var row in GetSchemaTables().Select(string.Format("({0}) AND ({1}) AND ({2})", incString, excString, typesString)))
+                yield return new DbTable(Provider, row);
         }
-
-        public DataTable GetTablePrimaryKeyColumns(string tableSchema, string tableName)
-        {
-            DataTable TableColumns = GetTableColumns(tableSchema, tableName);
-            string WhereClause = "IsKey = true";
-            DataTable tbl = TableColumns.Clone();
-            foreach (DataRow primaryKeyRow in TableColumns.Select(WhereClause))
-                tbl.ImportRow(primaryKeyRow);
-
-            return tbl;
-        }
-
-        public DataTable GetTableFields(string tableSchema, string tableName)
-        {
-            List<string> filteredcolumns = new List<string>();
-
-            foreach (DataRow primarykey in GetTablePrimaryKeyColumns(tableSchema, tableName).Rows)
-            {
-                string columnname = "'" + primarykey["ColumnName"].ToString() + "'";
-                if (!filteredcolumns.Contains(columnname))
-                    filteredcolumns.Add(columnname);
-            }
-
-            foreach (DataRow pkRelationRow in GetTableRelationsByPrimaryKey(tableSchema, tableName).Rows)
-            {
-                string columnname = "'" + pkRelationRow["PK_COLUMN_NAME"].ToString() + "'";
-                if (!filteredcolumns.Contains(columnname))
-                    filteredcolumns.Add(columnname);
-            }
-            foreach (DataRow fkRelationRow in GetTableRelationsByForeignKey(tableSchema, tableName).Rows)
-            {
-                string columnname = "'" + fkRelationRow["FK_COLUMN_NAME"].ToString() + "'";
-                if (!filteredcolumns.Contains(columnname))
-                    filteredcolumns.Add(columnname);
-            }
-
-            string WhereClause = "ColumnName NOT IN ( " + string.Join(", ", filteredcolumns.ToArray()) + " )";
-            DataTable TableColumns = GetTableColumns(tableSchema, tableName);
-            DataTable tbl = TableColumns.Clone();
-            foreach (DataRow columnRow in TableColumns.Select(WhereClause))
-            {
-                tbl.ImportRow(columnRow);
-            }
-
-            return tbl;
-        }
-
-        #endregion
-
-        #region ' Relations '
-
-        private DataTable GetSchemaConstraints()
-        {
-            string CacheKey = "Constraints";
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable tbl = _Provider.GetConstraints();
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
-        }
-
-        public DataTable GetTableRelationsOneToMany(string tableSchema, string tableName)
-        {
-            string CacheKey = "OneToManyRelations:" + _Provider.QualifiedTableName(tableSchema, tableName);
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable otmRelations = GetTableRelationsByPrimaryKey(tableSchema, tableName);
-            DataTable tbl = otmRelations.Clone();
-            foreach (DataRow relationRow in otmRelations.Rows)
-            {
-                string fkTableSchema = null;
-                if (relationRow["FK_TABLE_SCHEMA"] != DBNull.Value)
-                    fkTableSchema = relationRow["FK_TABLE_SCHEMA"].ToString();
-                string fkTableName = relationRow["FK_TABLE_NAME"].ToString();
-                string fkColumnName = relationRow["FK_COLUMN_NAME"].ToString();
-
-                DataTable fkTablePrimaryKeys = GetTablePrimaryKeyColumns(fkTableSchema, fkTableName);
-                bool fkColumnIsPrimaryKey = false;
-                foreach (DataRow primarykeyRow in fkTablePrimaryKeys.Rows)
-                {
-                    string pkColumnName = primarykeyRow["ColumnName"].ToString();
-                    if (fkColumnName.ToLower() == pkColumnName.ToLower())
-                    {
-                        fkColumnIsPrimaryKey = true;
-                        break;
-                    }
-                }
-
-                string tableNameHash = _Provider.QualifiedTableName(fkTableSchema, fkTableName);
-                if (!dictionaryTablesManyToMany.Contains(tableNameHash) && !fkColumnIsPrimaryKey)
-                    tbl.ImportRow(relationRow);
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
-        }
-
-        public DataTable GetTableRelationsManyToOne(string tableSchema, string tableName)
-        {
-            string CacheKey = "ManyToOneRelations:" + _Provider.QualifiedTableName(tableSchema, tableName);
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable mtoRelations = GetTableRelationsByForeignKey(tableSchema, tableName);
-            DataTable tbl = mtoRelations.Clone();
-            foreach (DataRow relationRow in mtoRelations.Rows)
-            {
-                string pkTableSchema = null;
-                if (relationRow["PK_TABLE_SCHEMA"] != DBNull.Value)
-                    pkTableSchema = relationRow["PK_TABLE_SCHEMA"].ToString();
-                string pkTableName = relationRow["PK_TABLE_NAME"].ToString();
-
-                string tableNameHash = _Provider.QualifiedTableName(pkTableSchema, pkTableName);
-                if (!dictionaryTablesManyToMany.Contains(tableNameHash))
-                    tbl.ImportRow(relationRow);
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
-        }
-
-        public DataTable GetTableRelationsManyToMany(string tableSchema, string tableName)
-        {
-            string CacheKey = "ManyToManyRelations:" + _Provider.QualifiedTableName(tableSchema, tableName);
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable mtmRelations = GetTableRelationsByPrimaryKey(tableSchema, tableName);
-            DataTable tbl = mtmRelations.Clone();
-            foreach (DataRow relationRow in mtmRelations.Rows)
-            {
-                string fkTableSchema = null;
-                string fkTableName = null;
-                if (relationRow["FK_TABLE_SCHEMA"] != DBNull.Value)
-                    fkTableSchema = relationRow["FK_TABLE_SCHEMA"].ToString();
-                fkTableName = relationRow["FK_TABLE_NAME"].ToString();
-
-                string tableNameHash = _Provider.QualifiedTableName(fkTableSchema, fkTableName);
-                if (dictionaryTablesManyToMany.Contains(tableNameHash))
-                    tbl.ImportRow(relationRow);
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
-        }
-
-        public DataTable GetTableRelationsOneToOne(string tableSchema, string tableName)
-        {
-            string CacheKey = "OneToOneRelations:" + _Provider.QualifiedTableName(tableSchema, tableName);
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable pkRelations = GetTableRelationsByPrimaryKey(tableSchema, tableName);
-            DataTable tbl = pkRelations.Clone();
-            foreach (DataRow relationRow in pkRelations.Rows)
-            {
-                string fkTableSchema = null;
-                if (relationRow["FK_TABLE_SCHEMA"] != DBNull.Value)
-                    fkTableSchema = relationRow["FK_TABLE_SCHEMA"].ToString();
-                string fkTableName = relationRow["FK_TABLE_NAME"].ToString();
-                string fkColumnName = relationRow["FK_COLUMN_NAME"].ToString();
-
-                DataTable fkTablePrimaryKeys = GetTablePrimaryKeyColumns(fkTableSchema, fkTableName);
-                bool fkColumnIsPrimaryKey = false;
-                foreach (DataRow primarykeyRow in fkTablePrimaryKeys.Rows)
-                {
-                    string pkColumnName = primarykeyRow["ColumnName"].ToString();
-                    if (fkColumnName.ToLower() == pkColumnName.ToLower())
-                    {
-                        fkColumnIsPrimaryKey = true;
-                        break;
-                    }
-                }
-
-                string tableNameHash = _Provider.QualifiedTableName(fkTableSchema, fkTableName);
-                if (!dictionaryTablesManyToMany.Contains(tableNameHash) && fkColumnIsPrimaryKey)
-                    tbl.ImportRow(relationRow);
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
-        }
-
-        public DataTable GetTableRelationsByPrimaryKey(string tableSchema, string tableName)
-        {
-            string CacheKey = "PrimaryKeyRelations:" + _Provider.QualifiedTableName(tableSchema, tableName);
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            string WhereClause;
-            if (!string.IsNullOrEmpty(tableSchema))
-                WhereClause = string.Format("PK_TABLE_SCHEMA = '{0}' AND PK_TABLE_NAME = '{1}'", tableSchema, tableName);
-            else
-                WhereClause = string.Format("PK_TABLE_NAME = '{0}'", tableName);
-
-            DataTable relations = GetSchemaConstraints();
-            DataRow[] pkRelations = (DataRow[])relations.Select(WhereClause);
-            DataTable tbl = relations.Clone();
-            foreach (DataRow relationRow in pkRelations)
-            {
-                tbl.ImportRow(relationRow);
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
-        }
-
-        public DataTable GetTableRelationsByForeignKey(string tableSchema, string tableName)
-        {
-            string CacheKey = "ForeignKeyRelations:" + _Provider.QualifiedTableName(tableSchema, tableName);
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            string WhereClause;
-            if (!string.IsNullOrEmpty(tableSchema))
-                WhereClause = string.Format("FK_TABLE_SCHEMA = '{0}' AND FK_TABLE_NAME = '{1}'", tableSchema, tableName);
-            else
-                WhereClause = string.Format("FK_TABLE_NAME = '{0}'", tableName);
-
-            DataTable relations = GetSchemaConstraints();
-            DataRow[] fkRelations = (DataRow[])relations.Select(WhereClause);
-            DataTable tbl = relations.Clone();
-            foreach (DataRow relationRow in fkRelations)
-            {
-                tbl.ImportRow(relationRow);
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
-        }
-
-        #endregion
-
-        #region ' Store Procedures '
-
-        public DataTable GetProcedures()
-        {
-            string CacheKey = "Procedures";
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable tblProcedures = _Provider.GetProcedures();
-            DataTable tbl = new DataTable("Procedures");
-            tbl = tblProcedures.Clone();
-            if (tblProcedures.Rows.Count > 0)
-            {
-                string WhereClause = "ROUTINE_TYPE = 'PROCEDURE'";
-                foreach (DataRow tblRow in tblProcedures.Select(WhereClause))
-                {
-                    tbl.ImportRow(tblRow);
-                }
-            }
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
-        }
-
-        public DataTable GetProcedureParameters(string procedureSchema, string procedureName)
-        {
-            string CacheKey = "ProcedureParameters:" + (string.IsNullOrEmpty(procedureSchema) ? procedureName : procedureSchema + "." + procedureName);
-            if (Cache.Keys.Contains(CacheKey))
-                return Cache[CacheKey];
-
-            DataTable tbl = _Provider.GetProcedureParameters(procedureSchema, procedureName);
-
-            Cache.Add(CacheKey, tbl);
-            return tbl;
-        }
-
-        #endregion
-
-        #endregion
 
         #region ' Helpers '
-        private DbSchemaProvider GetSchemaProvider(string connectionString, string providerName)
-        {
-            DbSchemaProvider dbProvider;
-            switch (providerName.ToLower())
-            {
-                case "system.data.sqlserverce.3.5":
-                case "system.data.sqlserverce":
-                    dbProvider = new SqlServerCeSchemaProvider(connectionString, providerName);
-                    break;
-                case "system.data.oledb":
-                    dbProvider = new OleDbSchemaProvider(connectionString, providerName);
-                    break;
-                case "system.data.sqlclient":
-                    dbProvider = new SqlServerSchemaProvider(connectionString, providerName);
-                    break;
-                case "mysql.data.mysqlclient":
-                    dbProvider = new MySqlSchemaProvider(connectionString, providerName);
-                    break;
-                case "npgsql":
-                    dbProvider = new PostgreSqlSchemaProvider(connectionString, providerName);
-                    break;
-                case "system.data.sqlite":
-                    dbProvider = new SQLiteSchemaProvider(connectionString, providerName);
-                    break;
-                case "system.data.oracleclient":
-                case "oracle.dataaccess.client":
-                    dbProvider = new OracleSchemaProvider(connectionString, providerName);
-                    break;
-                default:
-                    throw new NotImplementedException("The provider '" + providerName + "' is not implemented!");
-            }
-            return dbProvider;
-        }
-        public string GetPropertyType(string SystemType)
-        {
-            return this.GetPropertyType(SystemType, false);
-        }
-        public string GetPropertyType(string SystemType, bool IsNullable)
-        {
-            return _Provider.GetPropertyType(SystemType, IsNullable);
-        }
+
         public DbType GetDbColumnType(string providerDbType)
         {
-            return _Provider.GetDbColumnType(providerDbType);
+            return Provider.GetDbColumnType(providerDbType);
         }
-        public string QualifiedTableName(string tableSchema, string tableName)
-        {
-            return _Provider.QualifiedTableName(tableSchema, tableName);
-        }
+
         public string GetDatabaseName()
         {
-            return _Provider.GetDatabaseName();
+            return Provider.GetDatabaseName();
         }
+
         #endregion
 
     }
 
 
-	// Data.Common.IDbSchemaProvider
+	// Schema.Metadata.IDbSchemaProvider
 
-    interface IDbSchemaProvider
+    public interface IDbSchemaProvider
     {
         string GetDatabaseName();
         DataTable GetSchemaTables();
@@ -729,13 +445,11 @@
         DataTable GetProcedures();
         DataTable GetProcedureParameters(string procedureSchema, string procedureName);
         DbType GetDbColumnType(string providerDbType);
-        string GetPropertyType(string SystemType);
-        string GetPropertyType(string SystemType, bool IsNullable);
         string QualifiedTableName(string tableSchema, string tableName);
     }
 
 
-	// Data.Common.DbSchemaProvider
+	// Schema.Metadata.DbSchemaProvider
 
     abstract public class DbSchemaProvider : IDbSchemaProvider
     {
@@ -865,75 +579,7 @@
             return tbl;
         }
 
-        virtual public string GetPropertyType(string SystemType)
-        {
-            return GetPropertyType(SystemType, false);
-        }
-
-        virtual public string GetPropertyType(string SystemType, bool IsNullable)
-        {
-            string classType = string.Empty;
-            string[] systemType = SystemType.Split('.');
-            switch (systemType[1])
-            {
-                case "String":
-                    classType = "string";
-                    break;
-
-                case "SByte":
-                case "Boolean":
-                    classType = IsNullable ? "bool?" : "bool";
-                    break;
-
-                case "Byte":
-                    classType = IsNullable ? "byte?" : "byte";
-                    break;
-
-                case "Int16":
-                    classType = IsNullable ? "short?" : "short";
-                    break;
-
-                case "Int32":
-                    classType = IsNullable ? "int?" : "int";
-                    break;
-
-                case "Int64":
-                    classType = IsNullable ? "long?" : "long";
-                    break;
-
-                case "Decimal":
-                    classType = IsNullable ? "decimal?" : "decimal";
-                    break;
-
-                case "Double":
-                    classType = IsNullable ? "double?" : "double";
-                    break;
-
-                case "Single":
-                    classType = (IsNullable ? "float?" : "float");
-                    break;
-
-                case "DateTime":
-                    classType = (IsNullable ? "DateTime?" : "DateTime");
-                    break;
-
-                case "Guid":
-                case "Type":
-                    classType = systemType[1];
-                    break;
-
-                case "Byte[]":
-                    classType = "byte[]";
-                    break;
-
-                default:
-                    //throw new NotImplementedException("Not implemented type :" + SystemType);
-                    classType = SystemType;
-                    break;
-            }
-
-            return classType;
-        }
+       
 
         abstract public DbType GetDbColumnType(string providerDbType);
 
@@ -2321,6 +1967,97 @@
             "	KCUUC.CONSTRAINT_NAME = RC.R_CONSTRAINT_NAME AND" +
             "	RC.CONSTRAINT_TYPE = 'R'";
 
+
+        #endregion
+
+    }
+
+
+	// vistadb.net20
+
+    public class VistaDBSchemaProvider : DbSchemaProvider
+    {
+        public VistaDBSchemaProvider(string connectionstring, string providername) : base(connectionstring, providername) { }
+
+        #region ' IDbProvider Members '
+
+        public override string GetDatabaseName()
+        {
+            string DatabaseName = string.Empty;
+            using (DbConnection _Connection = GetDBConnection())
+            {
+                Regex RegExp = new Regex(@"\\(?<db>[^\\]*)?\.vdb3$", RegexOptions.IgnoreCase);
+                if (RegExp.IsMatch(_Connection.DataSource))
+                {
+                    Match found = RegExp.Matches(_Connection.DataSource)[0];
+                    DatabaseName = found.Groups[1].Value;
+                }
+            }
+            return DatabaseName;
+        }
+
+        public override System.Data.DataTable GetConstraints()
+        {
+            DataTable tbl = GetDTSchemaConstrains();
+            using (DbConnection _Connection = GetDBConnection())
+            {
+                DataTable Constraints = _Connection.GetSchema("ForeignKeyColumns");
+                foreach (DataRow contrainRow in Constraints.Rows)
+                {
+                    DataRow constrain = tbl.NewRow();
+                    if (contrainRow["FKEY_TO_CATALOG"] != DBNull.Value)
+                        constrain["PK_TABLE_CATALOG"] = contrainRow["FKEY_TO_CATALOG"];
+                    if (contrainRow["FKEY_TO_SCHEMA"] != DBNull.Value)
+                        constrain["PK_TABLE_SCHEMA"] = contrainRow["FKEY_TO_SCHEMA"];
+                    constrain["PK_TABLE_NAME"] = contrainRow["FKEY_TO_TABLE"];
+                    constrain["PK_COLUMN_NAME"] = contrainRow["FKEY_TO_COLUMN"];
+                    if (contrainRow["TABLE_CATALOG"] != DBNull.Value)
+                        constrain["FK_TABLE_CATALOG"] = contrainRow["TABLE_CATALOG"];
+                    if (contrainRow["TABLE_SCHEMA"] != DBNull.Value)
+                        constrain["FK_TABLE_SCHEMA"] = contrainRow["TABLE_SCHEMA"];
+                    constrain["FK_TABLE_NAME"] = contrainRow["TABLE_NAME"];
+                    constrain["FK_COLUMN_NAME"] = contrainRow["FKEY_FROM_COLUMN"];
+                    constrain["FK_ORDINAL_POSITION"] = contrainRow["FKEY_FROM_ORDINAL_POSITION"];
+                    constrain["FK_NAME"] = contrainRow["CONSTRAINT_NAME"];
+
+                    tbl.Rows.Add(constrain);
+                }
+            }
+
+            return tbl;
+        }
+
+        public override System.Data.DbType GetDbColumnType(string providerDbType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override DataTable GetSchemaTables()
+        {
+            DataTable tbl = new DataTable("SchemaTables");
+            using (DbConnection _Connection = GetDBConnection())
+            {
+                tbl = _Connection.GetSchema("Tables");
+            }
+            using (DbConnection _Connection = GetDBConnection())
+            {
+                DataTable tblViews = _Connection.GetSchema("Views");
+                foreach (DataRow viewRow in tblViews.Rows)
+                {
+                    DataRow tblRow = tbl.NewRow();
+                    if (viewRow["TABLE_CATALOG"] != DBNull.Value)
+                        tblRow["TABLE_CATALOG"] = viewRow["TABLE_CATALOG"];
+                    if (viewRow["TABLE_SCHEMA"] != DBNull.Value)
+                        tblRow["TABLE_SCHEMA"] = viewRow["TABLE_SCHEMA"];
+                    tblRow["TABLE_NAME"] = viewRow["TABLE_NAME"];
+                    tblRow["TABLE_TYPE"] = "VIEW";
+
+                    tbl.Rows.Add(tblRow);
+                }
+            }
+
+            return tbl;
+        }
 
         #endregion
 

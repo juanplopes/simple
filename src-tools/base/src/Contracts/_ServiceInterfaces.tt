@@ -2,16 +2,39 @@
 <#@ output extension=".log" #>
 <#@ Import Namespace="System" #>
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
-<#@ include file="..\Templates\ServiceInterfaceTemplate.ttinclude" #>
 <#
 	var template = new ServiceInterfaceTemplate();
-	template.EntityNamespace = "Sample.Project.Domain";
-	template.ServiceNamespace = "Sample.Project.Services";
+	template.EntityNamespace = "Conspirarte.Domain";
+	template.ServiceNamespace = "Conspirarte.Services";
+	template.OutputFileTemplate = @"Services\I%sService.cs";
+    template.Context = this;
 	template.PreserveFile = true;
 	
-    var generator = new GeneratorBase(template);
-    generator.ExcludedTables.Add("SchemaInfo");
-	generator.OutputFileTemplate = @"Services\I%sService.cs";
-    generator.Context = this;
-    generator.Run();
+    new GeneratorBase(template).Run();
 #>
+<#+
+public class ServiceInterfaceTemplate : TableTemplate
+{
+	public string EntityNamespace { get; set; }
+	public string ServiceNamespace { get; set; }
+	
+    protected override void RenderCore()
+    {
+		RefreshOutputFile();
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Simple.Entities;
+using <#= EntityNamespace #>;
+
+namespace <#=this.ServiceNamespace #>
+{
+    public partial interface I<#= GetTableClassName() #>Service : IEntityService<#="<" + GetTableClassName() + ">"#>
+    {
+    }
+}
+
+<#+ } 
+}#>

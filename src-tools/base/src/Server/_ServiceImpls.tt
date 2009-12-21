@@ -2,20 +2,44 @@
 <#@ output extension=".log" #>
 <#@ Import Namespace="System" #>
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
-<#@ include file="..\Templates\ServiceImplTemplate.ttinclude" #>
 <#
 	var template = new ServiceImplTemplate();
-	template.EntityNamespace = "Sample.Project.Domain";
-	template.ServiceContractsNamespace = 
-		template.ServiceImplNamespace = "Sample.Project.Services";
+	template.EntityNamespace = "Conspirarte.Domain";
+	template.ServiceContractsNamespace = template.ServiceImplNamespace = "Conspirarte.Services";
 	template.PreserveFile = true;
+	template.OutputFileTemplate = @"Services\%sService.cs";
+    template.Context = this;
 
-	
     var generator = new GeneratorBase(template);
 	generator.ConnectionString = GetNHConnectionString(@"..\Contracts\Environment\Development\NHibernate.config");
-    generator.ExcludedTables.Add("SchemaInfo");
-	generator.OutputFileTemplate = @"Services\%sService.cs";
-    generator.Context = this;
     generator.Run();
-
 #>
+<#+
+public class ServiceImplTemplate : TableTemplate
+{
+	public string EntityNamespace { get; set; }
+	public string ServiceContractsNamespace { get; set; }
+	public string ServiceImplNamespace { get; set; }
+
+	
+    protected override void RenderCore()
+    {
+		RefreshOutputFile();
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Simple.Entities;
+using <#= EntityNamespace #>;
+using <#= ServiceContractsNamespace #>;
+
+namespace <#=this.ServiceImplNamespace #>
+{
+    public partial class <#= GetTableClassName() #>Service : EntityService<#="<" + GetTableClassName() + ">"#>, I<#= GetTableClassName() #>Service
+    {
+    }
+}
+
+<#+ } 
+}#>

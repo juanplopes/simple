@@ -2,16 +2,100 @@
 <#@ output extension=".log" #>
 <#@ Import Namespace="System" #>
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
-<#@ include file="..\Templates\EntityTemplate.ttinclude" #>
 <#
 	var template = new EntityTemplate();
-	template.EntityNamespace = "Sample.Project.Domain";
-	template.ServiceNamespace = "Sample.Project.Services";
+	template.EntityNamespace = "Conspirarte.Domain";
+	template.ServiceNamespace = "Conspirarte.Services";
+	template.Context = this;
+	template.OutputFileTemplate = @"Domain\Generated\%s.cs";
 
-    var generator = new GeneratorBase(template);
-    generator.ExcludedTables.Add("SchemaInfo");
-	generator.OutputFileTemplate = @"Domain\Generated\%s.cs";
-    generator.Context = this;
-    generator.Run();
-
+    new GeneratorBase(template).Run();
 #>
+<#+
+public class EntityTemplate : TableTemplate
+{
+	public string EntityNamespace { get; set; }
+	public string ServiceNamespace { get; set; }
+	public string BaseClassTemplate { get; set; }
+	
+	public EntityTemplate() 
+	{
+		BaseClassTemplate = "Entity<%s,I%sService>";
+	}
+	
+    protected override void RenderCore()
+    {
+		RefreshOutputFile();
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Simple.Reflection;
+using Simple.Entities;
+using <#= this.ServiceNamespace #>;
+
+namespace <#=this.EntityNamespace #>
+{
+	[Serializable]
+    public partial class <#= GetTableClassName() #> : <#= this.BaseClassTemplate.Replace("%s", GetTableClassName()) #>
+    {
+<#+ foreach (var field in Table.GetKeyFields()) { #>
+		public virtual <#= GetFieldType(field) #> <#= GetFieldName(field) #> { get; set ; } 
+<#+ } #>
+
+<#+ foreach (var field in Table.GetFields()) { #>
+        public virtual <#= GetFieldType(field) #> <#= GetFieldName(field) #> { get; set ; }
+<#+ } #>
+		
+<#+ foreach (var field in Table.GetManyToOneFields()) { #>
+        public virtual <#= GetFieldType(field) #> <#= GetFieldName(field) #> { get; set; }
+<#+ }#>
+        
+		#region ' Generated Helpers '
+		static <#= GetTableClassName() #>() 
+		{
+			Identifiers
+<#+ foreach (var field in Table.GetKeyFields()) { #>
+				.AddID(x => x.<#= GetFieldName(field) #>)<#+ } 
+#>
+<#+ foreach (var field in Table.GetManyToOneFields().Where(x => x.IsKey)) { #>
+				.AddID(x => x.<#= GetFieldName(field) #>)<#+ } 
+#>;
+		}
+		
+		partial void Initialize();
+        
+		public <#= GetTableClassName() #>() 
+		{  
+			Initialize();
+		}
+<#+ string idInitializer = string.Join(", ", 
+		    Table.GetKeyFields().Select(x => GetFieldType(x) + " " + GetFieldName(x)).Union(
+		    Table.GetManyToOneFields().Where(x => x.IsKey).Select(x => GetFieldType(x) + " " + GetFieldName(x))).ToArray()); 
+#>
+		public <#= GetTableClassName() #>(<#= idInitializer #>) : this()
+		{  
+<#+ foreach (var field in Table.GetKeyFields()) { #>
+			this.<#= GetFieldName(field) #> = <#= GetFieldName(field) #>;
+<#+ } #>
+<#+ foreach (var field in Table.GetManyToOneFields().Where(x => x.IsKey)) { #>
+			this.<#= GetFieldName(field) #> = <#= GetFieldName(field) #>;
+<#+ }#>
+
+		}
+		
+		public <#= GetTableClassName() #> ClearId() 
+		{
+<#+ foreach (var field in Table.GetKeyFields()) { #>
+			this.<#= GetFieldName(field) #> = default(<#= GetFieldType(field) #>);
+<#+ } #>
+<#+ foreach (var field in Table.GetManyToOneFields().Where(x => x.IsKey)) { #>
+			this.<#= GetFieldName(field) #> = default(<#= GetFieldType(field) #>);
+<#+ }#>
+			return this;
+		}
+    	#endregion
+    }
+}
+<#+ } } #>
