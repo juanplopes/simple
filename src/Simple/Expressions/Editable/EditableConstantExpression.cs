@@ -12,6 +12,7 @@ namespace Simple.Expressions.Editable
     public class EditableConstantExpression : EditableExpression
     {
         public object Value { get; set;}
+        public Type ConstantType { get; set; }
         public override ExpressionType NodeType
         {
             get { return ExpressionType.Constant; }
@@ -25,16 +26,18 @@ namespace Simple.Expressions.Editable
         public EditableConstantExpression(object value)
         {
             Value = value;
+            ConstantType = (value != null ? value.GetType() : typeof(void));
         }
 
         public EditableConstantExpression(ConstantExpression startConstEx)
         {
             Value = startConstEx.Value;
+            ConstantType = startConstEx.Type;
         }
 
         public override Expression ToExpression()
         {
-            return Expression.Constant(Value);
+            return Expression.Constant(Value, ConstantType);
         }
     }
 }
