@@ -73,10 +73,17 @@ namespace Simple.Tests.Expressions
             TestIt((x, y) => x - y == y && x > y, 2, 3);
         }
 
-        [Test]
+        [Test, Ignore("TODO")]
         public void TestConditionalAssertionWithNullableFields()
         {
             TestIt((decimal? x, decimal y) => x > y, 2, 3);
+        }
+
+        [Test]
+        public void TestConditionalAssertionWithNullableMemberAccess()
+        {
+            var dd = new SerializableClassWithNullableField() { MyDateTime = DateTime.Now };
+            TestIt(x=>x.MyDateTime < DateTime.Now, dd);
         }
 
 
@@ -117,6 +124,12 @@ namespace Simple.Tests.Expressions
         public class SerializableClass
         {
             public int MyInt { get; set; }
+        }
+
+        [Serializable]
+        public class SerializableClassWithNullableField
+        {
+            public DateTime? MyDateTime { get; set; }
         }
 
         public class NonSerialiableClass
