@@ -73,13 +73,13 @@ namespace Simple.Tests.Expressions
             TestIt((x, y) => x - y == y && x > y, 2, 3);
         }
 
-        [Test, Ignore("TODO")]
+        [Test]
         public void TestConditionalAssertionWithNullableFields()
         {
             TestIt((decimal? x, decimal y) => x > y, 2, 3);
         }
 
-        [Test]
+        [Test, Ignore("TODO")]
         public void TestConditionalAssertionWithNullableMemberAccess()
         {
             var dd = new SerializableClassWithNullableField() { MyDateTime = DateTime.Now };
