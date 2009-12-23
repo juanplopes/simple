@@ -8,6 +8,7 @@
 <#@ import namespace="System.Configuration" #>
 <#@ import namespace="System.Data.Common" #>
 <#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Data.SqlTypes" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ import namespace="System.Data.OleDb" #>
 <#+
@@ -515,7 +516,6 @@
                 System.Console.WriteLine("SQL: " + _Command.CommandText);
                 tbl = _Command.ExecuteReader(CommandBehavior.KeyInfo).GetSchemaTable();
             }
-
             return tbl;
         }
 
@@ -1753,6 +1753,24 @@
             return tblProcedures;
         }
 
+        public override DataTable GetTableColumns(string tableSchema, string tableName)
+        {
+            var table1 = base.GetTableColumns(tableSchema, tableName);
+            table1.Columns.Add("DataTypeName");
+
+            using (var db = GetDBConnection())
+            {
+                var table2 = db.GetSchema("Columns", new[] { tableSchema, tableName })
+                    .Rows.OfType<DataRow>().ToDictionary(x => (string)x["COLUMN_NAME"]);
+
+                foreach (DataRow row in table1.Rows)
+                {
+                    row["DataTypeName"] = table2[(string)row["ColumnName"]]["DATATYPE"];
+                }
+            }
+            return table1;
+        }
+
         public override DbType GetDbColumnType(string providerDbType)
         {
             switch (providerDbType)
@@ -1872,7 +1890,7 @@
         // Oracle: find tables, views, procedures and database constrains
         //
 
-        const string sqlTables = 
+        const string sqlTables =
             "SELECT " +
             "	NULL AS TABLE_CATALOG," +
             "	OWNER AS TABLE_SCHEMA," +
