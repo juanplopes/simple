@@ -12,18 +12,12 @@ namespace Simple
 
         public SimplyConfigure Configure
         {
-            get
-            {
-                return SimplyConfigure.Do[ConfigKey];
-            }
+            get { return SimplyConfigure.Do[ConfigKey]; }
         }
 
         public SimplyRelease Release
         {
-            get
-            {
-                return SimplyRelease.Do[ConfigKey];
-            }
+            get { return SimplyRelease.Do[ConfigKey]; }
         }
 
         public T GetConfig<T>()
@@ -36,7 +30,7 @@ namespace Simple
     {
         public IConfiguratorInterface<T, SimplyConfigure> The<T>()
         {
-            return new ConfiguratorInterface<T, SimplyConfigure>(x => The(x));
+            return new ConfiguratorInterface<T, SimplyConfigure>(The<T>);
         }
 
         public SimplyConfigure The<T>(IConfigSource<T> source)
