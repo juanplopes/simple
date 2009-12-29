@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Sample.Project.Environment;
 using Simple;
+using Schema.Migrator;
 
 namespace Sample.Project.Migrations
 {
@@ -27,7 +28,7 @@ namespace Sample.Project.Migrations
         {
             var connectionString = Simply.Do.GetConnectionString();
 
-            var mig = new Migrator.Migrator(type, connectionString, typeof(MigratorProgram).Assembly, true);
+            var mig = new DbMigrator(type, connectionString, typeof(MigratorProgram).Assembly, true);
             if (version != null)
                 mig.MigrateTo(version ?? 0);
             else

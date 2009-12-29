@@ -49,7 +49,7 @@ public class GeneratorBase : Generator
     {
 		this.ConnectionString = this.ConnectionString ?? GetNHConnectionString(NHibernateFilePath);
 		
-        var tables = new DbSchema(this.ConnectionString, this.ProviderName)
+        var tables = new DbSchema(this.ProviderName, this.ConnectionString)
 			.GetTables(IncludedTables, ExcludedTables);
 			
         Template.AssemblyName = this.AssemblyName;

@@ -38,8 +38,8 @@
             this.Provider = provider;
         }
 
-        public DbObject(string connectionString, string provider) :
-            this(GetSchemaProvider(connectionString, provider))
+        public DbObject(string provider, string connectionString) :
+            this(GetSchemaProvider(provider, connectionString))
         {
 
         }
@@ -59,7 +59,7 @@
 
         }
 
-        private static DbSchemaProvider GetSchemaProvider(string connectionString, string providerName)
+        public static DbSchemaProvider GetSchemaProvider(string providerName, string connectionString)
         {
             switch (providerName.ToLower())
             {
@@ -291,7 +291,12 @@
         {
             return GetDisplayTypeName(false);
         }
-        
+
+        public DbType GetDbColumnType()
+        {
+            return Provider.GetDbColumnType(ProviderType);
+        }
+
         public string GetDisplayTypeName(bool forceNullable)
         {
             return DataType.Name + ((AllowDBNull || forceNullable) && DataType.IsValueType ? "?" : "");
@@ -311,11 +316,13 @@
             PkTableSchema = GetValue<string>(row, "PK_TABLE_SCHEMA");
             PkTableName = GetValue<string>(row, "PK_TABLE_NAME");
             PkColumnName = GetValue<string>(row, "PK_COLUMN_NAME");
+            PkOrdinalPosition = GetValue<int>(row, "PK_ORDINAL_POSItION");
 
             FkTableCatalog = GetValue<string>(row, "FK_TABLE_CATALOG");
             FkTableSchema = GetValue<string>(row, "FK_TABLE_SCHEMA");
             FkTableName = GetValue<string>(row, "FK_TABLE_NAME");
             FkColumnName = GetValue<string>(row, "FK_COLUMN_NAME");
+            FkOrdinalPosition = GetValue<int>(row, "FK_ORDINAL_POSItION");
 
             FkName = GetValue<string>(row, "FK_NAME");
         }
@@ -324,11 +331,14 @@
         public string PkTableSchema { get; set; }
         public string PkTableName { get; set; }
         public string PkColumnName { get; set; }
-        
+        public int PkOrdinalPosition { get; set; }
+
         public string FkTableCatalog { get; set; }
         public string FkTableSchema { get; set; }
         public string FkTableName { get; set; }
         public string FkColumnName { get; set; }
+        public int FkOrdinalPosition { get; set; }
+
 
         public string FkName { get; set; }
     }
@@ -359,10 +369,16 @@
     public class DbSchema : DbObject
     {
         private DataTable _tableCache = null;
-        public DbSchema(string connectionString, string provider)
-            : base(connectionString, provider)
+        public DbSchema(string provider, string connectionString)
+            : base(provider, connectionString)
         {
         }
+
+        public DbSchema(IDbSchemaProvider provider)
+            : base(provider)
+        {
+        }
+
 
         private DataTable GetSchemaTables()
         {
@@ -431,11 +447,6 @@
         }
 
         #region ' Helpers '
-
-        public DbType GetDbColumnType(string providerDbType)
-        {
-            return Provider.GetDbColumnType(providerDbType);
-        }
 
         public string GetDatabaseName()
         {

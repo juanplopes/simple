@@ -12,7 +12,7 @@ namespace Sample.Project.Environment
 {
     public class Default : ConfigDef
     {
-        public const string MigrationProvider = "SqlServer";
+        public const string MigrationProvider = "System.Data.SqlClient";
 
 #if DEBUG
         public const string Main = Development;
