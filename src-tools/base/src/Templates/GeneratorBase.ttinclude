@@ -1,6 +1,7 @@
 <#@ assembly name="System.Configuration" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Data" #>
+<#@ assembly name="Schema.Metadata.dll" #>
 
 <#@ import namespace="System.Collections" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -9,8 +10,8 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Configuration" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="Schema.Metadata" #>
 <#@ include file="..\Templates\T4Toolbox.ttinclude" #>
-<#@ include file="..\Templates\Schema.Metadata.ttinclude" #>
 <#@ include file="..\Templates\TableTemplate.ttinclude" #>
 
 <#+
