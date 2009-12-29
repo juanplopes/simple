@@ -13,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 	ProjectSection(SolutionItems) = preProject
 		Templates\GeneratorBase.ttinclude = Templates\GeneratorBase.ttinclude
 		Templates\Inflector.ttinclude = Templates\Inflector.ttinclude
-		Templates\Schema.Metadata.ttinclude = Templates\Schema.Metadata.ttinclude
 		Templates\T4Toolbox.ttinclude = Templates\T4Toolbox.ttinclude
 		Templates\TableTemplate.ttinclude = Templates\TableTemplate.ttinclude
 	EndProjectSection
