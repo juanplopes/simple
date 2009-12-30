@@ -24,6 +24,9 @@ namespace Simple.Entities
         T Merge(T entity);
 
         [OperationContract]
+        T Evict(T entity);
+        
+        [OperationContract]
         T FindByFilter(EditableExpression filter, OrderBy<T> orderBy);
 
         [OperationContract]

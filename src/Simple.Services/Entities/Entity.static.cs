@@ -53,6 +53,11 @@ namespace Simple.Entities
             return Service.Merge(entity);
         }
 
+        public static T Evict(T entity)
+        {
+            return Service.Evict(entity);
+        }
+
         public static T Find(Expression<Func<T, bool>> filter)
         {
             return Service.FindByFilter(filter.ToSerializable(), new OrderBy<T>());

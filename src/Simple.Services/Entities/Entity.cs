@@ -117,6 +117,11 @@ namespace Simple.Entities
             return Service.Merge(ThisAsT);
         }
 
+        public virtual T Evict()
+        {
+            return Service.Evict(ThisAsT);
+        }
+
         public virtual T Persist()
         {
             return Service.Persist(ThisAsT);
