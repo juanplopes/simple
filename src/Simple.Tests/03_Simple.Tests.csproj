@@ -138,6 +138,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.resx</DependentUpon>
     </Compile>
+    <Compile Include="Expressions\InvocationExpanderFixture.cs" />
     <Compile Include="Patterns\SingletonFixture.cs" />
     <Compile Include="Patterns\TransformationListFixture.cs" />
     <Compile Include="Patterns\TuplesFixture.cs" />
