@@ -128,6 +128,7 @@
     <Compile Include="Expressions\Editable\EditableMemberMemberBinding.cs" />
     <Compile Include="Expressions\Evaluator.cs" />
     <Compile Include="Expressions\ExpressionVisitor.cs" />
+    <Compile Include="Expressions\InvocationExpander.cs" />
     <Compile Include="IO\FileLocator.cs" />
     <Compile Include="IO\Serialization\BinarySimpleSerializer.cs" />
     <Compile Include="IO\Serialization\DataContractSimpleSerializer.cs" />
