@@ -14,7 +14,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void GroupTerritoriesByEmployee()
         {
-            var mapping = Session.Linq<EmployeeTerritory>();
+            var mapping = Session.Query<EmployeeTerritory>();
 
             var q = mapping.GroupBy(x => x.Employee.Id)
                 .Select(x => new { x.Key, Count = x.Count() });
