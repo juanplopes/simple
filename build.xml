@@ -10,6 +10,8 @@
     <SourceBaseDir>src-tools\base\</SourceBaseDir>
     <SourceBaseLibDir>$(SourceBaseDir)\lib\</SourceBaseLibDir>
 
+    <KeyFilePath>$(SourceDir)\Simple.snk</KeyFilePath>
+    
     <PackageDir>pkg\</PackageDir>
     <PackageDir2>$(BuildBase)$(PackageDir)</PackageDir2>
 
@@ -91,7 +93,9 @@
     <ILMerge OutputFile="$(PackageDir)\Simple.dll"
              InputAssemblies="@(MergeItems)"
              ToolPath="util\ilmerge"
-             LogFile=""/>
+             LogFile=""
+             KeyFile="$(KeyFilePath)"
+             />
   </Target>
 
   <Target Name="Package" DependsOnTargets="Rebuild;Merge">
