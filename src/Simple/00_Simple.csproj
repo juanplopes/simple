@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -130,6 +130,7 @@
     <Compile Include="Expressions\Editable\EditableMemberMemberBinding.cs" />
     <Compile Include="Expressions\Evaluator.cs" />
     <Compile Include="Expressions\ExpressionVisitor.cs" />
+    <Compile Include="Expressions\InvocationExpander.cs" />
     <Compile Include="IO\FileLocator.cs" />
     <Compile Include="IO\Serialization\BinarySimpleSerializer.cs" />
     <Compile Include="IO\Serialization\DataContractSimpleSerializer.cs" />

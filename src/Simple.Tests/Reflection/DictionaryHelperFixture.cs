@@ -137,5 +137,24 @@ namespace Simple.Tests.Reflection
             Assert.AreEqual("ASD", value["BBB"]);
         }
 
+        [Test]
+        public void CreateSimpleObjectFromNullExpressions()
+        {
+            var value = DictionaryHelper.FromExpressions(null);
+
+            Assert.IsInstanceOf<IDictionary<string, object>>(value);
+            Assert.AreEqual(0, value.Count);
+        }
+
+        [Test]
+        public void CreateSimpleObjectFromNullObject()
+        {
+            var value = DictionaryHelper.FromAnonymous(null);
+
+            Assert.IsInstanceOf<IDictionary<string, object>>(value);
+            Assert.AreEqual(0, value.Count);
+        }
+
+
     }
 }
