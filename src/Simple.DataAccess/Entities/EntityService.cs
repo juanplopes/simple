@@ -90,6 +90,12 @@ namespace Simple.Entities
             return (T)Session.Merge(entity);
         }
 
+        public T Evict(T entity)
+        {
+            Session.Evict(entity);
+            return entity;
+        }
+
         protected IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy)
         {
             IQueryable<T> query = Linq();
