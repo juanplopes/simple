@@ -85,9 +85,7 @@
       <MergeItems Include="$(BuildDir)\Iesi.Collections.dll"/>
       <MergeItems Include="$(BuildDir)\log4net.dll"/>
       <MergeItems Include="$(BuildDir)\NHibernate.dll"/>
-      <MergeItems Include="$(BuildDir)\Remotion.dll"/>
-      <MergeItems Include="$(BuildDir)\Remotion.Data.Linq.dll"/>
-      <MergeItems Include="$(BuildDir)\Remotion.Interfaces.dll"/>
+      <MergeItems Include="$(BuildDir)\NHibernate.Linq.dll"/>
     </ItemGroup>
 
     <MakeDir Directories="$(PackageDir)"></MakeDir>
@@ -96,7 +94,8 @@
              InputAssemblies="@(MergeItems)"
              ToolPath="util\ilmerge"
              LogFile=""
-             KeyFile="$(KeyFilePath)"/>
+             KeyFile="$(KeyFilePath)"
+             />
   </Target>
 
   <Target Name="Package" DependsOnTargets="Rebuild;Merge">

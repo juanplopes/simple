@@ -121,28 +121,6 @@ namespace Simple.Tests.Expressions
 
         }
 
-        [Test]
-        public void TestPredicateBuilderAndExpression()
-        {
-            Expression<Func<int, bool>> f1 = x => x > 2;
-            Expression<Func<int, bool>> f2 = x => x <= 3;
-
-            Assert.IsFalse(f1.And(f2).Compile()(2));
-            Assert.IsTrue(f1.And(f2).Compile()(3));
-            Assert.IsFalse(f1.And(f2).Compile()(4));
-        }
-        [Test]
-        public void TestPredicateBuilderOrExpression()
-        {
-            Expression<Func<int, bool>> f1 = x => x <= 2;
-            Expression<Func<int, bool>> f2 = x => x > 3;
-
-            Assert.IsTrue(f1.Or(f2).Compile()(2));
-            Assert.IsFalse(f1.Or(f2).Compile()(3));
-            Assert.IsTrue(f1.Or(f2).Compile()(4));
-        }
-
-
     }
 
 }

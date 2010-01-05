@@ -79,9 +79,10 @@ namespace Simple.Tests.DataAccess
         {
             var f = Customer.Expr(true);
             f = Customer.And(f, x => x.CompanyName.StartsWith("a"));
-            f = Customer.And(f, y => y.Country == "Mexico");
+            f = Customer.And(f, x => x.Country == "Mexico");
 
             var f2 = Customer.Expr(x => (true && x.CompanyName.StartsWith("A")) && x.Country == "Mexico");
+
 
             AssertQuery(x => x.Where(f2).OrderByDescending(o => o.Id).Take(1),
                 Customer.Find(f, o => o.Desc(x => x.Id)));
@@ -93,7 +94,7 @@ namespace Simple.Tests.DataAccess
         {
             var f = Customer.Expr(false);
             f = Customer.Or(f, x => x.CompanyName.StartsWith("a"));
-            f = Customer.Or(f, y => y.Country == "Mexico");
+            f = Customer.Or(f, x => x.Country == "Mexico");
 
             var f2 = Customer.Expr(x => (false || x.CompanyName.StartsWith("A")) || x.Country == "Mexico");
 

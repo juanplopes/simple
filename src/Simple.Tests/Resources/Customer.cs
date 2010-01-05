@@ -70,7 +70,7 @@ namespace Simple.Tests.Resources
         [RequiresTransaction]
         public void DeleteTwoCustomers()
         {
-            var two = Query().Take(2).ToList();
+            var two = Linq().Take(2).ToList();
 
             foreach (var cust in two)
             {

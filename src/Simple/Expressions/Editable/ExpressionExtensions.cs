@@ -30,12 +30,8 @@ namespace Simple.Expressions.Editable
                 yield return (source as ConditionalExpression).Test;
             }
             else if (source is InvocationExpression)
-            {
                 foreach (Expression x in (source as InvocationExpression).Arguments)
                     yield return x;
-
-                yield return (source as InvocationExpression).Expression;
-            }
             else if (source is ListInitExpression)
             {
                 yield return (source as ListInitExpression).NewExpression;

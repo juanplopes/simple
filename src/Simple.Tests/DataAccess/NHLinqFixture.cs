@@ -5,9 +5,6 @@ using System.Text;
 using NUnit.Framework;
 using NHibernate.Linq;
 using Simple.Tests.Resources;
-using Simple.Expressions;
-using NHibernate.Criterion;
-using System.Linq.Expressions;
 
 namespace Simple.Tests.DataAccess
 {
@@ -15,29 +12,9 @@ namespace Simple.Tests.DataAccess
     public class NHLinqFixture : BaseDataFixture
     {
         [Test]
-        public void GeneratedAndExpressionWontCauseException()
-        {
-            var expr1 = PredicateBuilder.True<Customer>();
-            expr1 = expr1.And(x => x.CompanyName.StartsWith("a"));
-            expr1 = expr1.And(x => x.Country == "Mexico");
-            expr1 = (Expression<Func<Customer, bool>>) Evaluator.PartialEval(expr1);
-            Session.Query<Customer>().Where(expr1).FirstOrDefault();
-        }
-
-        [Test]
-        public void GeneratedOrExpressionWontCauseException()
-        {
-            var expr1 = PredicateBuilder.True<Customer>();
-            expr1 = expr1.Or(x => x.CompanyName.StartsWith("a"));
-            expr1 = expr1.Or(x => x.Country == "Mexico");
-            Session.Query<Customer>().Where(expr1).FirstOrDefault();
-        }
-
-
-        [Test]
         public void GroupTerritoriesByEmployee()
         {
-            var mapping = Session.Query<EmployeeTerritory>();
+            var mapping = Session.Linq<EmployeeTerritory>();
 
             var q = mapping.GroupBy(x => x.Employee.Id)
                 .Select(x => new { x.Key, Count = x.Count() });
