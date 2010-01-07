@@ -14,14 +14,14 @@ using Simple.Patterns;
 namespace Simple.Entities
 {
     public class Entity<T> : Entity<T, IEntityService<T>>
-        where T : Entity<T, IEntityService<T>>
+        where T : class, IEntity<T>
     {
 
     }
 
     [Serializable]
     public partial class Entity<T, R> : IEntity<T>
-        where T : Entity<T, R>
+        where T : class, IEntity<T>
         where R : class, IEntityService<T>
     {
         public static EntityHelper<T> Identifiers

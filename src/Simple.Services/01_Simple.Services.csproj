@@ -109,8 +109,8 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="ConfigDef.cs" />
-    <Compile Include="Entities\IPage.cs" />
-    <Compile Include="Entities\Page.cs" />
+    <Compile Include="DataAccess\IPage.cs" />
+    <Compile Include="DataAccess\Page.cs" />
     <Compile Include="DefaultConfigContent.Designer.cs">
       <DependentUpon>DefaultConfigContent.resx</DependentUpon>
       <AutoGen>True</AutoGen>

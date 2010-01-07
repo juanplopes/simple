@@ -6,9 +6,14 @@ using System.Runtime.Serialization;
 
 namespace Simple.DataAccess
 {
-    public interface IPage<T> : IList<T>
+    public interface IPage
     {
         int TotalCount { get; }
         int TotalPages(int pageSize);
+    }
+
+    public interface IPage<T> : IPage, IList<T>
+    {
+       
     }
 }

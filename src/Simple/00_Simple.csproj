@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="Common\NamedEvents.cs" />
     <Compile Include="Common\PrimeNumbers.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Config\AggregateFactory.cs" />
     <Compile Include="Config\DefaultConfigAttribute.cs" />
     <Compile Include="Config\DirectConfigSource.cs" />
