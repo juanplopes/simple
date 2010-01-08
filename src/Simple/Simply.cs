@@ -6,6 +6,15 @@ using Simple.Config;
 
 namespace Simple
 {
+    public static class SimplyFluentExtensions
+    {
+        public static T FluentlyDo<T>(this T obj, Action<T> action)
+        {
+            action(obj);
+            return obj;
+        }
+    }
+
     public class Simply : AggregateFactory<Simply>
     {
         public void Nop() { }
