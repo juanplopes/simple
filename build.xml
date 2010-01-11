@@ -111,7 +111,7 @@
      ProjectName="$(GCProjectName)"
      LocalFile="$(PackageDir)\Simple.zip"
      TargetFileName="Simple-Nightly.zip"
-     Summary="Simple Library v$(ProductVersion).$(BuildTag)"
+     Summary="Simple.Net Library v$(ProductVersion).$(BuildTag)"
      Labels="Nightly;Type-Package"
       />
 
@@ -121,7 +121,7 @@
       ProjectName="$(GCProjectName)"
       LocalFile="$(PackageDir)\Simple.exe"
       TargetFileName="Simple-Nightly.exe"
-      Summary="Simple Project Starter v$(ProductVersion).$(BuildTag)"
+      Summary="Simple.Net Project Starter v$(ProductVersion).$(BuildTag)"
       Labels="Nightly;Type-Executable;Featured"
       />
   </Target>
