@@ -21,7 +21,6 @@ namespace Simple.Tests.Services
             ConfigureClientServerHooks(guid);
             return guid;
         }
-        [Test, Ignore("still cannot call some generic methods in service without error")]
         public override void TestGenericInt()
         {
             base.TestGenericInt();

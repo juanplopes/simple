@@ -10,6 +10,7 @@ namespace Simple.Services.Default
     {
         void Set(object server, Type contract);
         object Get(Type contract);
+        object TryGet(Type contract);
         void Clear();
     }
 
@@ -24,6 +25,17 @@ namespace Simple.Services.Default
                 Simply.Do.Log(this).DebugFormat("Setting server object for contract {0}...", contract.Name);
                 _classes[contract] = server;
             }
+        }
+
+        public object TryGet(Type contract)
+        {
+            lock (_classes)
+            {
+                object obj = null;
+                Simply.Do.Log(this).DebugFormat("Trying to retrieving server object for contract {0}...", contract.Name);
+                _classes.TryGetValue(contract, out obj);
+                return obj;
+            } 
         }
 
         public object Get(Type contract)

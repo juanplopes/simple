@@ -31,5 +31,12 @@ namespace Simple.Tests.Services
             Simply.Do[guid].StopServer();
             Simply.Do[guid].Release.Remoting();
         }
+
+        [Test]
+        public void TestAllCallsAreInSameThread()
+        {
+            var service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
+            Assert.IsTrue(service.CheckSameThread(Thread.CurrentThread.ManagedThreadId));
+        }
     }
 }

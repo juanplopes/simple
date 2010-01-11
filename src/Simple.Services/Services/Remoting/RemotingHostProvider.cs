@@ -10,6 +10,7 @@ using System.Runtime.Remoting.Services;
 using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Proxies;
 using Simple.DynamicProxy;
+using Simple.Services.Default;
 
 namespace Simple.Services.Remoting
 {
@@ -52,6 +53,7 @@ namespace Simple.Services.Remoting
                 if (!started) Start();
 
                 services.Add(server);
+                ServiceLocationFactory.Do[ConfigCache].Set(server, contract);
 
                 string key = ConfigCache.GetEndpointKey(contract);
                 logger.DebugFormat("Registering contract {0} at endpoint {1}...", contract.Name, key);

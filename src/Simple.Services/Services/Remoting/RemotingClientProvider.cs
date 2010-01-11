@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Channels;
 using Simple.DynamicProxy;
+using Simple.Reflection;
+using Simple.Services.Default;
 
 namespace Simple.Services.Remoting
 {
@@ -23,13 +25,21 @@ namespace Simple.Services.Remoting
 
         public object Create(Type type)
         {
-            logger.DebugFormat("Creating remoting proxy to type {0}...", type.Name);
+            logger.DebugFormat("Trying to find local reference to type {0}...", TypesHelper.GetFlatClassName(type));
+
+            object obj = ServiceLocationFactory.Do[ConfigCache].TryGet(type);
+            if (obj != null)
+            {
+                logger.DebugFormat("Found it, returning...");
+                return obj;
+            }
+            logger.DebugFormat("Creating remoting proxy to type {0}...", TypesHelper.GetFlatClassName(type));
 
             Uri uriBase = ConfigCache.GetUriFromAddressBase();
             string relativeUri = ConfigCache.GetEndpointKey(type);
             Uri uriFinal;
 
-            object obj = null;
+            
 
             if (Uri.TryCreate(uriBase, relativeUri, out uriFinal))
             {

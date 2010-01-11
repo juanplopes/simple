@@ -25,8 +25,23 @@ namespace Simple.Services
 
         #region IInterceptor Members
 
+        protected MethodBase CorrectMethod(object target, MethodBase method)
+        {
+            if (target == null) throw new ArgumentException("server cannot be null");
+            Type targetType = target.GetType();
+            Type declaringType = method.DeclaringType;
+            if (targetType != declaringType && declaringType.IsInterface)
+            {
+                var map = targetType.GetInterfaceMap(method.DeclaringType);
+                for (int i = 0; i < map.InterfaceMethods.Length; i++)
+                    if (map.InterfaceMethods[i] == method) return map.TargetMethods[i];
+            }
+            return method;
+        }
+
         public virtual object Intercept(object target, MethodBase method, object[] args)
         {
+            if (!Client) method = CorrectMethod(target, method);
             var hookArgs = new CallHookArgs(target, method, args, Client);
             var methodHooks = Hooks(hookArgs);
 

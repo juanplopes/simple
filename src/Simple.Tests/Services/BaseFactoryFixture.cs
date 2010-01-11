@@ -249,6 +249,7 @@ namespace Simple.Tests.Services
 
         bool TestExpression(EditableExpression expr, int value);
         bool TestSelfType(SelfType selfObject);
+        bool CheckSameThread(int id);
     }
 
     public interface IFailService : IService
@@ -394,6 +395,16 @@ namespace Simple.Tests.Services
         public bool TestSelfType(SelfType selfObject)
         {
             return object.ReferenceEquals(selfObject, selfObject.SelfProperty);
+        }
+
+        #endregion
+
+        #region ISimpleService Members
+
+
+        public bool CheckSameThread(int id)
+        {
+            return Thread.CurrentThread.ManagedThreadId == id;
         }
 
         #endregion
