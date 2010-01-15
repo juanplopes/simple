@@ -82,10 +82,10 @@
   </Target>
   
   <Target Name="Db:Migrate" DependsOnTargets="Build">
-    <Exec Command="$(MigrationsAssembly)"></Exec>
+    <Exec Command="$(MigrationsAssembly)" WorkingDirectory="$(ServerDir)"></Exec>
   </Target>
 
   <Target Name="Db:SampleData" DependsOnTargets="Build">
-    <Exec Command="$(SamplesAssembly1)"></Exec>
+    <Exec Command="$(SamplesAssembly1)" WorkingDirectory="$(ServerDir)"></Exec>
   </Target>
 </Project>
