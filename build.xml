@@ -6,7 +6,7 @@
     <BuildBase>..\..\</BuildBase>
     <BuildDir2>$(BuildBase)$(BuildDir)</BuildDir2>
 
-    <SourceDir>src</SourceDir>
+    <SourceDir>src\</SourceDir>
     <SourceBaseDir>src-tools\base\</SourceBaseDir>
     <SourceBaseLibDir>$(SourceBaseDir)\lib\</SourceBaseLibDir>
 
@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <SolutionFile Include="src\Simple.sln" />
+    <SolutionFile Include="$(SourceDir)\Simple.sln" />
   </ItemGroup>
 
   <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
@@ -34,7 +34,6 @@
     <MSBuild Projects="@(SolutionFile)" Targets="Clean" Properties="Configuration=$(Configuration);Platform=$(Platform);OutDir=$(BuildDir2)"/>
     <RemoveDir Directories="$(BuildDir)" ContinueOnError="true"/>
     <RemoveDir Directories="$(PackageDir)" ContinueOnError="true"/>
-    <Delete Files="$(LogFile)"></Delete>
   </Target>
 
   <Target Name="GenerateTag">
