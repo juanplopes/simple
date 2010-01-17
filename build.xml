@@ -65,7 +65,7 @@
     <CallTarget Targets="Clean; Build"></CallTarget>
   </Target>
 
-  <Target Name="Test" DependsOnTargets="Rebuild">
+  <Target Name="Test" DependsOnTargets="Build">
     <Nunit Assemblies="$(TestAssembly)" ToolPath="util\nunit"/>
   </Target>
 
@@ -97,7 +97,7 @@
              />
   </Target>
 
-  <Target Name="Package" DependsOnTargets="Rebuild;Merge">
+  <Target Name="Package" DependsOnTargets="Build;Merge">
     <Copy SourceFiles="$(PackageDir)\Simple.dll" DestinationFolder="$(SourceBaseLibDir)"/>
     <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile $(PackageDir2)\Simple.exe&quot;"/>
     <Zip Files="$(PackageDir)\Simple.dll" ZipFileName="$(PackageDir)\Simple.zip" WorkingDirectory="$(PackageDir)"/>
