@@ -155,5 +155,11 @@ namespace Simple.Entities
             Service.DeleteById(id);
         }
 
+        public static void Delete(T entity)
+        {
+            Service.Delete(entity);
+        }
+
+
     }
 }

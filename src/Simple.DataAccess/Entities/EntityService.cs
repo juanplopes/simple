@@ -87,7 +87,7 @@ namespace Simple.Entities
 
         public virtual T Reload(T entity)
         {
-            return Refresh(Evict(entity));
+            return Load(Evict(entity));
         }
 
         public virtual T Merge(T entity)

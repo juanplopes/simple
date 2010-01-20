@@ -148,6 +148,7 @@ namespace Simple.Entities
             Service.Delete(ThisAsT);
         }
 
+      
         public virtual T SaveOrUpdate()
         {
             return Service.SaveOrUpdate(ThisAsT);

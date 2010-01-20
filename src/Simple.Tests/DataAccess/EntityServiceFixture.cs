@@ -306,6 +306,7 @@ namespace Simple.Tests.DataAccess
             Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OLDWO"));
         }
 
+       
         [Test]
         public void TestDeleteOneByFilter()
         {
