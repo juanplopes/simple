@@ -174,9 +174,9 @@ namespace Simple.Entities
         public void DeleteById(object id)
         {
             Session.Delete(Load(id));
-            Session.Flush();
         }
 
+        [RequiresTransaction]
         public int DeleteByFilter(Simple.Expressions.Editable.EditableExpression filter)
         {
             int res = 0;
@@ -185,7 +185,6 @@ namespace Simple.Entities
                 Session.Delete(entity);
                 res++;
             }
-            Session.Flush();
             return res;
         }
 
@@ -193,7 +192,6 @@ namespace Simple.Entities
         {
             if (ValidateOnSave) ValidateAndThrow(entity);
             Session.SaveOrUpdate(entity);
-            Session.Flush();
             return entity;
         }
 
@@ -201,7 +199,6 @@ namespace Simple.Entities
         {
             if (ValidateOnSave) ValidateAndThrow(entity);
             Session.Save(entity);
-            Session.Flush();
             return entity;
         }
 
@@ -209,7 +206,6 @@ namespace Simple.Entities
         {
             if (ValidateOnSave) ValidateAndThrow(entity);
             Session.Update(entity);
-            Session.Flush();
             return entity;
         }
 
@@ -217,14 +213,12 @@ namespace Simple.Entities
         {
             if (ValidateOnSave) ValidateAndThrow(entity);
             Session.Persist(entity);
-            Session.Flush();
             return entity;
         }
 
         public void Delete(T entity)
         {
             Session.Delete(entity);
-            Session.Flush();
         }
 
         #endregion

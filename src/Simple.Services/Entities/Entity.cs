@@ -13,6 +13,7 @@ using Simple.Patterns;
 
 namespace Simple.Entities
 {
+    [Serializable]
     public class Entity<T> : Entity<T, IEntityService<T>>
         where T : class, IEntity<T>
     {
