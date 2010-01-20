@@ -4,8 +4,8 @@
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
 <#
 	var template = new EntityTemplate();
-	template.EntityNamespace = "Sample.Project.Domain";
-	template.ServiceNamespace = "Sample.Project.Services";
+	template.EntityNamespace = "Conspirarte.Domain";
+	template.ServiceNamespace = "Conspirarte.Services";
 	template.Context = this;
 	template.OutputFileTemplate = @"Domain\Generated\%s.cs";
 
@@ -84,6 +84,8 @@ namespace <#=this.EntityNamespace #>
 <#+ }#>
 
 		}
+		
+		protected override object InternalIdentifier { get {<#+ if (Table.PrimaryKeyColumns.Count() == 1) { #> return <#= GetFieldName(Table.PrimaryKeyColumns.First()) #><#+ } else { #> return this<#+ } #>; } }
 		
 		public <#= GetTableClassName() #> ClearId() 
 		{

@@ -14,6 +14,7 @@ namespace Simple.Tests.Resources
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class Category : Entity<Category, ICategoryService>
     {
+       
         public virtual int? Id { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }

@@ -21,9 +21,6 @@ namespace Simple.Entities
         T Refresh(T entity);
 
         [OperationContract]
-        T Reload(T entity);
-
-        [OperationContract]
         T Merge(T entity);
 
         [OperationContract]

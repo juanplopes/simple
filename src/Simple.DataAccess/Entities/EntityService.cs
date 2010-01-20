@@ -85,11 +85,6 @@ namespace Simple.Entities
             return entity;
         }
 
-        public virtual T Reload(T entity)
-        {
-            return Load(Evict(entity));
-        }
-
         public virtual T Merge(T entity)
         {
             return (T)Session.Merge(entity);

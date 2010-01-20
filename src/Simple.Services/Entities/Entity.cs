@@ -58,6 +58,14 @@ namespace Simple.Entities
                 return base.ToString();
         }
 
+        protected virtual object InternalIdentifier
+        {
+            get
+            {
+                throw new NotImplementedException("In order to use this method, you must implement InternalIdentifier property in your entity.");
+            }
+        }
+
         #region Expressions
         public static string Prop<P>(Expression<Func<T, P>> expr)
         {
@@ -115,7 +123,7 @@ namespace Simple.Entities
 
         public virtual T Reload()
         {
-            return Service.Reload(ThisAsT);
+            return Load(InternalIdentifier);
         }
 
         public virtual T Merge()
@@ -148,7 +156,7 @@ namespace Simple.Entities
             Service.Delete(ThisAsT);
         }
 
-      
+
         public virtual T SaveOrUpdate()
         {
             return Service.SaveOrUpdate(ThisAsT);
