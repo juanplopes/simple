@@ -12,6 +12,7 @@ using Simple.Services;
 using NHibernate;
 using NHibernate.Validator.Engine;
 using Simple.Validation;
+using NHibernate.Metadata;
 
 namespace Simple.Entities
 {
@@ -28,6 +29,19 @@ namespace Simple.Entities
                 return _logger;
             }
         }
+
+        private IClassMetadata _NHMetadata;
+        protected virtual IClassMetadata NHMetadata
+        {
+            get
+            {
+                if (_NHMetadata == null)
+                    _NHMetadata = Session.SessionFactory.GetClassMetadata(typeof(T));
+
+                return _NHMetadata;
+            }
+        }
+
 
         protected virtual object ConfigKey
         {
@@ -81,8 +95,14 @@ namespace Simple.Entities
 
         public virtual T Refresh(T entity)
         {
+            Session.SessionFactory.GetClassMetadata(typeof(T)).GetIdentifier(entity, Session.GetSessionImplementation().EntityMode);
             Session.Refresh(entity);
             return entity;
+        }
+
+        public virtual T Reload(T entity)
+        {
+            return Load(NHMetadata.GetIdentifier(entity, Session.GetSessionImplementation().EntityMode));
         }
 
         public virtual T Merge(T entity)

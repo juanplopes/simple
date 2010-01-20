@@ -85,8 +85,6 @@ namespace <#=this.EntityNamespace #>
 
 		}
 		
-		protected override object InternalIdentifier { get {<#+ if (Table.PrimaryKeyColumns.Count() == 1) { #> return <#= GetFieldName(Table.PrimaryKeyColumns.First()) #><#+ } else { #> return this<#+ } #>; } }
-		
 		public <#= GetTableClassName() #> ClearId() 
 		{
 <#+ foreach (var field in Table.GetKeyFields()) { #>

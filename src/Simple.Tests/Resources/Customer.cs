@@ -16,13 +16,13 @@ namespace Simple.Tests.Resources
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public partial class Customer : Entity<Customer, ICustomerService>
     {
-        protected override object InternalIdentifier
-        {
-            get
-            {
-                return Id;
-            }
-        }
+        //protected override object InternalIdentifier
+        //{
+        //    get
+        //    {
+        //        return Id;
+        //    }
+        //}
 
 
         public virtual string Id { get; set; }

@@ -50,7 +50,7 @@ namespace Simple.Entities
 
         public static T Reload(T entity)
         {
-            return entity.Reload();
+            return Service.Reload(entity);
         }
 
         public static T Merge(T entity)
