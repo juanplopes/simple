@@ -48,6 +48,11 @@ namespace Simple.Entities
             return Service.Refresh(entity);
         }
 
+        public static T Reload(T entity)
+        {
+            return Service.Reload(entity);
+        }
+
         public static T Merge(T entity)
         {
             return Service.Merge(entity);

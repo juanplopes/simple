@@ -14,6 +14,7 @@ namespace Simple.Entities
     {
         T Clone();
         T Refresh();
+        T Reload();
         T Merge();
         T Evict();
         T Persist();

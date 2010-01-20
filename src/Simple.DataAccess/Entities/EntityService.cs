@@ -19,7 +19,7 @@ namespace Simple.Entities
     public class EntityService<T> : MarshalByRefObject, IEntityService<T>
     {
         private ILog _logger = null;
-        protected ILog Logger
+        protected virtual ILog Logger
         {
             get
             {
@@ -29,7 +29,7 @@ namespace Simple.Entities
             }
         }
 
-        protected object ConfigKey
+        protected virtual object ConfigKey
         {
             get
             {
@@ -37,7 +37,7 @@ namespace Simple.Entities
             }
         }
 
-        protected Simply MySimply
+        protected virtual Simply MySimply
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Simple.Entities
             }
         }
 
-        protected ISession Session
+        protected virtual ISession Session
         {
             get
             {
@@ -74,29 +74,34 @@ namespace Simple.Entities
 
         #region IEntityService<T> Members
 
-        public T Load(object id)
+        public virtual T Load(object id)
         {
             return Session.Load<T>(id);
         }
 
-        public T Refresh(T entity)
+        public virtual T Refresh(T entity)
         {
             Session.Refresh(entity);
             return entity;
         }
 
-        public T Merge(T entity)
+        public virtual T Reload(T entity)
+        {
+            return Refresh(Evict(entity));
+        }
+
+        public virtual T Merge(T entity)
         {
             return (T)Session.Merge(entity);
         }
 
-        public T Evict(T entity)
+        public virtual T Evict(T entity)
         {
             Session.Evict(entity);
             return entity;
         }
 
-        protected IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy)
+        protected virtual IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy)
         {
             IQueryable<T> query = Linq();
 
@@ -125,59 +130,59 @@ namespace Simple.Entities
             return query;
         }
 
-        protected IQueryable<T> SkipAndTake(IQueryable<T> query, int? skip, int? take)
+        protected virtual IQueryable<T> SkipAndTake(IQueryable<T> query, int? skip, int? take)
         {
             if (skip.HasValue) query = query.Skip(skip.Value);
             if (take.HasValue) query = query.Take(take.Value);
             return query;
         }
 
-        public T FindByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order)
+        public virtual T FindByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).FirstOrDefault();
         }
 
-        public IList<T> List(OrderBy<T> order)
+        public virtual IList<T> List(OrderBy<T> order)
         {
             return GetDefaultQueriable(null, order).ToList();
         }
 
-        public IList<T> ListByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order)
+        public virtual IList<T> ListByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).ToList();
         }
 
-        public int Count()
+        public virtual int Count()
         {
             return GetDefaultQueriable(null, null).Count();
         }
 
-        public int CountByFilter(Simple.Expressions.Editable.EditableExpression filter)
+        public virtual int CountByFilter(Simple.Expressions.Editable.EditableExpression filter)
         {
             return GetDefaultQueriable(filter, null).Count();
         }
 
-        public IPage<T> Paginate(OrderBy<T> order, int? skip, int? take)
+        public virtual IPage<T> Paginate(OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(null, order);
 
             return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
         }
 
-        public IPage<T> PaginateByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order, int? skip, int? take)
+        public virtual IPage<T> PaginateByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(filter, order);
 
             return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
         }
 
-        public void DeleteById(object id)
+        public virtual void DeleteById(object id)
         {
             Session.Delete(Load(id));
         }
 
         [RequiresTransaction]
-        public int DeleteByFilter(Simple.Expressions.Editable.EditableExpression filter)
+        public virtual int DeleteByFilter(Simple.Expressions.Editable.EditableExpression filter)
         {
             int res = 0;
             foreach (var entity in ListByFilter(filter, null))
@@ -188,35 +193,35 @@ namespace Simple.Entities
             return res;
         }
 
-        public T SaveOrUpdate(T entity)
+        public virtual T SaveOrUpdate(T entity)
         {
             if (ValidateOnSave) ValidateAndThrow(entity);
             Session.SaveOrUpdate(entity);
             return entity;
         }
 
-        public T Save(T entity)
+        public virtual T Save(T entity)
         {
             if (ValidateOnSave) ValidateAndThrow(entity);
             Session.Save(entity);
             return entity;
         }
 
-        public T Update(T entity)
+        public virtual T Update(T entity)
         {
             if (ValidateOnSave) ValidateAndThrow(entity);
             Session.Update(entity);
             return entity;
         }
 
-        public T Persist(T entity)
+        public virtual T Persist(T entity)
         {
             if (ValidateOnSave) ValidateAndThrow(entity);
             Session.Persist(entity);
             return entity;
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             Session.Delete(entity);
         }

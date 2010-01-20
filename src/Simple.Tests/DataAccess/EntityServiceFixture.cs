@@ -60,6 +60,13 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
+        public void TestReloadById()
+        {
+            Assert.IsNotNull(new Customer() { Id = "BERGS" }.Reload().Phone);
+            Assert.IsNotNull(new Customer() { Id = "ANTON" }.Reload().Phone);
+        }
+
+        [Test]
         public void TestFindFirstByInsideId()
         {
             var c = new Customer() { Id = "BERGS" };

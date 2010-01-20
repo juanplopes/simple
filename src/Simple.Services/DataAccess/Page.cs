@@ -10,9 +10,9 @@ namespace Simple.DataAccess
     [Serializable]
     public class Page<T> : ReadOnlyCollection<T>, IPage<T>
     {
-        public int TotalCount { get; private set; }
+        public virtual int TotalCount { get; private set; }
 
-        public int TotalPages(int pageSize)
+        public virtual int TotalPages(int pageSize)
         {
             if (pageSize > 0)
             {

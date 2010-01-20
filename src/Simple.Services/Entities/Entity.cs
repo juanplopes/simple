@@ -113,6 +113,11 @@ namespace Simple.Entities
             return Service.Refresh(ThisAsT);
         }
 
+        public virtual T Reload()
+        {
+            return Service.Reload(ThisAsT);
+        }
+
         public virtual T Merge()
         {
             return Service.Merge(ThisAsT);
