@@ -30,6 +30,7 @@ namespace Simple.Tests.DataAccess
         {
             if (OpenOwnTx)
             {
+                Session.Clear();
                 tx.Dispose();
                 dx.Dispose();
             }
