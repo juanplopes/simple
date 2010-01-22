@@ -77,7 +77,7 @@ namespace Simple.DataAccess.Context
                 if (!_defaultSession.IsOpen)
                     throw new InvalidOperationException("You shoudn't close the main session. Correct your code right now");
 
-                _defaultSession.Clear();
+                _defaultSession.Flush();
                 _defaultSession.Close();
             }
         }
@@ -86,7 +86,7 @@ namespace Simple.DataAccess.Context
         {
             foreach (ISession session in _addSessions)
             {
-                session.Clear();
+                session.Flush();
                 session.Close();
             }
         }

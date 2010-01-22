@@ -34,6 +34,7 @@ namespace Sample.Project.Tests
         [TearDown]
         public void Teardown()
         {
+			Session.Clear();
             tx.Rollback();
             dx.Exit();
         }
