@@ -3,24 +3,24 @@
 <#@ Import Namespace="System" #>
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
 <#
-	var template = new ServiceInterfaceTemplate();
-	template.EntityNamespace = "Sample.Project.Domain";
-	template.ServiceNamespace = "Sample.Project.Services";
-	template.OutputFileTemplate = @"Services\I%sService.cs";
+    var template = new ServiceInterfaceTemplate();
+    template.EntityNamespace = "Sample.Project.Domain";
+    template.ServiceNamespace = "Sample.Project.Services";
+    template.OutputFileTemplate = @"Services\I%sService.cs";
     template.Context = this;
-	template.PreserveFile = true;
-	
+    template.PreserveFile = true;
+    
     new GeneratorBase(template).Run();
 #>
 <#+
 public class ServiceInterfaceTemplate : TableTemplate
 {
-	public string EntityNamespace { get; set; }
-	public string ServiceNamespace { get; set; }
-	
+    public string EntityNamespace { get; set; }
+    public string ServiceNamespace { get; set; }
+    
     protected override void RenderCore()
     {
-		RefreshOutputFile();
+        RefreshOutputFile();
 #>
 using System;
 using System.Collections.Generic;

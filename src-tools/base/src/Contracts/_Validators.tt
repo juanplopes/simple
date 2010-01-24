@@ -3,24 +3,24 @@
 <#@ Import Namespace="System" #>
 <#@ include file="..\Templates\GeneratorBase.ttinclude" #>
 <#
-	var template = new ValidatorTemplate();
-	template.EntityNamespace = "Sample.Project.Domain";
-	template.ValidatorNamespace = "Sample.Project.Validators";
-	template.OutputFileTemplate = @"Validators\%sValidator.cs";
+    var template = new ValidatorTemplate();
+    template.EntityNamespace = "Sample.Project.Domain";
+    template.ValidatorNamespace = "Sample.Project.Validators";
+    template.OutputFileTemplate = @"Validators\%sValidator.cs";
     template.Context = this;
-	template.PreserveFile = true;
-	
+    template.PreserveFile = true;
+    
     new GeneratorBase(template).Run();
 #>
 <#+
 public class ValidatorTemplate : TableTemplate
 {
-	public string EntityNamespace { get; set; }
-	public string ValidatorNamespace { get; set; }
-	
+    public string EntityNamespace { get; set; }
+    public string ValidatorNamespace { get; set; }
+    
     protected override void RenderCore()
     {
-		RefreshOutputFile();
+        RefreshOutputFile();
 #>
 using System;
 using System.Collections.Generic;
