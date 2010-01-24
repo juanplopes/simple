@@ -4,17 +4,22 @@ using System.Linq;
 using System.Text;
 using Simple.Hosting;
 using System.ComponentModel;
+using Simple;
+using Sample.Project.Environment;
+using Sample.Project.Config;
 
 namespace Sample.Project
 {
     [RunInstaller(true)]
     public class ServerInstaller : SimpleInstaller
     {
-        public const string MainServiceName = "sampleprojectsvc";
         public ServerInstaller()
         {
-            ServiceName = MainServiceName;
-            DisplayName = "SampleProject Business Server";
+            new Default().ConfigClient();
+
+            var cfg = Simply.Do.GetConfig<ApplicationConfig>();
+            ServiceName = cfg.Service.Name;
+            DisplayName = cfg.Service.DisplayName;
         }
     }
 }

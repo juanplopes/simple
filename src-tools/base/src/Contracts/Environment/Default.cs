@@ -7,6 +7,7 @@ using Simple.IO;
 using System.Reflection;
 using Simple.Services;
 using System.IO;
+using Sample.Project.Config;
 
 namespace Sample.Project.Environment
 {
@@ -20,6 +21,7 @@ namespace Sample.Project.Environment
         public const string Main = Production;
 #endif
 
+        public Default() : this(Main) { }
         public Default(string env) : base(env) { }
 
         protected override void InitLocations(FileLocator paths)
@@ -32,6 +34,7 @@ namespace Sample.Project.Environment
         public override void ConfigClient()
         {
             ConfigFile(x => x.Log4net(), "Log4net.config");
+            ConfigFile(x => x.The<ApplicationConfig>(), "Application.config");
 
             if (Environment == Test)
             {

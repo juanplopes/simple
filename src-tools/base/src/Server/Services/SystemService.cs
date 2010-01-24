@@ -6,6 +6,7 @@ using Simple.Patterns;
 using NHibernate.Tool.hbm2ddl;
 using Simple;
 using System.ServiceProcess;
+using Sample.Project.Config;
 
 namespace Sample.Project.Services
 {
@@ -20,7 +21,7 @@ namespace Sample.Project.Services
 
             runner.Run("Windows Service installed", "Installed",
                 x => x.WarnUnless(ServiceController.GetServices()
-                    .Count(y => y.ServiceName == ServerInstaller.MainServiceName) == 1, "Not installed"));
+                    .Count(y => y.ServiceName == Simply.Do.GetConfig<ApplicationConfig>().Service.Name) == 1, "Not installed"));
 
             return new List<TaskRunner.Result>(runner.Results);
         }

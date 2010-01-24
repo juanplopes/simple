@@ -17,6 +17,7 @@ using Simple.Tests.DataAccess;
 using Simple.Tests.Resources;
 using System.IO;
 using NHibernate.Tool.hbm2ddl;
+using Simple.Hosting;
 
 
 namespace Simple.Tests

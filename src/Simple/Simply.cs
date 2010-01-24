@@ -18,6 +18,10 @@ namespace Simple
     public class Simply : AggregateFactory<Simply>
     {
         public void Nop() { }
+        public Version GetVersion()
+        {
+            return new Version(this.GetType().Assembly.ImageRuntimeVersion);
+        }
 
         public SimplyConfigure Configure
         {
