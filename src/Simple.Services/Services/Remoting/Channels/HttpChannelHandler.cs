@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
-using Simple.Services.Remoting.Serialization;
 
 namespace Simple.Services.Remoting.Channels
 {
@@ -19,7 +18,7 @@ namespace Simple.Services.Remoting.Channels
 
         public IChannelReceiver CreateServerChannel(string name, Uri uri)
         {
-            return new HttpServerChannel(name, uri.Port, new CustomBinaryServerFormatterSinkProvider());
+            return new HttpServerChannel(name, uri.Port, new BinaryServerFormatterSinkProvider());
         }
 
         public IChannelSender CreateClientChannel()
@@ -29,7 +28,7 @@ namespace Simple.Services.Remoting.Channels
 
         public IChannelSender CreateClientChannel(string name)
         {
-            return new HttpClientChannel(name, new CustomBinaryClientFormatterSinkProvider());
+            return new HttpClientChannel(name, new BinaryClientFormatterSinkProvider());
         }
 
         public string DefaultName

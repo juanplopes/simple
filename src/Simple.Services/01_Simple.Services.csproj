@@ -120,10 +120,6 @@
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\OrderByItem.cs" />
     <Compile Include="Entities\OrderByCollection.cs" />
-    <Compile Include="Services\Remoting\Serialization\CustomBinaryClientFormatterSink.cs" />
-    <Compile Include="Services\Remoting\Serialization\CustomBinaryClientFormatterSinkProvider.cs" />
-    <Compile Include="Services\Remoting\Serialization\CustomBinaryServerFormatterSink.cs" />
-    <Compile Include="Services\Remoting\Serialization\CustomBinaryServerFormatterSinkProvider.cs" />
     <Compile Include="Services\SimpleHostingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CallHeaders.cs" />

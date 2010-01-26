@@ -26,15 +26,20 @@ namespace Simple.Services
         }
 
         ITransaction tx = null;
+        ISession session = null;
 
         public override void Before()
         {
 
             if (this.CallArgs.Method.IsDefined(typeof(RequiresTransactionAttribute), true))
             {
-                var currTx = Simply.Do[ConfigKey].GetSession().Transaction;
-                if (currTx == null || !currTx.IsActive)
-                    tx = Simply.Do[ConfigKey].BeginTransaction();
+                session = Simply.Do[ConfigKey].GetSession();
+                if (session != null)
+                {
+                    var currTx = session.Transaction;
+                    if (currTx == null || !currTx.IsActive)
+                        tx = Simply.Do[ConfigKey].BeginTransaction();
+                }
             }
         }
 
@@ -46,7 +51,10 @@ namespace Simple.Services
         public override void Finally()
         {
             if (tx != null)
+            {
+                session.Clear();
                 if (!tx.WasCommitted) tx.Rollback();
+            }
         }
     }
 }
