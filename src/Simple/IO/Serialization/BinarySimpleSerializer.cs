@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace Simple.IO.Serialization
 {
@@ -12,18 +13,34 @@ namespace Simple.IO.Serialization
         [Serializable]
         public class NullValueType { }
 
+        public ISurrogateSelector CustomSelector { get; protected set; }
+
+        public BinarySimpleSerializer() { }
+        public BinarySimpleSerializer(ISurrogateSelector customSelector) { CustomSelector = customSelector; }
+
+        protected BinaryFormatter GetFormatter()
+        {
+            var formatter = new BinaryFormatter();
+            if (CustomSelector != null)
+            {
+                formatter.SurrogateSelector = new SurrogateSelector();
+                formatter.SurrogateSelector.ChainSelector(CustomSelector);
+            }
+            return formatter;
+        }
+
         public byte[] Serialize(object graph)
         {
             if (graph == null) graph = new NullValueType();
             
             return StreamHelper.Serialize(graph,
-                (s, g) => new BinaryFormatter().Serialize(s, g));
+                (s, g) => GetFormatter().Serialize(s, g));
         }
 
         public object Deserialize(byte[] data)
         {
             object ret = StreamHelper.Deserialize(data,
-                s => new BinaryFormatter().Deserialize(s));
+                s => GetFormatter().Deserialize(s));
             if (ret is NullValueType) ret = null;
             return ret;
         }

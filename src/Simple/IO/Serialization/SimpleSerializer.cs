@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace Simple.IO.Serialization
 {
@@ -12,6 +13,10 @@ namespace Simple.IO.Serialization
             return new BinarySimpleSerializer();
         }
 
+        public static BinarySimpleSerializer Binary(ISurrogateSelector selector)
+        {
+            return new BinarySimpleSerializer(selector);
+        }
 
         public static XmlSimpleSerializer Xml(Type type)
         {

@@ -135,6 +135,7 @@
     <Compile Include="IO\FileLocator.cs" />
     <Compile Include="IO\Serialization\BinarySimpleSerializer.cs" />
     <Compile Include="IO\Serialization\DataContractSimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\ExpressionSurrogateSelector.cs" />
     <Compile Include="IO\Serialization\ISimpleSerializer.cs" />
     <Compile Include="IO\Serialization\NetDataContractSimpleSerializer.cs" />
     <Compile Include="IO\Serialization\SimpleSerializer.cs" />

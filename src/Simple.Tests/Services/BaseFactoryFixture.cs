@@ -230,6 +230,13 @@ namespace Simple.Tests.Services
             }
 
         }
+
+        [Test]
+        public void TestSerializingLambdaExpressions()
+        {
+            ISimpleService svc = Simply.Do[ConfigKey].Resolve<ISimpleService>();
+            Assert.AreEqual(42, svc.Calculate((x, y) => x * 2 * y, 3, 7));
+        }
     }
 
     #region Samples
@@ -237,6 +244,8 @@ namespace Simple.Tests.Services
     {
         string GetString();
         int GetInt32();
+        int Calculate(Expression<Func<int, int, int>> expr, int a, int b);
+
         byte[] GetByteArray(int size);
         int GetOverloadedMethod(int value);
         int GetOverloadedMethod(int value, int value2);
@@ -405,6 +414,16 @@ namespace Simple.Tests.Services
         public bool CheckSameThread(int id)
         {
             return Thread.CurrentThread.ManagedThreadId == id;
+        }
+
+        #endregion
+
+        #region ISimpleService Members
+
+
+        public int Calculate(Expression<Func<int, int, int>> expr, int a, int b)
+        {
+            return expr.Compile()(a, b);
         }
 
         #endregion
