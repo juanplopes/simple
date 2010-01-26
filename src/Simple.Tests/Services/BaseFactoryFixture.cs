@@ -237,6 +237,13 @@ namespace Simple.Tests.Services
             ISimpleService svc = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             Assert.AreEqual(42, svc.Calculate((x, y) => x * 2 * y, 3, 7));
         }
+
+        //[Test]
+        //public void TestSerializingLambdaExpressionsWithAnonymousTypes()
+        //{
+        //    ISimpleService svc = Simply.Do[ConfigKey].Resolve<ISimpleService>();
+        //    Assert.AreEqual(42, svc.Execute(x => new { asd = x * 2 }, 21).asd);
+        //}
     }
 
     #region Samples
@@ -245,6 +252,7 @@ namespace Simple.Tests.Services
         string GetString();
         int GetInt32();
         int Calculate(Expression<Func<int, int, int>> expr, int a, int b);
+        T Execute<T>(Expression<Func<int, T>> expr, int a);
 
         byte[] GetByteArray(int size);
         int GetOverloadedMethod(int value);
@@ -424,6 +432,16 @@ namespace Simple.Tests.Services
         public int Calculate(Expression<Func<int, int, int>> expr, int a, int b)
         {
             return expr.Compile()(a, b);
+        }
+
+        #endregion
+
+        #region ISimpleService Members
+
+
+        public T Execute<T>(Expression<Func<int, T>> expr, int a)
+        {
+            return expr.Compile()(a);
         }
 
         #endregion
