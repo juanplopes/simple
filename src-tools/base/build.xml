@@ -86,6 +86,10 @@
     <RemoveDir Directories="~temp" ContinueOnError="true"/>
   </Target>
   
+  <Target Name="CIBuild">
+    <CallTarget Targets="Rebuild;Test;Package;Db:Migrate;Db:SampleData;CheckUI"/>
+  </Target>
+  
   <Target Name="Db:Migrate" DependsOnTargets="Build">
     <Exec Command="$(MigrationsAssembly)"></Exec>
   </Target>
