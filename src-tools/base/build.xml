@@ -81,6 +81,11 @@
     <RemoveDir Directories="@(PackageDirsToClean)" Condition="true" />
   </Target>
   
+  <Target Name="CheckUI" DependsOnTargets="Package">
+    <AspNetCompiler PhysicalPath="$(UIDir)" TargetPath="~temp" VirtualPath="/" />
+    <RemoveDir Directories="~temp" ContinueOnError="true"/>
+  </Target>
+  
   <Target Name="Db:Migrate" DependsOnTargets="Build">
     <Exec Command="$(MigrationsAssembly)"></Exec>
   </Target>
