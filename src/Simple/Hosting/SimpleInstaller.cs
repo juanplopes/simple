@@ -25,6 +25,12 @@ namespace Simple.Hosting
             set { gobjService.DisplayName = value; }
         }
 
+        public ServiceStartMode StartType
+        {
+            get { return gobjService.StartType; }
+            set { gobjService.StartType = value; }
+        }
+
         public ServiceAccount Account
         {
             get { return gobjProcess.Account; }
@@ -34,6 +40,7 @@ namespace Simple.Hosting
         public SimpleInstaller()
         {
             Account = ServiceAccount.LocalSystem;
+            StartType = ServiceStartMode.Automatic;
             Installers.Add(gobjProcess);
             Installers.Add(gobjService);
         }
