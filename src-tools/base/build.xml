@@ -6,33 +6,32 @@
     <BuildBase>..\..\</BuildBase>
 
     <Configdir>$(BuildDir)\cfg\</Configdir>
-    
+
     <ServerDir>$(BuildDir)\server\</ServerDir>
     <ServerBuildDir>$(BuildBase)$(ServerDir)</ServerBuildDir>
-    
-    <UIDir>$(BuildDir)\ui\</UIDir>
-    <UIBuildDir>$(BuildBase)$(UIDir)</UIBuildDir>
 
-    <ProductVersion>1.0</ProductVersion>
+    <UIDir>$(BuildDir)\ui\</UIDir>
+    <UISrcDir>$(BuildDir)\ui-src\</UISrcDir>
+    <UISrcBuildDir>$(BuildBase)$(UISrcDir)</UISrcBuildDir>
+    <UIVirtualPath>/</UIVirtualPath>
+
+    <ProductVersion>2.0</ProductVersion>
     <Configuration>Release</Configuration>
 
     <TestAssembly>$(ServerDir)\Sample.Project.Tests.exe</TestAssembly>
     <MigrationsAssembly>$(ServerDir)\Sample.Project.Migrations.exe</MigrationsAssembly>
-    <SamplesAssembly1>$(ServerDir)\Sample.Project.SampleData.exe</SamplesAssembly1>
+    <SamplesAssembly>$(ServerDir)\Sample.Project.SampleData.exe</SamplesAssembly>
   </PropertyGroup>
 
   <ItemGroup>
     <SolutionFile Include="$(SourceDir)\Solution.sln" />
-    <WebProject Include="$(SourceDir)\UserInterface\*.csproj"/>
   </ItemGroup>
 
   <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
 
   <Target Name="Clean">
-    <CreateItem></CreateItem>
     <MSBuild Projects="@(SolutionFile)" Targets="Clean"/>
-    <RemoveDir Directories="$(BuildDir)" ContinueOnError="true"/>
-    <Delete Files="$(LogFile)"></Delete>
+    <DeleteTree Directories="$(BuildDir)" ContinueOnError="true"/>
   </Target>
 
   <Target Name="GenerateTag">
@@ -57,8 +56,10 @@
 
   <Target Name="Build" DependsOnTargets="GenerateAssemblyInfo">
     <MSBuild Projects="@(SolutionFile)" 
-             Properties="OutDir=$(ServerBuildDir);WebProjectOutputDir=$(UIBuildDir);Configuration=$(Configuration)"/>
+             Properties="OutDir=$(ServerBuildDir);WebProjectOutputDir=$(UISrcBuildDir);Configuration=$(Configuration)"/>
   </Target>
+
+
 
   <Target Name="Rebuild">
     <CallTarget Targets="Clean; Build"></CallTarget>
@@ -68,33 +69,36 @@
     <Nunit Assemblies="$(TestAssembly)" ToolPath="util\nunit"/>
   </Target>
 
-  <Target Name="Package" DependsOnTargets="Rebuild">
+  <Target Name="PreCompileUI" DependsOnTargets="Build">
+    <DeleteTree Directories="$(UIDir)" />
+	<AspNetCompiler PhysicalPath="$(UISrcDir)" VirtualPath="$(UIVirtualPath)" TargetPath="$(UIDir)"/>
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Rebuild;PreCompileUI">
     <ItemGroup>
+      <PackageDirsToClean Include="$(ServerDir)\search-index" />
+      <PackageDirsToClean Include="$(ServerDir)\similar-index" />
       <PackageDirsToClean Include="$(ServerDir)\Environment" />
+      <PackageDirsToClean Include="$(UISrcDir)" />
       <PackageFilesToClean Include="$(UIDir)\bin\*.config" />
       <PackageConfigBase Include="$(ServerDir)\Environment\Production\*.*"/>
     </ItemGroup>
-   
+
     <MakeDir Directories="$(ConfigDir)"/>
     <Copy SourceFiles="@(PackageConfigBase)" DestinationFolder="$(ConfigDir)"/>
     <Delete Files ="@(PackageFilesToClean)" ContinueOnError="true" />
     <RemoveDir Directories="@(PackageDirsToClean)" Condition="true" />
   </Target>
-  
-  <Target Name="CheckUI" DependsOnTargets="Package">
-    <AspNetCompiler PhysicalPath="$(UIDir)" TargetPath="~temp" VirtualPath="/" />
-    <RemoveDir Directories="~temp" ContinueOnError="true"/>
-  </Target>
-  
+
   <Target Name="CIBuild">
-    <CallTarget Targets="Rebuild;Test;Package;Db:Migrate;Db:SampleData;CheckUI"/>
+    <CallTarget Targets="Rebuild;Test;Package;Db:Migrate;Db:SampleData;PreCompileUI"/>
   </Target>
-  
+
   <Target Name="Db:Migrate" DependsOnTargets="Build">
     <Exec Command="$(MigrationsAssembly)"></Exec>
   </Target>
 
   <Target Name="Db:SampleData" DependsOnTargets="Build">
-    <Exec Command="$(SamplesAssembly1)"></Exec>
+    <Exec Command="$(SamplesAssembly)"></Exec>
   </Target>
 </Project>

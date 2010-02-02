@@ -17,6 +17,7 @@ namespace Simple.IO
         ZB=EB * 1024,
     }
 
+    [Serializable]
     public struct FileSize
     {
         private const string DefaultFormat = "0.##";
