@@ -20,6 +20,7 @@ namespace Simple
         {
             return Factory(simply.ConfigKey).Validator.Validate(obj);
         }
+
         public static InvalidValue[] Validate(this Simply simply, Type type, string propName, object value)
         {
             return Factory(simply.ConfigKey).Validator.ValidatePropertyValue(type, propName, value);
@@ -28,6 +29,21 @@ namespace Simple
             where T : class
         {
             return Factory(simply.ConfigKey).Validator.ValidatePropertyValue(obj, expr);
+        }
+
+        public static void AndThrow(this InvalidValue[] values)
+        {
+            values.AndThrow(null);
+        }
+
+        public static void AndThrow(this InvalidValue[] values, string baseName)
+        {
+            var newValues = values;
+            if (!string.IsNullOrEmpty(baseName))
+                newValues = values.Select(x => x.FluentlyDo(y => y.AddParentEntity(null, baseName))).ToArray();
+
+            if (values.Length > 0)
+                throw new ValidationException(values);
         }
 
         public static SimplyConfigure Validator(this SimplyConfigure config, params Assembly[] assemblies)
