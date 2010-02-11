@@ -67,14 +67,14 @@ namespace Simple.Entities
             }
         }
 
-        protected virtual IQueryable<Q> Query<Q>()
+        protected virtual IOrderedQueryable<Q> Linq<Q>()
         {
-            return Session.Query<Q>();
+            return Session.Linq<Q>();
         }
 
-        protected virtual IQueryable<T> Query()
+        protected virtual IOrderedQueryable<T> Linq()
         {
-            return Query<T>();
+            return Linq<T>();
         }
 
         protected virtual bool ValidateOnSave { get { return true; } }
@@ -115,7 +115,7 @@ namespace Simple.Entities
 
         protected virtual IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy)
         {
-            IQueryable<T> query = Query();
+            IQueryable<T> query = Linq();
 
             if (filter != null)
                 query = query.Where((Expression<Func<T, bool>>)filter.ToExpression());
