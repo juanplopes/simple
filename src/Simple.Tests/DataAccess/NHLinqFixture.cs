@@ -34,19 +34,6 @@ namespace Simple.Tests.DataAccess
             Assert.AreEqual(7, list[9].Count);
         }
 
-        [Test, Explicit ("NH Linq Bug")]
-        public void MaxWithEmptySet()
-        {
-            var max = Session.Query<EmployeeTerritory>().Where(x=>x.Employee.Id == 0).Max(x=>x.Territory.Region.Id);
-            Assert.That(max, Is.EqualTo(0));
-        }
-
-        [Test, Explicit("NH Linq Bug")]
-        public void ToLookupWithEmptySet()
-        {
-            int[] ids = new int[0];
-            var max = Session.Query<EmployeeTerritory>().Where(x => ids.Contains(x.Employee.Id)).ToLookup(x => x.Employee);
-            Assert.That(max.Count, Is.EqualTo(0));
-        }
+      
     }
 }
