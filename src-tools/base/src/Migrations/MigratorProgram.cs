@@ -26,7 +26,7 @@ namespace Sample.Project.Migrations
         public static void Migrate(string type, long? version)
         {
             new DbMigrator(type, Simply.Do.GetConnectionString(),
-                typeof(MigratorProgram).Assembly, true).MigrateTo(version ?? long.MaxValue);
+                typeof(MigratorProgram).Assembly, true).Migrate(version);
         }
     }
 }
