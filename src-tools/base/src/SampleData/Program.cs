@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple;
 using Sample.Project.Environment;
+using Simple.IO;
 
 namespace Sample.Project.SampleData
 {
@@ -11,9 +12,10 @@ namespace Sample.Project.SampleData
     {
         static void Main(string[] args)
         {
-            new Default(Default.Main).StartServer(
-                typeof(ServerStarter).Assembly, false,
-                x => x.Configure.DefaultHost());
+            var reader = new CommandLineReader(args);
+            string env = reader.Get("e", Default.Main);
+
+            new Default(env).StartServer<ServerStarter>(false, x => x.Configure.DefaultHost());
 
             Samples.Init();
         }

@@ -5,6 +5,7 @@ using System.Text;
 using Sample.Project.Environment;
 using Simple;
 using Schema.Migrator;
+using Simple.IO;
 
 namespace Sample.Project.Migrations
 {
@@ -12,12 +13,10 @@ namespace Sample.Project.Migrations
     {
         public static void Main(string[] args)
         {
-            string env = Default.Main;
+            var reader = new CommandLineReader(args);
 
-            if (args.Length > 0) env = args[0];
-
-            long? version = null;
-            if (args.Length > 1) version = long.Parse(args[1]);
+            string env = reader.Get<string>("e", Default.Main);
+            long? version = reader.Get<long?>("v", null);
 
             new Default(env).ConfigServer();
 
@@ -26,13 +25,8 @@ namespace Sample.Project.Migrations
 
         public static void Migrate(string type, long? version)
         {
-            var connectionString = Simply.Do.GetConnectionString();
-
-            var mig = new DbMigrator(type, connectionString, typeof(MigratorProgram).Assembly, true);
-            if (version != null)
-                mig.MigrateTo(version ?? 0);
-            else
-                mig.MigrateToLastVersion();
+            new DbMigrator(type, Simply.Do.GetConnectionString(),
+                typeof(MigratorProgram).Assembly, true).MigrateTo(version ?? long.MaxValue);
         }
     }
 }

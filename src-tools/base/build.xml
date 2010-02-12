@@ -90,10 +90,21 @@
     <RemoveDir Directories="@(PackageDirsToClean)" Condition="true" />
   </Target>
 
-  <Target Name="CIBuild">
-    <CallTarget Targets="Rebuild;Test;Package;Db:Migrate;Db:SampleData;PreCompileUI"/>
+   <Target Name="CIBuild">
+    <CallTarget Targets="Rebuild;Prepare;Test;Package;PreCompileUI"/>
   </Target>
 
+  <Target Name="Prepare">
+    <CallTarget Targets="Db:Migrate;Db:SampleData;Db:TestPrepare"/>
+  </Target>
+
+  <Target Name ="Db:TestPrepare" DependsOnTargets="Build">
+    <Exec Command="$(MigrationsAssembly) /e:Test /v:1"></Exec>
+    <Exec Command="$(MigrationsAssembly) /e:Test"></Exec>
+    <Exec Command="$(SamplesAssembly) /e:Test"></Exec>
+    <Exec Command="$(TestAssembly) /e:Test"></Exec>
+  </Target>
+  
   <Target Name="Db:Migrate" DependsOnTargets="Build">
     <Exec Command="$(MigrationsAssembly)"></Exec>
   </Target>

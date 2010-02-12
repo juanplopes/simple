@@ -18,12 +18,6 @@ namespace Sample.Project.Tests
 
         public ISession Session { get { return Simply.Do.GetSession(); } }
 
-        public override void FixtureSetup()
-        {
-            base.FixtureSetup();
-            DataEnsurer.Do.Init();
-        }
-
         [SetUp]
         public void Setup()
         {
@@ -38,16 +32,6 @@ namespace Sample.Project.Tests
             tx.Rollback();
             dx.Exit();
         }
-    }
-
-    public class DataEnsurer : Singleton<DataEnsurer>
-    {
-        public DataEnsurer()
-        {
-            ConfigurationEnsurer.Do.ReMigrate();
-            Samples.Init();
-        }
-        public void Init() { }
     }
 
 }

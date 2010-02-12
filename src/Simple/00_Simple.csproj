@@ -132,6 +132,7 @@
     <Compile Include="Expressions\Evaluator.cs" />
     <Compile Include="Expressions\ExpressionVisitor.cs" />
     <Compile Include="Expressions\InvocationExpander.cs" />
+    <Compile Include="IO\CommandLineReader.cs" />
     <Compile Include="IO\FileLocator.cs" />
     <Compile Include="IO\FileSize.cs" />
     <Compile Include="IO\Serialization\BinarySimpleSerializer.cs" />

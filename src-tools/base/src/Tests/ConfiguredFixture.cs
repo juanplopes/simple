@@ -28,12 +28,5 @@ namespace Sample.Project.Tests
         }
 
         public void Ensure() { }
-
-        public void ReMigrate()
-        {
-            MigratorProgram.Migrate(Default.MigrationProvider, 1);
-            MigratorProgram.Migrate(Default.MigrationProvider, null);
-
-        }
     }
 }
