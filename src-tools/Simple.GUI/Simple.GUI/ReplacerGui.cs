@@ -45,13 +45,13 @@ namespace Simple.GUI
             if (btnMore.Tag == null)
             {
                 btnMore.Text = "Less";
-                this.Height = 316;
+                this.Height = 440;
                 btnMore.Tag = new object();
             }
             else
             {
                 btnMore.Text = "More";
-                this.Height = 186;
+                this.Height = 316;
                 btnMore.Tag = null;
             }
         }

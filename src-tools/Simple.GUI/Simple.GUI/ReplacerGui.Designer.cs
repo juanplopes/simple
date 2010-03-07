@@ -46,9 +46,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(55, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(40, 13);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(358, 128);
+            this.pictureBox1.Size = new System.Drawing.Size(399, 250);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -56,10 +56,10 @@
             // 
             // txtNamespace
             // 
-            this.txtNamespace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.txtNamespace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.txtNamespace.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtNamespace.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNamespace.Location = new System.Drawing.Point(12, 146);
+            this.txtNamespace.Location = new System.Drawing.Point(15, 274);
             this.txtNamespace.Name = "txtNamespace";
             this.txtNamespace.Size = new System.Drawing.Size(264, 28);
             this.txtNamespace.TabIndex = 2;
@@ -68,10 +68,10 @@
             // 
             // txtIISUrl
             // 
-            this.txtIISUrl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.txtIISUrl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.txtIISUrl.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtIISUrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIISUrl.Location = new System.Drawing.Point(210, 235);
+            this.txtIISUrl.Location = new System.Drawing.Point(213, 363);
             this.txtIISUrl.Name = "txtIISUrl";
             this.txtIISUrl.Size = new System.Drawing.Size(251, 28);
             this.txtIISUrl.TabIndex = 4;
@@ -79,10 +79,10 @@
             // 
             // label1
             // 
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label1.Location = new System.Drawing.Point(12, 234);
+            this.label1.Location = new System.Drawing.Point(15, 362);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(192, 29);
             this.label1.TabIndex = 5;
@@ -92,7 +92,7 @@
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnCancel.Location = new System.Drawing.Point(344, 146);
+            this.btnCancel.Location = new System.Drawing.Point(347, 274);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(55, 28);
             this.btnCancel.TabIndex = 6;
@@ -103,7 +103,7 @@
             // btnOk
             // 
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnOk.Location = new System.Drawing.Point(282, 146);
+            this.btnOk.Location = new System.Drawing.Point(285, 274);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(56, 28);
             this.btnOk.TabIndex = 7;
@@ -114,7 +114,7 @@
             // btnMore
             // 
             this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnMore.Location = new System.Drawing.Point(405, 146);
+            this.btnMore.Location = new System.Drawing.Point(408, 274);
             this.btnMore.Name = "btnMore";
             this.btnMore.Size = new System.Drawing.Size(56, 28);
             this.btnMore.TabIndex = 8;
@@ -124,10 +124,10 @@
             // 
             // label2
             // 
-            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label2.Location = new System.Drawing.Point(12, 201);
+            this.label2.Location = new System.Drawing.Point(15, 329);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(192, 29);
             this.label2.TabIndex = 9;
@@ -135,10 +135,10 @@
             // 
             // txtCatalog
             // 
-            this.txtCatalog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.txtCatalog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.txtCatalog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtCatalog.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCatalog.Location = new System.Drawing.Point(210, 202);
+            this.txtCatalog.Location = new System.Drawing.Point(213, 330);
             this.txtCatalog.Name = "txtCatalog";
             this.txtCatalog.Size = new System.Drawing.Size(251, 28);
             this.txtCatalog.TabIndex = 10;
@@ -146,10 +146,10 @@
             // 
             // label3
             // 
-            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label3.Location = new System.Drawing.Point(12, 266);
+            this.label3.Location = new System.Drawing.Point(15, 394);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(192, 29);
             this.label3.TabIndex = 11;
@@ -157,10 +157,10 @@
             // 
             // txtSvcName
             // 
-            this.txtSvcName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.txtSvcName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.txtSvcName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSvcName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSvcName.Location = new System.Drawing.Point(210, 266);
+            this.txtSvcName.Location = new System.Drawing.Point(213, 394);
             this.txtSvcName.Name = "txtSvcName";
             this.txtSvcName.Size = new System.Drawing.Size(251, 28);
             this.txtSvcName.TabIndex = 4;
@@ -173,7 +173,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(469, 184);
+            this.ClientSize = new System.Drawing.Size(476, 314);
             this.ControlBox = false;
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtCatalog);
