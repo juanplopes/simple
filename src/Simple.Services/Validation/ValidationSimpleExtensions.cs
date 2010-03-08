@@ -6,11 +6,28 @@ using NHibernate.Validator.Engine;
 using Simple.Validation;
 using System.Linq.Expressions;
 using System.Reflection;
+using NHibernate.Validator.Cfg.Loquacious;
+using Simple.Expressions;
 
 namespace Simple
 {
     public static class ValidationSimpleExtensions
     {
+        public static IChainableConstraint<IInstanceConstraints<T>> PropertyBy<T>(this IInstanceConstraints<T> self, Expression<Func<T, object>> expr, Predicate<T> validator)
+            where T : class
+        {
+            return self.By((t, context) =>
+            {
+                if (!validator(t))
+                {
+                    context.AddInvalid(context.DefaultErrorMessage, ExpressionHelper.GetMemberName(expr));
+                    context.DisableDefaultError();
+                    return false;
+                }
+                else return true;
+            });
+        }
+
         private static ValidatorEngineFactory Factory(object key)
         {
             return ValidatorEngineFactory.Do[key];
@@ -31,18 +48,18 @@ namespace Simple
             return Factory(simply.ConfigKey).Validator.ValidatePropertyValue(obj, expr);
         }
 
-        public static void AndThrow(this InvalidValue[] values)
+        public static void AndThrow(this IList<InvalidValue> values)
         {
             values.AndThrow(null);
         }
 
-        public static void AndThrow(this InvalidValue[] values, string baseName)
+        public static void AndThrow(this IList<InvalidValue> values, string baseName)
         {
             var newValues = values;
             if (!string.IsNullOrEmpty(baseName))
                 newValues = values.Select(x => x.FluentlyDo(y => y.AddParentEntity(null, baseName))).ToArray();
 
-            if (values.Length > 0)
+            if (values.Count > 0)
                 throw new ValidationException(values);
         }
 

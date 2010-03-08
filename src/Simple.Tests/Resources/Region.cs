@@ -5,6 +5,7 @@ using System.Text;
 using Simple.Config;
 using Simple.Entities;
 using FluentNHibernate.Mapping;
+using NHibernate.Validator.Cfg.Loquacious;
 
 namespace Simple.Tests.Resources
 {
@@ -24,6 +25,15 @@ namespace Simple.Tests.Resources
 
                 Id(x => x.Id, "RegionID");
                 Map(x => x.Description, "RegionDescription");
+            }
+        }
+
+        public class Validator : ValidationDef<Region>
+        {
+            public Validator()
+            {
+                ValidateInstance.PropertyBy(x => x.Description,
+                    x => x.Description != null && x.Description.Length < 100);
             }
         }
     }

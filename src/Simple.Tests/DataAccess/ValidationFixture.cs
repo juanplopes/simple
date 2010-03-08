@@ -88,6 +88,15 @@ namespace Simple.Tests.DataAccess
         {
             GenericTest(x => x.Validate(c => c.CompanyName), "CompanyName");
         }
+
+        [Test]
+        public void TestValidateInstanceByProperty()
+        {
+            Region r = new Region() { Description = new string('a', 101) };
+            Assert.Throws<ValidationException>(() => r.Validate().AndThrow());
+            new Region() { Description = new string('a', 99) }.Validate().AndThrow();
+
+        }
        
     }
 }
