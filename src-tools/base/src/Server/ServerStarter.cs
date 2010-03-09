@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using System.Xml;
 using System.Reflection;
 using Sample.Project.Environment;
+using System.Threading;
 
 namespace Sample.Project
 {
@@ -17,7 +18,8 @@ namespace Sample.Project
     {
         static void Main(string[] args)
         {
-            new Default(Default.Main).StartServer(Assembly.GetExecutingAssembly());
+            ThreadPool.QueueUserWorkItem(x => new Default(Default.Main).StartServer<ServerStarter>());
+            Simply.Do.WaitRequests();
         }
     }
 }
