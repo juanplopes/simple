@@ -15,7 +15,7 @@ namespace Sample.Project.SampleData
             var reader = new CommandLineReader(args);
             string env = reader.Get("e", Default.Main);
 
-            new Default(env).StartServer<ServerStarter>(false, x => x.Configure.DefaultHost());
+            new Default(env).StartServer<ServerStarter>(x => x.Configure.DefaultHost());
 
             Samples.Init();
         }

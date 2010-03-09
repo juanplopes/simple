@@ -66,7 +66,7 @@ namespace Simple
             string ret = Path.GetDirectoryName(Uri.UnescapeDataString(
                 new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath));
 
-            foreach(string component in pathComponents)
+            foreach (string component in pathComponents)
                 ret = Path.Combine(ret, component);
 
             return ret;
@@ -79,30 +79,20 @@ namespace Simple
 
         public void StartServer(Assembly asm)
         {
-            StartServer(asm, true, null);
+            StartServer(asm, null);
         }
 
         public void StartServer<T>()
         {
-            StartServer<T>(true, null);
+            StartServer<T>(null);
         }
 
-        public void StartServer(Assembly asm, bool wait)
+        public void StartServer<T>(Action<Simply> overrides)
         {
-            StartServer(asm, wait, null);
+            StartServer(typeof(T).Assembly, overrides);
         }
 
-        public void StartServer<T>(bool wait)
-        {
-            StartServer<T>(wait, null);
-        }
-
-        public void StartServer<T>(bool wait, Action<Simply> overrides)
-        {
-            StartServer(typeof(T).Assembly, wait, overrides);
-        }
-
-        public void StartServer(Assembly asm, bool wait, Action<Simply> overrides)
+        public void StartServer(Assembly asm, Action<Simply> overrides)
         {
             StartClient();
             ConfigServer();
@@ -110,7 +100,7 @@ namespace Simple
             if (overrides != null)
                 overrides(Do);
 
-            Do.InitServer(asm, wait);
+            Do.InitServer(asm);
         }
 
     }

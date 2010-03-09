@@ -24,7 +24,7 @@ namespace Sample.Project.Tests
     {
         public ConfigurationEnsurer()
         {
-            new Default(Default.Test).StartServer(typeof(ServerStarter).Assembly, false);
+            new Default(Default.Test).StartServer(typeof(ServerStarter).Assembly);
         }
 
         public void Ensure() { }

@@ -59,8 +59,6 @@
              Properties="OutDir=$(ServerBuildDir);WebProjectOutputDir=$(UISrcBuildDir);Configuration=$(Configuration)"/>
   </Target>
 
-
-
   <Target Name="Rebuild">
     <CallTarget Targets="Clean; Build"></CallTarget>
   </Target>
@@ -76,15 +74,13 @@
 
   <Target Name="Package" DependsOnTargets="Rebuild;PreCompileUI">
     <ItemGroup>
-      <PackageDirsToClean Include="$(ServerDir)\search-index" />
-      <PackageDirsToClean Include="$(ServerDir)\similar-index" />
       <PackageDirsToClean Include="$(ServerDir)\Environment" />
       <PackageDirsToClean Include="$(UISrcDir)" />
       <PackageFilesToClean Include="$(UIDir)\bin\*.config" />
       <PackageConfigBase Include="$(ServerDir)\Environment\Production\*.*"/>
     </ItemGroup>
 
-    <MakeDir Directories="$(ConfigDir)"/>
+  <MakeDir Directories="$(ConfigDir)"/>
     <Copy SourceFiles="@(PackageConfigBase)" DestinationFolder="$(ConfigDir)"/>
     <Delete Files ="@(PackageFilesToClean)" ContinueOnError="true" />
     <RemoveDir Directories="@(PackageDirsToClean)" Condition="true" />
