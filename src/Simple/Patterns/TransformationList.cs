@@ -47,16 +47,6 @@ namespace Simple.Patterns
             }
         }
 
-        public static TransformationList<T> operator +(TransformationList<T> list, Func<T, T> func)
-        {
-            list.Add(func);
-            return list;
-        }
-
-        public static TransformationList<T> operator -(TransformationList<T> list, Func<T, T> func)
-        {
-            list.Remove(func);
-            return list;
-        }
+        
     }
 }

@@ -93,6 +93,7 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="Common\NamedEvents.cs" />
     <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Common\StringExtensions.cs" />
