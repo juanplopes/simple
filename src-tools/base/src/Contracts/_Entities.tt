@@ -66,6 +66,16 @@ namespace <#=this.EntityNamespace #>
         
         partial void Initialize();
         
+		public static bool operator ==(<#= GetTableClassName() #> obj1, <#= GetTableClassName() #> obj2)
+        {
+            return object.Equals(obj1, obj2);
+        }
+
+        public static bool operator !=(<#= GetTableClassName() #> obj1, <#= GetTableClassName() #> obj2)
+        {
+            return !(obj1 == obj2);
+        }
+		
         public <#= GetTableClassName() #>() 
         {  
             Initialize();
