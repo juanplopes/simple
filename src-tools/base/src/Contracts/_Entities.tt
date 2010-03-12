@@ -76,6 +76,16 @@ namespace <#=this.EntityNamespace #>
             return !(obj1 == obj2);
         }
 		
+		public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+		
         public <#= GetTableClassName() #>() 
         {  
             Initialize();
