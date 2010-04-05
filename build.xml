@@ -84,7 +84,7 @@
       <MergeItems Include="$(BuildDir)\Iesi.Collections.dll"/>
       <MergeItems Include="$(BuildDir)\log4net.dll"/>
       <MergeItems Include="$(BuildDir)\NHibernate.dll"/>
-      <MergeItems Include="$(BuildDir)\NHibernate.Linq.dll"/>
+      <MergeItems Include="$(BuildDir)\Remotion.Data.Linq.dll"/>
     </ItemGroup>
 
     <MakeDir Directories="$(PackageDir)"></MakeDir>
