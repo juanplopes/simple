@@ -121,6 +121,123 @@ namespace Simple.Tests.Expressions
 
         }
 
+        [Test]
+        public void TestGetPropertyFromString()
+        {
+            var type = typeof(A);
+            var str = "BProp.CProp.DProp";
+
+            var prop = ExpressionHelper.GetProperty(type, str);
+
+            Assert.That(prop.Name, Is.EqualTo("DProp"));
+            Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
+            Assert.That(prop.PropertyType, Is.EqualTo(typeof(D)));
+        }
+
+        [Test]
+        public void TestGetPropertyFromStringArray()
+        {
+            var type = typeof(A);
+            var str = new[] { "BProp", "CProp", "DProp" };
+
+            var prop = ExpressionHelper.GetProperty(type, str);
+
+            Assert.That(prop.Name, Is.EqualTo("DProp"));
+            Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
+            Assert.That(prop.PropertyType, Is.EqualTo(typeof(D)));
+        }
+
+        [Test]
+        public void TestGetPropertyFromStringAndGenericType()
+        {
+            var str = "BProp.CProp.DProp";
+
+            var prop = ExpressionHelper.GetProperty<A>(str);
+
+            Assert.That(prop.Name, Is.EqualTo("DProp"));
+            Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
+            Assert.That(prop.PropertyType, Is.EqualTo(typeof(D)));
+        }
+
+        [Test]
+        public void TestGetPropertyFromStringArrayAndGenericType()
+        {
+            var str = new[] { "BProp", "CProp", "DProp" };
+
+            var prop = ExpressionHelper.GetProperty<A>(str);
+
+            Assert.That(prop.Name, Is.EqualTo("DProp"));
+            Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
+            Assert.That(prop.PropertyType, Is.EqualTo(typeof(D)));
+        }
+
+        [Test]
+        public void TestGetPropertyFromEmptyString()
+        {
+            var str = "";
+
+            var prop = ExpressionHelper.GetProperty<A>(str);
+
+            Assert.That(prop, Is.Null);
+        }
+
+        [Test]
+        public void TestTryGetNonExistingPropertyFromString()
+        {
+            var str = "KProp";
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                ExpressionHelper.GetProperty<A>(str);
+            });
+        }
+
+
+        [Test]
+        public void TestGetPropertyExpressionFromString()
+        {
+            var str = "BProp.CProp.DProp";
+
+            var expr = Expression.Parameter(typeof(A), "x");
+            var prop = ExpressionHelper.GetPropertyExpression(expr, str);
+
+            Assert.AreEqual("x.BProp.CProp.DProp", prop.ToString());
+        }
+
+        [Test]
+        public void TestGetPropertyExpressionFromStringArray()
+        {
+            var str = new[] { "BProp", "CProp", "DProp" };
+
+            var expr = Expression.Parameter(typeof(A), "x");
+            var prop = ExpressionHelper.GetPropertyExpression(expr, str);
+
+            Assert.AreEqual("x.BProp.CProp.DProp", prop.ToString());
+
+        }
+
+
+        [Test]
+        public void TestGetPropertyExpressionFromEmptyString()
+        {
+            var str = "";
+            var expr = Expression.Parameter(typeof(A), "x");
+            var prop = ExpressionHelper.GetPropertyExpression(expr, str);
+
+            Assert.AreEqual("x", prop.ToString());
+        }
+
+        [Test]
+        public void TestTryGetNonExistingPropertyExpressionFromString()
+        {
+            var str = "KProp";
+            var expr = Expression.Parameter(typeof(A), "x");
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                ExpressionHelper.GetPropertyExpression(expr, str);
+            });
+        }
     }
 
 }

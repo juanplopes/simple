@@ -23,7 +23,7 @@ namespace Simple.Expressions
         public static IEnumerable<string> GetMemberPath(Expression expr)
         {
             LinkedList<string> answer = new LinkedList<string>();
-            while (expr != null &&  
+            while (expr != null &&
                   (expr.NodeType == ExpressionType.MemberAccess ||
                   expr.NodeType == ExpressionType.Call ||
                   expr.NodeType == ExpressionType.Convert))
@@ -43,7 +43,53 @@ namespace Simple.Expressions
                     expr = (expr as MethodCallExpression).Object;
                 }
             }
+
             return answer;
+        }
+
+        public static PropertyInfo GetProperty<T>(string propertyPath)
+        {
+            return GetProperty(typeof(T), propertyPath);
+        }
+
+        public static PropertyInfo GetProperty<T>(IList<string> propertyPath)
+        {
+            return GetProperty(typeof(T), propertyPath);
+        }
+
+        public static PropertyInfo GetProperty(Type type, string propertyPath)
+        {
+            return GetProperty(type, propertyPath.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries));
+        }
+
+        public static PropertyInfo GetProperty(Type type, IList<string> propertyPath)
+        {
+            PropertyInfo ret = null;
+            foreach (var prop in propertyPath)
+            {
+                ret = type.GetProperty(prop);
+                if (ret == null) throw new ArgumentException("the specified property doesn't exist");
+
+                type = ret.PropertyType;
+            }
+            return ret;
+        }
+
+
+        public static Expression GetPropertyExpression(Expression expr, string propertyPath)
+        {
+            return GetPropertyExpression(expr, propertyPath.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries));
+        }
+
+
+        public static Expression GetPropertyExpression(Expression expr, IList<string> propertyPath)
+        {
+            Expression ret = expr;
+
+            foreach (var prop in propertyPath)
+                ret = Expression.Property(ret, prop);
+            
+            return ret;
         }
 
         public static void SetValue(MemberExpression expr, object target, object value)
