@@ -46,6 +46,8 @@ namespace Simple.Expressions.Editable
         {
             if (NodeType == ExpressionType.UnaryPlus)
                 return Expression.UnaryPlus(Operand.ToExpression());
+            else if (NodeType == ExpressionType.Quote)
+                return Expression.Quote(Operand.ToExpression());
             else
                 return Expression.MakeUnary(NodeType, Operand.ToExpression(), Type);
         }

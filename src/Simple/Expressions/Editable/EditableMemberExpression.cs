@@ -16,28 +16,24 @@ namespace Simple.Expressions.Editable
         [IgnoreDataMember]
         public MemberInfo Member
         {
-            get;
-            set;
+            get
+            {
+                return ReflectionExtensions.FromMemberSerializableForm(MemberName);
+            }
+            set
+            {
+                MemberName = value.ToSerializableForm();
+            }
         }
+
+        public string MemberName { get; set; }
 
         public EditableExpression Expression
         {
             get;
             set;
         }
-
-        public string MemberName
-        {
-            get
-            {
-                return Member.ToSerializableForm();
-            }
-            set
-            {
-                Member = Member.FromSerializableForm(value);
-            }
-        }
-        
+     
         public override ExpressionType NodeType
         {
             get { return ExpressionType.MemberAccess; }

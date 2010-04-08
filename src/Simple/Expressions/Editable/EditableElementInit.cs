@@ -12,15 +12,24 @@ namespace Simple.Expressions.Editable
     [Serializable]
     public class EditableElementInit
     {
-        public EditableExpressionCollection Arguments { get; set;}
+        public EditableExpressionCollection Arguments { get; set; }
 
         [IgnoreDataMember]
-        public MethodInfo AddMethod { get; set;}
-        public string AddMethodName
+        public MethodInfo AddMethod
         {
-            get { return AddMethod.ToSerializableForm(); }
-            set { AddMethod = AddMethod.FromSerializableForm(value); }
+            get
+            {
+                return ReflectionExtensions.FromMethodSerializableForm(AddMethodName);
+            }
+            set
+            {
+                AddMethodName = value.ToSerializableForm();
+            }
         }
+        public string AddMethodName { get; set; }
+
+
+
 
         // Ctors
         public EditableElementInit()
@@ -28,7 +37,7 @@ namespace Simple.Expressions.Editable
             Arguments = new EditableExpressionCollection();
         }
 
-        public EditableElementInit(ElementInit elmInit) 
+        public EditableElementInit(ElementInit elmInit)
             : this()
         {
             AddMethod = elmInit.AddMethod;

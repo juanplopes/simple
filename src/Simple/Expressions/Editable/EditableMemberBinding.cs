@@ -16,13 +16,20 @@ namespace Simple.Expressions.Editable
         public abstract MemberBindingType BindingType { get; set;}
 
         [IgnoreDataMember]
-        public MemberInfo Member {get;set;}
-
-        public string MemberName
+        public MemberInfo Member
         {
-            get { return Member.ToSerializableForm(); }
-            set { Member = Member.FromSerializableForm(value); }
+            get
+            {
+                return ReflectionExtensions.FromMemberSerializableForm(MemberName);
+            }
+            set
+            {
+                MemberName = value.ToSerializableForm();
+            }
         }
+
+        public string MemberName { get; set; }
+
 
         // Ctors
         protected EditableMemberBinding()

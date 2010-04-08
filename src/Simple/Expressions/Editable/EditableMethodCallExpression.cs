@@ -22,21 +22,19 @@ namespace Simple.Expressions.Editable
         [IgnoreDataMember]
         public MethodInfo Method
         {
-            get;
-            set;
-        }
-
-        public string MethodName
-        {
             get
             {
-                return Method.ToSerializableForm();
+                return ReflectionExtensions.FromMethodSerializableForm(MethodName);
             }
             set
             {
-                Method = Method.FromSerializableForm(value);
+                MethodName = value.ToSerializableForm();
             }
         }
+
+        public string MethodName { get; set; }
+
+        
 
         public EditableExpression Object
         {

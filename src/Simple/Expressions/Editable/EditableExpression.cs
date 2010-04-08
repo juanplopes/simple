@@ -14,23 +14,20 @@ namespace Simple.Expressions.Editable
         public abstract ExpressionType NodeType { get; set; }
 
         [IgnoreDataMember]
-        public Type Type { get; set; }
-        public string TypeName
+        public Type Type
         {
             get
             {
-                if (Type == null)
-                    return null;
-
-                return Type.ToSerializableForm();
+                return ReflectionExtensions.FromTypeSerializableForm(TypeName);
             }
             set
             {
-                if (value != null)
-                    Type = Type.FromSerializableForm(value);
+                TypeName = value.ToSerializableForm();
             }
         }
 
+        public string TypeName { get; set; }
+     
         // Ctors
         public EditableExpression() { } //allow for non parameterized creation for all expressions
 
@@ -73,7 +70,7 @@ namespace Simple.Expressions.Editable
             return new EditableLambdaExpression(lambEx);
         }
 
-        internal static EditableExpression CreateEditableExpression(Expression ex)
+        public static EditableExpression CreateEditableExpression(Expression ex)
         {
             return CreateEditableExpression(ex, false);
         }

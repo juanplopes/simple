@@ -16,9 +16,18 @@ namespace Simple.Expressions.Editable
         [IgnoreDataMember]
         public ConstructorInfo Constructor
         {
-            get;
-            set;
+            get
+            {
+                return ReflectionExtensions.FromConstructorSerializableForm(ConstructorName);
+            }
+            set
+            {
+                ConstructorName = value.ToSerializableForm();
+            }
         }
+
+        public string ConstructorName { get; set; }
+
 
         public EditableExpressionCollection Arguments
         {
@@ -32,11 +41,6 @@ namespace Simple.Expressions.Editable
             set;
         }
 
-        public string ConstructorName
-        {
-            get { return Constructor.ToSerializableForm(); }
-            set { Constructor = Constructor.FromSerializableForm(value); }
-        }
         
         public override ExpressionType NodeType
         {

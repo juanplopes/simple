@@ -10,11 +10,13 @@ namespace Simple.Expressions.Editable
     {
         public static string ToSerializableForm(this Type type)
         {
+            if (type == null) return null;
             return type.AssemblyQualifiedName;
         }
 
-        public static Type FromSerializableForm(this Type type, string serializedValue)
+        public static Type FromTypeSerializableForm(string serializedValue)
         {
+            if (serializedValue == null) return null;
             return Type.GetType(serializedValue);
         }
 
@@ -33,7 +35,7 @@ namespace Simple.Expressions.Editable
             return serializableName;
         }
 
-        public static MethodInfo FromSerializableForm(this MethodInfo methodInfo, string serializedValue)
+        public static MethodInfo FromMethodSerializableForm(string serializedValue)
         {
             string[] fullName = SplitString(serializedValue);
             string name = fullName[1];            
@@ -43,7 +45,7 @@ namespace Simple.Expressions.Editable
 
             if (method.IsGenericMethod)
             {
-                method = method.MakeGenericMethod(fullName.Skip(2).Select(s => typeof(string).FromSerializableForm(s)).ToArray());
+                method = method.MakeGenericMethod(fullName.Skip(2).Select(s => FromTypeSerializableForm(s)).ToArray());
             }
             return method;
 
@@ -54,7 +56,7 @@ namespace Simple.Expressions.Editable
             return member.DeclaringType.AssemblyQualifiedName + Environment.NewLine + member.ToString();
         }
 
-        public static MemberInfo FromSerializableForm(this MemberInfo memberInfo, string serializedValue)
+        public static MemberInfo FromMemberSerializableForm(string serializedValue)
         {
             string[] fullName = SplitString(serializedValue);
             string name = fullName[1];
@@ -73,7 +75,7 @@ namespace Simple.Expressions.Editable
                 return obj.DeclaringType.AssemblyQualifiedName + Environment.NewLine + obj.ToString();
         }
 
-        public static ConstructorInfo FromSerializableForm(this ConstructorInfo obj, string serializedValue)
+        public static ConstructorInfo FromConstructorSerializableForm(string serializedValue)
         {
             if (serializedValue == null)
                 return null;

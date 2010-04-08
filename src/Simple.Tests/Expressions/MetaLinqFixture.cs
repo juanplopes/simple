@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using Simple.Common;
 using Simple.IO;
 using Simple.IO.Serialization;
+using System.Reflection;
 
 namespace Simple.Tests.Expressions
 {
@@ -85,7 +86,7 @@ namespace Simple.Tests.Expressions
             var a1 = DateTime.Now;
             var a2 = a1.AddDays(-2);
             var dd = new SerializableClassWithNullableField() { MyDateTime = a2 };
-            TestIt(x=>x.MyDateTime < a1, dd);
+            TestIt(x => x.MyDateTime < a1, dd);
         }
 
 
@@ -108,6 +109,63 @@ namespace Simple.Tests.Expressions
             int x = 42;
             TestIt(y => x.ToString() == y, "41");
         }
+
+        [Test]
+        public void TestInnerExpressionSerialization()
+        {
+            Expression<Func<IQueryable<int>, IQueryable<int>>> expr = q => q.Where(x => x % 2 == 0);
+            TestIt(expr, new[] { 1, 2, 3, 4 }.AsQueryable());
+        }
+
+        [Test]
+        public void TestStaticMethodCall()
+        {
+            TestIt(x => int.Parse(x), "123");
+        }
+
+        [Test]
+        public void TestGenericMethodCall()
+        {
+            TestIt(x => x.ConvertTo<double, string>(), new SerializableClass() { MyInt = 2 });
+        }
+
+        [Test]
+        public void TestGenericStaticMethodCall()
+        {
+            TestIt(x => StaticClass.ConvertTo<int, string>(x), 2);
+        }
+
+        [Test]
+        public void TestTypeSerialization()
+        {
+            var type = typeof(Expression<Func<int, bool>>);
+            var bytes = SimpleSerializer.Binary().Serialize(type);
+            var type2 = (Type)SimpleSerializer.Binary().Deserialize(bytes);
+            Assert.AreEqual(type, type2);
+        }
+
+        [Test]
+        public void TestMethodSerialization()
+        {
+            var method = typeof(Queryable).GetMember("Where").OfType<MethodInfo>().Where(x=>x.GetParameters().Length == 2).First();
+            var bytes = SimpleSerializer.Binary().Serialize(method);
+            var method2 = (MethodInfo)SimpleSerializer.Binary().Deserialize(bytes);
+            Assert.AreEqual(method, method2);
+        }
+
+        [Test]
+        public void TestGeneratedQuoteSerialization()
+        {
+            Expression<Func<int, int>> original = x => x * 2;
+            var expr1 = EditableExpression.CreateEditableExpression(Expression.Quote(original));
+
+            var bytes = SimpleSerializer.Binary().Serialize(expr1);
+            var expr2 = (EditableExpression)SimpleSerializer.Binary().Deserialize(bytes);
+            Assert.IsNotNull(expr2);
+        }
+
+
+
         [Test]
         public void TestStackPropertyCall()
         {
@@ -126,6 +184,20 @@ namespace Simple.Tests.Expressions
         public class SerializableClass
         {
             public int MyInt { get; set; }
+
+            public Q ConvertTo<T, Q>()
+            {
+                var t= (T)Convert.ChangeType(this.MyInt, typeof(T));
+                return (Q)Convert.ChangeType(t, typeof(Q));
+            }
+        }
+
+        public static class StaticClass
+        {
+            public static Q ConvertTo<T, Q>(T value)
+            {
+                return (Q)Convert.ChangeType(value, typeof(Q));
+            }
         }
 
         [Serializable]
