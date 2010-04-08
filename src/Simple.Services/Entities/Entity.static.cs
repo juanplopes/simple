@@ -90,7 +90,6 @@ namespace Simple.Entities
         }
         #endregion
 
-
         #region List yes order, no filter
         public static IList<T> ListAll(Func<OrderBy<T>, OrderBy<T>> orderBy)
         {
@@ -144,6 +143,10 @@ namespace Simple.Entities
 
         #endregion
 
+        public static IPage<T> Linq(Expression<Func<IQueryable<T>, IQueryable<T>>> map, Expression<Func<IQueryable<T>, IQueryable<T>>> reduce)
+        {
+            return Service.PaginateWithLinq(map.ToSerializable(), reduce.ToSerializable());
+        }
 
         public static int Delete(Expression<Func<T, bool>> filter)
         {

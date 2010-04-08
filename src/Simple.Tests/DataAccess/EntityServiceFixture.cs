@@ -137,12 +137,12 @@ namespace Simple.Tests.DataAccess
 
         public void TestListProductsByCategoryId()
         {
-            var c = Category.Find(x=>x.Name == "Meat/Poutrly");
+            var c = Category.Find(x => x.Name == "Meat/Poutrly");
             Assert.IsNotNull(c);
 
-            var p = Product.List(x=>x.Category.Id == c.Id);
+            var p = Product.List(x => x.Category.Id == c.Id);
             Assert.AreEqual(6, p.Count);
-            Assert.IsTrue(p.All(x=>x.Category.Id == 6));
+            Assert.IsTrue(p.All(x => x.Category.Id == 6));
         }
 
         [Test]
@@ -163,7 +163,7 @@ namespace Simple.Tests.DataAccess
         [Test]
         public void TestListProductsOrderingByOtherField()
         {
-            var p = Product.ListAll(o=>o.Desc(x=>x.Category.Name));
+            var p = Product.ListAll(o => o.Desc(x => x.Category.Name));
             var p2 = Product.ListAll().OrderByDescending(x => x.Category.Name);
             Assert.IsTrue(p.SequenceEqual(p2));
         }
@@ -262,6 +262,17 @@ namespace Simple.Tests.DataAccess
         }
 
         [Test]
+        public void TestListWithLinqSkip20Take10()
+        {
+            var f = Customer.Expr(x => x.Region != null);
+
+            var list = Customer.Linq(q => q.Where(x => x.Id.StartsWith("O")), q => q.Skip(1).Take(2));
+
+            AssertQuery(q => q.Where(x => x.Id.StartsWith("O")), 1, 2, list);
+        }
+
+
+        [Test]
         public void TestSmartUpdate()
         {
             var c = Customer.Load("OLDWO");
@@ -306,7 +317,7 @@ namespace Simple.Tests.DataAccess
             Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OLDWO"));
         }
 
-       
+
         [Test]
         public void TestDeleteOneByFilter()
         {

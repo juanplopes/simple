@@ -149,7 +149,7 @@ namespace Simple.Entities
             return query;
         }
 
-        public virtual T FindByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order)
+        public virtual T FindByFilter(EditableExpression filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).FirstOrDefault();
         }
@@ -159,7 +159,7 @@ namespace Simple.Entities
             return GetDefaultQueriable(null, order).ToList();
         }
 
-        public virtual IList<T> ListByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order)
+        public virtual IList<T> ListByFilter(EditableExpression filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).ToList();
         }
@@ -169,9 +169,25 @@ namespace Simple.Entities
             return GetDefaultQueriable(null, null).Count();
         }
 
-        public virtual int CountByFilter(Simple.Expressions.Editable.EditableExpression filter)
+        public virtual int CountByFilter(EditableExpression filter)
         {
             return GetDefaultQueriable(filter, null).Count();
+        }
+
+        public virtual IPage<T> PaginateWithLinq(EditableExpression mapExpression, EditableExpression reduceExpression)
+        {
+            var map = (mapExpression.ToExpression() as Expression<Func<IQueryable<T>, IQueryable<T>>>).Compile();
+            var reduce = (reduceExpression.ToExpression() as Expression<Func<IQueryable<T>, IQueryable<T>>>).Compile();
+
+            var linq = Linq();
+
+            linq = map(linq);
+            var count = linq.Count();
+
+            linq = reduce(linq);
+            var list = linq.ToList();
+
+            return new Page<T>(list, count);
         }
 
         public virtual IPage<T> Paginate(OrderBy<T> order, int? skip, int? take)
@@ -181,7 +197,7 @@ namespace Simple.Entities
             return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
         }
 
-        public virtual IPage<T> PaginateByFilter(Simple.Expressions.Editable.EditableExpression filter, OrderBy<T> order, int? skip, int? take)
+        public virtual IPage<T> PaginateByFilter(EditableExpression filter, OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(filter, order);
 
@@ -194,7 +210,7 @@ namespace Simple.Entities
         }
 
         [RequiresTransaction]
-        public virtual int DeleteByFilter(Simple.Expressions.Editable.EditableExpression filter)
+        public virtual int DeleteByFilter(EditableExpression filter)
         {
             int res = 0;
             foreach (var entity in ListByFilter(filter, null))

@@ -51,6 +51,9 @@ namespace Simple.Entities
         IPage<T> PaginateByFilter(EditableExpression filter, OrderBy<T> order, int? skip, int? take);
 
         [OperationContract]
+        IPage<T> PaginateWithLinq(EditableExpression mapExpression, EditableExpression reduceExpression);
+
+        [OperationContract]
         void DeleteById(object id);
 
         [OperationContract]
