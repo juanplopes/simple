@@ -5,10 +5,10 @@ using System.Text;
 using Simple.Tests.Resources;
 using NUnit.Framework;
 using NHibernate;
-using Simple.DataAccess;
+using Simple.Data;
 using Simple.Expressions;
 
-namespace Simple.Tests.DataAccess
+namespace Simple.Tests.Data
 {
     [TestFixture]
     public class EntityTransformersFixture : BaseDataFixture

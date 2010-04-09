@@ -8,7 +8,7 @@ using Simple.Config;
 using NHibernate;
 using NHibernate.SqlTypes;
 using Simple.Entities;
-using Simple.DataAccess;
+using Simple.Data;
 using NHibernate.Validator.Cfg.Loquacious;
 
 namespace Simple.Tests.Resources

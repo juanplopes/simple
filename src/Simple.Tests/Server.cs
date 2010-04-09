@@ -13,7 +13,7 @@ using Simple.Tests.Services;
 using Simple.Services;
 using System.Threading;
 using Simple.Common;
-using Simple.Tests.DataAccess;
+using Simple.Tests.Data;
 using Simple.Tests.Resources;
 using System.IO;
 using NHibernate.Tool.hbm2ddl;

@@ -6,7 +6,7 @@ using NHibernate.Transform;
 using System.Reflection;
 using NHibernate;
 
-namespace Simple.DataAccess
+namespace Simple.Data
 {
     public class TupleToPropertiesTransformer : IResultTransformer
     {

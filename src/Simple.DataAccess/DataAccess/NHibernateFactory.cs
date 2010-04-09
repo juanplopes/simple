@@ -10,7 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Reflection;
 
-namespace Simple.DataAccess
+namespace Simple.Data
 {
     public class NHibernateFactory : Factory<NHConfigurator>, INHibernateFactory
     {

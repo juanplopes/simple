@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 
-namespace Simple.DataAccess.Context
+namespace Simple.Data.Context
 {
     public class DataContext : IDataContext
     {

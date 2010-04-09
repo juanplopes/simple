@@ -4,10 +4,10 @@ using Simple.Tests.Resources;
 using Simple.Expressions;
 using System.Collections.Generic;
 using System;
-using Simple.DataAccess;
+using Simple.Data;
 using NHibernate;
 
-namespace Simple.Tests.DataAccess
+namespace Simple.Tests.Data
 {
     [TestFixture]
     public class EntityServiceFixture : BaseDataFixture

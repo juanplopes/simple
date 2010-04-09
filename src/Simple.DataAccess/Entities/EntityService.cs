@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using log4net;
 using NHibernate.Linq;
 using Simple.Config;
-using Simple.DataAccess;
+using Simple.Data;
 using Simple.Expressions.Editable;
 using Simple.Services;
 using NHibernate;

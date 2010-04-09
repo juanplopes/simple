@@ -8,7 +8,7 @@ using Simple.Patterns;
 using System.Runtime.Serialization;
 using System.IO;
 
-namespace Simple.DataAccess
+namespace Simple.Data
 {
     public class NHConfigurator : TransformationList<Configuration>
     {

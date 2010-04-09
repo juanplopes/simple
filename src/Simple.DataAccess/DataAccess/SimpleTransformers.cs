@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 
-namespace Simple.DataAccess
+namespace Simple.Data
 {
     public class SimpleTransformers
     {

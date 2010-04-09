@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Simple.DataAccess.Context;
+using Simple.Data.Context;
 using NHibernate;
 
-namespace Simple.Tests.DataAccess
+namespace Simple.Tests.Data
 {
     public class BaseDataFixture
     {

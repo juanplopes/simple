@@ -5,7 +5,7 @@ using System.Text;
 using Simple.Expressions;
 using Simple.Config;
 using System.Linq.Expressions;
-using Simple.DataAccess;
+using Simple.Data;
 
 namespace Simple.Entities
 {

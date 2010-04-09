@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Simple.DataAccess
+namespace Simple.Data
 {
     interface INHibernateFactory
     {

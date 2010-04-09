@@ -5,7 +5,7 @@ using System.Text;
 using NHibernate.Transform;
 using System.Reflection;
 
-namespace Simple.DataAccess
+namespace Simple.Data
 {
     public class TupleToConstructorTransformer : IResultTransformer
     {

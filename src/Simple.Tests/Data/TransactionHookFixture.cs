@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Simple.Tests.Resources;
 
-namespace Simple.Tests.DataAccess
+namespace Simple.Tests.Data
 {
     [TestFixture]
     public class TransactionHookFixture : BaseDataFixture

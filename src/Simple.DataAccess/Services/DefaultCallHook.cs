@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Simple.DataAccess.Context;
+using Simple.Data.Context;
 
 namespace Simple.Services
 {

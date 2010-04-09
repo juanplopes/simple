@@ -9,7 +9,7 @@ using NHibernate.Validator.Engine;
 using Simple.Validation;
 using Simple.IO.Serialization;
 
-namespace Simple.Tests.DataAccess
+namespace Simple.Tests.Data
 {
     public class ValidationFixture : BaseDataFixture
     {

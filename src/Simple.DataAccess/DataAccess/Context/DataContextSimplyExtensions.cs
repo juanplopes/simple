@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Simple.DataAccess.Context;
+using Simple.Data.Context;
 using NHibernate;
 using System.Data;
 

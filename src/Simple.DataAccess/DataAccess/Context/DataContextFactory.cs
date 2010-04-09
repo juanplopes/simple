@@ -6,7 +6,7 @@ using Simple.Config;
 using Simple.Common;
 using NHibernate;
 
-namespace Simple.DataAccess.Context
+namespace Simple.Data.Context
 {
     public class DataContextFactory : AggregateFactory<DataContextFactory>, IDataContextFactory
     {

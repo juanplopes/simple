@@ -1,6 +1,6 @@
 ﻿using System;
 using NHibernate;
-namespace Simple.DataAccess.Context
+namespace Simple.Data.Context
 {
     public interface IDataContextFactory
     {

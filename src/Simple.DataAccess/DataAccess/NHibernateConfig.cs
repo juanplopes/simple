@@ -5,7 +5,7 @@ using System.Text;
 using Simple.Config;
 using System.Xml;
 
-namespace Simple.DataAccess
+namespace Simple.Data
 {
     public class NHibernateConfig : IXmlContentHolder
     {

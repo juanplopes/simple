@@ -6,7 +6,7 @@ using NUnit.Framework;
 using NHibernate.Linq;
 using Simple.Tests.Resources;
 
-namespace Simple.Tests.DataAccess
+namespace Simple.Tests.Data
 {
     [TestFixture]
     public class NHLinqFixture : BaseDataFixture
