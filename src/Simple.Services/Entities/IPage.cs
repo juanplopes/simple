@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections;
 using System.Runtime.Serialization;
 
-namespace Simple.Data
+namespace Simple.Entities
 {
     public interface IPage
     {

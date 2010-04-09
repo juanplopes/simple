@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using Simple.Data;
 using NHibernate;
+using Simple.Entities;
 
 namespace Simple.Tests.Data
 {

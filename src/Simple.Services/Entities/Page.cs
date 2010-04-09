@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
 
-namespace Simple.Data
+namespace Simple.Entities
 {
     [Serializable]
     public class Page<T> : ReadOnlyCollection<T>, IPage<T>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using NHibernate;
 using NHibernate.Criterion;
+using Simple.Entities;
 
 namespace Simple.Data
 {

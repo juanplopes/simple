@@ -73,7 +73,7 @@
     <ItemGroup>
       <MergeItems Include="$(BuildDir)\Simple.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.Services.dll"/>
-      <MergeItems Include="$(BuildDir)\Simple.DataAccess.dll"/>
+      <MergeItems Include="$(BuildDir)\Simple.Data.dll"/>
       <MergeItems Include="$(BuildDir)\Castle.Core.dll"/>
       <MergeItems Include="$(BuildDir)\Castle.DynamicProxy2.dll"/>
       <MergeItems Include="$(BuildDir)\Antlr3.Runtime.dll"/>

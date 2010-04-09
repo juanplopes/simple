@@ -284,7 +284,7 @@
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
       <Name>00_Simple</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simple.DataAccess\02_Simple.DataAccess.csproj">
+    <ProjectReference Include="..\Simple.Data\02_Simple.Data.csproj">
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
       <Name>02_Simple.DataAccess</Name>
     </ProjectReference>
