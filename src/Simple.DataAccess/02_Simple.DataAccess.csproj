@@ -111,22 +111,32 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
-    <Compile Include="DataAccess\Context\DataContextFactory.cs" />
-    <Compile Include="DataAccess\Context\DataContext.cs" />
-    <Compile Include="DataAccess\Context\DataContextSimplyExtensions.cs" />
-    <Compile Include="DataAccess\Context\IDataContext.cs" />
-    <Compile Include="DataAccess\Context\IDataContextFactory.cs" />
-    <Compile Include="DataAccess\INHibernateFactory.cs" />
-    <Compile Include="DataAccess\NHibernateConfig.cs" />
-    <Compile Include="DataAccess\NHibernateConfigSource.cs" />
-    <Compile Include="DataAccess\NHibernateFactory.cs" />
-    <Compile Include="DataAccess\NHibernateSimplyExtensions.cs" />
-    <Compile Include="DataAccess\SimpleTransformers.cs" />
-    <Compile Include="DataAccess\TimestampType.cs" />
-    <Compile Include="DataAccess\TupleToConstructorTransformer.cs" />
-    <Compile Include="DataAccess\Extensions.cs" />
-    <Compile Include="DataAccess\TupleToDictionaryTransformer.cs" />
-    <Compile Include="DataAccess\TupleToPropertiesTransformer.cs" />
+    <Compile Include="Data\Context\DataContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Context\DataContextFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Context\DataContextSimplyExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Context\IDataContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\Context\IDataContextFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\INHibernateFactory.cs" />
+    <Compile Include="Data\NHibernateConfig.cs" />
+    <Compile Include="Data\NHibernateConfigSource.cs" />
+    <Compile Include="Data\NHibernateFactory.cs" />
+    <Compile Include="Data\NHibernateSimplyExtensions.cs" />
+    <Compile Include="Data\SimpleTransformers.cs" />
+    <Compile Include="Data\TimestampType.cs" />
+    <Compile Include="Data\TupleToConstructorTransformer.cs" />
+    <Compile Include="Data\Extensions.cs" />
+    <Compile Include="Data\TupleToDictionaryTransformer.cs" />
+    <Compile Include="Data\TupleToPropertiesTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DefaultCallHook.cs" />
     <Compile Include="Entities\EntityService.cs" />
