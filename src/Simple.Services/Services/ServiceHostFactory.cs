@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using Simple.Patterns;
 using Simple.DynamicProxy;
-using Castle.DynamicProxy;
 
 namespace Simple.Services
 {

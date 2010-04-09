@@ -7,7 +7,6 @@ using Simple.Config;
 using System.Linq.Expressions;
 using Simple.Expressions.Editable;
 using Simple.Expressions;
-using NHibernate.Validator.Engine;
 using Simple.Patterns;
 
 namespace Simple.Entities
@@ -153,18 +152,18 @@ namespace Simple.Entities
             return Service.SaveOrUpdate(ThisAsT);
         }
 
-        public virtual IList<InvalidValue> Validate()
+        public virtual IList<ValidationItem> Validate()
         {
             return Service.Validate(ThisAsT);
         }
 
-        public virtual IList<InvalidValue> Validate(string propName)
+        public virtual IList<ValidationItem> Validate(string propName)
         {
             return Service.ValidateProperty(propName, MethodCache.Do.GetGetter(typeof(T).GetProperty(propName))
                 (this, null));
         }
 
-        public virtual IList<InvalidValue> Validate<P>(Expression<Func<T, P>> expr)
+        public virtual IList<ValidationItem> Validate<P>(Expression<Func<T, P>> expr)
         {
             return Service.ValidateProperty(ExpressionHelper.GetMemberName(expr), expr.Compile()(ThisAsT));
         }

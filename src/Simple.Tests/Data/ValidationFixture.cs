@@ -8,6 +8,7 @@ using NHibernate;
 using NHibernate.Validator.Engine;
 using Simple.Validation;
 using Simple.IO.Serialization;
+using Simple.Entities;
 
 namespace Simple.Tests.Data
 {
@@ -45,11 +46,11 @@ namespace Simple.Tests.Data
             var bytes = SimpleSerializer.Binary().Serialize(obj);
             var obj2 = SimpleSerializer.Binary().Deserialize(bytes) as ValidationException;
 
-            Assert.IsNotNull(obj2.InvalidValues);
-            Assert.AreEqual(obj.InvalidValues.Count, obj2.InvalidValues.Count);
+            Assert.IsNotNull(obj2.Items);
+            Assert.AreEqual(obj.Items.Count, obj2.Items.Count);
         }
 
-        protected void GenericTest(Func<Customer, IList<InvalidValue>> func, params string[] props)
+        protected void GenericTest(Func<Customer, IList<ValidationItem>> func, params string[] props)
         {
             var c = Customer.ListAll(1).FirstOrDefault();
             Assert.IsNotNull(c);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Validator.Engine;
 using System.Linq.Expressions;
 
 namespace Simple.Entities
@@ -22,9 +21,9 @@ namespace Simple.Entities
         T Update();
         void Delete();
         T SaveOrUpdate();
-        IList<InvalidValue> Validate();
-        IList<InvalidValue> Validate(string propName);
-        IList<InvalidValue> Validate<P>(Expression<Func<T, P>> expr);
+        IList<ValidationItem> Validate();
+        IList<ValidationItem> Validate(string propName);
+        IList<ValidationItem> Validate<P>(Expression<Func<T, P>> expr);
     }
 
 }

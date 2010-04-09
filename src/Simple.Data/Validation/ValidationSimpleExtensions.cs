@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using NHibernate.Validator.Cfg.Loquacious;
 using Simple.Expressions;
+using Simple.Entities;
 
 namespace Simple
 {
@@ -33,34 +34,40 @@ namespace Simple
             return ValidatorEngineFactory.Do[key];
         }
 
-        public static InvalidValue[] Validate(this Simply simply, object obj)
+        public static IList<ValidationItem> Validate(this Simply simply, object obj)
         {
-            return Factory(simply.ConfigKey).Validator.Validate(obj);
+            return Factory(simply.ConfigKey).Validator.Validate(obj).ToValidationErrors();
         }
 
-        public static InvalidValue[] Validate(this Simply simply, Type type, string propName, object value)
+        public static IList<ValidationItem> Validate(this Simply simply, Type type, string propName, object value)
         {
-            return Factory(simply.ConfigKey).Validator.ValidatePropertyValue(type, propName, value);
+            return Factory(simply.ConfigKey).Validator.ValidatePropertyValue(type, propName, value).ToValidationErrors();
         }
-        public static InvalidValue[] Validate<T, P>(this Simply simply, T obj, Expression<Func<T, P>> expr)
+        public static IList<ValidationItem> Validate<T, P>(this Simply simply, T obj, Expression<Func<T, P>> expr)
             where T : class
         {
-            return Factory(simply.ConfigKey).Validator.ValidatePropertyValue(obj, expr);
+            return Factory(simply.ConfigKey).Validator.ValidatePropertyValue(obj, expr).ToValidationErrors();
         }
 
-        public static void AndThrow(this IList<InvalidValue> values)
+        public static void AndThrow(this IList<ValidationItem> values)
         {
             values.AndThrow(null);
         }
 
-        public static void AndThrow(this IList<InvalidValue> values, string baseName)
+        public static void AndThrow(this IList<ValidationItem> values, string baseName)
         {
-            var newValues = values;
-            if (!string.IsNullOrEmpty(baseName))
-                newValues = values.Select(x => x.FluentlyDo(y => y.AddParentEntity(null, baseName))).ToArray();
-
             if (values.Count > 0)
+            {
+                if (!string.IsNullOrEmpty(baseName))
+                    values = values.Select(x => x.RootedBy(baseName)).ToList();
+
                 throw new ValidationException(values);
+            }
+        }
+
+        public static IList<ValidationItem> ToValidationErrors(this IList<InvalidValue> list)
+        {
+            return list.Select(x=>new ValidationItem(x.Message, x.PropertyName, x.PropertyPath)).ToList();
         }
 
         public static SimplyConfigure Validator(this SimplyConfigure config, params Assembly[] assemblies)

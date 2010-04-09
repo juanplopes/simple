@@ -67,14 +67,14 @@ namespace Simple.Entities
             }
         }
 
-        protected virtual IQueryable<Q> Linq<Q>()
+        protected virtual IQueryable<Q> Query<Q>()
         {
             return Session.Query<Q>();
         }
 
-        protected virtual IQueryable<T> Linq()
+        protected virtual IQueryable<T> Query()
         {
-            return Linq<T>();
+            return Query<T>();
         }
 
         protected virtual bool ValidateOnSave { get { return true; } }
@@ -115,7 +115,7 @@ namespace Simple.Entities
 
         protected virtual IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy)
         {
-            IQueryable<T> query = Linq();
+            IQueryable<T> query = Query();
 
             if (filter != null)
                 query = query.Where((Expression<Func<T, bool>>)filter.ToExpression());
@@ -149,7 +149,7 @@ namespace Simple.Entities
             return query;
         }
 
-        public virtual T FindByFilter(EditableExpression filter, OrderBy<T> order)
+        public virtual T Find(EditableExpression filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).FirstOrDefault();
         }
@@ -159,7 +159,7 @@ namespace Simple.Entities
             return GetDefaultQueriable(null, order).ToList();
         }
 
-        public virtual IList<T> ListByFilter(EditableExpression filter, OrderBy<T> order)
+        public virtual IList<T> List(EditableExpression filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).ToList();
         }
@@ -169,17 +169,17 @@ namespace Simple.Entities
             return GetDefaultQueriable(null, null).Count();
         }
 
-        public virtual int CountByFilter(EditableExpression filter)
+        public virtual int Count(EditableExpression filter)
         {
             return GetDefaultQueriable(filter, null).Count();
         }
 
-        public virtual IPage<T> PaginateWithLinq(EditableExpression mapExpression, EditableExpression reduceExpression)
+        public virtual IPage<T> Linq(EditableExpression mapExpression, EditableExpression reduceExpression)
         {
             var map = (mapExpression.ToExpression() as Expression<Func<IQueryable<T>, IQueryable<T>>>).Compile();
             var reduce = (reduceExpression.ToExpression() as Expression<Func<IQueryable<T>, IQueryable<T>>>).Compile();
 
-            var linq = Linq();
+            var linq = Query();
 
             linq = map(linq);
             var count = linq.Count();
@@ -190,30 +190,30 @@ namespace Simple.Entities
             return new Page<T>(list, count);
         }
 
-        public virtual IPage<T> Paginate(OrderBy<T> order, int? skip, int? take)
+        public virtual IPage<T> List(OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(null, order);
 
             return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
         }
 
-        public virtual IPage<T> PaginateByFilter(EditableExpression filter, OrderBy<T> order, int? skip, int? take)
+        public virtual IPage<T> List(EditableExpression filter, OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(filter, order);
 
             return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
         }
 
-        public virtual void DeleteById(object id)
+        public virtual void Delete(object id)
         {
             Session.Delete(Load(id));
         }
 
         [RequiresTransaction]
-        public virtual int DeleteByFilter(EditableExpression filter)
+        public virtual int Delete(EditableExpression filter)
         {
             int res = 0;
-            foreach (var entity in ListByFilter(filter, null))
+            foreach (var entity in List(filter, null))
             {
                 Session.Delete(entity);
                 res++;
@@ -259,12 +259,12 @@ namespace Simple.Entities
         #region IEntityService<T> Members
 
 
-        public virtual IList<InvalidValue> Validate(T entity)
+        public virtual IList<ValidationItem> Validate(T entity)
         {
             return MySimply.Validate(entity);
         }
 
-        public virtual IList<InvalidValue> ValidateProperty(string propName, object value)
+        public virtual IList<ValidationItem> ValidateProperty(string propName, object value)
         {
             return MySimply.Validate(typeof(T), propName, value);
         }

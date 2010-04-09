@@ -6,7 +6,6 @@ using Simple.Config;
 using System.Linq.Expressions;
 using Simple.Expressions.Editable;
 using Simple.Services;
-using NHibernate.Validator.Engine;
 using Simple.Expressions;
 
 namespace Simple.Entities

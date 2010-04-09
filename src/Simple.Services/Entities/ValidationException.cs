@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Validator.Engine;
+using Simple.Entities;
 
 namespace Simple.Validation
 {
@@ -16,31 +16,31 @@ namespace Simple.Validation
         //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
         //
 
-        protected IList<InvalidValue> _invalidValues;
-        public IList<InvalidValue> InvalidValues
+        protected IList<ValidationItem> _items;
+        public IList<ValidationItem> Items
         {
-            get { return _invalidValues; }
+            get { return _items; }
         }
 
         public ValidationException()
             : base()
         {
-            _invalidValues = new InvalidValue[0];
+            _items = new ValidationItem[0];
         }
 
-        public ValidationException(IList<InvalidValue> values)
+        public ValidationException(IList<ValidationItem> values)
             : base(CreateMessage(values))
         {
-            _invalidValues = values;
+            _items = values;
         }
 
-        public ValidationException(IList<InvalidValue> values, Exception inner)
+        public ValidationException(IList<ValidationItem> values, Exception inner)
             : base(CreateMessage(values), inner)
         {
-            _invalidValues = values;
+            _items = values;
         }
 
-        protected static string CreateMessage(IList<InvalidValue> values)
+        protected static string CreateMessage(IList<ValidationItem> values)
         {
             return values.Count > 0 ? values[0].PropertyName + " " + values[0].Message : "no message";
         }
@@ -50,13 +50,13 @@ namespace Simple.Validation
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context)
         {
-            _invalidValues = (IList<InvalidValue>)info.GetValue("InvalidValues", typeof(IList<InvalidValue>));
+            _items = (IList<ValidationItem>)info.GetValue("Items", typeof(IList<ValidationItem>));
         }
 
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("InvalidValues", _invalidValues);
+            info.AddValue("Items", _items);
         }
     }
 

@@ -141,7 +141,6 @@
     <Compile Include="Services\DefaultCallHook.cs" />
     <Compile Include="Entities\EntityService.cs" />
     <Compile Include="Services\TransactionCallHook.cs" />
-    <Compile Include="Validation\ValidationException.cs" />
     <Compile Include="Validation\ValidationSimpleExtensions.cs" />
     <Compile Include="Validation\ValidatorEngineFactory.cs" />
   </ItemGroup>

@@ -6,7 +6,6 @@ using System.ServiceModel;
 using System.Linq.Expressions;
 using Simple.Expressions.Editable;
 using Simple.Services;
-using NHibernate.Validator.Engine;
 
 namespace Simple.Entities
 {
@@ -29,34 +28,34 @@ namespace Simple.Entities
         T Evict(T entity);
         
         [OperationContract]
-        T FindByFilter(EditableExpression filter, OrderBy<T> orderBy);
+        T Find(EditableExpression filter, OrderBy<T> orderBy);
 
         [OperationContract]
         IList<T> List(OrderBy<T> order);
 
         [OperationContract]
-        IList<T> ListByFilter(EditableExpression filter, OrderBy<T> order);
+        IList<T> List(EditableExpression filter, OrderBy<T> order);
 
         [OperationContract]
         int Count();
 
         [OperationContract]
-        int CountByFilter(EditableExpression filter);
+        int Count(EditableExpression filter);
 
         [OperationContract]
-        IPage<T> Paginate(OrderBy<T> order, int? skip, int? take);
+        IPage<T> List(OrderBy<T> order, int? skip, int? take);
 
         [OperationContract]
-        IPage<T> PaginateByFilter(EditableExpression filter, OrderBy<T> order, int? skip, int? take);
+        IPage<T> List(EditableExpression filter, OrderBy<T> order, int? skip, int? take);
 
         [OperationContract]
-        IPage<T> PaginateWithLinq(EditableExpression mapExpression, EditableExpression reduceExpression);
+        IPage<T> Linq(EditableExpression mapExpression, EditableExpression reduceExpression);
 
         [OperationContract]
-        void DeleteById(object id);
+        void Delete(object id);
 
         [OperationContract]
-        int DeleteByFilter(EditableExpression filter);
+        int Delete(EditableExpression filter);
 
         [OperationContract]
         T SaveOrUpdate(T entity);
@@ -74,10 +73,10 @@ namespace Simple.Entities
         void Delete(T entity);
 
         [OperationContract]
-        IList<InvalidValue> Validate(T entity);
+        IList<ValidationItem> Validate(T entity);
 
         [OperationContract]
-        IList<InvalidValue> ValidateProperty(string propName, object value);
+        IList<ValidationItem> ValidateProperty(string propName, object value);
 
     }
 }
