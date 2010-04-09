@@ -133,9 +133,9 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Common\EnumerableFixture.cs" />
-    <Compile Include="DataAccess\EntityHelperIntegrationFixture.cs" />
-    <Compile Include="DataAccess\TransactionHookFixture.cs" />
-    <Compile Include="DataAccess\ValidationFixture.cs" />
+    <Compile Include="Data\EntityHelperIntegrationFixture.cs" />
+    <Compile Include="Data\TransactionHookFixture.cs" />
+    <Compile Include="Data\ValidationFixture.cs" />
     <Compile Include="Database.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -155,13 +155,13 @@
       <DependentUpon>RemotingConfigs.resx</DependentUpon>
     </Compile>
     <Compile Include="Config\ConfiguratorInterfaceFixture.cs" />
-    <Compile Include="DataAccess\EntityServiceFixture.cs" />
-    <Compile Include="DataAccess\EntityTransformersFixture.cs" />
-    <Compile Include="DataAccess\ExpressionFilterFixture.cs" />
-    <Compile Include="DataAccess\NHLinqFixture.cs" />
-    <Compile Include="DataAccess\NorthwindCheckFixture.cs" />
-    <Compile Include="DataAccess\BaseDataFixture.cs" />
-    <Compile Include="DataAccess\DataContextFixture.cs" />
+    <Compile Include="Data\EntityServiceFixture.cs" />
+    <Compile Include="Data\EntityTransformersFixture.cs" />
+    <Compile Include="Data\ExpressionFilterFixture.cs" />
+    <Compile Include="Data\NHLinqFixture.cs" />
+    <Compile Include="Data\NorthwindCheckFixture.cs" />
+    <Compile Include="Data\BaseDataFixture.cs" />
+    <Compile Include="Data\DataContextFixture.cs" />
     <Compile Include="Resources\EmployeeTerritories.cs" />
     <Compile Include="Resources\Region.cs" />
     <Compile Include="Resources\Territory.cs" />
@@ -209,7 +209,7 @@
     <Compile Include="Services\BaseFactoryFixture.cs" />
     <Compile Include="Services\BaseRemotingFactoryFixture.cs" />
     <Compile Include="Services\ServiceConfigFixture.cs" />
-    <Compile Include="DataAccess\NHConfigFixture.cs" />
+    <Compile Include="Data\NHConfigFixture.cs" />
     <Compile Include="NHConfig1.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Config\FactoryFixture.cs" />
