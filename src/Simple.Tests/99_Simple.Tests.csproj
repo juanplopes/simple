@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B244B1EF-812D-4BDC-8BB7-E5ECAD0AACB1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Simple.Tests</RootNamespace>
+    <AssemblyName>Simple.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
+    <StartupObject>Simple.Tests.Server</StartupObject>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Simple.snk</AssemblyOriginatorKeyFile>
+    <PublishUrl>http://localhost/SimpleTests/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.NHibernate, Version=3.0.0.1001, Culture=neutral, PublicKeyToken=71e14f0ea88dd4a5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Simple.NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.61.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\System.Data.SQLite.DLL</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
+    <Compile Include="Common\EnumerableFixture.cs" />
+    <Compile Include="Data\EntityHelperIntegrationFixture.cs" />
+    <Compile Include="Data\TransactionHookFixture.cs" />
+    <Compile Include="Data\ValidationFixture.cs" />
+    <Compile Include="Database.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Database.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Expressions\InvocationExpanderFixture.cs" />
+    <Compile Include="IO\CommandLineReaderFixture.cs" />
+    <Compile Include="IO\FileSizeFixture.cs" />
+    <Compile Include="Patterns\SingletonFixture.cs" />
+    <Compile Include="Patterns\TransformationListFixture.cs" />
+    <Compile Include="Patterns\TuplesFixture.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\DictionaryHelperFixture.cs" />
+    <Compile Include="Services\RemotingConfigs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RemotingConfigs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Config\ConfiguratorInterfaceFixture.cs" />
+    <Compile Include="Data\EntityServiceFixture.cs" />
+    <Compile Include="Data\EntityTransformersFixture.cs" />
+    <Compile Include="Data\ExpressionFilterFixture.cs" />
+    <Compile Include="Data\NHLinqFixture.cs" />
+    <Compile Include="Data\NorthwindCheckFixture.cs" />
+    <Compile Include="Data\BaseDataFixture.cs" />
+    <Compile Include="Data\DataContextFixture.cs" />
+    <Compile Include="Resources\EmployeeTerritories.cs" />
+    <Compile Include="Resources\Region.cs" />
+    <Compile Include="Resources\Territory.cs" />
+    <Compile Include="Resources\Employee.cs" />
+    <Compile Include="Reflection\AttributeCacheFixture.cs" />
+    <Compile Include="Patterns\BaseWDProviderFixture.cs" />
+    <Compile Include="Patterns\BaseWorkingDaysFixture.cs" />
+    <Compile Include="Reflection\TypesHelperFixture.cs" />
+    <Compile Include="DynamicProxy\DynamicProxyFixture.cs" />
+    <Compile Include="Reflection\EntityHelperFixture.cs" />
+    <Compile Include="Reflection\EnumTypeFixture.cs" />
+    <Compile Include="Expressions\ExpressionHelperFixture.cs" />
+    <Compile Include="IO\FileLocatorFixture.cs" />
+    <Compile Include="Reflection\InvokerFactoryFixture.cs" />
+    <Compile Include="DynamicProxy\MarshallableDynamicProxyFixture.cs" />
+    <Compile Include="Common\SimpleMathFixture.cs" />
+    <Compile Include="Expressions\MetaLinqFixture.cs" />
+    <Compile Include="Reflection\MethodCacheFixture.cs" />
+    <Compile Include="Patterns\DisposableActionFixture.cs" />
+    <Compile Include="IO\BaseSerializerFixture.cs" />
+    <Compile Include="IO\BinarySerializerFixture.cs" />
+    <Compile Include="IO\DataContractSerializerFixture.cs" />
+    <Compile Include="IO\NetDataContractSerializerFixture.cs" />
+    <Compile Include="IO\XmlSerializerFixture.cs" />
+    <Compile Include="IO\StringUtilsFixture.cs" />
+    <Compile Include="Patterns\TaskRunnerFixture.cs" />
+    <Compile Include="Patterns\WorkingDaysFixture.cs" />
+    <Compile Include="Resources\Category.cs" />
+    <Compile Include="Resources\Customer.cs" />
+    <Compile Include="Resources\Product.cs" />
+    <Compile Include="Resources\Supplier.cs" />
+    <Compile Include="Services\BaseInterceptorFixture.samples.cs" />
+    <Compile Include="Services\ChannelSelectorFixture.cs" />
+    <Compile Include="Services\IpcRemotingFixtures.cs" />
+    <Compile Include="Services\HookOrderFixture.cs" />
+    <Compile Include="Services\TcpRemotingFixtures.cs" />
+    <Compile Include="Services\HttpRemotingFixtures.cs" />
+    <Compile Include="Services\BaseInterceptorFixture.cs" />
+    <Compile Include="Services\BaseRemotingInterceptorFixture.cs" />
+    <Compile Include="Services\BaseSelfRemotingInterceptorFixture.cs" />
+    <Compile Include="Services\DefaultInterceptorFixture.cs" />
+    <Compile Include="Services\Helper.cs" />
+    <Compile Include="Services\BaseSelfRemotingFactoryFixture.cs" />
+    <Compile Include="Services\DefaultFactoryFixture.cs" />
+    <Compile Include="Services\BaseFactoryFixture.cs" />
+    <Compile Include="Services\BaseRemotingFactoryFixture.cs" />
+    <Compile Include="Services\ServiceConfigFixture.cs" />
+    <Compile Include="Data\NHConfigFixture.cs" />
+    <Compile Include="NHConfig1.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="Config\FactoryFixture.cs" />
+    <Compile Include="Config\LoggerFactoryFixture.cs" />
+    <Compile Include="Config\XmlConfigSourceFixture.cs" />
+    <Compile Include="Config\XmlFileConfigSourceFixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Simple.snk">
+      <Link>Simple.snk</Link>
+    </None>
+    <None Include="Resources\Northwind.sl3" />
+    <None Include="Resources\SimpleRemotingAny.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.3.5">
+      <Visible>False</Visible>
+      <ProductName>SQL Server Compact 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Database.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Services\RemotingConfigs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>RemotingConfigs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simple\00_Simple.csproj">
+      <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
+      <Name>00_Simple</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Data\01_Simple.Data.csproj">
+      <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
+      <Name>01_Simple.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

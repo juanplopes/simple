@@ -87,5 +87,16 @@ namespace Simple {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;remoting&gt;
+        ///	&lt;baseAddress&gt;http://localhost:9001/&lt;/baseAddress&gt;
+        ///&lt;/remoting&gt;.
+        /// </summary>
+        internal static string RemotingConfig {
+            get {
+                return ResourceManager.GetString("RemotingConfig", resourceCulture);
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Simple.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -77,6 +77,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -97,12 +98,24 @@
     <Compile Include="Common\NamedEvents.cs" />
     <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Common\StringExtensions.cs" />
+    <Compile Include="ConfigDef.cs" />
     <Compile Include="Config\AggregateFactory.cs" />
     <Compile Include="Config\DefaultConfigAttribute.cs" />
     <Compile Include="Config\DirectConfigSource.cs" />
     <Compile Include="Config\ConfiguratorInterface.cs" />
     <Compile Include="Config\IConfiguratorInterface.cs" />
     <Compile Include="DynamicProxy\MarshallableDynamicProxyImpl.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Entity.static.cs" />
+    <Compile Include="Entities\ExpressionExtensions.cs" />
+    <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Entities\IEntityService.cs" />
+    <Compile Include="Entities\IPage.cs" />
+    <Compile Include="Entities\OrderByCollection.cs" />
+    <Compile Include="Entities\OrderByItem.cs" />
+    <Compile Include="Entities\Page.cs" />
+    <Compile Include="Entities\ValidationException.cs" />
+    <Compile Include="Entities\ValidationItem.cs" />
     <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
     <Compile Include="Expressions\Editable\EditableExpressionCollection.cs" />
     <Compile Include="Expressions\Editable\EditableMemberBindingCollection.cs" />
@@ -192,6 +205,41 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CallHeaders.cs" />
+    <Compile Include="Services\DefaultInterceptor.cs" />
+    <Compile Include="Services\Default\DefaultClientProvider.cs" />
+    <Compile Include="Services\Default\DefaultHostBaseProvider.cs" />
+    <Compile Include="Services\Default\DefaultHostConfig.cs" />
+    <Compile Include="Services\Default\DefaultHostProvider.cs" />
+    <Compile Include="Services\Default\DefaultHostSimplyExtensions.cs" />
+    <Compile Include="Services\Default\ServiceLocationFactory.cs" />
+    <Compile Include="Services\ICallHeadersHandler.cs" />
+    <Compile Include="Services\ICallHook.cs" />
+    <Compile Include="Services\IInterceptor.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\IServiceClientFactory.cs" />
+    <Compile Include="Services\IServiceClientProvider.cs" />
+    <Compile Include="Services\IServiceHostFactory.cs" />
+    <Compile Include="Services\IServiceHostProvider.cs" />
+    <Compile Include="Services\Remoting\CallContextCallHeadersHandler.cs" />
+    <Compile Include="Services\Remoting\ChannelSelector.cs" />
+    <Compile Include="Services\Remoting\Channels\HttpChannelHandler.cs" />
+    <Compile Include="Services\Remoting\Channels\IChannelHandler.cs" />
+    <Compile Include="Services\Remoting\Channels\IpcChannelHandler.cs" />
+    <Compile Include="Services\Remoting\Channels\TcpChannelHandler.cs" />
+    <Compile Include="Services\Remoting\RemotingBaseProvider.cs" />
+    <Compile Include="Services\Remoting\RemotingClientProvider.cs" />
+    <Compile Include="Services\Remoting\RemotingConfig.cs" />
+    <Compile Include="Services\Remoting\RemotingHostProvider.cs" />
+    <Compile Include="Services\Remoting\RemotingSimplyExtensions.cs" />
+    <Compile Include="Services\Remoting\Sinks\CallHeadersSink.cs" />
+    <Compile Include="Services\Remoting\Sinks\CallHeadersSinkProvider.cs" />
+    <Compile Include="Services\ServiceClientFactory.cs" />
+    <Compile Include="Services\ServiceConnectionException.cs" />
+    <Compile Include="Services\ServiceHostFactory.cs" />
+    <Compile Include="Services\ServiceSimplyExtensions.cs" />
+    <Compile Include="Services\SimpleContext.cs" />
+    <Compile Include="Services\SimpleHostingExtensions.cs" />
     <Compile Include="Simply.cs" />
     <Compile Include="IO\XmlHelper.cs" />
     <Compile Include="Hosting\SimpleController.cs">
@@ -220,6 +268,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RemotingConfig.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

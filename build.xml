@@ -2,6 +2,9 @@
   <PropertyGroup>
     <GCProjectName>simpledotnet</GCProjectName>
 
+    <LibDir>lib\</LibDir>
+    <NHLibDir>$(LibDir)\Nhibernate</NHLibDir>
+    
     <BuildDir>build\</BuildDir>
     <BuildBase>..\..\</BuildBase>
     <BuildDir2>$(BuildBase)$(BuildDir)</BuildDir2>
@@ -11,8 +14,9 @@
     <SourceBaseLibDir>$(SourceBaseDir)\lib\</SourceBaseLibDir>
 
     <KeyFilePath>$(SourceDir)\Simple.snk</KeyFilePath>
-    
+
     <PackageDir>pkg\</PackageDir>
+    <LibraryPackageDir>$(PackageDir)\library\</LibraryPackageDir>
     <PackageDir2>$(BuildBase)$(PackageDir)</PackageDir2>
 
     <Configuration>Release</Configuration>
@@ -33,6 +37,7 @@
   <Target Name="Clean">
     <MSBuild Projects="@(SolutionFile)" Targets="Clean" Properties="Configuration=$(Configuration);Platform=$(Platform);OutDir=$(BuildDir2)"/>
     <RemoveDir Directories="$(BuildDir)" ContinueOnError="true"/>
+    <RemoveDir Directories="$(LibraryPackageDir)" ContinueOnError="true"/>
     <RemoveDir Directories="$(PackageDir)" ContinueOnError="true"/>
   </Target>
 
@@ -69,38 +74,57 @@
     <Nunit Assemblies="$(TestAssembly)" ToolPath="util\nunit"/>
   </Target>
 
-  <Target Name="Merge" DependsOnTargets="Build">
+  <Target Name="MergeNH">
     <ItemGroup>
-      <MergeItems Include="$(BuildDir)\Simple.dll"/>
-      <MergeItems Include="$(BuildDir)\Simple.Services.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\NHibernate.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\Castle.Core.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\Castle.DynamicProxy2.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\Antlr3.Runtime.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\NHibernate.Validator.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\NHibernate.Validator.Specific.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\NHibernate.ByteCode.Castle.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\FluentNHibernate.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\Iesi.Collections.dll"/>
+      <NHibernateItems Include="$(NHLibDir)\Remotion.Data.Linq.dll"/>
+    </ItemGroup>
+    <ILMerge OutputFile="$(LibDir)\Simple.NHibernate.dll"
+            InputAssemblies="@(NHibernateItems)"
+            ToolPath="util\ilmerge"
+            LogFile=""
+            KeyFile="$(KeyFilePath)"
+             />
+  </Target>
+  
+  <Target Name="CopyToPackageFolder" DependsOnTargets="Build">
+    <ItemGroup>
       <MergeItems Include="$(BuildDir)\Simple.Data.dll"/>
-      <MergeItems Include="$(BuildDir)\Castle.Core.dll"/>
-      <MergeItems Include="$(BuildDir)\Castle.DynamicProxy2.dll"/>
-      <MergeItems Include="$(BuildDir)\Antlr3.Runtime.dll"/>
-      <MergeItems Include="$(BuildDir)\NHibernate.Validator.dll"/>
-      <MergeItems Include="$(BuildDir)\NHibernate.Validator.Specific.dll"/>
-      <MergeItems Include="$(BuildDir)\NHibernate.ByteCode.Castle.dll"/>
-      <MergeItems Include="$(BuildDir)\FluentNHibernate.dll"/>
-      <MergeItems Include="$(BuildDir)\Iesi.Collections.dll"/>
-      <MergeItems Include="$(BuildDir)\log4net.dll"/>
-      <MergeItems Include="$(BuildDir)\NHibernate.dll"/>
-      <MergeItems Include="$(BuildDir)\Remotion.Data.Linq.dll"/>
+      <MergeItems Include="$(BuildDir)\Simple.NHibernate.dll"/>
+
+      <OtherItems Include="$(BuildDir)\Simple.dll"/>
+      <OtherItems Include="$(BuildDir)\log4net.dll"/>
     </ItemGroup>
 
     <MakeDir Directories="$(PackageDir)"></MakeDir>
+    <MakeDir Directories="$(LibraryPackageDir)"></MakeDir>
 
-    <ILMerge OutputFile="$(PackageDir)\Simple.dll"
+    <ILMerge OutputFile="$(LibraryPackageDir)\Simple.Data.dll"
              InputAssemblies="@(MergeItems)"
              ToolPath="util\ilmerge"
              LogFile=""
-             KeyFile="$(KeyFilePath)"
+             KeyFile="$(KeyFilePath)" DebugInfo="false"
              />
+
+    <Copy SourceFiles="@(OtherItems)" DestinationFolder ="$(LibraryPackageDir)"/>
   </Target>
 
-  <Target Name="Package" DependsOnTargets="Build;Merge">
-    <Copy SourceFiles="$(PackageDir)\Simple.dll" DestinationFolder="$(SourceBaseLibDir)"/>
+  <Target Name="Package" DependsOnTargets="Build;CopyToPackageFolder">
+    <ItemGroup>
+      <LibraryFiles Include="$(LibraryPackageDir)\**" Exclude="$(LibraryPackageDir)\**\*.pdb" />
+    </ItemGroup>
+    
+    <Copy SourceFiles="@(LibraryFiles)" DestinationFolder="$(SourceBaseLibDir)"/>
     <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile $(PackageDir2)\Simple.exe&quot;"/>
-    <Zip Files="$(PackageDir)\Simple.dll" ZipFileName="$(PackageDir)\Simple.zip" WorkingDirectory="$(PackageDir)"/>
+    <Zip Files="@(LibraryFiles)" ZipFileName="$(PackageDir)\Simple.zip" WorkingDirectory="$(LibraryPackageDir)"/>
   </Target>
 
   <Target Name="Publish" DependsOnTargets="Test;Package">
