@@ -10,9 +10,9 @@ using Simple.Data;
 using Simple.Expressions.Editable;
 using Simple.Services;
 using NHibernate;
-using NHibernate.Validator.Engine;
 using Simple.Validation;
 using NHibernate.Metadata;
+using FluentValidation.Results;
 
 namespace Simple.Entities
 {
@@ -47,7 +47,7 @@ namespace Simple.Entities
         {
             get
             {
-                return SourceManager.Do.BestKeyOf(SimpleContext.Get().ConfigKey, DefaultConfigAttribute.GetKey(typeof(T)));
+                return DefaultConfigAttribute.GetKey(typeof(T));
             }
         }
 
@@ -65,52 +65,6 @@ namespace Simple.Entities
             {
                 return MySimply.GetSession();
             }
-        }
-
-        protected virtual IQueryable<Q> Query<Q>()
-        {
-            return Session.Query<Q>();
-        }
-
-        protected virtual IQueryable<T> Query()
-        {
-            return Query<T>();
-        }
-
-        protected virtual bool ValidateOnSave { get { return true; } }
-        protected virtual void ValidateAndThrow(object obj)
-        {
-            MySimply.Validate(obj).AndThrow();
-        }
-
-        #region IEntityService<T> Members
-
-        public virtual T Load(object id)
-        {
-            return Session.Load<T>(id);
-        }
-
-        public virtual T Refresh(T entity)
-        {
-            Session.SessionFactory.GetClassMetadata(typeof(T)).GetIdentifier(entity, Session.GetSessionImplementation().EntityMode);
-            Session.Refresh(entity);
-            return entity;
-        }
-
-        public virtual T Reload(T entity)
-        {
-            return Load(NHMetadata.GetIdentifier(entity, Session.GetSessionImplementation().EntityMode));
-        }
-
-        public virtual T Merge(T entity)
-        {
-            return (T)Session.Merge(entity);
-        }
-
-        public virtual T Evict(T entity)
-        {
-            Session.Evict(entity);
-            return entity;
         }
 
         protected virtual IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy)
@@ -142,6 +96,49 @@ namespace Simple.Entities
             return query;
         }
 
+        protected virtual IQueryable<Q> Query<Q>()
+        {
+            return Session.Query<Q>();
+        }
+
+        protected virtual IQueryable<T> Query()
+        {
+            return Query<T>();
+        }
+
+        protected virtual bool ValidateOnSave { get { return true; } }
+        protected virtual void ValidateAndThrow(object obj)
+        {
+            MySimply.Validate(obj).AndThrow();
+        }
+
+        public virtual T Load(object id)
+        {
+            return Session.Load<T>(id);
+        }
+
+        public virtual T Refresh(T entity)
+        {
+            Session.Refresh(entity);
+            return entity;
+        }
+
+        public virtual T Reload(T entity)
+        {
+            return Load(NHMetadata.GetIdentifier(entity, Session.GetSessionImplementation().EntityMode));
+        }
+
+        public virtual T Merge(T entity)
+        {
+            return (T)Session.Merge(entity);
+        }
+
+        public virtual T Evict(T entity)
+        {
+            Session.Evict(entity);
+            return entity;
+        }
+
         protected virtual IQueryable<T> SkipAndTake(IQueryable<T> query, int? skip, int? take)
         {
             if (skip.HasValue) query = query.Skip(skip.Value);
@@ -152,21 +149,6 @@ namespace Simple.Entities
         public virtual T Find(EditableExpression filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).FirstOrDefault();
-        }
-
-        public virtual IList<T> List(OrderBy<T> order)
-        {
-            return GetDefaultQueriable(null, order).ToList();
-        }
-
-        public virtual IList<T> List(EditableExpression filter, OrderBy<T> order)
-        {
-            return GetDefaultQueriable(filter, order).ToList();
-        }
-
-        public virtual int Count()
-        {
-            return GetDefaultQueriable(null, null).Count();
         }
 
         public virtual int Count(EditableExpression filter)
@@ -190,13 +172,6 @@ namespace Simple.Entities
             return new Page<T>(list, count);
         }
 
-        public virtual IPage<T> List(OrderBy<T> order, int? skip, int? take)
-        {
-            IQueryable<T> q = GetDefaultQueriable(null, order);
-
-            return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
-        }
-
         public virtual IPage<T> List(EditableExpression filter, OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(filter, order);
@@ -213,7 +188,7 @@ namespace Simple.Entities
         public virtual int Delete(EditableExpression filter)
         {
             int res = 0;
-            foreach (var entity in List(filter, null))
+            foreach (var entity in List(filter, null, null, null))
             {
                 Session.Delete(entity);
                 res++;
@@ -254,21 +229,15 @@ namespace Simple.Entities
             Session.Delete(entity);
         }
 
-        #endregion
 
-        #region IEntityService<T> Members
-
-
-        public virtual IList<ValidationItem> Validate(T entity)
+        public virtual ValidationList Validate(T entity)
         {
             return MySimply.Validate(entity);
         }
 
-        public virtual IList<ValidationItem> ValidateProperty(string propName, object value)
+        public virtual ValidationList ValidateProperty(T entity, params string[] props)
         {
-            return MySimply.Validate(typeof(T), propName, value);
+            return MySimply.Validate(entity, props);
         }
-
-        #endregion
     }
 }
