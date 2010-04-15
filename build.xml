@@ -5,8 +5,11 @@
     <LibDir>lib\</LibDir>
     
     <BuildDir>build\</BuildDir>
-    <BuildBase>..\..\</BuildBase>
-    <BuildDir2>$(BuildBase)$(BuildDir)</BuildDir2>
+    <BuildDir2>$(MSBuildProjectDirectory)\$(BuildDir)</BuildDir2>
+
+    <PackageDir>pkg\</PackageDir>
+    <PackageDir2>$(MSBuildProjectDirectory)\$(PackageDir)</PackageDir2>
+
 
     <SourceDir>src\</SourceDir>
     <SourceBaseDir>src-tools\base\</SourceBaseDir>
@@ -14,9 +17,6 @@
 
     <KeyFilePath>$(SourceDir)\Simple.snk</KeyFilePath>
 
-    <PackageDir>pkg\</PackageDir>
-    <LibraryPackageDir>$(PackageDir)\library\</LibraryPackageDir>
-    <PackageDir2>$(BuildBase)$(PackageDir)</PackageDir2>
 
     <Configuration>Release</Configuration>
     <Platform>Any CPU</Platform>
@@ -105,37 +105,29 @@
             KeyFile="$(KeyFilePath)"
              />
   </Target>
-  
-  <Target Name="CopyToPackageFolder" DependsOnTargets="Build">
+
+  <Target Name="Merge">
     <ItemGroup>
+      <MergeItems Include="$(BuildDir)\Simple.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.Data.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.NHibernate.dll"/>
-
-      <OtherItems Include="$(BuildDir)\Simple.dll"/>
-      <OtherItems Include="$(BuildDir)\log4net.dll"/>
+      <MergeItems Include="$(BuildDir)\log4net.dll"/>
     </ItemGroup>
 
-    <MakeDir Directories="$(PackageDir)"></MakeDir>
-    <MakeDir Directories="$(LibraryPackageDir)"></MakeDir>
-
-    <ILMerge OutputFile="$(LibraryPackageDir)\Simple.Data.dll"
-             InputAssemblies="@(MergeItems)"
-             ToolPath="util\ilmerge"
-             LogFile=""
-             KeyFile="$(KeyFilePath)" DebugInfo="false"
+    <MakeDir Directories="$(PackageDir)"/>
+    <ILMerge OutputFile="$(PackageDir)\Simple.dll"
+            InputAssemblies="@(MergeItems)"
+            ToolPath="util\ilmerge"
+            LogFile=""
+            KeyFile="$(KeyFilePath)"
              />
-
-    <Copy SourceFiles="@(OtherItems)" DestinationFolder ="$(LibraryPackageDir)"/>
   </Target>
 
-  <Target Name="Package" DependsOnTargets="Build;CopyToPackageFolder">
-    <ItemGroup>
-      <LibraryFiles Include="$(LibraryPackageDir)\**" Exclude="$(LibraryPackageDir)\**\*.pdb" />
-    </ItemGroup>
-    
-    <Copy SourceFiles="@(LibraryFiles)" DestinationFolder="$(SourceBaseLibDir)"/>
+  <Target Name="Package" DependsOnTargets="Build;Merge">
+    <MakeDir Directories="$(PackageDir)"/>
+    <Copy SourceFiles="$(PackageDir)\Simple.dll" DestinationFolder="$(SourceBaseLibDir)"/>
     <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile $(PackageDir2)\Simple.exe&quot;"/>
-    <Zip Files="@(LibraryFiles)" ZipFileName="$(PackageDir)\Simple.zip" WorkingDirectory="$(LibraryPackageDir)"/>
+    <Zip Files="$(PackageDir)\Simple.dll" ZipFileName="$(PackageDir)\Simple.zip" WorkingDirectory="$(PackageDir)"/>
   </Target>
 
   <Target Name="Publish" DependsOnTargets="Test;Package">
