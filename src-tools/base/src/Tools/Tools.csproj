@@ -55,7 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataToolBase.cs" />
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
+    <Compile Include="DataToolRunner.cs" />
     <Compile Include="DevTestData\DevTestDataTool.cs" />
     <Compile Include="InitialData\InitialDataTool.cs" />
     <Compile Include="IToolRunner.cs" />

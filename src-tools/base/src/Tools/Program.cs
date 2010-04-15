@@ -24,10 +24,7 @@ namespace Sample.Project.Tools
             var tool = reader.Get<string>("tool");
 
             if (!runners.ContainsKey(tool))
-            {
-                Console.WriteLine("Tool not found: {0}.", tool);
-                return 1;
-            }
+                throw new ArgumentException("Tool not found.", "tool");
 
             runners[tool].Execute(reader);
 
