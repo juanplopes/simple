@@ -5,19 +5,20 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3F9400F2-FA85-464D-ADFC-BCA2BBE65798}</ProjectGuid>
+    <ProjectGuid>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample.Project.Tests</RootNamespace>
-    <AssemblyName>Sample.Project.Tests</AssemblyName>
+    <RootNamespace>Sample.Project</RootNamespace>
+    <AssemblyName>Sample.Project.Server</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>Sample.Project.ServerStarter</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\tests\</OutputPath>
+    <OutputPath>..\..\bin\server\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,41 +26,27 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\tests\</OutputPath>
+    <OutputPath>..\..\bin\server\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="Schema.Metadata, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Schema.Migrator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Schema.Migrator.dll</HintPath>
+      <HintPath>..\..\lib\Schema.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="Simple, Version=1.0.3530.21817, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Simple.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Abstractions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Web.Extensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.Routing">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Web.Services" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -73,31 +60,37 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Helpers\DatabaseFixture.cs" />
-    <Compile Include="ConfiguredFixture.cs" />
-    <Compile Include="CustomAsserts.cs" />
-    <Compile Include="TransactionedFixture.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ServerInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ServerStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SystemService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\01_Contracts.csproj">
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
       <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
-      <Name>01_Contracts</Name>
+      <Name>Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Migrations\99_Migrations.csproj">
-      <Project>{174AC8FD-C467-4B08-9567-9C3A376D1F52}</Project>
-      <Name>99_Migrations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SampleData\04_SampleData.csproj">
-      <Project>{7980805D-169F-4726-BFFB-AAA8462E8196}</Project>
-      <Name>04_SampleData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Server\02_Server.csproj">
-      <Project>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</Project>
-      <Name>02_Server</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_ServiceImpls.log">
+      <DependentUpon>_ServiceImpls.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </None>
+    <None Include="_ServiceImpls.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>_ServiceImpls.log</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Simple.Launcher.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using NHibernate;
-using Simple.DataAccess.Context;
+using Simple.Data.Context;
 using Simple;
-using Sample.Project.SampleData;
 using Simple.Patterns;
 
 namespace Sample.Project.Tests

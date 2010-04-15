@@ -5,9 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Simple;
 using Simple.Patterns;
-using Sample.Project.SampleData;
 using Sample.Project.Environment;
-using Sample.Project.Migrations;
 
 namespace Sample.Project.Tests
 {
@@ -24,7 +22,7 @@ namespace Sample.Project.Tests
     {
         public ConfigurationEnsurer()
         {
-            new Default(Default.Test).StartServer(typeof(ServerStarter).Assembly);
+            new Configurator(Configurator.Test).StartServer(typeof(ServerStarter).Assembly);
         }
 
         public void Ensure() { }

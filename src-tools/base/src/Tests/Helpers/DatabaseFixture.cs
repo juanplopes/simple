@@ -7,7 +7,6 @@ using Simple;
 using Simple.Entities;
 using NHibernate.Tool.hbm2ddl;
 using Simple.Expressions;
-using Sample.Project.SampleData;
 
 namespace Sample.Project.Tests.Helpers
 {

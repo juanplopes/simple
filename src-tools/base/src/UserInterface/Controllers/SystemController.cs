@@ -8,7 +8,7 @@ using Simple.Patterns;
 using Simple;
 using Sample.Project.Services;
 
-namespace Sample.Project.UserInterface.Controllers
+namespace Sample.Project.Web.Controllers
 {
     public class SystemController : Controller
     {

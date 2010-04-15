@@ -5,20 +5,21 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{174AC8FD-C467-4B08-9567-9C3A376D1F52}</ProjectGuid>
+    <ProjectGuid>{CE498308-6668-45D8-8105-063AAA3ADE4B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample.Project.Migrations</RootNamespace>
-    <AssemblyName>Sample.Project.Migrations</AssemblyName>
+    <RootNamespace>Sample.Project.Tools</RootNamespace>
+    <AssemblyName>Sample.Project.Tools</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>Sample.Project.Migrations.MigratorProgram</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\misc\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,17 +27,17 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\misc\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Schema.Migrator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Schema.Migrator, Version=1.0.1004.111, Culture=neutral, PublicKeyToken=91dd93f21f06602c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Schema.Migrator.dll</HintPath>
     </Reference>
-    <Reference Include="Simple, Version=2.0.911.1610, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Simple, Version=2.0.1004.1508, Culture=neutral, PublicKeyToken=71e14f0ea88dd4a5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Simple.dll</HintPath>
     </Reference>
@@ -54,19 +55,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\GlobalInfo.cs">
-      <Link>Properties\GlobalInfo.cs</Link>
-    </Compile>
-    <Compile Include="MigratorProgram.cs" />
+    <Compile Include="DataToolBase.cs" />
+    <Compile Include="DevTestData\DevTestDataTool.cs" />
+    <Compile Include="InitialData\InitialDataTool.cs" />
+    <Compile Include="IToolRunner.cs" />
+    <Compile Include="Migrations\MigratorTool.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTestData\UnitTestDataTool.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="NewMigrationTemplate.log">
+    <None Include="Migrations\NewMigrationTemplate.log">
+      <DependentUpon>NewMigrationTemplate.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>NewMigrationTemplate.tt</DependentUpon>
     </None>
-    <None Include="NewMigrationTemplate.tt">
+    <None Include="Migrations\NewMigrationTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NewMigrationTemplate.log</LastGenOutput>
     </None>
@@ -75,9 +79,13 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\01_Contracts.csproj">
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
       <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
-      <Name>01_Contracts</Name>
+      <Name>Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server\Server.csproj">
+      <Project>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</Project>
+      <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

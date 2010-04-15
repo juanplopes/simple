@@ -26,10 +26,10 @@ namespace Sample.Project.Tests
 
         public static void ThrowsValidation(string property, bool strict, Action action)
         {
-            Throws<ValidationException>(action, e =>
+            Throws<SimpleValidationException>(action, e =>
             {
-                if (strict) Assert.AreEqual(1, e.InvalidValues.Count);
-                Assert.AreEqual(1, e.InvalidValues.Count(x => x.PropertyPath == property));
+                if (strict) Assert.AreEqual(1, e.Errors.Count);
+                Assert.AreEqual(1, e.Errors.Count(x => x.PropertyName == property));
             });
 
         }

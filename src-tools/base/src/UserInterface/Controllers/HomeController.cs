@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Sample.Project.UserInterface.Controllers
+namespace Sample.Project.Web.Controllers
 {
     [HandleError]
     public class HomeController : Controller

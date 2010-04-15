@@ -28,11 +28,10 @@ namespace Simple
 
         public const string Test = "Test";
         public const string Development = "Development";
-        public const string Production = "Production";
 
         public ConfigDef(string env)
         {
-            Environment = env;
+            Environment = env ?? Development;
         }
 
         protected virtual Simply Do { get { return Simply.Do; } }
@@ -74,7 +73,15 @@ namespace Simple
 
         public void StartClient()
         {
+            StartClient(null);
+        }
+
+        public void StartClient(Action<Simply> overrides)
+        {
             ConfigClient();
+
+            if (overrides != null)
+                overrides(Do);
         }
 
         public void StartServer(Assembly asm)

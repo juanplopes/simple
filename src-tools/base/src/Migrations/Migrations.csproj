@@ -5,20 +5,20 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</ProjectGuid>
+    <ProjectGuid>{174AC8FD-C467-4B08-9567-9C3A376D1F52}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample.Project</RootNamespace>
-    <AssemblyName>Sample.Project.Server</AssemblyName>
+    <RootNamespace>Sample.Project.Migrations</RootNamespace>
+    <AssemblyName>Sample.Project.Migrations</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>Sample.Project.ServerStarter</StartupObject>
+    <StartupObject>Sample.Project.Migrations.MigratorProgram</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\server\</OutputPath>
+    <OutputPath>..\..\bin\misc\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,27 +26,24 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\server\</OutputPath>
+    <OutputPath>..\..\bin\misc\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Schema.Metadata, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Schema.Migrator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Schema.Metadata.dll</HintPath>
+      <HintPath>..\..\lib\Schema.Migrator.dll</HintPath>
     </Reference>
-    <Reference Include="Simple, Version=1.0.3530.21817, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Simple, Version=2.0.911.1610, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Simple.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -60,37 +57,28 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
-    <Compile Include="ServerInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ServerStarter.cs" />
+    <Compile Include="MigratorProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SystemService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\01_Contracts.csproj">
-      <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
-      <Name>01_Contracts</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="_ServiceImpls.log">
-      <DependentUpon>_ServiceImpls.tt</DependentUpon>
+    <None Include="NewMigrationTemplate.log">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>NewMigrationTemplate.tt</DependentUpon>
     </None>
-    <None Include="_ServiceImpls.tt">
+    <None Include="NewMigrationTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>_ServiceImpls.log</LastGenOutput>
+      <LastGenOutput>NewMigrationTemplate.log</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Simple.Launcher.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
+      <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
+      <Name>Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

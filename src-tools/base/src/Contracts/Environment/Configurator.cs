@@ -11,24 +11,19 @@ using Sample.Project.Config;
 
 namespace Sample.Project.Environment
 {
-    public class Default : ConfigDef
+    public class Configurator : ConfigDef
     {
         public const string MigrationProvider = "System.Data.SqlClient";
 
-#if DEBUG
-        public const string Main = Development;
-#else
-        public const string Main = Production;
-#endif
-
-        public Default() : this(Main) { }
-        public Default(string env) : base(env) { }
+        public Configurator() : this(null) { }
+        public Configurator(string env) : base(env ?? Development) { }
 
         protected override void InitLocations(FileLocator paths)
         {
             paths.Add(CodeBase("Environment", Environment));
-            paths.Add(CodeBase("..", "..", "cfg"));
+            paths.Add(CodeBase("cfg"));
             paths.Add(CodeBase("..", "cfg"));
+            paths.Add(CodeBase("..", "..", "cfg"));
         }
 
         public override void ConfigClient()

@@ -15,7 +15,7 @@ namespace Sample.Project
     {
         public ServerInstaller()
         {
-            new Default().ConfigClient();
+            new Configurator().ConfigClient();
 
             var cfg = Simply.Do.GetConfig<ApplicationConfig>();
             ServiceName = cfg.Service.Name;

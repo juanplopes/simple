@@ -27,11 +27,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using <#= EntityNamespace #>;
-using NHibernate.Validator.Cfg.Loquacious;
+using FluentValidation;
 
 namespace <#=this.ValidatorNamespace #>
 {
-    public class <#= GetTableClassName() #>Validator : ValidationDef<#="<" + GetTableClassName() + ">" #>
+    public class <#= GetTableClassName() #>Validator : AbstractValidator<#="<" + GetTableClassName() + ">" #>
     {
         public <#= GetTableClassName() #>Validator()
         {
