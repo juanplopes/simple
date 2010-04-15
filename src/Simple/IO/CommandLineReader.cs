@@ -10,13 +10,13 @@ namespace Simple.IO
 {
     public class CommandLineReader
     {
-        private StringDictionary parameters;
+        private IDictionary<string, string> parameters;
 
         public CommandLineReader() : this(Environment.GetCommandLineArgs()) { }
 
         public CommandLineReader(params string[] args)
         {
-            parameters = new StringDictionary();
+            parameters = new Dictionary<string, string>();
             var spliter = new Regex(@"^-{1,2}|^/|=|:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             var remover = new Regex(@"^['""]?(.*?)['""]?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
@@ -98,11 +98,14 @@ namespace Simple.IO
 
         public T Get<T>(string name, T defaultValue)
         {
-            Type realType = (typeof(T).IsGenericType && typeof(Nullable<>) == typeof(T).GetGenericTypeDefinition()) 
-                ? typeof(T).GetGenericArguments()[0] 
-                : typeof(T);
+            var realType = TypesHelper.GetValueTypeIfNullable(typeof(T));
+            string value = null;
 
-            if (parameters.ContainsKey(name))
+            if (parameters.TryGetValue(name, out value))
+            {
+                if (TypesHelper.CanAssign(realType, typeof(Enum)))
+                    return (T)Enum.Parse(realType, value, true);
+
                 try
                 {
                     return (T)Convert.ChangeType(parameters[name], realType);
@@ -111,8 +114,11 @@ namespace Simple.IO
                 {
                     return defaultValue;
                 }
+            }
             else
+            {
                 return defaultValue;
+            }
         }
     }
 }

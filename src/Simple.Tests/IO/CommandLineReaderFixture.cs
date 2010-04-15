@@ -37,10 +37,17 @@ namespace Simple.Tests.IO
         }
 
         [Test]
-        public void CanCanReadInvalidFormatValues()
+        public void CanReadInvalidFormatValues()
         {
             var reader = new CommandLineReader("/a:asdasd");
             Assert.AreEqual(new DateTime(2000, 11, 11), reader.Get("a", new DateTime(2000, 11, 11)));
+        }
+
+        [Test]
+        public void CanReadEnumValues()
+        {
+            var reader = new CommandLineReader("/a:machine");
+            Assert.AreEqual(EnvironmentVariableTarget.Machine, reader.Get<EnvironmentVariableTarget>("a"));
         }
     }
 }

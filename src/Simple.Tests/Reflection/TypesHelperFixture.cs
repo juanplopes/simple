@@ -116,5 +116,23 @@ namespace Simple.Tests.Reflection
             string className = TypesHelper.GetFlatClassName(typeof(Dictionary<string, int>.Enumerator));
             Assert.AreEqual("Enumerator_String_Int32_", className);
         }
+
+        [Test]
+        public void CanGetValueTypeIfItsNotNullable()
+        {
+            Assert.AreEqual(typeof(int), typeof(int).GetValueTypeIfNullable());
+        }
+
+        [Test]
+        public void CanGetValueTypeIfItsNullable()
+        {
+            Assert.AreEqual(typeof(int), typeof(int?).GetValueTypeIfNullable());
+        }
+
+        [Test]
+        public void CanGetValueTypeIfItsReferenceType()
+        {
+            Assert.AreEqual(typeof(string), typeof(string).GetValueTypeIfNullable());
+        }
     }
 }
