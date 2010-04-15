@@ -67,6 +67,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=1.2.0.0, Culture=de, PublicKeyToken=71e14f0ea88dd4a5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.dll</HintPath>
@@ -114,8 +118,6 @@
     <Compile Include="Entities\OrderByCollection.cs" />
     <Compile Include="Entities\OrderByItem.cs" />
     <Compile Include="Entities\Page.cs" />
-    <Compile Include="Entities\ValidationException.cs" />
-    <Compile Include="Entities\ValidationItem.cs" />
     <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
     <Compile Include="Expressions\Editable\EditableExpressionCollection.cs" />
     <Compile Include="Expressions\Editable\EditableMemberBindingCollection.cs" />
@@ -249,6 +251,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Common\ThreadData.cs" />
+    <Compile Include="Validation\EmptyValidator.cs" />
+    <Compile Include="Validation\SimpleValidationException.cs" />
+    <Compile Include="Validation\ValidationItem.cs" />
+    <Compile Include="Validation\ValidationSimpleExtensions.cs" />
+    <Compile Include="Validation\ValidationList.cs" />
+    <Compile Include="Validation\ValidatorEngineFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Simple.snk">

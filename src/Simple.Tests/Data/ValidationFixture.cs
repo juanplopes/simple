@@ -5,7 +5,6 @@ using System.Text;
 using Simple.Tests.Resources;
 using NUnit.Framework;
 using NHibernate;
-using NHibernate.Validator.Engine;
 using Simple.Validation;
 using Simple.IO.Serialization;
 using Simple.Entities;
@@ -23,13 +22,13 @@ namespace Simple.Tests.Data
             c.CompanyName = new string('0', 42);
             c.ContactName = new string('0', 42);
 
-            Assert.Throws<ValidationException>(() => c.Save());
+            Assert.Throws<SimpleValidationException>(() => c.Save());
             MySimply.GetSession().Clear();
-            Assert.Throws<ValidationException>(() => c.Update());
+            Assert.Throws<SimpleValidationException>(() => c.Update());
             MySimply.GetSession().Clear();
-            Assert.Throws<ValidationException>(() => c.SaveOrUpdate());
+            Assert.Throws<SimpleValidationException>(() => c.SaveOrUpdate());
             MySimply.GetSession().Clear();
-            Assert.Throws<ValidationException>(() => c.Persist());
+            Assert.Throws<SimpleValidationException>(() => c.Persist());
             MySimply.GetSession().Clear();
         }
 
@@ -42,15 +41,15 @@ namespace Simple.Tests.Data
             c.CompanyName = new string('0', 42);
             c.ContactName = new string('0', 42);
 
-            var obj = new ValidationException(c.Validate().ToArray());
+            var obj = new SimpleValidationException(c.Validate());
             var bytes = SimpleSerializer.Binary().Serialize(obj);
-            var obj2 = SimpleSerializer.Binary().Deserialize(bytes) as ValidationException;
+            var obj2 = SimpleSerializer.Binary().Deserialize(bytes) as SimpleValidationException;
 
-            Assert.IsNotNull(obj2.Items);
-            Assert.AreEqual(obj.Items.Count, obj2.Items.Count);
+            Assert.IsNotNull(obj2.Errors);
+            Assert.AreEqual(obj.Errors.Count(), obj2.Errors.Count());
         }
 
-        protected void GenericTest(Func<Customer, IList<ValidationItem>> func, params string[] props)
+        protected void GenericTest(Func<Customer, ValidationList> func, params string[] props)
         {
             var c = Customer.ListAll(1).FirstOrDefault();
             Assert.IsNotNull(c);
@@ -80,7 +79,7 @@ namespace Simple.Tests.Data
         [Test]
         public void TestServicePropertyValidation()
         {
-            GenericTest(x => Customer.Service.ValidateProperty("CompanyName", x.CompanyName),
+            GenericTest(x => Customer.Service.ValidateProperty(x, "CompanyName"),
                 "CompanyName");
         }
 
@@ -94,7 +93,7 @@ namespace Simple.Tests.Data
         public void TestValidateInstanceByProperty()
         {
             Region r = new Region() { Description = new string('a', 101) };
-            Assert.Throws<ValidationException>(() => r.Validate().AndThrow());
+            Assert.Throws<SimpleValidationException>(() => r.Validate().AndThrow());
             new Region() { Description = new string('a', 99) }.Validate().AndThrow();
 
         }

@@ -9,7 +9,7 @@ using NHibernate;
 using NHibernate.SqlTypes;
 using Simple.Entities;
 using Simple.Data;
-using NHibernate.Validator.Cfg.Loquacious;
+using FluentValidation;
 
 namespace Simple.Tests.Resources
 {
@@ -59,12 +59,12 @@ namespace Simple.Tests.Resources
             }
         }
 
-        public class Validator : ValidationDef<Customer>
+        public class Validator : AbstractValidator<Customer>
         {
             public Validator()
             {
-                Define(x => x.CompanyName).MaxLength(40);
-                Define(x => x.ContactName).MaxLength(30);
+                RuleFor(x => x.CompanyName).Length(0, 40);
+                RuleFor(x => x.ContactName).Length(0, 30);
             }
         }
     }

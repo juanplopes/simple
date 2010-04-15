@@ -17,6 +17,7 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using System.Reflection;
 using System.IO;
+using NHibernate.ByteCode.Castle;
 
 namespace Simple.Tests
 {
@@ -44,7 +45,8 @@ namespace Simple.Tests
 
             simply.Configure
                 .NHibernteFluently(x=>
-                    x.Database(SQLiteConfiguration.Standard.UsingFile(temp)))
+                    x.Database(SQLiteConfiguration.Standard.UsingFile(temp)
+                     .ProxyFactoryFactory<ProxyFactoryFactory>()))
                .MappingFromAssemblyOf<Category.Map>()
                .Validator(typeof(Category.Map).Assembly)
                .DefaultHost();

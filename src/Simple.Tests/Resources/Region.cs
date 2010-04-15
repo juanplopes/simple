@@ -5,7 +5,7 @@ using System.Text;
 using Simple.Config;
 using Simple.Entities;
 using FluentNHibernate.Mapping;
-using NHibernate.Validator.Cfg.Loquacious;
+using FluentValidation;
 
 namespace Simple.Tests.Resources
 {
@@ -28,12 +28,12 @@ namespace Simple.Tests.Resources
             }
         }
 
-        public class Validator : ValidationDef<Region>
+        public class Validator : AbstractValidator<Region>
         {
             public Validator()
             {
-                ValidateInstance.PropertyBy(x => x.Description,
-                    x => x.Description != null && x.Description.Length < 100);
+                RuleFor(x=>x.Description).Must((m,x)=>
+                    m.Description != null && x.Length < 100);
             }
         }
     }
