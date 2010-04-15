@@ -3,7 +3,6 @@
     <GCProjectName>simpledotnet</GCProjectName>
 
     <LibDir>lib\</LibDir>
-    <NHLibDir>$(LibDir)\Nhibernate</NHLibDir>
     
     <BuildDir>build\</BuildDir>
     <BuildBase>..\..\</BuildBase>
@@ -76,19 +75,31 @@
 
   <Target Name="MergeNH">
     <ItemGroup>
-      <NHibernateItems Include="$(NHLibDir)\NHibernate.dll"/>
-      <NHibernateItems Include="$(NHLibDir)\Castle.Core.dll"/>
-      <NHibernateItems Include="$(NHLibDir)\Castle.DynamicProxy2.dll"/>
-      <NHibernateItems Include="$(NHLibDir)\Antlr3.Runtime.dll"/>
-      <NHibernateItems Include="$(NHLibDir)\NHibernate.Validator.dll"/>
-      <NHibernateItems Include="$(NHLibDir)\NHibernate.Validator.Specific.dll"/>
-      <NHibernateItems Include="$(NHLibDir)\NHibernate.ByteCode.Castle.dll"/>
-      <NHibernateItems Include="$(NHLibDir)\FluentNHibernate.dll"/>
-      <NHibernateItems Include="$(NHLibDir)\Iesi.Collections.dll"/>
-      <NHibernateItems Include="$(NHLibDir)\Remotion.Data.Linq.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\NHibernate.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\Castle.Core.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\Castle.DynamicProxy2.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\Antlr3.Runtime.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\NHibernate.ByteCode.Castle.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\FluentNHibernate.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\Iesi.Collections.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\Remotion.Data.Linq.dll"/>
     </ItemGroup>
     <ILMerge OutputFile="$(LibDir)\Simple.NHibernate.dll"
             InputAssemblies="@(NHibernateItems)"
+            ToolPath="util\ilmerge"
+            LogFile=""
+            KeyFile="$(KeyFilePath)"
+             />
+  </Target>
+
+  <Target Name="MergeFluentValidation">
+    <ItemGroup>
+      <FluentValidationItems Include="$(LibDir)\FluentValidation\FluentValidation.dll"/>
+      <FluentValidationItems Include="$(LibDir)\FluentValidation\**\*.dll" Exclude="$(LibDir)\FluentValidation\FluentValidation.dll"/>
+    </ItemGroup>
+    
+    <ILMerge OutputFile="$(LibDir)\FluentValidation.dll"
+            InputAssemblies="@(FluentValidationItems)"
             ToolPath="util\ilmerge"
             LogFile=""
             KeyFile="$(KeyFilePath)"
