@@ -111,6 +111,7 @@
       <MergeItems Include="$(BuildDir)\Simple.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.Data.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.NHibernate.dll"/>
+      <MergeItems Include="$(BuildDir)\FluentValidation.dll"/>
       <MergeItems Include="$(BuildDir)\log4net.dll"/>
     </ItemGroup>
 
