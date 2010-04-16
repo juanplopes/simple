@@ -8,7 +8,7 @@ using Simple.Entities;
 using NHibernate.Tool.hbm2ddl;
 using Simple.Expressions;
 
-namespace Sample.Project.Tests.Helpers
+namespace Sample.Project.Tests.Infra
 {
     public class DatabaseFixture : TransactionedFixture
     {

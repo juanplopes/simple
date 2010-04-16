@@ -63,20 +63,20 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
-    <Compile Include="Helpers\DatabaseFixture.cs" />
+    <Compile Include="Infra\DatabaseFixture.cs" />
     <Compile Include="ConfiguredFixture.cs" />
     <Compile Include="CustomAsserts.cs" />
     <Compile Include="TransactionedFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj">
+    <ProjectReference Include="..\Contracts\01_Contracts.csproj">
       <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
-      <Name>Contracts</Name>
+      <Name>01_Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Server\Server.csproj">
+    <ProjectReference Include="..\Server\02_Server.csproj">
       <Project>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</Project>
-      <Name>Server</Name>
+      <Name>02_Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
