@@ -13,8 +13,6 @@ namespace Sample.Project.Environment
 {
     public class Configurator : ConfigDef
     {
-        public const string MigrationProvider = "System.Data.SqlClient";
-
         public Configurator() : this(null) { }
         public Configurator(string env) : base(env ?? Development) { }
 
@@ -26,7 +24,7 @@ namespace Sample.Project.Environment
             paths.Add(CodeBase("..", "..", "cfg"));
         }
 
-        public override void ConfigClient()
+        public override ConfigDef ConfigClient()
         {
             ConfigFile(x => x.Log4net(), "Log4net.config");
             ConfigFile(x => x.The<ApplicationConfig>(), "Application.config");
@@ -40,14 +38,16 @@ namespace Sample.Project.Environment
                 ConfigFile(x => x.Remoting(), "Remoting.config");
                 Do.AddClientHook(x => new HttpIdentityInjector(x));
             }
+            return this;
         }
 
-        public override void ConfigServer()
+        public override ConfigDef ConfigServer()
         {
             ConfigFile(x => x.NHibernate(), "NHibernate.config");
             Config(x => x.Validator(Assembly.GetExecutingAssembly()));
             Do.AddServerHook(x => new TransactionCallHook(x));
             Do.AddServerHook(x => new DefaultCallHook(x, null));
+            return this;
         }
     }
 }

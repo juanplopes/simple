@@ -20,5 +20,8 @@ namespace Sample.Project.Config
 
         [XmlElement("service")]
         public ServiceConfig Service { get; set; }
+
+        [XmlElement("ado-provider")]
+        public string ADOProvider { get; set; }
     }
 }
