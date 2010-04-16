@@ -48,6 +48,16 @@
 				.OfType<XmlNode>().Where(x=>x.Attributes["name"].Value=="connection.connection_string")
 				.FirstOrDefault().InnerXml.Trim();
 	}
+
+	public static string GetMigrationProvider(string applicationConfig) 
+	{
+		XmlDocument xml = new XmlDocument();
+        xml.Load(GetProjectPath() + "\\" + applicationConfig);
+
+        return  xml.GetElementsByTagName("ado-provider")
+				.OfType<XmlNode>().FirstOrDefault().InnerXml.Trim();
+	}
+	
 	
 	/// <summary>
 	/// Disposes resources owned by this <see cref="GeneratedTextTransformation"/>

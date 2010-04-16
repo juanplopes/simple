@@ -3,24 +3,27 @@
     <SourceDir>src</SourceDir>
     <BuildDir>build</BuildDir>
 
-    <BuildBase>..\..\</BuildBase>
-
     <Configdir>$(BuildDir)\cfg\</Configdir>
 
     <ServerDir>$(BuildDir)\server\</ServerDir>
-    <ServerBuildDir>$(BuildBase)$(ServerDir)</ServerBuildDir>
+    <ServerBuildDir>$(MSBuildProjectDirectory)\$(ServerDir)</ServerBuildDir>
 
     <UIDir>$(BuildDir)\ui\</UIDir>
     <UISrcDir>$(BuildDir)\ui-src\</UISrcDir>
-    <UISrcBuildDir>$(BuildBase)$(UISrcDir)</UISrcBuildDir>
+    <UISrcBuildDir>$(MSBuildProjectDirectory)\$(UISrcDir)</UISrcBuildDir>
     <UIVirtualPath>/</UIVirtualPath>
 
     <ProductVersion>2.0</ProductVersion>
     <Configuration>Release</Configuration>
 
-    <TestAssembly>$(ServerDir)\Sample.Project.Tests.exe</TestAssembly>
-    <MigrationsAssembly>$(ServerDir)\Sample.Project.Migrations.exe</MigrationsAssembly>
-    <SamplesAssembly>$(ServerDir)\Sample.Project.SampleData.exe</SamplesAssembly>
+    <TestAssembly>$(ServerDir)\Sample.Project.Tests.dll</TestAssembly>
+
+    <ToolsAssembly>$(ServerDir)\Sample.Project.Tools.exe</ToolsAssembly>
+    
+    <ToolMigratorCommand>$(ToolsAssembly) /tool:Migrator</ToolMigratorCommand>
+    <ToolInitialDataCommand>$(ToolsAssembly) /tool:InitialData</ToolInitialDataCommand>
+    <ToolUnitTestDataCommand>$(ToolsAssembly) /tool:UnitTestData</ToolUnitTestDataCommand>
+    <ToolDevTestDataCommand>$(ToolsAssembly) /tool:DevTestData</ToolDevTestDataCommand>
   </PropertyGroup>
 
   <ItemGroup>
@@ -55,7 +58,7 @@
   </Target>
 
   <Target Name="Build" DependsOnTargets="GenerateAssemblyInfo">
-    <MSBuild Projects="@(SolutionFile)" 
+    <MSBuild Projects="@(SolutionFile)"
              Properties="OutDir=$(ServerBuildDir);WebProjectOutputDir=$(UISrcBuildDir);Configuration=$(Configuration)"/>
   </Target>
 
@@ -69,7 +72,7 @@
 
   <Target Name="PreCompileUI" DependsOnTargets="Build">
     <DeleteTree Directories="$(UIDir)" />
-	<AspNetCompiler PhysicalPath="$(UISrcDir)" VirtualPath="$(UIVirtualPath)" TargetPath="$(UIDir)"/>
+    <AspNetCompiler PhysicalPath="$(UISrcDir)" VirtualPath="$(UIVirtualPath)" TargetPath="$(UIDir)"/>
   </Target>
 
   <Target Name="Package" DependsOnTargets="Rebuild;PreCompileUI">
@@ -80,32 +83,36 @@
       <PackageConfigBase Include="$(ServerDir)\Environment\Production\*.*"/>
     </ItemGroup>
 
-  <MakeDir Directories="$(ConfigDir)"/>
+    <MakeDir Directories="$(ConfigDir)"/>
     <Copy SourceFiles="@(PackageConfigBase)" DestinationFolder="$(ConfigDir)"/>
     <Delete Files ="@(PackageFilesToClean)" ContinueOnError="true" />
     <RemoveDir Directories="@(PackageDirsToClean)" Condition="true" />
   </Target>
 
-   <Target Name="CIBuild">
+  <Target Name="CIBuild">
     <CallTarget Targets="Rebuild;Prepare;Test;Package;PreCompileUI"/>
   </Target>
 
   <Target Name="Prepare">
-    <CallTarget Targets="Db:Migrate;Db:SampleData;Db:TestPrepare"/>
+    <CallTarget Targets="Migrate;InitialData;TestPrepare"/>
   </Target>
 
-  <Target Name ="Db:TestPrepare" DependsOnTargets="Build">
-    <Exec Command="$(MigrationsAssembly) /e:Test /v:1"></Exec>
-    <Exec Command="$(MigrationsAssembly) /e:Test"></Exec>
-    <Exec Command="$(SamplesAssembly) /e:Test"></Exec>
-    <Exec Command="$(TestAssembly) /e:Test"></Exec>
-  </Target>
-  
-  <Target Name="Db:Migrate" DependsOnTargets="Build">
-    <Exec Command="$(MigrationsAssembly)"></Exec>
+  <Target Name ="TestPrepare" DependsOnTargets="Build">
+    <Exec Command="$(ToolMigratorCommand) /env:Test /version:1"></Exec>
+    <Exec Command="$(ToolMigratorCommand) /env:Test"></Exec>
+    <Exec Command="$(ToolInitialDataCommand) /env:Test"></Exec>
+    <Exec Command="$(ToolUnitTestDataCommand) /env:Test"></Exec>
   </Target>
 
-  <Target Name="Db:SampleData" DependsOnTargets="Build">
-    <Exec Command="$(SamplesAssembly)"></Exec>
+  <Target Name="Migrate" DependsOnTargets="Build">
+    <Exec Command="$(ToolMigratorCommand) /env:Test"></Exec>
+  </Target>
+
+  <Target Name="InitialData" DependsOnTargets="Build">
+    <Exec Command="$(ToolInitialDataCommand)"></Exec>
+  </Target>
+
+  <Target Name="TestDevData" DependsOnTargets="Build">
+    <Exec Command="$(ToolTestDevDataCommand)"></Exec>
   </Target>
 </Project>

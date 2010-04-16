@@ -12,6 +12,8 @@
 
     var generator = new GeneratorBase(template);
 	generator.ConnectionString = GetNHConnectionString(@"..\Contracts\Environment\Development\NHibernate.config");
+	generator.ProviderName = GetMigrationProvider(@"..\Contracts\Environment\Development\Application.config");
+
     generator.Run();
 #>
 <#+

@@ -41,24 +41,27 @@ namespace Simple
             return Locations.Find(file);
         }
 
-        protected void Config(Action<SimplyConfigure> action)
+        protected ConfigDef Config(Action<SimplyConfigure> action)
         {
             action(Do.Configure);
+            return this;
         }
 
-        protected void ConfigFile<T>(Func<SimplyConfigure, IConfiguratorInterface<T, SimplyConfigure>> func, string file)
+        protected ConfigDef ConfigFile<T>(Func<SimplyConfigure, IConfiguratorInterface<T, SimplyConfigure>> func, string file)
         {
             func(Do.Configure).FromXmlFile(File(file));
+            return this;
         }
 
-        protected void ConfigInstance<T>(Func<SimplyConfigure, IConfiguratorInterface<T, SimplyConfigure>> func, T instance)
+        protected ConfigDef ConfigInstance<T>(Func<SimplyConfigure, IConfiguratorInterface<T, SimplyConfigure>> func, T instance)
         {
             func(Do.Configure).FromInstance(instance);
+            return this;
         }
 
         protected abstract void InitLocations(FileLocator paths);
-        public abstract void ConfigClient();
-        public abstract void ConfigServer();
+        public abstract ConfigDef ConfigClient();
+        public abstract ConfigDef ConfigServer();
 
         protected string CodeBase(params string[] pathComponents)
         {
@@ -71,35 +74,41 @@ namespace Simple
             return ret;
         }
 
-        public void StartClient()
+        public ConfigDef StartClient()
         {
-            StartClient(null);
+            return StartClient(null);
         }
 
-        public void StartClient(Action<Simply> overrides)
+        public ConfigDef StartClient(Action<Simply> overrides)
         {
             ConfigClient();
 
             if (overrides != null)
                 overrides(Do);
+
+            return this;
+
         }
 
-        public void StartServer(Assembly asm)
+        public ConfigDef StartServer(Assembly asm)
         {
             StartServer(asm, null);
+            return this;
         }
 
-        public void StartServer<T>()
+        public ConfigDef StartServer<T>()
         {
             StartServer<T>(null);
+            return this;
         }
 
-        public void StartServer<T>(Action<Simply> overrides)
+        public ConfigDef StartServer<T>(Action<Simply> overrides)
         {
             StartServer(typeof(T).Assembly, overrides);
+            return this;
         }
 
-        public void StartServer(Assembly asm, Action<Simply> overrides)
+        public ConfigDef StartServer(Assembly asm, Action<Simply> overrides)
         {
             StartClient();
             ConfigServer();
@@ -108,6 +117,7 @@ namespace Simple
                 overrides(Do);
 
             Do.InitServer(asm);
+            return this;
         }
 
     }

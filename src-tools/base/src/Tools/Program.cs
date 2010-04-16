@@ -23,8 +23,11 @@ namespace Sample.Project.Tools
             var reader = new CommandLineReader(args);
             var tool = reader.Get<string>("tool");
 
-            if (!runners.ContainsKey(tool))
-                throw new ArgumentException("Tool not found.", "tool");
+            if (tool == null || !runners.ContainsKey(tool))
+            {
+                Console.WriteLine("Avaliable: {0}", string.Join(", ", runners.Keys.ToArray()));
+                return 1;
+            }
 
             runners[tool].Execute(reader);
 

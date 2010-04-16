@@ -25,9 +25,9 @@ public class GeneratorBase : Generator
 		IncludedTables.Add("%");
 		ExcludedTables.Add("SchemaInfo");
 		
-		ProviderName = "System.Data.SqlClient";
 		Template = template;
 		NHibernateFilePath= @"Environment\Development\NHibernate.config";
+		ApplicationFilePath =  @"Environment\Development\Application.config";
 	}
 	
     #region ' Properties '
@@ -38,6 +38,7 @@ public class GeneratorBase : Generator
 	public IList<string> IncludedTables { get; set; }
     public IList<string> ExcludedTables { get; set; }
 	public string NHibernateFilePath { get; set; }
+	public string ApplicationFilePath { get; set; }
 	
     public string AssemblyName
     {
@@ -49,6 +50,7 @@ public class GeneratorBase : Generator
     protected override void RunCore()
     {
 		this.ConnectionString = this.ConnectionString ?? GetNHConnectionString(NHibernateFilePath);
+		this.ProviderName = this.ProviderName ?? GetMigrationProvider(ApplicationFilePath);
 		
         var tables = new DbSchema(this.ProviderName, this.ConnectionString)
 			.GetTables(IncludedTables, ExcludedTables);

@@ -101,9 +101,9 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj">
+    <ProjectReference Include="..\Contracts\01_Contracts.csproj">
       <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
-      <Name>Contracts</Name>
+      <Name>01_Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
