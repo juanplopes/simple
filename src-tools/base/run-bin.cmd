@@ -1,1 +1,1 @@
-util\Simple.Launcher bin\server Sample.Project.Server.exe
+@util\Simple.Launcher bin\server Sample.Project.Server.exe
