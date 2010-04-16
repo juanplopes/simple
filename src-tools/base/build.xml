@@ -105,7 +105,7 @@
   </Target>
 
   <Target Name="Migrate" DependsOnTargets="Build">
-    <Exec Command="$(ToolMigratorCommand) /env:Test"></Exec>
+    <Exec Command="$(ToolMigratorCommand)"></Exec>
   </Target>
 
   <Target Name="InitialData" DependsOnTargets="Build">

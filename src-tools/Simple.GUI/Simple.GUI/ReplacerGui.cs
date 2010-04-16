@@ -16,6 +16,7 @@ namespace Simple.GUI
         public ReplacerGui()
         {
             InitializeComponent();
+            txtNamespace_TextChanged(this, new EventArgs());
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -24,13 +25,14 @@ namespace Simple.GUI
             string message = "Replacer will be executed at: " + path + Environment.NewLine + "Are you sure?";
             if (MessageBox.Show(message, "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                ReplacerLogic.DefaultExecute(path, "Sample.Project", txtNamespace.Text.Trim());
-                ReplacerLogic.DefaultExecute(path, "SampleProject", txtCatalog.Text.Trim());
-                ReplacerLogic.DefaultExecute(path, "sample-project", txtIISUrl.Text.Trim());
-                ReplacerLogic.DefaultExecute(path, "sampleprojectsvc", txtSvcName.Text.Trim());
-                ReplacerLogic.DefaultExecute(path, "sampleprojectSchemaInfo", txtSchemaInfo.Text.Trim());
+                ReplacerLogic.DefaultExecute(path, "Sample.Project", txtNamespace.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "SampleProject", txtCatalog.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "sample-project", txtIISUrl.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "sampleprojectsvc", txtSvcName.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "SampleProject_Meta", txtSchemaInfo.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "Solution.sln", txtNamespace.Text.Trim() + ".sln", true);
 
-                MessageBox.Show("Done!", "Message");
+                MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
         }
@@ -61,7 +63,7 @@ namespace Simple.GUI
             txtCatalog.Text = txtNamespace.Text.Replace(".", "");
             txtIISUrl.Text = txtNamespace.Text.Replace(".", "-").ToLower();
             txtSvcName.Text = txtNamespace.Text.Replace(".", "").ToLower() + "svc";
-            txtSchemaInfo.Text = txtNamespace.Text.Replace(".", "") + "SchemaInfo";
+            txtSchemaInfo.Text = txtNamespace.Text.Replace(".", "") + "_Meta";
         }
 
         private void pictureBox1_DoubleClick(object sender, EventArgs e)

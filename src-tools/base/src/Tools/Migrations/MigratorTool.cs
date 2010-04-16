@@ -25,7 +25,7 @@ namespace Sample.Project.Tools.Migrations
             new DbMigrator(
                 Simply.Do.GetConfig<ApplicationConfig>().ADOProvider, 
                 Simply.Do.GetConnectionString(),
-                GetType().Assembly, true).Migrate(version, "sampleprojectSchemaInfo");
+                GetType().Assembly, true).Migrate(version, "SampleProject_Meta");
 
             return 0;
         }

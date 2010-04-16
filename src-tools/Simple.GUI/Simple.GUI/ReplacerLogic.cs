@@ -9,14 +9,14 @@ namespace Simple.GUI
 {
     public class ReplacerLogic
     {
-        public static void DefaultExecute(string path, string find, string replace)
+        public static void DefaultExecute(string path, string find, string replace, bool inName)
         {
-            Execute(path, find, replace,
+            Execute(path, find, replace, inName,
                 "cmd", "csproj", "sln", "xml", "txt", "config", 
                 "cs", "aspx", "resx", "tt", "ttinclude", "asax", "sql");
         }
 
-        public static void Execute(string path, string find, string replace, params string[] extensions)
+        public static void Execute(string path, string find, string replace, bool inName, params string[] extensions)
         {
             foreach (string s in extensions)
             {
@@ -30,6 +30,16 @@ namespace Simple.GUI
                     {
                         content = content.Replace(find, replace);
                         File.WriteAllText(file, content);
+                    }
+
+                    if (inName)
+                    {
+                        string name = Path.GetFileName(file);
+                        if (name.Contains(find))
+                        {
+                            name = Path.Combine(Path.GetDirectoryName(file), name.Replace(find, replace));
+                            File.Move(file, name);
+                        }
                     }
                 }
             }

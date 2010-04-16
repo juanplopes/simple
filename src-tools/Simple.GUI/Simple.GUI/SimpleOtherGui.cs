@@ -24,7 +24,7 @@ namespace Simple.GUI
             string message = "Replacer will be executed at: " + path + Environment.NewLine + "Are you sure?";
             if (MessageBox.Show(message, "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                ReplacerLogic.DefaultExecute(path, textBox1.Text, textBox2.Text);
+                ReplacerLogic.DefaultExecute(path, textBox1.Text, textBox2.Text, checkBox1.Checked);
                 MessageBox.Show("Done!", "Message");
                 this.Close();
             }

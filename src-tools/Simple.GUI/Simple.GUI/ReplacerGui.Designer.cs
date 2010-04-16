@@ -64,7 +64,7 @@
             this.txtNamespace.Location = new System.Drawing.Point(12, 274);
             this.txtNamespace.Name = "txtNamespace";
             this.txtNamespace.Size = new System.Drawing.Size(375, 28);
-            this.txtNamespace.TabIndex = 2;
+            this.txtNamespace.TabIndex = 0;
             this.txtNamespace.Text = "Sample.Project";
             this.txtNamespace.TextChanged += new System.EventHandler(this.txtNamespace_TextChanged);
             // 
@@ -76,7 +76,7 @@
             this.txtIISUrl.Location = new System.Drawing.Point(213, 365);
             this.txtIISUrl.Name = "txtIISUrl";
             this.txtIISUrl.Size = new System.Drawing.Size(359, 28);
-            this.txtIISUrl.TabIndex = 4;
+            this.txtIISUrl.TabIndex = 2;
             this.txtIISUrl.Text = "sample-project";
             // 
             // label1
@@ -109,7 +109,7 @@
             this.btnOk.Location = new System.Drawing.Point(393, 274);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(56, 28);
-            this.btnOk.TabIndex = 7;
+            this.btnOk.TabIndex = 5;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -120,7 +120,7 @@
             this.btnMore.Location = new System.Drawing.Point(516, 274);
             this.btnMore.Name = "btnMore";
             this.btnMore.Size = new System.Drawing.Size(56, 28);
-            this.btnMore.TabIndex = 8;
+            this.btnMore.TabIndex = 7;
             this.btnMore.Text = "More";
             this.btnMore.UseVisualStyleBackColor = true;
             this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
@@ -145,7 +145,7 @@
             this.txtCatalog.Location = new System.Drawing.Point(213, 330);
             this.txtCatalog.Name = "txtCatalog";
             this.txtCatalog.Size = new System.Drawing.Size(359, 28);
-            this.txtCatalog.TabIndex = 10;
+            this.txtCatalog.TabIndex = 1;
             this.txtCatalog.Text = "SampleProject";
             // 
             // label3
@@ -168,7 +168,7 @@
             this.txtSvcName.Location = new System.Drawing.Point(213, 400);
             this.txtSvcName.Name = "txtSvcName";
             this.txtSvcName.Size = new System.Drawing.Size(359, 28);
-            this.txtSvcName.TabIndex = 4;
+            this.txtSvcName.TabIndex = 3;
             this.txtSvcName.Text = "sampleprojectsvc";
             // 
             // label4
@@ -180,7 +180,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(195, 30);
             this.label4.TabIndex = 13;
-            this.label4.Text = "SchemaInfo:";
+            this.label4.Text = "Meta table:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtSchemaInfo
@@ -191,8 +191,8 @@
             this.txtSchemaInfo.Location = new System.Drawing.Point(213, 435);
             this.txtSchemaInfo.Name = "txtSchemaInfo";
             this.txtSchemaInfo.Size = new System.Drawing.Size(359, 28);
-            this.txtSchemaInfo.TabIndex = 12;
-            this.txtSchemaInfo.Text = "sampleprojectSchemaInfo";
+            this.txtSchemaInfo.TabIndex = 4;
+            this.txtSchemaInfo.Text = "SampleProject_Met";
             // 
             // ReplacerGui
             // 
