@@ -5,7 +5,7 @@ using System.Text;
 using Sample.Project.Tools.Migrations;
 using Sample.Project.Tools.UnitTestData;
 using Sample.Project.Tools.DevTestData;
-using Sample.Project.Tools.SampleData;
+using Sample.Project.Tools.InitialData;
 using Simple.IO;
 
 namespace Sample.Project.Tools

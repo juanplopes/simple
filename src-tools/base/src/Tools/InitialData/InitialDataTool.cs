@@ -7,7 +7,7 @@ using Sample.Project.Environment;
 using Simple.IO;
 using Sample.Project.Tools;
 
-namespace Sample.Project.Tools.SampleData
+namespace Sample.Project.Tools.InitialData
 {
     public class InitialDataTool : DataToolRunner
     {

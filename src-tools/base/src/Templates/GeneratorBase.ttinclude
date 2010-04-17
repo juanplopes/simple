@@ -23,7 +23,7 @@ public class GeneratorBase : Generator
 		IncludedTables = new List<string>();
 		
 		IncludedTables.Add("%");
-		ExcludedTables.Add("SampleProject_Meta");
+		ExcludedTables.Add("SchemaInfo");
 		
 		Template = template;
 		NHibernateFilePath= @"Environment\Development\NHibernate.config";

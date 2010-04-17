@@ -29,7 +29,7 @@ namespace Simple.GUI
                 ReplacerLogic.DefaultExecute(path, "SampleProject", txtCatalog.Text.Trim(), false);
                 ReplacerLogic.DefaultExecute(path, "sample-project", txtIISUrl.Text.Trim(), false);
                 ReplacerLogic.DefaultExecute(path, "sampleprojectsvc", txtSvcName.Text.Trim(), false);
-                ReplacerLogic.DefaultExecute(path, "SampleProject_Meta", txtSchemaInfo.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "SchemaInfo", txtSchemaInfo.Text.Trim(), false);
                 ReplacerLogic.DefaultExecute(path, "Solution.sln", txtNamespace.Text.Trim() + ".sln", true);
 
                 MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
