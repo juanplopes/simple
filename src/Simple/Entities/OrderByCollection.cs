@@ -12,13 +12,13 @@ namespace Simple.Entities
     {
         public OrderBy<T> Asc(Expression<Func<T, object>> expr)
         {
-            this.Add(new OrderByItem(EditableExpression.CreateEditableExpression(expr), false));
+            this.Add(new OrderByItem(EditableExpression.Create(expr), false));
             return this;
         }
 
         public OrderBy<T> Desc(Expression<Func<T, object>> expr)
         {
-            this.Add(new OrderByItem(EditableExpression.CreateEditableExpression(expr), true));
+            this.Add(new OrderByItem(EditableExpression.Create(expr), true));
             return this;
         }
 

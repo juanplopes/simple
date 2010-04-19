@@ -30,7 +30,7 @@ namespace Simple.Expressions.Editable
         }
 
         public EditableTypeBinaryExpression(TypeBinaryExpression typeBinEx) 
-            : this(EditableExpression.CreateEditableExpression(typeBinEx.Expression), typeBinEx.TypeOperand)
+            : this(EditableExpression.Create(typeBinEx.Expression), typeBinEx.TypeOperand)
         { }
 
         public EditableTypeBinaryExpression(EditableExpression expression, Type type)

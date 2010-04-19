@@ -25,7 +25,7 @@ namespace Simple.Expressions.Editable
         public EditableMemberAssignment(MemberAssignment member)
             : base(member.BindingType, member.Member)
         {
-            Expression = EditableExpression.CreateEditableExpression(member.Expression);
+            Expression = EditableExpression.Create(member.Expression);
         }
 
         // Methods

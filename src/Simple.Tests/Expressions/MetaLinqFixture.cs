@@ -43,7 +43,7 @@ namespace Simple.Tests.Expressions
 
         public void TestItInternalInternal<T, TRet>(Expression<T> expr, Func<T, TRet> howToCall, ISimpleSerializer serializer)
         {
-            var expr1 = EditableExpression.CreateEditableExpression(expr, true);
+            var expr1 = EditableExpression.Create(expr, true);
             byte[] data = serializer.Serialize(expr1);
             EditableExpression expr2 = (EditableExpression)serializer.Deserialize(data);
             T func2 = ((Expression<T>)expr2.ToExpression()).Compile();
@@ -157,7 +157,7 @@ namespace Simple.Tests.Expressions
         public void TestGeneratedQuoteSerialization()
         {
             Expression<Func<int, int>> original = x => x * 2;
-            var expr1 = EditableExpression.CreateEditableExpression(Expression.Quote(original));
+            var expr1 = EditableExpression.Create(Expression.Quote(original));
 
             var bytes = SimpleSerializer.Binary().Serialize(expr1);
             var expr2 = (EditableExpression)SimpleSerializer.Binary().Deserialize(bytes);

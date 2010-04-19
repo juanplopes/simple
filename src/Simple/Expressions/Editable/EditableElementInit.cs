@@ -43,7 +43,7 @@ namespace Simple.Expressions.Editable
             AddMethod = elmInit.AddMethod;
             foreach (Expression ex in elmInit.Arguments)
             {
-                Arguments.Add(EditableExpression.CreateEditableExpression(ex));
+                Arguments.Add(EditableExpression.Create(ex));
             }
         }
 

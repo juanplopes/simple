@@ -22,9 +22,9 @@ namespace Simple.Expressions.Editable
         public EditableConditionalExpression(ConditionalExpression condEx)
         {
             NodeType = condEx.NodeType;
-            Test = EditableExpression.CreateEditableExpression(condEx.Test);
-            IfTrue = EditableExpression.CreateEditableExpression(condEx.IfTrue);
-            IfFalse = EditableExpression.CreateEditableExpression(condEx.IfFalse);
+            Test = EditableExpression.Create(condEx.Test);
+            IfTrue = EditableExpression.Create(condEx.IfTrue);
+            IfFalse = EditableExpression.Create(condEx.IfFalse);
         }
 
         public EditableConditionalExpression(ExpressionType nodeType, EditableExpression test, EditableExpression ifTrue, EditableExpression ifFalse)

@@ -28,7 +28,7 @@ namespace Simple.Expressions.Editable
         public EditableListInitExpression(ListInitExpression listInit)
             : this()
         {
-            NewExpression = EditableExpression.CreateEditableExpression(listInit.NewExpression);
+            NewExpression = EditableExpression.Create(listInit.NewExpression);
             foreach (ElementInit e in listInit.Initializers)
             {
                 Initializers.Add(new EditableElementInit(e));

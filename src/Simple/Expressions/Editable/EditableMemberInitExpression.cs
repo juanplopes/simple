@@ -38,7 +38,7 @@ namespace Simple.Expressions.Editable
         }
 
         public EditableMemberInitExpression(MemberInitExpression membInit)
-            : this(EditableExpression.CreateEditableExpression(membInit.NewExpression) as EditableNewExpression, membInit.Bindings)
+            : this(EditableExpression.Create(membInit.NewExpression) as EditableNewExpression, membInit.Bindings)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Simple.Expressions.Editable
         }
 
         public EditableMemberInitExpression(NewExpression newRawEx, IEnumerable<MemberBinding> bindings)
-            : this(EditableExpression.CreateEditableExpression(newRawEx) as EditableNewExpression, bindings)
+            : this(EditableExpression.Create(newRawEx) as EditableNewExpression, bindings)
         {
         }
 

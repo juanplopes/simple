@@ -29,9 +29,9 @@ namespace Simple.Expressions.Editable
         public EditableInvocationExpression(InvocationExpression invocEx)
             : this()
         {
-            Expression = EditableExpression.CreateEditableExpression(invocEx.Expression);
+            Expression = EditableExpression.Create(invocEx.Expression);
             foreach (Expression ex in invocEx.Arguments)
-                Arguments.Add(EditableExpression.CreateEditableExpression(ex));
+                Arguments.Add(EditableExpression.Create(ex));
         }
 
         // Methods

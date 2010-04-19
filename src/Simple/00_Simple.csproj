@@ -119,6 +119,15 @@
     <Compile Include="Entities\OrderByItem.cs" />
     <Compile Include="Entities\Page.cs" />
     <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
+    <None Include="Expressions\Editable\EditableExpression.static.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EditableExpression.static.cs</LastGenOutput>
+    </None>
+    <Compile Include="Expressions\Editable\EditableExpression.static.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditableExpression.static.tt</DependentUpon>
+    </Compile>
     <Compile Include="Expressions\Editable\EditableExpressionCollection.cs" />
     <Compile Include="Expressions\Editable\EditableMemberBindingCollection.cs" />
     <Compile Include="Expressions\Editable\EditableMemberInfoCollection.cs" />

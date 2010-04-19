@@ -20,8 +20,8 @@ namespace Simple.Expressions.Editable
 
         public EditableBinaryExpression(BinaryExpression binex) : base(binex.Type)
         {
-            Left = EditableExpression.CreateEditableExpression(binex.Left);
-            Right = EditableExpression.CreateEditableExpression(binex.Right);
+            Left = EditableExpression.Create(binex.Left);
+            Right = EditableExpression.Create(binex.Right);
             NodeType = binex.NodeType;
         }
 

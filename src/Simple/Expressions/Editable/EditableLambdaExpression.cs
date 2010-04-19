@@ -29,9 +29,9 @@ namespace Simple.Expressions.Editable
             : base(lambEx.Type) 
         {
             Parameters = new EditableExpressionCollection();
-            Body = EditableExpression.CreateEditableExpression(lambEx.Body);
+            Body = EditableExpression.Create(lambEx.Body);
             foreach (ParameterExpression param in lambEx.Parameters)
-                Parameters.Add(EditableExpression.CreateEditableExpression(param));
+                Parameters.Add(EditableExpression.Create(param));
         }
 
         // Methods

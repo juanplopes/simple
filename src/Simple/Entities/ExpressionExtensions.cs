@@ -19,7 +19,7 @@ namespace Simple.Entities
 
         public static EditableExpression ToEditable(this Expression expr, bool funcletize)
         {
-            return EditableExpression.CreateEditableExpression(expr, funcletize);
+            return EditableExpression.Create(expr, funcletize);
         }
 
     }

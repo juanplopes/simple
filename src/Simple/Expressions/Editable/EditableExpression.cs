@@ -8,8 +8,14 @@ using System.Xml.Serialization;
 
 namespace Simple.Expressions.Editable
 {
+    public class EditableExpression<TDelegate> : EditableLambdaExpression
+    {
+        public EditableExpression() : base() { }
+        public EditableExpression(Expression<TDelegate> lambda) : base(lambda) { }
+    }
+
     [Serializable]
-    public abstract class EditableExpression
+    public abstract partial class EditableExpression
     {
         public abstract ExpressionType NodeType { get; set; }
 
@@ -37,63 +43,85 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public static EditableExpression CreateEditableExpression<TResult>(Expression<Func<TResult>> ex)
+        public static EditableExpression<TDelegate> CreateTyped<TDelegate>(Expression<TDelegate> ex)
         {
-            LambdaExpression lambEx = Expression.Lambda<Func<TResult>>(ex.Body, ex.Parameters);
-            return new EditableLambdaExpression(lambEx);
-        }
-
-        public static EditableExpression CreateEditableExpression<TArg0, TResult>(Expression<Func<TArg0, TResult>> ex)
-        {
-            LambdaExpression lambEx = Expression.Lambda<Func<TArg0, TResult>>(ex.Body, ex.Parameters);
-            return new EditableLambdaExpression(lambEx);
+            return new EditableExpression<TDelegate>(ex);
         }
 
 
-        public static EditableExpression CreateEditableExpression<TArg0, TArg1, TResult>(Expression<Func<TArg0, TArg1, TResult>> ex)
+        public static EditableExpression Create(Expression ex)
         {
-            LambdaExpression lambEx = Expression.Lambda<Func<TArg0, TArg1, TResult>>(ex.Body, ex.Parameters);
-            return new EditableLambdaExpression(lambEx);
+            return Create(ex, false);
         }
 
-
-        public static EditableExpression CreateEditableExpression<TArg0, TArg1, TArg2, TResult>(Expression<Func<TArg0, TArg1, TArg2, TResult>> ex)
+        public static EditableExpression Create(Expression ex, bool funcletize)
         {
-            LambdaExpression lambEx = Expression.Lambda<Func<TArg0, TArg1, TArg2, TResult>>(ex.Body, ex.Parameters);
-            return new EditableLambdaExpression(lambEx);
-        }
+            if (ex == null) return null;
 
-
-        public static EditableExpression CreateEditableExpression<TArg0, TArg1, TArg2, TArg3, TResult>(Expression<Func<TArg0, TArg1, TArg2, TArg3, TResult>> ex)
-        {
-            LambdaExpression lambEx = Expression.Lambda<Func<TArg0, TArg1, TArg2, TArg3, TResult>>(ex.Body, ex.Parameters);
-            return new EditableLambdaExpression(lambEx);
-        }
-
-        public static EditableExpression CreateEditableExpression(Expression ex)
-        {
-            return CreateEditableExpression(ex, false);
-        }
-
-        public static EditableExpression CreateEditableExpression(Expression ex, bool funcletize)
-        {
             if (funcletize) ex = Evaluator.PartialEval(ex);
-
-            if (ex is ConstantExpression) return new EditableConstantExpression(ex as ConstantExpression);
-            else if (ex is BinaryExpression) return new EditableBinaryExpression(ex as BinaryExpression);
-            else if (ex is ConditionalExpression) return new EditableConditionalExpression(ex as ConditionalExpression);
-            else if (ex is InvocationExpression) return new EditableInvocationExpression(ex as InvocationExpression);
-            else if (ex is LambdaExpression) return new EditableLambdaExpression(ex as LambdaExpression);
-            else if (ex is ParameterExpression) return new EditableParameterExpression(ex as ParameterExpression);
-            else if (ex is ListInitExpression) return new EditableListInitExpression(ex as ListInitExpression);
-            else if (ex is MemberExpression) return new EditableMemberExpression(ex as MemberExpression);
-            else if (ex is MemberInitExpression) return new EditableMemberInitExpression(ex as MemberInitExpression);
-            else if (ex is MethodCallExpression) return new EditableMethodCallExpression(ex as MethodCallExpression);
-            else if (ex is NewArrayExpression) return new EditableNewArrayExpression(ex as NewArrayExpression);
-            else if (ex is NewExpression) return new EditableNewExpression(ex as NewExpression);
-            else if (ex is TypeBinaryExpression) return new EditableTypeBinaryExpression(ex as TypeBinaryExpression);
-            else if (ex is UnaryExpression) return new EditableUnaryExpression(ex as UnaryExpression);
-            else return null;
+            switch (ex.NodeType)
+            {
+                case ExpressionType.Negate:
+                case ExpressionType.NegateChecked:
+                case ExpressionType.Not:
+                case ExpressionType.Convert:
+                case ExpressionType.ConvertChecked:
+                case ExpressionType.ArrayLength:
+                case ExpressionType.Quote:
+                case ExpressionType.TypeAs:
+                    return CreateTyped(ex as UnaryExpression);
+                case ExpressionType.Add:
+                case ExpressionType.AddChecked:
+                case ExpressionType.Subtract:
+                case ExpressionType.SubtractChecked:
+                case ExpressionType.Multiply:
+                case ExpressionType.MultiplyChecked:
+                case ExpressionType.Divide:
+                case ExpressionType.Modulo:
+                case ExpressionType.And:
+                case ExpressionType.AndAlso:
+                case ExpressionType.Or:
+                case ExpressionType.OrElse:
+                case ExpressionType.LessThan:
+                case ExpressionType.LessThanOrEqual:
+                case ExpressionType.GreaterThan:
+                case ExpressionType.GreaterThanOrEqual:
+                case ExpressionType.Equal:
+                case ExpressionType.NotEqual:
+                case ExpressionType.Coalesce:
+                case ExpressionType.ArrayIndex:
+                case ExpressionType.RightShift:
+                case ExpressionType.LeftShift:
+                case ExpressionType.ExclusiveOr:
+                    return CreateTyped(ex as BinaryExpression);
+                case ExpressionType.TypeIs:
+                    return CreateTyped(ex as TypeBinaryExpression);
+                case ExpressionType.Conditional:
+                    return CreateTyped(ex as ConditionalExpression);
+                case ExpressionType.Constant:
+                    return CreateTyped(ex as ConstantExpression);
+                case ExpressionType.Parameter:
+                    return CreateTyped(ex as ParameterExpression);
+                case ExpressionType.MemberAccess:
+                    return CreateTyped(ex as MemberExpression);
+                case ExpressionType.Call:
+                    return CreateTyped(ex as MethodCallExpression);
+                case ExpressionType.Lambda:
+                    return CreateTyped(ex as LambdaExpression);
+                case ExpressionType.New:
+                    return CreateTyped(ex as NewExpression);
+                case ExpressionType.NewArrayInit:
+                case ExpressionType.NewArrayBounds:
+                    return CreateTyped(ex as NewArrayExpression);
+                case ExpressionType.Invoke:
+                    return CreateTyped(ex as InvocationExpression);
+                case ExpressionType.MemberInit:
+                    return CreateTyped(ex as MemberInitExpression);
+                case ExpressionType.ListInit:
+                    return CreateTyped(ex as ListInitExpression);
+                default:
+                    throw new ArgumentException("How could this happen? Did microsoft create new expression types?");
+            }
         }
 
         public abstract Expression ToExpression();

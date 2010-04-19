@@ -37,7 +37,7 @@ namespace Simple.Expressions.Editable
         }
 
         public EditableUnaryExpression(UnaryExpression unEx)
-            : this(unEx.NodeType, EditableExpression.CreateEditableExpression(unEx.Operand), unEx.Type)
+            : this(unEx.NodeType, EditableExpression.Create(unEx.Operand), unEx.Type)
         {
         }
 

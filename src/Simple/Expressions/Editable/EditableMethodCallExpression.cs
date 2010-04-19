@@ -62,12 +62,12 @@ namespace Simple.Expressions.Editable
         }
 
         public EditableMethodCallExpression(IEnumerable<EditableExpression> arguments, MethodInfo method, Expression theObject, ExpressionType nodeType) :
-            this(new EditableExpressionCollection(arguments), method, EditableExpression.CreateEditableExpression(theObject), nodeType)
+            this(new EditableExpressionCollection(arguments), method, EditableExpression.Create(theObject), nodeType)
         { 
         }
         
         public EditableMethodCallExpression(MethodCallExpression callEx) :
-            this(new EditableExpressionCollection(callEx.Arguments),callEx.Method,EditableExpression.CreateEditableExpression(callEx.Object),callEx.NodeType)
+            this(new EditableExpressionCollection(callEx.Arguments),callEx.Method,EditableExpression.Create(callEx.Object),callEx.NodeType)
         {
         }
 

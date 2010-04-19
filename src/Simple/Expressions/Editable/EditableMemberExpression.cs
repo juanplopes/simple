@@ -47,7 +47,7 @@ namespace Simple.Expressions.Editable
         }
 
         public EditableMemberExpression(Expression rawEx, MemberInfo member)
-            : this(EditableExpression.CreateEditableExpression(rawEx), member)
+            : this(EditableExpression.Create(rawEx), member)
         { 
         }
 
@@ -58,7 +58,7 @@ namespace Simple.Expressions.Editable
         }
 
         public EditableMemberExpression(MemberExpression membEx)
-            : this(EditableExpression.CreateEditableExpression(membEx.Expression), membEx.Member)
+            : this(EditableExpression.Create(membEx.Expression), membEx.Member)
         { 
         }
 

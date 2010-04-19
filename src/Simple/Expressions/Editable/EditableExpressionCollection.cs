@@ -14,7 +14,7 @@ namespace Simple.Expressions.Editable
         public EditableExpressionCollection(IEnumerable<Expression> source) 
         {
             foreach (Expression ex in source)
-                this.Add(EditableExpression.CreateEditableExpression(ex));
+                this.Add(EditableExpression.Create(ex));
         }
         
         public IEnumerable<Expression> GetExpressions()

@@ -50,7 +50,7 @@ namespace Simple.IO.Serialization
 
         public void GetObjectData(object obj, SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("_", SimpleSerializer.Binary().Serialize(EditableExpression.CreateEditableExpression((Expression)obj, true)));
+            info.AddValue("_", SimpleSerializer.Binary().Serialize(EditableExpression.Create((Expression)obj, true)));
         }
 
         public object SetObjectData(object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)
