@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableTypeBinaryExpression : EditableExpression
+    public partial class EditableTypeBinaryExpression : EditableExpressionImpl<TypeBinaryExpression>
     {
         // Properties
         public EditableExpression Expression
@@ -40,7 +40,7 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public override Expression ToExpression()
+        public override TypeBinaryExpression ToTypedExpression()
         {
             return System.Linq.Expressions.Expression.TypeIs(Expression.ToExpression(), Type);
         }        

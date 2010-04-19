@@ -119,14 +119,15 @@
     <Compile Include="Entities\OrderByItem.cs" />
     <Compile Include="Entities\Page.cs" />
     <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
-    <None Include="Expressions\Editable\EditableExpression.static.tt">
+    <None Include="Expressions\Editable\EditableExpressionsExtensions.static.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EditableExpression.static.cs</LastGenOutput>
+      <LastGenOutput>EditableExpressionsExtensions.static.cs</LastGenOutput>
     </None>
-    <Compile Include="Expressions\Editable\EditableExpression.static.cs">
+    <Compile Include="Expressions\Editable\EditableExpressionsExtensions.cs" />
+    <Compile Include="Expressions\Editable\EditableExpressionsExtensions.static.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EditableExpression.static.tt</DependentUpon>
+      <DependentUpon>EditableExpressionsExtensions.static.tt</DependentUpon>
     </Compile>
     <Compile Include="Expressions\Editable\EditableExpressionCollection.cs" />
     <Compile Include="Expressions\Editable\EditableMemberBindingCollection.cs" />
@@ -148,13 +149,14 @@
     <Compile Include="Expressions\Editable\EditableUnaryExpression.cs" />
     <Compile Include="Expressions\Editable\EditableExpressionExtensions.cs" />
     <Compile Include="Expressions\Editable\ExpressionExtensions.cs" />
+    <Compile Include="Expressions\Editable\IEditableImplementation.cs" />
     <Compile Include="Expressions\Editable\ReflectionExtensions.cs" />
     <Compile Include="Expressions\Editable\EditableElementInit.cs" />
     <Compile Include="Expressions\Editable\EditableMemberAssignment.cs" />
     <Compile Include="Expressions\Editable\EditableMemberBinding.cs" />
     <Compile Include="Expressions\Editable\EditableMemberListBinding.cs" />
     <Compile Include="Expressions\Editable\EditableMemberMemberBinding.cs" />
-    <Compile Include="Expressions\Evaluator.cs" />
+    <Compile Include="Expressions\Funcletizer.cs" />
     <Compile Include="Expressions\ExpressionVisitor.cs" />
     <Compile Include="Expressions\InvocationExpander.cs" />
     <Compile Include="IO\CommandLineReader.cs" />

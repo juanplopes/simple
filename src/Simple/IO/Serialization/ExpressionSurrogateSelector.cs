@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Linq.Expressions;
 using System.Runtime.Remoting.Channels;
 using Simple.Expressions.Editable;
+using Simple.Expressions;
 
 namespace Simple.IO.Serialization
 {
@@ -50,7 +51,7 @@ namespace Simple.IO.Serialization
 
         public void GetObjectData(object obj, SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("_", SimpleSerializer.Binary().Serialize(EditableExpression.Create((Expression)obj, true)));
+            info.AddValue("_", SimpleSerializer.Binary().Serialize(EditableExpression.Create(Funcletizer.PartialEval((Expression)obj))));
         }
 
         public object SetObjectData(object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)

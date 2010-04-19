@@ -10,6 +10,7 @@ using Simple.Common;
 using Simple.IO;
 using Simple.IO.Serialization;
 using System.Reflection;
+using Simple.Expressions;
 
 namespace Simple.Tests.Expressions
 {
@@ -43,7 +44,7 @@ namespace Simple.Tests.Expressions
 
         public void TestItInternalInternal<T, TRet>(Expression<T> expr, Func<T, TRet> howToCall, ISimpleSerializer serializer)
         {
-            var expr1 = EditableExpression.Create(expr, true);
+            var expr1 = EditableExpression.Create(Funcletizer.PartialEval(expr));
             byte[] data = serializer.Serialize(expr1);
             EditableExpression expr2 = (EditableExpression)serializer.Deserialize(data);
             T func2 = ((Expression<T>)expr2.ToExpression()).Compile();

@@ -67,27 +67,27 @@ namespace Simple.Entities
             }
         }
 
-        protected virtual IQueryable<T> GetDefaultQueriable(EditableExpression filter, OrderBy<T> orderBy)
+        protected virtual IQueryable<T> GetDefaultQueriable(EditableExpression<Func<T, bool>> filter, OrderBy<T> orderBy)
         {
             IQueryable<T> query = Query();
 
             if (filter != null)
-                query = query.Where((Expression<Func<T, bool>>)filter.ToExpression());
+                query = query.Where(filter.ToTypedLambda());
 
             if (orderBy != null && orderBy.Count > 0)
             {
                 IOrderedQueryable<T> tempQuery;
                 if (orderBy[0].Backwards)
-                    tempQuery = query.OrderByDescending(orderBy[0].ToExpression<T>());
+                    tempQuery = query.OrderByDescending(orderBy[0].ToExpression());
                 else
-                    tempQuery = query.OrderBy(orderBy[0].ToExpression<T>());
+                    tempQuery = query.OrderBy(orderBy[0].ToExpression());
 
                 for (int i = 1; i < orderBy.Count; i++)
                 {
                     if (orderBy[i].Backwards)
-                        tempQuery = tempQuery.ThenByDescending(orderBy[i].ToExpression<T>());
+                        tempQuery = tempQuery.ThenByDescending(orderBy[i].ToExpression());
                     else
-                        tempQuery = tempQuery.ThenBy(orderBy[i].ToExpression<T>());
+                        tempQuery = tempQuery.ThenBy(orderBy[i].ToExpression());
 
                 }
                 query = tempQuery;
@@ -146,20 +146,20 @@ namespace Simple.Entities
             return query;
         }
 
-        public virtual T Find(EditableExpression filter, OrderBy<T> order)
+        public virtual T Find(EditableExpression<Func<T, bool>> filter, OrderBy<T> order)
         {
             return GetDefaultQueriable(filter, order).FirstOrDefault();
         }
 
-        public virtual int Count(EditableExpression filter)
+        public virtual int Count(EditableExpression<Func<T, bool>> filter)
         {
             return GetDefaultQueriable(filter, null).Count();
         }
 
-        public virtual IPage<T> Linq(EditableExpression mapExpression, EditableExpression reduceExpression)
+        public virtual IPage<T> Linq(EditableExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, EditableExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression)
         {
-            var map = (mapExpression.ToExpression() as Expression<Func<IQueryable<T>, IQueryable<T>>>).Compile();
-            var reduce = (reduceExpression.ToExpression() as Expression<Func<IQueryable<T>, IQueryable<T>>>).Compile();
+            var map = mapExpression.ToTypedLambda().Compile();
+            var reduce = reduceExpression.ToTypedLambda().Compile();
 
             var linq = Query();
 
@@ -172,7 +172,7 @@ namespace Simple.Entities
             return new Page<T>(list, count);
         }
 
-        public virtual IPage<T> List(EditableExpression filter, OrderBy<T> order, int? skip, int? take)
+        public virtual IPage<T> List(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, int? skip, int? take)
         {
             IQueryable<T> q = GetDefaultQueriable(filter, order);
 
@@ -185,7 +185,7 @@ namespace Simple.Entities
         }
 
         [RequiresTransaction]
-        public virtual int Delete(EditableExpression filter)
+        public virtual int Delete(EditableExpression<Func<T, bool>> filter)
         {
             int res = 0;
             foreach (var entity in List(filter, null, null, null))

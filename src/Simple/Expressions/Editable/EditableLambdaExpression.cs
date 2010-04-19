@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableLambdaExpression : EditableExpression
+    public partial class EditableLambdaExpression : EditableExpressionImpl<LambdaExpression>
     {
         public EditableExpression Body { get; set;}
         public EditableExpressionCollection Parameters { get; set;}
@@ -35,7 +35,7 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public override Expression ToExpression()
+        public override LambdaExpression ToTypedExpression()
         {
             Expression body = Body.ToExpression();
             List<ParameterExpression> parameters = new List<ParameterExpression>(Parameters.GetParameterExpressions());

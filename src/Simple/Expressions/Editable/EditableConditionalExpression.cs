@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableConditionalExpression : EditableExpression
+    public partial class EditableConditionalExpression : EditableExpressionImpl<ConditionalExpression>
     {
         public EditableExpression Test { get; set; }
         public EditableExpression IfTrue { get; set; }
@@ -36,7 +36,7 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public override Expression ToExpression()
+        public override ConditionalExpression ToTypedExpression()
         {
             return Expression.Condition(Test.ToExpression(), IfTrue.ToExpression(), IfFalse.ToExpression());
         }

@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableParameterExpression : EditableExpression
+    public partial class EditableParameterExpression : EditableExpressionImpl<ParameterExpression>
     {
         // Members
         private static Dictionary<string, ParameterExpression> _usableParameters = new Dictionary<string, ParameterExpression>();
@@ -59,7 +59,7 @@ namespace Simple.Expressions.Editable
             return parameter;
         }
 
-        public override Expression ToExpression()
+        public override ParameterExpression ToTypedExpression()
         {
             return CreateParameter(Type, Name);
         }

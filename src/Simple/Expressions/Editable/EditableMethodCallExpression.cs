@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableMethodCallExpression : EditableExpression
+    public partial class EditableMethodCallExpression : EditableExpressionImpl<MethodCallExpression>
     {                        
         // Properties
         public EditableExpressionCollection Arguments
@@ -72,7 +72,7 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public override Expression ToExpression()
+        public override MethodCallExpression ToTypedExpression()
         {
             Expression instanceExpression = null;
             if (Object != null)
@@ -80,5 +80,6 @@ namespace Simple.Expressions.Editable
 
             return Expression.Call(instanceExpression, Method, Arguments.GetExpressions().ToArray<Expression>());
         }
+
     }
 }

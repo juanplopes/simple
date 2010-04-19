@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableNewArrayExpression : EditableExpression
+    public partial class EditableNewArrayExpression : EditableExpressionImpl<NewArrayExpression>
     {
         // Members           
         protected ExpressionType _nodeType;
@@ -59,7 +59,7 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public override Expression ToExpression()
+        public override NewArrayExpression ToTypedExpression()
         {
             if (NodeType == ExpressionType.NewArrayBounds)
                 return Expression.NewArrayBounds(Type.GetElementType(), Expressions.GetExpressions());

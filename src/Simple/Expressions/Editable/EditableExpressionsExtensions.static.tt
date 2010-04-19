@@ -1,0 +1,41 @@
+﻿<#@ template language="C#v3.5" hostspecific="True" debug="True" #>
+<#@ Import Namespace="System" #>
+<#@ Import Namespace="System.Collections.Generic" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Linq.Expressions;
+
+
+
+namespace Simple.Expressions.Editable
+{
+<#
+    var list = new List<string>();
+    list.Add("ConstantExpression");
+    list.Add("BinaryExpression");
+    list.Add("ConditionalExpression");
+    list.Add("InvocationExpression");
+    list.Add("LambdaExpression");
+    list.Add("ParameterExpression");
+    list.Add("ListInitExpression");
+    list.Add("MemberExpression");
+    list.Add("MemberInitExpression");
+    list.Add("MethodCallExpression");
+    list.Add("NewArrayExpression");
+    list.Add("NewExpression");
+    list.Add("TypeBinaryExpression");
+    list.Add("UnaryExpression");
+#>
+    public static partial class EditableExpressionsExtensions
+    {
+<# foreach(var item in list) { #>
+        public static Editable<#= item #> ToEditableExpression(this <#= item #> ex)
+        {
+            return new Editable<#= item #>(ex);
+        }
+        
+<# } #>
+    }
+}

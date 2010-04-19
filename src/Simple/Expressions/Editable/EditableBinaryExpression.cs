@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableBinaryExpression : EditableExpression
+    public partial class EditableBinaryExpression : EditableExpressionImpl<BinaryExpression>
     {
         public EditableExpression Left { get; set;}
         public EditableExpression Right { get; set;}
@@ -25,9 +25,9 @@ namespace Simple.Expressions.Editable
             NodeType = binex.NodeType;
         }
 
-        public override Expression ToExpression()
+        public override BinaryExpression ToTypedExpression()
         {
             return Expression.MakeBinary(NodeType, Left.ToExpression(), Right.ToExpression());
-        }        
+        }
     }
 }

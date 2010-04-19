@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableListInitExpression : EditableExpression
+    public partial class EditableListInitExpression : EditableExpressionImpl<ListInitExpression>
     {
         public EditableExpression NewExpression { get; set;}
         public EditableElementInitCollection Initializers { get; set;}
@@ -42,7 +42,7 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public override Expression ToExpression()
+        public override ListInitExpression ToTypedExpression()
         {
             return Expression.ListInit(NewExpression.ToExpression() as NewExpression, Initializers.GetElementsInit().ToArray<ElementInit>());
         }

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableMemberAssignment : EditableMemberBinding
+    public partial class EditableMemberAssignment : EditableMemberBinding
     {
         public EditableExpression Expression { get; set; }
         public override MemberBindingType BindingType

@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableConstantExpression : EditableExpression
+    public partial class EditableConstantExpression : EditableExpressionImpl<ConstantExpression>
     {
         public object Value { get; set;}
         public Type ConstantType { get; set; }
@@ -35,7 +35,7 @@ namespace Simple.Expressions.Editable
             ConstantType = startConstEx.Type;
         }
 
-        public override Expression ToExpression()
+        public override ConstantExpression ToTypedExpression()
         {
             return Expression.Constant(Value, ConstantType);
         }

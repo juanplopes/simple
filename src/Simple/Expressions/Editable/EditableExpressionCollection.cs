@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableExpressionCollection : List<EditableExpression>
+    public partial class EditableExpressionCollection : List<EditableExpression>
     {
         public EditableExpressionCollection() : base() { }
         public EditableExpressionCollection(IEnumerable<EditableExpression> source) : base(source) { }

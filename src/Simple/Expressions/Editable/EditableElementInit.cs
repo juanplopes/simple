@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableElementInit
+    public partial class EditableElementInit
     {
         public EditableExpressionCollection Arguments { get; set; }
 

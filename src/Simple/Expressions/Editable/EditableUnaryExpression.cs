@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableUnaryExpression : EditableExpression
+    public partial class EditableUnaryExpression : EditableExpressionImpl<UnaryExpression>
     {
         // Properties
         public EditableExpression Operand
@@ -42,7 +42,7 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public override Expression ToExpression()
+        public override UnaryExpression ToTypedExpression()
         {
             if (NodeType == ExpressionType.UnaryPlus)
                 return Expression.UnaryPlus(Operand.ToExpression());

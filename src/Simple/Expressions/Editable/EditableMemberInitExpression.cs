@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableMemberInitExpression : EditableExpression
+    public partial class EditableMemberInitExpression : EditableExpressionImpl<MemberInitExpression>
     {
         // Properties
         public EditableNewExpression NewExpression
@@ -54,7 +54,7 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public override Expression ToExpression()
+        public override MemberInitExpression ToTypedExpression()
         {
             return Expression.MemberInit(NewExpression.ToExpression() as NewExpression, Bindings.GetMemberBindings());
         }

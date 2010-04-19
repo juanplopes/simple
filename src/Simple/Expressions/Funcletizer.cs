@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Simple.Expressions
 {
-	public static class Evaluator
+	public static class Funcletizer
 	{
 		/// <summary>
 		/// Performs evaluation & replacement of independent sub-trees
@@ -25,7 +25,7 @@ namespace Simple.Expressions
 		/// <returns>A new tree with sub-trees evaluated and replaced.</returns>
 		public static Expression PartialEval(Expression expression)
 		{
-			return PartialEval(expression, Evaluator.CanBeEvaluatedLocally);
+			return PartialEval(expression, Funcletizer.CanBeEvaluatedLocally);
 		}
 
 		private static bool CanBeEvaluatedLocally(Expression expression)

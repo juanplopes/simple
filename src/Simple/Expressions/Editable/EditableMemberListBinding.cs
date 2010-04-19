@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableMemberListBinding : EditableMemberBinding
+    public partial class EditableMemberListBinding : EditableMemberBinding
     {
         // Properties
         public EditableElementInitCollection Initializers

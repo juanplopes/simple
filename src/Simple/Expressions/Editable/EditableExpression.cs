@@ -8,11 +8,38 @@ using System.Xml.Serialization;
 
 namespace Simple.Expressions.Editable
 {
-    public class EditableExpression<TDelegate> : EditableLambdaExpression
+    [Serializable]
+    public partial class EditableExpression<TDelegate> : EditableLambdaExpression
     {
         public EditableExpression() : base() { }
         public EditableExpression(Expression<TDelegate> lambda) : base(lambda) { }
+
+        public Expression<TDelegate> ToTypedLambda()
+        {
+            return (Expression<TDelegate>)ToTypedExpression();
+        }
     }
+
+    [Serializable]
+    public abstract partial class EditableExpressionImpl<T> : EditableExpression, IEditableImplementation<T>
+        where T : Expression
+    {
+          // Ctors
+        public EditableExpressionImpl() : base() { } //allow for non parameterized creation for all expressions
+
+        public EditableExpressionImpl(Type type)
+            : base(type)
+        {
+        }
+
+        public abstract T ToTypedExpression();
+
+        public override Expression ToExpression()
+        {
+            return ToTypedExpression();
+        }
+    }
+
 
     [Serializable]
     public abstract partial class EditableExpression
@@ -42,23 +69,10 @@ namespace Simple.Expressions.Editable
             Type = type;
         }
 
-        // Methods
-        public static EditableExpression<TDelegate> CreateTyped<TDelegate>(Expression<TDelegate> ex)
-        {
-            return new EditableExpression<TDelegate>(ex);
-        }
-
-
         public static EditableExpression Create(Expression ex)
-        {
-            return Create(ex, false);
-        }
-
-        public static EditableExpression Create(Expression ex, bool funcletize)
         {
             if (ex == null) return null;
 
-            if (funcletize) ex = Evaluator.PartialEval(ex);
             switch (ex.NodeType)
             {
                 case ExpressionType.Negate:
@@ -69,7 +83,7 @@ namespace Simple.Expressions.Editable
                 case ExpressionType.ArrayLength:
                 case ExpressionType.Quote:
                 case ExpressionType.TypeAs:
-                    return CreateTyped(ex as UnaryExpression);
+                    return (ex as UnaryExpression).ToEditableExpression();
                 case ExpressionType.Add:
                 case ExpressionType.AddChecked:
                 case ExpressionType.Subtract:
@@ -93,32 +107,32 @@ namespace Simple.Expressions.Editable
                 case ExpressionType.RightShift:
                 case ExpressionType.LeftShift:
                 case ExpressionType.ExclusiveOr:
-                    return CreateTyped(ex as BinaryExpression);
+                    return (ex as BinaryExpression).ToEditableExpression();
                 case ExpressionType.TypeIs:
-                    return CreateTyped(ex as TypeBinaryExpression);
+                    return (ex as TypeBinaryExpression).ToEditableExpression();
                 case ExpressionType.Conditional:
-                    return CreateTyped(ex as ConditionalExpression);
+                    return (ex as ConditionalExpression).ToEditableExpression();
                 case ExpressionType.Constant:
-                    return CreateTyped(ex as ConstantExpression);
+                    return (ex as ConstantExpression).ToEditableExpression();
                 case ExpressionType.Parameter:
-                    return CreateTyped(ex as ParameterExpression);
+                    return (ex as ParameterExpression).ToEditableExpression();
                 case ExpressionType.MemberAccess:
-                    return CreateTyped(ex as MemberExpression);
+                    return (ex as MemberExpression).ToEditableExpression();
                 case ExpressionType.Call:
-                    return CreateTyped(ex as MethodCallExpression);
+                    return (ex as MethodCallExpression).ToEditableExpression();
                 case ExpressionType.Lambda:
-                    return CreateTyped(ex as LambdaExpression);
+                    return (ex as LambdaExpression).ToEditableExpression();
                 case ExpressionType.New:
-                    return CreateTyped(ex as NewExpression);
+                    return (ex as NewExpression).ToEditableExpression();
                 case ExpressionType.NewArrayInit:
                 case ExpressionType.NewArrayBounds:
-                    return CreateTyped(ex as NewArrayExpression);
+                    return (ex as NewArrayExpression).ToEditableExpression();
                 case ExpressionType.Invoke:
-                    return CreateTyped(ex as InvocationExpression);
+                    return (ex as InvocationExpression).ToEditableExpression();
                 case ExpressionType.MemberInit:
-                    return CreateTyped(ex as MemberInitExpression);
+                    return (ex as MemberInitExpression).ToEditableExpression();
                 case ExpressionType.ListInit:
-                    return CreateTyped(ex as ListInitExpression);
+                    return (ex as ListInitExpression).ToEditableExpression();
                 default:
                     throw new ArgumentException("How could this happen? Did microsoft create new expression types?");
             }

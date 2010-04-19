@@ -7,7 +7,7 @@ using System.Reflection;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableMemberInfoCollection : List<string>
+    public partial class EditableMemberInfoCollection : List<string>
     {
         public EditableMemberInfoCollection() : base() { }
         public EditableMemberInfoCollection(IEnumerable<string> source) : base(source) { }

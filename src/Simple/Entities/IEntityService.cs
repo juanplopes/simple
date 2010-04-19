@@ -20,14 +20,14 @@ namespace Simple.Entities
         T Merge(T entity);
         T Evict(T entity);
 
-        int Count(EditableExpression filter);
-        T Find(EditableExpression filter, OrderBy<T> orderBy);
-        IPage<T> List(EditableExpression filter, OrderBy<T> order, int? skip, int? take);
-        IPage<T> Linq(EditableExpression mapExpression, EditableExpression reduceExpression);
+        int Count(EditableExpression<Func<T, bool>> filter);
+        T Find(EditableExpression<Func<T, bool>> filter, OrderBy<T> orderBy);
+        IPage<T> List(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, int? skip, int? take);
+        IPage<T> Linq(EditableExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, EditableExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression);
 
         void Delete(object id);
         void Delete(T entity);
-        int Delete(EditableExpression filter);
+        int Delete(EditableExpression<Func<T, bool>> filter);
 
         T SaveOrUpdate(T entity);
         T Save(T entity);

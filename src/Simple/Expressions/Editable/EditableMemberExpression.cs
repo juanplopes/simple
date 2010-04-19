@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace Simple.Expressions.Editable
 {
     [Serializable]
-    public class EditableMemberExpression : EditableExpression
+    public partial class EditableMemberExpression : EditableExpressionImpl<MemberExpression>
     {
         // Properties
         [IgnoreDataMember]
@@ -63,7 +63,7 @@ namespace Simple.Expressions.Editable
         }
 
         // Methods
-        public override Expression ToExpression()
+        public override MemberExpression ToTypedExpression()
         {
             Expression expression = null;
             if (Expression != null)

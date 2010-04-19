@@ -12,16 +12,11 @@ namespace Simple.Entities
 {
     internal static class ExpressionExtensions
     {
-        public static EditableExpression ToSerializable(this Expression expr)
+        public static T Funcletize<T>(this T expr)
+            where T : Expression
         {
-            return ToEditable(expr, true);
+            return (T)Funcletizer.PartialEval(expr);
         }
-
-        public static EditableExpression ToEditable(this Expression expr, bool funcletize)
-        {
-            return EditableExpression.Create(expr, funcletize);
-        }
-
     }
-   
+
 }
