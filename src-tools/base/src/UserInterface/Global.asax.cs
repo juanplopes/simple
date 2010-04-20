@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Sample.Project.Environment;
+using Simple;
 
 namespace Sample.Project.Web
 {
@@ -27,8 +28,18 @@ namespace Sample.Project.Web
 
         protected void Application_Start()
         {
-            new Configurator().StartClient();
+            new Configurator().StartServer<ServerStarter>();
             RegisterRoutes(RouteTable.Routes);
+        }
+
+        protected void Application_BeginRequest()
+        {
+            Simply.Do.EnterContext();
+        }
+
+        protected void Application_EndRequest()
+        {
+            Simply.Do.GetContext().Exit();
         }
     }
 }
