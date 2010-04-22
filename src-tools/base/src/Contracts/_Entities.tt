@@ -52,6 +52,10 @@ namespace <#=this.EntityNamespace #>
         public virtual <#= GetFieldType(field) #> <#= GetFieldName(field) #> { get; set; }
 <#+ }#>
         
+<#+ foreach (var field in Table.GetOneToManyFields()) { #>
+        public virtual <#= GetFieldType(field) #> <#= GetFieldName(field) #> { get; set; }
+<#+ }#>
+
         #region ' Generated Helpers '
         static <#= GetTableClassName() #>() 
         {
@@ -105,7 +109,7 @@ namespace <#=this.EntityNamespace #>
 
         }
         
-        public <#= GetTableClassName() #> ClearId() 
+        public virtual <#= GetTableClassName() #> ClearId() 
         {
 <#+ foreach (var field in Table.GetKeyFields()) { #>
             this.<#= GetFieldName(field) #> = default(<#= GetFieldType(field) #>);

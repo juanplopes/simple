@@ -21,7 +21,7 @@ public class HbmTemplate : TableTemplate
 #>
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="<#=this.EntityNamespace #>" assembly="<#=this.AssemblyName #>">
-  <class name="<#= EntityNamespace #>.<#= GetTableClassName() #>, <#= AssemblyName #>" table="<#= Table.TableName#>" schema="<#=Table.TableSchema#>" lazy="false">
+  <class name="<#= EntityNamespace #>.<#= GetTableClassName() #>, <#= AssemblyName #>" table="<#= Table.TableName#>" schema="<#=Table.TableSchema#>">
 <#+ if (Table.PrimaryKeyColumns.Count() > 1) { #>
     <composite-id>
 <#+ foreach (var field in Table.GetKeyFields()) { #>
@@ -58,12 +58,23 @@ public class HbmTemplate : TableTemplate
 <#+ } #>
 
 <#+ foreach (var field in Table.GetManyToOneFields().Where(x => !x.IsKey)) { #>
-    <many-to-one name="<#= GetFieldName(field) #>" lazy="false">
+    <many-to-one name="<#= GetFieldName(field) #>">
 <#+ foreach (var column in field.Columns) { #>
       <column name="<#= column.FkColumnName #>"/>
 <#+ } #>
     </many-to-one>
 <#+ }#>
+
+<#+ foreach (var field in Table.GetOneToManyFields()) { #>
+    <set name="<#= GetFieldName(field) #>">
+      <key>
+<#+ foreach (var column in field.Columns) { #>
+        <column name="<#= column.FkColumnName #>"/>
+<#+ } #>
+      </key>
+      <one-to-many class="<#= GetTableClassName(field.Columns[0].FkTableName) #>"/>
+    </set>
+<#+ }#>
   </class>
-</hibernate-mapping>
+ </hibernate-mapping>
 <#+ } } #>

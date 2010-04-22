@@ -34,16 +34,29 @@
 	    }
 	    
 	    
-	    public string GetFieldType(DbForeignKey fk) {
+	    public string GetFieldType(DbManyToOne fk) {
 			return GetTableClassName(fk.Columns[0].PkTableName);
 	    }
 	    
-	    public string GetFieldName(DbForeignKey fk) {
+	    
+	    public string GetFieldName(DbManyToOne fk) {
 			if (fk.Columns.Count == 1) 
 				return Utilities.CleanUp(Utilities.ReplaceId(fk.Columns[0].FkColumnName));
 			else
 				return GetTableClassName(fk.Columns[0].PkTableName);
 			
+	    }
+	    
+		public string GetFieldType(DbOneToMany fk) {
+			return "ICollection<" + GetTableClassName(fk.Columns[0].FkTableName) + ">";
+	    }
+	    
+	    
+	    public string GetFieldName(DbOneToMany fk) {
+			var name = Inflector.MakePlural(GetTableClassName(fk.Columns[0].FkTableName));
+			if (!fk.SafeNaming)
+				name += "At" + Utilities.CleanUp(Utilities.ReplaceId(fk.Columns[0].FkColumnName));
+			return name;
 	    }
 	}
 #>
