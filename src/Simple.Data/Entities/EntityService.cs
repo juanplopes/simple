@@ -67,12 +67,16 @@ namespace Simple.Entities
             }
         }
 
-        protected virtual IQueryable<T> GetDefaultQueriable(EditableExpression<Func<T, bool>> filter, OrderBy<T> orderBy)
+        protected virtual IQueryable<T> GetDefaultQueriable(EditableExpression<Func<T, bool>> filter, OrderBy<T> orderBy, IList<EditableExpression<Func<T, object>>> fetch)
         {
             IQueryable<T> query = Query();
 
             if (filter != null)
                 query = query.Where(filter.ToTypedLambda());
+
+            if (fetch != null)
+                foreach (var fetchItem in fetch)
+                    query = query.Fetch(fetchItem.ToTypedLambda());
 
             if (orderBy != null && orderBy.Count > 0)
             {
@@ -146,14 +150,14 @@ namespace Simple.Entities
             return query;
         }
 
-        public virtual T Find(EditableExpression<Func<T, bool>> filter, OrderBy<T> order)
+        public virtual T Find(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, IList<EditableExpression<Func<T, object>>> fetch)
         {
-            return GetDefaultQueriable(filter, order).FirstOrDefault();
+            return GetDefaultQueriable(filter, order, fetch).FirstOrDefault();
         }
 
         public virtual int Count(EditableExpression<Func<T, bool>> filter)
         {
-            return GetDefaultQueriable(filter, null).Count();
+            return GetDefaultQueriable(filter, null, null).Count();
         }
 
         public virtual IPage<T> Linq(EditableExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, EditableExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression)
@@ -172,9 +176,9 @@ namespace Simple.Entities
             return new Page<T>(list, count);
         }
 
-        public virtual IPage<T> List(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, int? skip, int? take)
+        public virtual IPage<T> List(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, int? skip, int? take, IList<EditableExpression<Func<T, object>>> fetch)
         {
-            IQueryable<T> q = GetDefaultQueriable(filter, order);
+            IQueryable<T> q = GetDefaultQueriable(filter, order, fetch);
 
             return new Page<T>(SkipAndTake(q, skip, take).ToList(), q.Count());
         }
@@ -182,17 +186,19 @@ namespace Simple.Entities
         public virtual void Delete(object id)
         {
             Session.Delete(Load(id));
+            Session.Flush();
         }
 
         [RequiresTransaction]
         public virtual int Delete(EditableExpression<Func<T, bool>> filter)
         {
             int res = 0;
-            foreach (var entity in List(filter, null, null, null))
+            foreach (var entity in List(filter, null, null, null, null))
             {
                 Session.Delete(entity);
                 res++;
             }
+            Session.Flush();
             return res;
         }
 
@@ -227,6 +233,7 @@ namespace Simple.Entities
         public virtual void Delete(T entity)
         {
             Session.Delete(entity);
+            Session.Flush();
         }
 
 

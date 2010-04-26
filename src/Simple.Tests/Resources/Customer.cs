@@ -43,7 +43,7 @@ namespace Simple.Tests.Resources
             public Map()
             {
                 Table("Customers");
-                Not.LazyLoad();
+                
 
                 Id(x => x.Id, "CustomerID");
                 Map(x => x.CompanyName);

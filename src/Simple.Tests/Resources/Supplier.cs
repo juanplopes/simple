@@ -30,7 +30,7 @@ namespace Simple.Tests.Resources
             public Map()
             {
                 Table("Suppliers");
-                Not.LazyLoad();
+                
 
                 Id(x => x.Id, "SupplierID");
                 Map(x => x.CompanyName);

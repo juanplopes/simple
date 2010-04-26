@@ -8,7 +8,7 @@ using Simple.Tests.Resources;
 namespace Simple.Tests.Data
 {
     [TestFixture]
-    public class NorthwindCheckFixture
+    public class NorthwindCheckFixture : BaseDataFixture
     {
         [Test]
         public void CheckCategories()

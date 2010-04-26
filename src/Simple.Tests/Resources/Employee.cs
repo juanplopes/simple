@@ -27,7 +27,7 @@ namespace Simple.Tests.Resources
             public Map()
             {
                 Table("Employees");
-                Not.LazyLoad();
+                
 
                 Id(x => x.Id, "EmployeeID");
                 Map(x => x.FirstName);

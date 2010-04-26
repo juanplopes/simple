@@ -28,12 +28,11 @@ namespace Simple.Tests.Resources
             public Map()
             {
                 Table("Products");
-                Not.LazyLoad();
 
                 Id(x => x.Id, "ProductID").GeneratedBy.Increment();
                 Map(x => x.Name, "ProductName");
-                References(x => x.Supplier, "SupplierID").Not.LazyLoad();
-                References(x => x.Category, "CategoryID").Not.LazyLoad() ;
+                References(x => x.Supplier, "SupplierID");
+                References(x => x.Category, "CategoryID") ;
                 Map(x => x.QuantityPerUnit);
                 Map(x => x.UnitPrice);
                 Map(x => x.UnitsInStock);

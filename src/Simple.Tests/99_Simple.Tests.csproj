@@ -121,6 +121,7 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Common\EnumerableFixture.cs" />
+    <Compile Include="Data\EntityFetchFixture.cs" />
     <Compile Include="Data\EntityHelperIntegrationFixture.cs" />
     <Compile Include="Data\TransactionHookFixture.cs" />
     <Compile Include="Data\ValidationFixture.cs" />

@@ -17,6 +17,11 @@ namespace Simple.Entities
         {
             return (T)Funcletizer.PartialEval(expr);
         }
+
+        public static IList<EditableExpression<Func<T, object>>> ToEditable<T>(this IList<Expression<Func<T, object>>> expressions)
+        {
+            return expressions.Select(x => x.ToEditableExpression()).ToList();
+        }
     }
 
 }

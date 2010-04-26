@@ -93,7 +93,7 @@ namespace Simple.Tests.Data
 
 
             AssertQuery(x => x.Where(f2).OrderByDescending(o => o.Id).Take(1),
-                Customer.Find(f, o => o.Desc(x => x.Id)));
+                Customer.Find(f, Customer.OrderByDesc(x => x.Id)));
         }
 
 
@@ -108,7 +108,7 @@ namespace Simple.Tests.Data
 
 
             AssertQuery(x => x.Where(f2).OrderByDescending(o => o.Id).Take(1),
-                Customer.Find(f, o => o.Desc(x => x.Id)));
+                Customer.Find(f, Customer.OrderByDesc(x => x.Id)));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Simple.Tests.Data
         {
             var f = Customer.Expr(x => x.CompanyName.StartsWith("B"));
             AssertQuery(x => x.Where(f).OrderByDescending(o => o.Id).Take(1),
-                Customer.Find(f, o => o.Desc(x => x.Id)));
+                Customer.Find(f, Customer.OrderByDesc(x => x.Id)));
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace Simple.Tests.Data
         {
             var f = Customer.Expr(x => x.City == "Sao Paulo");
             AssertQuery(x => x.Where(f).OrderBy(o => o.ContactTitle).ThenByDescending(o => o.ContactName).Take(1),
-                Customer.Find(f, o => o.Asc(x => x.ContactTitle).Desc(x => x.ContactName)));
+                Customer.Find(f, Customer.OrderBy(x => x.ContactTitle).Desc(x => x.ContactName)));
         }
 
         [Test]
@@ -157,14 +157,14 @@ namespace Simple.Tests.Data
         [Test]
         public void TestFindLastProduct()
         {
-            var p = Product.Find(x => true, o => o.Desc(x => x.Id));
+            var p = Product.Find(x => true, Product.OrderByDesc(x => x.Id));
             Assert.AreEqual(77, p.Id);
         }
 
         [Test]
         public void TestListProductsOrderingByOtherField()
         {
-            var p = Product.ListAll(o => o.Desc(x => x.Category.Name));
+            var p = Product.ListAll(Product.OrderByDesc(x => x.Category.Name));
             var p2 = Product.ListAll().OrderByDescending(x => x.Category.Name);
             Assert.IsTrue(p.SequenceEqual(p2));
         }
@@ -218,21 +218,21 @@ namespace Simple.Tests.Data
         public void TestListWithOrder()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax),
-                Customer.ListAll(o => o.Desc(x => x.Id).Asc(x => x.Fax)).ToArray());
+                Customer.ListAll(Customer.OrderByDesc(x => x.Id).Asc(x => x.Fax)).ToArray());
         }
 
         [Test]
         public void TestListWithOrderTop10()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax), 0, 10,
-                Customer.ListAll(o => o.Desc(x => x.Id).Asc(x => x.Fax), 10));
+                Customer.ListAll(Customer.OrderByDesc(x => x.Id).Asc(x => x.Fax), 10));
         }
 
         [Test]
         public void TestListWithOrderSkip20Take10()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax), 20, 10,
-                Customer.ListAll(o => o.Desc(x => x.Id).Asc(x => x.Fax), 20, 10));
+                Customer.ListAll(Customer.OrderByDesc(x => x.Id).Asc(x => x.Fax), 20, 10));
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace Simple.Tests.Data
             var f = Customer.Expr(x => x.Region != null);
 
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax).Where(f),
-                Customer.List(f, o => o.Desc(x => x.Id).Asc(x => x.Fax)).ToArray());
+                Customer.List(f, Customer.OrderByDesc(x => x.Id).Asc(x => x.Fax)).ToArray());
         }
 
         [Test]
@@ -250,7 +250,7 @@ namespace Simple.Tests.Data
             var f = Customer.Expr(x => x.Region != null);
 
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax).Where(f), 0, 10,
-                Customer.List(f, o => o.Desc(x => x.Id).Asc(x => x.Fax), 10));
+                Customer.List(f, Customer.OrderByDesc(x => x.Id).Asc(x => x.Fax), 10));
         }
 
         [Test]
@@ -259,7 +259,7 @@ namespace Simple.Tests.Data
             var f = Customer.Expr(x => x.Region != null);
 
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax).Where(f), 20, 10,
-                Customer.List(f, o => o.Desc(x => x.Id).Asc(x => x.Fax), 20, 10));
+                Customer.List(f, Customer.OrderByDesc(x => x.Id).Asc(x => x.Fax), 20, 10));
         }
 
         [Test]
@@ -315,7 +315,7 @@ namespace Simple.Tests.Data
         public void TestDeleteOne()
         {
             Customer.Load("OLDWO").Delete();
-            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OLDWO"));
+            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OLDWO").ToString());
         }
 
 
@@ -324,14 +324,14 @@ namespace Simple.Tests.Data
         {
             int count = Customer.Delete(x => x.ContactName == "Yvonne Moncada");
             Assert.AreEqual(1, count);
-            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OCEAN"));
+            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OCEAN").ToString());
         }
 
         [Test]
         public void TestDeleteOneById()
         {
             Customer.Delete("AROUT");
-            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("AROUT"));
+            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("AROUT").ToString());
         }
 
         [Test]

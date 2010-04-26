@@ -63,81 +63,91 @@ namespace Simple.Entities
             return Service.Evict(entity);
         }
 
-        public static T Find(Expression<Func<T, bool>> filter)
+        public static T Find(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.Find(filter.Funcletize().ToEditableExpression(), new OrderBy<T>());
+            return Service.Find(filter.Funcletize().ToEditableExpression(), new OrderBy<T>(), fetch.ToEditable());
         }
 
-        public static T Find(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy)
+        public static T Find(Expression<Func<T, bool>> filter, OrderBy<T> orderBy, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.Find(filter.Funcletize().ToEditableExpression(), orderBy(new OrderBy<T>()));
+            return Service.Find(filter.Funcletize().ToEditableExpression(), orderBy, fetch.ToEditable());
+        }
+
+        public static OrderBy<T> OrderBy(Expression<Func<T, object>> expr)
+        {
+            return new OrderBy<T>().Asc(expr);
+        }
+
+        public static OrderBy<T> OrderByDesc(Expression<Func<T, object>> expr)
+        {
+            return new OrderBy<T>().Desc(expr);
         }
 
         #region List no order, no filter
-        public static IList<T> ListAll()
+        public static IList<T> ListAll(params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(null, null, null, null);
+            return Service.List(null, null, null, null, fetch.ToEditable());
         }
 
-        public static IPage<T> ListAll(int top)
+        public static IPage<T> ListAll(int top, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(null, null, null, top);
+            return Service.List(null, null, null, top, fetch.ToEditable());
         }
 
-        public static IPage<T> ListAll(int skip, int take)
+        public static IPage<T> ListAll(int skip, int take, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(null, null, skip, take);
+            return Service.List(null, null, skip, take, fetch.ToEditable());
         }
         #endregion
 
         #region List yes order, no filter
-        public static IList<T> ListAll(Func<OrderBy<T>, OrderBy<T>> orderBy)
+        public static IList<T> ListAll(OrderBy<T> orderBy, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(null, orderBy(new OrderBy<T>()), null, null);
+            return Service.List(null, orderBy, null, null, fetch.ToEditable());
         }
 
-        public static IPage<T> ListAll(Func<OrderBy<T>, OrderBy<T>> orderBy, int top)
+        public static IPage<T> ListAll(OrderBy<T> orderBy, int top, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(null, orderBy(new OrderBy<T>()), null, top);
+            return Service.List(null, orderBy, null, top, fetch.ToEditable());
         }
 
-        public static IPage<T> ListAll(Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
+        public static IPage<T> ListAll(OrderBy<T> orderBy, int skip, int take, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(null, orderBy(new OrderBy<T>()), skip, take);
+            return Service.List(null, orderBy, skip, take, fetch.ToEditable());
         }
         #endregion
 
         #region List no order, yes filter
-        public static IList<T> List(Expression<Func<T, bool>> filter)
+        public static IList<T> List(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(filter.Funcletize().ToEditableExpression(), null, null, null);
+            return Service.List(filter.Funcletize().ToEditableExpression(), null, null, null, fetch.ToEditable());
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, int top)
+        public static IPage<T> List(Expression<Func<T, bool>> filter, int top, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(filter.Funcletize().ToEditableExpression(), null, null, top);
+            return Service.List(filter.Funcletize().ToEditableExpression(), null, null, top, fetch.ToEditable());
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, int skip, int take)
+        public static IPage<T> List(Expression<Func<T, bool>> filter, int skip, int take, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(filter.Funcletize().ToEditableExpression(), null, skip, take);
+            return Service.List(filter.Funcletize().ToEditableExpression(), null, skip, take, fetch.ToEditable());
         }
         #endregion
 
         #region List yes order, yes filter
-        public static IList<T> List(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy)
+        public static IList<T> List(Expression<Func<T, bool>> filter, OrderBy<T> orderBy, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(filter.Funcletize().ToEditableExpression(), orderBy(new OrderBy<T>()), null, null);
+            return Service.List(filter.Funcletize().ToEditableExpression(), orderBy, null, null, fetch.ToEditable());
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy, int top)
+        public static IPage<T> List(Expression<Func<T, bool>> filter, OrderBy<T> orderBy, int top, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(filter.Funcletize().ToEditableExpression(), orderBy(new OrderBy<T>()), null, top);
+            return Service.List(filter.Funcletize().ToEditableExpression(), orderBy, null, top, fetch.ToEditable());
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, Func<OrderBy<T>, OrderBy<T>> orderBy, int skip, int take)
+        public static IPage<T> List(Expression<Func<T, bool>> filter, OrderBy<T> orderBy, int skip, int take, params Expression<Func<T, object>>[] fetch)
         {
-            return Service.List(filter.Funcletize().ToEditableExpression(), orderBy(new OrderBy<T>()), skip, take);
+            return Service.List(filter.Funcletize().ToEditableExpression(), orderBy, skip, take, fetch.ToEditable());
         }
 
 

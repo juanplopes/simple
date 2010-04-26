@@ -28,7 +28,7 @@ namespace Simple.Tests.Resources
             public Map()
             {
                 Table("EmployeeTerritories");
-                Not.LazyLoad();
+                
 
                 CompositeId()
                     .KeyReference(x => x.Employee, "EmployeeID")

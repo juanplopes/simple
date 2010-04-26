@@ -26,7 +26,7 @@ namespace Simple.Tests.Resources
             public Map()
             {
                 Table("Territories");
-                Not.LazyLoad();
+                
 
                 Id(x => x.Id, "TerritoryID");
                 Map(x => x.Description, "TerritoryDescription");
