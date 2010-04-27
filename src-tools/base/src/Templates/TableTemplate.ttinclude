@@ -9,6 +9,7 @@
     	public string AssemblyName { get; set; }
         public GeneratedTextTransformation Context { get; set; }
 		public string OutputFileTemplate { get; set; }
+		public bool LazyLoad { get; set; }
 		
 		public void RefreshOutputFile() 
 		{

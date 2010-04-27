@@ -21,7 +21,7 @@ public class HbmTemplate : TableTemplate
 #>
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="<#=this.EntityNamespace #>" assembly="<#=this.AssemblyName #>">
-  <class name="<#= EntityNamespace #>.<#= GetTableClassName() #>, <#= AssemblyName #>" table="<#= Table.TableName#>" schema="<#=Table.TableSchema#>">
+  <class name="<#= EntityNamespace #>.<#= GetTableClassName() #>, <#= AssemblyName #>" table="<#= Table.TableName#>" schema="<#=Table.TableSchema#>" lazy="<#= LazyLoad.ToString().ToLower() #>">
 <#+ if (Table.PrimaryKeyColumns.Count() > 1) { #>
     <composite-id>
 <#+ foreach (var field in Table.GetKeyFields()) { #>
@@ -52,7 +52,7 @@ public class HbmTemplate : TableTemplate
 <#+ } #>
  
 <#+ foreach (var field in Table.GetFields()) { #>
-    <property name="<#= GetFieldName(field) #>">
+    <property name="<#= GetFieldName(field) #>" lazy="<#= LazyLoad.ToString().ToLower() #>">
       <column name="<#= field.ColumnName #>" <#+ if (field.DataTypeName != null) { #> sql-type="<#=field.DataTypeName #>" <#+ } #>/>
     </property>
 <#+ } #>
@@ -65,8 +65,9 @@ public class HbmTemplate : TableTemplate
     </many-to-one>
 <#+ }#>
 
-<#+ foreach (var field in Table.GetOneToManyFields()) { #>
-    <set name="<#= GetFieldName(field) #>">
+<#+ if (LazyLoad)
+	foreach (var field in Table.GetOneToManyFields()) { #>
+    <set name="<#= GetFieldName(field) #>" lazy="<#= LazyLoad.ToString().ToLower() #>">
       <key>
 <#+ foreach (var column in field.Columns) { #>
         <column name="<#= column.FkColumnName #>"/>

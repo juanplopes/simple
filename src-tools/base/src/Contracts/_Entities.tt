@@ -52,7 +52,8 @@ namespace <#=this.EntityNamespace #>
         public virtual <#= GetFieldType(field) #> <#= GetFieldName(field) #> { get; set; }
 <#+ }#>
         
-<#+ foreach (var field in Table.GetOneToManyFields()) { #>
+<#+ if (LazyLoad)
+	foreach (var field in Table.GetOneToManyFields()) { #>
         public virtual <#= GetFieldType(field) #> <#= GetFieldName(field) #> { get; set; }
 <#+ }#>
 

@@ -26,6 +26,7 @@ public class GeneratorBase : Generator
 		ExcludedTables.Add("SchemaInfo");
 		
 		Template = template;
+		LazyLoad = true;
 		NHibernateFilePath= @"Environment\Development\NHibernate.config";
 		ApplicationFilePath =  @"Environment\Development\Application.config";
 	}
@@ -39,6 +40,7 @@ public class GeneratorBase : Generator
     public IList<string> ExcludedTables { get; set; }
 	public string NHibernateFilePath { get; set; }
 	public string ApplicationFilePath { get; set; }
+	public bool LazyLoad { get; set; }
 	
     public string AssemblyName
     {
@@ -56,7 +58,7 @@ public class GeneratorBase : Generator
 			.GetTables(IncludedTables, ExcludedTables);
 			
         Template.AssemblyName = this.AssemblyName;
-
+		Template.LazyLoad = this.LazyLoad;
         foreach (var table in tables)
         {
             Template.Table = table;
