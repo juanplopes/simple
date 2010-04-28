@@ -39,6 +39,14 @@ namespace Simple.Reflection
 
         public bool HasIdentifiers { get { return _ids.Count > 0; } }
 
+        public IEnumerable<string> IdentifierList
+        {
+            get
+            {
+                return _ids;
+            }
+        }
+
         public EntityHelper(Type entityType)
         {
             _entityType = entityType;
