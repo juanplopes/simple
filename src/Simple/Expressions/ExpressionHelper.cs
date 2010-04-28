@@ -8,20 +8,34 @@ using Simple.Reflection;
 
 namespace Simple.Expressions
 {
-    public class ExpressionHelper
+    public static class ExpressionHelper
     {
-        public static string GetMemberName<T, P>(Expression<Func<T, P>> expr)
+        internal static IList<string> SplitProperty(this string propertyPath)
+        {
+            return propertyPath.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+
+        public static string GetMemberName<T, P>(this Expression<Func<T, P>> expr)
         {
             return GetMemberName(expr.Body);
         }
 
-        public static string GetMemberName(Expression expr)
+        public static string GetMemberName(this Expression expr)
         {
             return string.Join(".", GetMemberPath(expr).ToArray());
         }
 
-        public static IEnumerable<string> GetMemberPath(Expression expr)
+        public static IEnumerable<string> GetMemberNameGetMemberPath<T, P>(this Expression<Func<T, P>> expr)
         {
+            return GetMemberPath(expr.Body);
+        }
+
+        public static IEnumerable<string> GetMemberPath(this Expression expr)
+        {
+            if (expr != null && expr.NodeType == ExpressionType.Lambda)
+                return (expr as LambdaExpression).Body.GetMemberPath();
+
             LinkedList<string> answer = new LinkedList<string>();
             while (expr != null &&
                   (expr.NodeType == ExpressionType.MemberAccess ||
@@ -47,22 +61,22 @@ namespace Simple.Expressions
             return answer;
         }
 
-        public static PropertyInfo GetProperty<T>(string propertyPath)
+        public static PropertyInfo GetProperty<T>(this string propertyPath)
         {
-            return GetProperty(typeof(T), propertyPath);
+            return GetProperty(propertyPath, typeof(T));
         }
 
-        public static PropertyInfo GetProperty<T>(IList<string> propertyPath)
+        public static PropertyInfo GetProperty<T>(this IEnumerable<string> propertyPath)
         {
-            return GetProperty(typeof(T), propertyPath);
+            return GetProperty(propertyPath, typeof(T));
         }
 
-        public static PropertyInfo GetProperty(Type type, string propertyPath)
+        public static PropertyInfo GetProperty(this string propertyPath, Type type)
         {
-            return GetProperty(type, propertyPath.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries));
+            return GetProperty(propertyPath.SplitProperty(), type);
         }
 
-        public static PropertyInfo GetProperty(Type type, IList<string> propertyPath)
+        public static PropertyInfo GetProperty(this IEnumerable<string> propertyPath, Type type)
         {
             PropertyInfo ret = null;
             foreach (var prop in propertyPath)
@@ -76,23 +90,44 @@ namespace Simple.Expressions
         }
 
 
-        public static Expression GetPropertyExpression(Expression expr, string propertyPath)
+        public static Expression GetPropertyExpression(this string propertyPath, Expression expr)
         {
-            return GetPropertyExpression(expr, propertyPath.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries));
+            return propertyPath.SplitProperty().GetPropertyExpression(expr);
         }
 
-
-        public static Expression GetPropertyExpression(Expression expr, IList<string> propertyPath)
+      
+        public static Expression GetPropertyExpression(this IEnumerable<string> propertyPath, Expression expr)
         {
             Expression ret = expr;
 
             foreach (var prop in propertyPath)
                 ret = Expression.Property(ret, prop);
-            
+
             return ret;
         }
 
-        public static void SetValue(MemberExpression expr, object target, object value)
+        public static Expression<Func<T, object>> GetPropertyLambda<T>(this string propertyPath)
+        {
+            return propertyPath.SplitProperty().GetPropertyLambda<T>();
+        }
+
+        public static Expression<Func<T, object>> GetPropertyLambda<T>(this IEnumerable<string> propertyPath)
+        {
+            return propertyPath.GetPropertyLambda<T, object>();
+        }
+
+        public static Expression<Func<T, TProp>> GetPropertyLambda<T, TProp>(this string propertyPath)
+        {
+            return propertyPath.SplitProperty().GetPropertyLambda<T, TProp>();
+        }
+
+        public static Expression<Func<T, TProp>> GetPropertyLambda<T, TProp>(this IEnumerable<string> propertyPath)
+        {
+            var parameter = Expression.Parameter(typeof(T), "x");
+            return Expression.Lambda<Func<T, TProp>>(propertyPath.GetPropertyExpression(parameter), parameter);
+        }
+
+        public static void SetValue(this MemberExpression expr, object target, object value)
         {
             IEnumerable<string> path = GetMemberPath(expr);
             PropertyInfo prop = null;

@@ -127,7 +127,7 @@ namespace Simple.Tests.Expressions
             var type = typeof(A);
             var str = "BProp.CProp.DProp";
 
-            var prop = ExpressionHelper.GetProperty(type, str);
+            var prop = str.GetProperty(type);
 
             Assert.That(prop.Name, Is.EqualTo("DProp"));
             Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
@@ -140,7 +140,7 @@ namespace Simple.Tests.Expressions
             var type = typeof(A);
             var str = new[] { "BProp", "CProp", "DProp" };
 
-            var prop = ExpressionHelper.GetProperty(type, str);
+            var prop = str.GetProperty(type);
 
             Assert.That(prop.Name, Is.EqualTo("DProp"));
             Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
@@ -152,7 +152,7 @@ namespace Simple.Tests.Expressions
         {
             var str = "BProp.CProp.DProp";
 
-            var prop = ExpressionHelper.GetProperty<A>(str);
+            var prop = str.GetProperty<A>();
 
             Assert.That(prop.Name, Is.EqualTo("DProp"));
             Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
@@ -164,7 +164,7 @@ namespace Simple.Tests.Expressions
         {
             var str = new[] { "BProp", "CProp", "DProp" };
 
-            var prop = ExpressionHelper.GetProperty<A>(str);
+            var prop = str.GetProperty<A>();
 
             Assert.That(prop.Name, Is.EqualTo("DProp"));
             Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
@@ -176,7 +176,7 @@ namespace Simple.Tests.Expressions
         {
             var str = "";
 
-            var prop = ExpressionHelper.GetProperty<A>(str);
+            var prop = str.GetProperty<A>();
 
             Assert.That(prop, Is.Null);
         }
@@ -188,7 +188,7 @@ namespace Simple.Tests.Expressions
 
             Assert.Throws<ArgumentException>(() =>
             {
-                ExpressionHelper.GetProperty<A>(str);
+                str.GetProperty<A>();
             });
         }
 
@@ -199,7 +199,7 @@ namespace Simple.Tests.Expressions
             var str = "BProp.CProp.DProp";
 
             var expr = Expression.Parameter(typeof(A), "x");
-            var prop = ExpressionHelper.GetPropertyExpression(expr, str);
+            var prop = str.GetPropertyExpression(expr);
 
             Assert.AreEqual("x.BProp.CProp.DProp", prop.ToString());
         }
@@ -210,9 +210,53 @@ namespace Simple.Tests.Expressions
             var str = new[] { "BProp", "CProp", "DProp" };
 
             var expr = Expression.Parameter(typeof(A), "x");
-            var prop = ExpressionHelper.GetPropertyExpression(expr, str);
+            var prop = str.GetPropertyExpression(expr);
 
             Assert.AreEqual("x.BProp.CProp.DProp", prop.ToString());
+
+        }
+
+        [Test]
+        public void TestGetPropertyLambdaWithObjectReturnTypeFromStringArray()
+        {
+            var str = new[] { "BProp", "CProp", "DProp" };
+
+            var prop = str.GetPropertyLambda<A>();
+
+            Assert.AreEqual("x => x.BProp.CProp.DProp", prop.ToString());
+
+        }
+
+        [Test]
+        public void TestGetPropertyLambdaWithDReturnTypeFromStringArray()
+        {
+            var str = new[] { "BProp", "CProp", "DProp" };
+
+            var prop = str.GetPropertyLambda<A, D>();
+
+            Assert.AreEqual("x => x.BProp.CProp.DProp", prop.ToString());
+
+        }
+
+        [Test]
+        public void TestGetPropertyLambdaWithObjectReturnTypeFromString()
+        {
+            var str = "BProp.CProp.DProp";
+
+            var prop = str.GetPropertyLambda<A>();
+
+            Assert.AreEqual("x => x.BProp.CProp.DProp", prop.ToString());
+
+        }
+
+        [Test]
+        public void TestGetPropertyLambdaWithDReturnTypeFromString()
+        {
+            var str = "BProp.CProp.DProp";
+
+            var prop = str.GetPropertyLambda<A, D>();
+
+            Assert.AreEqual("x => x.BProp.CProp.DProp", prop.ToString());
 
         }
 
@@ -222,7 +266,7 @@ namespace Simple.Tests.Expressions
         {
             var str = "";
             var expr = Expression.Parameter(typeof(A), "x");
-            var prop = ExpressionHelper.GetPropertyExpression(expr, str);
+            var prop = str.GetPropertyExpression(expr);
 
             Assert.AreEqual("x", prop.ToString());
         }
@@ -235,7 +279,7 @@ namespace Simple.Tests.Expressions
 
             Assert.Throws<ArgumentException>(() =>
             {
-                ExpressionHelper.GetPropertyExpression(expr, str);
+                str.GetPropertyExpression(expr);
             });
         }
     }

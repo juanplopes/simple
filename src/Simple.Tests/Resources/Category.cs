@@ -19,6 +19,7 @@ namespace Simple.Tests.Resources
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
         public virtual byte[] Picture { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         public class Map : ClassMap<Category>
         {
@@ -29,6 +30,7 @@ namespace Simple.Tests.Resources
                 Map(x => x.Name, "CategoryName");
                 Map(x => x.Description);
                 Map(x => x.Picture);
+                HasMany(x => x.Products).KeyColumn("ProductID");
             }
         }
     }

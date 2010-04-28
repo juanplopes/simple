@@ -115,12 +115,12 @@ namespace Simple.Entities
 
         public virtual T Find(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, IList<EditableExpression<Func<T, object>>> fetch)
         {
-            return Query().GetDefaultQueriable(filter, order).GetFetchExpressions(fetch).FirstOrDefault();
+            return Query().ApplyFilter(filter, order).ApplyFetch(fetch).FirstOrDefault();
         }
 
         public virtual int Count(EditableExpression<Func<T, bool>> filter)
         {
-            return Query().GetDefaultQueriable(filter, null).Count();
+            return Query().ApplyFilter(filter, null).Count();
         }
 
         public virtual IPage<T> Linq(EditableExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, EditableExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression)
@@ -141,11 +141,11 @@ namespace Simple.Entities
 
         public virtual IPage<T> List(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, int? skip, int? take, IList<EditableExpression<Func<T, object>>> fetch)
         {
-            var query = Query().GetDefaultQueriable(filter, order);
+            var map = Query().ApplyFilter(filter, order);
+            var reduce = map.ApplyFetch(fetch).ApplyLimit(skip, take);
 
-            var page = query.GetFetchExpressions(fetch).SkipAndTake(skip, take).ToList();
-
-            var count = (skip != null || take != null) ? query.Count() : page.Count;
+            var page = reduce.ToList();
+            var count = (skip != null || take != null) ? map.Count() : page.Count;
 
             return new Page<T>(page, count);
         }

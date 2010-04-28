@@ -5,21 +5,24 @@ using System.Text;
 using NHibernate.Linq;
 using System.Linq.Expressions;
 using Simple.Expressions.Editable;
+using Simple.Expressions;
 
 namespace Simple.Entities
 {
     internal static class EntityServiceExtensions
     {
-        public static IQueryable<T> GetFetchExpressions<T>(this IQueryable<T> query, IList<EditableExpression<Func<T, object>>> fetch)
+        public static IQueryable<T> ApplyFetch<T>(this IQueryable<T> query, IList<EditableExpression<Func<T, object>>> fetch)
         {
             if (fetch != null)
                 foreach (var fetchProperty in fetch)
+                {
                     query = query.Fetch(fetchProperty.ToTypedLambda());
+                }
 
             return query;
         }
 
-        public static IQueryable<T> GetDefaultQueriable<T>(this IQueryable<T> query, EditableExpression<Func<T, bool>> filter, OrderBy<T> orderBy)
+        public static IQueryable<T> ApplyFilter<T>(this IQueryable<T> query, EditableExpression<Func<T, bool>> filter, OrderBy<T> orderBy)
         {
             if (filter != null)
                 query = query.Where(filter.ToTypedLambda());
@@ -46,7 +49,7 @@ namespace Simple.Entities
             return query;
         }
 
-        public static IQueryable<T> SkipAndTake<T>(this IQueryable<T> query, int? skip, int? take)
+        public static IQueryable<T> ApplyLimit<T>(this IQueryable<T> query, int? skip, int? take)
         {
             if (skip.HasValue) query = query.Skip(skip.Value);
             if (take.HasValue) query = query.Take(take.Value);
