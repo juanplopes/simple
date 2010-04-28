@@ -67,6 +67,18 @@ namespace Simple.Tests.Data
         }
 
         [Test]
+        public void CanListAllProductsAndTheirCategoriesWithLazyLoadFetchingCategoryAndSupplier()
+        {
+            IList<Product> p = null;
+            using (MySimply.EnterContext())
+            {
+                p = Product.ListAll(x => x.Category, x => x.Supplier);
+            }
+            CollectionAssert.AllItemsAreNotNull(p.Select(x => x.Category).ToArray());
+            CollectionAssert.AllItemsAreNotNull(p.Select(x => x.Supplier).ToArray());
+        }
+
+        [Test]
         public void CanLoadOneProductAndItsCategoryWithLazyLoadFetchingCategoryWhenCategoryIsNull()
         {
 

@@ -125,6 +125,7 @@
     <Compile Include="Data\Extensions.cs" />
     <Compile Include="Data\TupleToDictionaryTransformer.cs" />
     <Compile Include="Data\TupleToPropertiesTransformer.cs" />
+    <Compile Include="Entities\EntityServiceExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DefaultCallHook.cs" />
     <Compile Include="Entities\EntityService.cs" />
