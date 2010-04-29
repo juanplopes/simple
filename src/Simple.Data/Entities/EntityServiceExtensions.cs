@@ -6,54 +6,38 @@ using NHibernate.Linq;
 using System.Linq.Expressions;
 using Simple.Expressions.Editable;
 using Simple.Expressions;
+using Simple.Entities.QuerySpec;
+using Simple.Patterns;
 
 namespace Simple.Entities
 {
     internal static class EntityServiceExtensions
     {
-        public static IQueryable<T> ApplyFetch<T>(this IQueryable<T> query, IList<EditableExpression<Func<T, object>>> fetch)
+        public static IQueryable<T> ApplySpecs<T>(this IQueryable<T> query, SpecBuilder<T> specs)
         {
-            if (fetch != null)
-                foreach (var fetchProperty in fetch)
-                {
-                    query = query.Fetch(fetchProperty.ToTypedLambda());
-                }
-
-            return query;
+            if (specs == null) return query;
+            return query.ApplySpecs(specs.Items);
         }
 
-        public static IQueryable<T> ApplyFilter<T>(this IQueryable<T> query, EditableExpression<Func<T, bool>> filter, OrderBy<T> orderBy)
+        public static IQueryable<T> ApplySpecs<T>(this IQueryable<T> query, IList<ISpecItem<T>> specs)
         {
-            if (filter != null)
-                query = query.Where(filter.ToTypedLambda());
+            if (specs == null) return query;
 
-            if (orderBy != null && orderBy.Count > 0)
+            return specs.Aggregate(query, (q, x) =>
             {
-                IOrderedQueryable<T> tempQuery;
-                if (orderBy[0].Backwards)
-                    tempQuery = query.OrderByDescending(orderBy[0].ToExpression());
-                else
-                    tempQuery = query.OrderBy(orderBy[0].ToExpression());
-
-                for (int i = 1; i < orderBy.Count; i++)
-                {
-                    if (orderBy[i].Backwards)
-                        tempQuery = tempQuery.ThenByDescending(orderBy[i].ToExpression());
-                    else
-                        tempQuery = tempQuery.ThenBy(orderBy[i].ToExpression());
-
-                }
-                query = tempQuery;
-            }
-
-            return query;
+                q = ApplySpec<T, IFilterResolver<T>>(q, x, Singleton<FilterResolver<T>>.Do);
+                q = ApplySpec<T, IOrderByResolver<T>>(q, x, Singleton<OrderByResolver<T>>.Do);
+                q = ApplySpec<T, IFetchResolver<T>>(q, x, Singleton<FetchResolver<T>>.Do);
+                q = ApplySpec<T, ILimitsResolver<T>>(q, x, Singleton<LimitsResolver<T>>.Do);
+                return q;
+            });
         }
 
-        public static IQueryable<T> ApplyLimit<T>(this IQueryable<T> query, int? skip, int? take)
+        public static IQueryable<T> ApplySpec<T, R>(this IQueryable<T> query, ISpecItem<T> spec, R resolver)
         {
-            if (skip.HasValue) query = query.Skip(skip.Value);
-            if (take.HasValue) query = query.Take(take.Value);
-            return query;
+            var newSpec = spec as ISpecItem<T, R>;
+            if (newSpec != null) return newSpec.Execute(query, resolver);
+            else return query;
         }
     }
 }

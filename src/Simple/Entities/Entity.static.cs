@@ -6,6 +6,7 @@ using Simple.Expressions;
 using Simple.Config;
 using System.Linq.Expressions;
 using Simple.Expressions.Editable;
+using Simple.Entities.QuerySpec;
 
 namespace Simple.Entities
 {
@@ -28,14 +29,9 @@ namespace Simple.Entities
             }
         }
 
-        public static int Count()
+        protected static SpecBuilder<T> Builder()
         {
-            return Service.Count(null);
-        }
-
-        public static int Count(Expression<Func<T, bool>> filter)
-        {
-            return Service.Count(filter.Funcletize().ToEditableExpression());
+            return new SpecBuilder<T>();
         }
 
         public static T Load(object id)
@@ -63,91 +59,54 @@ namespace Simple.Entities
             return Service.Evict(entity);
         }
 
-        public static T Find(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] fetch)
+        public static int Count()
         {
-            return Service.Find(filter.Funcletize().ToEditableExpression(), new OrderBy<T>(), fetch.ToEditable());
+            return Service.Count(null);
         }
 
-        public static T Find(Expression<Func<T, bool>> filter, OrderBy<T> orderBy, params Expression<Func<T, object>>[] fetch)
+        public static int Count(Expression<Func<T, bool>> filter)
         {
-            return Service.Find(filter.Funcletize().ToEditableExpression(), orderBy, fetch.ToEditable());
+            return Service.Count(Builder().Filter(filter));
         }
 
-        public static OrderBy<T> OrderBy(Expression<Func<T, object>> expr)
-        {
-            return new OrderBy<T>().Asc(expr);
-        }
 
-        public static OrderBy<T> OrderByDesc(Expression<Func<T, object>> expr)
+        public static T Find(Expression<Func<T, bool>> filter, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
         {
-            return new OrderBy<T>().Desc(expr);
+            return Service.Find(Builder().Filter(filter).ApplyFuncs(options));
         }
-
-        #region List no order, no filter
-        public static IList<T> ListAll(params Expression<Func<T, object>>[] fetch)
-        {
-            return Service.List(null, null, null, null, fetch.ToEditable());
-        }
-
-        public static IPage<T> ListAll(int top, params Expression<Func<T, object>>[] fetch)
-        {
-            return Service.List(null, null, null, top, fetch.ToEditable());
-        }
-
-        public static IPage<T> ListAll(int skip, int take, params Expression<Func<T, object>>[] fetch)
-        {
-            return Service.List(null, null, skip, take, fetch.ToEditable());
-        }
-        #endregion
 
         #region List yes order, no filter
-        public static IList<T> ListAll(OrderBy<T> orderBy, params Expression<Func<T, object>>[] fetch)
+        public static IList<T> ListAll(params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
         {
-            return Service.List(null, orderBy, null, null, fetch.ToEditable());
+            return Service.List(Builder().ApplyFuncs(options));
         }
 
-        public static IPage<T> ListAll(OrderBy<T> orderBy, int top, params Expression<Func<T, object>>[] fetch)
+        public static IPage<T> ListAll(int top, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
         {
-            return Service.List(null, orderBy, null, top, fetch.ToEditable());
+            return Service.Paginate(null, Builder().ApplyFuncs(options).Take(top));
         }
 
-        public static IPage<T> ListAll(OrderBy<T> orderBy, int skip, int take, params Expression<Func<T, object>>[] fetch)
+        public static IPage<T> ListAll(int skip, int take, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
         {
-            return Service.List(null, orderBy, skip, take, fetch.ToEditable());
-        }
-        #endregion
-
-        #region List no order, yes filter
-        public static IList<T> List(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] fetch)
-        {
-            return Service.List(filter.Funcletize().ToEditableExpression(), null, null, null, fetch.ToEditable());
-        }
-
-        public static IPage<T> List(Expression<Func<T, bool>> filter, int top, params Expression<Func<T, object>>[] fetch)
-        {
-            return Service.List(filter.Funcletize().ToEditableExpression(), null, null, top, fetch.ToEditable());
-        }
-
-        public static IPage<T> List(Expression<Func<T, bool>> filter, int skip, int take, params Expression<Func<T, object>>[] fetch)
-        {
-            return Service.List(filter.Funcletize().ToEditableExpression(), null, skip, take, fetch.ToEditable());
+            return Service.Paginate(null, Builder().ApplyFuncs(options).Skip(skip).Take(take));
         }
         #endregion
 
+       
         #region List yes order, yes filter
-        public static IList<T> List(Expression<Func<T, bool>> filter, OrderBy<T> orderBy, params Expression<Func<T, object>>[] fetch)
+        public static IList<T> List(Expression<Func<T, bool>> filter, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
         {
-            return Service.List(filter.Funcletize().ToEditableExpression(), orderBy, null, null, fetch.ToEditable());
+            return Service.List(Builder().Filter(filter).ApplyFuncs(options));
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, OrderBy<T> orderBy, int top, params Expression<Func<T, object>>[] fetch)
+        public static IPage<T> List(Expression<Func<T, bool>> filter, int top, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
         {
-            return Service.List(filter.Funcletize().ToEditableExpression(), orderBy, null, top, fetch.ToEditable());
+            return Service.Paginate(Builder().Filter(filter), Builder().ApplyFuncs(options).Take(top));
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, OrderBy<T> orderBy, int skip, int take, params Expression<Func<T, object>>[] fetch)
+        public static IPage<T> List(Expression<Func<T, bool>> filter, int skip, int take, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
         {
-            return Service.List(filter.Funcletize().ToEditableExpression(), orderBy, skip, take, fetch.ToEditable());
+            return Service.Paginate(Builder().Filter(filter), Builder().ApplyFuncs(options).Skip(skip).Take(take));
         }
 
 
@@ -160,7 +119,7 @@ namespace Simple.Entities
 
         public static int Delete(Expression<Func<T, bool>> filter)
         {
-            return Service.Delete(filter.Funcletize().ToEditableExpression());
+            return Service.Delete(Builder().Filter(filter));
         }
 
         public static void Delete(object id)

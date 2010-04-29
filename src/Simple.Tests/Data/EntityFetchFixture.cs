@@ -35,7 +35,7 @@ namespace Simple.Tests.Data
             Product p = null;
             using (MySimply.EnterContext())
             {
-                p = Product.Find(x => true, x => x.Category);
+                p = Product.Find(x => true, q => q.Fetch(x => x.Category));
             }
             Assert.AreEqual("Beverages", p.Category.Name);
         }
@@ -46,7 +46,7 @@ namespace Simple.Tests.Data
             Product p = null;
             using (MySimply.EnterContext())
             {
-                p = Product.Find(x => true, x => x.Category);
+                p = Product.Find(x => true, q => q.Fetch(x => x.Category));
             }
             Assert.AreEqual("Beverages", p.Category.Name);
             Assert.Throws<LazyInitializationException>(() => p.Supplier.ContactName.ToString());
@@ -59,7 +59,7 @@ namespace Simple.Tests.Data
             Product p = null;
             using (MySimply.EnterContext())
             {
-                p = Product.Find(x => true, x => x.Category, x => x.Supplier);
+                p = Product.Find(x => true, q => q.Fetch(x => x.Category).Fetch(x => x.Supplier));
             }
             Assert.AreEqual("Beverages", p.Category.Name);
             Assert.AreEqual("Charlotte Cooper", p.Supplier.ContactName);
@@ -72,7 +72,7 @@ namespace Simple.Tests.Data
             IList<Product> p = null;
             using (MySimply.EnterContext())
             {
-                p = Product.ListAll(x => x.Category, x => x.Supplier);
+                p = Product.ListAll(q => q.Fetch(x => x.Category).Fetch(x => x.Supplier));
             }
             CollectionAssert.AllItemsAreNotNull(p.Select(x => x.Category.Name).ToArray());
             CollectionAssert.AllItemsAreNotNull(p.Select(x => x.Supplier.ContactName).ToArray());
@@ -114,7 +114,7 @@ namespace Simple.Tests.Data
                     p1.Category = null;
                     p1 = p1.Save();
 
-                    Product p = Product.Find(x => x.Id == p1.Id, x => x.Category);
+                    Product p = Product.Find(x => x.Id == p1.Id, q => q.Fetch(x => x.Category));
 
                     Assert.AreEqual(null, p.Category);
                 }

@@ -115,9 +115,14 @@
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\IEntityService.cs" />
     <Compile Include="Entities\IPage.cs" />
-    <Compile Include="Entities\OrderByCollection.cs" />
-    <Compile Include="Entities\OrderByItem.cs" />
+    <Compile Include="Entities\QuerySpec\FilterSpec.cs" />
+    <Compile Include="Entities\QuerySpec\FetchSpec.cs" />
+    <Compile Include="Entities\QuerySpec\ISpecItem.cs" />
+    <Compile Include="Entities\QuerySpec\LimitsSpec.cs" />
+    <Compile Include="Entities\QuerySpec\OrderBySpec.cs" />
     <Compile Include="Entities\Page.cs" />
+    <Compile Include="Entities\QuerySpec\SpecBuilder.cs" />
+    <Compile Include="Entities\QuerySpec\SpecBuilderExtensions.cs" />
     <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
     <None Include="Expressions\Editable\EditableExpressionsExtensions.static.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

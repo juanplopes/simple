@@ -130,6 +130,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.resx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\OrderByFixture.cs" />
     <Compile Include="Expressions\InvocationExpanderFixture.cs" />
     <Compile Include="IO\CommandLineReaderFixture.cs" />
     <Compile Include="IO\FileSizeFixture.cs" />

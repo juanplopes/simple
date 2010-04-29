@@ -8,6 +8,7 @@ using Simple.Expressions.Editable;
 using Simple.Services;
 using FluentValidation.Results;
 using Simple.Validation;
+using Simple.Entities.QuerySpec;
 
 namespace Simple.Entities
 {
@@ -20,14 +21,16 @@ namespace Simple.Entities
         T Merge(T entity);
         T Evict(T entity);
 
-        int Count(EditableExpression<Func<T, bool>> filter);
-        T Find(EditableExpression<Func<T, bool>> filter, OrderBy<T> orderBy, IList<EditableExpression<Func<T, object>>> fetch);
-        IPage<T> List(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, int? skip, int? take, IList<EditableExpression<Func<T, object>>> fetch);
+        int Count(SpecBuilder<T> map);
+        T Find(SpecBuilder<T> map);
+        IList<T> List(SpecBuilder<T> map);
+        IPage<T> Paginate(SpecBuilder<T> map, SpecBuilder<T> reduce);
+
         IPage<T> Linq(EditableExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, EditableExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression);
 
         void Delete(object id);
         void Delete(T entity);
-        int Delete(EditableExpression<Func<T, bool>> filter);
+        int Delete(SpecBuilder<T> map);
 
         T SaveOrUpdate(T entity);
         T Save(T entity);

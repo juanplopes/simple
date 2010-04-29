@@ -13,6 +13,7 @@ using NHibernate;
 using Simple.Validation;
 using NHibernate.Metadata;
 using FluentValidation.Results;
+using Simple.Entities.QuerySpec;
 
 namespace Simple.Entities
 {
@@ -113,14 +114,26 @@ namespace Simple.Entities
         }
 
 
-        public virtual T Find(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, IList<EditableExpression<Func<T, object>>> fetch)
+        public virtual T Find(SpecBuilder<T> map)
         {
-            return Query().ApplyFilter(filter, order).ApplyFetch(fetch).FirstOrDefault();
+            return Query().ApplySpecs(map).FirstOrDefault();
         }
 
-        public virtual int Count(EditableExpression<Func<T, bool>> filter)
+        public virtual int Count(SpecBuilder<T> map)
         {
-            return Query().ApplyFilter(filter, null).Count();
+            return Query().ApplySpecs(map).Count();
+        }
+
+        public virtual IList<T> List(SpecBuilder<T> map)
+        {
+            return Query().ApplySpecs(map).ToList();
+        }
+
+        public virtual IPage<T> Paginate(SpecBuilder<T> map, SpecBuilder<T> reduce)
+        {
+            var mapped = Query().ApplySpecs(map);
+
+            return new Page<T>(mapped.ApplySpecs(reduce).ToList(), mapped.Count());
         }
 
         public virtual IPage<T> Linq(EditableExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, EditableExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression)
@@ -139,16 +152,6 @@ namespace Simple.Entities
             return new Page<T>(list, count);
         }
 
-        public virtual IPage<T> List(EditableExpression<Func<T, bool>> filter, OrderBy<T> order, int? skip, int? take, IList<EditableExpression<Func<T, object>>> fetch)
-        {
-            var map = Query().ApplyFilter(filter, order);
-            var reduce = map.ApplyFetch(fetch).ApplyLimit(skip, take);
-
-            var page = reduce.ToList();
-            var count = (skip != null || take != null) ? map.Count() : page.Count;
-
-            return new Page<T>(page, count);
-        }
 
         public virtual void Delete(object id)
         {
@@ -157,10 +160,10 @@ namespace Simple.Entities
         }
 
         [RequiresTransaction]
-        public virtual int Delete(EditableExpression<Func<T, bool>> filter)
+        public virtual int Delete(SpecBuilder<T> map)
         {
             int res = 0;
-            foreach (var entity in List(filter, null, null, null, null))
+            foreach (var entity in List(map))
             {
                 Session.Delete(entity);
                 res++;
