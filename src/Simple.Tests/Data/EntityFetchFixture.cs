@@ -78,28 +78,29 @@ namespace Simple.Tests.Data
             CollectionAssert.AllItemsAreNotNull(p.Select(x => x.Supplier.ContactName).ToArray());
         }
 
-        //[Test]
-        //public void CanListAllBeverageProductsUsingFetch()
-        //{
-        //    ICollection<Product> p = null;
-        //    using (MySimply.EnterContext())
-        //    {
-        //        p = Category.Find(x => x.Name == "Beverages", x => x.Products, x => x.Products.First().Category, x => x.Products.First().Supplier).Products;
-        //    }
-        //    CollectionAssert.AllItemsAreNotNull(p.Select(x => x.Category.Name).ToArray());
-        //    CollectionAssert.AllItemsAreNotNull(p.Select(x => x.Supplier.ContactName).ToArray());
-        //}
+        [Test]
+        public void CanListAllBeverageProductsUsingFetch()
+        {
+            Category c;
+            using (MySimply.EnterContext())
+            {
+                c = Category.Find(x => x.Name == "Beverages",
+                    q => q.FetchMany(x => x.Products).ThenFetch(x => x.Supplier));
+            }
+            CollectionAssert.AreEqual(new[] { "Beverages" }, c.Products.Select(x => x.Category.Name).ToArray());
+            CollectionAssert.AllItemsAreNotNull(c.Products.Select(x => x.Supplier.ContactName).ToArray());
+        }
 
-        //[Test]
-        //public void CanFetchInTwoLevels()
-        //{
-        //    EmployeeTerritory p;
-        //    using (MySimply.EnterContext())
-        //    {
-        //        p = EmployeeTerritory.Find(x => true, x => x.Territory.Region);
-        //    }
-        //    Assert.AreEqual("asdasd", p.Territory.Region.Description);
-        //}
+        [Test]
+        public void CanFetchInTwoLevels()
+        {
+            EmployeeTerritory p;
+            using (MySimply.EnterContext())
+            {
+                p = EmployeeTerritory.Find(x => true, q => q.Fetch(x => x.Territory).ThenFetch(x => x.Region));
+            }
+            Assert.AreEqual("Eastern".PadRight(50, ' '), p.Territory.Region.Description);
+        }
 
 
         [Test]

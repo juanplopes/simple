@@ -7,5 +7,9 @@ namespace Simple.Tests.Entities
 {
     public class OrderByFixture
     {
+        public void CanOrderByFirstColumn()
+        {
+
+        }
     }
 }

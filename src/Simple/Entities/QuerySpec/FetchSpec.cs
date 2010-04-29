@@ -22,7 +22,7 @@ namespace Simple.Entities.QuerySpec
             return new FetchSpec<T, TFetching>(Items, new ThenFetchItem<T, TFetched, TFetching>(expr));
         }
 
-        public FetchSpec<T, TFetching> ThenFetch<TFetching>(Expression<Func<TFetched, IEnumerable<TFetching>>> expr)
+        public FetchSpec<T, TFetching> ThenFetchMany<TFetching>(Expression<Func<TFetched, IEnumerable<TFetching>>> expr)
         {
             return new FetchSpec<T, TFetching>(Items, new ThenFetchManyItem<T, TFetched, TFetching>(expr));
         }
