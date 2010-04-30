@@ -6,6 +6,7 @@ using Simple.Tests.Resources;
 using Simple.Entities;
 using Simple.Expressions;
 using NUnit.Framework;
+using Simple.IO.Serialization;
 
 namespace Simple.Tests.Entities
 {
@@ -43,6 +44,24 @@ namespace Simple.Tests.Entities
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             Assert.AreEqual("q.OrderBy(x => x.Address).ThenByDescending(x => x.ContactName)",
                 queryable.Expression.ToString());
+        }
+
+        [Test]
+        public void CanSerializeOrderByWithAllAsc()
+        {
+            var spec = Customer.Do.OrderBy(x => x.Address).ThenBy(x => x.ContactName);
+            var spec2 = SimpleSerializer.Binary().RoundTrip(spec);
+
+            Assert.AreNotSame(spec, spec2);
+        }
+
+        [Test]
+        public void CanSerializeOrderByWithAllDesc()
+        {
+            var spec = Customer.Do.OrderByDesc(x => x.Address).ThenByDesc(x => x.ContactName);
+            var spec2 = SimpleSerializer.Binary().RoundTrip(spec);
+
+            Assert.AreNotSame(spec, spec2);
         }
     }
 }
