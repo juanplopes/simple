@@ -128,8 +128,6 @@ namespace Simple.Entities
         {
             return Service.List(Do.Filter(filter), Do.Skip(skip).Take(take));
         }
-
-
         #endregion
 
         #region List yes filter, yes options
@@ -147,8 +145,6 @@ namespace Simple.Entities
         {
             return Service.List(Do.Filter(filter), Do.ApplyFuncs(options).Skip(skip).Take(take));
         }
-
-
         #endregion
 
         public static IList<T> List(SpecBuilder<T> map)
@@ -164,7 +160,7 @@ namespace Simple.Entities
 
         public static IPage<T> Linq(Expression<Func<IQueryable<T>, IQueryable<T>>> map, Expression<Func<IQueryable<T>, IQueryable<T>>> reduce)
         {
-            return Service.Linq(map.Funcletize().ToEditableExpression(), reduce.Funcletize().ToEditableExpression());
+            return Service.Linq(map.Funcletize().ToLazyExpression(), reduce.Funcletize().ToLazyExpression());
         }
 
         public static int Delete(Expression<Func<T, bool>> filter)

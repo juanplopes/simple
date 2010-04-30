@@ -133,8 +133,10 @@
     <Compile Include="Entities\OrderByFixture.cs" />
     <Compile Include="Entities\Samples.cs" />
     <Compile Include="Expressions\InvocationExpanderFixture.cs" />
+    <Compile Include="Expressions\LazyExpressionFixture.cs" />
     <Compile Include="IO\CommandLineReaderFixture.cs" />
     <Compile Include="IO\FileSizeFixture.cs" />
+    <Compile Include="IO\LazySerializerFixture.cs" />
     <Compile Include="Patterns\SingletonFixture.cs" />
     <Compile Include="Patterns\TransformationListFixture.cs" />
     <Compile Include="Patterns\TuplesFixture.cs" />

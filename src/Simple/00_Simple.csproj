@@ -164,6 +164,7 @@
     <Compile Include="Expressions\Funcletizer.cs" />
     <Compile Include="Expressions\ExpressionVisitor.cs" />
     <Compile Include="Expressions\InvocationExpander.cs" />
+    <Compile Include="Expressions\Editable\LazyExpression.cs" />
     <Compile Include="IO\CommandLineReader.cs" />
     <Compile Include="IO\FileLocator.cs" />
     <Compile Include="IO\FileSize.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="IO\Serialization\DataContractSimpleSerializer.cs" />
     <Compile Include="IO\Serialization\ExpressionSurrogateSelector.cs" />
     <Compile Include="IO\Serialization\ISimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\LazySerializer.cs" />
     <Compile Include="IO\Serialization\NetDataContractSimpleSerializer.cs" />
     <Compile Include="IO\Serialization\SimpleSerializer.cs" />
     <Compile Include="IO\Serialization\StreamHelper.cs" />

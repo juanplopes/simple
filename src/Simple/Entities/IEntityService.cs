@@ -9,6 +9,7 @@ using Simple.Services;
 using FluentValidation.Results;
 using Simple.Validation;
 using Simple.Entities.QuerySpec;
+using Simple.Expressions;
 
 namespace Simple.Entities
 {
@@ -26,7 +27,7 @@ namespace Simple.Entities
         IList<T> List(SpecBuilder<T> map);
         IPage<T> List(SpecBuilder<T> map, SpecBuilder<T> reduce);
 
-        IPage<T> Linq(EditableExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, EditableExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression);
+        IPage<T> Linq(LazyExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, LazyExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression);
 
         void Delete(object id);
         void Delete(T entity);

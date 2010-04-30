@@ -12,5 +12,11 @@ namespace Simple.Expressions.Editable
         {
             return new EditableExpression<TDelegate>(ex);
         }
+
+        public static LazyExpression<TDelegate> ToLazyExpression<TDelegate>(this Expression<TDelegate> ex)
+        {
+            return new LazyExpression<TDelegate>(ex);
+        }
+
     }
 }

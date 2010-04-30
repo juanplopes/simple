@@ -5,6 +5,7 @@ using System.Text;
 using Simple.Expressions.Editable;
 using System.Linq.Expressions;
 using Simple.Entities.QuerySpec;
+using Simple.Expressions;
 
 namespace Simple.Entities.QuerySpec
 {
@@ -43,11 +44,11 @@ namespace Simple.Entities.QuerySpec
     [Serializable]
     public class FetchExpression<T, P>
     {
-        public EditableExpression<Func<T, P>> Expression { get; set; }
+        public LazyExpression<Func<T, P>> Expression { get; set; }
 
         public FetchExpression(Expression<Func<T, P>> expr)
         {
-            this.Expression = expr.ToEditableExpression();
+            this.Expression = expr.ToLazyExpression();
         }
     }
 
@@ -58,7 +59,7 @@ namespace Simple.Entities.QuerySpec
 
         public IQueryable<T> Execute(IQueryable<T> query, IFetchResolver<T> resolver)
         {
-            return resolver.Fetch(query, Expression.ToTypedLambda());
+            return resolver.Fetch(query, Expression.Real);
         }
     }
 
@@ -69,7 +70,7 @@ namespace Simple.Entities.QuerySpec
 
         public IQueryable<T> Execute(IQueryable<T> query, IFetchResolver<T> resolver)
         {
-            return resolver.ThenFetch(query, Expression.ToTypedLambda());
+            return resolver.ThenFetch(query, Expression.Real);
         }
     }
 
@@ -80,7 +81,7 @@ namespace Simple.Entities.QuerySpec
 
         public IQueryable<T> Execute(IQueryable<T> query, IFetchResolver<T> resolver)
         {
-            return resolver.ThenFetchMany(query, Expression.ToTypedLambda());
+            return resolver.ThenFetchMany(query, Expression.Real);
         }
     }
 
@@ -91,7 +92,7 @@ namespace Simple.Entities.QuerySpec
 
         public IQueryable<T> Execute(IQueryable<T> query, IFetchResolver<T> resolver)
         {
-            return resolver.FetchMany(query, Expression.ToTypedLambda());
+            return resolver.FetchMany(query, Expression.Real);
         }
     }
 

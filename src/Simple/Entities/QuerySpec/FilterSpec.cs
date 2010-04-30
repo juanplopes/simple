@@ -15,16 +15,16 @@ namespace Simple.Entities.QuerySpec
     [Serializable]
     public class FilterItem<T> : ISpecItem<T, IFilterResolver<T>>
     {
-        public EditableExpression<Func<T, bool>> Expression { get; set; }
+        public LazyExpression<Func<T, bool>> Expression { get; set; }
 
         public FilterItem(Expression<Func<T, bool>> expr)
         {
-            this.Expression = expr.Funcletize().ToEditableExpression();
+            this.Expression = expr.Funcletize().ToLazyExpression();
         }
 
         public IQueryable<T> Execute(IQueryable<T> query, IFilterResolver<T> resolver)
         {
-            return resolver.Filter(query, Expression.ToTypedLambda());
+            return resolver.Filter(query, Expression.Real);
         }
     }
 

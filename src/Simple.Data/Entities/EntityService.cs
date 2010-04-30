@@ -139,10 +139,10 @@ namespace Simple.Entities
             return new Page<T>(mapped.ApplySpecs(reduce).ToList(), mapped.Count());
         }
 
-        public virtual IPage<T> Linq(EditableExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, EditableExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression)
+        public virtual IPage<T> Linq(LazyExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, LazyExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression)
         {
-            var map = mapExpression.ToTypedLambda().Compile();
-            var reduce = reduceExpression.ToTypedLambda().Compile();
+            var map = mapExpression.Real.Compile();
+            var reduce = reduceExpression.Real.Compile();
 
             var linq = Query();
 

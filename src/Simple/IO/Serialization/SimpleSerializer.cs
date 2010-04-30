@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Simple.IO.Serialization
 {
-    public class SimpleSerializer
+    public static class SimpleSerializer
     {
         public static BinarySimpleSerializer Binary()
         {
@@ -36,6 +36,11 @@ namespace Simple.IO.Serialization
         public static NetDataContractSimpleSerializer NetDataContract()
         {
             return new NetDataContractSimpleSerializer();
+        }
+
+        public static T RoundTrip<T>(this ISimpleSerializer serializer, T graph)
+        {
+            return (T)serializer.Deserialize(serializer.Serialize(graph));
         }
     }
 }

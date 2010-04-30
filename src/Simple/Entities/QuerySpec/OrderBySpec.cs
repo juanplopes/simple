@@ -45,16 +45,11 @@ namespace Simple.Entities.QuerySpec
     [Serializable]
     public abstract class OrderByItem<T> : ISpecItem<T, IOrderByResolver<T>>
     {
-        public EditableExpression<Func<T, object>> Expression { get; protected set; }
+        public LazyExpression<Func<T, object>> Expression { get; protected set; }
 
         public OrderByItem(Expression<Func<T, object>> expr)
         {
-            Expression = expr.ToEditableExpression();
-        }
-
-        public Expression<Func<T, object>> ToExpression()
-        {
-            return Expression.ToTypedLambda();
+            Expression = expr.ToLazyExpression();
         }
 
 
@@ -68,7 +63,7 @@ namespace Simple.Entities.QuerySpec
 
         public override IQueryable<T> Execute(IQueryable<T> query, IOrderByResolver<T> resolver)
         {
-            return resolver.OrderBy(query, Expression.ToTypedLambda());
+            return resolver.OrderBy(query, Expression.Real);
         }
     }
 
@@ -79,7 +74,7 @@ namespace Simple.Entities.QuerySpec
 
         public override IQueryable<T> Execute(IQueryable<T> query, IOrderByResolver<T> resolver)
         {
-            return resolver.OrderByDescending(query, Expression.ToTypedLambda());
+            return resolver.OrderByDescending(query, Expression.Real);
         }
     }
 
@@ -90,7 +85,7 @@ namespace Simple.Entities.QuerySpec
 
         public override IQueryable<T> Execute(IQueryable<T> query, IOrderByResolver<T> resolver)
         {
-            return resolver.ThenBy(query, Expression.ToTypedLambda());
+            return resolver.ThenBy(query, Expression.Real);
         }
     }
 
@@ -101,7 +96,7 @@ namespace Simple.Entities.QuerySpec
 
         public override IQueryable<T> Execute(IQueryable<T> query, IOrderByResolver<T> resolver)
         {
-            return resolver.ThenByDescending(query, Expression.ToTypedLambda());
+            return resolver.ThenByDescending(query, Expression.Real);
         }
     }
 
