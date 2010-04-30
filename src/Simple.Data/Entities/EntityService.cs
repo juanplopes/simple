@@ -68,7 +68,10 @@ namespace Simple.Entities
             }
         }
 
-
+        protected virtual SpecBuilder<T> Builder
+        {
+            get { return new SpecBuilder<T>(); }
+        }
 
         protected virtual IQueryable<Q> Query<Q>()
         {
@@ -129,7 +132,7 @@ namespace Simple.Entities
             return Query().ApplySpecs(map).ToList();
         }
 
-        public virtual IPage<T> Paginate(SpecBuilder<T> map, SpecBuilder<T> reduce)
+        public virtual IPage<T> List(SpecBuilder<T> map, SpecBuilder<T> reduce)
         {
             var mapped = Query().ApplySpecs(map);
 

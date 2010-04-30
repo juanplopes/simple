@@ -29,15 +29,11 @@ namespace Sample.Project.Environment
             ConfigFile(x => x.Log4net(), "Log4net.config");
             ConfigFile(x => x.The<ApplicationConfig>(), "Application.config");
 
-            if (Environment == Test)
-            {
-                Config(x => x.DefaultHost());
-            }
-            else
-            {
-                ConfigFile(x => x.Remoting(), "Remoting.config");
+            Config(x => x.DefaultHost());
+
+            if (Environment != Test)
                 Do.AddClientHook(x => new HttpIdentityInjector(x));
-            }
+
             return this;
         }
 

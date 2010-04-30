@@ -29,9 +29,9 @@ namespace Simple.Entities
             }
         }
 
-        protected static SpecBuilder<T> Builder()
+        public static SpecBuilder<T> Do
         {
-            return new SpecBuilder<T>();
+            get { return new SpecBuilder<T>(); }
         }
 
         public static T Load(object id)
@@ -66,51 +66,101 @@ namespace Simple.Entities
 
         public static int Count(Expression<Func<T, bool>> filter)
         {
-            return Service.Count(Builder().Filter(filter));
+            return Service.Count(Do.Filter(filter));
         }
 
-
-        public static T Find(Expression<Func<T, bool>> filter, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
+        public static T Find(Expression<Func<T, bool>> filter)
         {
-            return Service.Find(Builder().Filter(filter).ApplyFuncs(options));
+            return Service.Find(Do.Filter(filter));
         }
 
-        #region List yes order, no filter
-        public static IList<T> ListAll(params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
+        public static T Find(Expression<Func<T, bool>> filter, Func<SpecBuilder<T>, SpecBuilder<T>> options)
         {
-            return Service.List(Builder().ApplyFuncs(options));
+            return Service.Find(Do.Filter(filter).ApplyFuncs(options));
         }
 
-        public static IPage<T> ListAll(int top, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
+        #region List no filter, no options
+        public static IList<T> ListAll()
         {
-            return Service.Paginate(null, Builder().ApplyFuncs(options).Take(top));
+            return Service.List(Do);
         }
 
-        public static IPage<T> ListAll(int skip, int take, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
+        public static IPage<T> ListAll(int top)
         {
-            return Service.Paginate(null, Builder().ApplyFuncs(options).Skip(skip).Take(take));
+            return Service.List(null, Do.Take(top));
+        }
+
+        public static IPage<T> ListAll(int skip, int take)
+        {
+            return Service.List(null, Do.Skip(skip).Take(take));
         }
         #endregion
 
-       
-        #region List yes order, yes filter
-        public static IList<T> List(Expression<Func<T, bool>> filter, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
+        #region List no filter, yes options
+        public static IList<T> ListAll(Func<SpecBuilder<T>, SpecBuilder<T>> options)
         {
-            return Service.List(Builder().Filter(filter).ApplyFuncs(options));
+            return Service.List(Do.ApplyFuncs(options));
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, int top, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
+        public static IPage<T> ListAll(int top, Func<SpecBuilder<T>, SpecBuilder<T>> options)
         {
-            return Service.Paginate(Builder().Filter(filter), Builder().ApplyFuncs(options).Take(top));
+            return Service.List(null, Do.ApplyFuncs(options).Take(top));
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, int skip, int take, params Func<SpecBuilder<T>, SpecBuilder<T>>[] options)
+        public static IPage<T> ListAll(int skip, int take, Func<SpecBuilder<T>, SpecBuilder<T>> options)
         {
-            return Service.Paginate(Builder().Filter(filter), Builder().ApplyFuncs(options).Skip(skip).Take(take));
+            return Service.List(null, Do.ApplyFuncs(options).Skip(skip).Take(take));
+        }
+        #endregion
+
+        #region List yes filter, no options
+        public static IList<T> List(Expression<Func<T, bool>> filter)
+        {
+            return Service.List(Do.Filter(filter));
+        }
+
+        public static IPage<T> List(Expression<Func<T, bool>> filter, int top)
+        {
+            return Service.List(Do.Filter(filter), Do.Take(top));
+        }
+
+        public static IPage<T> List(Expression<Func<T, bool>> filter, int skip, int take)
+        {
+            return Service.List(Do.Filter(filter), Do.Skip(skip).Take(take));
         }
 
 
         #endregion
+
+        #region List yes filter, yes options
+        public static IList<T> List(Expression<Func<T, bool>> filter, Func<SpecBuilder<T>, SpecBuilder<T>> options)
+        {
+            return Service.List(Do.Filter(filter).ApplyFuncs(options));
+        }
+
+        public static IPage<T> List(Expression<Func<T, bool>> filter, int top, Func<SpecBuilder<T>, SpecBuilder<T>> options)
+        {
+            return Service.List(Do.Filter(filter), Do.ApplyFuncs(options).Take(top));
+        }
+
+        public static IPage<T> List(Expression<Func<T, bool>> filter, int skip, int take, Func<SpecBuilder<T>, SpecBuilder<T>> options)
+        {
+            return Service.List(Do.Filter(filter), Do.ApplyFuncs(options).Skip(skip).Take(take));
+        }
+
+
+        #endregion
+
+        public static IList<T> List(SpecBuilder<T> map)
+        {
+            return Service.List(map);
+        }
+
+        public static IPage<T> List(SpecBuilder<T> map, SpecBuilder<T> reduce)
+        {
+            return Service.List(map, reduce);
+        }
+
 
         public static IPage<T> Linq(Expression<Func<IQueryable<T>, IQueryable<T>>> map, Expression<Func<IQueryable<T>, IQueryable<T>>> reduce)
         {
@@ -119,7 +169,7 @@ namespace Simple.Entities
 
         public static int Delete(Expression<Func<T, bool>> filter)
         {
-            return Service.Delete(Builder().Filter(filter));
+            return Service.Delete(Do.Filter(filter));
         }
 
         public static void Delete(object id)

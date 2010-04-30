@@ -50,7 +50,6 @@ namespace Simple.Tests.Data
             }
             Assert.AreEqual("Beverages", p.Category.Name);
             Assert.Throws<LazyInitializationException>(() => p.Supplier.ContactName.ToString());
-
         }
 
         [Test]

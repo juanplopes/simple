@@ -24,7 +24,7 @@ namespace Simple.Entities
         int Count(SpecBuilder<T> map);
         T Find(SpecBuilder<T> map);
         IList<T> List(SpecBuilder<T> map);
-        IPage<T> Paginate(SpecBuilder<T> map, SpecBuilder<T> reduce);
+        IPage<T> List(SpecBuilder<T> map, SpecBuilder<T> reduce);
 
         IPage<T> Linq(EditableExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, EditableExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression);
 
