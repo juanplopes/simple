@@ -11,7 +11,7 @@ using Simple.Patterns;
 
 namespace Simple.Entities
 {
-    internal static class EntityServiceExtensions
+    public static class EntityServiceExtensions
     {
         public static IQueryable<T> ApplySpecs<T>(this IQueryable<T> query, SpecBuilder<T> specs)
         {

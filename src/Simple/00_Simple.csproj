@@ -161,6 +161,7 @@
     <Compile Include="Expressions\Editable\EditableMemberBinding.cs" />
     <Compile Include="Expressions\Editable\EditableMemberListBinding.cs" />
     <Compile Include="Expressions\Editable\EditableMemberMemberBinding.cs" />
+    <Compile Include="Expressions\EmptyQueryable.cs" />
     <Compile Include="Expressions\Funcletizer.cs" />
     <Compile Include="Expressions\ExpressionVisitor.cs" />
     <Compile Include="Expressions\InvocationExpander.cs" />

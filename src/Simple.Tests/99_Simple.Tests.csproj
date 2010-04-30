@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Entities\OrderByFixture.cs" />
     <Compile Include="Entities\Samples.cs" />
+    <Compile Include="Expressions\EmptyQueryableFixture.cs" />
     <Compile Include="Expressions\InvocationExpanderFixture.cs" />
     <Compile Include="Expressions\LazyExpressionFixture.cs" />
     <Compile Include="IO\CommandLineReaderFixture.cs" />
