@@ -88,7 +88,7 @@ namespace Simple.IO
 
         public string Get(string name)
         {
-            return Get(name, string.Empty);
+            return Get<string>(name, null);
         }
 
         public T Get<T>(string name)
