@@ -228,14 +228,14 @@ namespace Simple.Tests.Data
         public void TestListWithOrderTop10()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax), 0, 10,
-                Customer.ListAll(10, q => q.OrderByDesc(x => x.Id).ThenBy(x => x.Fax)));
+                Customer.ListAll(q => q.OrderByDesc(x => x.Id).ThenBy(x => x.Fax), 10));
         }
 
         [Test]
         public void TestListWithOrderSkip20Take10()
         {
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax), 20, 10,
-                Customer.ListAll(20, 10, q => q.OrderByDesc(x => x.Id).ThenBy(x => x.Fax)));
+                Customer.ListAll(q => q.OrderByDesc(x => x.Id).ThenBy(x => x.Fax), 20, 10));
         }
 
         [Test]
@@ -253,7 +253,7 @@ namespace Simple.Tests.Data
             var f = Customer.Expr(x => x.Region != null);
 
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax).Where(f), 0, 10,
-                Customer.List(f, 10, q => q.OrderByDesc(x => x.Id).ThenBy(x => x.Fax)));
+                Customer.List(f, q => q.OrderByDesc(x => x.Id).ThenBy(x => x.Fax), 10));
         }
 
         [Test]
@@ -262,7 +262,7 @@ namespace Simple.Tests.Data
             var f = Customer.Expr(x => x.Region != null);
 
             AssertQuery(x => x.OrderByDescending(m => m.Id).ThenBy(m => m.Fax).Where(f), 20, 10,
-                Customer.List(f, 20, 10, q => q.OrderByDesc(x => x.Id).ThenBy(x => x.Fax)));
+                Customer.List(f, q => q.OrderByDesc(x => x.Id).ThenBy(x => x.Fax), 20, 10));
         }
 
         [Test]

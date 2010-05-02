@@ -43,7 +43,7 @@ namespace Simple.Tests.IO
         }
 
         [Test]
-        public void WhenTheClassIsNotSerializedTheInstanceIsTheDifferent()
+        public void WhenTheClassIsSerializedTheInstanceIsTheDifferent()
         {
             var value = new NonSerializable() { Value = "asd" };
             var serializable = new SerializeAsString(value);
@@ -55,7 +55,7 @@ namespace Simple.Tests.IO
         }
 
         [Test]
-        public void WhenTheClassIsNotSerializedAndInstanceIsNullWontCauseAnyProblem()
+        public void WhenTheClassIsSerializedAndInstanceIsNullWontCauseAnyProblem()
         {
             var serializable = new SerializeAsString(null);
             var newSerializable = SerializeAndDeserialize(serializable);

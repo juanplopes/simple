@@ -102,12 +102,12 @@ namespace Simple.Entities
             return Service.List(Do.ApplyFuncs(options));
         }
 
-        public static IPage<T> ListAll(int top, Func<SpecBuilder<T>, SpecBuilder<T>> options)
+        public static IPage<T> ListAll(Func<SpecBuilder<T>, SpecBuilder<T>> options, int top)
         {
             return Service.List(null, Do.ApplyFuncs(options).Take(top));
         }
 
-        public static IPage<T> ListAll(int skip, int take, Func<SpecBuilder<T>, SpecBuilder<T>> options)
+        public static IPage<T> ListAll(Func<SpecBuilder<T>, SpecBuilder<T>> options, int skip, int take)
         {
             return Service.List(null, Do.ApplyFuncs(options).Skip(skip).Take(take));
         }
@@ -136,12 +136,12 @@ namespace Simple.Entities
             return Service.List(Do.Filter(filter).ApplyFuncs(options));
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, int top, Func<SpecBuilder<T>, SpecBuilder<T>> options)
+        public static IPage<T> List(Expression<Func<T, bool>> filter, Func<SpecBuilder<T>, SpecBuilder<T>> options, int top)
         {
             return Service.List(Do.Filter(filter), Do.ApplyFuncs(options).Take(top));
         }
 
-        public static IPage<T> List(Expression<Func<T, bool>> filter, int skip, int take, Func<SpecBuilder<T>, SpecBuilder<T>> options)
+        public static IPage<T> List(Expression<Func<T, bool>> filter, Func<SpecBuilder<T>, SpecBuilder<T>> options, int skip, int take)
         {
             return Service.List(Do.Filter(filter), Do.ApplyFuncs(options).Skip(skip).Take(take));
         }
