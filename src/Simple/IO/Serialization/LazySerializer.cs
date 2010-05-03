@@ -30,7 +30,7 @@ namespace Simple.IO.Serialization
                 }
                 return real;
             }
-            set
+            protected set
             {
                 real = value;
                 IsRealActivated = true;
@@ -77,14 +77,18 @@ namespace Simple.IO.Serialization
 
         protected LazySerializer(SerializationInfo info, StreamingContext context)
         {
-            this.Proxy = (TProxy)info.GetValue("Proxy", typeof(TProxy));
             this.IsNull = info.GetBoolean("IsNull");
+            
+            if (!IsNull)
+                this.Proxy = (TProxy)info.GetValue("Proxy", typeof(TProxy));
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("Proxy", Proxy);
             info.AddValue("IsNull", IsNull);
+            
+            if (!IsNull) 
+                info.AddValue("Proxy", Proxy);
         }
 
         #endregion

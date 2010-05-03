@@ -81,6 +81,18 @@ namespace Simple.Tests.IO
         }
 
         [Test]
+        public void WhenTheValueIsNullItDoesntSerializeTheProxy()
+        {
+            var serializable = new SerializeAsString(null);
+            var newSerializable = SimpleSerializer.Binary().RoundTrip(serializable);
+
+            Assert.IsFalse(newSerializable.IsProxyActivated);
+            Assert.IsFalse(newSerializable.IsRealActivated);
+            Assert.IsNull(newSerializable.Real);
+            Assert.IsTrue(newSerializable.IsRealActivated);
+        }
+
+        [Test]
         public void WhenAccessTheProxyPropertyItBecomesActivated()
         {
             var value = new NonSerializable() { Value = "asd" };

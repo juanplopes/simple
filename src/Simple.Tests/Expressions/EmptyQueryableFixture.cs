@@ -5,6 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Simple.Expressions;
 using System.Linq.Expressions;
+using Simple.Tests.Resources;
 
 namespace Simple.Tests.Expressions
 {
@@ -27,7 +28,7 @@ namespace Simple.Tests.Expressions
 
             Assert.AreEqual("q.Where(x => (x > 2)).Distinct()", newQuery.Expression.ToString());
         }
-
+        
         [Test]
         public void CanRecordTwoLevelLinqExpressionsWithProjection()
         {
