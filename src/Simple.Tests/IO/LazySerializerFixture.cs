@@ -5,6 +5,8 @@ using System.Text;
 using Simple.IO.Serialization;
 using NUnit.Framework;
 using System.Runtime.Serialization;
+using Simple.Entities;
+using Simple.Expressions;
 
 namespace Simple.Tests.IO
 {
@@ -122,7 +124,7 @@ namespace Simple.Tests.IO
             var serializable = new SerializeAsString(value);
             var newSerializable = SerializeAndDeserialize(serializable);
             var real = newSerializable.Real;
-            
+
             Assert.IsNotNull(real);
             Assert.IsTrue(newSerializable.IsRealActivated);
             Assert.IsTrue(serializable.IsProxyActivated);

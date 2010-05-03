@@ -38,10 +38,10 @@ namespace Simple.Tests.Expressions
             var newLazy = SimpleSerializer.Binary().RoundTrip(lazy);
 
             Assert.IsFalse(newLazy.IsRealActivated);
-            Assert.IsTrue(newLazy.IsProxyActivated);
+            Assert.IsFalse(newLazy.IsProxyActivated);
             var newReal = newLazy.Real;
             Assert.IsTrue(newLazy.IsRealActivated);
-            Assert.IsTrue(newLazy.IsProxyActivated);
+            Assert.IsFalse(newLazy.IsProxyActivated);
 
 
             Assert.AreEqual(real, newReal);

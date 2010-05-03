@@ -10,6 +10,7 @@ using Simple.Expressions;
 using Simple.Patterns;
 using FluentValidation.Results;
 using Simple.Validation;
+using System.Reflection;
 
 namespace Simple.Entities
 {
@@ -32,7 +33,6 @@ namespace Simple.Entities
                 return Singleton<EntityHelper<T>>.Instance;
             }
         }
-
 
         public override int GetHashCode()
         {

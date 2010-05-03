@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple.Reflection;
+using Simple.Entities;
 
 namespace Simple.Tests.Reflection
 {
@@ -12,6 +13,18 @@ namespace Simple.Tests.Reflection
     {
         class Sample1
         {
+            public int IntProp { get; set; }
+            public string StringProp { get; set; }
+        }
+
+        class Sample3 : Entity<Sample3>
+        {
+            static Sample3()
+            {
+                
+                Identifiers.AddID(x => x.IntProp).AddID(x => x.StringProp);
+            }
+
             public int IntProp { get; set; }
             public string StringProp { get; set; }
         }
@@ -93,6 +106,20 @@ namespace Simple.Tests.Reflection
             obj1.StringProp = "asd";
 
             Assert.AreEqual("(IntProp=123 | StringProp=asd)", helper.ObjectToString(obj1));
+        }
+
+        [Test]
+        public void TestIdentifierListMultipleKey()
+        {
+            var helper = new EntityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
+            CollectionAssert.AreEquivalent(new[] { "IntProp", "StringProp" }, helper.IdentifierList);
+        }
+
+        [Test]
+        public void TestIdentifierListMultipleKeyUsingEntity()
+        {
+            new Sample3(); //Workaround TODO
+            CollectionAssert.AreEquivalent(new[] { "IntProp", "StringProp" }, Sample3.Identifiers.IdentifierList);
         }
 
         [Test]

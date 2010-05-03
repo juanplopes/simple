@@ -15,32 +15,15 @@ namespace Simple.Reflection
     {
         public InvocationDelegate Create(MethodBase method)
         {
-            if (method is MethodInfo)
-            {
-                return Create(method as MethodInfo);
-            }
-            else
-            {
-                throw new ArgumentException("Cannot create with invalid methods.");
-            }
-        }
-
-        public InvocationDelegate Create(MethodInfo method)
-        {
-            if (method == null) throw new ArgumentException("There is no method");
-
             return GetMethodInvoker(method);
         }
-     
 
-
-
-        private static InvocationDelegate GetMethodInvoker(MethodInfo methodInfo)
+        private static InvocationDelegate GetMethodInvoker(MethodBase methodBase)
         {
-            DynamicMethod dynamicMethod = new DynamicMethod(string.Empty, typeof(object), 
-                new Type[] { typeof(object), typeof(object[]) }, methodInfo.DeclaringType.Module, true);
+            DynamicMethod dynamicMethod = new DynamicMethod(string.Empty, typeof(object),
+                new Type[] { typeof(object), typeof(object[]) }, methodBase.DeclaringType.Module, true);
             ILGenerator il = dynamicMethod.GetILGenerator();
-            ParameterInfo[] ps = methodInfo.GetParameters();
+            ParameterInfo[] ps = methodBase.GetParameters();
             Type[] paramTypes = new Type[ps.Length];
             for (int i = 0; i < paramTypes.Length; i++)
             {
@@ -63,7 +46,7 @@ namespace Simple.Reflection
                 EmitCastToReference(il, paramTypes[i]);
                 il.Emit(OpCodes.Stloc, locals[i]);
             }
-            if (!methodInfo.IsStatic)
+            if (!methodBase.IsStatic)
             {
                 il.Emit(OpCodes.Ldarg_0);
             }
@@ -74,14 +57,19 @@ namespace Simple.Reflection
                 else
                     il.Emit(OpCodes.Ldloc, locals[i]);
             }
-            if (methodInfo.IsStatic)
-                il.EmitCall(OpCodes.Call, methodInfo, null);
-            else
-                il.EmitCall(OpCodes.Callvirt, methodInfo, null);
-            if (methodInfo.ReturnType == typeof(void))
-                il.Emit(OpCodes.Ldnull);
-            else
-                EmitBoxIfNeeded(il, methodInfo.ReturnType);
+            if (methodBase is MethodInfo)
+            {
+                var methodInfo = methodBase as MethodInfo;
+                if (methodBase.IsStatic)
+                    il.EmitCall(OpCodes.Call, methodInfo, null);
+                else
+                    il.EmitCall(OpCodes.Callvirt, methodInfo, null);
+                if (methodInfo.ReturnType == typeof(void))
+                    il.Emit(OpCodes.Ldnull);
+                else
+                    EmitBoxIfNeeded(il, methodInfo.ReturnType);
+            }
+           
 
             for (int i = 0; i < paramTypes.Length; i++)
             {
