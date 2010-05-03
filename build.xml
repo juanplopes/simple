@@ -21,7 +21,7 @@
     <Configuration>Release</Configuration>
     <Platform>Any CPU</Platform>
 
-    <ProductVersion>2.0</ProductVersion>
+    <ProductVersion>3.0</ProductVersion>
 
     <TestAssembly>$(BuildDir)\Simple.Tests.exe</TestAssembly>
   </PropertyGroup>
