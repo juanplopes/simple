@@ -40,5 +40,14 @@ namespace Simple.Tests.Common
 
             CollectionAssert.AreEqual(new[] { "1um", "4dois" }, seq4);
         }
+
+        [Test]
+        public void CanAggregateJoinArrayOfStrings()
+        {
+            var seq = new[] { "um", "dois", "três" };
+            var str = seq.AggregateJoin((x, y) => x + "," + y);
+
+            CollectionAssert.AreEqual("um,dois,três", str);
+        }
     }
 }

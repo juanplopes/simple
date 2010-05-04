@@ -213,6 +213,7 @@
     <Compile Include="Config\LoggerFactoryFixture.cs" />
     <Compile Include="Config\XmlConfigSourceFixture.cs" />
     <Compile Include="Config\XmlFileConfigSourceFixture.cs" />
+    <Compile Include="Validation\FluentValidationFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Simple.snk">

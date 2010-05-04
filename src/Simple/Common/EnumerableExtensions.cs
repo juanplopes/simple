@@ -16,5 +16,15 @@ namespace Simple.Common
                 yield return func(i.Current, j.Current);
             }
         }
+
+        public static T AggregateJoin<T>(this IEnumerable<T> enumerable, Func<T, T, T> joiner)
+        {
+            var result = enumerable.First();
+
+            foreach (var other in enumerable.Skip(1))
+                result = joiner(result, other);
+
+            return result;
+        }
     }
 }
