@@ -22,7 +22,8 @@ namespace Sample.Project.Tools
             new Configurator(env)
                 .StartServer<ServerStarter>(x => x.Configure.DefaultHost());
 
-            RunSamples(cmd);
+            using(Simply.Do.EnterContext())
+                RunSamples(cmd);
 
             return 0;
         }
