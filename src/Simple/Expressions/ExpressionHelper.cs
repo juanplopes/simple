@@ -26,7 +26,7 @@ namespace Simple.Expressions
             return string.Join(".", GetMemberPath(expr).ToArray());
         }
 
-        public static IEnumerable<string> GetMemberNameGetMemberPath<T, P>(this Expression<Func<T, P>> expr)
+        public static IEnumerable<string> GetMemberPath<T, P>(this Expression<Func<T, P>> expr)
         {
             return GetMemberPath(expr.Body);
         }
