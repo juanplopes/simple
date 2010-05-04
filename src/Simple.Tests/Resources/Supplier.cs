@@ -12,7 +12,7 @@ namespace Simple.Tests.Resources
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public class Supplier : Entity<Supplier, ISupplierService>
     {
-        public virtual int Id { get; set; }
+        public virtual int? Id { get; set; }
         public virtual string CompanyName { get; set; }
         public virtual string ContactName { get; set; }
         public virtual string ContactTitle { get; set; }

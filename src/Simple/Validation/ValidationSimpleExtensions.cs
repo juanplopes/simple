@@ -11,6 +11,7 @@ using FluentValidation.Results;
 using FluentValidation;
 using FluentValidation.Internal;
 using Simple.Common;
+using Simple.Reflection;
 
 namespace Simple
 {
@@ -63,49 +64,7 @@ namespace Simple
             return config;
         }
 
-        #region FluentValidation Simple Extensions
 
-        //public static IRuleBuilderOptions<T, TProp> MustBeUnique<T, TProp>(this IRuleBuilderInitial<T, TProp> builder)
-        //    where T : class, IEntity<T>
-        //{
-        //    var ruleBuilder = builder as RuleBuilder<T, TProp>;
-
-        //    return builder.Must((T model, TProp prop) => model.UniqueProperties<T>(ruleBuilder.Model.Expression));
-        //}
-
-        public static bool UniqueProperties<T>(this T model, params  Expression<Func<T, object>>[] props)
-           where T : class, IEntity<T>
-        {
-            return model.UniqueProperties(props as LambdaExpression[]);
-        }
-
-        public static bool UniqueProperties<T>(this T model, params Expression[] props)
-            where T : class, IEntity<T>
-        {
-            return Entity<T>.Count(props.CreateUniqueExpression<T>(model, "x")) == 0;
-        }
-
-        public static Expression<Func<T, bool>> CreateUniqueExpression<T>(this IEnumerable<Expression> props, T model, string parameterName) 
-            where T : class, IEntity<T>
-        {
-            var param = Expression.Parameter(typeof(T), parameterName);
-            var idList = Entity<T>.Identifiers.IdentifierList;
-
-            var expr = idList.Select(prop =>
-            {
-                var idExpr = prop.GetPropertyExpression(param);
-                var idLambda = Expression.Lambda(idExpr, param);
-                return Expression.NotEqual(idExpr, Expression.Constant(idLambda.Compile().DynamicInvoke(model)));
-            }).AggregateJoin((expr1, expr2) => Expression.AndAlso(expr1, expr2));
-
-            expr = props.OfType<LambdaExpression>().Select(x => x.GetMemberName().GetPropertyExpression(param))
-                .Aggregate(expr, (seed, x) => Expression.AndAlso(seed, x));
-
-            var lambda = Expression.Lambda<Func<T, bool>>(expr, param);
-            return lambda;
-        }
-
-        #endregion
     }
 }
 

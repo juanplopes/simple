@@ -111,6 +111,7 @@
     <Compile Include="DynamicProxy\MarshallableDynamicProxyImpl.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Entity.static.cs" />
+    <Compile Include="Entities\EntityPredicates.cs" />
     <Compile Include="Entities\ExpressionExtensions.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\IEntityService.cs" />
@@ -271,6 +272,7 @@
     </Compile>
     <Compile Include="Common\ThreadData.cs" />
     <Compile Include="Validation\EmptyValidator.cs" />
+    <Compile Include="Validation\SimpleCustomValidators.cs" />
     <Compile Include="Validation\SimpleValidationException.cs" />
     <Compile Include="Validation\ValidationItem.cs" />
     <Compile Include="Validation\ValidationSimpleExtensions.cs" />
