@@ -7,6 +7,10 @@ using Simple.Entities;
 using Simple.Expressions;
 using NUnit.Framework;
 using Simple.IO.Serialization;
+using System.Linq.Expressions;
+using System.Reflection;
+using Simple.Reflection;
+using Simple.Common;
 
 namespace Simple.Tests.Entities
 {
@@ -25,7 +29,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Do.OrderBy(x => x.Address).ThenBy(x => x.ContactName);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.OrderBy(x => x.Address).ThenBy(x => x.ContactName)", 
+            Assert.AreEqual("q.OrderBy(x => x.Address).ThenBy(x => x.ContactName)",
                 queryable.Expression.ToString());
         }
 
@@ -36,6 +40,8 @@ namespace Simple.Tests.Entities
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             Assert.AreEqual("q.OrderByDescending(x => x.Address)", queryable.Expression.ToString());
         }
+
+
 
         [Test]
         public void CanOrderByTwoColumnsWithSecondDescending()

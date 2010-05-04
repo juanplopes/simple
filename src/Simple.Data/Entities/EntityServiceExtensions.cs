@@ -8,6 +8,9 @@ using Simple.Expressions.Editable;
 using Simple.Expressions;
 using Simple.Entities.QuerySpec;
 using Simple.Patterns;
+using System.Reflection;
+using Simple.Reflection;
+using Simple.Common;
 
 namespace Simple.Entities
 {
