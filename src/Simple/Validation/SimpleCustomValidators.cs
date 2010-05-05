@@ -6,7 +6,7 @@ using FluentValidation;
 using FluentValidation.Internal;
 using Simple.Entities;
 
-namespace Simple.Validation
+namespace Simple
 {
     public static class SimpleCustomValidators
     {

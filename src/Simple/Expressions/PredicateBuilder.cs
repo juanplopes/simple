@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using Simple.Expressions;
 
-namespace Simple.Expressions
+namespace Simple
 {
     public static class PredicateBuilder
     {

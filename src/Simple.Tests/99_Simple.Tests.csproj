@@ -214,6 +214,7 @@
     <Compile Include="Config\XmlConfigSourceFixture.cs" />
     <Compile Include="Config\XmlFileConfigSourceFixture.cs" />
     <Compile Include="Expressions\UniquenessPredicateFixture.cs" />
+    <Compile Include="Validation\ValidationStructureFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Simple.snk">
@@ -282,9 +283,6 @@
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
       <Name>01_Simple.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Validation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

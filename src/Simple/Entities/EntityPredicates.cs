@@ -6,8 +6,9 @@ using System.Linq.Expressions;
 using Simple.Reflection;
 using Simple.Expressions;
 using Simple.Common;
+using Simple.Entities;
 
-namespace Simple.Entities
+namespace Simple
 {
     public static class EntityPredicates
     {

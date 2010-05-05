@@ -11,8 +11,9 @@ using Simple.Patterns;
 using System.Reflection;
 using Simple.Reflection;
 using Simple.Common;
+using Simple.Entities;
 
-namespace Simple.Entities
+namespace Simple
 {
     public static class EntityServiceExtensions
     {

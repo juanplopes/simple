@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Simple.Entities.QuerySpec;
 
-namespace Simple.Entities.QuerySpec
+namespace Simple
 {
     public static class SpecBuilderExtensions
     {

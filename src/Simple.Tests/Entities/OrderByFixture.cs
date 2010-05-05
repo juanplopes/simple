@@ -41,8 +41,6 @@ namespace Simple.Tests.Entities
             Assert.AreEqual("q.OrderByDescending(x => x.Address)", queryable.Expression.ToString());
         }
 
-
-
         [Test]
         public void CanOrderByTwoColumnsWithSecondDescending()
         {
