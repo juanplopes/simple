@@ -11,7 +11,7 @@ namespace Simple
     public static class SimpleCustomValidators
     {
         #region FluentValidation Simple Extensions
-        public static IRuleBuilderOptions<T, TProp> MustBeUnique<T, TProp>(this IRuleBuilderInitial<T, TProp> builder)
+        public static IRuleBuilderOptions<T, TProp> MustBeUnique<T, TProp>(this IRuleBuilder<T, TProp> builder)
             where T : class, IEntity<T>
         {
             var ruleBuilder = builder as RuleBuilder<T, TProp>;

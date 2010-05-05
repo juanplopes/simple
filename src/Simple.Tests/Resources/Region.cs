@@ -6,6 +6,7 @@ using Simple.Config;
 using Simple.Entities;
 using FluentNHibernate.Mapping;
 using FluentValidation;
+using Simple.Validation;
 
 namespace Simple.Tests.Resources
 {
@@ -33,7 +34,7 @@ namespace Simple.Tests.Resources
             public Validator()
             {
                 RuleFor(x=>x.Description).Must((m,x)=>
-                    m.Description != null && x.Length < 100);
+                    m.Description != null && x.Length < 100);                
             }
         }
     }

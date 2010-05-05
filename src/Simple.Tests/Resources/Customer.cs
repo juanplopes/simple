@@ -10,6 +10,7 @@ using NHibernate.SqlTypes;
 using Simple.Entities;
 using Simple.Data;
 using FluentValidation;
+using Simple.Validation;
 
 namespace Simple.Tests.Resources
 {
@@ -66,6 +67,8 @@ namespace Simple.Tests.Resources
             {
                 RuleFor(x => x.CompanyName).Length(0, 40);
                 RuleFor(x => x.ContactName).Length(0, 30);
+
+                RuleFor(x => x.CompanyName).MustBeUnique();
             }
         }
     }

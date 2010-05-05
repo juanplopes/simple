@@ -8,6 +8,8 @@ using NHibernate;
 using Simple.Validation;
 using Simple.IO.Serialization;
 using Simple.Entities;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using System.Linq.Expressions;
 
 namespace Simple.Tests.Data
 {
@@ -97,7 +99,44 @@ namespace Simple.Tests.Data
             new Region() { Description = new string('a', 99) }.Validate().AndThrow();
 
         }
-       
+
+        [Test]
+        public void TestUniquePropertiesPredicate()
+        {
+            var c = new Customer();
+            c.CompanyName = "CompanyName";            
+
+            var expr = c.UniqueProperties("q", x => x.CompanyName);
+            Assert.IsTrue(Customer.Count(expr) == 0);
+        }
+
+        [Test]
+        public void TestUniquePropertiesPredicateFail()
+        {
+            var c = new Customer();
+            c.CompanyName = "Alfreds Futterkiste";
+
+            var expr = c.UniqueProperties("q", x => x.CompanyName);
+            Assert.IsFalse(Customer.Count(expr) == 0);
+        }
+
+        [Test]
+        public void TestMustBeUniqueValidation()
+        {
+            var c = new Customer();
+            c.CompanyName = "CompanyName";
+
+            Assert.IsTrue(c.Validate().Count == 0);
+        }
+
+        [Test]
+        public void TestMustBeUniqueValidationFail()
+        {
+            var c = new Customer();
+            c.CompanyName = "Alfreds Futterkiste";
+
+            Assert.IsFalse(c.Validate().Count == 0);
+        }
     }
 }
 
