@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 namespace Simple.Expressions.Editable
 {
 <#
-    var list = new List<string>();
+    IList<string> list = new List<string>();
     list.Add("ConstantExpression");
     list.Add("BinaryExpression");
     list.Add("ConditionalExpression");
@@ -30,7 +30,7 @@ namespace Simple.Expressions.Editable
 #>
     public static partial class EditableExpressionsExtensions
     {
-<# foreach(var item in list) { #>
+<# foreach(string item in list) { #>
         public static Editable<#= item #> ToEditableExpression(this <#= item #> ex)
         {
             return new Editable<#= item #>(ex);
