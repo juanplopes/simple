@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simple.Tests.Validation
 {
-    public class ValidationStructureFixture
+    public class StandardValidationsFixture
     {
     }
 }
