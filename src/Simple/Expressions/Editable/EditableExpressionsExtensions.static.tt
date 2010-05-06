@@ -1,4 +1,4 @@
-﻿<#@ template language="C#v3.5" hostspecific="True" debug="True" #>
+﻿<#@ template language="C#" hostspecific="True" debug="True" #>
 <#@ Import Namespace="System" #>
 <#@ Import Namespace="System.Collections.Generic" #>
 using System;
