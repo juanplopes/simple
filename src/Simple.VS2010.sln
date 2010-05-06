@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E86ABAB-B60C-43FF-9A5A-7C810F232E9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_Simple", "Simple\00_Simple.VS2010.csproj", "{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_Simple", "Simple\00_Simple.csproj", "{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_Simple.Data", "Simple.Data\01_Simple.Data.VS2010.csproj", "{35DBC634-E490-4239-9315-4E9210647C2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_Simple.Data", "Simple.Data\01_Simple.Data.csproj", "{35DBC634-E490-4239-9315-4E9210647C2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "99_Simple.Tests", "Simple.Tests\99_Simple.Tests.VS2010.csproj", "{B244B1EF-812D-4BDC-8BB7-E5ECAD0AACB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "99_Simple.Tests", "Simple.Tests\99_Simple.Tests.csproj", "{B244B1EF-812D-4BDC-8BB7-E5ECAD0AACB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
