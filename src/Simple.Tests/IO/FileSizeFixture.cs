@@ -56,7 +56,7 @@ namespace Simple.Tests.IO
             Assert.AreEqual(FileSizeUnit.B, new FileSize(999).InBestUnit().Unit);
             Assert.AreEqual(FileSizeUnit.MB, new FileSize(1024000).InBestUnit().Unit);
 
-            Assert.AreEqual("0.98 MB", new FileSize(1024000).InBestUnit().ToString());
+            Assert.AreEqual("0.98 MB", new FileSize(1024000).InBestUnit().ToString(CultureInfo.InvariantCulture));
         }
     }
 }

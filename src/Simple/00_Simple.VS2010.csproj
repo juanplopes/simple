@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Simple</RootNamespace>
+    <AssemblyName>Simple</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Simple.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentValidation, Version=1.2.0.0, Culture=de, PublicKeyToken=71e14f0ea88dd4a5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
+    <Compile Include="Common\EnumerableExtensions.cs" />
+    <Compile Include="Common\NamedEvents.cs" />
+    <Compile Include="Common\PrimeNumbers.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
+    <Compile Include="ConfigDef.cs" />
+    <Compile Include="Config\AggregateFactory.cs" />
+    <Compile Include="Config\DefaultConfigAttribute.cs" />
+    <Compile Include="Config\DirectConfigSource.cs" />
+    <Compile Include="Config\ConfiguratorInterface.cs" />
+    <Compile Include="Config\IConfiguratorInterface.cs" />
+    <Compile Include="DynamicProxy\MarshallableDynamicProxyImpl.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Entity.static.cs" />
+    <Compile Include="Entities\EntityPredicates.cs" />
+    <Compile Include="Entities\ExpressionExtensions.cs" />
+    <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Entities\IEntityService.cs" />
+    <Compile Include="Entities\IPage.cs" />
+    <Compile Include="Entities\QuerySpec\FilterSpec.cs" />
+    <Compile Include="Entities\QuerySpec\FetchSpec.cs" />
+    <Compile Include="Entities\QuerySpec\ISpecItem.cs" />
+    <Compile Include="Entities\QuerySpec\LimitsSpec.cs" />
+    <Compile Include="Entities\QuerySpec\OrderBySpec.cs" />
+    <Compile Include="Entities\Page.cs" />
+    <Compile Include="Entities\QuerySpec\SpecBuilder.cs" />
+    <Compile Include="Entities\QuerySpec\SpecBuilderExtensions.cs" />
+    <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
+    <None Include="Expressions\Editable\EditableExpressionsExtensions.static.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EditableExpressionsExtensions.static.cs</LastGenOutput>
+    </None>
+    <Compile Include="Expressions\Editable\EditableExpressionsExtensions.cs" />
+    <Compile Include="Expressions\Editable\EditableExpressionsExtensions.static.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditableExpressionsExtensions.static.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Expressions\Editable\EditableExpressionCollection.cs" />
+    <Compile Include="Expressions\Editable\EditableMemberBindingCollection.cs" />
+    <Compile Include="Expressions\Editable\EditableMemberInfoCollection.cs" />
+    <Compile Include="Expressions\Editable\EditableBinaryExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableConditionalExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableConstantExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableInvocationExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableLambdaExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableListInitExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableMemberExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableMemberInitExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableMethodCallExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableNewArrayExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableNewExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableParameterExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableTypeBinaryExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableUnaryExpression.cs" />
+    <Compile Include="Expressions\Editable\EditableExpressionExtensions.cs" />
+    <Compile Include="Expressions\Editable\ExpressionExtensions.cs" />
+    <Compile Include="Expressions\Editable\IEditableImplementation.cs" />
+    <Compile Include="Expressions\Editable\ReflectionExtensions.cs" />
+    <Compile Include="Expressions\Editable\EditableElementInit.cs" />
+    <Compile Include="Expressions\Editable\EditableMemberAssignment.cs" />
+    <Compile Include="Expressions\Editable\EditableMemberBinding.cs" />
+    <Compile Include="Expressions\Editable\EditableMemberListBinding.cs" />
+    <Compile Include="Expressions\Editable\EditableMemberMemberBinding.cs" />
+    <Compile Include="Expressions\EmptyQueryable.cs" />
+    <Compile Include="Expressions\Funcletizer.cs" />
+    <Compile Include="Expressions\ExpressionVisitor.cs" />
+    <Compile Include="Expressions\InvocationExpander.cs" />
+    <Compile Include="Expressions\Editable\LazyExpression.cs" />
+    <Compile Include="IO\CommandLineReader.cs" />
+    <Compile Include="IO\FileLocator.cs" />
+    <Compile Include="IO\FileSize.cs" />
+    <Compile Include="IO\Serialization\BinarySimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\DataContractSimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\ExpressionSurrogateSelector.cs" />
+    <Compile Include="IO\Serialization\ISimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\LazySerializer.cs" />
+    <Compile Include="IO\Serialization\NetDataContractSimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\SimpleSerializer.cs" />
+    <Compile Include="IO\Serialization\StreamHelper.cs" />
+    <Compile Include="IO\Serialization\XmlSimpleSerializer.cs" />
+    <Compile Include="Logging\ILog4netFactory.cs" />
+    <Compile Include="Logging\Log4netConfig.cs" />
+    <Compile Include="Config\FactoryManager.cs" />
+    <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />
+    <Compile Include="Patterns\DisposableAction.cs" />
+    <Compile Include="Patterns\TaskRunner.cs" />
+    <Compile Include="Patterns\ThreadSingleton.cs" />
+    <Compile Include="Patterns\TransformationList.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\SimpleMath.cs" />
+    <Compile Include="Patterns\Singleton.cs" />
+    <Compile Include="Patterns\Tuples.cs" />
+    <Compile Include="Config\ConfigSource.cs" />
+    <Compile Include="Config\Factory.cs" />
+    <Compile Include="Config\IWrappedConfigSource.cs" />
+    <Compile Include="Config\IConfigSource.cs" />
+    <Compile Include="Config\IFactory.cs" />
+    <Compile Include="Config\IXmlContentHolder.cs" />
+    <Compile Include="Config\NullConfigSource.cs" />
+    <Compile Include="Config\SourceManager.cs" />
+    <Compile Include="Config\WrappedConfigSource.cs" />
+    <Compile Include="Config\XmlConfig.cs" />
+    <Compile Include="Config\XmlConfigSource.cs" />
+    <Compile Include="Config\XmlFileConfigSource.cs" />
+    <Compile Include="Config\XPathParameter.cs" />
+    <Compile Include="DynamicProxy\DynamicProxyFactory.cs" />
+    <Compile Include="DynamicProxy\InterfaceDynamicProxyImpl.cs" />
+    <Compile Include="DynamicProxy\IDynamicProxy.cs" />
+    <Compile Include="Logging\Log4netFactory.cs" />
+    <Compile Include="Logging\NullLog.cs" />
+    <Compile Include="Logging\Log4netSimplyExtensions.cs" />
+    <Compile Include="Patterns\WorkingDays.cs" />
+    <Compile Include="Reflection\DictionaryHelper.cs" />
+    <Compile Include="Reflection\EnumTypeAttribute.cs" />
+    <Compile Include="Patterns\IWorkingDaysProvider.cs" />
+    <Compile Include="Expressions\ExpressionHelper.cs" />
+    <Compile Include="Reflection\InvokerFactory.cs" />
+    <Compile Include="IO\StringUtils.cs" />
+    <Compile Include="Reflection\AttributeCache.cs" />
+    <Compile Include="Reflection\EntityHelper.cs" />
+    <Compile Include="Expressions\PredicateBuilder.cs" />
+    <Compile Include="Reflection\MethodCache.cs" />
+    <Compile Include="Reflection\TypesHelper.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CallHeaders.cs" />
+    <Compile Include="Services\DefaultInterceptor.cs" />
+    <Compile Include="Services\Default\DefaultClientProvider.cs" />
+    <Compile Include="Services\Default\DefaultHostBaseProvider.cs" />
+    <Compile Include="Services\Default\DefaultHostConfig.cs" />
+    <Compile Include="Services\Default\DefaultHostProvider.cs" />
+    <Compile Include="Services\Default\DefaultHostSimplyExtensions.cs" />
+    <Compile Include="Services\Default\ServiceLocationFactory.cs" />
+    <Compile Include="Services\ICallHeadersHandler.cs" />
+    <Compile Include="Services\ICallHook.cs" />
+    <Compile Include="Services\IInterceptor.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\IServiceClientFactory.cs" />
+    <Compile Include="Services\IServiceClientProvider.cs" />
+    <Compile Include="Services\IServiceHostFactory.cs" />
+    <Compile Include="Services\IServiceHostProvider.cs" />
+    <Compile Include="Services\Remoting\CallContextCallHeadersHandler.cs" />
+    <Compile Include="Services\Remoting\ChannelSelector.cs" />
+    <Compile Include="Services\Remoting\Channels\HttpChannelHandler.cs" />
+    <Compile Include="Services\Remoting\Channels\IChannelHandler.cs" />
+    <Compile Include="Services\Remoting\Channels\IpcChannelHandler.cs" />
+    <Compile Include="Services\Remoting\Channels\TcpChannelHandler.cs" />
+    <Compile Include="Services\Remoting\RemotingBaseProvider.cs" />
+    <Compile Include="Services\Remoting\RemotingClientProvider.cs" />
+    <Compile Include="Services\Remoting\RemotingConfig.cs" />
+    <Compile Include="Services\Remoting\RemotingHostProvider.cs" />
+    <Compile Include="Services\Remoting\RemotingSimplyExtensions.cs" />
+    <Compile Include="Services\Remoting\Sinks\CallHeadersSink.cs" />
+    <Compile Include="Services\Remoting\Sinks\CallHeadersSinkProvider.cs" />
+    <Compile Include="Services\ServiceClientFactory.cs" />
+    <Compile Include="Services\ServiceConnectionException.cs" />
+    <Compile Include="Services\ServiceHostFactory.cs" />
+    <Compile Include="Services\ServiceSimplyExtensions.cs" />
+    <Compile Include="Services\SimpleContext.cs" />
+    <Compile Include="Services\SimpleHostingExtensions.cs" />
+    <Compile Include="Simply.cs" />
+    <Compile Include="IO\XmlHelper.cs" />
+    <Compile Include="Hosting\SimpleController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Hosting\SimpleInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\ThreadData.cs" />
+    <Compile Include="Validation\EmptyValidator.cs" />
+    <Compile Include="Validation\SimpleCustomValidators.cs" />
+    <Compile Include="Validation\SimpleValidationException.cs" />
+    <Compile Include="Validation\ValidationItem.cs" />
+    <Compile Include="Validation\ValidationSimpleExtensions.cs" />
+    <Compile Include="Validation\ValidationList.cs" />
+    <Compile Include="Validation\ValidatorEngineFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Simple.snk">
+      <Link>Simple.snk</Link>
+    </None>
+    <None Include="Resources\Log4net.alternative.config" />
+    <None Include="Resources\Log4net.config">
+    </None>
+    <None Include="Resources\Primes.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RemotingConfig.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
