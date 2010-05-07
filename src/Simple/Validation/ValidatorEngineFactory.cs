@@ -12,13 +12,20 @@ namespace Simple.Validation
     public class ValidatorEngineFactory : AggregateFactory<ValidatorEngineFactory>, IValidatorFactory
     {
         IDictionary<Type, IValidator> _validators = new Dictionary<Type, IValidator>();
-  
+
 
         public void Initialize(params Assembly[] assemblies)
         {
             foreach (var entry in assemblies.SelectMany(x => AssemblyScanner.FindValidatorsInAssembly(x)))
             {
-                _validators[entry.InterfaceType] = (IValidator)Activator.CreateInstance(entry.ValidatorType);
+                try
+                {
+                    _validators[entry.InterfaceType] = (IValidator)Activator.CreateInstance(entry.ValidatorType);
+                }
+                catch (ArgumentException)
+                {
+                    Simply.Do.Log(this).ErrorFormat("Couldn't create IValidator instance for type {0}", entry.InterfaceType);
+                }
             }
         }
 
@@ -56,7 +63,7 @@ namespace Simple.Validation
                 return (IValidator)Activator.CreateInstance(typeof(EmptyValidator<>).MakeGenericType(type));
             }
         }
-       
+
         #endregion
     }
 }
