@@ -53,6 +53,15 @@ namespace Simple.Tests.Validation
                 .Replace("{PropertyName}", propName)
                 .Replace("{ComparisonValue}", value);
         }
+
+        public string InclusiveBetween(string propName, string min, string max, string total)
+        {
+            return FluentValidation.Resources.Messages.inclusivebetween_error
+                .Replace("{PropertyName}", propName)
+                .Replace("{From}", min)
+                .Replace("{To}", max)
+                .Replace("{Value}", total);
+        }
     }
 
     public class FluentValidationFixture
@@ -175,22 +184,47 @@ namespace Simple.Tests.Validation
 
             Assert.IsTrue(validator.Validate(model).IsValid);
         }
-        
+
         [Test]
-        public void FieldIsAnEntity()
+        public void FieldIsInclusiveBetween()
         {
             var validator = new Validator<User>();
+
+            var startDate = new DateTime(1920, 1, 1);
+            var endDate = DateTime.Now;
+
+            validator.RuleFor(x => x.BirthDate).InclusiveBetween(startDate, endDate);
+
+            var model = new User() { BirthDate = startDate.AddSeconds(-1) };
+
+            Assert.IsFalse(validator.Validate(model).IsValid);
+            Assert.AreEqual(validator.Validate(model).Errors[0].ErrorMessage, Messages.InclusiveBetween("Birth Date", startDate.ToString(), endDate.ToString(), startDate.AddSeconds(-1).ToString()));
+
+            model = new User() { BirthDate = startDate };
+
+            Assert.IsTrue(validator.Validate(model).IsValid);
+        }
+
+        [Test]
+        [Explicit]
+        public void FieldIsAnEntity()
+        {
+            var userValidator = new Validator<User>();
+            var companyValidator = new Validator<Company>();
+
             var company = new Company();
-            validator.RuleFor(x => x.Company.CompanyValue).NotEmpty();
+
+            companyValidator.RuleFor(x => x.CompanyValue).NotEmpty();
+            userValidator.RuleFor(x => x.Company).SetValidator(companyValidator);
 
             var model = new User() { Company = company };
 
-            Assert.IsFalse(validator.Validate(model).IsValid);
-            Assert.AreEqual(validator.Validate(model).Errors[0].ErrorMessage, Messages.NotEmpty("Company Value"));
+            Assert.IsFalse(userValidator.Validate(model).IsValid);
+            Assert.AreEqual(userValidator.Validate(model).Errors[0].ErrorMessage, Messages.NotEmpty("Company.Company Value"));
 
             model = new User() { Company = new Company() { CompanyValue = 20 } };
 
-            Assert.IsTrue(validator.Validate(model).IsValid);
+            Assert.IsTrue(userValidator.Validate(model).IsValid);
         }
     }
 
