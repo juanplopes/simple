@@ -205,8 +205,7 @@ namespace Simple.Tests.Validation
             Assert.IsTrue(validator.Validate(model).IsValid);
         }
 
-        [Test]
-        [Explicit]
+        [Test]        
         public void FieldIsAnEntity()
         {
             var userValidator = new Validator<User>();
@@ -220,7 +219,8 @@ namespace Simple.Tests.Validation
             var model = new User() { Company = company };
 
             Assert.IsFalse(userValidator.Validate(model).IsValid);
-            Assert.AreEqual(userValidator.Validate(model).Errors[0].ErrorMessage, Messages.NotEmpty("Company.Company Value"));
+            Assert.AreEqual(userValidator.Validate(model).Errors[0].ErrorMessage, Messages.NotEmpty("Company Value"));
+            Assert.AreEqual(userValidator.Validate(model).Errors[0].PropertyName, "Company.CompanyValue");
 
             model = new User() { Company = new Company() { CompanyValue = 20 } };
 
