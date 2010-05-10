@@ -1,0 +1,220 @@
+Index: nhibernate/src/NHibernate/Driver/SqlStringFormatter.cs
+===================================================================
+--- nhibernate/src/NHibernate/Driver/SqlStringFormatter.cs	(revision 4974)
++++ nhibernate/src/NHibernate/Driver/SqlStringFormatter.cs	(working copy)
+@@ -3,110 +3,111 @@
+ using System.Text;
+ using NHibernate.SqlCommand;
+ using NHibernate.Engine.Query;
++using System.Linq;
+ 
+ namespace NHibernate.Driver
+ {
+-	public class SqlStringFormatter : ISqlStringVisitor
+-	{
+-		private readonly StringBuilder result = new StringBuilder();
+-		private int parameterIndex = 0;
+-		private readonly ISqlParameterFormatter formatter;
+-		private readonly string multipleQueriesSeparator;
++    public class SqlStringFormatter : ISqlStringVisitor
++    {
++        private readonly StringBuilder result = new StringBuilder();
++        private int parameterIndex = 0;
++        private readonly ISqlParameterFormatter formatter;
++        private readonly string multipleQueriesSeparator;
+ 
+-		private readonly Dictionary<int, int> queryIndexToNumberOfPreceedingParameters = new Dictionary<int, int>();
+-		private readonly Dictionary<int, int> parameterIndexToQueryIndex = new Dictionary<int, int>();
++        private readonly Dictionary<int, int> queryIndexToNumberOfPreceedingParameters = new Dictionary<int, int>();
++        private readonly Dictionary<int, int> parameterIndexToQueryIndex = new Dictionary<int, int>();
+ 
+-		private bool hasReturnParameter = false;
+-		private bool foundReturnParameter = false;
++        private bool hasReturnParameter = false;
++        private bool foundReturnParameter = false;
+ 
+-		public SqlStringFormatter(ISqlParameterFormatter formatter, string multipleQueriesSeparator)
+-		{
+-			this.formatter = formatter;
+-			this.multipleQueriesSeparator = multipleQueriesSeparator;
+-		}
++        public SqlStringFormatter(ISqlParameterFormatter formatter, string multipleQueriesSeparator)
++        {
++            this.formatter = formatter;
++            this.multipleQueriesSeparator = multipleQueriesSeparator;
++        }
+ 
+-		public void Format(SqlString text)
+-		{
+-			DetermineNumberOfPreceedingParametersForEachQuery(text);
+-			foundReturnParameter = false;
+-			text.Visit(this);
+-		}
++        public void Format(SqlString text)
++        {
++            DetermineNumberOfPreceedingParametersForEachQuery(text);
++            foundReturnParameter = false;
++            parameterIndex = text.Parts.OfType<Parameter>().Select(x => x.ParameterPosition ?? -1).Union(new[] { -1 }).Max();
++            text.Visit(this);
++        }
+ 
+-		public string GetFormattedText()
+-		{
+-			return result.ToString();
+-		}
++        public string GetFormattedText()
++        {
++            return result.ToString();
++        }
+ 
+-		void ISqlStringVisitor.String(string text)
+-		{
+-			result.Append(text);
+-		}
++        void ISqlStringVisitor.String(string text)
++        {
++            result.Append(text);
++        }
+ 
+-		void ISqlStringVisitor.String(SqlString sqlString)
+-		{
+-			result.Append(sqlString.ToString());
+-		}
++        void ISqlStringVisitor.String(SqlString sqlString)
++        {
++            result.Append(sqlString.ToString());
++        }
+ 
+-		void ISqlStringVisitor.Parameter(Parameter parameter)
+-		{
+-			if (hasReturnParameter && !foundReturnParameter)
+-			{
+-				result.Append(parameter);
+-				foundReturnParameter = true;
+-				return;
+-			}
++        void ISqlStringVisitor.Parameter(Parameter parameter)
++        {
++            if (hasReturnParameter && !foundReturnParameter)
++            {
++                result.Append(parameter);
++                foundReturnParameter = true;
++                return;
++            }
+ 
+-			string name = formatter.GetParameterName(parameter.ParameterPosition ?? parameterIndex);
++            string name = formatter.GetParameterName(parameter.ParameterPosition ?? ++parameterIndex);
+ 
+-			parameterIndex++;
+-			result.Append(name);
+-		}
++            result.Append(name);
++        }
+ 
+-		private int GetNumberOfPreceedingParameters() 
+-		{
+-			int queryIndex = parameterIndexToQueryIndex[parameterIndex];
+-			return queryIndexToNumberOfPreceedingParameters[queryIndex];
+-		}
++        private int GetNumberOfPreceedingParameters()
++        {
++            int queryIndex = parameterIndexToQueryIndex[parameterIndex];
++            return queryIndexToNumberOfPreceedingParameters[queryIndex];
++        }
+ 
+-		private void DetermineNumberOfPreceedingParametersForEachQuery(SqlString text)
+-		{
+-			int currentParameterIndex = 0;
+-			int currentQueryParameterCount = 0;
+-			int currentQueryIndex = 0;
+-			hasReturnParameter = false;
+-			foundReturnParameter = false;
++        private void DetermineNumberOfPreceedingParametersForEachQuery(SqlString text)
++        {
++            int currentParameterIndex = 0;
++            int currentQueryParameterCount = 0;
++            int currentQueryIndex = 0;
++            hasReturnParameter = false;
++            foundReturnParameter = false;
+ 
+-			CallableParser.Detail callableDetail = CallableParser.Parse(text.ToString());
++            CallableParser.Detail callableDetail = CallableParser.Parse(text.ToString());
+ 
+-			if (callableDetail.IsCallable && callableDetail.HasReturn)
+-				hasReturnParameter = true;
++            if (callableDetail.IsCallable && callableDetail.HasReturn)
++                hasReturnParameter = true;
+ 
+-			foreach (object part in text.Parts)
+-			{
+-				if (part.ToString().Equals(multipleQueriesSeparator))
+-				{
+-					queryIndexToNumberOfPreceedingParameters[currentQueryIndex] = currentParameterIndex - currentQueryParameterCount;
+-					currentQueryParameterCount = 0;
+-					currentQueryIndex++;
+-					continue;
+-				}
++            foreach (object part in text.Parts)
++            {
++                if (part.ToString().Equals(multipleQueriesSeparator))
++                {
++                    queryIndexToNumberOfPreceedingParameters[currentQueryIndex] = currentParameterIndex - currentQueryParameterCount;
++                    currentQueryParameterCount = 0;
++                    currentQueryIndex++;
++                    continue;
++                }
+ 
+-				Parameter parameter = part as Parameter;
++                Parameter parameter = part as Parameter;
+ 
+-				if (parameter != null)
+-				{
+-					if (hasReturnParameter && !foundReturnParameter)
+-					{
+-						foundReturnParameter = true;
+-					}
+-					else
+-					{
+-						parameterIndexToQueryIndex[currentParameterIndex] = currentQueryIndex;
+-					}
+-					currentQueryParameterCount++;
+-					currentParameterIndex++;
+-				}
+-			}
+-		}
+-	}
++                if (parameter != null)
++                {
++                    if (hasReturnParameter && !foundReturnParameter)
++                    {
++                        foundReturnParameter = true;
++                    }
++                    else
++                    {
++                        parameterIndexToQueryIndex[currentParameterIndex] = currentQueryIndex;
++                    }
++                    currentQueryParameterCount++;
++                    currentParameterIndex++;
++                }
++            }
++        }
++    }
+ }
+Index: nhibernate/src/NHibernate/Linq/Functions/StringGenerator.cs
+===================================================================
+--- nhibernate/src/NHibernate/Linq/Functions/StringGenerator.cs	(revision 4974)
++++ nhibernate/src/NHibernate/Linq/Functions/StringGenerator.cs	(working copy)
+@@ -122,11 +122,11 @@
+ 
+                 if (((method.Name == "ToUpper") || (method.Name == "ToUpperInvariant")))
+                 {
+-                    methodName = "lower";
++                    methodName = "upper";
+                 }
+                 else
+                 {
+-                    methodName = "upper";
++                    methodName = "lower";
+                 }
+ 
+                 return treeBuilder.MethodCall(methodName, visitor.Visit(targetObject).AsExpression());
