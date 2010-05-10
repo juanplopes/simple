@@ -1,4 +1,4 @@
-<#@ assembly name="System.Xml" #>
+﻿<#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Xml.Linq" #>
 <#@ assembly name="EnvDTE" #>
 <#@ assembly name="Microsoft.VisualStudio.Ole.Interop" #>
@@ -798,6 +798,10 @@ public static class TransformationContext
             System.Type transformationType = Transformation.GetType();
             System.Reflection.PropertyInfo errorsProperty = transformationType.GetProperty("Errors", 
 				System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+			
+			if(errorsProperty == null)
+				return new System.CodeDom.Compiler.CompilerErrorCollection();
+			
             return (System.CodeDom.Compiler.CompilerErrorCollection)errorsProperty.GetValue(Transformation, null);
         }
     }

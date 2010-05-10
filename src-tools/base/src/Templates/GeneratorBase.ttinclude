@@ -1,7 +1,7 @@
-<#@ assembly name="System.Configuration" #>
+﻿<#@ assembly name="System.Configuration" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Data" #>
-<#@ assembly name="Schema.Metadata.dll" #>
+<#@ assembly name="$(ProjectDir)$(OutDir)Schema.Metadata.dll" #>
 
 <#@ import namespace="System.Collections" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -23,7 +23,7 @@ public class GeneratorBase : Generator
 		IncludedTables = new List<string>();
 		
 		IncludedTables.Add("%");
-		ExcludedTables.Add("SchemaInfo");
+		ExcludedTables.Add("CadPro_Meta");
 		
 		Template = template;
 		LazyLoad = true;
