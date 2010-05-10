@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Simple.Entities.QuerySpec;
 using System.Linq.Expressions;
 using NHibernate.Linq;
+using Simple.Entities.QuerySpec;
 
 namespace Simple.Entities
 {

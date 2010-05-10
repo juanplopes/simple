@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Simple.Expressions;
-using Simple.Config;
 using System.Linq.Expressions;
-using Simple.Expressions.Editable;
+using Simple.Config;
 using Simple.Entities.QuerySpec;
+using Simple.Expressions.Editable;
 
 namespace Simple.Entities
 {

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using NHibernate;
 using NUnit.Framework;
 using Simple.Data.Context;
-using NHibernate;
 
 namespace Simple.Tests.Data
 {

@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ServiceProcess;
-using System.ServiceModel;
-using System.ServiceModel.Dispatcher;
-using Simple.Logging;
-using System.Runtime.Remoting.Contexts;
-using System.ServiceModel.Description;
-using log4net;
 using System.Reflection;
-using Simple.Common;
+using System.ServiceProcess;
+using log4net;
 
 namespace Simple.Hosting
 {

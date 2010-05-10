@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Reflection;
-using Simple.Reflection;
 using log4net;
+using Simple.Reflection;
 
 
 namespace Simple.Services

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Simple.Config;
+﻿using System.IO;
+using System.Runtime.Serialization;
 using System.Xml;
 using NHibernate.Cfg;
+using Simple.Config;
 using Simple.Patterns;
-using System.Runtime.Serialization;
-using System.IO;
 
 namespace Simple.Data
 {

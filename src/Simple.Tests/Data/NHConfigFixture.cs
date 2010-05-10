@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using FluentNHibernate.Cfg.Db;
 using NUnit.Framework;
-using NHibernate.Tool.hbm2ddl;
 using Simple.Config;
 using Simple.Data;
-using Simple.Services.Remoting;
-using Simple.Tests.Services;
-using FluentNHibernate.Cfg;
-using NHibernate;
 using Simple.Tests.Resources;
-using FluentNHibernate.Cfg.Db;
 
 namespace Simple.Tests.Data
 {

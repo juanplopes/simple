@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
-using Simple.Reflection;
+﻿using NUnit.Framework;
 using Simple.Entities;
+using Simple.Reflection;
 
 namespace Simple.Tests.Reflection
 {

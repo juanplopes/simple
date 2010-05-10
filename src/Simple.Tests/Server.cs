@@ -1,23 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels.Http;
-using System.Runtime.Remoting.Channels.Tcp;
-using Simple.Services.Remoting;
-using Simple.Config;
-using Simple.Tests.Services;
-using Simple.Services;
 using System.Threading;
 using Simple.Common;
-using Simple.Tests.Data;
-using Simple.Tests.Resources;
-using System.IO;
-using NHibernate.Tool.hbm2ddl;
-using Simple.Hosting;
+using Simple.Tests.Services;
 
 
 namespace Simple.Tests

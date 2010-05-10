@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using FluentValidation;
 using NUnit.Framework;
 using Simple.Tests.Validation.ValidationResources;
-using FluentValidation;
 
 
 namespace Simple.Tests.Validation

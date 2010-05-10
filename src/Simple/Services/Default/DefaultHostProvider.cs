@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Config;
-using Simple.DynamicProxy;
 
 namespace Simple.Services.Default
 {

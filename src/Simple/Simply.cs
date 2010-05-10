@@ -1,7 +1,4 @@
 ﻿using System;
-using log4net;
-using Simple.Logging;
-using System.Reflection;
 using Simple.Config;
 
 namespace Simple

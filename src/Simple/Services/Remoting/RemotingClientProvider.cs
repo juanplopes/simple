@@ -1,12 +1,8 @@
 ﻿using System;
-using Simple.Config;
+using System.Reflection;
 using System.Runtime.Remoting;
 using log4net;
-using System.Reflection;
-using System.Runtime.Remoting.Contexts;
-using System.Runtime.Remoting.Channels;
 using Simple.DynamicProxy;
-using Simple.Reflection;
 using Simple.Services.Default;
 
 namespace Simple.Services.Remoting

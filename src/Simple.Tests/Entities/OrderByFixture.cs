@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Tests.Resources;
-using Simple.Entities;
+﻿using NUnit.Framework;
 using Simple.Expressions;
-using NUnit.Framework;
 using Simple.IO.Serialization;
-using System.Linq.Expressions;
-using System.Reflection;
-using Simple.Reflection;
-using Simple.Common;
+using Simple.Tests.Resources;
 
 namespace Simple.Tests.Entities
 {

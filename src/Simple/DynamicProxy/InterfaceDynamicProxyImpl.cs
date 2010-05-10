@@ -37,9 +37,9 @@
  * 
  */
 using System;
+using System.Diagnostics;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Proxies;
-using System.Diagnostics;
 
 namespace Simple.DynamicProxy
 {

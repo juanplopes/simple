@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
 using System.IO;
-using Simple.Config;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
+using NUnit.Framework;
+using Simple.Config;
 using Simple.IO;
-using System.Reflection;
 
 namespace Simple.Tests.Config
 {

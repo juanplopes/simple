@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NHibernate.Cfg;
 using NHibernate;
-using NHibernate.Type;
 using NHibernate.SqlTypes;
 
 namespace Simple.Data

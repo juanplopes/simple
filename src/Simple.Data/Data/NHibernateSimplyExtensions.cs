@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Data;
-using Simple.Config;
-using NH = NHibernate;
-using NHibernate.Cfg;
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Mapping;
 using System.Reflection;
-using System.Linq.Expressions;
-using Simple.Expressions;
-using NHibernate;
 using FluentNHibernate;
+using FluentNHibernate.Cfg;
+using NHibernate;
+using NHibernate.Cfg;
+using Simple.Config;
+using Simple.Data;
+using NH = NHibernate;
 
 namespace Simple
 {

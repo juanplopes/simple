@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
-using Simple.Common;
-using Simple.Patterns;
 using System.Linq;
+using System.Reflection;
 
 namespace Simple.Reflection
 {

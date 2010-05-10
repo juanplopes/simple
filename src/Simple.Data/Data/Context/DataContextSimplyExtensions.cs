@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Data.Context;
+﻿using System.Data;
 using NHibernate;
-using System.Data;
+using Simple.Data.Context;
 
 namespace Simple
 {

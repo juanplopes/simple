@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Patterns;
+﻿using System.Collections.Generic;
 using System.Reflection;
+using Simple.Patterns;
 
 namespace Simple.Reflection
 {

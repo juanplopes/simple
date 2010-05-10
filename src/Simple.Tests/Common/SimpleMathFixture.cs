@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Simple.Common;
-using System.Linq;
 
 namespace Simple.Tests.Common
 {

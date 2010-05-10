@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Threading;
 using NUnit.Framework;
-using System.Threading;
 using Simple.Patterns;
 
 namespace Simple.Tests.Patterns

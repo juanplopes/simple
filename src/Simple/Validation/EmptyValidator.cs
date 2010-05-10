@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FluentValidation;
-using FluentValidation.Validators;
 using FluentValidation.Results;
+using FluentValidation.Validators;
 using Simple.Patterns;
 
 namespace Simple.Validation

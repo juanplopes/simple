@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using log4net;
 using log4net.Core;
-using Simple.Common;
 using Simple.Patterns;
 
 namespace Simple.Logging

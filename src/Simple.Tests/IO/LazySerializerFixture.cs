@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.IO.Serialization;
-using NUnit.Framework;
 using System.Runtime.Serialization;
-using Simple.Entities;
-using Simple.Expressions;
+using NUnit.Framework;
+using Simple.IO.Serialization;
 
 namespace Simple.Tests.IO
 {

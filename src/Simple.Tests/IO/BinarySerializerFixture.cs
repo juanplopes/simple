@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
+using NHibernate.Criterion;
 using NUnit.Framework;
 using Simple.IO.Serialization;
-using NHibernate.Criterion;
-using System.Linq.Expressions;
-using System.Runtime.Serialization;
 
 namespace Simple.Tests.Serialization
 {

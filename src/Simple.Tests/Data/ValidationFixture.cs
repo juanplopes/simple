@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Simple.Tests.Resources;
 using NUnit.Framework;
-using NHibernate;
-using Simple.Validation;
 using Simple.IO.Serialization;
-using Simple.Entities;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-using System.Linq.Expressions;
+using Simple.Tests.Resources;
+using Simple.Validation;
 
 namespace Simple.Tests.Data
 {

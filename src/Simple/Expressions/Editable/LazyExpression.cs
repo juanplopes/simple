@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Linq.Expressions;
-using Simple.Expressions.Editable;
-using Simple.IO.Serialization;
 using System.Runtime.Serialization;
+using Simple.IO.Serialization;
 
 namespace Simple.Expressions.Editable
 {

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Config;
-using NUnit.Framework;
 using System.IO;
-using Simple.Logging;
+using NUnit.Framework;
+using Simple.Config;
 
 namespace Simple.Tests.Config
 {

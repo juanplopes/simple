@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
+using NHibernate.Criterion;
 using NUnit.Framework;
 using Simple.Reflection;
-using NHibernate.Criterion;
-using System.Linq.Expressions;
 
 namespace Simple.Tests.Reflection
 {

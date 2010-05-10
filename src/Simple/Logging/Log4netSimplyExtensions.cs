@@ -1,10 +1,9 @@
 ﻿using System;
-using log4net;
-using Simple.Common;
 using System.Reflection;
+using log4net;
 using Simple.Config;
-using Simple.Patterns;
 using Simple.Logging;
+using Simple.Patterns;
 
 namespace Simple
 {

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Runtime.Serialization;
-using Simple.Patterns;
 
 namespace Simple.Config
 {

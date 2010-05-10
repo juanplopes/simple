@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Globalization;
 using NUnit.Framework;
 using Simple.IO;
-using System.Globalization;
 
 namespace Simple.Tests.IO
 {

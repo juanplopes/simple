@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using NHibernate.Linq;
-using System.Linq.Expressions;
-using Simple.Expressions.Editable;
-using Simple.Expressions;
+using Simple.Entities;
 using Simple.Entities.QuerySpec;
 using Simple.Patterns;
-using System.Reflection;
-using Simple.Reflection;
-using Simple.Common;
-using Simple.Entities;
 
 namespace Simple
 {

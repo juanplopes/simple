@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using System.ServiceProcess;
+﻿using System.ComponentModel;
 using System.Configuration.Install;
+using System.ServiceProcess;
 
 namespace Simple.Hosting
 {

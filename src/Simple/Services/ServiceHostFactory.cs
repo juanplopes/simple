@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Simple.Config;
-using Simple.Reflection;
-using log4net;
 using System.Linq;
 using System.Reflection;
-using Simple.Patterns;
-using Simple.DynamicProxy;
+using log4net;
+using Simple.Config;
 
 namespace Simple.Services
 {

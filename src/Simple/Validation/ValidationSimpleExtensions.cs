@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Simple.Validation;
 using System.Linq.Expressions;
 using System.Reflection;
-using Simple.Expressions;
-using Simple.Entities;
-using FluentValidation.Results;
 using FluentValidation;
-using FluentValidation.Internal;
-using Simple.Common;
-using Simple.Reflection;
+using FluentValidation.Results;
+using Simple.Validation;
 
 namespace Simple
 {

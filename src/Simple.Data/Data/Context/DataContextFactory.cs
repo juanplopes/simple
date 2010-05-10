@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Simple.Patterns;
-using Simple.Config;
-using Simple.Common;
 using NHibernate;
+using Simple.Common;
+using Simple.Config;
 
 namespace Simple.Data.Context
 {

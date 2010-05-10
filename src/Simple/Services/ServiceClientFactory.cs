@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Simple.Config;
 using Simple.Patterns;
-using System.Linq;
 
 namespace Simple.Services
 {

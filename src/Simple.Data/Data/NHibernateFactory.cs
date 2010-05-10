@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Config;
+﻿using NHibernate;
 using NHibernate.Cfg;
-using NHibernate;
-using Simple.Patterns;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Reflection;
+using Simple.Config;
 
 namespace Simple.Data
 {

@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Services;
-using Simple.Reflection;
-using NUnit.Framework;
-using Simple.Config;
-using System.Reflection;
-using System.Globalization;
 using System.Security.Principal;
+using NUnit.Framework;
+using Simple.Services;
 
 namespace Simple.Tests.Services
 {

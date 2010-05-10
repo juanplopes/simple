@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using Simple.Reflection;
-using Simple.Config;
 using System.Linq.Expressions;
-using Simple.Expressions.Editable;
-using Simple.Expressions;
 using Simple.Patterns;
-using FluentValidation.Results;
+using Simple.Reflection;
 using Simple.Validation;
-using System.Reflection;
 
 namespace Simple.Entities
 {

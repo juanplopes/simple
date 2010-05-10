@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Logging;
+﻿using System.Collections.Generic;
 using Simple.Patterns;
 
 namespace Simple.Config

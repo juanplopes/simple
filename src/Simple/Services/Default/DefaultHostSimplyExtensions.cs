@@ -1,6 +1,4 @@
-﻿using Simple.Patterns;
-using Simple.Config;
-using Simple.Services.Remoting;
+﻿using Simple.Config;
 using Simple.Services;
 using Simple.Services.Default;
 

@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.ServiceModel;
-using System.Linq.Expressions;
+using Simple.Entities.QuerySpec;
 using Simple.Expressions.Editable;
 using Simple.Services;
-using FluentValidation.Results;
 using Simple.Validation;
-using Simple.Entities.QuerySpec;
-using Simple.Expressions;
 
 namespace Simple.Entities
 {

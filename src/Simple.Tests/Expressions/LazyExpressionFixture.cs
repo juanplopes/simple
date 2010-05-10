@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
-using Simple.Expressions;
-using Simple.IO.Serialization;
 using Simple.Expressions.Editable;
+using Simple.IO.Serialization;
 
 namespace Simple.Tests.Expressions
 {

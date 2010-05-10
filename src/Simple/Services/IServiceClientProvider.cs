@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Simple.DynamicProxy;
-using System.Reflection;
-using Simple.Reflection;
 
 namespace Simple.Services
 {

@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using NUnit.Framework;
-using Simple.Tests.Resources;
-using Simple.Expressions;
+﻿using System;
 using System.Collections.Generic;
-using System;
-using Simple.Data;
+using System.Linq;
 using NHibernate;
+using NUnit.Framework;
 using Simple.Entities;
-using NHibernate.Linq;
+using Simple.Tests.Resources;
 
 namespace Simple.Tests.Data
 {

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using NUnit.Framework;
 using System.Linq.Expressions;
-using Simple.Expressions.Editable;
+using NUnit.Framework;
 using Simple.Expressions;
+using Simple.Expressions.Editable;
 
 namespace Simple.Tests.Expressions
 {

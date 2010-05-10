@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.IO;
 using System.IO;
 using System.Reflection;
 using Simple.Config;
+using Simple.IO;
 
 namespace Simple
 {

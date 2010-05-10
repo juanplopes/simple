@@ -1,5 +1,4 @@
-﻿using System;
-namespace Simple.Data
+﻿namespace Simple.Data
 {
     interface INHibernateFactory
     {

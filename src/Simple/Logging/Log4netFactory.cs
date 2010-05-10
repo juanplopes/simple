@@ -1,10 +1,8 @@
 ﻿using System;
-using Simple.Config;
+using System.Reflection;
 using log4net;
 using log4net.Config;
-using System.Reflection;
-using System.Xml;
-using System.IO;
+using Simple.Config;
 
 namespace Simple.Logging
 {

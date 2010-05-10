@@ -1,14 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Services.Remoting;
-using Simple.Config;
-using Simple.Services;
-using NUnit.Framework;
-using System.Threading;
-using System.Diagnostics;
-using System.Reflection;
 
 namespace Simple.Tests.Services
 {

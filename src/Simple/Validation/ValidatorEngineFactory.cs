@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Simple.Config;
 using System.Reflection;
 using FluentValidation;
-using FluentValidation.Results;
+using Simple.Config;
 
 namespace Simple.Validation
 {

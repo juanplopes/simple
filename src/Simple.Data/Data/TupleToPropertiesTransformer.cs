@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using System.Text;
-using NHibernate.Transform;
 using System.Reflection;
-using NHibernate;
+using NHibernate.Transform;
 
 namespace Simple.Data
 {

@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FluentNHibernate.Mapping;
-using Simple.Services;
-using Simple.Config;
-using NHibernate;
-using NHibernate.SqlTypes;
-using Simple.Entities;
-using Simple.Data;
 using FluentValidation;
-using Simple.Validation;
+using Simple.Config;
+using Simple.Entities;
+using Simple.Services;
 
 namespace Simple.Tests.Resources
 {

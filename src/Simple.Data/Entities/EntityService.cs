@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using log4net;
+using NHibernate;
 using NHibernate.Linq;
+using NHibernate.Metadata;
 using Simple.Config;
-using Simple.Data;
+using Simple.Entities.QuerySpec;
 using Simple.Expressions.Editable;
 using Simple.Services;
-using NHibernate;
 using Simple.Validation;
-using NHibernate.Metadata;
-using FluentValidation.Results;
-using Simple.Entities.QuerySpec;
 
 namespace Simple.Entities
 {

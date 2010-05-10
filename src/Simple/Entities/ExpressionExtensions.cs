@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Simple.Config;
 using System.Linq.Expressions;
-using Simple.Expressions.Editable;
-using Simple.Services;
 using Simple.Expressions;
+using Simple.Expressions.Editable;
 
 namespace Simple.Entities
 {

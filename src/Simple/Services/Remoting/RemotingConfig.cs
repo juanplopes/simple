@@ -1,12 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.Remoting;
+using System.Runtime.Remoting.Channels;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Runtime.Remoting.Channels.Tcp;
-using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Http;
-using System.Runtime.Remoting;
-using System.ComponentModel;
-using Simple.Reflection;
 
 namespace Simple.Services.Remoting
 {
