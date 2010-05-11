@@ -1,6 +1,33 @@
+Index: nhibernate/src/NHibernate.ByteCode.Castle/LazyFieldInterceptor.cs
+===================================================================
+--- nhibernate/src/NHibernate.ByteCode.Castle/LazyFieldInterceptor.cs	(revision 4980)
++++ nhibernate/src/NHibernate.ByteCode.Castle/LazyFieldInterceptor.cs	(working copy)
+@@ -30,12 +30,16 @@
+ 						invocation.ReturnValue = result;
+ 					}
+ 				}
+-				else if (ReflectHelper.IsPropertySet(invocation.Method))
+-				{
+-					FieldInterceptor.MarkDirty();
+-					FieldInterceptor.Intercept(invocation.InvocationTarget, ReflectHelper.GetPropertyName(invocation.Method), null);
+-					invocation.Proceed();
+-				}
++                else if (ReflectHelper.IsPropertySet(invocation.Method))
++                {
++                    FieldInterceptor.MarkDirty();
++                    FieldInterceptor.Intercept(invocation.InvocationTarget, ReflectHelper.GetPropertyName(invocation.Method), null);
++                    invocation.Proceed();
++                }
++                else
++                {
++                    invocation.Proceed();
++                }
+ 			}
+ 			else
+ 			{
 Index: nhibernate/src/NHibernate/Driver/SqlStringFormatter.cs
 ===================================================================
---- nhibernate/src/NHibernate/Driver/SqlStringFormatter.cs	(revision 4974)
+--- nhibernate/src/NHibernate/Driver/SqlStringFormatter.cs	(revision 4980)
 +++ nhibernate/src/NHibernate/Driver/SqlStringFormatter.cs	(working copy)
 @@ -3,110 +3,111 @@
  using System.Text;
@@ -200,21 +227,3 @@ Index: nhibernate/src/NHibernate/Driver/SqlStringFormatter.cs
 +        }
 +    }
  }
-Index: nhibernate/src/NHibernate/Linq/Functions/StringGenerator.cs
-===================================================================
---- nhibernate/src/NHibernate/Linq/Functions/StringGenerator.cs	(revision 4974)
-+++ nhibernate/src/NHibernate/Linq/Functions/StringGenerator.cs	(working copy)
-@@ -122,11 +122,11 @@
- 
-                 if (((method.Name == "ToUpper") || (method.Name == "ToUpperInvariant")))
-                 {
--                    methodName = "lower";
-+                    methodName = "upper";
-                 }
-                 else
-                 {
--                    methodName = "upper";
-+                    methodName = "lower";
-                 }
- 
-                 return treeBuilder.MethodCall(methodName, visitor.Visit(targetObject).AsExpression());
