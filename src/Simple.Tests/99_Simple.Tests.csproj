@@ -176,7 +176,7 @@
     <Compile Include="IO\FileLocatorFixture.cs" />
     <Compile Include="Reflection\InvokerFactoryFixture.cs" />
     <Compile Include="DynamicProxy\MarshallableDynamicProxyFixture.cs" />
-    <Compile Include="Common\SimpleMathFixture.cs" />
+    <Compile Include="Common\MathExtensionsFixture.cs" />
     <Compile Include="Expressions\MetaLinqFixture.cs" />
     <Compile Include="Reflection\MethodCacheFixture.cs" />
     <Compile Include="Patterns\DisposableActionFixture.cs" />
@@ -185,7 +185,7 @@
     <Compile Include="IO\DataContractSerializerFixture.cs" />
     <Compile Include="IO\NetDataContractSerializerFixture.cs" />
     <Compile Include="IO\XmlSerializerFixture.cs" />
-    <Compile Include="IO\StringUtilsFixture.cs" />
+    <Compile Include="Common\StringExtensionsFixture.cs" />
     <Compile Include="Patterns\TaskRunnerFixture.cs" />
     <Compile Include="Patterns\WorkingDaysFixture.cs" />
     <Compile Include="Resources\Category.cs" />

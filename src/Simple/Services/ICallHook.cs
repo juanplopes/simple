@@ -27,7 +27,7 @@ namespace Simple.Services
         void Finally();
     }
 
-    public abstract class BaseCallHook : ICallHook
+    public abstract class BaseCallHook : Attribute, ICallHook
     {
         public CallHookArgs CallArgs { get; set; }
         protected BaseCallHook(CallHookArgs args)

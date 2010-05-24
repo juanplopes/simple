@@ -1,12 +1,13 @@
 ﻿using System;
 using Simple.Patterns;
+using Simple.Common;
 
-namespace Simple.Common
+namespace Simple
 {
     /// <summary>
     /// Contains helper methods for working with simple math operations.
     /// </summary>
-    public class SimpleMath
+    public static class MathExtensions
     {
         /// <summary>
         /// Apply the real modular operation, returning values in range [0, q).
@@ -14,7 +15,7 @@ namespace Simple.Common
         /// <param name="p">The dividend.</param>
         /// <param name="q">The divisor.</param>
         /// <returns>The modulo q result.</returns>
-        public static long RealMod(long p, long q)
+        public static long RealMod(this long p, long q)
         {
             long r = p % q;
             if (r < 0) return r + q;
@@ -28,7 +29,7 @@ namespace Simple.Common
         /// <param name="p"></param>
         /// <param name="q"></param>
         /// <returns>The rounded number.</returns>
-        public static long ModRound(long p, long q)
+        public static long ModRound(this long p, long q)
         {
             return p - RealMod(p, q);
         }
@@ -38,7 +39,7 @@ namespace Simple.Common
         /// <param name="p">The number.</param>
         /// <param name="q">The modular set.</param>
         /// <returns>The rounded number.</returns>
-        public static int ModRound(int p, int q)
+        public static int ModRound(this int p, int q)
         {
             return (int)(p - RealMod(p, q));
         }
@@ -63,7 +64,7 @@ namespace Simple.Common
         /// <param name="b">Second value.</param>
         /// <param name="delta">The delta value.</param>
         /// <returns>True if they are almost equal, false otherwise.</returns>
-        public static bool FloatEq(decimal a, decimal b, decimal delta)
+        public static bool FloatEq(this decimal a, decimal b, decimal delta)
         {
             return Math.Abs(a - b) < delta;
         }
@@ -75,7 +76,7 @@ namespace Simple.Common
         /// <param name="b">Second value.</param>
         /// <param name="delta">The delta value.</param>
         /// <returns>True if they are almost equal, false otherwise.</returns>
-        public static bool FloatEq(float a, float b, float delta)
+        public static bool FloatEq(this float a, float b, float delta)
         {
             return Math.Abs(a - b) < delta;
         }
@@ -87,7 +88,7 @@ namespace Simple.Common
         /// <param name="b">Second value.</param>
         /// <param name="delta">The delta value.</param>
         /// <returns>True if they are almost equal, false otherwise.</returns>
-        public static bool FloatEq(double a, double b, double delta)
+        public static bool FloatEq(this double a, double b, double delta)
         {
             return Math.Abs(a - b) < delta;
         }

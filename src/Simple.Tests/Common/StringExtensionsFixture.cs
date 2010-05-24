@@ -11,30 +11,30 @@ namespace Simple.Tests.IO
         [Test]
         public void TestRemovePortugueseDiacritics()
         {
-            Assert.AreEqual("cao", StringUtils.RemoveDiacritics("cão"));
-            Assert.AreEqual("acao", StringUtils.RemoveDiacritics("ação"));
-            Assert.AreEqual("aeiouaeiouao", StringUtils.RemoveDiacritics("áéíóúâêîôûãõ"));
+            Assert.AreEqual("cao", "cão".RemoveDiacritics());
+            Assert.AreEqual("acao", "ação".RemoveDiacritics());
+            Assert.AreEqual("aeiouaeiouao", "áéíóúâêîôûãõ".RemoveDiacritics());
         }
 
         [Test]
         public void TestWontRemoveSpaces()
         {
-            Assert.AreEqual("cao sarnento", StringUtils.RemoveDiacritics("cão sarnento"));
-            Assert.AreEqual("acao e aventura", StringUtils.RemoveDiacritics("ação e aventura"));
-            Assert.AreEqual("aeiou aeiou ao", StringUtils.RemoveDiacritics("áéíóú âêîôû ãõ"));
+            Assert.AreEqual("cao sarnento", "cão sarnento".RemoveDiacritics());
+            Assert.AreEqual("acao e aventura", "ação e aventura".RemoveDiacritics());
+            Assert.AreEqual("aeiou aeiou ao", "áéíóú âêîôû ãõ".RemoveDiacritics());
         }
 
         [Test]
         public void TestRemoveCrazyDiacritics()
         {
-            Assert.AreEqual("aEn", StringUtils.RemoveDiacritics("áÈñ"));
-            Assert.AreEqual("uayCu", StringUtils.RemoveDiacritics("üåÿĈǜ"));
+            Assert.AreEqual("aEn", "áÈñ".RemoveDiacritics());
+            Assert.AreEqual("uayCu", "üåÿĈǜ".RemoveDiacritics());
         }
 
         [Test]
         public void TestSplitSimpleIdValueString()
         {
-            var res = StringUtils.Split("12 - algum texto", x=>Regex.IsMatch(x.ToString(), "[a-z0-9]")).ToArray();
+            var res = "12 - algum texto".Split(x=>Regex.IsMatch(x.ToString(), "[a-z0-9]")).ToArray();
 
             Assert.AreEqual(3, res.Length);
             CollectionAssert.Contains(res, "12");
@@ -45,7 +45,7 @@ namespace Simple.Tests.IO
         [Test]
         public void TestSplitCrazyValues()
         {
-            var res = StringUtils.Split("aà:[]b", "[a-z0-9]").ToArray();
+            var res = "aà:[]b".Split("[a-z0-9]").ToArray();
 
             Assert.AreEqual(2, res.Length);
             CollectionAssert.Contains(res, "a");

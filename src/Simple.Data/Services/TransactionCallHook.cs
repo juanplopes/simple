@@ -1,5 +1,6 @@
 ﻿using System;
 using NHibernate;
+using Simple.Reflection;
 
 namespace Simple.Services
 {
