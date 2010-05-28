@@ -19,7 +19,7 @@ namespace Simple.Tests.IO
         [Test]
         public void CanReadSomeNullableIntValues()
         {
-            var reader = new CommandLineReader("/a:1", "-b:2", "-c=3");
+            var reader = new CommandLineReader("/a:1", "-b:2", "--c", "3");
             Assert.AreEqual(1, reader.Get<int?>("a"));
             Assert.AreEqual(2, reader.Get<int?>("b"));
             Assert.AreEqual(3, reader.Get<int?>("c"));
