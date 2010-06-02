@@ -1,7 +1,7 @@
 ﻿<#@ assembly name="System.Configuration" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Data" #>
-<#@ assembly name="$(ProjectDir)$(OutDir)Schema.Metadata.dll" #>
+<#@ assembly name="Schema.Metadata.dll" #>
 
 <#@ import namespace="System.Collections" #>
 <#@ import namespace="System.Collections.Generic" #>
