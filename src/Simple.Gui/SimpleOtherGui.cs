@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 
-namespace Simple.GUI
+namespace Simple.Gui
 {
     public partial class SimpleOtherGui : Form
     {

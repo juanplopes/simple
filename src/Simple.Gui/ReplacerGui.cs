@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
 
-namespace Simple.GUI
+namespace Simple.Gui
 {
     public partial class ReplacerGui : Form
     {
@@ -17,6 +17,24 @@ namespace Simple.GUI
         {
             InitializeComponent();
             txtNamespace_TextChanged(this, new EventArgs());
+            Version.Text = string.Format("v{0}", this.GetType().Assembly.GetName().Version);
+
+            AdvancedGroup.Visible = false;
+            AutoResize();
+        }
+
+        private void AutoResize()
+        {
+            if (AdvancedGroup.Visible)
+            {
+                this.Height = AdvancedGroup.Top + AdvancedGroup.ClientSize.Height + AdvancedGroup.Left;
+                txtCatalog.Focus();
+            }
+            else
+            {
+                this.Height = AdvancedGroup.Top + AdvancedGroup.Left;
+                txtNamespace.Focus();
+            }
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -42,21 +60,6 @@ namespace Simple.GUI
             this.Close();
         }
 
-        private void btnMore_Click(object sender, EventArgs e)
-        {
-            if (btnMore.Tag == null)
-            {
-                btnMore.Text = "Less";
-                this.Height = 475;
-                btnMore.Tag = new object();
-            }
-            else
-            {
-                btnMore.Text = "More";
-                this.Height = 316;
-                btnMore.Tag = null;
-            }
-        }
 
         private void txtNamespace_TextChanged(object sender, EventArgs e)
         {
@@ -70,6 +73,12 @@ namespace Simple.GUI
         {
             if (txtNamespace.Text.ToLower() == "dirtyhack")
                 new SimpleOtherGui().Show();
+        }
+
+        private void btnMore_Click(object sender, EventArgs e)
+        {
+            AdvancedGroup.Visible = !AdvancedGroup.Visible;
+            AutoResize();
         }
 
        

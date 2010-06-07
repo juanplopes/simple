@@ -3,7 +3,7 @@
     <GCProjectName>simpledotnet</GCProjectName>
 
     <LibDir>lib\</LibDir>
-    
+
     <BuildDir>build\</BuildDir>
     <BuildDir2>$(MSBuildProjectDirectory)\$(BuildDir)</BuildDir2>
 
@@ -21,8 +21,11 @@
     <Configuration>Release</Configuration>
     <Platform>Any CPU</Platform>
 
-    <ProductVersion>3.0</ProductVersion>
+    <ProductMajorVersion>3</ProductMajorVersion>
+    <ProductMinorVersion>0</ProductMinorVersion>
 
+    <MainLibraryName>Simple$(ProductMajorVersion)</MainLibraryName>
+    
     <TestAssembly>$(BuildDir)\Simple.Tests.exe</TestAssembly>
   </PropertyGroup>
 
@@ -41,11 +44,22 @@
   </Target>
 
   <Target Name="GenerateTag">
-    <Time Format="yMM.dhh">
+    <SvnVersion LocalPath="." ToolPath="util\svn">
+      <Output TaskParameter="Revision" PropertyName="Revision" />
+    </SvnVersion>
+    <Message Text="Revision: $(Revision)"/>
+
+    <Time Format="Mdd">
       <Output TaskParameter="FormattedTime" PropertyName="BuildTag" />
     </Time>
-
     <Message Text="Build tag: $(BuildTag)"/>
+
+    <CreateProperty
+        Value="$(ProductMajorVersion).$(ProductMinorVersion).$(Revision).$(BuildTag)">
+      <Output TaskParameter="Value" PropertyName="ProductVersion" />
+    </CreateProperty>
+
+    <Message Text="Product version: $(ProductVersion)"/>
   </Target>
 
   <Target Name="GenerateAssemblyInfo" DependsOnTargets="GenerateTag">
@@ -57,8 +71,8 @@
                AssemblyTrademark=""
                ComVisible="false"
                CLSCompliant="false"
-               AssemblyVersion="$(ProductVersion).$(BuildTag)"
-               AssemblyFileVersion="$(ProductVersion).$(BuildTag)" />
+               AssemblyVersion="$(ProductVersion)"
+               AssemblyFileVersion="$(ProductVersion)" />
   </Target>
 
   <Target Name="Build" DependsOnTargets ="GenerateAssemblyInfo">
@@ -97,7 +111,7 @@
       <FluentValidationItems Include="$(LibDir)\FluentValidation\FluentValidation.dll"/>
       <FluentValidationItems Include="$(LibDir)\FluentValidation\**\*.dll" Exclude="$(LibDir)\FluentValidation\FluentValidation.dll"/>
     </ItemGroup>
-    
+
     <ILMerge OutputFile="$(LibDir)\FluentValidation.dll"
             InputAssemblies="@(FluentValidationItems)"
             ToolPath="util\ilmerge"
@@ -116,7 +130,7 @@
     </ItemGroup>
 
     <MakeDir Directories="$(PackageDir)"/>
-    <ILMerge OutputFile="$(PackageDir)\Simple.dll"
+    <ILMerge OutputFile="$(PackageDir)\$(MainLibraryName).dll"
             InputAssemblies="@(MergeItems)"
             ToolPath="util\ilmerge"
             LogFile=""
@@ -126,9 +140,11 @@
 
   <Target Name="Package" DependsOnTargets="Build;Merge">
     <MakeDir Directories="$(PackageDir)"/>
-    <Copy SourceFiles="$(PackageDir)\Simple.dll" DestinationFolder="$(SourceBaseLibDir)"/>
+    <Copy SourceFiles="$(PackageDir)\$(MainLibraryName).dll" DestinationFolder="$(SourceBaseLibDir)"/>
+    <Copy SourceFiles="$(BuildDir)\Simple.Gui.exe" DestinationFolder="$(SourceBaseDir)"/>
+
     <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile $(PackageDir2)\Simple.exe&quot;"/>
-    <Zip Files="$(PackageDir)\Simple.dll" ZipFileName="$(PackageDir)\Simple.zip" WorkingDirectory="$(PackageDir)"/>
+    <Zip Files="$(PackageDir)\$(MainLibraryName).dll" ZipFileName="$(PackageDir)\Simple.zip" WorkingDirectory="$(PackageDir)"/>
   </Target>
 
   <Target Name="Publish" DependsOnTargets="Test;Package">
@@ -138,7 +154,7 @@
      ProjectName="$(GCProjectName)"
      LocalFile="$(PackageDir)\Simple.zip"
      TargetFileName="Simple-Nightly.zip"
-     Summary="Simple.Net Library v$(ProductVersion).$(BuildTag)"
+     Summary="Simple.Net Library v$(ProductVersion)"
      Labels="Nightly;Type-Package"
       />
 
@@ -148,7 +164,7 @@
       ProjectName="$(GCProjectName)"
       LocalFile="$(PackageDir)\Simple.exe"
       TargetFileName="Simple-Nightly.exe"
-      Summary="Simple.Net Project Starter v$(ProductVersion).$(BuildTag)"
+      Summary="Simple.Net Project Starter v$(ProductVersion)"
       Labels="Nightly;Type-Executable;Featured"
       />
   </Target>

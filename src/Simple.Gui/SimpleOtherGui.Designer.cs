@@ -1,4 +1,4 @@
-﻿namespace Simple.GUI
+﻿namespace Simple.Gui
 {
     partial class SimpleOtherGui
     {

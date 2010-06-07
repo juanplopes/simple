@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Simple.GUI
+namespace Simple.Gui
 {
     public class ReplacerLogic
     {
