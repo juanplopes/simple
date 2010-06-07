@@ -143,8 +143,8 @@
     <Copy SourceFiles="$(PackageDir)\$(MainLibraryName).dll" DestinationFolder="$(SourceBaseLibDir)"/>
     <Copy SourceFiles="$(BuildDir)\Simple.Gui.exe" DestinationFolder="$(SourceBaseDir)"/>
 
-    <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile $(PackageDir2)\Simple.exe&quot;"/>
-    <Zip Files="$(PackageDir)\$(MainLibraryName).dll" ZipFileName="$(PackageDir)\Simple.zip" WorkingDirectory="$(PackageDir)"/>
+    <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile $(PackageDir2)\$(MainLibraryName).exe&quot;"/>
+    <Zip Files="$(PackageDir)\$(MainLibraryName).dll" ZipFileName="$(PackageDir)\$(MainLibraryName).zip" WorkingDirectory="$(PackageDir)"/>
   </Target>
 
   <Target Name="Publish" DependsOnTargets="Test;Package">
@@ -152,8 +152,8 @@
      UserName="$(GCUsername)"
      Password="$(GCPassword)"
      ProjectName="$(GCProjectName)"
-     LocalFile="$(PackageDir)\Simple.zip"
-     TargetFileName="Simple-Nightly.zip"
+     LocalFile="$(PackageDir)\$(MainLibraryName).zip"
+     TargetFileName="$(MainLibraryName)-Nightly.zip"
      Summary="Simple.Net Library v$(ProductVersion)"
      Labels="Nightly;Type-Package"
       />
@@ -162,8 +162,8 @@
       UserName="$(GCUsername)"
       Password="$(GCPassword)"
       ProjectName="$(GCProjectName)"
-      LocalFile="$(PackageDir)\Simple.exe"
-      TargetFileName="Simple-Nightly.exe"
+      LocalFile="$(PackageDir)\$(MainLibraryName).exe"
+      TargetFileName="$(MainLibraryName)-Nightly.exe"
       Summary="Simple.Net Project Starter v$(ProductVersion)"
       Labels="Nightly;Type-Executable;Featured"
       />
