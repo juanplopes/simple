@@ -49,13 +49,9 @@
     </SvnVersion>
     <Message Text="Revision: $(Revision)"/>
 
-    <Time Format="Mdd">
-      <Output TaskParameter="FormattedTime" PropertyName="BuildTag" />
-    </Time>
-    <Message Text="Build tag: $(BuildTag)"/>
 
     <CreateProperty
-        Value="$(ProductMajorVersion).$(ProductMinorVersion).$(Revision).$(BuildTag)">
+        Value="$(ProductMajorVersion).$(ProductMinorVersion).$(Revision)">
       <Output TaskParameter="Value" PropertyName="ProductVersion" />
     </CreateProperty>
 
