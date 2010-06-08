@@ -4,6 +4,21 @@ using System.Xml.Serialization;
 
 namespace Simple.IO.Serialization
 {
+    public class XmlSimpleSerializer<T> : XmlSimpleSerializer
+    {
+        public XmlSimpleSerializer() : base(typeof(T)){}
+
+        public T DeserializeTyped(byte[] data)
+        {
+            return (T)Deserialize(data);
+        }
+
+        public T DeserializeTypedFromString(string data)
+        {
+            return (T)DeserializeFromString(data);
+        }
+    }
+
     public class XmlSimpleSerializer : ISimpleSerializer, ISimpleStringSerializer
     {
         public Type Type { get; protected set; }

@@ -13,10 +13,10 @@ namespace Simple.Tests.Metadata
     [TestFixture]
     public class RunAndRollBackFixture
     {
-        public object[] TestCases()
+        public IList<DatabasesXml.Entry> TestCases()
         {
-            var xml = (DatabasesXml)SimpleSerializer.Xml<DatabasesXml>().Deserialize(File.ReadAllBytes("databases.xml"));
-            return xml.Entries.ToArray() ;
+            var xml = SimpleSerializer.Xml<DatabasesXml>().DeserializeTypedFromString(Database.Databases);
+            return xml.Entries;
         }
 
         [TestCaseSource("TestCases")]

@@ -1,5 +1,9 @@
 <Databases>
-  <Entry Provider="System.Data.SqlClient" ConnectionString="server=.\sqlexpress; initial catalog=Simple; integrated security=sspi"/>
-  <Entry Provider="asdaqsdsad" ConnectionString="server=.\sqlexpress; initial catalog=Simple; integrated security=sspi"/>
-
+  <!-- Used  by unit tests. Change to your own databases. They must not be empty, but it is recommended. -->
+  
+  <Entry Provider="System.Data.SqlClient" 
+         ConnectionString="server=.\sqlexpress; initial catalog=simple; integrated security=sspi"/>
+  
+  <Entry Provider="System.Data.OracleClient"
+         ConnectionString="server=xe; user id=sys; password=sys"/>
 </Databases>
