@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Simple.Tests.Metadata.Runs;
 using Simple.IO.Serialization;
 using System.IO;
 
 namespace Simple.Tests.Metadata
 {
 
-    [TestFixture]
+    [TestFixture, Explicit]
     public class RunAndRollBackFixture
     {
         public IList<DatabasesXml.Entry> TestCases()
@@ -22,31 +21,31 @@ namespace Simple.Tests.Metadata
         [TestCaseSource("TestCases")]
         public void AllTypesTest(DatabasesXml.Entry entry)
         {
-            new AllTypesTest(entry).ExecuteAll();
+            new AllTypesTest.Run(entry).ExecuteAll();
         }
 
         [TestCaseSource("TestCases")]
         public void ChangeColumnTest(DatabasesXml.Entry entry)
         {
-            new ChangeColumnTest(entry).ExecuteAll();
+            new ChangeColumnTest.Run(entry).ExecuteAll();
         }
 
         [TestCaseSource("TestCases")]
         public void ChangeTableTest(DatabasesXml.Entry entry)
         {
-            new ChangeTableTest(entry).ExecuteAll();
+            new ChangeTableTest.Run(entry).ExecuteAll();
         }
 
         [TestCaseSource("TestCases")]
         public void DoubleForeignKeyTest(DatabasesXml.Entry entry)
         {
-            new DoubleForeignKeyTest(entry).ExecuteAll();
+            new DoubleForeignKeyTest.Run(entry).ExecuteAll();
         }
 
         [TestCaseSource("TestCases")]
         public void SimpleTableTest(DatabasesXml.Entry entry)
         {
-            new SimpleTableTest(entry).ExecuteAll();
+            new SimpleTableTest.Run(entry).ExecuteAll();
         }
     }
 }
