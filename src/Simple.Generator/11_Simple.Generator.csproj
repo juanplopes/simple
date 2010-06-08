@@ -12,6 +12,8 @@
     <AssemblyName>Simple.Generator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Simple.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -145,6 +147,9 @@
     <Compile Include="Migrator\Providers\TypeNames.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Simple.snk">
+      <Link>Simple.snk</Link>
+    </None>
     <None Include="Migrator\Fluent\Tables\TableAction.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TableAction2.cs</LastGenOutput>

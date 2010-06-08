@@ -143,6 +143,16 @@
     <Compile Include="IO\CommandLineReaderFixture.cs" />
     <Compile Include="IO\FileSizeFixture.cs" />
     <Compile Include="IO\LazySerializerFixture.cs" />
+    <Compile Include="Metadata\DatabasesXml.cs" />
+    <Compile Include="Metadata\RunAndRollBackFixture.cs" />
+    <Compile Include="Metadata\Runs\AllTypesTest.cs" />
+    <Compile Include="Metadata\Runs\ChangeColumnTest.cs" />
+    <Compile Include="Metadata\Runs\ChangeTableTest.cs" />
+    <Compile Include="Metadata\Runs\DoubleForeignKeyTest.cs" />
+    <Compile Include="Metadata\BaseTest.cs" />
+    <Compile Include="Metadata\Constants.cs" />
+    <Compile Include="Metadata\TableAssertionHelper.cs" />
+    <Compile Include="Metadata\Runs\SimpleTableTest.cs" />
     <Compile Include="Patterns\SingletonFixture.cs" />
     <Compile Include="Patterns\TransformationListFixture.cs" />
     <Compile Include="Patterns\TuplesFixture.cs" />
@@ -278,6 +288,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Simple.Generator\11_Simple.Generator.csproj">
+      <Project>{0D3A5B7E-9BA9-43B1-A500-BF89CBFC0E7B}</Project>
+      <Name>11_Simple.Generator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simple\00_Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
       <Name>00_Simple</Name>
@@ -286,6 +300,12 @@
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
       <Name>01_Simple.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\databases.xml">
+      <Link>databases.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

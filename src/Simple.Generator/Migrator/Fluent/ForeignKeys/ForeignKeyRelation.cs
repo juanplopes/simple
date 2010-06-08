@@ -18,7 +18,7 @@ namespace Simple.Migrator.Fluent
 
         public static implicit operator ForeignKeyRelation(ColumnNameAction column)
         {
-            return new ForeignKeyRelation(column, column.Name);
+            return column.LinkedTo(column.Name);
         }
     }
 }
