@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0D3A5B7E-9BA9-43B1-A500-BF89CBFC0E7B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Simple.Generator</RootNamespace>
+    <AssemblyName>Simple.Generator</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Metadata\DbColumn.cs" />
+    <Compile Include="Metadata\DbForeignKey.cs" />
+    <Compile Include="Metadata\DbObject.cs" />
+    <Compile Include="Metadata\DbRelation.cs" />
+    <Compile Include="Metadata\DbSchema.cs" />
+    <Compile Include="Metadata\DbSchemaProvider.cs" />
+    <Compile Include="Metadata\DbTable.cs" />
+    <Compile Include="Metadata\IDbSchemaProvider.cs" />
+    <Compile Include="Metadata\Providers\MySqlSchemaProvider.cs" />
+    <Compile Include="Metadata\Providers\OleDbSchemaProvider.cs" />
+    <Compile Include="Metadata\Providers\OracleSchemaProvider.cs" />
+    <Compile Include="Metadata\Providers\PostgreSqlSchemaProvider.cs" />
+    <Compile Include="Metadata\Providers\SQLiteSchemaProvider.cs" />
+    <Compile Include="Metadata\Providers\SqlServerCeSchemaProvider.cs" />
+    <Compile Include="Metadata\Providers\SqlServerSchemaProvider.cs" />
+    <Compile Include="Metadata\Providers\VistaDBSchemaProvider.cs" />
+    <Compile Include="Migrator\BaseMigrate.cs" />
+    <Compile Include="Migrator\DbMigrator.cs" />
+    <Compile Include="Migrator\DuplicatedVersionException.cs" />
+    <Compile Include="Migrator\Fluent\Columns\ColumnAction.cs" />
+    <Compile Include="Migrator\Fluent\Columns\ColumnAddAction.cs" />
+    <Compile Include="Migrator\Fluent\Columns\ColumnChangeAction.cs" />
+    <Compile Include="Migrator\Fluent\Columns\ColumnNameAction.cs" />
+    <Compile Include="Migrator\Fluent\Columns\ColumnRemoveAction.cs" />
+    <Compile Include="Migrator\Fluent\Columns\ColumnRenameAction.cs" />
+    <Compile Include="Migrator\Fluent\FluentMigration.cs" />
+    <Compile Include="Migrator\Fluent\ForeignKeys\ForeignKeyAction.cs" />
+    <Compile Include="Migrator\Fluent\ForeignKeys\ForeignKeyAddAction.cs" />
+    <Compile Include="Migrator\Fluent\ForeignKeys\ForeignKeyRelation.cs" />
+    <Compile Include="Migrator\Fluent\ForeignKeys\ForeignKeyRemoveAction.cs" />
+    <Compile Include="Migrator\Fluent\IAction.cs" />
+    <Compile Include="Migrator\Fluent\IConvention.cs" />
+    <Compile Include="Migrator\Fluent\InsideTableAction.cs" />
+    <Compile Include="Migrator\Fluent\SchemaBuilder.cs" />
+    <Compile Include="Migrator\Fluent\Tables\TableAction.cs" />
+    <Compile Include="Migrator\Fluent\Tables\TableAction2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableAction.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Migrator\Fluent\Tables\TableAddAction.cs" />
+    <Compile Include="Migrator\Fluent\Tables\TableChangeAction.cs" />
+    <Compile Include="Migrator\Fluent\Tables\TableChangeAction2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableChangeAction.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Migrator\Fluent\Tables\TableRemoveAction.cs" />
+    <Compile Include="Migrator\Fluent\Tables\TableRenameAction.cs" />
+    <Compile Include="Migrator\Fluent\UniqueConstraints\UniqueConstraintAction.cs" />
+    <Compile Include="Migrator\Fluent\UniqueConstraints\UniqueConstraintAddAction.cs" />
+    <Compile Include="Migrator\Fluent\UniqueConstraints\UniqueConstraintRemoveAction.cs" />
+    <Compile Include="Migrator\Framework\Column.cs" />
+    <Compile Include="Migrator\Framework\ColumnProperty.cs" />
+    <Compile Include="Migrator\Framework\ForeignKeyConstraint.cs" />
+    <Compile Include="Migrator\Framework\IColumn.cs" />
+    <Compile Include="Migrator\Framework\ILogger.cs" />
+    <Compile Include="Migrator\Framework\IMigration.cs" />
+    <Compile Include="Migrator\Framework\ITransformationProvider.cs" />
+    <Compile Include="Migrator\Framework\Loggers\ConsoleWriter.cs" />
+    <Compile Include="Migrator\Framework\Loggers\IAttachableLogger.cs" />
+    <Compile Include="Migrator\Framework\Loggers\ILogWriter.cs" />
+    <Compile Include="Migrator\Framework\Loggers\Logger.cs" />
+    <Compile Include="Migrator\Framework\Loggers\SqlScriptFileLogger.cs" />
+    <Compile Include="Migrator\Framework\Migration.cs" />
+    <Compile Include="Migrator\Framework\MigrationAttribute.cs" />
+    <Compile Include="Migrator\Framework\MigrationException.cs" />
+    <Compile Include="Migrator\Framework\StringUtils.cs" />
+    <Compile Include="Migrator\IrreversibleMigrationException.cs" />
+    <Compile Include="Migrator\MigrateAnywhere.cs" />
+    <Compile Include="Migrator\MigrateDown.cs" />
+    <Compile Include="Migrator\MigrateUp.cs" />
+    <Compile Include="Migrator\MigrationComparer.cs" />
+    <Compile Include="Migrator\MigrationLoader.cs" />
+    <Compile Include="Migrator\ProviderFactory.cs" />
+    <Compile Include="Migrator\Providers\ColumnPropertiesMapper.cs" />
+    <Compile Include="Migrator\Providers\Dialect.cs" />
+    <Compile Include="Migrator\Providers\ForeignKeyConstraintMapper.cs" />
+    <Compile Include="Migrator\Providers\Mysql\MysqlDialect.cs" />
+    <Compile Include="Migrator\Providers\Mysql\MySqlTransformationProvider.cs" />
+    <Compile Include="Migrator\Providers\NoOpTransformationProvider.cs" />
+    <Compile Include="Migrator\Providers\Oracle\OracleDialect.cs" />
+    <Compile Include="Migrator\Providers\Oracle\OracleTransformationProvider.cs" />
+    <Compile Include="Migrator\Providers\PostgreSQL\PostgreSQLDialect.cs" />
+    <Compile Include="Migrator\Providers\PostgreSQL\PostgreSQLTransformationProvider.cs" />
+    <Compile Include="Migrator\Providers\SQLite\SQLiteDialect.cs" />
+    <Compile Include="Migrator\Providers\SQLite\SQLiteTransformationProvider.cs" />
+    <Compile Include="Migrator\Providers\SqlServer\SqlServer2005Dialect.cs" />
+    <Compile Include="Migrator\Providers\SqlServer\SqlServerCeDialect.cs" />
+    <Compile Include="Migrator\Providers\SqlServer\SqlServerCeTransformationProvider.cs" />
+    <Compile Include="Migrator\Providers\SqlServer\SqlServerDialect.cs" />
+    <Compile Include="Migrator\Providers\SqlServer\SqlServerTransformationProvider.cs" />
+    <Compile Include="Migrator\Providers\TransformationProvider.cs" />
+    <Compile Include="Migrator\Providers\TypeNames.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Migrator\Fluent\Tables\TableAction.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TableAction2.cs</LastGenOutput>
+    </None>
+    <None Include="Migrator\Fluent\Tables\TableChangeAction.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TableChangeAction2.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generator\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

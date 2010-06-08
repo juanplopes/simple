@@ -1,0 +1,22 @@
+<#@ assembly name="System.Data.dll" #>
+<#@ import namespace="System.Data" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+
+namespace Simple.Migrator.Fluent
+{
+    public abstract partial class TableAction
+    {
+<#
+foreach (DbType type in Enum.GetValues(typeof(DbType)))
+{ #>
+		public ColumnAddAction Add<#= type.ToString() #>(string name) 
+		{
+			return AddColumn(name, DbType.<#= type.ToString() #>);
+		}
+<# } #>
+    }
+}
