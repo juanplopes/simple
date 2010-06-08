@@ -1,3 +1,5 @@
 <Databases>
   <Entry Provider="System.Data.SqlClient" ConnectionString="server=.\sqlexpress; initial catalog=Simple; integrated security=sspi"/>
+  <Entry Provider="asdaqsdsad" ConnectionString="server=.\sqlexpress; initial catalog=Simple; integrated security=sspi"/>
+
 </Databases>
