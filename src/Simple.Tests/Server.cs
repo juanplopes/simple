@@ -2,6 +2,8 @@
 using System.Threading;
 using Simple.Common;
 using Simple.Tests.Services;
+using Simple.Reflection;
+using System.Linq.Expressions;
 
 
 namespace Simple.Tests
@@ -11,6 +13,14 @@ namespace Simple.Tests
         public const string RemotingTest = "remotingtest";
         public const string RemotingServerInterceptorTest = "remotingserverinterceptortest";
         public const string RemotingClientInterceptorTest = "remotingclientinterceptortest";
+
+        class Teste
+        {
+            public int Whatever
+            {
+                get { return 2; }
+            }
+        }
 
         [STAThread]
         static int Main(string[] args)
