@@ -155,7 +155,6 @@
     <Compile Include="Metadata\ChangeTableTest\Run.cs" />
     <Compile Include="Metadata\DoubleForeignKeyTest\Run.cs" />
     <Compile Include="Metadata\BaseTest.cs" />
-    <Compile Include="Metadata\Constants.cs" />
     <Compile Include="Metadata\SimpleTableTest\Migration1.cs" />
     <Compile Include="Metadata\TableAssertionHelper.cs" />
     <Compile Include="Metadata\SimpleTableTest\Run.cs" />

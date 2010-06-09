@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Simple.Migrator;
 using Simple.Metadata;
 using Simple.Migrator.Fluent;
+using Simple.Migrator.Providers;
 
 namespace Simple.Tests.Metadata
 {
@@ -31,15 +32,21 @@ namespace Simple.Tests.Metadata
         {
             return new DbMigrator(Database.Provider, Database.ConnectionString, GetMigrations().ToArray());
         }
-        public DbSchema GetSchema()
+        protected DbSchema GetSchema()
         {
             return new DbSchema(Database.Provider, Database.ConnectionString);
+        }
+
+        protected Dialect GetDialect()
+        {
+            return ProviderFactory.GetDialect(Database.Provider);
         }
 
         public virtual void Check()
         {
             var schema = GetSchema();
-            new TableAssertionHelper(schema).AssertTables(GetTableDefinitions());
+            var dialect = GetDialect();
+            new TableAssertionHelper(schema, dialect).AssertTables(GetTableDefinitions());
         }
 
 
@@ -50,9 +57,15 @@ namespace Simple.Tests.Metadata
 
         public virtual void ExecuteAll()
         {
-            Setup();
-            Check();
-            Teardown();
+            try
+            {
+                Setup();
+                Check();
+            }
+            finally
+            {
+                Teardown();
+            }
         }
 
         public virtual void Teardown()

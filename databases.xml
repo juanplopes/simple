@@ -6,4 +6,8 @@
   
   <Entry Provider="Oracle.DataAccess.Client"
          ConnectionString="data source=xe; user id=simple; password=simple"/>
+		 
+  <Entry Provider="System.Data.OracleClient"
+         ConnectionString="data source=xe; user id=simple; password=simple"/>
+
 </Databases>

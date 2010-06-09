@@ -12,7 +12,7 @@ namespace Simple.Tests.Metadata.AllTypesTest
     {
         public override void Up()
         {
-            Schema.AddTable("t_rel_1", false, t =>
+            Schema.AddTable("t_all_types_1", false, t =>
             {
                 t.AddAnsiString("fieldAnsiString").PrimaryKey();
                 t.AddBinary("fieldBinary").PrimaryKey();
@@ -29,9 +29,9 @@ namespace Simple.Tests.Metadata.AllTypesTest
                 t.AddString("fieldString").PrimaryKey();
             });
 
-            Schema.AddTable("t_rel_2", false, t =>
+            Schema.AddTable("t_all_types_2", false, t =>
             {
-                t.AutoForeignKey("t_rel_1"
+                t.AutoForeignKey("t_all_types_1"
                                     , t.AddAnsiString("fieldAnsiString").PrimaryKey()
                                     , t.AddBinary("fieldBinary").PrimaryKey()
                                     , t.AddByte("fieldByte").PrimaryKey()
@@ -53,8 +53,8 @@ namespace Simple.Tests.Metadata.AllTypesTest
 
         public override void Down()
         {
-            Schema.RemoveTable("t_rel_2");
-            Schema.RemoveTable("t_rel_1");
+            Schema.RemoveTable("t_all_types_2");
+            Schema.RemoveTable("t_all_types_1");
         }
     }
 

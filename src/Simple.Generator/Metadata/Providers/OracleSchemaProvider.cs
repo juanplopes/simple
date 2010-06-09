@@ -34,17 +34,23 @@ namespace Simple.Metadata
             DataTable tblViews = GetDTSchemaTables();
             using (DbConnection _Connection = GetDBConnection())
             {
-                DbCommand _Command = _Connection.CreateCommand();
-                _Command.CommandText = sqlTables;
-                _Command.CommandType = CommandType.Text;
-                tblTables.Load(_Command.ExecuteReader());
+                using (DbCommand _Command = _Connection.CreateCommand())
+                {
+                    _Command.CommandText = sqlTables;
+                    _Command.CommandType = CommandType.Text;
+                    using (var reader = _Command.ExecuteReader())
+                        tblTables.Load(reader);
+                }
             }
             using (DbConnection _Connection = GetDBConnection())
             {
-                DbCommand _Command = _Connection.CreateCommand();
-                _Command.CommandText = sqlViews;
-                _Command.CommandType = CommandType.Text;
-                tblViews.Load(_Command.ExecuteReader());
+                using (DbCommand _Command = _Connection.CreateCommand())
+                {
+                    _Command.CommandText = sqlViews;
+                    _Command.CommandType = CommandType.Text;
+                    using (var reader = _Command.ExecuteReader())
+                        tblViews.Load(reader);
+                }
             }
             foreach (DataRow viewRow in tblViews.Rows)
             {
@@ -59,10 +65,13 @@ namespace Simple.Metadata
             DataTable tbl = new DataTable("Constraints");
             using (DbConnection _Connection = GetDBConnection())
             {
-                DbCommand _Command = _Connection.CreateCommand();
-                _Command.CommandText = sqlConstrains;
-                _Command.CommandType = CommandType.Text;
-                tbl.Load(_Command.ExecuteReader());
+                using (DbCommand _Command = _Connection.CreateCommand())
+                {
+                    _Command.CommandText = sqlConstrains;
+                    _Command.CommandType = CommandType.Text;
+                    using(var reader = _Command.ExecuteReader())
+                        tbl.Load(_Command.ExecuteReader());
+                }
             }
 
             return tbl;

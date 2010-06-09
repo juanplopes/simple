@@ -8,16 +8,19 @@ using System.Linq.Expressions;
 using Simple.Migrator.Fluent;
 using Simple.Migrator.Framework;
 using Simple.Migrator;
+using Simple.Migrator.Providers;
 
 namespace Simple.Tests.Metadata
 {
     public class TableAssertionHelper
     {
         public DbSchema Schema { get; protected set; }
+        public Dialect Dialect { get; protected set; }
 
-        public TableAssertionHelper(DbSchema schema)
+        public TableAssertionHelper(DbSchema schema, Dialect dialect)
         {
             this.Schema = schema;
+            this.Dialect = dialect;
         }
 
         public void AssertTables(IEnumerable<TableAddAction> tables)
@@ -68,7 +71,7 @@ namespace Simple.Tests.Metadata
             string columnId = string.Format("{0}.{1}", column.Table.Name, column.Name);
             StringAssert.AreEqualIgnoringCase(column.Name, actualColumn.ColumnName, "column name");
 
-            string type = ProviderFactory.GetDialect(Constants.MetadataProvider).GetTypeName(column.Type);
+            string type = Dialect.GetTypeName(column.Type);
             StringAssert.StartsWith(actualColumn.DataTypeName.ToUpper(), type.ToUpper());
             //Assert.AreEqual(column.Type, actualColumn.GetDbColumnType(), "column type for {0}", columnId);
             if (column.Size != null)

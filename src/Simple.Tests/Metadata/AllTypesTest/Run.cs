@@ -21,7 +21,7 @@ namespace Simple.Tests.Metadata.AllTypesTest
 
         public override IEnumerable<TableAddAction> GetTableDefinitions()
         {
-            yield return TableDef("t_rel_1", t =>
+            yield return TableDef("t_all_types_1", t =>
             {
                 t.AddAnsiString("fieldAnsiString").PrimaryKey();
                 t.AddBinary("fieldBinary").PrimaryKey();
@@ -38,9 +38,9 @@ namespace Simple.Tests.Metadata.AllTypesTest
                 t.AddString("fieldString").PrimaryKey();
             });
 
-            yield return TableDef("t_rel_2", t =>
+            yield return TableDef("t_all_types_2", t =>
             {
-                t.ForeignKey("t_rel_2_t_rel_1_fk", "t_rel_1",
+                t.ForeignKey("t_all_types_2_t_all_types_1_fk", "t_all_types_1",
                     t.AddAnsiString("fieldAnsiString").PrimaryKey(),
                     t.AddBinary("fieldBinary").PrimaryKey(),
                     t.AddByte("fieldByte").PrimaryKey(),
