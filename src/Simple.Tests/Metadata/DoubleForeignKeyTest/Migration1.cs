@@ -12,7 +12,7 @@ namespace Simple.Tests.Metadata.DoubleForeignKeyTest
     {
         public override void Up()
         {
-            Schema.AddTable("t_rel_1", false, t =>
+            Schema.AddTable("t_double_fk_1", false, t =>
             {
                 t.AddInt32("id1").PrimaryKey();
                 t.AddString("id2").PrimaryKey();
@@ -20,9 +20,9 @@ namespace Simple.Tests.Metadata.DoubleForeignKeyTest
                 t.AddDateTime("field1");
             });
 
-            Schema.AddTable("t_rel_2", false, t =>
+            Schema.AddTable("t_double_fk_2", false, t =>
             {
-                t.AutoForeignKey("t_rel_1",
+                t.AutoForeignKey("t_double_fk_1",
                     t.AddInt32("id1").PrimaryKey().LinkedTo("id1"),
                     t.AddString("id2").PrimaryKey().LinkedTo("id2"));
 
@@ -37,8 +37,8 @@ namespace Simple.Tests.Metadata.DoubleForeignKeyTest
 
         public override void Down()
         {
-            Schema.RemoveTable("t_rel_2");
-            Schema.RemoveTable("t_rel_1");
+            Schema.RemoveTable("t_double_fk_2");
+            Schema.RemoveTable("t_double_fk_1");
         }
     }
 

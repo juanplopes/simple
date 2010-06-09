@@ -23,7 +23,7 @@ namespace Simple.Tests.Metadata.ChangeTableTest
 
         public override IEnumerable<TableAddAction> GetTableDefinitions()
         {
-            yield return TableDef("t_simple_table", t =>
+            yield return TableDef("t_change_table", t =>
             {
                 t.AddInt32("id").PrimaryKey();
                 t.AddString("whatever").WithSize(1000);

@@ -12,13 +12,13 @@ namespace Simple.Tests.Metadata.ChangeColumnTest
     {
         public override void Up()
         {
-            Schema.AddTable("t_simple_table", t =>
+            Schema.AddTable("t_change_column", t =>
             {
                 t.AddString("string1").WithSize(123);
                 t.AddInt32("int1");
             });
 
-            Schema.ChangeTable("t_simple_table", t =>
+            Schema.ChangeTable("t_change_column", t =>
             {
                 t.ChangeString("string1").WithSize(42);
             });
@@ -26,7 +26,7 @@ namespace Simple.Tests.Metadata.ChangeColumnTest
 
         public override void Down()
         {
-            Schema.RemoveTable("t_simple_table");
+            Schema.RemoveTable("t_change_column");
         }
     }
 

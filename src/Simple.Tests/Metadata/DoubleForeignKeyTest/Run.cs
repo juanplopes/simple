@@ -21,7 +21,7 @@ namespace Simple.Tests.Metadata.DoubleForeignKeyTest
 
         public override IEnumerable<TableAddAction> GetTableDefinitions()
         {
-            yield return TableDef("t_rel_1", t =>
+            yield return TableDef("t_double_fk_1", t =>
             {
                 t.AddInt32("id1").PrimaryKey();
                 t.AddString("id2").PrimaryKey();
@@ -29,9 +29,9 @@ namespace Simple.Tests.Metadata.DoubleForeignKeyTest
                 t.AddDateTime("field1");
             });
 
-            yield return TableDef("t_rel_2", t =>
+            yield return TableDef("t_double_fk_2", t =>
             {
-                t.ForeignKey("t_rel_2_t_rel_1_fk", "t_rel_1",
+                t.ForeignKey("t_double_fk_2_t_double_fk_1_fk", "t_double_fk_1",
                     t.AddInt32("id1").PrimaryKey().LinkedTo("id1"),
                     t.AddString("id2").PrimaryKey().LinkedTo("id2"));
 
