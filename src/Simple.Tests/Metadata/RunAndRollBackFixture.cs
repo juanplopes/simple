@@ -18,31 +18,31 @@ namespace Simple.Tests.Metadata
             return xml.Entries;
         }
 
-        [TestCaseSource("TestCases")]
+        [TestCaseSource("TestCases"), RequiresSTA]
         public void AllTypesTest(DatabasesXml.Entry entry)
         {
             new AllTypesTest.Run(entry).ExecuteAll();
         }
 
-        [TestCaseSource("TestCases")]
+        [TestCaseSource("TestCases"), RequiresSTA]
         public void ChangeColumnTest(DatabasesXml.Entry entry)
         {
             new ChangeColumnTest.Run(entry).ExecuteAll();
         }
 
-        [TestCaseSource("TestCases")]
+        [TestCaseSource("TestCases"), RequiresSTA]
         public void ChangeTableTest(DatabasesXml.Entry entry)
         {
             new ChangeTableTest.Run(entry).ExecuteAll();
         }
 
-        [TestCaseSource("TestCases")]
+        [TestCaseSource("TestCases"), RequiresSTA]
         public void DoubleForeignKeyTest(DatabasesXml.Entry entry)
         {
             new DoubleForeignKeyTest.Run(entry).ExecuteAll();
         }
 
-        [TestCaseSource("TestCases")]
+        [TestCaseSource("TestCases"), RequiresSTA]
         public void SimpleTableTest(DatabasesXml.Entry entry)
         {
             new SimpleTableTest.Run(entry).ExecuteAll();

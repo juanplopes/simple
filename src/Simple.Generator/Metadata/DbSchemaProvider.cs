@@ -66,12 +66,15 @@ namespace Simple.Metadata
 
             using (DbConnection _Connection = GetDBConnection())
             {
-                DbCommand _Command = _Connection.CreateCommand();
-                _Command.CommandText = string.Format("SELECT * FROM {0}", QualifiedTableName(tableSchema, tableName));
-                _Command.CommandType = CommandType.Text;
+                using (DbCommand _Command = _Connection.CreateCommand())
+                {
+                    _Command.CommandText = string.Format("SELECT * FROM {0}", QualifiedTableName(tableSchema, tableName));
+                    _Command.CommandType = CommandType.Text;
 
-                System.Console.WriteLine("SQL: " + _Command.CommandText);
-                tbl = _Command.ExecuteReader(CommandBehavior.KeyInfo).GetSchemaTable();
+                    System.Console.WriteLine("SQL: " + _Command.CommandText);
+                    using (var reader = _Command.ExecuteReader(CommandBehavior.KeyInfo))
+                        tbl = reader.GetSchemaTable();
+                }
             }
             return tbl;
         }
@@ -148,7 +151,7 @@ namespace Simple.Metadata
             return tbl;
         }
 
-       
+
 
         abstract public DbType GetDbColumnType(string providerDbType);
 
@@ -209,7 +212,7 @@ namespace Simple.Metadata
             tbl.Columns.Add(new DataColumn("ROUTINE_CATALOG", typeof(string)));
             tbl.Columns.Add(new DataColumn("ROUTINE_SCHEMA", typeof(string)));
             tbl.Columns.Add(new DataColumn("ROUTINE_NAME", typeof(string)));
-            tbl.Columns.Add(new DataColumn("ROUTINE_TYPE", typeof(string))); 
+            tbl.Columns.Add(new DataColumn("ROUTINE_TYPE", typeof(string)));
             tbl.Columns.Add(new DataColumn("CREATED", typeof(DateTime)));
             tbl.Columns.Add(new DataColumn("LAST_ALTERED", typeof(DateTime)));
 

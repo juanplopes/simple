@@ -36,22 +36,21 @@ namespace Simple.Metadata
             {
                 using (DbCommand _Command = _Connection.CreateCommand())
                 {
-                    _Command.CommandText = sqlTables;
+                    _Command.CommandText = "SELECT * FROM(" + sqlTables + ") WHERE TABLE_TYPE!='SYSTEM TABLE'";
                     _Command.CommandType = CommandType.Text;
                     using (var reader = _Command.ExecuteReader())
                         tblTables.Load(reader);
                 }
-            }
-            using (DbConnection _Connection = GetDBConnection())
-            {
+
                 using (DbCommand _Command = _Connection.CreateCommand())
                 {
-                    _Command.CommandText = sqlViews;
+                    _Command.CommandText = "SELECT * FROM(" + sqlViews + ") WHERE TABLE_TYPE!='SYSTEM VIEW'";
                     _Command.CommandType = CommandType.Text;
                     using (var reader = _Command.ExecuteReader())
                         tblViews.Load(reader);
                 }
             }
+
             foreach (DataRow viewRow in tblViews.Rows)
             {
                 tblTables.ImportRow(viewRow);
@@ -69,7 +68,7 @@ namespace Simple.Metadata
                 {
                     _Command.CommandText = sqlConstrains;
                     _Command.CommandType = CommandType.Text;
-                    using(var reader = _Command.ExecuteReader())
+                    using (var reader = _Command.ExecuteReader())
                         tbl.Load(_Command.ExecuteReader());
                 }
             }
