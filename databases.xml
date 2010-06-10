@@ -5,9 +5,9 @@
          ConnectionString="server=.\sqlexpress; initial catalog=simple; integrated security=sspi"/>
   
   <Entry Provider="Oracle.DataAccess.Client"
-         ConnectionString="data source=xe; user id=simple; password=simple"/>
+         ConnectionString="Data Source=xe;User Id=simple;Password=simple"/>
 		 
   <Entry Provider="System.Data.OracleClient"
-         ConnectionString="data source=xe; user id=simple; password=simple"/>
+         ConnectionString="Data Source=xe;User Id=simple;Password=simple"/>
 
 </Databases>

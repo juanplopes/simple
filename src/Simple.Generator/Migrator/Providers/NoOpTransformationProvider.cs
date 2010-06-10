@@ -344,5 +344,13 @@ namespace Simple.Migrator.Providers
         }
 
         #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+        }
+
+        #endregion
     }
 }

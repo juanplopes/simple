@@ -1,12 +1,13 @@
 using System.Data;
 using System.Collections.Generic;
+using System;
 
 namespace Simple.Migrator.Framework
 {   
     /// <summary>
     /// The main interface to use in Migrations to make changes on a database schema.
     /// </summary>
-    public interface ITransformationProvider
+    public interface ITransformationProvider : IDisposable
     {
         
         /// <summary>

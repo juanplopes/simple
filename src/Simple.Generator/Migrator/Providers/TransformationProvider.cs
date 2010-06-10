@@ -858,5 +858,14 @@ namespace Simple.Migrator.Providers
         {
             _schemainfoname = schemainfoname;
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            if (_connection != null) _connection.Dispose();
+        }
+
+        #endregion
     }
 }
