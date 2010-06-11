@@ -18,68 +18,113 @@ using System.Data.Common;
 using System.Reflection;
 using System;
 using System.Data.SqlTypes;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Simple.Metadata
 {
     abstract public class DbSchemaProvider : IDbSchemaProvider
     {
-        private string _ConnectionString;
-        private string _ProviderName;
+        private string _connectionString = null;
+        private string _providerName = null;
+        private DbConnection _connection = null;
 
-        protected string ProviderName
+        protected DbConnection GetConnection()
         {
-            get { return _ProviderName; }
+            if (_connection == null)
+            {
+                DbProviderFactory providerFactory = DbProviderFactories.GetFactory(_providerName);
+                _connection = providerFactory.CreateConnection();
+                _connection.ConnectionString = _connectionString;
+                _connection.Open();
+            }
+
+            return _connection;
         }
 
         public DbSchemaProvider(string connectionstring, string providername)
         {
-            _ConnectionString = connectionstring;
-            _ProviderName = providername;
+            _connectionString = connectionstring;
+            _providerName = providername;
         }
 
         #region ' IDbProvider Members '
 
         virtual public string GetDatabaseName()
         {
-            string DatabaseName = string.Empty;
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                DatabaseName = _Connection.Database;
-            }
-            return DatabaseName;
+            return GetConnection().Database;
         }
 
-        virtual public DataTable GetSchemaTables()
+        private string GetRelationsClause(IList<string> included, IList<string> excluded, string type)
         {
-            DataTable tbl = new DataTable("SchemaTables");
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                tbl = _Connection.GetSchema("Tables");
-            }
-
-            return tbl;
+            return GetGenericClause(
+                new[] { type + "_TABLE_NAME", type + "_TABLE_SCHEMA", type + "_TABLE_CATALOG" },
+                included, excluded) + " AND PK_ORDINAL_POSITION = FK_ORDINAL_POSITION";
         }
 
-        virtual public DataTable GetTableColumns(string tableSchema, string tableName)
+        private string GetTablesClause(IList<string> included, IList<string> excluded)
         {
-            DataTable tbl = new DataTable();
+            return GetGenericClause(
+                new[] { "TABLE_NAME", "TABLE_SCHEMA", "TABLE_CATALOG" },
+                included, excluded);
+        }
 
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                using (DbCommand _Command = _Connection.CreateCommand())
-                {
-                    _Command.CommandText = string.Format("SELECT * FROM {0}", QualifiedTableName(tableSchema, tableName));
-                    _Command.CommandType = CommandType.Text;
+        public string GetGenericClause(IList<string> columns, IList<string> included, IList<string> excluded)
+        {
+            var incString = included.Count > 0 ?
+                string.Join(" OR ", included.Select(x => GetTableWhereClause(columns, "LIKE", x)).ToArray()) :
+                "1=1";
 
-                    System.Console.WriteLine("SQL: " + _Command.CommandText);
-                    using (var reader = _Command.ExecuteReader(CommandBehavior.KeyInfo))
-                        tbl = reader.GetSchemaTable();
-                }
-            }
-            return tbl;
+            var excString = excluded.Count > 0 ?
+                string.Join(" AND ", excluded.Select(x => GetTableWhereClause(columns, "NOT LIKE", x)).ToArray()) :
+                "1=1";
+
+            return string.Format("({0}) AND ({1})", incString, excString);
+        }
+
+
+        protected string GetTableWhereClause(IList<string> columns, string op, string tableName)
+        {
+            var names = tableName.Split('.').Reverse().ToList();
+
+            var clauses = new List<string>();
+            for (int i = 0; i < columns.Count && i < names.Count; i++)
+                clauses.Add(string.Format("{0} {1} '{2}'", columns[i], op, names[i]));
+
+            return "(" + string.Join(" AND ", clauses.ToArray()) + ")";
+        }
+
+        virtual public IEnumerable<DbTable> GetTables(IList<string> includedTables, IList<string> excludedTables)
+        {
+            return GetConnection().GetSchema("Tables")
+                .Select(GetTablesClause(includedTables, excludedTables))
+                .Select(x=>new DbTable(x));
+        }
+
+        virtual protected DbCommand CreateCommand(string sql, params object[] parameters)
+        {
+            var cmd = GetConnection().CreateCommand();
+            cmd.CommandText = string.Format(sql, parameters);
+            cmd.CommandType = CommandType.Text;
+            return cmd;
+        }
+
+        virtual protected void LoadTableWithCommand(DataTable table, string sql, params object[] parameters)
+        {
+            var cmd = CreateCommand(sql, parameters);
+            using (var reader = cmd.ExecuteReader())
+                table.Load(reader);
+        }
+
+        virtual public IEnumerable<DbColumn> GetColumns(string table)
+        {
+            using (var cmd = CreateCommand("SELECT * FROM {0}", QualifiedTableName(tableSchema, tableName)))
+            using (var reader = cmd.ExecuteReader(CommandBehavior.KeyInfo))
+                return reader.GetSchemaTable();
         }
 
         abstract public DataTable GetConstraints();
+        abstract public DbType GetDbColumnType(string providerDbType);
 
         virtual public string QualifiedTableName(string tableSchema, string tableName)
         {
@@ -89,84 +134,11 @@ namespace Simple.Metadata
                 return string.Format("[{0}]", tableName);
         }
 
-        virtual public DataTable GetProcedures()
-        {
-            DataTable tbl = new DataTable("Procedures");
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                tbl = _Connection.GetSchema("Procedures");
-            }
 
-            return tbl;
-        }
-
-        virtual public DataTable GetProcedureParameters(string procedureSchema, string procedureName)
-        {
-            #region ' Decapated Code '
-            //DataTable tbl = new DataTable("ProcedureParameters");
-            //using (DbConnection _Connection = GetDBConnection())
-            //{
-            //    string[] restrictions = new string[4] { null, procedureSchema, procedureName, null };
-            //    tbl = _Connection.GetSchema("ProcedureParameters", restrictions);
-            //}
-            //return tbl;
-            #endregion
-
-            DataTable tbl = GetDTSchemaProcedureParameters();
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                DbCommand _Command = _Connection.CreateCommand();
-                _Command.CommandText = this.QualifiedTableName(procedureSchema, procedureName);
-                _Command.CommandType = CommandType.StoredProcedure;
-
-                DbParameter par = _Command.CreateParameter();
-
-                DbProviderFactory pf = DbProviderFactories.GetFactory(this.ProviderName);
-                DbCommandBuilder cb = pf.CreateCommandBuilder();
-                MethodInfo theMethod = cb.GetType().GetMethod("DeriveParameters");
-                theMethod.Invoke(cb, new object[] { _Command });
-
-                int counter = 1;
-                foreach (DbParameter p in _Command.Parameters)
-                {
-                    if (p.ParameterName != "@RETURN_VALUE")
-                    {
-                        DataRow parameterRow = tbl.NewRow();
-                        if (!string.IsNullOrEmpty(procedureSchema))
-                            parameterRow["SPECIFIC_SCHEMA"] = procedureSchema;
-                        parameterRow["SPECIFIC_NAME"] = procedureName;
-                        parameterRow["PARAMETER_NAME"] = p.ParameterName;
-                        parameterRow["ORDINAL_POSITION"] = counter;
-                        parameterRow["PARAMETER_MODE"] = p.Direction;
-                        parameterRow["IS_RESULT"] = p.Direction == ParameterDirection.ReturnValue;
-                        parameterRow["DATA_TYPE"] = p.DbType;
-                        parameterRow["CHARACTER_MAXIMUM_LENGTH"] = p.Size;
-
-                        tbl.Rows.Add(parameterRow);
-                        counter++;
-                    }
-                }
-            }
-
-            return tbl;
-        }
-
-
-
-        abstract public DbType GetDbColumnType(string providerDbType);
 
         #endregion
 
         #region ' Helper functions '
-
-        internal DbConnection GetDBConnection()
-        {
-            DbProviderFactory providerFactory = DbProviderFactories.GetFactory(_ProviderName);
-            DbConnection _Connection = providerFactory.CreateConnection();
-            _Connection.ConnectionString = _ConnectionString;
-            _Connection.Open();
-            return _Connection;
-        }
 
         protected DataTable GetDTSchemaTables()
         {
@@ -203,42 +175,21 @@ namespace Simple.Metadata
             return tbl;
         }
 
-        protected DataTable GetDTSchemaProcedures()
+        #endregion
+
+
+        #region IDisposable Members
+
+        public void Dispose()
         {
-            DataTable tbl = new DataTable("Procedures");
-            tbl.Columns.Add(new DataColumn("SPECIFIC_CATALOG", typeof(string)));
-            tbl.Columns.Add(new DataColumn("SPECIFIC_SCHEMA", typeof(string)));
-            tbl.Columns.Add(new DataColumn("SPECIFIC_NAME", typeof(string)));
-            tbl.Columns.Add(new DataColumn("ROUTINE_CATALOG", typeof(string)));
-            tbl.Columns.Add(new DataColumn("ROUTINE_SCHEMA", typeof(string)));
-            tbl.Columns.Add(new DataColumn("ROUTINE_NAME", typeof(string)));
-            tbl.Columns.Add(new DataColumn("ROUTINE_TYPE", typeof(string)));
-            tbl.Columns.Add(new DataColumn("CREATED", typeof(DateTime)));
-            tbl.Columns.Add(new DataColumn("LAST_ALTERED", typeof(DateTime)));
-
-            return tbl;
-        }
-
-        protected DataTable GetDTSchemaProcedureParameters()
-        {
-            DataTable tbl = new DataTable("ProcedureParameters");
-            tbl.Columns.Add("SPECIFIC_CATALOG", typeof(System.String));
-            tbl.Columns.Add("SPECIFIC_SCHEMA", typeof(System.String));
-            tbl.Columns.Add("SPECIFIC_NAME", typeof(System.String));
-            tbl.Columns.Add("PARAMETER_NAME", typeof(System.String));
-            tbl.Columns.Add("ORDINAL_POSITION", typeof(System.Int32));
-            tbl.Columns.Add("PARAMETER_MODE", typeof(ParameterDirection));
-            tbl.Columns.Add("IS_RESULT", typeof(System.Boolean));
-            tbl.Columns.Add("DATA_TYPE", typeof(System.Data.DbType));
-            tbl.Columns.Add("CHARACTER_MAXIMUM_LENGTH", typeof(System.Int32));
-            tbl.Columns.Add("NUMERIC_PRECISION", typeof(System.Int16));
-            tbl.Columns.Add("NUMERIC_SCALE", typeof(System.Int32));
-            tbl.Columns.Add("DATETIME_PRECISION", typeof(System.Int16));
-
-            return tbl;
+            if (_connection != null)
+            {
+                if (_connection.State != ConnectionState.Closed)
+                    _connection.Close();
+                _connection.Dispose();
+            }
         }
 
         #endregion
-
     }
 }

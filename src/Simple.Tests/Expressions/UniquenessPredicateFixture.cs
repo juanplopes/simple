@@ -8,14 +8,14 @@ namespace Simple.Tests.Entities
     {
         class SampleSingleStringIdentifier : Entity<SampleSingleStringIdentifier>
         {
-            static SampleSingleStringIdentifier() { Identifiers.AddID(x => x.Id); }
+            static SampleSingleStringIdentifier() { Identifiers.Add(x => x.Id); }
             public string Id { get; set; }
             public string CompanyName { get; set; }
         }
 
         class SampleSingleNullableIntIdentifier : Entity<SampleSingleNullableIntIdentifier>
         {
-            static SampleSingleNullableIntIdentifier() { Identifiers.AddID(x => x.Id); }
+            static SampleSingleNullableIntIdentifier() { Identifiers.Add(x => x.Id); }
 
             public int? Id { get; set; }
             public string Phone { get; set; }
@@ -23,7 +23,7 @@ namespace Simple.Tests.Entities
 
         class SampleReferenceSingleStringIdentifier : Entity<SampleReferenceSingleStringIdentifier>
         {
-            static SampleReferenceSingleStringIdentifier() { Identifiers.AddID(x => x.Id); }
+            static SampleReferenceSingleStringIdentifier() { Identifiers.Add(x => x.Id); }
             
             public int Id { get; set; }
             public SampleSingleStringIdentifier SampleStringIdentifier { get; set; }
@@ -37,7 +37,7 @@ namespace Simple.Tests.Entities
 
         class SampleMultipleIdentifiers : Entity<SampleMultipleIdentifiers>
         {
-            static SampleMultipleIdentifiers() { Identifiers.AddID(x => x.Id).AddID(x => x.Name); }
+            static SampleMultipleIdentifiers() { Identifiers.Add(x => x.Id).Add(x => x.Name); }
 
             public int Id { get; set; }
             public string Name { get; set; }

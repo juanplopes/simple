@@ -5,28 +5,28 @@ using System.Reflection;
 
 namespace Simple.Reflection
 {
-    public class EntityHelper<T> : EntityHelper
+    public class EqualityHelper<T> : EqualityHelper
     {
-        public EntityHelper()
+        public EqualityHelper()
             : this(new Expression<Func<T, object>>[0])
         {
         }
 
-        public EntityHelper(params Expression<Func<T, object>>[] ids)
+        public EqualityHelper(params Expression<Func<T, object>>[] ids)
             : base(typeof(T))
         {
             foreach (var id in ids)
-                AddID<T>(id);
+                Add<T>(id);
         }
 
-        public EntityHelper<T> AddID(Expression<Func<T, object>> expr)
+        public EqualityHelper<T> Add(Expression<Func<T, object>> expr)
         {
-            this.AddID<T>(expr);
+            this.Add<T>(expr);
             return this;
         }
     }
 
-    public class EntityHelper
+    public class EqualityHelper
     {
         protected MethodCache _cache = new MethodCache();
         protected List<string> _ids = new List<string>();
@@ -43,12 +43,12 @@ namespace Simple.Reflection
             }
         }
 
-        public EntityHelper(Type entityType)
+        public EqualityHelper(Type entityType)
         {
             _entityType = entityType;
         }
 
-        public EntityHelper(object obj)
+        public EqualityHelper(object obj)
         {
             if (obj == null)
                 throw new InvalidOperationException("Cannot use null valued object in EntityHelper constructor");
@@ -56,15 +56,33 @@ namespace Simple.Reflection
             _obj = obj;
         }
 
-        public EntityHelper AddID(string propName)
+        public EqualityHelper ConvertTo(Type type)
+        {
+            return new EqualityHelper(type).AddMany(_ids);
+        }
+
+        public EqualityHelper<T> ConvertTo<T>()
+        {
+            var helper = new EqualityHelper<T>();
+            helper.AddMany(_ids);
+            return helper;
+        }
+
+        public EqualityHelper Add(string propName)
         {
             _ids.Add(propName);
             return this;
         }
 
-        public EntityHelper AddID<T>(Expression<Func<T, object>> expr)
+        public EqualityHelper AddMany(IEnumerable<string> props)
         {
-            AddID(ExpressionHelper.GetMemberName(expr));
+            _ids.AddRange(props);
+            return this;
+        }
+
+        public EqualityHelper Add<T>(Expression<Func<T, object>> expr)
+        {
+            Add(ExpressionHelper.GetMemberName(expr));
             return this;
         }
 
@@ -72,7 +90,7 @@ namespace Simple.Reflection
         {
             foreach (PropertyInfo info in _entityType.GetProperties())
             {
-                this.AddID(info.Name);
+                this.Add(info.Name);
             }
         }
 

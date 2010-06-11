@@ -31,25 +31,10 @@ namespace Simple.Metadata
         public override DataTable GetSchemaTables()
         {
             DataTable tblTables = base.GetDTSchemaTables();
-            DataTable tblViews = GetDTSchemaTables();
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                using (DbCommand _Command = _Connection.CreateCommand())
-                {
-                    _Command.CommandText = "SELECT * FROM(" + sqlTables + ") WHERE TABLE_TYPE!='SYSTEM TABLE'";
-                    _Command.CommandType = CommandType.Text;
-                    using (var reader = _Command.ExecuteReader())
-                        tblTables.Load(reader);
-                }
+            DataTable tblViews = base.GetDTSchemaTables();
 
-                using (DbCommand _Command = _Connection.CreateCommand())
-                {
-                    _Command.CommandText = "SELECT * FROM(" + sqlViews + ") WHERE TABLE_TYPE!='SYSTEM VIEW'";
-                    _Command.CommandType = CommandType.Text;
-                    using (var reader = _Command.ExecuteReader())
-                        tblViews.Load(reader);
-                }
-            }
+            LoadTableWithCommand(tblTables, "SELECT * FROM ({0}) WHERE TABLE_TYPE!='SYSTEM TABLE'", sqlTables);
+            LoadTableWithCommand(tblViews, "SELECT * FROM ({0}) WHERE TABLE_TYPE!='SYSTEM VIEW'", sqlViews);
 
             foreach (DataRow viewRow in tblViews.Rows)
             {
@@ -62,31 +47,14 @@ namespace Simple.Metadata
         public override DataTable GetConstraints()
         {
             DataTable tbl = new DataTable("Constraints");
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                using (DbCommand _Command = _Connection.CreateCommand())
-                {
-                    _Command.CommandText = sqlConstrains;
-                    _Command.CommandType = CommandType.Text;
-                    using (var reader = _Command.ExecuteReader())
-                        tbl.Load(_Command.ExecuteReader());
-                }
-            }
-
+            LoadTableWithCommand(tbl, sqlConstrains);
             return tbl;
         }
 
         public override DataTable GetProcedures()
         {
             DataTable tblProcedures = new DataTable("Procedures");
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                DbCommand _Command = _Connection.CreateCommand();
-                _Command.CommandText = sqlProcedures;
-                _Command.CommandType = CommandType.Text;
-                tblProcedures.Load(_Command.ExecuteReader());
-            }
-
+            LoadTableWithCommand(tblProcedures, sqlProcedures);
             return tblProcedures;
         }
 
@@ -95,16 +63,14 @@ namespace Simple.Metadata
             var table1 = base.GetTableColumns(tableSchema, tableName);
             table1.Columns.Add("DataTypeName");
 
-            using (var db = GetDBConnection())
-            {
-                var table2 = db.GetSchema("Columns", new[] { tableSchema, tableName })
-                    .Rows.OfType<DataRow>().ToDictionary(x => (string)x["COLUMN_NAME"]);
+            var table2 = GetConnection().GetSchema("Columns", new[] { tableSchema, tableName })
+                .Rows.OfType<DataRow>().ToDictionary(x => (string)x["COLUMN_NAME"]);
 
-                foreach (DataRow row in table1.Rows)
-                {
-                    row["DataTypeName"] = table2[(string)row["ColumnName"]]["DATATYPE"];
-                }
+            foreach (DataRow row in table1.Rows)
+            {
+                row["DataTypeName"] = table2[(string)row["ColumnName"]]["DATATYPE"];
             }
+
             return table1;
         }
 

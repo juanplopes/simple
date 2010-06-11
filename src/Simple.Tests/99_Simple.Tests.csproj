@@ -185,7 +185,7 @@
     <Compile Include="Patterns\BaseWorkingDaysFixture.cs" />
     <Compile Include="Reflection\TypesHelperFixture.cs" />
     <Compile Include="DynamicProxy\DynamicProxyFixture.cs" />
-    <Compile Include="Reflection\EntityHelperFixture.cs" />
+    <Compile Include="Reflection\EqualityHelperFixture.cs" />
     <Compile Include="Reflection\EnumTypeFixture.cs" />
     <Compile Include="Expressions\ExpressionHelperFixture.cs" />
     <Compile Include="IO\FileLocatorFixture.cs" />

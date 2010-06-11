@@ -31,10 +31,8 @@ namespace Simple.Metadata
         public override DataTable GetConstraints()
         {
             DataTable tbl = new DataTable("Constraints");
-            using (OleDbConnection OleDbConn = (OleDbConnection)GetDBConnection())
-            {
-                tbl = OleDbConn.GetOleDbSchemaTable(OleDbSchemaGuid.Foreign_Keys, new object[] { });
-            }
+            var conn = (OleDbConnection)GetConnection();
+                tbl = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Foreign_Keys, new object[] { });
 
             return tbl;
         }

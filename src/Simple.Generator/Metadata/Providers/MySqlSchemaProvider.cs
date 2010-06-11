@@ -27,25 +27,20 @@ namespace Simple.Metadata
 
         public override DataTable GetSchemaTables()
         {
-            DataTable tbl = new DataTable("SchemaTables");
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                tbl = _Connection.GetSchema("Tables");
-            }
-            using (DbConnection _Connection = GetDBConnection())
-            {
-                DataTable tblViews = _Connection.GetSchema("Views");
-                foreach (DataRow viewRow in tblViews.Rows)
-                {
-                    DataRow tblRow = tbl.NewRow();
-                    if (viewRow["TABLE_CATALOG"] != DBNull.Value)
-                        tblRow["TABLE_CATALOG"] = viewRow["TABLE_CATALOG"];
-                    tblRow["TABLE_SCHEMA"] = viewRow["TABLE_SCHEMA"];
-                    tblRow["TABLE_NAME"] = viewRow["TABLE_NAME"];
-                    tblRow["TABLE_TYPE"] = "VIEW";
+            var conn = GetConnection();
+            var tbl = conn.GetSchema("Tables");
 
-                    tbl.Rows.Add(tblRow);
-                }
+            DataTable tblViews = conn.GetSchema("Views");
+            foreach (DataRow viewRow in tblViews.Rows)
+            {
+                DataRow tblRow = tbl.NewRow();
+                if (viewRow["TABLE_CATALOG"] != DBNull.Value)
+                    tblRow["TABLE_CATALOG"] = viewRow["TABLE_CATALOG"];
+                tblRow["TABLE_SCHEMA"] = viewRow["TABLE_SCHEMA"];
+                tblRow["TABLE_NAME"] = viewRow["TABLE_NAME"];
+                tblRow["TABLE_TYPE"] = "VIEW";
+
+                tbl.Rows.Add(tblRow);
             }
 
             return tbl;
@@ -55,42 +50,37 @@ namespace Simple.Metadata
         {
             DataTable tbl = GetDTSchemaConstrains();
 
-            using (DbConnection _Connection = this.GetDBConnection())
+            var conn = GetConnection();
+            if (conn.ServerVersion.StartsWith("5."))
             {
-                if (_Connection.ServerVersion.StartsWith("5."))
+                LoadTableWithCommand(tbl, sqlConstraints);
+            }
+            else
+            {
+                DataTable tblConstraints = conn.GetSchema("Foreign Key Columns");
+                foreach (DataRow constraintRow in tblConstraints.Rows)
                 {
-                    DbCommand _Command = _Connection.CreateCommand();
-                    _Command.CommandText = sqlConstraints;
-                    _Command.CommandType = CommandType.Text;
-                    tbl.Load(_Command.ExecuteReader());
-                }
-                else
-                {
-                    DataTable tblConstraints = _Connection.GetSchema("Foreign Key Columns");
-                    foreach (DataRow constraintRow in tblConstraints.Rows)
-                    {
-                        DataRow constraint = tbl.NewRow();
-                        if (constraintRow["REFERENCED_TABLE_CATALOG"] != DBNull.Value)
-                            constraint["PK_TABLE_CATALOG"] = constraintRow["REFERENCED_TABLE_CATALOG"];
-                        constraint["PK_TABLE_SCHEMA"] = constraintRow["REFERENCED_TABLE_SCHEMA"];
-                        constraint["PK_TABLE_NAME"] = constraintRow["REFERENCED_TABLE_NAME"];
-                        constraint["PK_COLUMN_NAME"] = constraintRow["REFERENCED_COLUMN_NAME"];
-                        //constraint["PK_ORDINAL_POSITION"] = constraintRow[""];
-                        //constraint["PK_NAME"] = constraintRow[""];
+                    DataRow constraint = tbl.NewRow();
+                    if (constraintRow["REFERENCED_TABLE_CATALOG"] != DBNull.Value)
+                        constraint["PK_TABLE_CATALOG"] = constraintRow["REFERENCED_TABLE_CATALOG"];
+                    constraint["PK_TABLE_SCHEMA"] = constraintRow["REFERENCED_TABLE_SCHEMA"];
+                    constraint["PK_TABLE_NAME"] = constraintRow["REFERENCED_TABLE_NAME"];
+                    constraint["PK_COLUMN_NAME"] = constraintRow["REFERENCED_COLUMN_NAME"];
+                    //constraint["PK_ORDINAL_POSITION"] = constraintRow[""];
+                    //constraint["PK_NAME"] = constraintRow[""];
 
-                        if (constraintRow["TABLE_CATALOG"] != DBNull.Value)
-                            constraint["FK_TABLE_CATALOG"] = constraintRow["TABLE_CATALOG"];
-                        constraint["FK_TABLE_SCHEMA"] = constraintRow["TABLE_SCHEMA"];
-                        constraint["FK_TABLE_NAME"] = constraintRow["TABLE_NAME"];
-                        constraint["FK_COLUMN_NAME"] = constraintRow["COLUMN_NAME"];
-                        constraint["FK_ORDINAL_POSITION"] = constraintRow["ORDINAL_POSITION"];
-                        constraint["FK_NAME"] = constraintRow["CONSTRAINT_NAME"];
+                    if (constraintRow["TABLE_CATALOG"] != DBNull.Value)
+                        constraint["FK_TABLE_CATALOG"] = constraintRow["TABLE_CATALOG"];
+                    constraint["FK_TABLE_SCHEMA"] = constraintRow["TABLE_SCHEMA"];
+                    constraint["FK_TABLE_NAME"] = constraintRow["TABLE_NAME"];
+                    constraint["FK_COLUMN_NAME"] = constraintRow["COLUMN_NAME"];
+                    constraint["FK_ORDINAL_POSITION"] = constraintRow["ORDINAL_POSITION"];
+                    constraint["FK_NAME"] = constraintRow["CONSTRAINT_NAME"];
 
-                        tbl.Rows.Add(constraint);
-                    }
-
+                    tbl.Rows.Add(constraint);
                 }
             }
+
             return tbl;
         }
 

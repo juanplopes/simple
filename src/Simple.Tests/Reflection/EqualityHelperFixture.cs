@@ -5,7 +5,7 @@ using Simple.Reflection;
 namespace Simple.Tests.Reflection
 {
     [TestFixture]
-    public class EntityHelperFixture
+    public class EqualityHelperFixture
     {
         class Sample1
         {
@@ -18,7 +18,7 @@ namespace Simple.Tests.Reflection
             static Sample3()
             {
                 
-                Identifiers.AddID(x => x.IntProp).AddID(x => x.StringProp);
+                Identifiers.Add(x => x.IntProp).Add(x => x.StringProp);
             }
 
             public int IntProp { get; set; }
@@ -36,9 +36,9 @@ namespace Simple.Tests.Reflection
             Sample1 obj1 = new Sample1();
             Sample1 obj2 = new Sample1();
 
-            EntityHelper helper = new EntityHelper(obj1);
-            helper.AddID((Sample1 x) => x.IntProp);
-            helper.AddID((Sample1 x) => x.StringProp);
+            EqualityHelper helper = new EqualityHelper(obj1);
+            helper.Add((Sample1 x) => x.IntProp);
+            helper.Add((Sample1 x) => x.StringProp);
 
             Assert.IsTrue(helper.ObjectEquals(obj2));
 
@@ -63,7 +63,7 @@ namespace Simple.Tests.Reflection
             Sample1 obj1 = new Sample1();
             Sample1 obj2 = new Sample1();
 
-            EntityHelper helper = new EntityHelper(typeof(Sample1));
+            EqualityHelper helper = new EqualityHelper(typeof(Sample1));
             helper.AddAllProperties();
 
             Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
@@ -87,7 +87,7 @@ namespace Simple.Tests.Reflection
         public void TestToStringSingleKey()
         {
             var obj1 = new Sample1();
-            var helper = new EntityHelper<Sample1>(x => x.IntProp);
+            var helper = new EqualityHelper<Sample1>(x => x.IntProp);
             obj1.IntProp = 123;
 
             Assert.AreEqual("(IntProp=123)", helper.ObjectToString(obj1));
@@ -97,7 +97,7 @@ namespace Simple.Tests.Reflection
         public void TestToStringMultipleKey()
         {
             var obj1 = new Sample1();
-            var helper = new EntityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
+            var helper = new EqualityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
             obj1.IntProp = 123;
             obj1.StringProp = "asd";
 
@@ -107,7 +107,7 @@ namespace Simple.Tests.Reflection
         [Test]
         public void TestIdentifierListMultipleKey()
         {
-            var helper = new EntityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
+            var helper = new EqualityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
             CollectionAssert.AreEquivalent(new[] { "IntProp", "StringProp" }, helper.IdentifierList);
         }
 
@@ -122,7 +122,7 @@ namespace Simple.Tests.Reflection
         public void TestToStringMultipleKeyWithNullKey()
         {
             var obj1 = new Sample1();
-            var helper = new EntityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
+            var helper = new EqualityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
             obj1.IntProp = 123;
             obj1.StringProp = null;
 
@@ -136,7 +136,7 @@ namespace Simple.Tests.Reflection
             Sample1 obj1 = new Sample1();
             Sample2 obj2 = new Sample2();
 
-            EntityHelper helper = new EntityHelper(typeof(Sample1));
+            EqualityHelper helper = new EqualityHelper(typeof(Sample1));
             helper.AddAllProperties();
 
             Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
@@ -162,7 +162,7 @@ namespace Simple.Tests.Reflection
             Sample1 obj1 = new Sample1();
             int obj2 = 42;
 
-            EntityHelper helper = new EntityHelper(typeof(Sample1));
+            EqualityHelper helper = new EqualityHelper(typeof(Sample1));
             Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
         }
 
@@ -172,7 +172,7 @@ namespace Simple.Tests.Reflection
             Sample1 obj1 = new Sample1();
             Sample1 obj2 = new Sample1();
 
-            EntityHelper helper = new EntityHelper(typeof(Sample1));
+            EqualityHelper helper = new EqualityHelper(typeof(Sample1));
 
             Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
 

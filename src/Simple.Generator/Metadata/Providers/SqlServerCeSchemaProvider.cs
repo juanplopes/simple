@@ -28,29 +28,22 @@ namespace Simple.Metadata
 
         public override string GetDatabaseName()
         {
-            string DatabaseName = string.Empty;
-            using (DbConnection _Connection = GetDBConnection())
+            string dbName = GetConnection().Database;
+            Regex RegExp = new Regex(@"\\(?<db>[^\\]*)?\.sdf$", RegexOptions.IgnoreCase);
+            if (RegExp.IsMatch(dbName))
             {
-                Regex RegExp = new Regex(@"\\(?<db>[^\\]*)?\.sdf$", RegexOptions.IgnoreCase);
-                if (RegExp.IsMatch(_Connection.Database))
-                {
-                    Match found = RegExp.Matches(_Connection.Database)[0];
-                    DatabaseName = found.Groups[1].Value;
-                }
+                Match found = RegExp.Matches(dbName)[0];
+                dbName = found.Groups[1].Value;
             }
-            return DatabaseName;
+            return dbName;
         }
 
         public override DataTable GetSchemaTables()
         {
             DataTable tbl = GetDTSchemaTables();
-
-            using (DbConnection _Connection = GetDBConnection())
+            var cmd = CreateCommand(sqlTables);
+            using (var results = cmd.ExecuteReader())
             {
-                DbCommand _Command = _Connection.CreateCommand();
-                _Command.CommandText = sqlTables;
-                _Command.CommandType = CommandType.Text;
-                DbDataReader results = _Command.ExecuteReader();
                 while (results.Read())
                 {
                     DataRow valuesRow = tbl.NewRow();
@@ -70,7 +63,6 @@ namespace Simple.Metadata
                         valuesRow[8] = results.GetDateTime(8);
                     tbl.Rows.Add(valuesRow);
                 }
-                results.Close();
             }
 
             return tbl;
@@ -79,12 +71,9 @@ namespace Simple.Metadata
         public override DataTable GetConstraints()
         {
             DataTable tbl = GetDTSchemaConstrains();
-            using (DbConnection _Connection = this.GetDBConnection())
+            var cmd = CreateCommand(sqlConstraints);
+            using (var results = cmd.ExecuteReader())
             {
-                DbCommand _Command = _Connection.CreateCommand();
-                _Command.CommandText = sqlConstraints;
-                _Command.CommandType = CommandType.Text;
-                DbDataReader results = _Command.ExecuteReader();
                 while (results.Read())
                 {
                     DataRow valuesRow = tbl.NewRow();
@@ -115,20 +104,9 @@ namespace Simple.Metadata
 
                     tbl.Rows.Add(valuesRow);
                 }
-                results.Close();
             }
 
             return tbl;
-        }
-
-        public override DataTable GetProcedures()
-        {
-            return GetDTSchemaProcedures();
-        }
-
-        public override DataTable GetProcedureParameters(string procedureSchema, string procedureName)
-        {
-            return GetDTSchemaProcedureParameters();
         }
 
         public override DbType GetDbColumnType(string providerDbType)

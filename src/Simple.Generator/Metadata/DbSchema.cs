@@ -21,19 +21,50 @@ using System.Linq;
 
 namespace Simple.Metadata
 {
-    public class DbSchema : DbObject
+    public class DbSchema : IDisposable
     {
+        protected IDbSchemaProvider Provider { get; private set; } 
+        protected static DbSchemaProvider GetSchemaProvider(string providerName, string connectionString)
+        {
+            switch (providerName.ToLower())
+            {
+                case "system.data.sqlserverce.3.5":
+                case "system.data.sqlserverce":
+                    return new SqlServerCeSchemaProvider(connectionString, providerName);
+
+                case "system.data.oledb":
+                    return new OleDbSchemaProvider(connectionString, providerName);
+
+                case "system.data.sqlclient":
+                    return new SqlServerSchemaProvider(connectionString, providerName);
+
+                case "mysql.data.mysqlclient":
+                    return new MySqlSchemaProvider(connectionString, providerName);
+
+                case "npgsql":
+                    return new PostgreSqlSchemaProvider(connectionString, providerName);
+
+                case "system.data.sqlite":
+                    return new SQLiteSchemaProvider(connectionString, providerName);
+
+                case "system.data.oracleclient":
+                case "oracle.dataaccess.client":
+                    return new OracleSchemaProvider(connectionString, providerName);
+
+                case "vistadb.net20":
+                    return new VistaDBSchemaProvider(connectionString, providerName);
+
+                default:
+                    throw new NotImplementedException("The provider '" + providerName + "' is not implemented!");
+
+            }
+        }
+
         private DataTable _tableCache = null;
         public DbSchema(string provider, string connectionString)
-            : base(provider, connectionString)
         {
+            Provider = GetSchemaProvider(provider, connectionString);
         }
-
-        public DbSchema(IDbSchemaProvider provider)
-            : base(provider)
-        {
-        }
-
 
         private DataTable GetSchemaTables()
         {
@@ -71,35 +102,6 @@ namespace Simple.Metadata
             return GetGeneric(included, excluded, "VIEW");
         }
 
-        public IEnumerable<DbTable> GetGeneric(IList<string> included, IList<string> excluded, params string[] types)
-        {
-            var incString = included.Count > 0 ?
-                string.Join(" OR ", included.Select(x => GetTableWhereClause("LIKE", x)).ToArray()) :
-                "1=1";
-
-            var excString = excluded.Count > 0 ?
-                string.Join(" AND ", excluded.Select(x => GetTableWhereClause("NOT LIKE", x)).ToArray()) :
-                "1=1";
-
-            var typesString = types.Length > 0 ?
-                string.Join(" OR ", types.Select(x => "TABLE_TYPE = '" + x + "'").ToArray()) :
-                "1=1";
-
-            foreach (var row in GetSchemaTables().Select(string.Format("({0}) AND ({1}) AND ({2})", incString, excString, typesString)))
-                yield return new DbTable(Provider, row);
-        }
-
-        protected string GetTableWhereClause(string op, string tableName)
-        {
-            var columns = new[] { "TABLE_NAME", "TABLE_SCHEMA", "TABLE_CATALOG" };
-            var names = tableName.Split('.').Reverse().ToList();
-
-            var clauses = new List<string>();
-            for (int i = 0; i < columns.Length && i < names.Count; i++)
-                clauses.Add(string.Format("{0} {1} '{2}'", columns[i], op, names[i]));
-
-            return "(" + string.Join(" AND ", clauses.ToArray()) + ")";
-        }
 
         #region ' Helpers '
 
@@ -110,5 +112,14 @@ namespace Simple.Metadata
 
         #endregion
 
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            if (Provider != null) Provider.Dispose();
+        }
+
+        #endregion
     }
 }

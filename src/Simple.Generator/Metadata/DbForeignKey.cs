@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Simple.Reflection;
 
 namespace Simple.Metadata
 {
@@ -9,37 +10,48 @@ namespace Simple.Metadata
     {
         public bool IsKey { get; set; }
 
-        public DbManyToOne(IDbSchemaProvider provider, string name, IList<DbRelation> columns)
-            : base(provider, name, columns)
+        public DbManyToOne(MetaContext context, IList<DbRelation> columns)
+            : base(context, columns)
         {
         }
     }
 
     public class DbOneToMany : DbForeignKey
     {
-        public DbOneToMany(IDbSchemaProvider provider, string name, IList<DbRelation> columns)
-            : base(provider, name, columns)
+        public DbOneToMany(MetaContext context, IList<DbRelation> columns)
+            : base(context, columns)
         {
         }
     }
 
-    public abstract class DbForeignKey : DbObject
+    public abstract class DbForeignKey : DbRelationName
     {
         public string FkName { get; set; }
         public IList<DbRelation> Columns { get; protected set; }
         public bool SafeNaming { get; set; }
 
-        public DbForeignKey(IDbSchemaProvider provider)
-            : base(provider)
+        public DbForeignKey(MetaContext context, IList<DbRelation> columns) : base(context)
         {
+            this.Columns = columns;
+            
+            var first = columns.First();
+            this.FkName = first.FkName;
+            this.PkColumnName = first.PkColumnName;
+            this.FkColumnName = first.FkColumnName;
             this.SafeNaming = true;
         }
 
-        public DbForeignKey(IDbSchemaProvider provider, string name, IList<DbRelation> columns)
-            : this(provider)
+        EqualityHelper _helper = new EqualityHelper<DbForeignKey>()
+            .Add(x => x.FkName);
+
+        public override bool Equals(object obj)
         {
-            this.Columns = columns;
-            this.FkName = name;
+            return _helper.ObjectEquals(this, obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _helper.ObjectGetHashCode(this);
         }
     }
 }

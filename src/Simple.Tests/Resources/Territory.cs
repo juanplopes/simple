@@ -11,7 +11,7 @@ namespace Simple.Tests.Resources
         static Territory()
         {
             Identifiers
-                .AddID(x => x.Id);
+                .Add(x => x.Id);
         }
 
         public virtual string Id { get; set; }

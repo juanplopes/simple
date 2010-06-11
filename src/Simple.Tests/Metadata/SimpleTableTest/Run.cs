@@ -22,7 +22,7 @@ namespace Simple.Tests.Metadata.SimpleTableTest
 
         public override IEnumerable<TableAddAction> GetTableDefinitions()
         {
-            yield return TableDef("t_simple_table", t =>
+            yield return TableDef("t_all_types_1", t =>
             {
                 t.AddInt32("id").PrimaryKey();
                 t.AddString("string1").WithSize(123);

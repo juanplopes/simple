@@ -22,7 +22,7 @@ namespace Simple.Migrator
     /// <summary>
     /// Migrations mediator.
     /// </summary>
-    public class DbMigrator
+    public class DbMigrator : IDisposable
     {
         private readonly ITransformationProvider _provider;
 
@@ -70,25 +70,25 @@ namespace Simple.Migrator
         }
 
 
-        public DbMigrator(ITransformationProvider provider, Assembly migrationAssembly, bool trace)
+        protected DbMigrator(ITransformationProvider provider, Assembly migrationAssembly, bool trace)
             : this(provider, migrationAssembly, trace, new Logger(trace, new ConsoleWriter()))
         {
         }
 
-        public DbMigrator(ITransformationProvider provider, IList<Type> types, bool trace)
+        protected DbMigrator(ITransformationProvider provider, IList<Type> types, bool trace)
             : this(provider, types, trace, new Logger(trace, new ConsoleWriter()))
         {
         }
 
 
-        public DbMigrator(ITransformationProvider provider, IList<Type> types, bool trace, ILogger logger)
+        protected DbMigrator(ITransformationProvider provider, IList<Type> types, bool trace, ILogger logger)
             : this(provider, trace, logger)
         {
             _migrationLoader = new MigrationLoader(provider, types, trace);
             _migrationLoader.CheckForDuplicatedVersion();
         }
 
-        public DbMigrator(ITransformationProvider provider, Assembly migrationAssembly, bool trace, ILogger logger)
+        protected DbMigrator(ITransformationProvider provider, Assembly migrationAssembly, bool trace, ILogger logger)
             : this(provider, trace, logger)
         {
             _migrationLoader = new MigrationLoader(provider, migrationAssembly, trace);
@@ -215,5 +215,14 @@ namespace Simple.Migrator
 
             Logger.Finished(migrate.AppliedVersions, version);
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            _provider.Dispose();
+        }
+
+        #endregion
     }
 }

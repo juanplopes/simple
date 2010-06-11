@@ -557,15 +557,17 @@ namespace Simple.Migrator.Providers
         {
             Logger.Trace(sql);
             Logger.ApplyingDBChange(sql);
-            IDbCommand cmd = BuildCommand(sql);
-            try
+            using (IDbCommand cmd = BuildCommand(sql))
             {
-                return cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                Logger.Warn(ex.Message);
-                throw;
+                try
+                {
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex.Message);
+                    throw;
+                }
             }
         }
 
@@ -589,30 +591,34 @@ namespace Simple.Migrator.Providers
         public IDataReader ExecuteQuery(string sql)
         {
             Logger.Trace(sql);
-            IDbCommand cmd = BuildCommand(sql);
-            try
+            using (IDbCommand cmd = BuildCommand(sql))
             {
-                return cmd.ExecuteReader();
-            }
-            catch
-            {
-                Logger.Warn("query failed: {0}", cmd.CommandText);
-                throw;
+                try
+                {
+                    return cmd.ExecuteReader();
+                }
+                catch
+                {
+                    Logger.Warn("query failed: {0}", cmd.CommandText);
+                    throw;
+                }
             }
         }
 
         public object ExecuteScalar(string sql)
         {
             Logger.Trace(sql);
-            IDbCommand cmd = BuildCommand(sql);
-            try
+            using (IDbCommand cmd = BuildCommand(sql))
             {
-                return cmd.ExecuteScalar();
-            }
-            catch
-            {
-                Logger.Warn("Query failed: {0}", cmd.CommandText);
-                throw;
+                try
+                {
+                    return cmd.ExecuteScalar();
+                }
+                catch
+                {
+                    Logger.Warn("Query failed: {0}", cmd.CommandText);
+                    throw;
+                }
             }
         }
 

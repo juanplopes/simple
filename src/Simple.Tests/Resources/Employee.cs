@@ -10,7 +10,7 @@ namespace Simple.Tests.Resources
     {
         static Employee()
         {
-            Identifiers.AddID(x => x.Id);
+            Identifiers.Add(x => x.Id);
         }
 
 

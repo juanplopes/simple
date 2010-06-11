@@ -27,15 +27,9 @@ namespace Simple.Metadata
         public override DataTable GetConstraints()
         {
             DataTable tbl = new DataTable("Constraints");
-            using (DbConnection _Connection = this.GetDBConnection())
-            {
-                DbCommand _Command = _Connection.CreateCommand();
-                _Command.CommandText = sqlConstraints;
-                _Command.CommandType = CommandType.Text;
-                tbl.Load(_Command.ExecuteReader());
-            }
-
+            LoadTableWithCommand(tbl, sqlConstraints);
             return tbl;
+
         }
 
         public override DbType GetDbColumnType(string providerDbType)

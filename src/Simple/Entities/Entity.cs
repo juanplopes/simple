@@ -19,11 +19,11 @@ namespace Simple.Entities
         where T : class, IEntity<T>
         where R : class, IEntityService<T>
     {
-        public static EntityHelper<T> Identifiers
+        public static EqualityHelper<T> Identifiers
         {
             get
             {
-                return Singleton<EntityHelper<T>>.Instance;
+                return Singleton<EqualityHelper<T>>.Instance;
             }
         }
 

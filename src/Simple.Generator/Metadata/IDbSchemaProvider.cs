@@ -14,17 +14,19 @@
 
 
 using System.Data;
+using System;
+using System.Collections.Generic;
 
 namespace Simple.Metadata
 {
-    public interface IDbSchemaProvider
+    public interface IDbSchemaProvider : IDisposable
     {
         string GetDatabaseName();
-        DataTable GetSchemaTables();
-        DataTable GetTableColumns(string tableSchema, string tableName);
-        DataTable GetConstraints();
-        DataTable GetProcedures();
-        DataTable GetProcedureParameters(string procedureSchema, string procedureName);
+        
+        IEnumerable<DbTable> GetTables(IList<string> includedTables, IList<string> excludedTables);
+        IEnumerable<DbRelation> GetConstraints(IList<string> includedTables, IList<string> excludedTables);
+        IEnumerable<DbColumn> GetColumns(string table);
+        
         DbType GetDbColumnType(string providerDbType);
         string QualifiedTableName(string tableSchema, string tableName);
     }

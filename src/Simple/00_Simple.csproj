@@ -214,12 +214,13 @@
     <Compile Include="Logging\Log4netSimplyExtensions.cs" />
     <Compile Include="Patterns\WorkingDays.cs" />
     <Compile Include="Reflection\DictionaryHelper.cs" />
+    <Compile Include="Reflection\EasyEquatable.cs" />
     <Compile Include="Reflection\EnumTypeAttribute.cs" />
     <Compile Include="Patterns\IWorkingDaysProvider.cs" />
     <Compile Include="Expressions\ExpressionHelper.cs" />
     <Compile Include="Reflection\InvokerFactory.cs" />
     <Compile Include="Reflection\AttributeCache.cs" />
-    <Compile Include="Reflection\EntityHelper.cs" />
+    <Compile Include="Reflection\EqualityHelper.cs" />
     <Compile Include="Expressions\PredicateBuilder.cs" />
     <Compile Include="Reflection\MethodCache.cs" />
     <Compile Include="Reflection\TypesHelper.cs" />

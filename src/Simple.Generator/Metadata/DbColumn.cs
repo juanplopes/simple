@@ -3,35 +3,54 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using Simple.Reflection;
 
 namespace Simple.Metadata
 {
-    public class DbColumn : DbObject
+    public class DbColumnName : ContextualizedObject
     {
-        public DbColumn(IDbSchemaProvider provider) : base(provider) { }
-        public DbColumn(IDbSchemaProvider provider, DataRow row)
-            : this(provider)
+        public string ColumnName { get; set; }
+        public DbTableName TableName { get; set; }
+        
+
+        public DbColumnName(MetaContext context)
+            : base(context)
         {
-            AllowDBNull = GetValue<bool>(row, "AllowDBNull");
-            BaseCatalogName = GetValue<string>(row, "BaseCatalogName");
-            BaseColumnName = GetValue<string>(row, "BaseColumnName");
-            BaseSchemaName = GetValue<string>(row, "BaseSchemaName");
-            BaseTableName = GetValue<string>(row, "BaseTableName");
-            ColumnName = GetValue<string>(row, "ColumnName");
-            ColumnOrdinal = GetValue<int>(row, "ColumnOrdinal");
-            ColumnSize = GetValue<int>(row, "ColumnSize");
-            DataType = GetValue<Type>(row, "DataType");
-            IsAutoIncrement = GetValue<bool>(row, "IsAutoIncrement");
-            IsKey = GetValue<bool>(row, "IsKey");
-            IsLong = GetValue<bool>(row, "IsLong");
-            IsHidden = GetValue<bool>(row, "IsHidden");
-            IsReadOnly = GetValue<bool>(row, "IsReadOnly");
-            IsRowVersion = GetValue<bool>(row, "IsRowVersion");
-            IsUnique = GetValue<bool>(row, "IsUnique");
-            NumericPrecision = GetValue<int>(row, "NumericPrecision");
-            NumericScale = GetValue<int>(row, "NumericScale");
-            ProviderType = GetValue<string>(row, "ProviderType");
-            DataTypeName = GetValue<string>(row, "DataTypeName");
+        }
+
+
+        protected override EqualityHelper CreateHelper()
+        {
+            return new EqualityHelper<DbColumnName>()
+                .Add(x => x.TableName)
+                .Add(x => x.ColumnName);
+        }
+    }
+
+    public class DbColumn : DbColumnName
+    {
+        public DbColumn(MetaContext context, DataRow row) : base(context)
+        {
+            AllowDBNull = row.GetValue<bool>("AllowDBNull");
+            BaseCatalogName = row.GetValue<string>("BaseCatalogName");
+            BaseColumnName = row.GetValue<string>("BaseColumnName");
+            BaseSchemaName = row.GetValue<string>("BaseSchemaName");
+            BaseTableName = row.GetValue<string>("BaseTableName");
+            ColumnName = row.GetValue<string>("ColumnName");
+            ColumnOrdinal = row.GetValue<int>("ColumnOrdinal");
+            ColumnSize = row.GetValue<int>("ColumnSize");
+            DataType = row.GetValue<Type>("DataType");
+            IsAutoIncrement = row.GetValue<bool>("IsAutoIncrement");
+            IsKey = row.GetValue<bool>("IsKey");
+            IsLong = row.GetValue<bool>("IsLong");
+            IsHidden = row.GetValue<bool>("IsHidden");
+            IsReadOnly = row.GetValue<bool>("IsReadOnly");
+            IsRowVersion = row.GetValue<bool>("IsRowVersion");
+            IsUnique = row.GetValue<bool>("IsUnique");
+            NumericPrecision = row.GetValue<int>("NumericPrecision");
+            NumericScale = row.GetValue<int>("NumericScale");
+            ProviderType = row.GetValue<string>("ProviderType");
+            DataTypeName = row.GetValue<string>("DataTypeName");
         }
 
         public bool AllowDBNull { get; set; }
@@ -54,15 +73,11 @@ namespace Simple.Metadata
         public int NumericPrecision { get; set; }
         public int NumericScale { get; set; }
         public string ProviderType { get; set; }
+        public DbType DbColumnType { get; set; }
 
         public string GetDisplayTypeName()
         {
             return GetDisplayTypeName(false);
-        }
-
-        public DbType GetDbColumnType()
-        {
-            return Provider.GetDbColumnType(ProviderType);
         }
 
         public string GetDisplayTypeName(bool forceNullable)

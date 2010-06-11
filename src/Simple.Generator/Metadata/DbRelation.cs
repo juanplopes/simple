@@ -1,42 +1,62 @@
 ﻿using System;
 using System.Data;
+using Simple.Reflection;
 
 namespace Simple.Metadata
 {
-    public class DbRelation : DbObject
+    public class DbRelationName : ContextualizedObject
     {
-        public DbRelation(IDbSchemaProvider provider) : base(provider) { }
+        public DbColumnName PkColumnName { get; set; }
+        public DbColumnName FkColumnName { get; set; }
+        public string FkName { get; set; }
 
-        public DbRelation(IDbSchemaProvider provider, DataRow row) : this(provider)
+        public DbRelationName(MetaContext context)
+            : base(context)
+        { }
+
+        public override EqualityHelper CreateHelper()
         {
-            PkTableCatalog = GetValue<string>(row, "PK_TABLE_CATALOG");
-            PkTableSchema = GetValue<string>(row, "PK_TABLE_SCHEMA");
-            PkTableName = GetValue<string>(row, "PK_TABLE_NAME");
-            PkColumnName = GetValue<string>(row, "PK_COLUMN_NAME");
-            PkOrdinalPosition = GetValue<int>(row, "PK_ORDINAL_POSItION");
+            return new EqualityHelper<DbRelationName>()
+                .Add(x => x.PkColumnName)
+                .Add(x => x.FkColumnName)
+                .Add(x => x.FkName);
+        }
+    }
 
-            FkTableCatalog = GetValue<string>(row, "FK_TABLE_CATALOG");
-            FkTableSchema = GetValue<string>(row, "FK_TABLE_SCHEMA");
-            FkTableName = GetValue<string>(row, "FK_TABLE_NAME");
-            FkColumnName = GetValue<string>(row, "FK_COLUMN_NAME");
-            FkOrdinalPosition = GetValue<int>(row, "FK_ORDINAL_POSItION");
 
-            FkName = GetValue<string>(row, "FK_NAME");
+    public class DbRelation : DbRelationName
+    {
+        public int PkColumnPosition { get; set; }
+
+        public DbRelation(MetaContext context) : base(context) { }
+
+        public DbRelation(MetaContext context, DataRow row) : base(context)
+        {
+            PkColumnName = GetColumnInfo(context, row, "PK");
+            PkOrdinalPosition = row.GetValue<int>("PK_ORDINAL_POSITION");
+
+            FkColumnName = GetColumnInfo(context, row, "FK");
+            FkOrdinalPosition = row.GetValue<int>("FK_ORDINAL_POSITION");
+
+            FkName = row.GetValue<string>("FK_NAME");
         }
 
-        public string PkTableCatalog { get; set; }
-        public string PkTableSchema { get; set; }
-        public string PkTableName { get; set; }
-        public string PkColumnName { get; set; }
+        private DbColumnName GetColumnInfo(MetaContext context, DataRow row, string type)
+        {
+            return new DbColumnName(context)
+            {
+                ColumnName = row.GetValue<string>(type + "_COLUMN_NAME"),
+                TableName = new DbTableName(context)
+                {
+                    TableName = row.GetValue<string>(type + "_TABLE_NAME"),
+                    TableSchema = row.GetValue<string>(type + "_TABLE_SCHEMA"),
+                    TableCatalog = row.GetValue<string>(type + "_TABLE_CATALOG")
+                }
+            };
+
+        }
+
         public int PkOrdinalPosition { get; set; }
-
-        public string FkTableCatalog { get; set; }
-        public string FkTableSchema { get; set; }
-        public string FkTableName { get; set; }
-        public string FkColumnName { get; set; }
         public int FkOrdinalPosition { get; set; }
-
-
-        public string FkName { get; set; }
     }
 }

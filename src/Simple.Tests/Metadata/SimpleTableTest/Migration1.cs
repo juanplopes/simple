@@ -12,7 +12,7 @@ namespace Simple.Tests.Metadata.SimpleTableTest
     {
         public override void Up()
         {
-            Schema.AddTable("t_simple_table", t =>
+            Schema.AddTable("t_all_types_1", t =>
             {
                 t.AddString("string1").WithSize(123);
                 t.AddInt32("int1");
@@ -21,7 +21,7 @@ namespace Simple.Tests.Metadata.SimpleTableTest
 
         public override void Down()
         {
-            Schema.RemoveTable("t_simple_table");
+            Schema.RemoveTable("t_all_types_1");
         }
     }
 

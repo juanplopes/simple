@@ -52,7 +52,8 @@ namespace Simple.Tests.Metadata
 
         public virtual void Setup()
         {
-            GetMigrator().MigrateToLastVersion("SchemaInfo");
+            using (var migrator = GetMigrator())
+                migrator.MigrateToLastVersion("SchemaInfo");
         }
 
         public virtual void ExecuteAll()
@@ -70,7 +71,8 @@ namespace Simple.Tests.Metadata
 
         public virtual void Teardown()
         {
-            GetMigrator().MigrateTo(0, "SchemaInfo");
+            using (var migrator = GetMigrator())
+                migrator.MigrateTo(0, "SchemaInfo");
         }
 
     }

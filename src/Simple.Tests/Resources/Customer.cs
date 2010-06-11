@@ -11,7 +11,7 @@ namespace Simple.Tests.Resources
     [DefaultConfig(NHConfig1.ConfigKey), Serializable]
     public partial class Customer : Entity<Customer, ICustomerService>
     {
-        static Customer() { Identifiers.AddID(x => x.Id); }
+        static Customer() { Identifiers.Add(x => x.Id); }
         //protected override object InternalIdentifier
         //{
         //    get

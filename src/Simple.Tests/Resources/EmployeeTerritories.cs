@@ -11,8 +11,8 @@ namespace Simple.Tests.Resources
         static EmployeeTerritory()
         {
             Identifiers
-                .AddID(x => x.Employee)
-                .AddID(x => x.Territory);
+                .Add(x => x.Employee)
+                .Add(x => x.Territory);
         }
 
 
