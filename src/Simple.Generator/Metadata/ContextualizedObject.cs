@@ -6,7 +6,7 @@ using Simple.Reflection;
 
 namespace Simple.Metadata
 {
-    public class ContextualizedObject : EasyEquatable
+    public abstract class ContextualizedObject : EasyEquatable
     {
         protected MetaContext Context { get; private set; }
         public ContextualizedObject(MetaContext context)

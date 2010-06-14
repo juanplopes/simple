@@ -15,21 +15,22 @@
 
 using System.Data;
 using System.Data.Common;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Simple.Metadata
 {
     class SqlServerSchemaProvider : DbSchemaProvider
     {
-        public SqlServerSchemaProvider(string connectionstring, string providername) : base(connectionstring, providername) { }
+        public SqlServerSchemaProvider(MetaContext context) : base(context) { }
 
         #region ' IDbProvider Members '
 
-        public override DataTable GetConstraints()
+        public override IEnumerable<DbRelation> GetConstraints(IList<string> includedTables, IList<string> excludedTables)
         {
             DataTable tbl = new DataTable("Constraints");
             LoadTableWithCommand(tbl, sqlConstraints);
-            return tbl;
-
+            return ConstructRelations(tbl.Rows.OfType<DataRow>());
         }
 
         public override DbType GetDbColumnType(string providerDbType)

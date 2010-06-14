@@ -25,35 +25,28 @@ namespace Simple.Metadata
 {
     abstract public class DbSchemaProvider : IDbSchemaProvider
     {
-        private string _connectionString = null;
-        private string _providerName = null;
         private DbConnection _connection = null;
+        public MetaContext Context { get; private set; }
 
         protected DbConnection GetConnection()
         {
             if (_connection == null)
             {
-                DbProviderFactory providerFactory = DbProviderFactories.GetFactory(_providerName);
+                DbProviderFactory providerFactory = DbProviderFactories.GetFactory(Context.Provider);
                 _connection = providerFactory.CreateConnection();
-                _connection.ConnectionString = _connectionString;
+                _connection.ConnectionString = Context.ConnectionString;
                 _connection.Open();
             }
 
             return _connection;
         }
 
-        public DbSchemaProvider(string connectionstring, string providername)
+        public DbSchemaProvider(MetaContext context)
         {
-            _connectionString = connectionstring;
-            _providerName = providername;
+            Context = context;
         }
 
         #region ' IDbProvider Members '
-
-        virtual public string GetDatabaseName()
-        {
-            return GetConnection().Database;
-        }
 
         private string GetRelationsClause(IList<string> included, IList<string> excluded, string type)
         {
@@ -96,9 +89,9 @@ namespace Simple.Metadata
 
         virtual public IEnumerable<DbTable> GetTables(IList<string> includedTables, IList<string> excludedTables)
         {
-            return GetConnection().GetSchema("Tables")
-                .Select(GetTablesClause(includedTables, excludedTables))
-                .Select(x=>new DbTable(x));
+            return ConstructTables(
+                GetConnection().GetSchema("Tables")
+                .Select(GetTablesClause(includedTables, excludedTables)));
         }
 
         virtual protected DbCommand CreateCommand(string sql, params object[] parameters)
@@ -116,22 +109,49 @@ namespace Simple.Metadata
                 table.Load(reader);
         }
 
-        virtual public IEnumerable<DbColumn> GetColumns(string table)
+        virtual public IEnumerable<DbColumn> GetColumns(DbTableName table)
         {
-            using (var cmd = CreateCommand("SELECT * FROM {0}", QualifiedTableName(tableSchema, tableName)))
+            using (var cmd = CreateCommand("SELECT * FROM {0}", QualifiedTableName(table)))
             using (var reader = cmd.ExecuteReader(CommandBehavior.KeyInfo))
-                return reader.GetSchemaTable();
+                return ConstructColumns(table, reader.GetSchemaTable().Rows.OfType<DataRow>());
         }
 
-        abstract public DataTable GetConstraints();
+        virtual protected IEnumerable<DbColumn> ConstructColumns(DbTableName table, IEnumerable<DataRow> columns)
+        {
+            foreach (var row in columns)
+            {
+                var column = new DbColumn(Context, table, row);
+                column.DbColumnType = GetDbColumnType(column.ProviderType);
+                yield return column;
+            }
+        }
+
+        virtual protected IEnumerable<DbTable> ConstructTables(IEnumerable<DataRow> tables)
+        {
+            foreach (var row in tables)
+            {
+                var table = new DbTable(Context, row);
+                table.QualifiedTableName = QualifiedTableName(table);
+                yield return table;
+            }
+        }
+
+
+        virtual protected IEnumerable<DbRelation> ConstructRelations(IEnumerable<DataRow> relations)
+        {
+            return relations.Select(x => new DbRelation(Context, x));
+        }
+
+
+        abstract public IEnumerable<DbRelation> GetConstraints(IList<string> includedTables, IList<string> excludedTables);
         abstract public DbType GetDbColumnType(string providerDbType);
 
-        virtual public string QualifiedTableName(string tableSchema, string tableName)
+        virtual public string QualifiedTableName(DbTableName table)
         {
-            if (!string.IsNullOrEmpty(tableSchema))
-                return string.Format("[{0}].[{1}]", tableSchema, tableName);
+            if (!string.IsNullOrEmpty(table.TableSchema))
+                return string.Format("[{0}].[{1}]", table.TableSchema, table.TableName);
             else
-                return string.Format("[{0}]", tableName);
+                return string.Format("[{0}]", table.TableName);
         }
 
 

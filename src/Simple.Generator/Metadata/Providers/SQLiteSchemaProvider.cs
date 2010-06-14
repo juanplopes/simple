@@ -16,17 +16,18 @@
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Simple.Metadata
 {
     class SQLiteSchemaProvider : DbSchemaProvider
     {
-
-        public SQLiteSchemaProvider(string connectionstring, string providername) : base(connectionstring, providername) { }
+        public SQLiteSchemaProvider(MetaContext context) : base(context) { }
 
         #region ' IDbProvider Members '
 
-        public override DataTable GetConstraints()
+        public override IEnumerable<DbRelation> GetConstraints(IList<string> includedTables, IList<string> excludedTables)
         {
             DataTable tbl = GetDTSchemaConstrains();
             DataTable Constraints = GetConnection().GetSchema("ForeignKeys");
@@ -51,7 +52,7 @@ namespace Simple.Metadata
                 tbl.Rows.Add(constrain);
             }
 
-            return tbl;
+            return ConstructRelations(tbl.Rows.OfType<DataRow>());
         }
 
         /// <summary>
@@ -105,17 +106,7 @@ namespace Simple.Metadata
             }
         }
 
-        public override DataTable GetProcedures()
-        {
-            return GetDTSchemaProcedures();
-        }
-
-        public override DataTable GetProcedureParameters(string procedureSchema, string procedureName)
-        {
-            return GetDTSchemaProcedureParameters();
-        }
-
-        public override DataTable GetSchemaTables()
+        public override IEnumerable<DbTable> GetTables(IList<string> includedTables, IList<string> excludedTables)
         {
             var conn = GetConnection();
             var tbl = conn.GetSchema("Tables");
@@ -134,7 +125,7 @@ namespace Simple.Metadata
                 tbl.Rows.Add(tblRow);
             }
 
-            return tbl;
+            return ConstructTables(tbl.Rows.OfType<DataRow>());
         }
 
         #endregion

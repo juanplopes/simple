@@ -18,6 +18,15 @@ namespace Simple.Metadata
         {
         }
 
+        public DbTableName(MetaContext context, string name)
+            : base(context)
+        {
+            var parts = name.Split('.').Reverse().ToList();
+            if (parts.Count > 0) TableName = parts[0];
+            if (parts.Count > 1) TableSchema = parts[1];
+            if (parts.Count > 2) TableCatalog = parts[2];
+        }
+
         public override EqualityHelper CreateHelper()
         {
             return new EqualityHelper<DbTableName>()
@@ -37,7 +46,8 @@ namespace Simple.Metadata
         public string QualifiedTableName { get; set; }
         public string TableType { get; set; }
 
-        public DbTable(MetaContext context, DataRow row) : base(context)
+        public DbTable(MetaContext context, DataRow row)
+            : base(context)
         {
             this.TableCatalog = row.GetValue<string>("TABLE_CATALOG");
             this.TableSchema = row.GetValue<string>("TABLE_SCHEMA");
@@ -45,7 +55,40 @@ namespace Simple.Metadata
             this.TableType = row.GetValue<string>("TABLE_TYPE");
         }
 
+        public void ExecuteCache()
+        {
+            AllColumns = Context.ColumnsByTable[this].ToList();
+            OutRelations = Context.OutRelationsByTable[this].ToList();
+            InRelations = Context.InRelationsByTable[this].ToList();
+            ExecuteOutFkCache();
+            ExecuteInFkCache();
+        }
 
+        public void ExecuteOutFkCache()
+        {
+            //all foreign keys columns grouped by fk name
+            var keys = new HashSet<DbColumnName>(PrimaryKeyColumns.Select(x => x as DbColumnName));
+
+            var safe = OutRelations.GroupBy(x => x.FkColumnName.TableName).ToDictionary(x => x.Key, x => x.Count());
+
+            ManyToOneRelations = OutRelations.GroupBy(x => x.FkName).Select(x => new DbManyToOne(Context, x.ToList())
+            {
+                IsKey = x.Any(y => keys.Contains(y.FkColumnName)),
+                SafeNaming = safe[x.First().PkColumnName.TableName] == 1
+            });
+        }
+
+        public void ExecuteInFkCache()
+        {
+            //all foreign keys columns grouped by fk name
+
+            var safe = InRelations.GroupBy(x => x.FkColumnName.TableName).ToDictionary(x => x.Key, x => x.Count());
+
+            OneToManyRelations = InRelations.GroupBy(x => x.FkName).Select(x => new DbOneToMany(Context, x.ToList())
+            {
+                SafeNaming = safe[x.First().FkColumnName.TableName] == 1
+            });
+        }
 
         #region ' Columns and Primary Keys '
 
@@ -84,41 +127,11 @@ namespace Simple.Metadata
             }
         }
 
-        public IEnumerable<DbManyToOne> ManyToOneRelations
-        {
-            get
-            {
-                //all foreign keys columns grouped by fk name
-                HashSet<string> keys = new HashSet<string>(PrimaryKeyColumns.Select(x => x.ColumnName));
+        public IEnumerable<DbManyToOne> ManyToOneRelations { get; protected set; }
 
-                var safe = OutRelations.GroupBy(x => x.FkTableName).ToDictionary(x => x.Key, x => x.Count());
-
-                return OutRelations.GroupBy(x => x.FkName).Select(x => new DbManyToOne(x.Key, x.ToList())
-                {
-                    IsKey = x.Any(y => keys.Contains(y.FkColumnName)),
-                    SafeNaming = safe[x.Select(y => y.FkTableName).First()] == 1
-                });
-            }
-        }
-
-        public IEnumerable<DbOneToMany> OneToManyRelations
-        {
-            get
-            {
-                //all foreign keys columns grouped by fk name
-
-                var safe = InRelations.GroupBy(x => x.FkTableName).ToDictionary(x => x.Key, x => x.Count());
-
-                return InRelations.GroupBy(x => x.FkName).Select(x => new DbOneToMany(x.Key, x.ToList())
-                {
-                    SafeNaming = safe[x.Select(y => y.FkTableName).First()] == 1
-                });
-            }
-        }
-
+        public IEnumerable<DbOneToMany> OneToManyRelations { get; protected set;}
 
         #endregion
 
     }
 }
- 

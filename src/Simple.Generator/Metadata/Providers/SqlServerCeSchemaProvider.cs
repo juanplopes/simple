@@ -17,28 +17,18 @@ using System;
 using System.Data;
 using System.Data.Common;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Simple.Metadata
 {
     public class SqlServerCeSchemaProvider : DbSchemaProvider
     {
-        public SqlServerCeSchemaProvider(string connectionstring, string providername) : base(connectionstring, providername) { }
+        public SqlServerCeSchemaProvider(MetaContext context) : base(context) { }
 
         #region ' IDbProvider Members '
 
-        public override string GetDatabaseName()
-        {
-            string dbName = GetConnection().Database;
-            Regex RegExp = new Regex(@"\\(?<db>[^\\]*)?\.sdf$", RegexOptions.IgnoreCase);
-            if (RegExp.IsMatch(dbName))
-            {
-                Match found = RegExp.Matches(dbName)[0];
-                dbName = found.Groups[1].Value;
-            }
-            return dbName;
-        }
-
-        public override DataTable GetSchemaTables()
+        public override IEnumerable<DbTable> GetTables(IList<string> includedTables, IList<string> excludedTables)
         {
             DataTable tbl = GetDTSchemaTables();
             var cmd = CreateCommand(sqlTables);
@@ -65,10 +55,10 @@ namespace Simple.Metadata
                 }
             }
 
-            return tbl;
+            return ConstructTables(tbl.Rows.OfType<DataRow>());
         }
 
-        public override DataTable GetConstraints()
+        public override IEnumerable<DbRelation> GetConstraints(IList<string> includedTables, IList<string> excludedTables)
         {
             DataTable tbl = GetDTSchemaConstrains();
             var cmd = CreateCommand(sqlConstraints);
@@ -106,7 +96,7 @@ namespace Simple.Metadata
                 }
             }
 
-            return tbl;
+            return ConstructRelations(tbl.Rows.OfType<DataRow>());
         }
 
         public override DbType GetDbColumnType(string providerDbType)

@@ -62,13 +62,11 @@
     <Compile Include="Metadata\DbTable.cs" />
     <Compile Include="Metadata\IDbSchemaProvider.cs" />
     <Compile Include="Metadata\Providers\MySqlSchemaProvider.cs" />
-    <Compile Include="Metadata\Providers\OleDbSchemaProvider.cs" />
     <Compile Include="Metadata\Providers\OracleSchemaProvider.cs" />
     <Compile Include="Metadata\Providers\PostgreSqlSchemaProvider.cs" />
     <Compile Include="Metadata\Providers\SQLiteSchemaProvider.cs" />
     <Compile Include="Metadata\Providers\SqlServerCeSchemaProvider.cs" />
     <Compile Include="Metadata\Providers\SqlServerSchemaProvider.cs" />
-    <Compile Include="Metadata\Providers\VistaDBSchemaProvider.cs" />
     <Compile Include="Migrator\BaseMigrate.cs" />
     <Compile Include="Migrator\DbMigrator.cs" />
     <Compile Include="Migrator\DuplicatedVersionException.cs" />

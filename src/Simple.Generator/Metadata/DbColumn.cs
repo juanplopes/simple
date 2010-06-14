@@ -11,7 +11,7 @@ namespace Simple.Metadata
     {
         public string ColumnName { get; set; }
         public DbTableName TableName { get; set; }
-        
+
 
         public DbColumnName(MetaContext context)
             : base(context)
@@ -19,7 +19,7 @@ namespace Simple.Metadata
         }
 
 
-        protected override EqualityHelper CreateHelper()
+        public override EqualityHelper CreateHelper()
         {
             return new EqualityHelper<DbColumnName>()
                 .Add(x => x.TableName)
@@ -29,14 +29,25 @@ namespace Simple.Metadata
 
     public class DbColumn : DbColumnName
     {
-        public DbColumn(MetaContext context, DataRow row) : base(context)
+        public DbColumn(MetaContext context, DbTableName table, DataRow row)
+            : base(context)
         {
-            AllowDBNull = row.GetValue<bool>("AllowDBNull");
-            BaseCatalogName = row.GetValue<string>("BaseCatalogName");
-            BaseColumnName = row.GetValue<string>("BaseColumnName");
-            BaseSchemaName = row.GetValue<string>("BaseSchemaName");
-            BaseTableName = row.GetValue<string>("BaseTableName");
+
+            BaseColumnName = new DbColumnName(context)
+            {
+                ColumnName = row.GetValue<string>("BaseColumnName"),
+                TableName = new DbTableName(context)
+                {
+                    TableCatalog = row.GetValue<string>("BaseCatalogName"),
+                    TableName = row.GetValue<string>("BaseTableName"),
+                    TableSchema = row.GetValue<string>("BaseSchemaName")
+                }
+            };
+
             ColumnName = row.GetValue<string>("ColumnName");
+            TableName = table;
+
+            AllowDBNull = row.GetValue<bool>("AllowDBNull");
             ColumnOrdinal = row.GetValue<int>("ColumnOrdinal");
             ColumnSize = row.GetValue<int>("ColumnSize");
             DataType = row.GetValue<Type>("DataType");
@@ -53,12 +64,9 @@ namespace Simple.Metadata
             DataTypeName = row.GetValue<string>("DataTypeName");
         }
 
+        public DbColumnName BaseColumnName { get; set; }
+
         public bool AllowDBNull { get; set; }
-        public string BaseCatalogName { get; set; }
-        public string BaseColumnName { get; set; }
-        public string BaseSchemaName { get; set; }
-        public string BaseTableName { get; set; }
-        public string ColumnName { get; set; }
         public int ColumnOrdinal { get; set; }
         public int ColumnSize { get; set; }
         public Type DataType { get; set; }

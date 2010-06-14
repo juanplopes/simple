@@ -15,17 +15,18 @@
 using System;
 using System.Data;
 using System.Data.Common;
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Simple.Metadata
 {
     public class MySqlSchemaProvider : DbSchemaProvider
     {
-        public MySqlSchemaProvider(string connectionstring, string providername) : base(connectionstring, providername) { }
+        public MySqlSchemaProvider(MetaContext context) : base(context) { }
 
         #region ' IDbProvider Members '
 
-        public override DataTable GetSchemaTables()
+        public override IEnumerable<DbTable> GetTables(IList<string> includedTables, IList<string> excludedTables)
         {
             var conn = GetConnection();
             var tbl = conn.GetSchema("Tables");
@@ -43,53 +44,15 @@ namespace Simple.Metadata
                 tbl.Rows.Add(tblRow);
             }
 
-            return tbl;
+            return ConstructTables(tbl.Rows.OfType<DataRow>());
         }
 
-        public override DataTable GetConstraints()
+        public override string QualifiedTableName(DbTableName table)
         {
-            DataTable tbl = GetDTSchemaConstrains();
-
-            var conn = GetConnection();
-            if (conn.ServerVersion.StartsWith("5."))
-            {
-                LoadTableWithCommand(tbl, sqlConstraints);
-            }
+            if (!string.IsNullOrEmpty(table.TableSchema))
+                return string.Format("`{0}`.`{1}`", table.TableSchema, table.TableName);
             else
-            {
-                DataTable tblConstraints = conn.GetSchema("Foreign Key Columns");
-                foreach (DataRow constraintRow in tblConstraints.Rows)
-                {
-                    DataRow constraint = tbl.NewRow();
-                    if (constraintRow["REFERENCED_TABLE_CATALOG"] != DBNull.Value)
-                        constraint["PK_TABLE_CATALOG"] = constraintRow["REFERENCED_TABLE_CATALOG"];
-                    constraint["PK_TABLE_SCHEMA"] = constraintRow["REFERENCED_TABLE_SCHEMA"];
-                    constraint["PK_TABLE_NAME"] = constraintRow["REFERENCED_TABLE_NAME"];
-                    constraint["PK_COLUMN_NAME"] = constraintRow["REFERENCED_COLUMN_NAME"];
-                    //constraint["PK_ORDINAL_POSITION"] = constraintRow[""];
-                    //constraint["PK_NAME"] = constraintRow[""];
-
-                    if (constraintRow["TABLE_CATALOG"] != DBNull.Value)
-                        constraint["FK_TABLE_CATALOG"] = constraintRow["TABLE_CATALOG"];
-                    constraint["FK_TABLE_SCHEMA"] = constraintRow["TABLE_SCHEMA"];
-                    constraint["FK_TABLE_NAME"] = constraintRow["TABLE_NAME"];
-                    constraint["FK_COLUMN_NAME"] = constraintRow["COLUMN_NAME"];
-                    constraint["FK_ORDINAL_POSITION"] = constraintRow["ORDINAL_POSITION"];
-                    constraint["FK_NAME"] = constraintRow["CONSTRAINT_NAME"];
-
-                    tbl.Rows.Add(constraint);
-                }
-            }
-
-            return tbl;
-        }
-
-        public override string QualifiedTableName(string tableSchema, string tableName)
-        {
-            if (!string.IsNullOrEmpty(tableSchema))
-                return string.Format("`{0}`.`{1}`", tableSchema, tableName);
-            else
-                return string.Format("`{0}`", tableName);
+                return string.Format("`{0}`", table.TableName);
         }
 
         public override DbType GetDbColumnType(string providerDbType)
@@ -202,5 +165,43 @@ namespace Simple.Metadata
 
         #endregion
 
+
+        public override IEnumerable<DbRelation> GetConstraints(System.Collections.Generic.IList<string> includedTables, System.Collections.Generic.IList<string> excludedTables)
+        {
+            DataTable tbl = GetDTSchemaConstrains();
+
+            var conn = GetConnection();
+            if (conn.ServerVersion.StartsWith("5."))
+            {
+                LoadTableWithCommand(tbl, sqlConstraints);
+            }
+            else
+            {
+                DataTable tblConstraints = conn.GetSchema("Foreign Key Columns");
+                foreach (DataRow constraintRow in tblConstraints.Rows)
+                {
+                    DataRow constraint = tbl.NewRow();
+                    if (constraintRow["REFERENCED_TABLE_CATALOG"] != DBNull.Value)
+                        constraint["PK_TABLE_CATALOG"] = constraintRow["REFERENCED_TABLE_CATALOG"];
+                    constraint["PK_TABLE_SCHEMA"] = constraintRow["REFERENCED_TABLE_SCHEMA"];
+                    constraint["PK_TABLE_NAME"] = constraintRow["REFERENCED_TABLE_NAME"];
+                    constraint["PK_COLUMN_NAME"] = constraintRow["REFERENCED_COLUMN_NAME"];
+                    //constraint["PK_ORDINAL_POSITION"] = constraintRow[""];
+                    //constraint["PK_NAME"] = constraintRow[""];
+
+                    if (constraintRow["TABLE_CATALOG"] != DBNull.Value)
+                        constraint["FK_TABLE_CATALOG"] = constraintRow["TABLE_CATALOG"];
+                    constraint["FK_TABLE_SCHEMA"] = constraintRow["TABLE_SCHEMA"];
+                    constraint["FK_TABLE_NAME"] = constraintRow["TABLE_NAME"];
+                    constraint["FK_COLUMN_NAME"] = constraintRow["COLUMN_NAME"];
+                    constraint["FK_ORDINAL_POSITION"] = constraintRow["ORDINAL_POSITION"];
+                    constraint["FK_NAME"] = constraintRow["CONSTRAINT_NAME"];
+
+                    tbl.Rows.Add(constraint);
+                }
+            }
+
+            return ConstructRelations(tbl.Rows.OfType<DataRow>());
+        }
     }
 }

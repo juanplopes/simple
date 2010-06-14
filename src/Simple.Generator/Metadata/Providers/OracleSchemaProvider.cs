@@ -24,11 +24,11 @@ namespace Simple.Metadata
 {
     class OracleSchemaProvider : DbSchemaProvider
     {
-        public OracleSchemaProvider(string connectionstring, string providername) : base(connectionstring, providername) { }
+        public OracleSchemaProvider(MetaContext context) : base(context) { }
 
         #region ' IDbProvider Members '
 
-        public override DataTable GetSchemaTables()
+        public override IEnumerable<DbTable> GetTables(IList<string> includedTables, IList<string> excludedTables)
         {
             DataTable tblTables = base.GetDTSchemaTables();
             DataTable tblViews = base.GetDTSchemaTables();
@@ -41,37 +41,28 @@ namespace Simple.Metadata
                 tblTables.ImportRow(viewRow);
             }
 
-            return tblTables;
+            return ConstructTables(tblTables.Rows.OfType<DataRow>());
         }
-
-        public override DataTable GetConstraints()
+        public override IEnumerable<DbRelation> GetConstraints(IList<string> includedTables, IList<string> excludedTables)
         {
             DataTable tbl = new DataTable("Constraints");
             LoadTableWithCommand(tbl, sqlConstrains);
-            return tbl;
+            return ConstructRelations(tbl.Rows.OfType<DataRow>());
         }
 
-        public override DataTable GetProcedures()
+        public override IEnumerable<DbColumn> GetColumns(DbTableName table)
         {
-            DataTable tblProcedures = new DataTable("Procedures");
-            LoadTableWithCommand(tblProcedures, sqlProcedures);
-            return tblProcedures;
-        }
+            var columns = base.GetColumns(table).ToList();
 
-        public override DataTable GetTableColumns(string tableSchema, string tableName)
-        {
-            var table1 = base.GetTableColumns(tableSchema, tableName);
-            table1.Columns.Add("DataTypeName");
-
-            var table2 = GetConnection().GetSchema("Columns", new[] { tableSchema, tableName })
+            var table2 = GetConnection().GetSchema("Columns", new[] { table.TableSchema, table.TableName })
                 .Rows.OfType<DataRow>().ToDictionary(x => (string)x["COLUMN_NAME"]);
 
-            foreach (DataRow row in table1.Rows)
+            foreach (var column in columns)
             {
-                row["DataTypeName"] = table2[(string)row["ColumnName"]]["DATATYPE"];
+                column.DataTypeName = table2[column.ColumnName].GetValue<string>("DATATYPE");
             }
 
-            return table1;
+            return columns;
         }
 
         public override DbType GetDbColumnType(string providerDbType)
@@ -170,12 +161,12 @@ namespace Simple.Metadata
             throw new NotImplementedException();
         }
 
-        public override string QualifiedTableName(string tableSchema, string tableName)
+        public override string QualifiedTableName(DbTableName table)
         {
-            if (!string.IsNullOrEmpty(tableSchema))
-                return string.Format("{0}.{1}", DoubleQuoteIfNeeded(tableSchema), DoubleQuoteIfNeeded(tableName));
+            if (!string.IsNullOrEmpty(table.TableSchema))
+                return string.Format("{0}.{1}", DoubleQuoteIfNeeded(table.TableSchema), DoubleQuoteIfNeeded(table.TableName));
             else
-                return string.Format("{0}", DoubleQuoteIfNeeded(tableName));
+                return string.Format("{0}", DoubleQuoteIfNeeded(table.TableName));
         }
 
         private string DoubleQuoteIfNeeded(string variable)

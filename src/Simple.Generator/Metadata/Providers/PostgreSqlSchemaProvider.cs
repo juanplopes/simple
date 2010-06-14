@@ -15,34 +15,29 @@
 
 using System.Data;
 using System.Data.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Simple.Metadata
 {
     class PostgreSqlSchemaProvider : DbSchemaProvider
     {
-        public PostgreSqlSchemaProvider(string connectionstring, string providername) : base(connectionstring, providername) { }
+        public PostgreSqlSchemaProvider(MetaContext context) : base(context) { }
 
         #region ' IDbProvider Members '
 
-        public override DataTable GetConstraints()
-        {
-            DataTable tbl = new DataTable("Constraints");
-            LoadTableWithCommand(tbl, sqlConstraints);
-            return tbl;
-        }
-
-        public override DataTable GetSchemaTables()
+        public override IEnumerable<DbTable> GetTables(IList<string> includedTables, IList<string> excludedTables)
         {
             DataTable tbl = GetDTSchemaTables();
             LoadTableWithCommand(tbl, sqlTables);
-            return tbl;
+            return ConstructTables(tbl.Rows.OfType<DataRow>());
         }
 
-        public override DataTable GetProcedures()
+        public override IEnumerable<DbRelation> GetConstraints(IList<string> includedTables, IList<string> excludedTables)
         {
-            DataTable tbl = GetDTSchemaProcedures();
-            LoadTableWithCommand(tbl, sqlProcedures);
-            return tbl;
+            DataTable tbl = new DataTable("Constraints");
+            LoadTableWithCommand(tbl, sqlConstraints);
+            return ConstructRelations(tbl.Rows.OfType<DataRow>());
         }
 
         public override DbType GetDbColumnType(string providerDbType)
@@ -120,12 +115,12 @@ namespace Simple.Metadata
             }
         }
 
-        public override string QualifiedTableName(string tableSchema, string tableName)
+        public override string QualifiedTableName(DbTableName table)
         {
-            if (!string.IsNullOrEmpty(tableSchema))
-                return string.Format("{0}.{1}", DoubleQuoteIfNeeded(tableSchema), DoubleQuoteIfNeeded(tableName));
+            if (!string.IsNullOrEmpty(table.TableSchema))
+                return string.Format("{0}.{1}", DoubleQuoteIfNeeded(table.TableSchema), DoubleQuoteIfNeeded(table.TableName));
             else
-                return string.Format("{0}", DoubleQuoteIfNeeded(tableName));
+                return string.Format("{0}", DoubleQuoteIfNeeded(table.TableName));
         }
 
         private string DoubleQuoteIfNeeded(string variable)

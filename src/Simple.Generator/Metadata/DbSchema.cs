@@ -21,55 +21,51 @@ using System.Linq;
 
 namespace Simple.Metadata
 {
-    public class DbSchema : IDisposable
+    public class DbSchema
     {
-        protected IDbSchemaProvider Provider { get; private set; } 
-        protected static DbSchemaProvider GetSchemaProvider(string providerName, string connectionString)
+        public string Provider { get; set; }
+        public string ConnectionString { get; set; }
+
+        protected static DbSchemaProvider GetSchemaProvider(MetaContext context)
         {
-            switch (providerName.ToLower())
+            switch (context.Provider.ToLower())
             {
                 case "system.data.sqlserverce.3.5":
                 case "system.data.sqlserverce":
-                    return new SqlServerCeSchemaProvider(connectionString, providerName);
+                    return new SqlServerCeSchemaProvider(context);
 
-                case "system.data.oledb":
-                    return new OleDbSchemaProvider(connectionString, providerName);
+                //case "system.data.oledb":
+                //    return new OleDbSchemaProvider(connectionString, providerName);
 
                 case "system.data.sqlclient":
-                    return new SqlServerSchemaProvider(connectionString, providerName);
+                    return new SqlServerSchemaProvider(context);
 
                 case "mysql.data.mysqlclient":
-                    return new MySqlSchemaProvider(connectionString, providerName);
+                    return new MySqlSchemaProvider(context);
 
                 case "npgsql":
-                    return new PostgreSqlSchemaProvider(connectionString, providerName);
+                    return new PostgreSqlSchemaProvider(context);
 
                 case "system.data.sqlite":
-                    return new SQLiteSchemaProvider(connectionString, providerName);
+                    return new SQLiteSchemaProvider(context);
 
                 case "system.data.oracleclient":
                 case "oracle.dataaccess.client":
-                    return new OracleSchemaProvider(connectionString, providerName);
+                    return new OracleSchemaProvider(context);
 
-                case "vistadb.net20":
-                    return new VistaDBSchemaProvider(connectionString, providerName);
+                //case "vistadb.net20":
+                //    return new VistaDBSchemaProvider(connectionString, providerName);
 
                 default:
-                    throw new NotImplementedException("The provider '" + providerName + "' is not implemented!");
+                    throw new NotImplementedException("The provider '" + context.Provider + "' is not implemented!");
 
             }
         }
 
-        private DataTable _tableCache = null;
         public DbSchema(string provider, string connectionString)
         {
-            Provider = GetSchemaProvider(provider, connectionString);
-        }
-
-        private DataTable GetSchemaTables()
-        {
-            if (_tableCache != null) return _tableCache;
-            return _tableCache = Provider.GetSchemaTables();
+            this.Provider = provider;
+            this.ConnectionString = connectionString;
         }
 
         public IEnumerable<DbTable> GetTables()
@@ -84,42 +80,26 @@ namespace Simple.Metadata
 
         public IEnumerable<DbTable> GetTables(IList<string> included, IList<string> excluded)
         {
-            return GetGeneric(included, excluded, "TABLE", "BASE TABLE");
+            using (var provider = GetSchemaProvider(new MetaContext(ConnectionString, Provider)))
+            {
+                var tables = provider.GetTables(included, excluded);
+                var relations = provider.GetConstraints(included, excluded);
+                var columns = tables.SelectMany(x => provider.GetColumns(x));
+
+                provider.Context
+                    .InjectTables(tables)
+                    .InjectRelactions(relations)
+                    .InjectTableColumns(columns)
+                    .ExecuteCache();
+
+                foreach (var table in tables)
+                    table.ExecuteCache();
+
+                return tables;
+            }
         }
 
-        public IEnumerable<DbTable> GetViews()
-        {
-            return GetViews("%");
-        }
 
-        public IEnumerable<DbTable> GetViews(params string[] included)
-        {
-            return GetViews(included, new string[] { });
-        }
-
-        public IEnumerable<DbTable> GetViews(IList<string> included, IList<string> excluded)
-        {
-            return GetGeneric(included, excluded, "VIEW");
-        }
-
-
-        #region ' Helpers '
-
-        public string GetDatabaseName()
-        {
-            return Provider.GetDatabaseName();
-        }
-
-        #endregion
-
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            if (Provider != null) Provider.Dispose();
-        }
-
-        #endregion
+      
     }
 }
