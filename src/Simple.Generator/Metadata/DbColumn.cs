@@ -9,8 +9,8 @@ namespace Simple.Metadata
 {
     public class DbColumnName : ContextualizedObject
     {
-        public string ColumnName { get; set; }
-        public DbTableName TableName { get; set; }
+        public string Name { get; set; }
+        public DbTableName TableRef { get; set; }
 
 
         public DbColumnName(MetaContext context)
@@ -22,8 +22,8 @@ namespace Simple.Metadata
         public override EqualityHelper CreateHelper()
         {
             return new EqualityHelper<DbColumnName>()
-                .Add(x => x.TableName)
-                .Add(x => x.ColumnName);
+                .Add(x => x.TableRef)
+                .Add(x => x.Name);
         }
     }
 
@@ -33,19 +33,19 @@ namespace Simple.Metadata
             : base(context)
         {
 
-            BaseColumnName = new DbColumnName(context)
+            BaseColumnRef = new DbColumnName(context)
             {
-                ColumnName = row.GetValue<string>("BaseColumnName"),
-                TableName = new DbTableName(context)
+                Name = row.GetValue<string>("BaseColumnName"),
+                TableRef = new DbTableName(context)
                 {
-                    TableCatalog = row.GetValue<string>("BaseCatalogName"),
-                    TableName = row.GetValue<string>("BaseTableName"),
-                    TableSchema = row.GetValue<string>("BaseSchemaName")
+                    Catalog = row.GetValue<string>("BaseCatalogName"),
+                    Name = row.GetValue<string>("BaseTableName"),
+                    Schema = row.GetValue<string>("BaseSchemaName")
                 }
             };
 
-            ColumnName = row.GetValue<string>("ColumnName");
-            TableName = table;
+            Name = row.GetValue<string>("ColumnName");
+            TableRef = table;
 
             AllowDBNull = row.GetValue<bool>("AllowDBNull");
             ColumnOrdinal = row.GetValue<int>("ColumnOrdinal");
@@ -64,7 +64,7 @@ namespace Simple.Metadata
             DataTypeName = row.GetValue<string>("DataTypeName");
         }
 
-        public DbColumnName BaseColumnName { get; set; }
+        public DbColumnName BaseColumnRef { get; set; }
 
         public bool AllowDBNull { get; set; }
         public int ColumnOrdinal { get; set; }

@@ -49,10 +49,10 @@ namespace Simple.Metadata
 
         public override string QualifiedTableName(DbTableName table)
         {
-            if (!string.IsNullOrEmpty(table.TableSchema))
-                return string.Format("`{0}`.`{1}`", table.TableSchema, table.TableName);
+            if (!string.IsNullOrEmpty(table.Schema))
+                return string.Format("`{0}`.`{1}`", table.Schema, table.Name);
             else
-                return string.Format("`{0}`", table.TableName);
+                return string.Format("`{0}`", table.Name);
         }
 
         public override DbType GetDbColumnType(string providerDbType)

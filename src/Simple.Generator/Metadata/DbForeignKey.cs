@@ -26,9 +26,9 @@ namespace Simple.Metadata
 
     public class DbForeignKeyName : ContextualizedObject
     {
-        public DbTableName PkTableName { get; set; }
-        public DbTableName FkTableName { get; set; }
-        public string FkName { get; set; }
+        public DbTableName PkTableRef { get; set; }
+        public DbTableName FkTableRef { get; set; }
+        public string Name { get; set; }
 
         public DbForeignKeyName(MetaContext context)
             : base(context)
@@ -37,9 +37,9 @@ namespace Simple.Metadata
         public override EqualityHelper CreateHelper()
         {
             return new EqualityHelper<DbForeignKeyName>()
-                .Add(x => x.PkTableName)
-                .Add(x => x.FkTableName)
-                .Add(x => x.FkName);
+                .Add(x => x.PkTableRef)
+                .Add(x => x.FkTableRef)
+                .Add(x => x.Name);
         }
     }
 
@@ -53,14 +53,14 @@ namespace Simple.Metadata
             this.Columns = columns;
             
             var first = columns.First();
-            this.FkName = first.FkName;
-            this.PkTableName = first.PkColumnName.TableName;
-            this.FkTableName = first.FkColumnName.TableName;
+            this.Name = first.Name;
+            this.PkTableRef = first.PkColumnRef.TableRef;
+            this.FkTableRef = first.FkColumnRef.TableRef;
             this.SafeNaming = true;
         }
 
         EqualityHelper _helper = new EqualityHelper<DbForeignKey>()
-            .Add(x => x.FkName);
+            .Add(x => x.Name);
 
         public override bool Equals(object obj)
         {

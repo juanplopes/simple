@@ -6,9 +6,9 @@ namespace Simple.Metadata
 {
     public class DbRelationName : ContextualizedObject
     {
-        public DbColumnName PkColumnName { get; set; }
-        public DbColumnName FkColumnName { get; set; }
-        public string FkName { get; set; }
+        public DbColumnName PkColumnRef { get; set; }
+        public DbColumnName FkColumnRef { get; set; }
+        public string Name { get; set; }
 
         public DbRelationName(MetaContext context)
             : base(context)
@@ -17,40 +17,38 @@ namespace Simple.Metadata
         public override EqualityHelper CreateHelper()
         {
             return new EqualityHelper<DbRelationName>()
-                .Add(x => x.PkColumnName)
-                .Add(x => x.FkColumnName)
-                .Add(x => x.FkName);
+                .Add(x => x.PkColumnRef)
+                .Add(x => x.FkColumnRef)
+                .Add(x => x.Name);
         }
     }
 
 
     public class DbRelation : DbRelationName
     {
-        public int PkColumnPosition { get; set; }
-
         public DbRelation(MetaContext context) : base(context) { }
 
         public DbRelation(MetaContext context, DataRow row) : base(context)
         {
-            PkColumnName = GetColumnInfo(context, row, "PK");
+            PkColumnRef = GetColumnInfo(context, row, "PK");
             PkOrdinalPosition = row.GetValue<int>("PK_ORDINAL_POSITION");
 
-            FkColumnName = GetColumnInfo(context, row, "FK");
+            FkColumnRef = GetColumnInfo(context, row, "FK");
             FkOrdinalPosition = row.GetValue<int>("FK_ORDINAL_POSITION");
 
-            FkName = row.GetValue<string>("FK_NAME");
+            Name = row.GetValue<string>("FK_NAME");
         }
 
         private DbColumnName GetColumnInfo(MetaContext context, DataRow row, string type)
         {
             return new DbColumnName(context)
             {
-                ColumnName = row.GetValue<string>(type + "_COLUMN_NAME"),
-                TableName = new DbTableName(context)
+                Name = row.GetValue<string>(type + "_COLUMN_NAME"),
+                TableRef = new DbTableName(context)
                 {
-                    TableName = row.GetValue<string>(type + "_TABLE_NAME"),
-                    TableSchema = row.GetValue<string>(type + "_TABLE_SCHEMA"),
-                    TableCatalog = row.GetValue<string>(type + "_TABLE_CATALOG")
+                    Name = row.GetValue<string>(type + "_TABLE_NAME"),
+                    Schema = row.GetValue<string>(type + "_TABLE_SCHEMA"),
+                    Catalog = row.GetValue<string>(type + "_TABLE_CATALOG")
                 }
             };
 

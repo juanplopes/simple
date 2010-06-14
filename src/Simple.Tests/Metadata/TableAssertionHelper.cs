@@ -28,7 +28,7 @@ namespace Simple.Tests.Metadata
             var defTables = tables.ToList();
             
             var actualTables = Schema.GetTables(defTables.Select(x => x.Name).ToArray())
-                .ToDictionary(x => x.TableName, StringComparer.InvariantCultureIgnoreCase);
+                .ToDictionary(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
 
             foreach (var table in tables)
             {
@@ -74,7 +74,7 @@ namespace Simple.Tests.Metadata
         protected void AssertSingleColumn(ColumnAddAction column, DbColumn actualColumn)
         {
             string columnId = string.Format("{0}.{1}", column.Table.Name, column.Name);
-            StringAssert.AreEqualIgnoringCase(column.Name, actualColumn.ColumnName, "column name");
+            StringAssert.AreEqualIgnoringCase(column.Name, actualColumn.Name, "column name");
 
             string type = Dialect.GetTypeName(column.Type);
             StringAssert.StartsWith(actualColumn.DataTypeName.ToUpper(), type.ToUpper());
@@ -85,15 +85,15 @@ namespace Simple.Tests.Metadata
 
         protected void AssertSingleRelation(ForeignKeyAddAction fk, DbForeignKey actualForeignKey)
         {
-            StringAssert.AreEqualIgnoringCase(fk.Name, actualForeignKey.FkName);
+            StringAssert.AreEqualIgnoringCase(fk.Name, actualForeignKey.Name);
             Assert.AreEqual(fk.FkColumns.Count, fk.PkColumns.Count);
             var fkColumns = actualForeignKey.Columns.OrderBy(x => x.FkOrdinalPosition).ToList();
             for (int i = 0; i < fk.FkColumns.Count; i++)
             {
-                StringAssert.AreEqualIgnoringCase(fk.FkColumns[i], fkColumns[i].FkColumnName.ColumnName);
-                StringAssert.AreEqualIgnoringCase(fk.Table.Name, actualForeignKey.Columns[i].FkColumnName.TableName.TableName);
-                StringAssert.AreEqualIgnoringCase(fk.PkColumns[i], fkColumns[i].PkColumnName.ColumnName);
-                StringAssert.AreEqualIgnoringCase(fk.PkTable, actualForeignKey.Columns[i].PkColumnName.TableName.TableName);
+                StringAssert.AreEqualIgnoringCase(fk.FkColumns[i], fkColumns[i].FkColumnRef.Name);
+                StringAssert.AreEqualIgnoringCase(fk.Table.Name, actualForeignKey.Columns[i].FkColumnRef.TableRef.Name);
+                StringAssert.AreEqualIgnoringCase(fk.PkColumns[i], fkColumns[i].PkColumnRef.Name);
+                StringAssert.AreEqualIgnoringCase(fk.PkTable, actualForeignKey.Columns[i].PkColumnRef.TableRef.Name);
             }
         }
     }

@@ -9,9 +9,9 @@ namespace Simple.Metadata
 {
     public class DbTableName : ContextualizedObject
     {
-        public string TableCatalog { get; set; }
-        public string TableSchema { get; set; }
-        public string TableName { get; set; }
+        public string Catalog { get; set; }
+        public string Schema { get; set; }
+        public string Name { get; set; }
 
         public DbTableName(MetaContext context)
             : base(context)
@@ -22,17 +22,17 @@ namespace Simple.Metadata
             : base(context)
         {
             var parts = name.Split('.').Reverse().ToList();
-            if (parts.Count > 0) TableName = parts[0];
-            if (parts.Count > 1) TableSchema = parts[1];
-            if (parts.Count > 2) TableCatalog = parts[2];
+            if (parts.Count > 0) Name = parts[0];
+            if (parts.Count > 1) Schema = parts[1];
+            if (parts.Count > 2) Catalog = parts[2];
         }
 
         public override EqualityHelper CreateHelper()
         {
             return new EqualityHelper<DbTableName>()
-                .Add(x => x.TableCatalog)
-                .Add(x => x.TableSchema)
-                .Add(x => x.TableName);
+                .Add(x => x.Catalog)
+                .Add(x => x.Schema)
+                .Add(x => x.Name);
 
         }
     }
@@ -49,9 +49,9 @@ namespace Simple.Metadata
         public DbTable(MetaContext context, DataRow row)
             : base(context)
         {
-            this.TableCatalog = row.GetValue<string>("TABLE_CATALOG");
-            this.TableSchema = row.GetValue<string>("TABLE_SCHEMA");
-            this.TableName = row.GetValue<string>("TABLE_NAME");
+            this.Catalog = row.GetValue<string>("TABLE_CATALOG");
+            this.Schema = row.GetValue<string>("TABLE_SCHEMA");
+            this.Name = row.GetValue<string>("TABLE_NAME");
             this.TableType = row.GetValue<string>("TABLE_TYPE");
         }
 
@@ -69,12 +69,12 @@ namespace Simple.Metadata
             //all foreign keys columns grouped by fk name
             var keys = new HashSet<DbColumnName>(PrimaryKeyColumns.Select(x => x as DbColumnName));
 
-            var safe = OutRelations.GroupBy(x => x.FkColumnName.TableName).ToDictionary(x => x.Key, x => x.Count());
+            var safe = OutRelations.GroupBy(x => x.FkColumnRef.TableRef).ToDictionary(x => x.Key, x => x.Count());
 
-            ManyToOneRelations = OutRelations.GroupBy(x => x.FkName).Select(x => new DbManyToOne(Context, x.ToList())
+            ManyToOneRelations = OutRelations.GroupBy(x => x.Name).Select(x => new DbManyToOne(Context, x.ToList())
             {
-                IsKey = x.Any(y => keys.Contains(y.FkColumnName)),
-                SafeNaming = safe[x.First().FkColumnName.TableName] == 1
+                IsKey = x.Any(y => keys.Contains(y.FkColumnRef)),
+                SafeNaming = safe[x.First().FkColumnRef.TableRef] == 1
             });
         }
 
@@ -82,11 +82,11 @@ namespace Simple.Metadata
         {
             //all foreign keys columns grouped by fk name
 
-            var safe = InRelations.GroupBy(x => x.FkColumnName.TableName).ToDictionary(x => x.Key, x => x.Count());
+            var safe = InRelations.GroupBy(x => x.FkColumnRef.TableRef).ToDictionary(x => x.Key, x => x.Count());
 
-            OneToManyRelations = InRelations.GroupBy(x => x.FkName).Select(x => new DbOneToMany(Context, x.ToList())
+            OneToManyRelations = InRelations.GroupBy(x => x.Name).Select(x => new DbOneToMany(Context, x.ToList())
             {
-                SafeNaming = safe[x.First().FkColumnName.TableName] == 1
+                SafeNaming = safe[x.First().FkColumnRef.TableRef] == 1
             });
         }
 
@@ -106,7 +106,7 @@ namespace Simple.Metadata
         {
             get
             {
-                var columns = new HashSet<DbColumnName>(OutRelations.Select(x => x.FkColumnName).Distinct());
+                var columns = new HashSet<DbColumnName>(OutRelations.Select(x => x.FkColumnRef).Distinct());
                 return AllColumns.Where(x => columns.Contains(x));
             }
         }

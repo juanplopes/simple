@@ -57,12 +57,12 @@ namespace Simple.Metadata
         {
             var columns = base.GetColumns(table).ToList();
 
-            var table2 = GetConnection().GetSchema("Columns", new[] { table.TableSchema, table.TableName })
+            var table2 = GetConnection().GetSchema("Columns", new[] { table.Schema, table.Name })
                 .Rows.OfType<DataRow>().ToDictionary(x => (string)x["COLUMN_NAME"]);
 
             foreach (var column in columns)
             {
-                column.DataTypeName = table2[column.ColumnName].GetValue<string>("DATATYPE");
+                column.DataTypeName = table2[column.Name].GetValue<string>("DATATYPE");
             }
 
             return columns;
@@ -166,10 +166,10 @@ namespace Simple.Metadata
 
         public override string QualifiedTableName(DbTableName table)
         {
-            if (!string.IsNullOrEmpty(table.TableSchema))
-                return string.Format("{0}.{1}", DoubleQuoteIfNeeded(table.TableSchema), DoubleQuoteIfNeeded(table.TableName));
+            if (!string.IsNullOrEmpty(table.Schema))
+                return string.Format("{0}.{1}", DoubleQuoteIfNeeded(table.Schema), DoubleQuoteIfNeeded(table.Name));
             else
-                return string.Format("{0}", DoubleQuoteIfNeeded(table.TableName));
+                return string.Format("{0}", DoubleQuoteIfNeeded(table.Name));
         }
 
         private string DoubleQuoteIfNeeded(string variable)

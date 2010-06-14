@@ -117,10 +117,10 @@ namespace Simple.Metadata
 
         public override string QualifiedTableName(DbTableName table)
         {
-            if (!string.IsNullOrEmpty(table.TableSchema))
-                return string.Format("{0}.{1}", DoubleQuoteIfNeeded(table.TableSchema), DoubleQuoteIfNeeded(table.TableName));
+            if (!string.IsNullOrEmpty(table.Schema))
+                return string.Format("{0}.{1}", DoubleQuoteIfNeeded(table.Schema), DoubleQuoteIfNeeded(table.Name));
             else
-                return string.Format("{0}", DoubleQuoteIfNeeded(table.TableName));
+                return string.Format("{0}", DoubleQuoteIfNeeded(table.Name));
         }
 
         private string DoubleQuoteIfNeeded(string variable)

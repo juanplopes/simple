@@ -55,9 +55,9 @@ namespace Simple.Metadata
 
         public MetaContext ExecuteCache()
         {
-            OutRelationsByTable = AllRelations.Values.ToLookup(x => x.FkColumnName.TableName);
-            InRelationsByTable = AllRelations.Values.ToLookup(x => x.PkColumnName.TableName);
-            ColumnsByTable = AllColumns.Values.ToLookup(x => x.TableName);
+            OutRelationsByTable = AllRelations.Values.ToLookup(x => x.FkColumnRef.TableRef);
+            InRelationsByTable = AllRelations.Values.ToLookup(x => x.PkColumnRef.TableRef);
+            ColumnsByTable = AllColumns.Values.ToLookup(x => x.TableRef);
 
             return this;
         }
