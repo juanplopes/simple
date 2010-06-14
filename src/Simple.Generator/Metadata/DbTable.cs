@@ -74,7 +74,7 @@ namespace Simple.Metadata
             ManyToOneRelations = OutRelations.GroupBy(x => x.FkName).Select(x => new DbManyToOne(Context, x.ToList())
             {
                 IsKey = x.Any(y => keys.Contains(y.FkColumnName)),
-                SafeNaming = safe[x.First().PkColumnName.TableName] == 1
+                SafeNaming = safe[x.First().FkColumnName.TableName] == 1
             });
         }
 

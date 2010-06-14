@@ -33,8 +33,10 @@ namespace Simple.Metadata
             DataTable tblTables = base.GetDTSchemaTables();
             DataTable tblViews = base.GetDTSchemaTables();
 
-            LoadTableWithCommand(tblTables, "SELECT * FROM ({0}) WHERE TABLE_TYPE!='SYSTEM TABLE'", sqlTables);
-            LoadTableWithCommand(tblViews, "SELECT * FROM ({0}) WHERE TABLE_TYPE!='SYSTEM VIEW'", sqlViews);
+            var tablesClause = GetTablesClause(includedTables, excludedTables, true);
+
+            LoadTableWithCommand(tblTables, "SELECT * FROM ({0}) WHERE TABLE_TYPE!='SYSTEM TABLE' AND ({1})", sqlTables, tablesClause);
+            LoadTableWithCommand(tblViews, "SELECT * FROM ({0}) WHERE TABLE_TYPE!='SYSTEM VIEW' AND ({1})", sqlViews, tablesClause);
 
             foreach (DataRow viewRow in tblViews.Rows)
             {
@@ -46,7 +48,8 @@ namespace Simple.Metadata
         public override IEnumerable<DbRelation> GetConstraints(IList<string> includedTables, IList<string> excludedTables)
         {
             DataTable tbl = new DataTable("Constraints");
-            LoadTableWithCommand(tbl, sqlConstrains);
+            var clause = GetRelationsClause(includedTables, excludedTables, true);
+            LoadTableWithCommand(tbl, "SELECT * FROM ({0}) WHERE ({1})", sqlConstrains, clause);
             return ConstructRelations(tbl.Rows.OfType<DataRow>());
         }
 

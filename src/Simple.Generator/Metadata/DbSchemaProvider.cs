@@ -48,41 +48,44 @@ namespace Simple.Metadata
 
         #region ' IDbProvider Members '
 
-        private string GetRelationsClause(IList<string> included, IList<string> excluded, string type)
+        protected string GetRelationsClause(IList<string> included, IList<string> excluded, bool forceLower)
         {
             return GetGenericClause(
-                new[] { type + "_TABLE_NAME", type + "_TABLE_SCHEMA", type + "_TABLE_CATALOG" },
-                included, excluded) + " AND PK_ORDINAL_POSITION = FK_ORDINAL_POSITION";
+                new[] { "FK_TABLE_NAME", "FK_TABLE_SCHEMA", "FK_TABLE_CATALOG" },
+                included, excluded, forceLower);
         }
 
-        private string GetTablesClause(IList<string> included, IList<string> excluded)
+
+        protected string GetTablesClause(IList<string> included, IList<string> excluded, bool forceLower)
         {
             return GetGenericClause(
                 new[] { "TABLE_NAME", "TABLE_SCHEMA", "TABLE_CATALOG" },
-                included, excluded);
+                included, excluded, forceLower);
         }
 
-        public string GetGenericClause(IList<string> columns, IList<string> included, IList<string> excluded)
+        protected string GetGenericClause(IList<string> columns, IList<string> included, IList<string> excluded, bool forceLower)
         {
             var incString = included.Count > 0 ?
-                string.Join(" OR ", included.Select(x => GetTableWhereClause(columns, "LIKE", x)).ToArray()) :
+                string.Join(" OR ", included.Select(x => GetTableWhereClause(columns, "LIKE", x, forceLower)).ToArray()) :
                 "1=1";
 
             var excString = excluded.Count > 0 ?
-                string.Join(" AND ", excluded.Select(x => GetTableWhereClause(columns, "NOT LIKE", x)).ToArray()) :
+                string.Join(" AND ", excluded.Select(x => GetTableWhereClause(columns, "NOT LIKE", x, forceLower)).ToArray()) :
                 "1=1";
 
             return string.Format("({0}) AND ({1})", incString, excString);
         }
 
 
-        protected string GetTableWhereClause(IList<string> columns, string op, string tableName)
+        protected string GetTableWhereClause(IList<string> columns, string op, string tableName, bool forceLower)
         {
             var names = tableName.Split('.').Reverse().ToList();
 
+            string format = forceLower ? "lower({0}) {1} '{2}'" : "{0} {1} '{2}'";
+
             var clauses = new List<string>();
             for (int i = 0; i < columns.Count && i < names.Count; i++)
-                clauses.Add(string.Format("{0} {1} '{2}'", columns[i], op, names[i]));
+                clauses.Add(string.Format(format, columns[i], op, names[i].ToLower()));
 
             return "(" + string.Join(" AND ", clauses.ToArray()) + ")";
         }
@@ -91,7 +94,7 @@ namespace Simple.Metadata
         {
             return ConstructTables(
                 GetConnection().GetSchema("Tables")
-                .Select(GetTablesClause(includedTables, excludedTables)));
+                .Select(GetTablesClause(includedTables, excludedTables, false)));
         }
 
         virtual protected DbCommand CreateCommand(string sql, params object[] parameters)
@@ -139,7 +142,7 @@ namespace Simple.Metadata
 
         virtual protected IEnumerable<DbRelation> ConstructRelations(IEnumerable<DataRow> relations)
         {
-            return relations.Select(x => new DbRelation(Context, x));
+            return relations.Select(x => new DbRelation(Context, x)).Where(x=>x.FkOrdinalPosition == x.PkOrdinalPosition);
         }
 
 

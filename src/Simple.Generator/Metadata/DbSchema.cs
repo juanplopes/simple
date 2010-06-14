@@ -82,9 +82,9 @@ namespace Simple.Metadata
         {
             using (var provider = GetSchemaProvider(new MetaContext(ConnectionString, Provider)))
             {
-                var tables = provider.GetTables(included, excluded);
-                var relations = provider.GetConstraints(included, excluded);
-                var columns = tables.SelectMany(x => provider.GetColumns(x));
+                var tables = provider.GetTables(included, excluded).ToList();
+                var relations = provider.GetConstraints(included, excluded).ToList();
+                var columns = tables.SelectMany(x => provider.GetColumns(x)).ToList();
 
                 provider.Context
                     .InjectTables(tables)
@@ -100,6 +100,6 @@ namespace Simple.Metadata
         }
 
 
-      
+
     }
 }

@@ -25,11 +25,16 @@ namespace Simple.Tests.Metadata
 
         public void AssertTables(IEnumerable<TableAddAction> tables)
         {
+            var defTables = tables.ToList();
+            
+            var actualTables = Schema.GetTables(defTables.Select(x => x.Name).ToArray())
+                .ToDictionary(x => x.TableName, StringComparer.InvariantCultureIgnoreCase);
+
             foreach (var table in tables)
             {
                 AssertSingleTable(table,
                     tables.SelectMany(x => x.Actions.OfType<ForeignKeyAddAction>().Where(y => y.PkTable == table.Name)).ToList(),
-                    Schema.GetTables(table.Name).Single());
+                    actualTables[table.Name]);
             }
         }
 
@@ -48,7 +53,7 @@ namespace Simple.Tests.Metadata
             Assert.AreEqual(fkColumnCount, actualTable.ForeignKeyColumns.Count());
             Assert.AreEqual(pkColumnCount - fkPkColumnCount, actualTable.PrimaryKeysExceptFk.Count());
 
-            var actualColumns = actualTable.AllColumns.OrderBy(x=>x.ColumnOrdinal).ToList();
+            var actualColumns = actualTable.AllColumns.OrderBy(x => x.ColumnOrdinal).ToList();
             var actualPrimaryKeys = actualTable.PrimaryKeyColumns.OrderBy(x => x.ColumnOrdinal).ToList();
             var actualForeignKeys = actualTable.ManyToOneRelations.ToList();
             var actualOneToMany = actualTable.OneToManyRelations.ToList();
