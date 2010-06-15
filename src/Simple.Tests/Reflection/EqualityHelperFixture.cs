@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using Simple.Entities;
 using Simple.Reflection;
+using System.Linq;
+using System;
 
 namespace Simple.Tests.Reflection
 {
@@ -84,6 +86,28 @@ namespace Simple.Tests.Reflection
         }
 
         [Test]
+        public void TestBasicTypesEqualityOuterWithCustomComparer()
+        {
+            Sample1 obj1 = new Sample1();
+            Sample1 obj2 = new Sample1();
+
+            var helper = new EqualityHelper<Sample1>();
+            helper.Add(x => x.StringProp, StringComparer.InvariantCultureIgnoreCase);
+
+            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+
+            obj1.StringProp = "A";
+            Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
+
+            obj2.StringProp = "A";
+            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+
+            obj1.StringProp = "a";
+            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            Assert.AreEqual(helper.ObjectGetHashCode(obj1), helper.ObjectGetHashCode(obj2));
+        }
+
+        [Test]
         public void TestToStringSingleKey()
         {
             var obj1 = new Sample1();
@@ -108,14 +132,18 @@ namespace Simple.Tests.Reflection
         public void TestIdentifierListMultipleKey()
         {
             var helper = new EqualityHelper<Sample1>(x => x.IntProp, x => x.StringProp);
-            CollectionAssert.AreEquivalent(new[] { "IntProp", "StringProp" }, helper.IdentifierList);
+            CollectionAssert.AreEquivalent(
+                new[] { "IntProp", "StringProp" }, 
+                helper.IdentifierNamesList);
         }
 
         [Test]
         public void TestIdentifierListMultipleKeyUsingEntity()
         {
             new Sample3(); //Workaround TODO
-            CollectionAssert.AreEquivalent(new[] { "IntProp", "StringProp" }, Sample3.Identifiers.IdentifierList);
+            CollectionAssert.AreEquivalent(
+                new[] { "IntProp", "StringProp" },
+                Sample3.Identifiers.IdentifierNamesList);
         }
 
         [Test]

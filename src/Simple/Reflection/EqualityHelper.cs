@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Collections;
+using System.Linq;
+
 
 namespace Simple.Reflection
 {
@@ -24,22 +27,56 @@ namespace Simple.Reflection
             this.Add<T>(expr);
             return this;
         }
+
+        public EqualityHelper<T> Add(Expression<Func<T, object>> expr, IEqualityComparer comparer)
+        {
+            this.Add<T>(expr, comparer);
+            return this;
+        }
     }
 
     public class EqualityHelper
     {
+        public class Entry
+        {
+            public string Property { get; set; }
+            public IEqualityComparer Comparer { get; set; }
+
+            public Entry(string property) : this(property, EqualityComparer<object>.Default)
+            {
+            }
+            public Entry(string property, IEqualityComparer comparer)
+            {
+                Property = property;
+                Comparer = comparer;
+            }
+            public override string ToString()
+            {
+                return Property;
+            }
+          
+        }
+
         protected MethodCache _cache = new MethodCache();
-        protected List<string> _ids = new List<string>();
+        protected List<Entry> _ids = new List<Entry>();
         protected Type _entityType = null;
         protected object _obj = null;
 
         public bool HasIdentifiers { get { return _ids.Count > 0; } }
 
-        public IEnumerable<string> IdentifierList
+        public IEnumerable<Entry> IdentifierList
         {
             get
             {
                 return _ids;
+            }
+        }
+
+        public IEnumerable<string> IdentifierNamesList
+        {
+            get
+            {
+                return _ids.Select(x => x.Property);
             }
         }
 
@@ -70,11 +107,18 @@ namespace Simple.Reflection
 
         public EqualityHelper Add(string propName)
         {
-            _ids.Add(propName);
+            _ids.Add(new Entry(propName));
             return this;
         }
 
-        public EqualityHelper AddMany(IEnumerable<string> props)
+        public EqualityHelper Add(string propName, IEqualityComparer comparer)
+        {
+            _ids.Add(new Entry(propName, comparer));
+            return this;
+        }
+
+
+        public EqualityHelper AddMany(IEnumerable<Entry> props)
         {
             _ids.AddRange(props);
             return this;
@@ -83,6 +127,12 @@ namespace Simple.Reflection
         public EqualityHelper Add<T>(Expression<Func<T, object>> expr)
         {
             Add(ExpressionHelper.GetMemberName(expr));
+            return this;
+        }
+
+        public EqualityHelper Add<T>(Expression<Func<T, object>> expr, IEqualityComparer comparer)
+        {
+            Add(ExpressionHelper.GetMemberName(expr), comparer);
             return this;
         }
 
@@ -107,17 +157,16 @@ namespace Simple.Reflection
             if (!_entityType.IsAssignableFrom(obj2.GetType())) return false;
 
             var ignore = ToHashSet(toIgnore);
-            foreach (string idProp in _ids)
+            foreach (var idProp in _ids)
             {
-                if (ignore.Contains(idProp)) continue;
+                if (ignore.Contains(idProp.Property)) continue;
 
-                PropertyInfo info = _entityType.GetProperty(idProp);
+                PropertyInfo info = _entityType.GetProperty(idProp.Property);
                 InvocationDelegate getter = _cache.GetGetter(info);
                 object value1 = getter(obj1, null);
                 object value2 = getter(obj2, null);
 
-                if (value1 == null ^ value2 == null) return false;
-                if (value1 != null && value2 != null && !value1.Equals(value2)) return false;
+                if (!idProp.Comparer.Equals(value1, value2)) return false;
             }
 
             return true;
@@ -139,18 +188,18 @@ namespace Simple.Reflection
             int res = 1;
 
             var ignore = ToHashSet(toIgnore);
-            foreach (string idProp in _ids)
+            foreach (var idProp in _ids)
             {
-                if (ignore.Contains(idProp)) continue;
+                if (ignore.Contains(idProp.Property)) continue;
 
-                PropertyInfo info = _entityType.GetProperty(idProp);
+                PropertyInfo info = _entityType.GetProperty(idProp.Property);
                 if (info == null) throw new InvalidOperationException("Property not found: " + idProp);
 
                 InvocationDelegate getter = _cache.GetGetter(info);
                 object value = getter(obj, null);
                 if (value != null)
                 {
-                    res ^= value.GetHashCode();
+                    res ^= idProp.Comparer.GetHashCode(value);
                 }
             }
             return res;
@@ -177,9 +226,9 @@ namespace Simple.Reflection
             var ignore = ToHashSet(toIgnore);
             for (int i = 0; i < _ids.Count; i++)
             {
-                if (ignore.Contains(_ids[i])) continue;
+                if (ignore.Contains(_ids[i].Property)) continue;
 
-                response[i] = _ids[i] + "=" + GetToString(_entityType.GetProperty(_ids[i]).GetValue(obj, null));
+                response[i] = _ids[i] + "=" + GetToString(_entityType.GetProperty(_ids[i].Property).GetValue(obj, null));
             }
 
             return "(" + string.Join(" | ", response) + ")";

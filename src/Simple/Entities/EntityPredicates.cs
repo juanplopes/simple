@@ -39,8 +39,8 @@ namespace Simple
             
             var expr = idList.Select(prop =>
             {
-                var property = prop.GetPropertyExpression(param);
-                return Expression.NotEqual(property, prop.EvaluateConstantFor(model));
+                var property = prop.Property.GetPropertyExpression(param);
+                return Expression.NotEqual(property, prop.Property.EvaluateConstantFor(model));
             }).AggregateJoin((expr1, expr2) => Expression.AndAlso(expr1, expr2));
 
             expr = props.OfType<LambdaExpression>().Select(x =>

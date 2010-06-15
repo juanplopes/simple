@@ -63,6 +63,7 @@ namespace Simple.Metadata
                 included, excluded, forceLower);
         }
 
+
         protected string GetGenericClause(IList<string> columns, IList<string> included, IList<string> excluded, bool forceLower)
         {
             var incString = included.Count > 0 ?
