@@ -50,6 +50,7 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="Generator\ProjectWriter.cs" />
     <Compile Include="Metadata\ContextualizedObject.cs" />
     <Compile Include="Metadata\DataRowExtensions.cs" />
     <Compile Include="Metadata\MetaContext.cs" />
@@ -167,9 +168,6 @@
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
       <Name>00_Simple</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Generator\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

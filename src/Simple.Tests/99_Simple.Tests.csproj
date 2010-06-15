@@ -123,6 +123,11 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Common\EnumerableFixture.cs" />
+    <Compile Include="CsProjects.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CsProjects.resx</DependentUpon>
+    </Compile>
     <Compile Include="Data\EntityFetchFixture.cs" />
     <Compile Include="Data\EntityHelperIntegrationFixture.cs" />
     <Compile Include="Data\TransactionHookFixture.cs" />
@@ -140,6 +145,7 @@
     <Compile Include="Expressions\EmptyQueryableFixture.cs" />
     <Compile Include="Expressions\InvocationExpanderFixture.cs" />
     <Compile Include="Expressions\LazyExpressionFixture.cs" />
+    <Compile Include="Generator\ProjectWriterFixture.cs" />
     <Compile Include="IO\CommandLineReaderFixture.cs" />
     <Compile Include="IO\FileSizeFixture.cs" />
     <Compile Include="IO\LazySerializerFixture.cs" />
@@ -283,6 +289,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CsProjects.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CsProjects.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Database.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Database.Designer.cs</LastGenOutput>
@@ -312,6 +322,7 @@
     <Content Include="..\..\databases.xml">
       <Link>databases.xml</Link>
     </Content>
+    <None Include="Resources\00_Simple.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
