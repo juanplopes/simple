@@ -46,8 +46,7 @@ namespace Simple.Generator
             if (values.Count != 1)
                 throw new ArgumentException(string.Format("invalid number of arguments: {0}", values.Count));
 
-            ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator,
-                (P)Convert.ChangeType(values.First(), TypesHelper.GetValueTypeIfNullable(typeof(P))));
+            ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator, values.First());
         }
     }
 
@@ -57,8 +56,7 @@ namespace Simple.Generator
         protected override void ParseInternal(IList<string> values, IGenerator generator)
         {
             ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator,
-                values.Select(x => (P)Convert.ChangeType(x,
-                    TypesHelper.GetValueTypeIfNullable(typeof(P)))).ToList());
+                values.Select(x => (P)Convert.ChangeType(x, typeof(P).GetValueTypeIfNullable())).ToList());
         }
     }
 }

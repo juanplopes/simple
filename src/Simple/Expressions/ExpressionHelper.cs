@@ -149,7 +149,7 @@ namespace Simple
 
             if (value != null && !prop.PropertyType.IsAssignableFrom(value.GetType()))
                 if (value.GetType().CanAssign(typeof(IConvertible)))
-                    value = Convert.ChangeType(value, prop.PropertyType, CultureInfo.InvariantCulture);
+                    value = Convert.ChangeType(value, prop.PropertyType.GetValueTypeIfNullable(), CultureInfo.InvariantCulture);
                 else
                     throw new ArgumentException(string.Format("Don't know how to convert from {0} to {1}",
                         value.GetType().GetRealClassName(),
