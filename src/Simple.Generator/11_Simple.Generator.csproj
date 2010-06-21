@@ -50,7 +50,13 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="Generator\GeneratorOptions.cs" />
+    <Compile Include="Generator\GeneratorResolver.cs" />
+    <Compile Include="Generator\IGenerator.cs" />
+    <Compile Include="Generator\IGeneratorOptions.cs" />
+    <Compile Include="Generator\InitialGeneratorOptions.cs" />
     <Compile Include="Generator\ProjectWriter.cs" />
+    <Compile Include="Generator\RegexHelper.cs" />
     <Compile Include="Metadata\ContextualizedObject.cs" />
     <Compile Include="Metadata\DataRowExtensions.cs" />
     <Compile Include="Metadata\MetaContext.cs" />

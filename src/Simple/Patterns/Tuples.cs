@@ -34,6 +34,29 @@ namespace Simple.Patterns
         }
     }
 
+    public static class Tuples
+    {
+        public static Pair<T> Get<T>(T first, T second)
+        {
+            return new Pair<T>(first, second);
+        }
+
+        public static Pair<T, Q> Get<T, Q>(T first, Q second)
+        {
+            return new Pair<T, Q>(first, second);
+        }
+
+        public static Triplet<T> Get<T>(T first, T second, T third)
+        {
+            return new Triplet<T>(first, second, third);
+        }
+
+        public static Triplet<T, Q, P> Get<T, Q, P>(T first, Q second, P third)
+        {
+            return new Triplet<T, Q, P>(first, second, third);
+        }
+    }
+
     [Serializable]
     public class Pair<T, Q>
     {
