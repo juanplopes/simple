@@ -33,11 +33,16 @@ namespace Simple.Generator
 
         public IGenerator Resolve(string cmdLine)
         {
+            return Resolve(cmdLine, false);
+        }
+
+        public IGenerator Resolve(string cmdLine, bool ignoreExceedingArgs)
+        {
             cmdLine = cmdLine.CorrectInput();
             
             var parser = FindParser(cmdLine);
-            cmdLine = cmdLine.Replace(parser.First, "");
-            return parser.Second.Parse(cmdLine);
+            cmdLine = cmdLine.Remove(cmdLine.IndexOf(parser.First), parser.First.Length);
+            return parser.Second.Parse(cmdLine, ignoreExceedingArgs);
         }
 
         private Pair<string, IGeneratorOptions> FindParser(string cmdLine)

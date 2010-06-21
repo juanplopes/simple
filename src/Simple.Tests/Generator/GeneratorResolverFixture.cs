@@ -17,8 +17,8 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleStringList(), "test1");
             resolver.Register(() => new SampleDateTimeList(), "test2");
 
-            var generator1 = resolver.Resolve("test1 test");
-            var generator2 = resolver.Resolve("test2 test");
+            var generator1 = resolver.Resolve("test1 test", true);
+            var generator2 = resolver.Resolve("test2 test", true);
 
 
             Assert.IsInstanceOf<SampleStringList>(generator1);
@@ -31,7 +31,7 @@ namespace Simple.Tests.Generator
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "test1");
 
-            Assert.Throws<ArgumentException>(()=>resolver.Resolve("test1t(test)"));
+            Assert.Throws<ArgumentException>(() => resolver.Resolve("test1t(test)", true));
         }
 
 
@@ -42,8 +42,8 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleStringList(), "test1");
             resolver.Register(() => new SampleDateTimeList(), "test2");
 
-            var generator1 = resolver.Resolve(" test1 test");
-            var generator2 = resolver.Resolve(" test2 test");
+            var generator1 = resolver.Resolve(" test1 test", true);
+            var generator2 = resolver.Resolve(" test2 test", true);
 
 
             Assert.IsInstanceOf<SampleStringList>(generator1);
@@ -57,8 +57,8 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleStringList(), "test1");
             resolver.Register(() => new SampleDateTimeList(), "test2");
 
-            var generator1 = resolver.Resolve("test1 test ");
-            var generator2 = resolver.Resolve("test2 test ");
+            var generator1 = resolver.Resolve("test1 test ", true);
+            var generator2 = resolver.Resolve("test2 test ", true);
 
 
             Assert.IsInstanceOf<SampleStringList>(generator1);
@@ -73,8 +73,8 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleStringList(), "test1 a");
             resolver.Register(() => new SampleDateTimeList(), "test2 b");
 
-            var generator1 = resolver.Resolve("test1    a");
-            var generator2 = resolver.Resolve("test2    b");
+            var generator1 = resolver.Resolve("test1    a", true);
+            var generator2 = resolver.Resolve("test2    b", true);
 
 
             Assert.IsInstanceOf<SampleStringList>(generator1);
@@ -88,8 +88,8 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleStringList(), "test1 a");
             resolver.Register(() => new SampleDateTimeList(), "test2 b");
 
-            var generator1 = resolver.Resolve("test1    a(test)");
-            var generator2 = resolver.Resolve("test2    b(test)");
+            var generator1 = resolver.Resolve("test1    a(test)", true);
+            var generator2 = resolver.Resolve("test2    b(test)", true);
 
 
             Assert.IsInstanceOf<SampleStringList>(generator1);
@@ -103,8 +103,8 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleStringList(), "test1 a");
             resolver.Register(() => new SampleDateTimeList(), "test2 b");
 
-            var generator1 = resolver.Resolve("test1    a (test)");
-            var generator2 = resolver.Resolve("test2    b (test)");
+            var generator1 = resolver.Resolve("test1    a (test)", true);
+            var generator2 = resolver.Resolve("test2    b (test)", true);
 
 
             Assert.IsInstanceOf<SampleStringList>(generator1);
@@ -119,7 +119,7 @@ namespace Simple.Tests.Generator
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "test1 a");
             resolver.Register(() => new SampleDateTimeList(), "test1");
-            resolver.Resolve("test1    a (test)");
+            resolver.Resolve("test1    a (test)", true);
         }
 
 

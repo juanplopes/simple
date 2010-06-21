@@ -31,12 +31,22 @@ namespace Simple.Generator
         }
 
 
-        public IGenerator Parse(string parameters)
+        public IGenerator Parse(string parameters, bool ignoreExceedingArgs)
         {
             var result = _generator();
 
             foreach (var parser in Parsers)
                 parameters = parser.Parse(parameters, result);
+
+            parameters = parameters.Trim();
+            if (parameters.Length > 0)
+            {
+                string message = string.Format("unrecognized options: {0}", parameters);
+                if (!ignoreExceedingArgs)
+                    throw new ArgumentException(message);
+                else
+                    Simply.Do.Log(this).Warn(message);
+            }
 
             return result;
         }

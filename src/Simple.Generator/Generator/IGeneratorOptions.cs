@@ -8,6 +8,6 @@ namespace Simple.Generator
     public interface IGeneratorOptions
     {
         string GeneratorType { get; }
-        IGenerator Parse(string parameters);
+        IGenerator Parse(string parameters, bool ignoreExceedingArgs);
     }
 }
