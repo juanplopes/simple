@@ -8,6 +8,7 @@ namespace Simple.Generator
 {
     public static class RegexHelper
     {
+        public const string ValueGroup = "value";
         public const string ListRegexString = @"\(?(\s*(?<value>\w+)\s*,)*(\s*(?<value>\w+)\s*)\)?";
         
         private static Regex _listRegex = new Regex(ListRegexString.ToRegexFormat(true), RegexOptions.Compiled);

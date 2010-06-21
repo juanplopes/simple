@@ -46,7 +46,7 @@ namespace Simple.Generator
 
             if (parsers.Count > 1)
                 throw new ArgumentException("Multiple generator found for input '{0}': {1}".AsFormat(
-                    cmdLine, GetParserListString(parsers)), "cmdLine");
+                    cmdLine, GetParserListString(parsers)));
 
             if (parsers.Count == 0)
                 throw new ArgumentException("No generator found for input '{0}'".AsFormat(cmdLine));

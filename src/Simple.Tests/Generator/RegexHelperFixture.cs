@@ -23,7 +23,7 @@ namespace Simple.Tests.Generator
         private static void AssertRegex(string[] array, string str)
         {
             CollectionAssert.AreEqual(array,
-                RegexHelper.ListRegex.Match(str).Groups["value"].Captures.OfType<Capture>().Select(x => x.Value).ToArray());
+                RegexHelper.ListRegex.Match(str).Groups[RegexHelper.ValueGroup].Captures.OfType<Capture>().Select(x => x.Value).ToArray());
         }
 
 

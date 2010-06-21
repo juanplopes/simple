@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Simple.Tests.Expressions
 {
@@ -22,6 +23,7 @@ namespace Simple.Tests.Expressions
         {
             public int IntProp { get; set; }
             public D DProp { get; set; }
+            public IList<D> DList { get; set; }
         }
 
         class D
@@ -67,6 +69,18 @@ namespace Simple.Tests.Expressions
             Assert.IsNotNull(a.BProp);
             Assert.AreEqual(42, a.BProp.Diff);
         }
+
+        [Test]
+        public void TestSimplePropertySetList()
+        {
+            Expression<Func<A, IList<D>>> lambda = x => x.BProp.CProp.DList;
+
+            A a = new A();
+            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new[] { new D(1), new D(2) });
+
+            Assert.IsNotNull(a.BProp.CProp.DList);
+        }
+
 
         [Test, ExpectedException(typeof(InvalidOperationException))]
         public void FailSettingMethod()

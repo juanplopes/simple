@@ -15,7 +15,13 @@ namespace Simple.Generator
 
         public GeneratorOptions<T> Argument<P>(Expression<Func<T, P>> into)
         {
-            Parsers.Add(Tuples.Get(RegexHelper.ListRegex, (MemberExpression)into.Body));
+            Parsers.Add(new GeneratorValueParser<T, P>(RegexHelper.ListRegex, into));
+            return this;
+        }
+
+        public GeneratorOptions<T> ArgumentList<P>(Expression<Func<T, IEnumerable<P>>> into)
+        {
+            Parsers.Add(new GeneratorListParser<T, P>(RegexHelper.ListRegex, into));
             return this;
         }
     }

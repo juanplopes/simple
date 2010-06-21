@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Simple.Reflection;
+using System.Globalization;
 
 namespace Simple
 {
@@ -146,8 +147,15 @@ namespace Simple
                 if (prop == null) throw new InvalidOperationException("Cannot have method on the way");
             }
 
-            MethodCache.Do.GetSetter(prop)(target,
-                Convert.ChangeType(value, prop.PropertyType), null);
+            if (value != null && !prop.PropertyType.IsAssignableFrom(value.GetType()))
+                if (value.GetType().CanAssign(typeof(IConvertible)))
+                    value = Convert.ChangeType(value, prop.PropertyType, CultureInfo.InvariantCulture);
+                else
+                    throw new ArgumentException(string.Format("Don't know how to convert from {0} to {1}",
+                        value.GetType().GetRealClassName(),
+                        prop.PropertyType.GetRealClassName()));
+
+            MethodCache.Do.GetSetter(prop)(target, value, null);
         }
     }
 }

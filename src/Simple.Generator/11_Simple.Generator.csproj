@@ -51,6 +51,7 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Generator\GeneratorOptions.cs" />
+    <Compile Include="Generator\GeneratorParser.cs" />
     <Compile Include="Generator\GeneratorResolver.cs" />
     <Compile Include="Generator\IGenerator.cs" />
     <Compile Include="Generator\IGeneratorOptions.cs" />

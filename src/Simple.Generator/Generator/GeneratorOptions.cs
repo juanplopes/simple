@@ -12,9 +12,7 @@ namespace Simple.Generator
         where T : IGenerator
     {
         Func<T> _generator;
-        protected List<Pair<Regex, MemberExpression>> Parsers = 
-            new List<Pair<Regex, MemberExpression>>();
-
+        protected List<IGeneratorParser> Parsers = new List<IGeneratorParser>();
         public GeneratorOptions(Func<T> generator)
         {
             this._generator = generator;
@@ -26,17 +24,19 @@ namespace Simple.Generator
             return this;
         }
 
-        public string Apply(string parameters, Pair<Regex, MemberExpression> parser, IGenerator generator)
+
+        private void ApplyEnumerable(IGenerator generator, IList<string> values, MemberExpression memberExpression, Type innerType)
         {
-            return parameters;
+            memberExpression.SetValue(generator, values.Select(x => Convert.ChangeType(x, innerType)).ToArray());
         }
+
 
         public IGenerator Parse(string parameters)
         {
             var result = _generator();
 
             foreach (var parser in Parsers)
-                parameters = Apply(parameters, parser, result);
+                parameters = parser.Parse(parameters, result);
 
             return result;
         }
