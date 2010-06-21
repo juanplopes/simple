@@ -21,17 +21,24 @@ namespace Simple.Generator
         }
 
 
-        public GeneratorOptions<T> Parameter<P>(string name, Expression<Func<T, P>> into)
+        public GeneratorOptions<T> Option<P>(string name, Expression<Func<T, P>> into)
         {
             return this;
         }
 
+        public string Apply(string parameters, Pair<Regex, MemberExpression> parser, IGenerator generator)
+        {
+            return parameters;
+        }
 
         public IGenerator Parse(string parameters)
         {
-            parameters = parameters.Trim();
+            var result = _generator();
 
-            return _generator();
+            foreach (var parser in Parsers)
+                parameters = Apply(parameters, parser, result);
+
+            return result;
         }
 
         public string GeneratorType

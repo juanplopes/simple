@@ -42,7 +42,7 @@ namespace Simple.Generator
 
         private Pair<string, IGeneratorOptions> FindParser(string cmdLine)
         {
-            var parsers = Parsers.Where(x => Regex.IsMatch(cmdLine,"^" + x.First + @"(\s|$)")).ToList();
+            var parsers = Parsers.Where(x => Regex.IsMatch(cmdLine, x.First.ToRegexFormat(true))).ToList();
 
             if (parsers.Count > 1)
                 throw new ArgumentException("Multiple generator found for input '{0}': {1}".AsFormat(

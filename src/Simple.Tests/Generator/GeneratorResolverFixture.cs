@@ -13,6 +13,7 @@ namespace Simple.Tests.Generator
         public void CanSelectCorrectGenerator()
         {
             var resolver = new GeneratorResolver();
+
             resolver.Register(() => new SampleStringList(), "test1");
             resolver.Register(() => new SampleDateTimeList(), "test2");
 

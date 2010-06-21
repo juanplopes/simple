@@ -4,11 +4,29 @@ using System.Linq;
 using System.Text;
 using Simple.Generator;
 using NUnit.Framework;
+using System.Text.RegularExpressions;
 
 namespace Simple.Tests.Generator
 {
     public class RegexHelperFixture
     {
+        [Test]
+        public void ListRegexFormatDoestItsWork()
+        {
+            AssertRegex(new[] { "asd", "qwe", "zxc" }, "asd  ,qwe,   zxc");
+            AssertRegex(new[] { "asd", "qwe", "zxc" }, "( asd  ,qwe,   zxc )");
+            AssertRegex(new[] { "asd", "qwe", "zxc" }, "   ( asd  ,qwe,   zxc )   ");
+            AssertRegex(new string[0], ";;;   ( asd  ,qwe,   zxc )   ");
+            AssertRegex(new[] { "asd" }, "asd");
+        }
+
+        private static void AssertRegex(string[] array, string str)
+        {
+            CollectionAssert.AreEqual(array,
+                RegexHelper.ListRegex.Match(str).Groups["value"].Captures.OfType<Capture>().Select(x => x.Value).ToArray());
+        }
+
+
         [Test]
         public void CanCorrectDoubleSpacedStrings()
         {

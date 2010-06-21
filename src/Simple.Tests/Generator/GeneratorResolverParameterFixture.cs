@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple.Generator;
+using System.Text.RegularExpressions;
 
 namespace Simple.Tests.Generator
 {
@@ -15,7 +16,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "sample")
-                .List(x => x.TestList);
+                .Argument(x => x.TestList);
 
             var generator = resolver.Resolve("sample test");
 
@@ -28,7 +29,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "sample")
-                .List(x => x.TestList);
+                .Argument(x => x.TestList);
 
             var generator = resolver.Resolve("sample test, test2, test3");
 
@@ -41,7 +42,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "sample")
-                .List(x => x.TestList);
+                .Argument(x => x.TestList);
 
             var generator = resolver.Resolve("sample (test, test2, test3)");
 
