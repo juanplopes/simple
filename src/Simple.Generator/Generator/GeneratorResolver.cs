@@ -39,15 +39,15 @@ namespace Simple.Generator
             return opts;
         }
 
-        public GeneratorResolver WithHelp(IHelpWriter writer)
+        public GeneratorResolver WithHelp(params IHelpWriter[] writers)
         {
-            this.Register(() => new HelpTextGenerator(this, writer), "help")
-                .ArgumentList("commands", x=>x.OptionNames);
+            this.Register(() => new HelpTextGenerator(this, writers), "help")
+                .ArgumentList("commands", x => x.OptionNames);
             return this;
         }
-        public GeneratorResolver WithHelp(TextWriter writer)
+        public GeneratorResolver WithHelp(params TextWriter[] writers)
         {
-            return WithHelp(new HelpTextWriter(writer));
+            return WithHelp(writers.Select(x => new HelpTextWriter(x)).ToArray());
         }
 
         public GeneratorResolver WithHelp()

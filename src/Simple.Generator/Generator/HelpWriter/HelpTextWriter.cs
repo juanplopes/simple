@@ -55,10 +55,19 @@ namespace Simple.Generator.HelpWriter
 
                 Writer.Write("Command: ");
                 WriteCommandName(cmd.First, cmd.Second);
-                Writer.WriteLine("Available options:");
 
-                foreach (var option in cmd.Second.Options)
-                    Writer.WriteLine("> {0} [{1}]", option.Name, option.Member.Type.GetRealClassName());
+                var options = cmd.Second.Options.ToList();
+
+                if (options.Count > 0)
+                {
+                    Writer.WriteLine("Available options:");
+                    foreach (var option in cmd.Second.Options)
+                        Writer.WriteLine("> {0} [{1}]", option.Name, option.Member.Type.GetRealClassName());
+                }
+                else
+                {
+                    Writer.WriteLine("No available options.");
+                }
             }
         }
 

@@ -41,6 +41,9 @@ cmd1 b <cmd1_arguments> (IList<String>)
 > Generator: Sample1
 
 cmd2
+> Generator: Sample2
+
+noopt
 > Generator: Sample2", text);
 
         }
@@ -61,6 +64,22 @@ Available options:
 > opt1 [Int32]
 > opt2 [String]", text);
         }
+
+        [Test]
+        public void CanWriteHelpInfoForNoOptionCommand()
+        {
+            var writer = new StringWriter();
+            var r = Sample(writer);
+            r.Resolve("help noopt").Execute();
+
+            var text = writer.ToString();
+            AssertTexts(
+@"Commands found: 1
+
+Command: noopt
+No available options.", text);
+        }
+
 
         [Test]
         public void CanWriteHelpInfoForCmd1Generic()
@@ -134,7 +153,7 @@ Available options:
 
         public GeneratorResolver Sample(TextWriter writer)
         {
-            var r = new GeneratorResolver().WithHelp(writer);
+            var r = new GeneratorResolver().WithHelp(writer, Console.Out);
 
             r.Register<Sample1>("cmd1 a", "cmd1 b")
                 .ArgumentList("cmd1_arguments", x => x.Arguments)
@@ -144,6 +163,8 @@ Available options:
             r.Register<Sample2>("cmd2")
               .Option("opt1", x => x.Option1)
               .Option("opt2", x => x.Option2);
+
+            r.Register<Sample2>("noopt");
 
             return r;
         }
