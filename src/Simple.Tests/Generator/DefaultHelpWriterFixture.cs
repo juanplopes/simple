@@ -54,7 +54,9 @@ cmd2
 
             var text = writer.ToString();
             AssertTexts(
-@"Command: cmd1 a <cmd1_arguments> (IList<String>)
+@"Commands found: 1
+
+Command: cmd1 a <cmd1_arguments> (IList<String>)
 Available options:
 > opt1 [Int32]
 > opt2 [String]", text);
@@ -69,7 +71,9 @@ Available options:
 
             var text = writer.ToString();
             AssertTexts(
-@"Command: cmd1 a <cmd1_arguments> (IList<String>)
+@"Commands found: 2
+
+Command: cmd1 a <cmd1_arguments> (IList<String>)
 Available options:
 > opt1 [Int32]
 > opt2 [String]
@@ -89,7 +93,9 @@ Available options:
 
             var text = writer.ToString();
             AssertTexts(
-@"Command: cmd1 a <cmd1_arguments> (IList<String>)
+@"Commands found: 3
+
+Command: cmd1 a <cmd1_arguments> (IList<String>)
 Available options:
 > opt1 [Int32]
 > opt2 [String]
@@ -113,7 +119,7 @@ Available options:
             r.Resolve("help 'asd qwe'").Execute();
 
             var text = writer.ToString();
-            AssertTexts(@"Command not found.", text);
+            AssertTexts(@"Commands found: 0", text);
         }
 
         public void AssertTexts(string expected, string actual)

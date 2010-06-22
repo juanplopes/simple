@@ -34,13 +34,12 @@ namespace Simple.Generator.HelpWriter
         public void Write(GeneratorResolver resolver)
         {
             Writer.WriteLine("Available commands: (say 'help <commands>' for more info)");
-            Blank();
 
             foreach (var command in resolver.GetMeta())
             {
+                Blank(); 
                 WriteCommandName(command.First, command.Second);
                 Writer.WriteLine("> Generator: {0}", command.Second.GeneratorType);
-                Blank();
             }
         }
 
@@ -48,20 +47,18 @@ namespace Simple.Generator.HelpWriter
         {
             var list = commands.ToList();
 
-            if (!list.Any())
-                Writer.WriteLine("Command not found.");
-
+            Writer.WriteLine("Commands found: {0}", list.Count);
 
             foreach (var cmd in list)
             {
+                Blank();
+
                 Writer.Write("Command: ");
                 WriteCommandName(cmd.First, cmd.Second);
                 Writer.WriteLine("Available options:");
 
                 foreach (var option in cmd.Second.Options)
                     Writer.WriteLine("> {0} [{1}]", option.Name, option.Member.Type.GetRealClassName());
-
-                Blank();
             }
         }
 
