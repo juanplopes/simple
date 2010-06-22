@@ -9,7 +9,7 @@ namespace Simple.Generator
 {
     public class GeneratorResolver
     {
-        protected List<Pair<string, IGeneratorOptions>> Parsers = 
+        protected List<Pair<string, IGeneratorOptions>> Parsers =
             new List<Pair<string, IGeneratorOptions>>();
 
         //new migration
@@ -39,7 +39,7 @@ namespace Simple.Generator
         public IGenerator Resolve(string cmdLine, bool ignoreExceedingArgs)
         {
             cmdLine = cmdLine.CorrectInput();
-            
+
             var parser = FindParser(cmdLine);
             cmdLine = cmdLine.Remove(cmdLine.IndexOf(parser.First), parser.First.Length);
             return parser.Second.Parse(cmdLine, ignoreExceedingArgs);
@@ -50,19 +50,14 @@ namespace Simple.Generator
             var parsers = Parsers.Where(x => Regex.IsMatch(cmdLine, x.First.ToRegexFormat(true))).ToList();
 
             if (parsers.Count > 1)
-                throw new ArgumentException("Multiple generator found for input '{0}': {1}".AsFormat(
-                    cmdLine, GetParserListString(parsers)));
+                throw new AmbiguousCommandException(cmdLine, parsers.Select(x => x.Second));
 
             if (parsers.Count == 0)
-                throw new ArgumentException("No generator found for input '{0}'".AsFormat(cmdLine));
+                throw new InvalidCommandException(cmdLine);
 
             var parser = parsers.First();
             return parser;
         }
 
-        private static string GetParserListString(List<Pair<string, IGeneratorOptions>> parsers)
-        {
-            return string.Join(", ", parsers.Select(x => x.Second.GeneratorType).ToArray());
-        }
     }
 }

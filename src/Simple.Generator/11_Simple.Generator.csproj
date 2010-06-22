@@ -54,6 +54,10 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="Generator\AmbiguousCommandException.cs" />
+    <Compile Include="Generator\UnrecognizedOptionsException.cs" />
+    <Compile Include="Generator\InvalidArgumentCountException.cs" />
+    <Compile Include="Generator\InvalidCommandException.cs" />
     <Compile Include="Generator\GeneratorOptions.cs" />
     <Compile Include="Generator\GeneratorParser.cs" />
     <Compile Include="Generator\GeneratorResolver.cs" />

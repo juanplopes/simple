@@ -49,11 +49,10 @@ namespace Simple.Generator
             parameters = parameters.Trim();
             if (parameters.Length > 0)
             {
-                string message = string.Format("unrecognized options: {0}", parameters);
                 if (!ignoreExceedingArgs)
-                    throw new ArgumentException(message);
+                    throw new UnrecognizedOptionsException(parameters);
                 else
-                    Simply.Do.Log(this).Warn(message);
+                    Simply.Do.Log(this).Warn(string.Format("Unrecognized options: {0}", parameters));
             }
 
             return result;

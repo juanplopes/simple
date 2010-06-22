@@ -31,7 +31,7 @@ namespace Simple.Tests.Generator
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "test1");
 
-            Assert.Throws<ArgumentException>(() => resolver.Resolve("test1t(test)", true));
+            Assert.Throws<InvalidCommandException>(() => resolver.Resolve("test1t(test)", true));
         }
 
 
@@ -111,7 +111,7 @@ namespace Simple.Tests.Generator
             Assert.IsInstanceOf<SampleDateTimeList>(generator2);
         }
 
-        [Test, ExpectedException(typeof(ArgumentException), 
+        [Test, ExpectedException(typeof(AmbiguousCommandException), 
             ExpectedMessage="SampleStringList, SampleDateTimeList",
             MatchType=MessageMatch.Contains)]
         public void CannotSelectCorrectGeneratorWhenFoundMultiple()

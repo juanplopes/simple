@@ -95,7 +95,7 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleSingleInt(), "sample")
                 .Argument(x => x.Test);
 
-            Assert.Throws<ArgumentException>(() => resolver.Resolve("sample "), "invalid number of arguments: 0");
+            Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample "), "invalid number of arguments: 0");
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleSingleInt(), "sample")
                 .Argument(x => x.Test);
 
-            Assert.Throws<ArgumentException>(() => resolver.Resolve("sample 1,2"), "invalid number of arguments: 2");
+            Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample 1,2"), "invalid number of arguments: 2");
         }
 
         [Test]

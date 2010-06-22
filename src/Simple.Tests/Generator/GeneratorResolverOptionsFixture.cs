@@ -50,6 +50,17 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
+        public void CannotBindBooleanShorthandAndNormalAtSameTime()
+        {
+            var resolver = new GeneratorResolver();
+            resolver.Register(() => new SampleBoolean(), "sample")
+                .Option("lasers", x => x.Test);
+
+            Assert.Throws<UnrecognizedOptionsException>(
+                ()=>resolver.Resolve("sample +lasers:true"));
+        }
+
+        [Test]
         public void CanBindBooleanNormal()
         {
             var resolver = new GeneratorResolver();
@@ -108,7 +119,7 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleString(), "sample")
                 .Option("with", x => x.Test);
 
-            Assert.Throws<ArgumentException>(() => resolver.Resolve("sample with lasers, test "));
+            Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample with lasers, test "));
         }
 
         public class SampleString : IGenerator
