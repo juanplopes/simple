@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Simple.Patterns;
+using Simple.Generator.HelpWriter;
+using System.IO;
 
 namespace Simple.Generator
 {
@@ -12,11 +14,18 @@ namespace Simple.Generator
         protected List<Pair<string, IGeneratorOptions>> Parsers =
             new List<Pair<string, IGeneratorOptions>>();
 
-        //new migration
-        //scaffold t_clients_%
-        //scaffold * +replace
-        //scaffold(table1, table2, -whatever) +noreplace
-        //gsvc(table1, table2) 
+        public IEnumerable<Pair<string, IGeneratorOptions>> GetMeta()
+        {
+            return Parsers;
+        }
+
+
+        public InitialGeneratorOptions<T> Register<T>(params string[] cmds)
+            where T : IGenerator, new()
+        {
+            return Register(() => new T(), cmds);
+        }
+
 
         public InitialGeneratorOptions<T> Register<T>(Func<T> generator, params string[] cmds)
             where T : IGenerator
@@ -28,6 +37,22 @@ namespace Simple.Generator
                 Parsers.Add(new Pair<string, IGeneratorOptions>(cmd, opts));
 
             return opts;
+        }
+
+        public GeneratorResolver WithHelp(IHelpWriter writer)
+        {
+            this.Register(() => new HelpTextGenerator(this, writer), "help")
+                .ArgumentList("commands", x=>x.OptionNames);
+            return this;
+        }
+        public GeneratorResolver WithHelp(TextWriter writer)
+        {
+            return WithHelp(new HelpTextWriter(writer));
+        }
+
+        public GeneratorResolver WithHelp()
+        {
+            return WithHelp(Console.Out);
         }
 
 

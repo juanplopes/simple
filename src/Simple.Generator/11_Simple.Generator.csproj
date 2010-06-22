@@ -55,11 +55,18 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Generator\AmbiguousCommandException.cs" />
+    <Compile Include="Generator\HelpWriter\IHelpWriter.cs" />
+    <Compile Include="Generator\HelpWriter\HelpTextWriter.cs" />
+    <Compile Include="Generator\HelpWriter\HelpTextGenerator.cs" />
+    <Compile Include="Generator\Parsers\GeneratorListParser.cs" />
+    <Compile Include="Generator\Parsers\GeneratorValueParser.cs" />
+    <Compile Include="Generator\Parsers\IGeneratorParser.cs" />
+    <Compile Include="Generator\Parsers\Regexes.cs" />
     <Compile Include="Generator\UnrecognizedOptionsException.cs" />
     <Compile Include="Generator\InvalidArgumentCountException.cs" />
     <Compile Include="Generator\InvalidCommandException.cs" />
     <Compile Include="Generator\GeneratorOptions.cs" />
-    <Compile Include="Generator\GeneratorParser.cs" />
+    <Compile Include="Generator\Parsers\GeneratorParser.cs" />
     <Compile Include="Generator\GeneratorResolver.cs" />
     <Compile Include="Generator\IGenerator.cs" />
     <Compile Include="Generator\IGeneratorOptions.cs" />

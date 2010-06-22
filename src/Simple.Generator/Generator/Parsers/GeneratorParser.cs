@@ -5,21 +5,21 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq.Expressions;
 
-namespace Simple.Generator
+namespace Simple.Generator.Parsers
 {
-    public interface IGeneratorParser
-    {
-        string Parse(string args, IGenerator generator);
-    }
 
     public abstract class GeneratorParser<T, P> : IGeneratorParser
     {
-        protected Regex RegularExpression { get; private set; }
-        protected Expression<Func<T, P>> Expression { get; private set; }
+        public Regex RegularExpression { get; private set; }
+        public string Name { get; private set; }
+        public MemberExpression Member { get { return (MemberExpression)Expression.Body; } }
 
-        public GeneratorParser(Regex regex, Expression<Func<T, P>> expression)
+        public Expression<Func<T, P>> Expression { get; private set; }
+
+        public GeneratorParser(bool mustBeExplicit, string name, Expression<Func<T, P>> expression)
         {
-            RegularExpression = regex;
+            Name = name ?? string.Empty;
+            RegularExpression = (!mustBeExplicit) ? Regexes.ListRegex : Regexes.OptionRegex(name);
             Expression = expression;
         }
 
@@ -39,7 +39,7 @@ namespace Simple.Generator
 
         protected IList<string> ExtractValues(Match match)
         {
-            return match.Groups[RegexHelper.ValueGroup]
+            return match.Groups[Regexes.ValueGroup]
                 .Captures.OfType<Capture>().Select(x => x.Value).ToList();
         }
 
@@ -68,32 +68,14 @@ namespace Simple.Generator
                 case "n":
                 case "no":
                     return "false";
-                    
+
                 default:
                     return value;
             }
         }
     }
 
-    public class GeneratorValueParser<T, P> : GeneratorParser<T, P>
-    {
-        public GeneratorValueParser(Regex regex, Expression<Func<T, P>> expression) : base(regex, expression) { }
-        protected override void ParseInternal(string match, IList<string> values, IGenerator generator)
-        {
-            if (values.Count != 1)
-                throw new InvalidArgumentCountException(match, 1, values.Count);
 
-            ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator, ConvertValue<P>(values.First()));
-        }
-    }
 
-    public class GeneratorListParser<T, P> : GeneratorParser<T, IEnumerable<P>>
-    {
-        public GeneratorListParser(Regex regex, Expression<Func<T, IEnumerable<P>>> expression) : base(regex, expression) { }
-        protected override void ParseInternal(string match, IList<string> values, IGenerator generator)
-        {
-            ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator,
-                values.Select(x => ConvertValue<P>(x)).ToList());
-        }
-    }
+
 }

@@ -8,14 +8,14 @@ using System.Text.RegularExpressions;
 
 namespace Simple.Tests.Generator
 {
-    public class GeneratorResolverParameterFixture
+    public class GeneratorResolverArgumentFixture
     {
         [Test]
         public void CanBindStringListWithOneParameter()
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "sample")
-                .ArgumentList(x => x.TestList);
+                .ArgumentList(null, x => x.TestList);
 
             var generator = resolver.Resolve("sample test");
 
@@ -28,7 +28,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "sample")
-                .ArgumentList(x => x.TestList);
+                .ArgumentList(null, x => x.TestList);
 
             var generator = resolver.Resolve("sample test, test2, test3");
 
@@ -41,7 +41,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "sample")
-                .ArgumentList(x => x.TestList);
+                .ArgumentList(null, x => x.TestList);
 
             var generator = resolver.Resolve("sample +test, @test2, t^est3");
 
@@ -54,7 +54,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleIntList(), "sample")
-                .ArgumentList(x => x.TestList);
+                .ArgumentList(null, x => x.TestList);
 
             var generator = resolver.Resolve("sample 1, 2, 3");
 
@@ -67,7 +67,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleIntNullableList(), "sample")
-                .ArgumentList(x => x.TestList);
+                .ArgumentList(null, x => x.TestList);
 
             var generator = resolver.Resolve("sample 1, 2, 3");
 
@@ -80,7 +80,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleSingleInt(), "sample")
-                .Argument(x => x.Test);
+                .Argument(null, x => x.Test);
 
             var generator = resolver.Resolve("sample 1");
 
@@ -93,7 +93,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleSingleInt(), "sample")
-                .Argument(x => x.Test);
+                .Argument(null, x => x.Test);
 
             Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample "), "invalid number of arguments: 0");
         }
@@ -103,7 +103,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleSingleInt(), "sample")
-                .Argument(x => x.Test);
+                .Argument(null, x => x.Test);
 
             Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample 1,2"), "invalid number of arguments: 2");
         }
@@ -113,7 +113,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleSingleIntNullable(), "sample")
-                .Argument(x => x.Test);
+                .Argument(null, x => x.Test);
 
             var generator = resolver.Resolve("sample 1");
 
@@ -127,7 +127,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleIntNullableList(), "sample")
-                .ArgumentList(x => x.TestList);
+                .ArgumentList(null, x => x.TestList);
 
             var generator = resolver.Resolve("sample");
 
@@ -140,13 +140,27 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleStringList(), "sample")
-                .ArgumentList(x => x.TestList);
+                .ArgumentList(null, x => x.TestList);
 
             var generator = resolver.Resolve("sample (test, test2, test3)");
 
             Assert.IsInstanceOf<SampleStringList>(generator);
             CollectionAssert.AreEqual(new[] { "test", "test2", "test3" }, (generator as SampleStringList).TestList);
         }
+
+        [Test]
+        public void CanBindNamedStringListQuoted()
+        {
+            var resolver = new GeneratorResolver();
+            resolver.Register(() => new SampleStringList(), "sample")
+                .ArgumentList("asd", x => x.TestList);
+
+            var generator = resolver.Resolve("sample 'test 1'");
+
+            Assert.IsInstanceOf<SampleStringList>(generator);
+            CollectionAssert.AreEqual(new[] { "test 1" }, (generator as SampleStringList).TestList);
+        }
+
 
         public class SampleStringList : IGenerator
         {
