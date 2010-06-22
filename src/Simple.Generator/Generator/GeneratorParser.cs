@@ -36,6 +36,37 @@ namespace Simple.Generator
             return RegularExpression.Match(args).Groups[RegexHelper.ValueGroup]
                 .Captures.OfType<Capture>().Select(x => x.Value).ToList();
         }
+
+        protected K ConvertValue<K>(string value)
+        {
+            if (typeof(K) == typeof(bool))
+                value = ReplaceBoolean(value);
+
+            return (K)Convert.ChangeType(value, typeof(K).GetValueTypeIfNullable());
+        }
+
+        private string ReplaceBoolean(string value)
+        {
+            switch (value.ToLower())
+            {
+                case "+":
+                case "1":
+                case "t":
+                case "y":
+                case "s":
+                case "yes":
+                    return "true";
+                case "-":
+                case "0":
+                case "f":
+                case "n":
+                case "no":
+                    return "false";
+                    
+                default:
+                    return value;
+            }
+        }
     }
 
     public class GeneratorValueParser<T, P> : GeneratorParser<T, P>
@@ -46,7 +77,7 @@ namespace Simple.Generator
             if (values.Count != 1)
                 throw new ArgumentException(string.Format("invalid number of arguments: {0}", values.Count));
 
-            ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator, values.First());
+            ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator, ConvertValue<P>(values.First()));
         }
     }
 
@@ -56,7 +87,7 @@ namespace Simple.Generator
         protected override void ParseInternal(IList<string> values, IGenerator generator)
         {
             ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator,
-                values.Select(x => (P)Convert.ChangeType(x, typeof(P).GetValueTypeIfNullable())).ToList());
+                values.Select(x => ConvertValue<P>(x)).ToList());
         }
     }
 }

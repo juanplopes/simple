@@ -37,6 +37,19 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
+        public void CanBindStringListWithSpecialChars()
+        {
+            var resolver = new GeneratorResolver();
+            resolver.Register(() => new SampleStringList(), "sample")
+                .ArgumentList(x => x.TestList);
+
+            var generator = resolver.Resolve("sample +test, @test2, t^est3");
+
+            Assert.IsInstanceOf<SampleStringList>(generator);
+            CollectionAssert.AreEqual(new[] { "+test", "@test2", "t^est3" }, (generator as SampleStringList).TestList);
+        }
+
+        [Test]
         public void CanBindIntListWithMultipleParameters()
         {
             var resolver = new GeneratorResolver();

@@ -145,6 +145,7 @@
     <Compile Include="Expressions\EmptyQueryableFixture.cs" />
     <Compile Include="Expressions\InvocationExpanderFixture.cs" />
     <Compile Include="Expressions\LazyExpressionFixture.cs" />
+    <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverParameterFixture.cs" />
     <Compile Include="Generator\ProjectWriterFixture.cs" />

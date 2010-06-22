@@ -21,8 +21,16 @@ namespace Simple.Generator
 
         public GeneratorOptions<T> Option<P>(string name, Expression<Func<T, P>> into)
         {
+            Parsers.Add(new GeneratorValueParser<T, P>(RegexHelper.OptionRegex(name), into));
             return this;
         }
+
+        public GeneratorOptions<T> OptionList<P>(string name, Expression<Func<T, IEnumerable<P>>> into)
+        {
+            Parsers.Add(new GeneratorListParser<T, P>(RegexHelper.OptionRegex(name), into));
+            return this;
+        }
+
 
 
         private void ApplyEnumerable(IGenerator generator, IList<string> values, MemberExpression memberExpression, Type innerType)
