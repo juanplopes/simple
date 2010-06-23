@@ -15,7 +15,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleString(), "sample")
-                .Option("with", x => x.Test);
+                .WithOption("with", x => x.Test);
 
             var generator = resolver.Resolve("sample with lasers");
 
@@ -28,7 +28,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleString(), "sample")
-                .Option("with", x => x.Test);
+                .WithOption("with", x => x.Test);
 
             var generator = resolver.Resolve("sample with=lasers");
 
@@ -41,7 +41,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleBoolean(), "sample")
-                .Option("lasers", x => x.Test);
+                .WithOption("lasers", x => x.Test);
 
             var generator = resolver.Resolve("sample +lasers");
 
@@ -54,7 +54,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleBoolean(), "sample")
-                .Option("lasers", x => x.Test);
+                .WithOption("lasers", x => x.Test);
 
             Assert.Throws<UnrecognizedOptionsException>(
                 ()=>resolver.Resolve("sample +lasers:true"));
@@ -65,7 +65,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleBoolean(), "sample")
-                .Option("lasers", x => x.Test);
+                .WithOption("lasers", x => x.Test);
 
             var generator = resolver.Resolve("sample lasers=true");
 
@@ -78,7 +78,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleBoolean(), "sample")
-                .Option("lasers", x => x.Test);
+                .WithOption("lasers", x => x.Test);
 
             var generator = resolver.Resolve("sample lasers true");
 
@@ -91,7 +91,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleIntList(), "sample")
-                .OptionList("lasers", x => x.Test);
+                .WithOptionList("lasers", x => x.Test);
 
             var generator = resolver.Resolve("sample lasers:1,2,3");
 
@@ -104,7 +104,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleBoolList(), "sample")
-                .OptionList("lasers", x => x.Test);
+                .WithOptionList("lasers", x => x.Test);
 
             var generator = resolver.Resolve("sample lasers=t,f,y,n,yes,no,1,0,true,false");
 
@@ -117,7 +117,7 @@ namespace Simple.Tests.Generator
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleString(), "sample")
-                .Option("with", x => x.Test);
+                .WithOption("with", x => x.Test);
 
             Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample with lasers, test "));
         }

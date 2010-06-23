@@ -7,7 +7,7 @@ using Simple;
 namespace Simple.Generator
 {
     [Serializable]
-    public class InvalidCommandException : Exception
+    public class InvalidCommandException : GeneratorException
     {
         public InvalidCommandException() { }
         public InvalidCommandException(string command)

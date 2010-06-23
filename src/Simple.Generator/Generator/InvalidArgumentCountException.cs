@@ -6,7 +6,7 @@ using System.Text;
 namespace Simple.Generator
 {
     [Serializable]
-    public class InvalidArgumentCountException : Exception
+    public class InvalidArgumentCountException : GeneratorException
     {
         public InvalidArgumentCountException() { }
         public InvalidArgumentCountException(string command, int expected, int actual)

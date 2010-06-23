@@ -156,13 +156,13 @@ Available options:
             var r = new GeneratorResolver().WithHelp(writer, Console.Out);
 
             r.Register<Sample1>("cmd1 a", "cmd1 b")
-                .ArgumentList("cmd1_arguments", x => x.Arguments)
-                .Option("opt1", x => x.Option1)
-                .Option("opt2", x => x.Option2);
+                .WithArgumentList("cmd1_arguments", x => x.Arguments)
+                .WithOption("opt1", x => x.Option1)
+                .WithOption("opt2", x => x.Option2);
 
             r.Register<Sample2>("cmd2")
-              .Option("opt1", x => x.Option1)
-              .Option("opt2", x => x.Option2);
+              .WithOption("opt1", x => x.Option1)
+              .WithOption("opt2", x => x.Option2);
 
             r.Register<Sample2>("noopt");
 

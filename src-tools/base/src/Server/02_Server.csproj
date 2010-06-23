@@ -36,9 +36,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Schema.Metadata.dll</HintPath>
     </Reference>
-    <Reference Include="Simple, Version=1.0.3530.21817, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Simple3, Version=3.0.767.0, Culture=neutral, PublicKeyToken=71e14f0ea88dd4a5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Simple.dll</HintPath>
+      <HintPath>..\..\lib\Simple3.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />

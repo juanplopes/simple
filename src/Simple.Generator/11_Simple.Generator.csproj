@@ -55,6 +55,7 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Generator\AmbiguousCommandException.cs" />
+    <Compile Include="Generator\GeneratorException.cs" />
     <Compile Include="Generator\HelpWriter\IHelpWriter.cs" />
     <Compile Include="Generator\HelpWriter\HelpTextWriter.cs" />
     <Compile Include="Generator\HelpWriter\HelpTextGenerator.cs" />

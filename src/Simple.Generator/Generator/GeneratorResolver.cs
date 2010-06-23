@@ -42,7 +42,7 @@ namespace Simple.Generator
         public GeneratorResolver WithHelp(params IHelpWriter[] writers)
         {
             this.Register(() => new HelpTextGenerator(this, writers), "help")
-                .ArgumentList("commands", x => x.OptionNames);
+                .WithArgumentList("commands", x => x.OptionNames);
             return this;
         }
         public GeneratorResolver WithHelp(params TextWriter[] writers)

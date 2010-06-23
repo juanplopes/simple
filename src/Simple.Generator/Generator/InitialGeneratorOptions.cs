@@ -14,13 +14,13 @@ namespace Simple.Generator
     {
         public InitialGeneratorOptions(Func<T> generator) : base(generator) { }
 
-        public GeneratorOptions<T> Argument<P>(string name, Expression<Func<T, P>> into)
+        public GeneratorOptions<T> WithArgument<P>(string name, Expression<Func<T, P>> into)
         {
             ArgumentParser = new GeneratorValueParser<T, P>(false, name, into);
             return this;
         }
 
-        public GeneratorOptions<T> ArgumentList<P>(string name, Expression<Func<T, IEnumerable<P>>> into)
+        public GeneratorOptions<T> WithArgumentList<P>(string name, Expression<Func<T, IEnumerable<P>>> into)
         {
             ArgumentParser = new GeneratorListParser<T, P>(false, name, into);
             return this;

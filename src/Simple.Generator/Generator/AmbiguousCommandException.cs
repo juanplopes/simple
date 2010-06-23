@@ -7,7 +7,7 @@ using Simple;
 namespace Simple.Generator
 {
     [Serializable]
-    public class AmbiguousCommandException : Exception
+    public class AmbiguousCommandException : GeneratorException
     {
         public AmbiguousCommandException() { }
         public AmbiguousCommandException(string command, IEnumerable<IGeneratorOptions> generators)

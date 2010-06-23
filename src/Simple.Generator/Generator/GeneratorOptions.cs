@@ -21,13 +21,13 @@ namespace Simple.Generator
         }
 
 
-        public GeneratorOptions<T> Option<P>(string name, Expression<Func<T, P>> into)
+        public GeneratorOptions<T> WithOption<P>(string name, Expression<Func<T, P>> into)
         {
             OptionParsers.Add(new GeneratorValueParser<T, P>(true, name, into));
             return this;
         }
 
-        public GeneratorOptions<T> OptionList<P>(string name, Expression<Func<T, IEnumerable<P>>> into)
+        public GeneratorOptions<T> WithOptionList<P>(string name, Expression<Func<T, IEnumerable<P>>> into)
         {
             OptionParsers.Add(new GeneratorListParser<T, P>(true, name, into));
             return this;
