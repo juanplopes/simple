@@ -48,7 +48,7 @@ namespace Simple.Launcher
                 }
             };
             watcher.EnableRaisingEvents = true;
-            while (true) Console.ReadLine();
+            Thread.Sleep(Timeout.Infinite);
         }
 
         static void CopyDirectory(string src, string dst)

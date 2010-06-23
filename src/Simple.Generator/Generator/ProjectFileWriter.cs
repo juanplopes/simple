@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using log4net;
+using System.Reflection;
 
 namespace Simple.Generator
 {
     public class ProjectFileWriter : ProjectWriter
     {
         public string ProjectPath { get; protected set; }
+        ILog log = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
         public ProjectFileWriter(string projectPath) :
             base(File.ReadAllText(projectPath))
         {
+            log.DebugFormat("Read project '{0}'", projectPath);
             ProjectPath = Path.GetFullPath(projectPath);
         }
 
@@ -63,6 +67,8 @@ namespace Simple.Generator
 
         public FileInfo RemoveAndDeleteFile(string relativePath)
         {
+            log.DebugFormat("Deleting file '{0}'...", relativePath);
+
             var path = GetFullPath(relativePath);
             File.Delete(path);
             RemoveFile(relativePath);
@@ -71,6 +77,8 @@ namespace Simple.Generator
 
         protected FileInfo CreateFile<T>(string relativePath, T content, Action<string, T> writer)
         {
+            log.DebugFormat("Creating file '{0}'...", relativePath);
+
             var fullDir = GetFullPath(relativePath);
             var dir = Path.GetDirectoryName(fullDir);
             Directory.CreateDirectory(dir);
@@ -86,6 +94,7 @@ namespace Simple.Generator
 
         public ProjectFileWriter WriteChanges()
         {
+            log.DebugFormat("Writing changes to project '{0}'...", ProjectPath);
             File.WriteAllText(ProjectPath, GetXml());
             return this;
         }

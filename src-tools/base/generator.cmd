@@ -1,0 +1,1 @@
+@util\Simple.Launcher bin\generator Sample.Project.Generator.exe

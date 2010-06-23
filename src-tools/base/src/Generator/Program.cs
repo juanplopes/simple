@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
+using Sample.Project.Environment;
+using Env = System.Environment;
 
 namespace Sample.Project.Generator
 {
@@ -10,6 +12,11 @@ namespace Sample.Project.Generator
     {
         static void Main(string[] args)
         {
+            new Configurator().ConfigClient();
+
+            if (RootFinder.ChangeToPathOf("generator.findme", "Sample.Project"))
+                Console.WriteLine("Found flag file. Changed current directory to:\n'{0}'.", Env.CurrentDirectory);
+
             string command;
             var resolver = new GeneratorResolver().WithHelp().Define();
 

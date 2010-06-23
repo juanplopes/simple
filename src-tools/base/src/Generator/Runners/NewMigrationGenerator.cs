@@ -12,9 +12,13 @@ namespace Sample.Project.Generator.Runners
     {
         public void Execute()
         {
+            var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
             var template = new StringTemplate(Templates.NewMigrationGenerator);
-            template.SetAttribute("timestamp", DateTime.Now.ToString("yyyyMMddHHmmss"));
-            Console.WriteLine(template.ToString());
+            template.SetAttribute("timestamp", timestamp);
+
+            var project = new ProjectFileWriter("src/Tools/99_Tools.csproj");
+            project.AddNewCompile("Migrations/" + timestamp + "_UntitledMigration.cs", template.ToString());
+            project.WriteChanges();
         }
     }
 }

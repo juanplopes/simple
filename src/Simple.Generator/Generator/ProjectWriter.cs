@@ -5,6 +5,8 @@ using System.Text;
 using System.Xml;
 using Simple;
 using System.IO;
+using log4net;
+using System.Reflection;
 
 namespace Simple.Generator
 {
@@ -14,6 +16,8 @@ namespace Simple.Generator
         XmlNamespaceManager _names = null;
         string _namespace = null;
         private const string DefaultNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
+        ILog log = Simply.Do.Log(MethodInfo.GetCurrentMethod());
+
 
         public ProjectWriter(string xml) : this(xml, DefaultNamespace) { }
         public ProjectWriter(string xml, string ns)
@@ -39,6 +43,8 @@ namespace Simple.Generator
 
         public ProjectWriter AddFile(string file, string type)
         {
+            log.DebugFormat("Adding file '{0}' to project as '{1}'...", file, type);
+
             var node = GetFileNode(file);
             if (node != null) return this;
 
@@ -52,6 +58,8 @@ namespace Simple.Generator
 
         public ProjectWriter RemoveFile(string file)
         {
+            log.DebugFormat("Removing file '{0}' from project...", file);
+
             XmlNode nodeItemGroup = GetFileNode(file);
             nodeItemGroup.ParentNode.RemoveChild(nodeItemGroup);
             return this;
