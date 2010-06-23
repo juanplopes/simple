@@ -6,36 +6,37 @@ using Simple.Generator;
 
 namespace Sample.Project.Generator
 {
-    class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
             string command;
-            var resolver = new GeneratorResolver().WithHelp();
+            var resolver = new GeneratorResolver().WithHelp().Define();
 
             while (ReadCommand(out command))
-            {
-                try
-                {
-                    resolver.Resolve(command).Execute();
-                }
-                catch (GeneratorException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine(e.StackTrace);
-                }
-
-                Console.WriteLine();
-            }
-
-
+                resolver.Execute(command);
         }
 
-        static bool ReadCommand(out string command)
+        private static void Execute(this GeneratorResolver resolver, string command)
+        {
+            try
+            {
+                resolver.Resolve(command).Execute();
+            }
+            catch (GeneratorException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR: {0}", e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+
+            Console.WriteLine();
+        }
+
+        private static bool ReadCommand(out string command)
         {
             Console.Write(">");
             command = Console.ReadLine();
