@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using Sample.Project.Environment;
 using Simple;
-using Schema.Migrator;
 using Simple.IO;
 using Sample.Project.Tools;
 using Sample.Project.Config;
+using Simple.Migrator;
 
 namespace Sample.Project.Tools.Migrations
 {

@@ -98,10 +98,22 @@
             InputAssemblies="@(NHibernateItems)"
             ToolPath="util\ilmerge"
             LogFile=""
-            KeyFile="$(KeyFilePath)"
              />
   </Target>
 
+  
+  <Target Name="MergeST">
+    <ItemGroup>
+      <StringTemplateItems Include="$(LibDir)\StringTemplate\StringTemplate.dll"/>
+      <StringTemplateItems Include="$(LibDir)\StringTemplate\antlr.runtime.dll"/>
+    </ItemGroup>
+    <ILMerge OutputFile="$(LibDir)\StringTemplate.dll"
+            InputAssemblies="@(StringTemplateItems)"
+            ToolPath="util\ilmerge"
+            LogFile=""
+             />
+  </Target>
+  
   <Target Name="MergeFluentValidation">
     <ItemGroup>
       <FluentValidationItems Include="$(LibDir)\FluentValidation\FluentValidation.dll"/>
@@ -112,7 +124,6 @@
             InputAssemblies="@(FluentValidationItems)"
             ToolPath="util\ilmerge"
             LogFile=""
-            KeyFile="$(KeyFilePath)"
              />
   </Target>
 
