@@ -62,7 +62,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestData\UnitTestDataTool.cs" />
-    <Compile Include="Migrations\20100623131845_UntitledMigration.cs" />
+    <Compile Include="Migrations\20100623132223_UntitledMigration.cs" />
+    <Compile Include="Migrations\20100623132455_UntitledMigration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Migrations\NewMigrationTemplate.log">

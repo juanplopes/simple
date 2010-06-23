@@ -12,7 +12,7 @@ namespace Sample.Project.Generator
     {
         static void Main(string[] args)
         {
-            new Configurator().ConfigClient();
+            new Configurator().ConfigClient().ConfigServer();
 
             if (RootFinder.ChangeToPathOf("generator.findme", "Sample.Project"))
                 Console.WriteLine("Found flag file. Changed current directory to:\n'{0}'.", Env.CurrentDirectory);
@@ -21,7 +21,8 @@ namespace Sample.Project.Generator
             var resolver = new GeneratorResolver().WithHelp().Define();
 
             while (ReadCommand(out command))
-                resolver.Execute(command);
+                if (!string.IsNullOrEmpty(command.Trim()))
+                    resolver.Execute(command);
         }
 
         private static void Execute(this GeneratorResolver resolver, string command)
