@@ -50,6 +50,18 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
+        public void CanAddCompileFileWithSlashInProjectAndItWillChangeToBackslash()
+        {
+            var project = CsProjects.SampleProjectSimple;
+            var writer = new ProjectWriter(project);
+            writer.AddCompile("__test__/asdasd");
+
+            var newProject = writer.GetXml();
+
+            StringAssert.Contains("<Compile Include=\"__test__\\asdasd\" />", newProject);
+        }
+
+        [Test]
         public void CanAddEmbeddedResourceFileInProject()
         {
             var project = CsProjects.SampleProjectSimple;

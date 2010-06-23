@@ -148,6 +148,7 @@
     <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
+    <Compile Include="Generator\ProjectFileWriterFixture.cs" />
     <Compile Include="Generator\ProjectWriterFixture.cs" />
     <Compile Include="Generator\RegexesFixture.cs" />
     <Compile Include="Generator\RegexHelperFixture.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="IO\CommandLineReaderFixture.cs" />
     <Compile Include="IO\FileSizeFixture.cs" />
     <Compile Include="IO\LazySerializerFixture.cs" />
+    <Compile Include="IO\RootFinderFixture.cs" />
     <Compile Include="Metadata\AllTypesTest\Migration1.cs" />
     <Compile Include="Metadata\ChangeColumnTest\Migration1.cs" />
     <Compile Include="Metadata\ChangeTableTest\Migration2.cs" />

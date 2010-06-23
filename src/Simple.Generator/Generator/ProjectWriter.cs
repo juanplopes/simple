@@ -42,6 +42,7 @@ namespace Simple.Generator
             var node = GetFileNode(file);
             if (node != null) return this;
 
+            file = file.Replace(@"/", @"\");
             XmlNode nodeItemGroup = _doc.SelectSingleNode("//p:ItemGroup[p:{0}]".AsFormat(type), _names);
             XmlElement newChild = _doc.CreateElement(type, _namespace);
             newChild.SetAttribute("Include", file);
@@ -58,6 +59,7 @@ namespace Simple.Generator
 
         private XmlNode GetFileNode(string file)
         {
+            file = file.Replace(@"/", @"\");
             return _doc.SelectSingleNode("//p:ItemGroup/p:*[@Include=\"{0}\"]".AsFormat(file), _names);
         }
 

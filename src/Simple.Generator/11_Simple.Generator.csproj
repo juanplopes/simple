@@ -63,6 +63,8 @@
     <Compile Include="Generator\Parsers\GeneratorValueParser.cs" />
     <Compile Include="Generator\Parsers\IGeneratorParser.cs" />
     <Compile Include="Generator\Parsers\Regexes.cs" />
+    <Compile Include="Generator\ProjectFileWriter.cs" />
+    <Compile Include="Generator\RootFinder.cs" />
     <Compile Include="Generator\UnrecognizedOptionsException.cs" />
     <Compile Include="Generator\InvalidArgumentCountException.cs" />
     <Compile Include="Generator\InvalidCommandException.cs" />
