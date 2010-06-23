@@ -6,7 +6,7 @@ using Simple.Generator;
 using Sample.Project.Environment;
 using Env = System.Environment;
 
-namespace Sample.Project.Generator
+namespace Sample.Project.Generator.Infra
 {
     public static class Program
     {

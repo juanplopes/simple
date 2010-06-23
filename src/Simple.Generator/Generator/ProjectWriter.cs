@@ -18,7 +18,7 @@ namespace Simple.Generator
         private const string DefaultNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
         ILog log = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
-
+      
         public ProjectWriter(string xml) : this(xml, DefaultNamespace) { }
         public ProjectWriter(string xml, string ns)
         {
@@ -90,5 +90,6 @@ namespace Simple.Generator
             _doc.Save(stream);
             return this;
         }
+    
     }
 }

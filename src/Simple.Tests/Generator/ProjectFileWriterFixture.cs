@@ -47,6 +47,37 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
+        public void CannotAddCompileFileToProjectWithoutWriteChanges()
+        {
+            var writer = new ProjectFileWriter("test/test.csproj");
+            writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
+
+            StringAssert.DoesNotContain(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
+            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+        }
+
+        [Test]
+        public void CanAddCompileFileToProjectWithoutWriteChangesWithDisposeButWithoutAutoCommit()
+        {
+            using (var writer = new ProjectFileWriter("test/test.csproj"))
+                writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
+
+            StringAssert.DoesNotContain(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
+            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+
+        }
+
+        [Test]
+        public void CanAddCompileFileToProjectWithoutWriteChangesWithDisposeButWithAutoCommit()
+        {
+            using (var writer = new ProjectFileWriter("test/test.csproj").AutoCommit())
+                writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
+
+            StringAssert.Contains(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
+            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+        }
+
+        [Test]
         public void CanAddCompileFileToProjectWorkEvenIfWeChangeDir()
         {
             var writer = new ProjectFileWriter("test/test.csproj");

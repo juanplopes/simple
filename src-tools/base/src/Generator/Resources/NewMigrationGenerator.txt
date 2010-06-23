@@ -6,7 +6,7 @@ using Simple.Migrator.Framework;
 using Simple.Migrator.Fluent;
 using System.Data;
 
-namespace Conspirarte.Migrations
+namespace Sample.Project.Tools.Migrations
 {
     [Migration($timestamp$)]
     public class Migration$timestamp$ : FluentMigration

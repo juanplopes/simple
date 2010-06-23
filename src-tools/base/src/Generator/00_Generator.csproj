@@ -12,7 +12,7 @@
     <AssemblyName>Sample.Project.Generator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>Sample.Project.Generator.Program</StartupObject>
+    <StartupObject>Sample.Project.Generator.Infra.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,10 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Definition.cs" />
+    <Compile Include="Generators.cs" />
+    <Compile Include="Projects.cs" />
     <Compile Include="Runners\NewMigrationGenerator.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Infra\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables.cs" />
     <Compile Include="Templates.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
