@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <StartupObject>Simple.Tests.Server</StartupObject>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Simple.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -103,6 +103,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Simple.NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="Simple.NVelocity, Version=0.4.2.8580, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Simple.NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -153,6 +157,7 @@
     <Compile Include="Generator\RegexesFixture.cs" />
     <Compile Include="Generator\RegexHelperFixture.cs" />
     <Compile Include="Generator\DefaultHelpWriterFixture.cs" />
+    <Compile Include="Generator\SimpleTemplateFixture.cs" />
     <Compile Include="IO\CommandLineReaderFixture.cs" />
     <Compile Include="IO\FileSizeFixture.cs" />
     <Compile Include="IO\LazySerializerFixture.cs" />
@@ -262,7 +267,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <ProductName>.NET Framework Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -287,7 +292,7 @@
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.3.5">
       <Visible>False</Visible>
-      <ProductName>SQL Server Compact 3.5 SP2</ProductName>
+      <ProductName>SQL Server Compact 3.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">

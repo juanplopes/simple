@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Antlr.StringTemplate;
 using System.IO;
 
 namespace Sample.Project.Generator.Runners
@@ -15,9 +14,8 @@ namespace Sample.Project.Generator.Runners
             var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
             var filename = string.Format("Migrations/{0}_Untitled.cs", timestamp);
 
-            
             var template = Templates.NewMigrationGenerator.ToTemplate();
-            template.SetAttribute("timestamp", timestamp);
+            template["timestamp"] = timestamp;
             
             using (var project = Projects.Tools.Get().AutoCommit())
                 project.AddNewCompile(filename, template.ToString());

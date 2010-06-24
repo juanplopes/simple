@@ -5,7 +5,9 @@ using System.Text;
 using Simple.Generator;
 using Sample.Project.Generator.Runners;
 using System.IO;
-using Antlr.StringTemplate;
+using NVelocity;
+using NVelocity.App;
+using Simple.NVelocity;
 
 namespace Sample.Project.Generator
 {
@@ -18,9 +20,9 @@ namespace Sample.Project.Generator
             return registry;
         }
 
-        public static StringTemplate ToTemplate(this string template)
+        public static SimpleTemplate ToTemplate(this string template)
         {
-            return new StringTemplate(template);
+            return new SimpleTemplate(template);
         }
     }
 }

@@ -12,7 +12,7 @@
     <AssemblyName>Simple.Generator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Simple.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -37,6 +37,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Simple.NVelocity, Version=0.4.2.8580, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Simple.NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -54,6 +58,7 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="NVelocity\NVelocityMemoryEngine.cs" />
     <Compile Include="Generator\AmbiguousCommandException.cs" />
     <Compile Include="Generator\GeneratorException.cs" />
     <Compile Include="Generator\HelpWriter\IHelpWriter.cs" />
@@ -79,6 +84,7 @@
     <Compile Include="Metadata\ContextualizedObject.cs" />
     <Compile Include="Metadata\DataRowExtensions.cs" />
     <Compile Include="Metadata\MetaContext.cs" />
+    <Compile Include="NVelocity\SimpleTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Metadata\DbColumn.cs" />
     <Compile Include="Metadata\DbForeignKey.cs" />

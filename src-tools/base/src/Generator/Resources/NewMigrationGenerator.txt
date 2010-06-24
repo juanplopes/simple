@@ -8,8 +8,8 @@ using System.Data;
 
 namespace Sample.Project.Tools.Migrations
 {
-    [Migration($timestamp$)]
-    public class Migration$timestamp$ : FluentMigration
+    [Migration(${timestamp})]
+    public class Migration${timestamp} : FluentMigration
     {
         public override void Up()
         {

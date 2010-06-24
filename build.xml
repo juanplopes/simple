@@ -102,13 +102,13 @@
   </Target>
 
   
-  <Target Name="MergeST">
+  <Target Name="MergeNVelocity">
     <ItemGroup>
-      <StringTemplateItems Include="$(LibDir)\StringTemplate\StringTemplate.dll"/>
-      <StringTemplateItems Include="$(LibDir)\StringTemplate\antlr.runtime.dll"/>
+      <NVelocityItems Include="$(LibDir)\NVelocity\NVelocity.dll"/>
+      <NVelocityItems Include="$(LibDir)\NVelocity\Commons.dll"/>
     </ItemGroup>
-    <ILMerge OutputFile="$(LibDir)\StringTemplate.dll"
-            InputAssemblies="@(StringTemplateItems)"
+    <ILMerge OutputFile="$(LibDir)\Simple.NVelocity.dll"
+            InputAssemblies="@(NVelocityItems)"
             ToolPath="util\ilmerge"
             LogFile=""
              />
@@ -127,11 +127,12 @@
              />
   </Target>
 
-  <Target Name="Merge">
+  <Target Name="Merge" DependsOnTargets="Build">
     <ItemGroup>
       <MergeItems Include="$(BuildDir)\Simple.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.Data.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.Generator.dll"/>
+      <MergeItems Include="$(BuildDir)\Simple.NVelocity.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.NHibernate.dll"/>
       <MergeItems Include="$(BuildDir)\FluentValidation.dll"/>
       <MergeItems Include="$(BuildDir)\log4net.dll"/>
