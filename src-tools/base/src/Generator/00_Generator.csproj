@@ -50,8 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conventions.cs" />
     <Compile Include="Generators.cs" />
+    <Compile Include="Pluralizer.cs" />
     <Compile Include="Projects.cs" />
+    <Compile Include="Runners\EntityGenerator.cs" />
     <Compile Include="Runners\NewMigrationGenerator.cs" />
     <Compile Include="Infra\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +79,9 @@
       <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
       <Name>01_Contracts</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EntityGenerator.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

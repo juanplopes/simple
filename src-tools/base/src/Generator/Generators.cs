@@ -16,6 +16,9 @@ namespace Sample.Project.Generator
         public static GeneratorResolver Define(this GeneratorResolver registry)
         {
             registry.Register<NewMigrationGenerator>("new migration");
+            
+            registry.Register<EntityGenerator>("g entity")
+                .WithArgumentList("tables", x => x.TableNames);
 
             return registry;
         }

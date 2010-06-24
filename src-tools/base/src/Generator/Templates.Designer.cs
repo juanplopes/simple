@@ -61,6 +61,17 @@ namespace Sample.Project.Generator {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;# for($table in $tables) #&gt;
+        ///$table.Name
+        ///&lt;# end #&gt;.
+        /// </summary>
+        internal static string EntityGenerator {
+            get {
+                return ResourceManager.GetString("EntityGenerator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Collections.Generic;
         ///using System.Linq;
@@ -69,16 +80,16 @@ namespace Sample.Project.Generator {
         ///using Simple.Migrator.Fluent;
         ///using System.Data;
         ///
-        ///namespace Conspirarte.Migrations
+        ///namespace Sample.Project.Tools.Migrations
         ///{
-        ///    [Migration($timestamp$)]
-        ///    public class Migration$timestamp$ : FluentMigration
+        ///    [Migration(${timestamp})]
+        ///    public class Migration${timestamp} : FluentMigration
         ///    {
         ///        public override void Up()
         ///        {
-        ///		}
+        ///        }
         ///
-        ///		public override void Down()
+        ///        public override void Down()
         ///        {
         ///        }
         ///    }

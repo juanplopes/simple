@@ -1,0 +1,3 @@
+#foreach($table in $tables)
+$table.Name - $re.NameFor($table)
+#end
