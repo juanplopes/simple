@@ -58,6 +58,9 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="Generator\Strings\EnglishPluralizer.cs" />
+    <Compile Include="Generator\Strings\IPluralizer.cs" />
+    <Compile Include="Generator\Strings\GeneratorStrings.cs" />
     <Compile Include="NVelocity\NVelocityMemoryEngine.cs" />
     <Compile Include="Generator\AmbiguousCommandException.cs" />
     <Compile Include="Generator\GeneratorException.cs" />

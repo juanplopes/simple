@@ -47,6 +47,30 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
+        public void CanCheckIfFileExists()
+        {
+            var writer = new ProjectFileWriter("test/test.csproj");
+            
+            Assert.False(writer.ExistsFile("asd/qwe/simsim.txt"));
+            writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
+
+            Assert.True(writer.ExistsFile("asd/qwe/simsim.txt"));
+            writer.WriteChanges();
+        }
+
+        [Test]
+        public void CanAddCrazyFileToProject()
+        {
+            var writer = new ProjectFileWriter("test/test.csproj");
+            writer.AddNewFile("asd/qwe/simsim.txt", "ASDASD", "olá");
+            writer.WriteChanges();
+
+            StringAssert.Contains(@"<ASDASD Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
+            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+        }
+
+
+        [Test]
         public void CannotAddCompileFileToProjectWithoutWriteChanges()
         {
             var writer = new ProjectFileWriter("test/test.csproj");

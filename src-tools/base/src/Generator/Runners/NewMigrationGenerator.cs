@@ -17,7 +17,7 @@ namespace Sample.Project.Generator.Runners
             var template = Templates.NewMigrationGenerator.ToTemplate();
             template["timestamp"] = timestamp;
             
-            using (var project = Projects.Tools.Get().AutoCommit())
+            using (var project = Default.ToolsProject.Writer())
                 project.AddNewCompile(filename, template.ToString());
         }
     }

@@ -24,6 +24,18 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
+        public void AddingNonExistingSectionWillCreateNew()
+        {
+            var project = CsProjects.SampleProjectSimple;
+            var writer = new ProjectWriter(project);
+            writer.AddFile(@"asd/qwe.txt", "ASDASD");
+
+            var newProject = writer.GetXml();
+
+            StringAssert.Contains("<ASDASD Include=\"asd\\qwe.txt\" />", newProject);
+        }
+
+        [Test]
         public void AddingDuplicatedFileWillMaintainTheLast()
         {
             var project = CsProjects.SampleProjectSimple;

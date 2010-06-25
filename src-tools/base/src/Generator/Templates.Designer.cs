@@ -61,9 +61,25 @@ namespace Sample.Project.Generator {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;# for($table in $tables) #&gt;
-        ///$table.Name
-        ///&lt;# end #&gt;.
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Text;
+        ///using Simple.Reflection;
+        ///using Simple.Entities;
+        ///using ${namespace}.Services;
+        ///
+        ///namespace ${namespace}.Domain
+        ///{
+        ///    [Serializable]
+        ///    public partial class $classname : Entity&lt;${classname}, I${classname}Service&gt;
+        ///    {
+        ///#foreach($field in $table.PrimaryKeysExceptFk)
+        ///        public virtual $re.TypeFor($field) $re.NameFor($field) { get; set; } 
+        ///#end
+        ///
+        ///#foreach($field in $table.OrdinaryFields)
+        ///        public virt [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EntityGenerator {
             get {
@@ -76,11 +92,38 @@ namespace Sample.Project.Generator {
         ///using System.Collections.Generic;
         ///using System.Linq;
         ///using System.Text;
+        ///using Simple.Reflection;
+        ///using Simple.Entities;
+        ///using ${namespace}.Services;
+        ///
+        ///namespace ${namespace}.Domain
+        ///{
+        ///    [Serializable]
+        ///    public partial class $classname : Entity&lt;${classname}, I${classname}Service&gt;
+        ///    {
+        ///#foreach($field in $table.PrimaryKeysExceptFk)
+        ///        public virtual $re.TypeFor($field) $re.NameFor($field) { get; set; } 
+        ///#end
+        ///
+        ///#foreach($field in $table.OrdinaryFields)
+        ///        public virt [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MappingGenerator {
+            get {
+                return ResourceManager.GetString("MappingGenerator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Text;
         ///using Simple.Migrator.Framework;
         ///using Simple.Migrator.Fluent;
         ///using System.Data;
         ///
-        ///namespace Sample.Project.Tools.Migrations
+        ///namespace ${namespace}.Tools.Migrations
         ///{
         ///    [Migration(${timestamp})]
         ///    public class Migration${timestamp} : FluentMigration

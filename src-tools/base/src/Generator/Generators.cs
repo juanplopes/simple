@@ -15,12 +15,19 @@ namespace Sample.Project.Generator
     {
         public static GeneratorResolver Define(this GeneratorResolver registry)
         {
-            registry.Register<NewMigrationGenerator>("new migration");
-            
-            registry.Register<EntityGenerator>("g entity")
-                .WithArgumentList("tables", x => x.TableNames);
+            registry.Register<NewMigrationGenerator>("g migration");
+
+            registry.Register<ScaffoldGenerator>("scaffold").AsTableGenerator();
+            registry.Register<EntityGenerator>("g entity").AsTableGenerator();
+            registry.Register<MappingGenerator>("g mapping").AsTableGenerator();
 
             return registry;
+        }
+
+        public static GeneratorOptions<T> AsTableGenerator<T>(this InitialGeneratorOptions<T> generator)
+            where T : BaseTableGenerator
+        {
+            return generator.WithArgumentList("tables", x => x.TableNames);
         }
 
         public static SimpleTemplate ToTemplate(this string template)

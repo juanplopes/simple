@@ -63,7 +63,7 @@ namespace Simple.NVelocity
             engine.Init();
             try
             {
-                engine.Evaluate(this, writer, "mystring", Template);
+                engine.Evaluate(this, writer, this.GetType().Name, Template);
             }
             catch (ParseErrorException pe)
             {
@@ -72,7 +72,7 @@ namespace Simple.NVelocity
             catch (MethodInvocationException mi)
             {
                 writer.Write(mi.Message);
-            }
+            } 
         }
     }
 }

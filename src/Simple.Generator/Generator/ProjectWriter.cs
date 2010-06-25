@@ -50,6 +50,11 @@ namespace Simple.Generator
 
             file = file.Replace(@"/", @"\");
             XmlNode nodeItemGroup = _doc.SelectSingleNode("//p:ItemGroup[p:{0}]".AsFormat(type), _names);
+            if (nodeItemGroup == null)
+            {
+                nodeItemGroup = _doc.CreateElement("ItemGroup", _namespace);
+                _doc.SelectSingleNode("/p:Project", _names).AppendChild(nodeItemGroup);
+            }
             XmlElement newChild = _doc.CreateElement(type, _namespace);
             newChild.SetAttribute("Include", file);
             nodeItemGroup.AppendChild(newChild);

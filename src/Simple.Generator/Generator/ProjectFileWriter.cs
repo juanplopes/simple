@@ -89,6 +89,11 @@ namespace Simple.Generator
             return this;
         }
 
+        public bool ExistsFile(string relativePath)
+        {
+            return File.Exists(GetFullPath(relativePath));
+        }
+
         protected ProjectFileWriter CreateFile<T>(string relativePath, T content, Action<string, T> writer)
         {
             log.DebugFormat("Creating file '{0}'...", relativePath);

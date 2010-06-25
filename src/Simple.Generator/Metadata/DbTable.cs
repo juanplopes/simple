@@ -127,6 +127,14 @@ namespace Simple.Metadata
             }
         }
 
+        public IEnumerable<DbManyToOne> KeyManyToOneRelations
+        {
+            get
+            {
+                return ManyToOneRelations.Where(x => x.IsKey);
+            }
+        }
+
         public IEnumerable<DbManyToOne> ManyToOneRelations { get; protected set; }
 
         public IEnumerable<DbOneToMany> OneToManyRelations { get; protected set;}
