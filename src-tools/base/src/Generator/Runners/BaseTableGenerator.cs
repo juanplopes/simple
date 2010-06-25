@@ -58,5 +58,7 @@ namespace Sample.Project.Generator.Runners
 
 
         public abstract void ExecuteSingle(DbTable table);
+        public abstract string FilePath(string className);
+        public abstract void Delete(string className);
     }
 }

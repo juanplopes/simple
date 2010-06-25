@@ -21,5 +21,16 @@ namespace Sample.Project.Generator.Runners
             foreach (var g in _generators)
                 g.ExecuteSingle(table);
         }
+
+        public override string FilePath(string className)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Delete(string className)
+        {
+            foreach (var g in _generators)
+                g.Delete(className);
+        }
     }
 }

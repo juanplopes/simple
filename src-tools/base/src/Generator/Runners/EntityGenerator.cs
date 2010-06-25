@@ -17,7 +17,7 @@ namespace Sample.Project.Generator.Runners
             var re = Default.Convention;
             
             var className = re.NameFor(table);
-            var filename = string.Format("Domain/Generated/{0}.cs", className);
+            var filename = FilePath(className);
 
             var template = Templates.EntityGenerator.ToTemplate().SetDefaults(table);
             
@@ -27,6 +27,17 @@ namespace Sample.Project.Generator.Runners
 
             using (var project = Default.ContractsProject.Writer())
                 project.AddNewCompile(filename, template.Render());
+        }
+
+        public override void Delete(string className)
+        {
+            using (var project = Default.ContractsProject.Writer())
+                project.RemoveAndDeleteFile(FilePath(className));
+        }
+
+        public override string FilePath(string className)
+        {
+            return string.Format("Domain/Generated/{0}.cs", className);
         }
     }
 }
