@@ -1,3 +1,6 @@
 #foreach($table in $tables)
 $table.Name - $re.NameFor($table)
+#foreach($column in $table.AllColumns)
+    $column.Name $column.DataType
+#end
 #end

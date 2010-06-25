@@ -6,6 +6,7 @@ using Simple.Generator;
 using Simple.Metadata;
 using Simple;
 using Sample.Project.Config;
+using Simple.NVelocity;
 
 namespace Sample.Project.Generator.Runners
 {
