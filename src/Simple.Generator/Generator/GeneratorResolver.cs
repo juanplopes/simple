@@ -67,7 +67,11 @@ namespace Simple.Generator
 
             var parser = FindParser(cmdLine);
             cmdLine = cmdLine.Remove(cmdLine.IndexOf(parser.First), parser.First.Length);
-            return parser.Second.Parse(cmdLine, ignoreExceedingArgs);
+            var generator = parser.Second.Parse(cmdLine, ignoreExceedingArgs);
+
+            if (generator != null)
+                Simply.Do.Log(this).InfoFormat("Found generator: {0}...", generator.GetType().Name);
+            return generator;
         }
 
         private Pair<string, IGeneratorOptions> FindParser(string cmdLine)

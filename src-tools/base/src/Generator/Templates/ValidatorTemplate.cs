@@ -7,19 +7,20 @@ using Simple.Metadata;
 using Simple;
 using Sample.Project.Config;
 using Simple.NVelocity;
+using Sample.Project.Generator.Infra;
 
-namespace Sample.Project.Generator.Runners
+namespace Sample.Project.Generator.Templates
 {
-    public class ServiceInterfaceGenerator : BaseTableGenerator
+    public class ValidatorTemplate : TableTemplate
     {
         public string FilePath(DbTable table)
         {
-            return string.Format("Services/I{0}Service.cs", Default.Convention.NameFor(table));
+            return string.Format("Validators/{0}Validator.cs", Default.Convention.NameFor(table));
         }
 
         public override void Create(DbTable table)
         {
-            var template = Templates.ServiceInterface.ToTemplate().SetDefaults(table);
+            var template = this.ToTemplate().SetDefaults(table);
 
             var filepath = FilePath(table);
             using (var project = Default.ContractsProject.Writer())

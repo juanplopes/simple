@@ -43,14 +43,17 @@ namespace Sample.Project.Generator
         public static SimpleTemplate SetDefaults(this SimpleTemplate template, DbTable table)
         {
             var re = Convention;
-            template["re"] = re;
-            template["table"] = table;
-            template["lazyload"] = Default.LazyLoad;
-            template["namespace"] = Default.DefaultNamespace;
-            template["contracts"] = Default.ContractsAssembly;
-            template["classname"] = re.NameFor(table);
-            template["count"] = new Func<IEnumerable, int>(x => x.Cast<object>().Count());
-            return template;
+            return template.SetMany(new
+            {
+                re = re,
+                table = table,
+                lazyload = LazyLoad,
+                @namespace = DefaultNamespace,
+                contracts = ContractsAssembly,
+                classname = re.NameFor(table),
+                count = new Func<IEnumerable, int>(x => x.Cast<object>().Count()),
+            });
+
         }
 
     }

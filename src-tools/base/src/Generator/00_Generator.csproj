@@ -53,30 +53,19 @@
     <Compile Include="Conventions.cs" />
     <Compile Include="Generators.cs" />
     <Compile Include="Default.cs" />
-    <Compile Include="Runners\BaseTableGenerator.cs" />
-    <Compile Include="Runners\ValidatorGenerator.cs" />
-    <Compile Include="Runners\ServiceImplGenerator.cs" />
-    <Compile Include="Runners\ServiceInterfaceGenerator.cs" />
-    <Compile Include="Runners\MappingGenerator.cs" />
-    <Compile Include="Runners\EntityGenerator.cs" />
-    <Compile Include="Runners\NewMigrationGenerator.cs" />
+    <Compile Include="Infra\TableTemplate.cs" />
+    <Compile Include="Templates\ValidatorTemplate.cs" />
+    <Compile Include="Templates\ServiceImplTemplate.cs" />
+    <Compile Include="Templates\ServiceInterfaceTemplate.cs" />
+    <Compile Include="Templates\MappingTemplate.cs" />
+    <Compile Include="Templates\EntityTemplate.cs" />
+    <Compile Include="Templates\NewMigrationTemplate.cs" />
     <Compile Include="Infra\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Runners\ScaffoldGenerator.cs" />
-    <Compile Include="Templates.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Templates.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Infra\ScaffoldGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Templates.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Templates.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\NewMigrationGenerator.txt" />
+    <EmbeddedResource Include="Templates\NewMigrationTemplate.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contracts\01_Contracts.csproj">
@@ -85,19 +74,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\EntityGenerator.txt" />
+    <EmbeddedResource Include="Templates\EntityTemplate.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MappingGenerator.txt" />
+    <EmbeddedResource Include="Templates\MappingTemplate.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ServiceInterface.txt" />
+    <EmbeddedResource Include="Templates\ServiceInterfaceTemplate.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ServiceImpl.txt" />
+    <EmbeddedResource Include="Templates\ServiceImplTemplate.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Validator.txt" />
+    <EmbeddedResource Include="Templates\ValidatorTemplate.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

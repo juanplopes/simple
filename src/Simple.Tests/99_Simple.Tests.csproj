@@ -158,6 +158,7 @@
     <Compile Include="Generator\RegexHelperFixture.cs" />
     <Compile Include="Generator\DefaultHelpWriterFixture.cs" />
     <Compile Include="Generator\SimpleTemplateFixture.cs" />
+    <Compile Include="Generator\TableNameTransformerFixture.cs" />
     <Compile Include="IO\CommandLineReaderFixture.cs" />
     <Compile Include="IO\FileSizeFixture.cs" />
     <Compile Include="IO\LazySerializerFixture.cs" />

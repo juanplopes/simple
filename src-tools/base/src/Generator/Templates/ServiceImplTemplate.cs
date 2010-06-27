@@ -7,10 +7,11 @@ using Simple.Metadata;
 using Simple;
 using Sample.Project.Config;
 using Simple.NVelocity;
+using Sample.Project.Generator.Infra;
 
-namespace Sample.Project.Generator.Runners
+namespace Sample.Project.Generator.Templates
 {
-    public class ServiceImplGenerator : BaseTableGenerator
+    public class ServiceImplTemplate : TableTemplate
     {
         public string FilePath(DbTable table)
         {
@@ -19,7 +20,7 @@ namespace Sample.Project.Generator.Runners
 
         public override void Create(DbTable table)
         {
-            var template = Templates.ServiceImpl.ToTemplate().SetDefaults(table);
+            var template = this.ToTemplate().SetDefaults(table);
 
             var filepath = FilePath(table);
             using (var project = Default.ServerProject.Writer())

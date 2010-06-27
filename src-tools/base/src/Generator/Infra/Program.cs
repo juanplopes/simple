@@ -5,24 +5,32 @@ using System.Text;
 using Simple.Generator;
 using Sample.Project.Environment;
 using Env = System.Environment;
+using Simple;
+using log4net;
+using System.Reflection;
 
 namespace Sample.Project.Generator.Infra
 {
     public static class Program
     {
+        static ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         static void Main(string[] args)
+        {
+            PrepareEnvironment();
+
+            var resolver = new GeneratorResolver().WithHelp().Define();
+
+            for (string command; ReadCommand(out command); )
+                if (!string.IsNullOrEmpty(command.Trim()))
+                    resolver.Execute(command);
+        }
+
+        private static void PrepareEnvironment()
         {
             new Configurator().ConfigClient().ConfigServer();
 
             if (RootFinder.ChangeToPathOf("generator.findme", "Sample.Project"))
                 Console.WriteLine("Found flag file. Changed current directory to:\n'{0}'.", Env.CurrentDirectory);
-
-            string command;
-            var resolver = new GeneratorResolver().WithHelp().Define();
-
-            while (ReadCommand(out command))
-                if (!string.IsNullOrEmpty(command.Trim()))
-                    resolver.Execute(command);
         }
 
         private static void Execute(this GeneratorResolver resolver, string command)

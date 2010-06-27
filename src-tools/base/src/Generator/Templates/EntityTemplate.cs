@@ -7,10 +7,11 @@ using Simple.Metadata;
 using Simple;
 using Sample.Project.Config;
 using Simple.NVelocity;
+using Sample.Project.Generator.Infra;
 
-namespace Sample.Project.Generator.Runners
+namespace Sample.Project.Generator.Templates
 {
-    public class EntityGenerator : BaseTableGenerator
+    public class EntityTemplate : TableTemplate
     {
         public string FilePath(DbTable table)
         {
@@ -19,7 +20,7 @@ namespace Sample.Project.Generator.Runners
 
         public override void Create(DbTable table)
         {
-            var template = Templates.EntityGenerator.ToTemplate().SetDefaults(table);
+            var template = this.ToTemplate().SetDefaults(table);
             template["idlist"] = MakeIdList(table);
 
             using (var project = Default.ContractsProject.Writer())
