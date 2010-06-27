@@ -24,5 +24,26 @@ namespace Simple.Tests.Generator
             t["asd"] = 123;
             Assert.AreEqual("asd123asd", t.ToString());
         }
+
+        [Test]
+        public void CanReplaceSimpleValueUsingAnonymousObject()
+        {
+            var t = new SimpleTemplate("asd${asd}asd$qwe");
+
+            t.SetMany(new { asd = 123, qwe = 456 });
+
+            Assert.AreEqual("asd123asd456", t.ToString());
+        }
+
+
+        [Test]
+        public void CanReplaceSimpleValueUsingExpressions()
+        {
+            var t = new SimpleTemplate("asd${asd}asd$qwe");
+
+            t.SetMany(asd => 123, qwe => 456);
+
+            Assert.AreEqual("asd123asd456", t.ToString());
+        }
     }
 }

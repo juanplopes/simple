@@ -7,6 +7,8 @@ using NVelocity;
 using System.IO;
 using NVelocity.App;
 using NVelocity.Exception;
+using Simple.Reflection;
+using System.Linq.Expressions;
 
 namespace Simple.NVelocity
 {
@@ -37,6 +39,22 @@ namespace Simple.NVelocity
             }
         }
 
+        public virtual SimpleTemplate SetMany(object anonymous)
+        {
+            var dic = DictionaryHelper.FromAnonymous(anonymous);
+            foreach (var item in dic)
+                this[item.Key] = item.Value;
+            return this;
+        }
+
+        public virtual SimpleTemplate SetMany(params Expression<Func<object, object>>[] expr)
+        {
+            var dic = DictionaryHelper.FromExpressions(expr);
+            foreach (var item in dic)
+                this[item.Key] = item.Value;
+            return this;
+        }
+
         public SimpleTemplate() { }
 
         public SimpleTemplate(string template)
@@ -59,8 +77,7 @@ namespace Simple.NVelocity
 
         public void Render(TextWriter writer)
         {
-            var engine = new VelocityEngine();
-            engine.Init();
+            var engine = EngineWrapper.Do.Get();
             try
             {
                 engine.Evaluate(this, writer, this.GetType().FullName, Template);
