@@ -13,6 +13,7 @@ namespace Sample.Project.Generator.Infra
 {
     public static class Program
     {
+        public static string EnvName = null;
         static ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         static void Main(string[] args)
         {
@@ -54,9 +55,10 @@ namespace Sample.Project.Generator.Infra
 
         private static bool ReadCommand(out string command)
         {
+            Console.Write(EnvName ?? "default");
             Console.Write(">");
             command = Console.ReadLine();
-            return command.Trim() != "quit";
+            return command != null;
         }
     }
 }
