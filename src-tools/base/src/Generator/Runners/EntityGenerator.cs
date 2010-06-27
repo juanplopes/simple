@@ -12,12 +12,10 @@ namespace Sample.Project.Generator.Runners
 {
     public class EntityGenerator : BaseTableGenerator
     {
-        public override void ExecuteSingle(DbTable table)
+        public override void Create(DbTable table)
         {
             var re = Default.Convention;
-            
-            var className = re.NameFor(table);
-            var filename = FilePath(className);
+            var filename = FilePath(table);
 
             var template = Templates.EntityGenerator.ToTemplate().SetDefaults(table);
             
@@ -29,15 +27,15 @@ namespace Sample.Project.Generator.Runners
                 project.AddNewCompile(filename, template.Render());
         }
 
-        public override void Delete(string className)
+        public override void Delete(DbTable table)
         {
             using (var project = Default.ContractsProject.Writer())
-                project.RemoveAndDeleteFile(FilePath(className));
+                project.RemoveAndDeleteFile(FilePath(table));
         }
 
-        public override string FilePath(string className)
+        public string FilePath(DbTable table)
         {
-            return string.Format("Domain/Generated/{0}.cs", className);
+            return string.Format("Domain/Generated/{0}.cs", Default.Convention.NameFor(table));
         }
     }
 }

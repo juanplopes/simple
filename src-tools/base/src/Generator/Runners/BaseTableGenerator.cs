@@ -13,7 +13,9 @@ namespace Sample.Project.Generator.Runners
     public abstract class BaseTableGenerator : IGenerator
     {
         public IList<string> TableNames { get; set; }
+        public bool DeleteFlag { get; set; }
         private IList<DbTable> _tables = null;
+
         public IList<DbTable> Tables
         {
             get
@@ -39,26 +41,38 @@ namespace Sample.Project.Generator.Runners
                 Simply.Do.GetConfig<ApplicationConfig>().ADOProvider,
                 Simply.Do.GetConnectionString());
 
-            return db.GetTables(included, excluded.Select(x => x.Substring(1)).ToList()).ToList();
+            var ret = db.GetTables(included, excluded.Select(x => x.Substring(1)).ToList()).ToList();
+
+            Simply.Do.Log(this).DebugFormat("Found tables: {0}", string.Join(", ", ret.Select(x => x.Name).ToArray()));
+
+            return ret;
         }
 
         private IList<string> GetTransformedTableNames()
         {
             var names = TableNames ?? Default.TableNames.ToList();
-            if (names.Count == 1 && names[0] == "$")
-                names = Default.TableNames.ToList();
-            return names.Select(x => x.Replace("*", "%")).ToList();
+            
+            if (names.Remove("$")) 
+                foreach (var name in Default.TableNames) 
+                    names.Add(name);
+
+            var ret = names.Select(x => x.Replace("*", "%")).ToArray();
+            return ret;
         }
 
         public virtual void Execute()
         {
             foreach (var table in Tables)
-                ExecuteSingle(table);
+            {
+                if (!DeleteFlag)
+                    Create(table);
+                else
+                    Delete(table);
+            }
         }
 
 
-        public abstract void ExecuteSingle(DbTable table);
-        public abstract string FilePath(string className);
-        public abstract void Delete(string className);
+        public abstract void Create(DbTable table);
+        public abstract void Delete(DbTable table);
     }
 }

@@ -13,12 +13,14 @@ namespace Simple.Generator
         public string ProjectPath { get; protected set; }
         ILog log = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         bool autocommit = false;
+        string lastXml = null;
 
         public ProjectFileWriter(string projectPath) :
             base(File.ReadAllText(projectPath))
         {
             log.DebugFormat("Read project '{0}'", projectPath);
             ProjectPath = Path.GetFullPath(projectPath);
+            lastXml = GetXml();
         }
 
         public ProjectFileWriter AutoCommit()
@@ -114,7 +116,13 @@ namespace Simple.Generator
         public ProjectFileWriter WriteChanges()
         {
             log.DebugFormat("Writing changes to project '{0}'...", ProjectPath);
-            File.WriteAllText(ProjectPath, GetXml());
+            var xml = GetXml();
+
+            if (xml != lastXml)
+            {
+                File.WriteAllText(ProjectPath, xml);
+                lastXml = xml;
+            }
             return this;
         }
 

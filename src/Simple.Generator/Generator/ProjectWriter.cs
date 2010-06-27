@@ -66,7 +66,8 @@ namespace Simple.Generator
             log.DebugFormat("Removing file '{0}' from project...", file);
 
             XmlNode nodeItemGroup = GetFileNode(file);
-            nodeItemGroup.ParentNode.RemoveChild(nodeItemGroup);
+            if (nodeItemGroup != null)
+                nodeItemGroup.ParentNode.RemoveChild(nodeItemGroup);
             return this;
         }
 

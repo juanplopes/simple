@@ -27,7 +27,9 @@ namespace Sample.Project.Generator
         public static GeneratorOptions<T> AsTableGenerator<T>(this InitialGeneratorOptions<T> generator)
             where T : BaseTableGenerator
         {
-            return generator.WithArgumentList("tables", x => x.TableNames);
+            return generator
+                .WithArgumentList("tables", x => x.TableNames)
+                .WithOption("delete", x => x.DeleteFlag);
         }
 
         public static SimpleTemplate ToTemplate(this string template)

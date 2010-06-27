@@ -97,5 +97,14 @@ namespace Simple.Tests.Generator
 
             StringAssert.DoesNotContain("<Compile Include=\"Common\\EnumerableExtensions.cs\" />", newProject);
         }
+
+        [Test]
+        public void CanRemoveNonExistingFileFromProject()
+        {
+            var project = CsProjects.SampleProjectSimple;
+            var writer = new ProjectWriter(project);
+            writer.RemoveFile(@"asd.qwe/asd.txt");
+            var newProject = writer.GetXml();
+        }
     }
 }

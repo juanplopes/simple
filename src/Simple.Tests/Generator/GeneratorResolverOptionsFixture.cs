@@ -74,6 +74,20 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
+        public void CanBindBooleanWithoutPassingItsValue()
+        {
+            var resolver = new GeneratorResolver();
+            resolver.Register(() => new SampleBoolean(), "sample")
+                .WithOption("lasers", x => x.Test);
+
+            var generator = resolver.Resolve("sample");
+
+            Assert.IsInstanceOf<SampleBoolean>(generator);
+            Assert.AreEqual(false, (generator as SampleBoolean).Test);
+        }
+
+
+        [Test]
         public void CanBindBooleanNormalWithoutEquals()
         {
             var resolver = new GeneratorResolver();

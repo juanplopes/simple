@@ -36,14 +36,17 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
-        public void CanAddCompileFileToProject()
+        public void CanAddAlreadyExistingFileWontWriteChanges()
         {
             var writer = new ProjectFileWriter("test/test.csproj");
             writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
             writer.WriteChanges();
 
-            StringAssert.Contains(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
-            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+            using (new FileInfo(writer.ProjectPath).Open(FileMode.Open, FileAccess.ReadWrite))
+            {
+                writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
+                writer.WriteChanges();
+            }
         }
 
         [Test]

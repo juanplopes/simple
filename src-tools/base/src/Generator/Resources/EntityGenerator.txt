@@ -34,10 +34,10 @@ namespace ${namespace}.Domain
         {
             Identifiers
 #foreach($field in $table.PrimaryKeysExceptFk)
-                .AddID(x => x.$re.NameFor($field))
+                .Add(x => x.$re.NameFor($field))
 #end
 #foreach($field in $table.KeyManyToOneFields)
-                .AddID(x => x.$re.NameFor($field))
+                .Add(x => x.$re.NameFor($field))
 #end;
         }
         

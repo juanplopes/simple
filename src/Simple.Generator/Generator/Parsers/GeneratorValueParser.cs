@@ -12,10 +12,11 @@ namespace Simple.Generator.Parsers
         public GeneratorValueParser(bool mustBeExplicit, string name, Expression<Func<T, P>> expression) : base(mustBeExplicit, name, expression) { }
         protected override void ParseInternal(string match, IList<string> values, IGenerator generator)
         {
-            if (values.Count != 1)
+            if (values.Count > 1)
                 throw new InvalidArgumentCountException(match, 1, values.Count);
 
-            ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator, ConvertValue<P>(values.First()));
+            if (values.Count == 1)
+                ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator, ConvertValue<P>(values.First()));
         }
     }
 }

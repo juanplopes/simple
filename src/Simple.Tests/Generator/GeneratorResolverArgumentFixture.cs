@@ -89,13 +89,16 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
-        public void CannotBindIntWithZeroParameter()
+        public void CanBindIntWithZeroParameter()
         {
             var resolver = new GeneratorResolver();
             resolver.Register(() => new SampleSingleInt(), "sample")
                 .WithArgument(null, x => x.Test);
 
-            Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample "), "invalid number of arguments: 0");
+            var generator = resolver.Resolve("sample ");
+
+            Assert.IsInstanceOf<SampleSingleInt>(generator);
+            Assert.AreEqual(0, (generator as SampleSingleInt).Test);
         }
 
         [Test]

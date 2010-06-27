@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Simple.Metadata;
 
 namespace Sample.Project.Generator.Runners
 {
@@ -16,21 +17,16 @@ namespace Sample.Project.Generator.Runners
             base.Execute();
         }
 
-        public override void ExecuteSingle(Simple.Metadata.DbTable table)
+        public override void Create(DbTable table)
         {
             foreach (var g in _generators)
-                g.ExecuteSingle(table);
+                g.Create(table);
         }
 
-        public override string FilePath(string className)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Delete(string className)
+        public override void Delete(DbTable table)
         {
             foreach (var g in _generators)
-                g.Delete(className);
+                g.Delete(table);
         }
     }
 }
