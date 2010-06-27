@@ -70,8 +70,16 @@ namespace Simple.Generator
             {
                 log.DebugFormat("Removing file '{0}' from project...", file);
                 nodeItemGroup.ParentNode.RemoveChild(nodeItemGroup);
+                CleanUp();
             }
             return this;
+        }
+
+        private void CleanUp()
+        {
+            var nodes = _doc.SelectNodes("//p:ItemGroup[not(node())]", _names);
+            foreach (XmlNode node in nodes)
+                node.ParentNode.RemoveChild(node);
         }
 
         private XmlNode GetFileNode(string file)

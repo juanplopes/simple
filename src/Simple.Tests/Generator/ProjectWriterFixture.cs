@@ -36,6 +36,20 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
+        public void RemovingLastItemOfAItemGroupWontLeaveItEmpty()
+        {
+            var project = CsProjects.SampleProjectSimple;
+            var writer = new ProjectWriter(project);
+            writer.AddFile(@"asd/qwe.txt", "ASDASD");
+            
+            var newWriter = new ProjectWriter(writer.GetXml());
+            newWriter.RemoveFile("asd/qwe.txt");
+
+            var xml = newWriter.GetXml().Replace("\n", "").Replace("\r", "").Replace(" ", "");
+            StringAssert.DoesNotContain("<ItemGroup></ItemGroup>", xml);
+        }
+
+        [Test]
         public void AddingDuplicatedFileWillMaintainTheLast()
         {
             var project = CsProjects.SampleProjectSimple;
