@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="Sample.Project.Domain">
+  <class name="Sample.Project.Domain.Person, Sample.Project.Contracts" table="people" schema="dbo" >
+            <id name="Id" column="id">
+          <generator class="native" />
+        </id>
+         
+
+
+  </class>
+</hibernate-mapping>

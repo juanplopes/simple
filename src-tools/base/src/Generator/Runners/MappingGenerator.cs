@@ -12,13 +12,17 @@ namespace Sample.Project.Generator.Runners
 {
     public class MappingGenerator : BaseTableGenerator
     {
+        public string FilePath(DbTable table)
+        {
+            return string.Format("Domain/Generated/{0}.hbm.xml", Default.Convention.NameFor(table));
+        }
+
         public override void Create(DbTable table)
         {
-            var filename = FilePath(table);
             var template = Templates.MappingGenerator.ToTemplate().SetDefaults(table);
 
             using (var project = Default.ContractsProject.Writer())
-                project.AddNewEmbeddedResource(filename, template.Render());
+                project.AddNewEmbeddedResource(FilePath(table), template.Render());
         }
 
         public override void Delete(DbTable table)
@@ -27,10 +31,6 @@ namespace Sample.Project.Generator.Runners
                 project.RemoveAndDeleteFile(FilePath(table));
         }
 
-        public string FilePath(DbTable table)
-        {
-            return string.Format("Domain/Generated/{0}.hbm.xml", Default.Convention.NameFor(table));
-        }
 
     }
 }

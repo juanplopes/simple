@@ -43,18 +43,19 @@ namespace Simple.Generator
 
         public ProjectWriter AddFile(string file, string type)
         {
-            log.DebugFormat("Adding file '{0}' to project as '{1}'...", file, type);
-
             var node = GetFileNode(file);
             if (node != null) return this;
 
             file = file.Replace(@"/", @"\");
             XmlNode nodeItemGroup = _doc.SelectSingleNode("//p:ItemGroup[p:{0}]".AsFormat(type), _names);
+
             if (nodeItemGroup == null)
             {
+                log.DebugFormat("Adding file '{0}' to project as '{1}'...", file, type);
                 nodeItemGroup = _doc.CreateElement("ItemGroup", _namespace);
                 _doc.SelectSingleNode("/p:Project", _names).AppendChild(nodeItemGroup);
             }
+            
             XmlElement newChild = _doc.CreateElement(type, _namespace);
             newChild.SetAttribute("Include", file);
             nodeItemGroup.AppendChild(newChild);
@@ -63,11 +64,13 @@ namespace Simple.Generator
 
         public ProjectWriter RemoveFile(string file)
         {
-            log.DebugFormat("Removing file '{0}' from project...", file);
 
             XmlNode nodeItemGroup = GetFileNode(file);
             if (nodeItemGroup != null)
+            {
+                log.DebugFormat("Removing file '{0}' from project...", file);
                 nodeItemGroup.ParentNode.RemoveChild(nodeItemGroup);
+            }
             return this;
         }
 

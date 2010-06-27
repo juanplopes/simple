@@ -83,10 +83,14 @@ namespace Simple.Generator
 
         public ProjectFileWriter RemoveAndDeleteFile(string relativePath)
         {
-            log.DebugFormat("Deleting file '{0}'...", relativePath);
 
             var path = GetFullPath(relativePath);
-            File.Delete(path);
+
+            if (File.Exists(path))
+            {
+                log.DebugFormat("Deleting file '{0}'...", relativePath);
+                File.Delete(path);
+            }
             RemoveFile(relativePath);
             return this;
         }
@@ -115,14 +119,19 @@ namespace Simple.Generator
 
         public ProjectFileWriter WriteChanges()
         {
-            log.DebugFormat("Writing changes to project '{0}'...", ProjectPath);
             var xml = GetXml();
 
             if (xml != lastXml)
             {
+                log.DebugFormat("Writing changes to project '{0}'...", Path.GetFileName(ProjectPath));
                 File.WriteAllText(ProjectPath, xml);
                 lastXml = xml;
             }
+            else
+            {
+                log.DebugFormat("No change was made to '{0}'. Skipping...", Path.GetFileName(ProjectPath));
+            }
+
             return this;
         }
 

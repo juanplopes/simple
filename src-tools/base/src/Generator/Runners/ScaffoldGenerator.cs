@@ -12,9 +12,18 @@ namespace Sample.Project.Generator.Runners
 
         public override void Execute()
         {
-            _generators.Add(new EntityGenerator() { Tables = this.Tables });
-            _generators.Add(new MappingGenerator() { Tables = this.Tables });
+            _generators.Clear();
+            
+            AddGenerator<EntityGenerator>();
+            AddGenerator<MappingGenerator>();
+            
             base.Execute();
+        }
+
+        protected void AddGenerator<T>()
+            where T : BaseTableGenerator, new()
+        {
+            _generators.Add(new T() { Tables = this.Tables });
         }
 
         public override void Create(DbTable table)
