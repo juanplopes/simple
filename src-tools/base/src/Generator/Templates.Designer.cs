@@ -88,25 +88,15 @@ namespace Sample.Project.Generator {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using System;
-        ///using System.Collections.Generic;
-        ///using System.Linq;
-        ///using System.Text;
-        ///using Simple.Reflection;
-        ///using Simple.Entities;
-        ///using ${namespace}.Services;
-        ///
-        ///namespace ${namespace}.Domain
-        ///{
-        ///    [Serializable]
-        ///    public partial class $classname : Entity&lt;${classname}, I${classname}Service&gt;
-        ///    {
-        ///#foreach($field in $table.PrimaryKeysExceptFk)
-        ///        public virtual $re.TypeFor($field) $re.NameFor($field) { get; set; } 
-        ///#end
-        ///
-        ///#foreach($field in $table.OrdinaryFields)
-        ///        public virt [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;hibernate-mapping xmlns=&quot;urn:nhibernate-mapping-2.2&quot; namespace=&quot;${namespace}.Domain&quot;&gt;
+        ///  &lt;class name=&quot;${namespace}.Domain.$classname, $contracts&quot; table=&quot;$table.Name&quot; schema=&quot;$table.Schema&quot; #if (!$lazyload) lazy=&quot;false&quot; #end&gt;
+        ///#if ($count.Invoke($table.PrimaryKeyColumns) &gt; 1)
+        ///        &lt;composite-id&gt;
+        ///    #foreach($field in $table.PrimaryKeysExceptFk)
+        ///          &lt;key-property name=&quot;$re.NameFor($field)&quot; column=&quot;$field.Name&quot; /&gt;
+        ///    #end
+        ///    #foreach($field in $table.K [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MappingGenerator {
             get {
@@ -142,6 +132,73 @@ namespace Sample.Project.Generator {
         internal static string NewMigrationGenerator {
             get {
                 return ResourceManager.GetString("NewMigrationGenerator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Text;
+        ///using Simple.Entities;
+        ///using ${namespace}.Domain;
+        ///
+        ///namespace ${namespace}.Services
+        ///{
+        ///    public partial class ${classname}Service : EntityService&lt;${classname}&gt;, I${classname}Service
+        ///    {
+        ///    }
+        ///}.
+        /// </summary>
+        internal static string ServiceImpl {
+            get {
+                return ResourceManager.GetString("ServiceImpl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Text;
+        ///using Simple.Entities;
+        ///using ${namespace}.Domain;
+        ///
+        ///namespace ${namespace}.Services
+        ///{
+        ///    public partial interface I${classname}Service : IEntityService&lt;${classname}&gt;
+        ///    {
+        ///    }
+        ///}.
+        /// </summary>
+        internal static string ServiceInterface {
+            get {
+                return ResourceManager.GetString("ServiceInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Text;
+        ///using ${namespace}.Domain;
+        ///using FluentValidation;
+        ///
+        ///namespace ${namespace}.Validators
+        ///{
+        ///    public class ${classname}Validator : AbstractValidator&lt;${classname}&gt;
+        ///    {
+        ///        public ${classname}Validator()
+        ///        {
+        ///        }
+        ///    }
+        ///}
+        ///.
+        /// </summary>
+        internal static string Validator {
+            get {
+                return ResourceManager.GetString("Validator", resourceCulture);
             }
         }
     }

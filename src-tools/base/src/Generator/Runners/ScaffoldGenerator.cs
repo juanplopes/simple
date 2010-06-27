@@ -16,6 +16,9 @@ namespace Sample.Project.Generator.Runners
             
             AddGenerator<EntityGenerator>();
             AddGenerator<MappingGenerator>();
+            AddGenerator<ServiceInterfaceGenerator>();
+            AddGenerator<ServiceImplGenerator>();
+            AddGenerator<ValidatorGenerator>();
             
             base.Execute();
         }

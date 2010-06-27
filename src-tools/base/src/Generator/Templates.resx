@@ -127,4 +127,13 @@
   <data name="NewMigrationGenerator" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\NewMigrationGenerator.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="ServiceImpl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ServiceImpl.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ServiceInterface" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\serviceinterface.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="Validator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Validator.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

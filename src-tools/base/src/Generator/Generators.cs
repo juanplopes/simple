@@ -18,7 +18,11 @@ namespace Sample.Project.Generator
             registry.Register<NewMigrationGenerator>("g migration");
 
             registry.Register<ScaffoldGenerator>("scaffold").AsTableGenerator();
+
+            registry.Register<ServiceInterfaceGenerator>("g service interface").AsTableGenerator();
+            registry.Register<ServiceImplGenerator>("g service impl").AsTableGenerator();
             registry.Register<EntityGenerator>("g entity").AsTableGenerator();
+            registry.Register<ValidatorGenerator>("g validator").AsTableGenerator();
             registry.Register<MappingGenerator>("g mapping").AsTableGenerator();
 
             return registry;

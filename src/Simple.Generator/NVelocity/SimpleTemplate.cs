@@ -9,6 +9,7 @@ using NVelocity.App;
 using NVelocity.Exception;
 using Simple.Reflection;
 using System.Linq.Expressions;
+using NVelocity.Context;
 
 namespace Simple.NVelocity
 {
@@ -89,7 +90,7 @@ namespace Simple.NVelocity
             catch (MethodInvocationException mi)
             {
                 writer.Write(mi.Message);
-            } 
+            }
         }
     }
 }

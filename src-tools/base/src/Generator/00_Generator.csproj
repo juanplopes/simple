@@ -54,6 +54,9 @@
     <Compile Include="Generators.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="Runners\BaseTableGenerator.cs" />
+    <Compile Include="Runners\ValidatorGenerator.cs" />
+    <Compile Include="Runners\ServiceImplGenerator.cs" />
+    <Compile Include="Runners\ServiceInterfaceGenerator.cs" />
     <Compile Include="Runners\MappingGenerator.cs" />
     <Compile Include="Runners\EntityGenerator.cs" />
     <Compile Include="Runners\NewMigrationGenerator.cs" />
@@ -86,6 +89,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MappingGenerator.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ServiceInterface.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ServiceImpl.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Validator.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
