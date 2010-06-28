@@ -31,8 +31,8 @@ namespace Sample.Project.Environment
 
             Config(x => x.DefaultHost());
 
-            if (Environment != Test)
-                Do.AddClientHook(x => new HttpIdentityInjector(x));
+            //if (Environment != Test)
+            //    Do.AddClientHook(x => new HttpIdentityInjector(x));
 
             return this;
         }

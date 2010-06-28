@@ -53,7 +53,6 @@ namespace Sample.Project.Generator
                 classname = re.NameFor(table),
                 count = new Func<IEnumerable, int>(x => x.Cast<object>().Count()),
             });
-
         }
 
     }

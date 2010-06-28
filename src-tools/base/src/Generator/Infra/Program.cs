@@ -22,8 +22,7 @@ namespace Sample.Project.Generator.Infra
             var resolver = new GeneratorResolver().WithHelp().Define();
 
             for (string command; ReadCommand(out command); )
-                if (!string.IsNullOrEmpty(command.Trim()))
-                    resolver.Execute(command);
+                resolver.Execute(command);
         }
 
         private static void PrepareEnvironment()
@@ -55,9 +54,13 @@ namespace Sample.Project.Generator.Infra
 
         private static bool ReadCommand(out string command)
         {
-            Console.Write(EnvName ?? "default");
-            Console.Write(">");
-            command = Console.ReadLine();
+            do
+            {
+                Console.Write(EnvName ?? "default");
+                Console.Write(">");
+                command = Console.ReadLine();
+            } while (command != null && command.Trim() == string.Empty);
+
             return command != null;
         }
     }
