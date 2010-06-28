@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="Sample.Project.Domain">
+  <class name="Sample.Project.Domain.Person, Sample.Project.Contracts" table="people" schema="dbo" >
+    <composite-id>
+          <key-property name="Id" column="id" />
+          <key-property name="Id2" column="id2" />
+            </composite-id>  
+ 
+    <property name="Asd">
+      <column name="asd" sql-type="nchar" />
+    </property>
+
+
+  </class>
+</hibernate-mapping>

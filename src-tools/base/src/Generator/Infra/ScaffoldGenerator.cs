@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Simple.Metadata;
 using Sample.Project.Generator.Templates;
+using Simple;
+using Sample.Project.Services;
 
 namespace Sample.Project.Generator.Infra
 {
@@ -13,6 +15,8 @@ namespace Sample.Project.Generator.Infra
 
         public override void Execute()
         {
+            var item = Simply.Do.Resolve<ISystemService>().Check();
+
             _generators.Clear();
             
             AddGenerator<EntityTemplate>();

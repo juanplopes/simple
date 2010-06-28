@@ -9,12 +9,13 @@ using NVelocity;
 using NVelocity.App;
 using Simple.NVelocity;
 using Sample.Project.Generator.Infra;
+using Sample.Project.Generator.Contexts;
 
 namespace Sample.Project.Generator
 {
     public static class Generators
     {
-        public static GeneratorResolver Define(this GeneratorResolver registry)
+        public static GeneratorResolver Define(this GeneratorResolver registry, bool enableContextCommands)
         {
             registry.Register<NewMigrationTemplate>("g migration");
 
@@ -25,6 +26,13 @@ namespace Sample.Project.Generator
             registry.Register<EntityTemplate>("g entity").AsTableGenerator();
             registry.Register<ValidatorTemplate>("g validator").AsTableGenerator();
             registry.Register<MappingTemplate>("g mapping").AsTableGenerator();
+
+            if (enableContextCommands)
+            {
+                registry.Register<ExitCommand>("@exit", "@quit");
+                registry.Register<SetContextCommand>("@set").WithArgument("new context", x => x.NewContext);
+                registry.Register<ListContextsCommand>("@list");
+            }
 
             return registry;
         }

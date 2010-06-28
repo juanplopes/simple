@@ -50,9 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contexts\ListContextsCommand.cs" />
+    <Compile Include="Contexts\SetContextCommand.cs" />
+    <Compile Include="Contexts\ExitCommand.cs" />
     <Compile Include="Conventions.cs" />
     <Compile Include="Generators.cs" />
     <Compile Include="Default.cs" />
+    <Compile Include="Infra\Context.cs" />
+    <Compile Include="Infra\ContextManager.cs" />
     <Compile Include="Infra\TableTemplate.cs" />
     <Compile Include="Templates\ValidatorTemplate.cs" />
     <Compile Include="Templates\ServiceImplTemplate.cs" />
@@ -71,6 +76,10 @@
     <ProjectReference Include="..\Contracts\01_Contracts.csproj">
       <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
       <Name>01_Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server\02_Server.csproj">
+      <Project>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</Project>
+      <Name>02_Server</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
