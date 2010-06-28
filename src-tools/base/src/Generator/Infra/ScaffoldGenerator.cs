@@ -15,8 +15,6 @@ namespace Sample.Project.Generator.Infra
 
         public override void Execute()
         {
-            var item = Simply.Do.Resolve<ISystemService>().Check();
-
             _generators.Clear();
             
             AddGenerator<EntityTemplate>();

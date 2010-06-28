@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sample.Project.Generator.Infra
+namespace Simple.Generator.Console
 {
-    public class ContextManager
+    public class ContextManager<C> : Simple.Generator.Console.IContextManager
+        where C : ContextBase, new()
     {
         public string PromptContext { get; set; }
 
         private object NullKey = new object();
-        IDictionary<object, Context> contexts = new Dictionary<object, Context>();
+        IDictionary<object, IContext> contexts = new Dictionary<object, IContext>();
         string contextFreeIdentifier;
 
         public ContextManager(string contextFreeIdentifier)
@@ -24,20 +25,20 @@ namespace Sample.Project.Generator.Infra
 
         }
 
-        public Context Get(string key)
+        public IContext Get(string key)
         {
             if (!contexts.ContainsKey(key ?? NullKey))
             {
-                Context ctx = null;
+                IContext ctx = null;
                 if (key == null)
                 {
-                    ctx = new Context();
+                    ctx = new C();
                 }
                 else
                 {
                     var domain = AppDomain.CreateDomain(key);
-                    var type = typeof(Context);
-                    ctx = (Context)domain.CreateInstanceAndUnwrap(type.Assembly.GetName().Name, type.FullName);
+                    var type = typeof(C);
+                    ctx = (C)domain.CreateInstanceAndUnwrap(type.Assembly.GetName().Name, type.FullName);
                 }
                 ctx.Init(key, key == null);
                 return contexts[key ?? NullKey] = ctx;
@@ -58,15 +59,13 @@ namespace Sample.Project.Generator.Infra
         {
             try
             {
-                Context context = (command.Trim().StartsWith(contextFreeIdentifier)) ? Get(null) : Get(PromptContext);
+                var context = (command.Trim().StartsWith(contextFreeIdentifier)) ? Get(null) : Get(PromptContext);
                 context.Execute(command);
             }
             catch (Exception e)
             {
-                Console.WriteLine("FATAL: {0}", e.Message);
-                Console.WriteLine(e.StackTrace);
+                Simply.Do.Log(this).Fatal(e.Message, e);
             }
-            Console.WriteLine();
         }
 
     }

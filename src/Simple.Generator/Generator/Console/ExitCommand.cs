@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Sample.Project.Generator.Infra;
 using System.Diagnostics;
 
-namespace Sample.Project.Generator.Contexts
+namespace Simple.Generator.Console
 {
     public class ExitCommand : IGenerator
     {
+        IContextManager manager;
+        public ExitCommand(IContextManager manager)
+        {
+            this.manager = manager;
+        }
+
         #region IGenerator Members
 
         public void Execute()
         {
-            if (Program.Manager.PromptContext == null)
+            if (manager.PromptContext == null)
                 System.Environment.Exit(0);
             else
-                Program.Manager.PromptContext = null;
-          
+                manager.PromptContext = null;
+
         }
 
         #endregion

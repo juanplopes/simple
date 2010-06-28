@@ -8,12 +8,13 @@ using Env = System.Environment;
 using Simple;
 using log4net;
 using System.Reflection;
+using Simple.Generator.Console;
 
 namespace Sample.Project.Generator.Infra
 {
     public static class Program
     {
-        public static ContextManager Manager = new ContextManager();
+        public static IContextManager Manager = new ContextManager<Context>();
 
 
         static void Main(string[] args)
@@ -22,7 +23,10 @@ namespace Sample.Project.Generator.Infra
                 Console.WriteLine("Found flag file. Changed current directory to:\n'{0}'.", Env.CurrentDirectory);
 
             for (string command; ReadCommand(out command); )
+            {
                 Manager.Execute(command);
+                Console.WriteLine();
+            }
         }
 
         private static bool ReadCommand(out string command)

@@ -7,7 +7,7 @@ using Sample.Project.Domain;
 
 namespace Sample.Project.Services
 {
-    public partial class PersonService : EntityService<Person>, IPersonService
+    public partial class SchemaInfoService : EntityService<SchemaInfo>, ISchemaInfoService
     {
     }
 }

@@ -58,21 +58,9 @@
     <Compile Include="DevTestData\DevTestDataTool.cs" />
     <Compile Include="InitialData\InitialDataTool.cs" />
     <Compile Include="IToolRunner.cs" />
-    <Compile Include="Migrations\MigratorTool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestData\UnitTestDataTool.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Migrations\NewMigrationTemplate.log">
-      <DependentUpon>NewMigrationTemplate.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </None>
-    <None Include="Migrations\NewMigrationTemplate.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>NewMigrationTemplate.log</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

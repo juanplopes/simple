@@ -9,32 +9,29 @@ using Sample.Project.Services;
 namespace Sample.Project.Domain
 {
     [Serializable]
-    public partial class Person : Entity<Person, IPersonService>
+    public partial class SchemaInfo : Entity<SchemaInfo, ISchemaInfoService>
     {
-        public virtual Int32? Id { get; set; } 
-        public virtual Byte[] Id2 { get; set; } 
+        public virtual Int64? Version { get; set; } 
 
-        public virtual String Asd { get; set; } 
 
 
 
         #region ' Generated Helpers '
-        static Person()
+        static SchemaInfo()
         {
             Identifiers
-                .Add(x => x.Id)
-                .Add(x => x.Id2)
+                .Add(x => x.Version)
 ;
         }
         
         partial void Initialize();
         
-        public static bool operator ==(Person obj1, Person obj2)
+        public static bool operator ==(SchemaInfo obj1, SchemaInfo obj2)
         {
             return object.Equals(obj1, obj2);
         }
 
-        public static bool operator !=(Person obj1, Person obj2)
+        public static bool operator !=(SchemaInfo obj1, SchemaInfo obj2)
         {
             return !(obj1 == obj2);
         }
@@ -49,15 +46,14 @@ namespace Sample.Project.Domain
             return base.GetHashCode();
         }
         
-        public Person() 
+        public SchemaInfo() 
         {  
             Initialize();
         }
         
-        public Person(Int32? Id, Byte[] Id2) : this()
+        public SchemaInfo(Int64? Version) : this()
         {  
-            this.Id = Id;
-            this.Id2 = Id2;
+            this.Version = Version;
         }
      
         #endregion

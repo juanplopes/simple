@@ -58,6 +58,13 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="Generator\Console\ContextBase.cs" />
+    <Compile Include="Generator\Console\ContextManager.cs" />
+    <Compile Include="Generator\Console\ExitCommand.cs" />
+    <Compile Include="Generator\Console\IContext.cs" />
+    <Compile Include="Generator\Console\IContextManager.cs" />
+    <Compile Include="Generator\Console\ListContextsCommand.cs" />
+    <Compile Include="Generator\Console\SetContextCommand.cs" />
     <Compile Include="Generator\Strings\EnglishPluralizer.cs" />
     <Compile Include="Generator\Strings\IPluralizer.cs" />
     <Compile Include="Generator\Strings\GeneratorStrings.cs" />

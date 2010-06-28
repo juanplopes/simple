@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Sample.Project.Tools.Migrations;
 using Sample.Project.Tools.UnitTestData;
 using Sample.Project.Tools.DevTestData;
 using Sample.Project.Tools.InitialData;
@@ -15,7 +14,7 @@ namespace Sample.Project.Tools
         static int Main(string[] args)
         {
             var runners = new Dictionary<string, IToolRunner>(StringComparer.InvariantCultureIgnoreCase);
-            runners["Migrator"] = new MigratorTool();
+            //runners["Migrator"] = new MigratorTool();
             runners["UnitTestData"] = new UnitTestDataTool();
             runners["DevTestData"] = new DevTestDataTool();
             runners["InitialData"] = new InitialDataTool();

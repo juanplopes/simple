@@ -7,9 +7,9 @@ using FluentValidation;
 
 namespace Sample.Project.Validators
 {
-    public class PersonValidator : AbstractValidator<Person>
+    public class SchemaInfoValidator : AbstractValidator<SchemaInfo>
     {
-        public PersonValidator()
+        public SchemaInfoValidator()
         {
         }
     }

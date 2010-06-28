@@ -50,15 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\ListContextsCommand.cs" />
-    <Compile Include="Contexts\SetContextCommand.cs" />
-    <Compile Include="Contexts\ExitCommand.cs" />
     <Compile Include="Conventions.cs" />
     <Compile Include="Generators.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="Infra\Context.cs" />
-    <Compile Include="Infra\ContextManager.cs" />
     <Compile Include="Infra\TableTemplate.cs" />
+    <Compile Include="Migrations\MigrateTool.cs" />
     <Compile Include="Templates\ValidatorTemplate.cs" />
     <Compile Include="Templates\ServiceImplTemplate.cs" />
     <Compile Include="Templates\ServiceInterfaceTemplate.cs" />
@@ -96,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Templates\ValidatorTemplate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

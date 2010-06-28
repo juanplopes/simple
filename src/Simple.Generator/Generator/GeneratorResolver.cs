@@ -52,7 +52,7 @@ namespace Simple.Generator
 
         public GeneratorResolver WithHelp()
         {
-            return WithHelp(Console.Out);
+            return WithHelp(System.Console.Out);
         }
 
 

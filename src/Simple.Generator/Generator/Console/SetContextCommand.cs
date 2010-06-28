@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Sample.Project.Generator.Infra;
 using System.Diagnostics;
 
-namespace Sample.Project.Generator.Contexts
+namespace Simple.Generator.Console
 {
     public class SetContextCommand : IGenerator
     {
+        IContextManager manager;
+        public SetContextCommand(IContextManager manager)
+        {
+            this.manager = manager;
+        }
+
+
         public string NewContext { get; set; }
 
         #region IGenerator Members
@@ -17,9 +23,9 @@ namespace Sample.Project.Generator.Contexts
         public void Execute()
         {
             if (NewContext == "$")
-                Program.Manager.PromptContext = null;
+                manager.PromptContext = null;
             else
-                Program.Manager.PromptContext = NewContext;
+                manager.PromptContext = NewContext;
         }
 
         #endregion

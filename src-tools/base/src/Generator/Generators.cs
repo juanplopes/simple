@@ -9,7 +9,8 @@ using NVelocity;
 using NVelocity.App;
 using Simple.NVelocity;
 using Sample.Project.Generator.Infra;
-using Sample.Project.Generator.Contexts;
+using Sample.Project.Generator.Migrations;
+using Simple.Generator.Console;
 
 namespace Sample.Project.Generator
 {
@@ -17,8 +18,14 @@ namespace Sample.Project.Generator
     {
         public static GeneratorResolver Define(this GeneratorResolver registry, bool enableContextCommands)
         {
-            registry.Register<NewMigrationTemplate>("g migration");
+            //Migrations
+            registry.Register<NewMigrationTemplate>("new migration")
+                .WithArgument("name", x => x.Name);
+            
+            registry.Register<MigrateTool>("migrate")
+                .WithOption("to", x => x.Version);
 
+            //Table generators
             registry.Register<ScaffoldGenerator>("scaffold").AsTableGenerator();
 
             registry.Register<ServiceInterfaceTemplate>("g service interface").AsTableGenerator();
@@ -27,11 +34,14 @@ namespace Sample.Project.Generator
             registry.Register<ValidatorTemplate>("g validator").AsTableGenerator();
             registry.Register<MappingTemplate>("g mapping").AsTableGenerator();
 
+
             if (enableContextCommands)
             {
-                registry.Register<ExitCommand>("@exit", "@quit");
-                registry.Register<SetContextCommand>("@set").WithArgument("new context", x => x.NewContext);
-                registry.Register<ListContextsCommand>("@list");
+                registry.Register(() => new ExitCommand(Program.Manager), "@exit", "@quit");
+                registry.Register(() => new SetContextCommand(Program.Manager), "@set")
+                    .WithArgument("new context", x => x.NewContext);
+
+                registry.Register(() => new ListContextsCommand(Program.Manager), "@list");
             }
 
             return registry;
