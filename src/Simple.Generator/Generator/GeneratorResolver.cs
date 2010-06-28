@@ -69,8 +69,6 @@ namespace Simple.Generator
             cmdLine = cmdLine.Remove(cmdLine.IndexOf(parser.First), parser.First.Length);
             var generator = parser.Second.Parse(cmdLine, ignoreExceedingArgs);
 
-            if (generator != null)
-                Simply.Do.Log(this).InfoFormat("Found generator: {0}...", generator.GetType().Name);
             return generator;
         }
 
