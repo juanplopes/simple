@@ -20,7 +20,6 @@ namespace Sample.Project.Generator.Infra
                 cfg.StartServer<ServerStarter>();
             else
                 cfg.ConfigClient().ConfigServer();
-            Simply.Do.Configure.Log4netToConsole();
 
             return resolver;
         }

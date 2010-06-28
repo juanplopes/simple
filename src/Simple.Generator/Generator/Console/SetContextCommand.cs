@@ -22,10 +22,8 @@ namespace Simple.Generator.Console
 
         public void Execute()
         {
-            if (NewContext == "$")
-                manager.PromptContext = null;
-            else
-                manager.PromptContext = NewContext;
+            if (NewContext != null)
+                manager.Push(NewContext);
         }
 
         #endregion

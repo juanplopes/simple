@@ -33,7 +33,7 @@ namespace Sample.Project.Generator.Infra
         {
             do
             {
-                Console.Write(Manager.PromptContext);
+                Console.Write(string.Join(">", Manager.Stack.ToArray()));
                 Console.Write(">");
                 command = Console.ReadLine();
             } while (command != null && command.Trim() == string.Empty);

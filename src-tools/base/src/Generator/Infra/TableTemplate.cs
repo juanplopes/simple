@@ -37,7 +37,7 @@ namespace Sample.Project.Generator.Infra
 
             var ret = db.GetTables(names.Included, names.Excluded).ToList();
 
-            Simply.Do.Log(this).DebugFormat("Found tables: {0}", string.Join(", ", ret.Select(x => x.Name).ToArray()));
+            Simply.Do.Log(this).InfoFormat("Found tables: {0}", string.Join(", ", ret.Select(x => x.Name).ToArray()));
 
             return ret;
         }

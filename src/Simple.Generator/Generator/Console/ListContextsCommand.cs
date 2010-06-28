@@ -19,7 +19,7 @@ namespace Simple.Generator.Console
 
         public void Execute()
         {
-            var contexts = manager.Names;
+            var contexts = manager.ContextNames;
             Simply.Do.Log(this).InfoFormat("Open contexts: {0}", string.Join(", ", contexts));
         }
 

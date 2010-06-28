@@ -5,18 +5,20 @@ using System.Text;
 
 namespace Simple.Generator.Console
 {
-    public class ContextManager<C> : Simple.Generator.Console.IContextManager
+    public class ContextManager<C> : IContextManager
         where C : ContextBase, new()
     {
-        public string PromptContext { get; set; }
-
         private object NullKey = new object();
         IDictionary<object, IContext> contexts = new Dictionary<object, IContext>();
+
+        LinkedList<string> stack = new LinkedList<string>();
+
         string contextFreeIdentifier;
 
         public ContextManager(string contextFreeIdentifier)
         {
             this.contextFreeIdentifier = contextFreeIdentifier;
+            Push(null);
         }
 
         public ContextManager()
@@ -25,7 +27,7 @@ namespace Simple.Generator.Console
 
         }
 
-        public IContext Get(string key)
+        protected IContext Get(string key)
         {
             if (!contexts.ContainsKey(key ?? NullKey))
             {
@@ -47,7 +49,7 @@ namespace Simple.Generator.Console
             return contexts[key ?? NullKey];
         }
 
-        public string[] Names
+        public string[] ContextNames
         {
             get
             {
@@ -59,7 +61,7 @@ namespace Simple.Generator.Console
         {
             try
             {
-                var context = (command.Trim().StartsWith(contextFreeIdentifier)) ? Get(null) : Get(PromptContext);
+                var context = (command.Trim().StartsWith(contextFreeIdentifier)) ? Root : Current;
                 context.Execute(command);
             }
             catch (Exception e)
@@ -68,5 +70,43 @@ namespace Simple.Generator.Console
             }
         }
 
+
+
+
+        #region IContextManager Members
+
+        public void Push(string key)
+        {
+            stack.AddLast(key);
+        }
+
+        public bool Pop()
+        {
+            stack.RemoveLast();
+            return stack.Count > 0;
+
+        }
+
+        public IContext Current
+        {
+            get { return Get(stack.Last.Value); }
+        }
+
+        public IContext Root
+        {
+            get { return Get(stack.First.Value); }
+        }
+
+        #endregion
+
+        #region IContextManager Members
+
+
+        public IEnumerable<string> Stack
+        {
+            get { return stack; }
+        }
+
+        #endregion
     }
 }

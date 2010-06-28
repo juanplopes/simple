@@ -60,6 +60,11 @@
     </Compile>
     <Compile Include="Generator\Console\ContextBase.cs" />
     <Compile Include="Generator\Console\ContextManager.cs" />
+    <Compile Include="Generator\Console\DefaultConfig.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DefaultConfig.resx</DependentUpon>
+    </Compile>
     <Compile Include="Generator\Console\ExitCommand.cs" />
     <Compile Include="Generator\Console\IContext.cs" />
     <Compile Include="Generator\Console\IContextManager.cs" />
@@ -211,6 +216,15 @@
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
       <Name>00_Simple</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Generator\Console\DefaultConfig.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DefaultConfig.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Generator\Console\Log4net.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

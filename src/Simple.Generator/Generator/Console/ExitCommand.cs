@@ -19,11 +19,8 @@ namespace Simple.Generator.Console
 
         public void Execute()
         {
-            if (manager.PromptContext == null)
+            if (!manager.Pop())
                 System.Environment.Exit(0);
-            else
-                manager.PromptContext = null;
-
         }
 
         #endregion
