@@ -58,6 +58,9 @@ namespace Simple.Generator
 
         public Result Transform(IEnumerable<string> input)
         {
+            if (input == null || !input.Any())
+                input = new[] { DefaultIdentifier };
+
             var list = new List<string>(SearchIdentifier(input ?? DefaultNames));
 
             var excluded = list.Where(x => x.StartsWith("-"));

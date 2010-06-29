@@ -21,13 +21,16 @@ namespace Simple
                 return locations;
             }
         }
-        public string Environment { protected get; set; }
+        public string Environment { get; protected set; }
 
         public const string Test = "Test";
         public bool IsTest { get { return Is(Test); } }
 
         public const string Development = "Development";
         public bool IsDevelopment { get { return Is(Development); } }
+
+        public const string Production = "Production";
+        public bool IsProduction { get { return Is(Production); } }
 
         public virtual string DefaultEnvironment { get { return Development; } }
         public bool IsDefault { get { return Is(DefaultEnvironment); } }

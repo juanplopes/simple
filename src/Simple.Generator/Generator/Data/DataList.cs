@@ -6,13 +6,13 @@ using Simple.Entities;
 using System.Linq.Expressions;
 using Simple;
 
-namespace Sample.Project.Generator.Data
+namespace Simple.Generator.Data
 {
-    public abstract class DataList<T> : IDataItems
+    public abstract class DataList<T> : IDataList
         where T : class, IEntity<T>, new()
     {
-        public abstract Expression<Func<T, bool>> FindPredicate(T entity);
-        public abstract void DefineItems();
+        protected abstract Expression<Func<T, bool>> FindPredicate(T entity);
+        protected abstract void DefineItems();
         bool initialized = false;
 
         public DataList()
@@ -38,8 +38,10 @@ namespace Sample.Project.Generator.Data
             return GetEnumeration(name).Single();
         }
 
-        private IEnumerable<T> GetEnumeration(string name)
+        public IEnumerable<T> GetEnumeration(string name)
         {
+            Initialize();
+
             var sample = lookup[name ?? DataItem<T>.NullName];
             var items = sample.SelectMany(x =>
             {
@@ -50,7 +52,7 @@ namespace Sample.Project.Generator.Data
             return items;
         }
 
-        protected virtual DataItem<T> NewItem(string name)
+        protected virtual DataItem<T> MakeNew(string name)
         {
             if (initialized) throw new InvalidOperationException("Already initialized");
             var item = new DataItem<T>(name);
@@ -58,12 +60,12 @@ namespace Sample.Project.Generator.Data
             return item;
         }
 
-        protected virtual DataItem<T> NewItem()
+        protected virtual DataItem<T> MakeNew()
         {
-            return NewItem(null);
+            return MakeNew(null);
         }
 
-        public virtual void Initialize()
+        protected virtual void Initialize()
         {
             if (initialized) return;
 

@@ -7,6 +7,7 @@ namespace Simple.Generator.Console
 {
     public interface IContext
     {
+        string Name { get; }
         void Init(string name, bool defaultContext);
         void Execute(string command);
     }

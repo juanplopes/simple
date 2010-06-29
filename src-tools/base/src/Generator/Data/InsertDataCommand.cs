@@ -6,6 +6,7 @@ using Castle.Core;
 using Simple.Generator;
 using Sample.Project.Generator.Infra;
 using Sample.Project.Environment;
+using Simple;
 
 namespace Sample.Project.Generator.Data
 {
@@ -17,8 +18,7 @@ namespace Sample.Project.Generator.Data
 
         public void Execute()
         {
-            var env = new Configurator(Environment ?? Program.Manager.Current.Name);
-
+            var env = new Configurator(Environment ?? Simply.Do.GetGeneratorContext().Name);
 
             if (env.IsDevelopment)
             {

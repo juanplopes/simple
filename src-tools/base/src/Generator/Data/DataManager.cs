@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Simple.Generator.Data;
 
 namespace Sample.Project.Generator.Data
 {
     public class DataManager
     {
-        static IDictionary<Type, IDataItems> items = new Dictionary<Type, IDataItems>();
+        //Take a look at InsertDataCommand. It's more interesting.
+
+        static IDictionary<Type, IDataList> items = new Dictionary<Type, IDataList>();
         public static T Get<T>()
-            where T : IDataItems, new()
+            where T : IDataList, new()
         {
-            IDataItems item;
+            IDataList item;
             if (!items.TryGetValue(typeof(T), out item))
-            {
-                item = new T();
-                item.Initialize();
-                items[typeof(T)] = item;
-            }
+                items[typeof(T)] = item = new T();
+
             return (T)item;
         }
 

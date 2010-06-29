@@ -19,14 +19,11 @@ namespace Simple.Generator.Console
         {
             this.Name = name;
             this.logger = Simply.Do.Log(this);
+            GeneratorContextSimplyExtensions._context = this;
+
             resolver = Configure(name, defaultContext);
             if (OverrideLogConfig)
                 Simply.Do.Configure.Log4net().FromXmlString(DefaultConfig.Log4net);
-        }
-
-        public bool Is(string environment)
-        {
-            return string.Compare(this.Name, environment, true) == 0;
         }
 
         public void Execute(string command)

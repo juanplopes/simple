@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sample.Project.Generator.Data
+namespace Simple.Generator.Data
 {
-    public interface IDataItems
+    public interface IDataList
     {
-        void Initialize();
         void Execute();
     }
 }

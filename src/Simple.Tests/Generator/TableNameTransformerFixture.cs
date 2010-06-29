@@ -10,6 +10,26 @@ namespace Simple.Tests.Generator
     public class TableNameTransformerFixture
     {
         [Test]
+        public void EmptyListReturnsDefaultTables()
+        {
+            var transformer = new TableNameTransformer(new[] { "%", "-test" });
+            var result = transformer.Transform(new string[] { });
+
+            CollectionAssert.AreEqual(new[] { "%" }, result.Included);
+            CollectionAssert.AreEqual(new[] { "test" }, result.Excluded);
+        }
+
+        [Test]
+        public void NullListReturnsDefaultTables()
+        {
+            var transformer = new TableNameTransformer(new[] { "%", "-test" });
+            var result = transformer.Transform(null);
+
+            CollectionAssert.AreEqual(new[] { "%" }, result.Included);
+            CollectionAssert.AreEqual(new[] { "test" }, result.Excluded);
+        }
+
+        [Test]
         public void NoDefaultMarkResultInSameOutput()
         {
             var transformer = new TableNameTransformer(new[] { "%", "-test" });

@@ -10,6 +10,7 @@ namespace Simple
             action(obj);
             return obj;
         }
+       
     }
 
     public class Simply : AggregateFactory<Simply>

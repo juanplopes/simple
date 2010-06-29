@@ -33,7 +33,7 @@ namespace Simple.Services.Default
                 Simply.Do.Log(this).DebugFormat("Trying to retrieving server object for contract {0}...", contract.Name);
                 _classes.TryGetValue(contract, out obj);
                 return obj;
-            } 
+            }
         }
 
         public object Get(Type contract)
@@ -50,7 +50,7 @@ namespace Simple.Services.Default
             {
                 lock (_classes)
                 {
-                    throw new ServiceConnectionException(e.Message, e);
+                    throw new ServiceConnectionException("Service not found: {0}".AsFormat(contract.GetRealClassName()), e);
                 }
             }
         }

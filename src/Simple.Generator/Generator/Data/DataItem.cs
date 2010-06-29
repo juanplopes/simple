@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sample.Project.Generator.Data
+namespace Simple.Generator.Data
 {
     public class DataItem<T>
     {
@@ -25,13 +25,13 @@ namespace Sample.Project.Generator.Data
             this.Name = name ?? NullName;
         }
 
-        public DataItem<T> Key(Action<T> action)
+        public DataItem<T> IdentifiedBy(Action<T> action)
         {
             this.PopulateKey = action;
             return this;
         }
 
-        public DataItem<T> Value(Action<T> action)
+        public DataItem<T> AlsoWith(Action<T> action)
         {
             this.PopulateValues = action;
             return this;
