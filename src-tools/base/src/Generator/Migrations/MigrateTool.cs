@@ -11,11 +11,11 @@ using Simple.Generator;
 
 namespace Sample.Project.Generator.Migrations
 {
-    public class MigrateTool : IGenerator
+    public class MigrateTool : ICommand
     {
         public long? Version { get; set; }
 
-        #region IGenerator Members
+        #region ICommand Members
 
         public void Execute()
         {

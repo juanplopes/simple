@@ -7,10 +7,10 @@ using System.Linq.Expressions;
 
 namespace Simple.Generator.Parsers
 {
-    public class GeneratorListParser<T, P> : GeneratorParser<T, IEnumerable<P>>
+    public class ListParser<T, P> : CommandParser<T, IEnumerable<P>>
     {
-        public GeneratorListParser(bool mustBeExplicit, string name, Expression<Func<T, IEnumerable<P>>> expression) : base(mustBeExplicit, name, expression) { }
-        protected override void ParseInternal(string match, IList<string> values, IGenerator generator)
+        public ListParser(bool mustBeExplicit, string name, Expression<Func<T, IEnumerable<P>>> expression) : base(mustBeExplicit, name, expression) { }
+        protected override void ParseInternal(string match, IList<string> values, ICommand generator)
         {
             ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator,
                 values.Select(x => ConvertValue<P>(x)).ToList());

@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Simple.Generator.Console
 {
-    public class ExitCommand : IGenerator
+    public class ExitCommand : ICommand
     {
         IContextManager manager;
         public ExitCommand(IContextManager manager)

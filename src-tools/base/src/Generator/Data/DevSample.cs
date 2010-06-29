@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Simple.Generator
+namespace Sample.Project.Generator.Data
 {
-    public interface IGenerator
+    class DevSample
     {
-        void Execute();
     }
 }

@@ -12,7 +12,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanSelectCorrectGenerator()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
 
             resolver.Register(() => new SampleStringList(), "test1");
             resolver.Register(() => new SampleDateTimeList(), "test2");
@@ -28,7 +28,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void ShowErrorWhenStringOnlyStartsWithCorrectValue()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "test1");
 
             Assert.Throws<InvalidCommandException>(() => resolver.Resolve("test1t(test)", true));
@@ -38,7 +38,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanSelectCorrectGeneratorStartingWithSpace()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "test1");
             resolver.Register(() => new SampleDateTimeList(), "test2");
 
@@ -53,7 +53,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanSelectCorrectGeneratorEndingWithSpace()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "test1");
             resolver.Register(() => new SampleDateTimeList(), "test2");
 
@@ -69,7 +69,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanSelectCorrectGeneratorWithSpacedInput()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "test1 a");
             resolver.Register(() => new SampleDateTimeList(), "test2 b");
 
@@ -84,7 +84,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanSelectCorrectGeneratorWithSpacedInputAndParenthesisEnd()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "test1 a");
             resolver.Register(() => new SampleDateTimeList(), "test2 b");
 
@@ -99,7 +99,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanSelectCorrectGeneratorWithSpacedInputAndSpaceEnd()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "test1 a");
             resolver.Register(() => new SampleDateTimeList(), "test2 b");
 
@@ -116,7 +116,7 @@ namespace Simple.Tests.Generator
             MatchType=MessageMatch.Contains)]
         public void CannotSelectCorrectGeneratorWhenFoundMultiple()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "test1 a");
             resolver.Register(() => new SampleDateTimeList(), "test1");
             resolver.Resolve("test1    a (test)", true);
@@ -125,12 +125,12 @@ namespace Simple.Tests.Generator
 
      
 
-        public class SampleStringList : IGenerator
+        public class SampleStringList : ICommand
         {
             public void Execute() { }
         }
 
-        public class SampleDateTimeList : IGenerator
+        public class SampleDateTimeList : ICommand
         {
             public void Execute() { }
         }

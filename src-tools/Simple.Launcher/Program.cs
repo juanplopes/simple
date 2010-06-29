@@ -88,6 +88,9 @@ namespace Simple.Launcher
                 WorkingDirectory = dir
             };
             p = Process.Start(info);
+            p.WaitForExit();
+            Console.WriteLine("$$$ Process ended.");
+            p = null;
         }
     }
 }

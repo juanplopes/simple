@@ -8,9 +8,9 @@ namespace Simple.Generator.Console
 {
     public abstract class ContextBase : MarshalByRefObject, IContext
     {
-        GeneratorResolver resolver = null;
+        CommandResolver resolver = null;
         public string Name { get; private set; }
-        protected abstract GeneratorResolver Configure(string name, bool defaultContext);
+        protected abstract CommandResolver Configure(string name, bool defaultContext);
         private ILog logger = null;
 
         protected bool OverrideLogConfig { get { return true; } }
@@ -24,6 +24,10 @@ namespace Simple.Generator.Console
                 Simply.Do.Configure.Log4net().FromXmlString(DefaultConfig.Log4net);
         }
 
+        public bool Is(string environment)
+        {
+            return string.Compare(this.Name, environment, true) == 0;
+        }
 
         public void Execute(string command)
         {
@@ -32,7 +36,7 @@ namespace Simple.Generator.Console
                 logger.InfoFormat("Running on context: {0}", Name ?? "<default>");
                 resolver.Resolve(command).Execute();
             }
-            catch (GeneratorException e)
+            catch (ParserException e)
             {
                 logger.Warn(e.Message);
             }

@@ -16,7 +16,7 @@ namespace Sample.Project.Generator
 {
     public static class Generators
     {
-        public static GeneratorResolver Define(this GeneratorResolver registry, bool enableContextCommands)
+        public static CommandResolver Define(this CommandResolver registry, bool enableContextCommands)
         {
             //Migrations
             registry.Register<NewMigrationTemplate>("new migration")
@@ -38,7 +38,7 @@ namespace Sample.Project.Generator
             if (enableContextCommands)
             {
                 registry.Register(() => new ExitCommand(Program.Manager), "@exit", "@quit");
-                registry.Register(() => new SetContextCommand(Program.Manager), "@set")
+                registry.Register(() => new SetContextCommand(Program.Manager), "@enter")
                     .WithArgument("new context", x => x.NewContext);
 
                 registry.Register(() => new ListContextsCommand(Program.Manager), "@list");
@@ -47,7 +47,7 @@ namespace Sample.Project.Generator
             return registry;
         }
 
-        public static GeneratorOptions<T> AsTableGenerator<T>(this InitialGeneratorOptions<T> generator)
+        public static CommandOptions<T> AsTableGenerator<T>(this InitialCommandOptions<T> generator)
             where T : TableTemplate
         {
             return generator
@@ -55,14 +55,14 @@ namespace Sample.Project.Generator
                 .WithOption("delete", x => x.DeleteFlag);
         }
 
-        public static SimpleTemplate ToTemplate(this IGenerator generator)
+        public static SimpleTemplate ToTemplate(this ICommand generator)
         {
             var type = generator.GetType();
             var asm = type.Assembly;
 
             using (var stream = asm.GetManifestResourceStream(string.Format("{0}.txt", type.FullName)))
             {
-                if (stream == null) throw new GeneratorException(string.Format("Couldn't find template for '{0}'...", type.FullName));
+                if (stream == null) throw new ParserException(string.Format("Couldn't find template for '{0}'...", type.FullName));
                 return new SimpleTemplate(new StreamReader(stream).ReadToEnd());
             }
         }

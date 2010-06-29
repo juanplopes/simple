@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Simple.Generator.HelpWriter
 {
-    public class HelpTextGenerator : IGenerator
+    public class HelpTextGenerator : ICommand
     {
-        protected GeneratorResolver Resolver { get; set; }
+        protected CommandResolver Resolver { get; set; }
         protected IList<IHelpWriter> Writers { get; set; }
         public IList<string> OptionNames { get; set; }
 
-        public HelpTextGenerator(GeneratorResolver resolver, params IHelpWriter[] writers)
+        public HelpTextGenerator(CommandResolver resolver, params IHelpWriter[] writers)
         {
             Resolver = resolver;
             Writers = writers;

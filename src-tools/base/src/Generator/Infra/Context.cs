@@ -11,9 +11,9 @@ namespace Sample.Project.Generator.Infra
 {
     public class Context : ContextBase
     {
-        protected override GeneratorResolver Configure(string name, bool defaultContext)
+        protected override CommandResolver Configure(string name, bool defaultContext)
         {
-            var resolver = new GeneratorResolver().WithHelp().Define(defaultContext);
+            var resolver = new CommandResolver().WithHelp().Define(defaultContext);
             var cfg = new Configurator(name);
 
             if (!defaultContext)

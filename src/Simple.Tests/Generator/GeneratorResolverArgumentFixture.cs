@@ -13,7 +13,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindStringListWithOneParameter()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "sample")
                 .WithArgumentList(null, x => x.TestList);
 
@@ -26,7 +26,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindStringListWithMultipleParametersWithoutParentesis()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "sample")
                 .WithArgumentList(null, x => x.TestList);
 
@@ -39,7 +39,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindStringListWithSpecialChars()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "sample")
                 .WithArgumentList(null, x => x.TestList);
 
@@ -52,7 +52,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindIntListWithMultipleParameters()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleIntList(), "sample")
                 .WithArgumentList(null, x => x.TestList);
 
@@ -65,7 +65,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindIntNullableListWithMultipleParameters()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleIntNullableList(), "sample")
                 .WithArgumentList(null, x => x.TestList);
 
@@ -78,7 +78,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindInt()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleSingleInt(), "sample")
                 .WithArgument(null, x => x.Test);
 
@@ -91,7 +91,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindIntWithZeroParameter()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleSingleInt(), "sample")
                 .WithArgument(null, x => x.Test);
 
@@ -104,7 +104,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CannotBindIntWithTwoParameter()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleSingleInt(), "sample")
                 .WithArgument(null, x => x.Test);
 
@@ -114,7 +114,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindIntNullable()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleSingleIntNullable(), "sample")
                 .WithArgument(null, x => x.Test);
 
@@ -128,7 +128,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindIntNullableListWithNoParameters()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleIntNullableList(), "sample")
                 .WithArgumentList(null, x => x.TestList);
 
@@ -141,7 +141,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindStringListWithMultipleParametersWithParentesis()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "sample")
                 .WithArgumentList(null, x => x.TestList);
 
@@ -154,7 +154,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindNamedStringListQuoted()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleStringList(), "sample")
                 .WithArgumentList("asd", x => x.TestList);
 
@@ -165,28 +165,28 @@ namespace Simple.Tests.Generator
         }
 
 
-        public class SampleStringList : IGenerator
+        public class SampleStringList : ICommand
         {
             public IList<string> TestList { get; set; }
 
             public void Execute() { }
         }
 
-        public class SampleIntList : IGenerator
+        public class SampleIntList : ICommand
         {
             public IList<int> TestList { get; set; }
 
             public void Execute() { }
         }
 
-        public class SampleSingleInt : IGenerator
+        public class SampleSingleInt : ICommand
         {
             public int Test { get; set; }
 
             public void Execute() { }
         }
 
-        public class SampleSingleIntNullable : IGenerator
+        public class SampleSingleIntNullable : ICommand
         {
             public int? Test { get; set; }
 
@@ -194,7 +194,7 @@ namespace Simple.Tests.Generator
         }
 
 
-        public class SampleIntNullableList : IGenerator
+        public class SampleIntNullableList : ICommand
         {
             public IList<int?> TestList { get; set; }
 

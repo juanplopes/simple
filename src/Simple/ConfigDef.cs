@@ -24,11 +24,24 @@ namespace Simple
         public string Environment { protected get; set; }
 
         public const string Test = "Test";
+        public bool IsTest { get { return Is(Test); } }
+
         public const string Development = "Development";
+        public bool IsDevelopment { get { return Is(Development); } }
+
+        public virtual string DefaultEnvironment { get { return Development; } }
+        public bool IsDefault { get { return Is(DefaultEnvironment); } }
+
+        public bool Is(string env)
+        {
+            env = env ?? DefaultEnvironment;
+            return string.Compare(Environment, env, true) == 0;
+        }
+
 
         public ConfigDef(string env)
         {
-            Environment = env ?? Development;
+            Environment = env ?? DefaultEnvironment;
         }
 
         protected virtual Simply Do { get { return Simply.Do; } }
@@ -59,6 +72,12 @@ namespace Simple
         protected abstract void InitLocations(FileLocator paths);
         public abstract ConfigDef ConfigClient();
         public abstract ConfigDef ConfigServer();
+
+        public virtual ConfigDef ConfigAll()
+        {
+            return ConfigClient().ConfigServer();
+        }
+
 
         protected string CodeBase(params string[] pathComponents)
         {

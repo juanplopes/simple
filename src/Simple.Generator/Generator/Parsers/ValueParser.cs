@@ -7,10 +7,10 @@ using System.Linq.Expressions;
 
 namespace Simple.Generator.Parsers
 {
-    public class GeneratorValueParser<T, P> : GeneratorParser<T, P>
+    public class ValueParser<T, P> : CommandParser<T, P>
     {
-        public GeneratorValueParser(bool mustBeExplicit, string name, Expression<Func<T, P>> expression) : base(mustBeExplicit, name, expression) { }
-        protected override void ParseInternal(string match, IList<string> values, IGenerator generator)
+        public ValueParser(bool mustBeExplicit, string name, Expression<Func<T, P>> expression) : base(mustBeExplicit, name, expression) { }
+        protected override void ParseInternal(string match, IList<string> values, ICommand generator)
         {
             if (values.Count > 1)
                 throw new InvalidArgumentCountException(match, 1, values.Count);

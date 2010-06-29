@@ -9,39 +9,39 @@ using Simple.Generator.Parsers;
 
 namespace Simple.Generator
 {
-    public class GeneratorOptions<T> : IGeneratorOptions
-        where T : IGenerator
+    public class CommandOptions<T> : ICommandOptions
+        where T : ICommand
     {
         Func<T> _generator;
-        protected IGeneratorParser ArgumentParser = null;
-        protected List<IGeneratorParser> OptionParsers = new List<IGeneratorParser>();
-        public GeneratorOptions(Func<T> generator)
+        protected ICommandParser ArgumentParser = null;
+        protected List<ICommandParser> OptionParsers = new List<ICommandParser>();
+        public CommandOptions(Func<T> generator)
         {
             this._generator = generator;
         }
 
 
-        public GeneratorOptions<T> WithOption<P>(string name, Expression<Func<T, P>> into)
+        public CommandOptions<T> WithOption<P>(string name, Expression<Func<T, P>> into)
         {
-            OptionParsers.Add(new GeneratorValueParser<T, P>(true, name, into));
+            OptionParsers.Add(new ValueParser<T, P>(true, name, into));
             return this;
         }
 
-        public GeneratorOptions<T> WithOptionList<P>(string name, Expression<Func<T, IEnumerable<P>>> into)
+        public CommandOptions<T> WithOptionList<P>(string name, Expression<Func<T, IEnumerable<P>>> into)
         {
-            OptionParsers.Add(new GeneratorListParser<T, P>(true, name, into));
+            OptionParsers.Add(new ListParser<T, P>(true, name, into));
             return this;
         }
 
 
 
-        private void ApplyEnumerable(IGenerator generator, IList<string> values, MemberExpression memberExpression, Type innerType)
+        private void ApplyEnumerable(ICommand generator, IList<string> values, MemberExpression memberExpression, Type innerType)
         {
             memberExpression.SetValue(generator, values.Select(x => Convert.ChangeType(x, innerType)).ToArray());
         }
 
 
-        public IGenerator Parse(string parameters, bool ignoreExceedingArgs)
+        public ICommand Parse(string parameters, bool ignoreExceedingArgs)
         {
             var result = _generator();
             
@@ -70,12 +70,12 @@ namespace Simple.Generator
 
         #region IGeneratorOptions Members
 
-        public IEnumerable<IGeneratorParser> Options
+        public IEnumerable<ICommandParser> Options
         {
             get { return OptionParsers; }
         }
 
-        public IGeneratorParser Argument
+        public ICommandParser Argument
         {
             get { return ArgumentParser; }
         }

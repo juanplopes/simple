@@ -21,7 +21,7 @@ namespace Simple.Generator.HelpWriter
             Writer.WriteLine();
         }
 
-        private void WriteCommandName(string name, IGeneratorOptions command)
+        private void WriteCommandName(string name, ICommandOptions command)
         {
             var param = command.Argument;
 
@@ -31,7 +31,7 @@ namespace Simple.Generator.HelpWriter
                 Writer.WriteLine("{0}", name);
         }
 
-        public void Write(GeneratorResolver resolver)
+        public void Write(CommandResolver resolver)
         {
             Writer.WriteLine("Available commands: (say 'help <commands>' for more info)");
 
@@ -43,7 +43,7 @@ namespace Simple.Generator.HelpWriter
             }
         }
 
-        public void Write(IEnumerable<Pair<string, IGeneratorOptions>> commands)
+        public void Write(IEnumerable<Pair<string, ICommandOptions>> commands)
         {
             var list = commands.ToList();
 

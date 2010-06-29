@@ -10,7 +10,7 @@ using Simple.NVelocity;
 
 namespace Sample.Project.Generator.Infra
 {
-    public abstract class TableTemplate : IGenerator
+    public abstract class TableTemplate : ICommand
     {
         public IList<string> TableNames { get; set; }
         public bool DeleteFlag { get; set; }

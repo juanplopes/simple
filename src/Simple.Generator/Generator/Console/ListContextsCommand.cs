@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Simple.Generator.Console
 {
-    public class ListContextsCommand : IGenerator
+    public class ListContextsCommand : ICommand
     {
         IContextManager manager;
         public ListContextsCommand(IContextManager manager)

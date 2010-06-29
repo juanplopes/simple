@@ -7,14 +7,14 @@ using Simple;
 namespace Simple.Generator
 {
     [Serializable]
-    public class AmbiguousCommandException : GeneratorException
+    public class AmbiguousCommandException : ParserException
     {
         public AmbiguousCommandException() { }
-        public AmbiguousCommandException(string command, IEnumerable<IGeneratorOptions> generators)
-            : base("Multiple generator found for input '{0}': {1}".AsFormat(
+        public AmbiguousCommandException(string command, IEnumerable<ICommandOptions> generators)
+            : base("Multiple commands found for input '{0}': {1}".AsFormat(
                 command, GetParserListString(generators))) { }
 
-        private static string GetParserListString(IEnumerable<IGeneratorOptions> parsers)
+        private static string GetParserListString(IEnumerable<ICommandOptions> parsers)
         {
             return string.Join(", ", parsers.Select(x => x.GeneratorType).ToArray());
         }

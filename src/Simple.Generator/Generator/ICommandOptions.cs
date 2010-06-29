@@ -8,11 +8,11 @@ using Simple.Generator.Parsers;
 
 namespace Simple.Generator
 {
-    public interface IGeneratorOptions
+    public interface ICommandOptions
     {
-        IGeneratorParser Argument { get; }
-        IEnumerable<IGeneratorParser> Options { get; }
+        ICommandParser Argument { get; }
+        IEnumerable<ICommandParser> Options { get; }
         string GeneratorType { get; }
-        IGenerator Parse(string parameters, bool ignoreExceedingArgs);
+        ICommand Parse(string parameters, bool ignoreExceedingArgs);
     }
 }

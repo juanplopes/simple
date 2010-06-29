@@ -51,6 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conventions.cs" />
+    <Compile Include="Data\AllSample.cs" />
+    <Compile Include="Data\ISampleSet.cs" />
+    <Compile Include="Data\SampleSet.cs" />
+    <Compile Include="Data\DevSample.cs" />
+    <Compile Include="Data\TestSample.cs" />
     <Compile Include="Generators.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="Infra\Context.cs" />

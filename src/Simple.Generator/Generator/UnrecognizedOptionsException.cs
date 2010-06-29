@@ -7,7 +7,7 @@ using Simple;
 namespace Simple.Generator
 {
     [Serializable]
-    public class UnrecognizedOptionsException : GeneratorException
+    public class UnrecognizedOptionsException : ParserException
     {
         public UnrecognizedOptionsException() { }
         public UnrecognizedOptionsException(string options)

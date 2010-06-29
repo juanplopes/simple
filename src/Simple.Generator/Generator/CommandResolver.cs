@@ -9,59 +9,59 @@ using System.IO;
 
 namespace Simple.Generator
 {
-    public class GeneratorResolver
+    public class CommandResolver
     {
-        protected List<Pair<string, IGeneratorOptions>> Parsers =
-            new List<Pair<string, IGeneratorOptions>>();
+        protected List<Pair<string, ICommandOptions>> Parsers =
+            new List<Pair<string, ICommandOptions>>();
 
-        public IEnumerable<Pair<string, IGeneratorOptions>> GetMeta()
+        public IEnumerable<Pair<string, ICommandOptions>> GetMeta()
         {
             return Parsers;
         }
 
 
-        public InitialGeneratorOptions<T> Register<T>(params string[] cmds)
-            where T : IGenerator, new()
+        public InitialCommandOptions<T> Register<T>(params string[] cmds)
+            where T : ICommand, new()
         {
             return Register(() => new T(), cmds);
         }
 
 
-        public InitialGeneratorOptions<T> Register<T>(Func<T> generator, params string[] cmds)
-            where T : IGenerator
+        public InitialCommandOptions<T> Register<T>(Func<T> generator, params string[] cmds)
+            where T : ICommand
         {
-            var opts = new InitialGeneratorOptions<T>(generator);
+            var opts = new InitialCommandOptions<T>(generator);
             cmds = cmds.Select(x => x.CorrectInput()).ToArray();
 
             foreach (var cmd in cmds)
-                Parsers.Add(new Pair<string, IGeneratorOptions>(cmd, opts));
+                Parsers.Add(new Pair<string, ICommandOptions>(cmd, opts));
 
             return opts;
         }
 
-        public GeneratorResolver WithHelp(params IHelpWriter[] writers)
+        public CommandResolver WithHelp(params IHelpWriter[] writers)
         {
             this.Register(() => new HelpTextGenerator(this, writers), "help")
                 .WithArgumentList("commands", x => x.OptionNames);
             return this;
         }
-        public GeneratorResolver WithHelp(params TextWriter[] writers)
+        public CommandResolver WithHelp(params TextWriter[] writers)
         {
             return WithHelp(writers.Select(x => new HelpTextWriter(x)).ToArray());
         }
 
-        public GeneratorResolver WithHelp()
+        public CommandResolver WithHelp()
         {
             return WithHelp(System.Console.Out);
         }
 
 
-        public IGenerator Resolve(string cmdLine)
+        public ICommand Resolve(string cmdLine)
         {
             return Resolve(cmdLine, false);
         }
 
-        public IGenerator Resolve(string cmdLine, bool ignoreExceedingArgs)
+        public ICommand Resolve(string cmdLine, bool ignoreExceedingArgs)
         {
             cmdLine = cmdLine.CorrectInput();
 
@@ -72,7 +72,7 @@ namespace Simple.Generator
             return generator;
         }
 
-        private Pair<string, IGeneratorOptions> FindParser(string cmdLine)
+        private Pair<string, ICommandOptions> FindParser(string cmdLine)
         {
             var parsers = Parsers.Where(x => Regex.IsMatch(cmdLine, x.First.ToRegexFormat(true))).ToList();
 

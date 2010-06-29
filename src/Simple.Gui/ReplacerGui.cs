@@ -43,12 +43,11 @@ namespace Simple.Gui
             string message = "Replacer will be executed at: " + path + Environment.NewLine + "Are you sure?";
             if (MessageBox.Show(message, "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                ReplacerLogic.DefaultExecute(path, "Sample.Project", txtNamespace.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "Sample.Project", txtNamespace.Text.Trim(), true);
                 ReplacerLogic.DefaultExecute(path, "SampleProject", txtCatalog.Text.Trim(), false);
                 ReplacerLogic.DefaultExecute(path, "sample-project", txtIISUrl.Text.Trim(), false);
                 ReplacerLogic.DefaultExecute(path, "sampleprojectsvc", txtSvcName.Text.Trim(), false);
                 ReplacerLogic.DefaultExecute(path, "SchemaInfo", txtSchemaInfo.Text.Trim(), false);
-                ReplacerLogic.DefaultExecute(path, "Solution.sln", txtNamespace.Text.Trim() + ".sln", true);
 
                 MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();

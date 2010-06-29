@@ -7,13 +7,13 @@ using System.Text.RegularExpressions;
 
 namespace Simple.Generator.Parsers
 {
-    public interface IGeneratorParser
+    public interface ICommandParser
     {
         string Name { get; }
         MemberExpression Member { get; }
         Regex RegularExpression { get; }
 
-        string Parse(string args, IGenerator generator);
+        string Parse(string args, ICommand generator);
     }
 
 }

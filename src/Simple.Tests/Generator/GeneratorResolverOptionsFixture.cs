@@ -13,7 +13,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindStringWithOptionAndSpaceWithoutParameter()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleString(), "sample")
                 .WithOption("with", x => x.Test);
 
@@ -26,7 +26,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindStringWithOptionAndEqualsWithoutParameter()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleString(), "sample")
                 .WithOption("with", x => x.Test);
 
@@ -39,7 +39,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindBooleanShorthand()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleBoolean(), "sample")
                 .WithOption("lasers", x => x.Test);
 
@@ -52,7 +52,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CannotBindBooleanShorthandAndNormalAtSameTime()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleBoolean(), "sample")
                 .WithOption("lasers", x => x.Test);
 
@@ -63,7 +63,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindBooleanNormal()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleBoolean(), "sample")
                 .WithOption("lasers", x => x.Test);
 
@@ -76,7 +76,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindBooleanWithoutPassingItsValue()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleBoolean(), "sample")
                 .WithOption("lasers", x => x.Test);
 
@@ -90,7 +90,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindBooleanNormalWithoutEquals()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleBoolean(), "sample")
                 .WithOption("lasers", x => x.Test);
 
@@ -103,7 +103,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindIntList()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleIntList(), "sample")
                 .WithOptionList("lasers", x => x.Test);
 
@@ -116,7 +116,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanBindBoolList()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleBoolList(), "sample")
                 .WithOptionList("lasers", x => x.Test);
 
@@ -129,21 +129,21 @@ namespace Simple.Tests.Generator
         [Test]
         public void CannotBindStringToMultipleParameters()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
             resolver.Register(() => new SampleString(), "sample")
                 .WithOption("with", x => x.Test);
 
             Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample with lasers, test "));
         }
 
-        public class SampleString : IGenerator
+        public class SampleString : ICommand
         {
             public string Test { get; set; }
 
             public void Execute() { }
         }
 
-        public class SampleBoolean : IGenerator
+        public class SampleBoolean : ICommand
         {
             public bool Test { get; set; }
 
@@ -151,14 +151,14 @@ namespace Simple.Tests.Generator
         }
 
 
-        public class SampleIntList : IGenerator
+        public class SampleIntList : ICommand
         {
             public IList<int?> Test { get; set; }
 
             public void Execute() { }
         }
 
-        public class SampleBoolList : IGenerator
+        public class SampleBoolList : ICommand
         {
             public IList<bool> Test { get; set; }
 

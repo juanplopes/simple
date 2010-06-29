@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 namespace Simple.Generator.Parsers
 {
 
-    public abstract class GeneratorParser<T, P> : IGeneratorParser
+    public abstract class CommandParser<T, P> : ICommandParser
     {
         public Regex RegularExpression { get; private set; }
         public string Name { get; private set; }
@@ -16,21 +16,21 @@ namespace Simple.Generator.Parsers
 
         public Expression<Func<T, P>> Expression { get; private set; }
 
-        public GeneratorParser(bool mustBeExplicit, string name, Expression<Func<T, P>> expression)
+        public CommandParser(bool mustBeExplicit, string name, Expression<Func<T, P>> expression)
         {
             Name = name ?? string.Empty;
             RegularExpression = (!mustBeExplicit) ? Regexes.ListRegex : Regexes.OptionRegex(name);
             Expression = expression;
         }
 
-        public virtual string Parse(string args, IGenerator generator)
+        public virtual string Parse(string args, ICommand generator)
         {
             var match = Match(args);
             var values = ExtractValues(match);
             ParseInternal(match.ToString(), values, generator);
             return RegularExpression.Replace(args, "");
         }
-        protected abstract void ParseInternal(string match, IList<string> values, IGenerator generator);
+        protected abstract void ParseInternal(string match, IList<string> values, ICommand generator);
 
         protected Match Match(string args)
         {

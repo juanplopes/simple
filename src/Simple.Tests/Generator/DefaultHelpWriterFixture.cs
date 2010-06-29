@@ -13,7 +13,7 @@ namespace Simple.Tests.Generator
         [Test]
         public void CannotWriteHelpUnlessConfigured()
         {
-            var resolver = new GeneratorResolver();
+            var resolver = new CommandResolver();
 
             Assert.Throws<InvalidCommandException>(() => resolver.Resolve("help"));
             Assert.Throws<InvalidCommandException>(() => resolver.Resolve("help test"));
@@ -151,9 +151,9 @@ Available options:
             return text.Replace("\n", "").Replace("\r", "");
         }
 
-        public GeneratorResolver Sample(TextWriter writer)
+        public CommandResolver Sample(TextWriter writer)
         {
-            var r = new GeneratorResolver().WithHelp(writer, Console.Out);
+            var r = new CommandResolver().WithHelp(writer, Console.Out);
 
             r.Register<Sample1>("cmd1 a", "cmd1 b")
                 .WithArgumentList("cmd1_arguments", x => x.Arguments)
@@ -169,7 +169,7 @@ Available options:
             return r;
         }
 
-        public class Sample1 : IGenerator
+        public class Sample1 : ICommand
         {
             public IList<string> Arguments { get; set; }
             public int Option1 { get; set; }
@@ -178,7 +178,7 @@ Available options:
             public void Execute() { }
         }
 
-        public class Sample2 : IGenerator
+        public class Sample2 : ICommand
         {
             public int Option1 { get; set; }
             public string Option2 { get; set; }

@@ -6,7 +6,7 @@ using System.Text;
 namespace Simple.Generator
 {
     [global::System.Serializable]
-    public class GeneratorException : Exception
+    public class ParserException : Exception
     {
         //
         // For guidelines regarding the creation of new exception types, see
@@ -15,10 +15,10 @@ namespace Simple.Generator
         //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
         //
 
-        public GeneratorException() { }
-        public GeneratorException(string message) : base(message) { }
-        public GeneratorException(string message, Exception inner) : base(message, inner) { }
-        protected GeneratorException(
+        public ParserException() { }
+        public ParserException(string message) : base(message) { }
+        public ParserException(string message, Exception inner) : base(message, inner) { }
+        protected ParserException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }

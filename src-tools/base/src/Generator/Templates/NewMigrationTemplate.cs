@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Sample.Project.Generator.Templates
 {
-    public class NewMigrationTemplate : IGenerator
+    public class NewMigrationTemplate : ICommand
     {
         public string Name { get; set; }
 
