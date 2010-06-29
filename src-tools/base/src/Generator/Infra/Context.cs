@@ -16,10 +16,7 @@ namespace Sample.Project.Generator.Infra
             var resolver = new CommandResolver().WithHelp().Define(defaultContext);
             var cfg = new Configurator(name);
 
-            if (!defaultContext)
-                cfg.StartServer<ServerStarter>();
-            else
-                cfg.ConfigClient().ConfigServer();
+            cfg.StartServer<ServerStarter>();
 
             return resolver;
         }

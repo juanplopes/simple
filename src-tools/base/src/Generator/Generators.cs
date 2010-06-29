@@ -11,6 +11,7 @@ using Simple.NVelocity;
 using Sample.Project.Generator.Infra;
 using Sample.Project.Generator.Migrations;
 using Simple.Generator.Console;
+using Sample.Project.Generator.Data;
 
 namespace Sample.Project.Generator
 {
@@ -34,6 +35,7 @@ namespace Sample.Project.Generator
             registry.Register<ValidatorTemplate>("g validator").AsTableGenerator();
             registry.Register<MappingTemplate>("g mapping").AsTableGenerator();
 
+            registry.Register<InsertDataCommand>("data").WithOption("for", x => x.Environment);
 
             if (enableContextCommands)
             {

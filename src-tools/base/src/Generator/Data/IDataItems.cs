@@ -5,7 +5,9 @@ using System.Text;
 
 namespace Sample.Project.Generator.Data
 {
-    class DevSample
+    public interface IDataItems
     {
+        void Initialize();
+        void Execute();
     }
 }

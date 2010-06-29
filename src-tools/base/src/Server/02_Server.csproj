@@ -62,7 +62,6 @@
     <Compile Include="ServerStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SystemService.cs" />
-    <Compile Include="Services\SchemaInfoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contracts\01_Contracts.csproj">
