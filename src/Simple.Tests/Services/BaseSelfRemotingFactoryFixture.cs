@@ -11,9 +11,11 @@ namespace Simple.Tests.Services
         protected override Guid Configure()
         {
             Guid guid = Guid.NewGuid();
-
-            Simply.Do[guid].Configure.Remoting().FromXmlString(Helper.MakeConfig(Uri));
-            Simply.Do[guid].Host(typeof(SimpleService));
+            using (Simply.KeyContext(guid))
+            {
+                Simply.Do.Configure.Remoting().FromXmlString(Helper.MakeConfig(Uri));
+                Simply.Do.Host(typeof(SimpleService));
+            }
 
             return guid;
         }

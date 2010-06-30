@@ -30,12 +30,15 @@ namespace Simple.Tests.Services
         [Test]
         public void SimpleExpressionSerializationTest()
         {
-            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
-            Expression<Predicate<int>> pred = i => i == 42;
-            EditableExpression expr = EditableExpression.Create(Funcletizer.PartialEval(pred));
+            using (Simply.KeyContext(ConfigKey))
+            {
+                ISimpleService service = Simply.Do.Resolve<ISimpleService>();
+                Expression<Predicate<int>> pred = i => i == 42;
+                EditableExpression expr = EditableExpression.Create(Funcletizer.PartialEval(pred));
 
-            Assert.IsFalse(service.TestExpression(expr, 41));
-            Assert.IsTrue(service.TestExpression(expr, 42));
+                Assert.IsFalse(service.TestExpression(expr, 41));
+                Assert.IsTrue(service.TestExpression(expr, 42));
+            }
         }
 
         [Test]
