@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using System;
 
 namespace Simple.Common
 {
@@ -9,6 +10,7 @@ namespace Simple.Common
     public class ThreadData
     {
         object defaultKey = new object();
+        string storageKey = Guid.NewGuid().ToString();
 
         /// <summary>
         /// Gets the thread storage.
@@ -16,7 +18,7 @@ namespace Simple.Common
         /// <returns>The thread storage.</returns>
         public Dictionary<object, object> GetStorage()
         {
-            var store = Thread.GetNamedDataSlot(this.GetType().GUID.ToString());
+            var store = Thread.GetNamedDataSlot(storageKey);
             var dic = (Dictionary<object, object>)Thread.GetData(store);
             if (dic == null)
             {
