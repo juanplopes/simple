@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -106,6 +106,7 @@
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="ConfigDef.cs" />
     <Compile Include="Config\AggregateFactory.cs" />
+    <Compile Include="Config\AggregateFactoryContext.cs" />
     <Compile Include="Config\DefaultConfigAttribute.cs" />
     <Compile Include="Config\DirectConfigSource.cs" />
     <Compile Include="Config\ConfiguratorInterface.cs" />
