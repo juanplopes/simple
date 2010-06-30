@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Simple.Migrator.Framework;
+using Simple.Migrator.Fluent;
+using System.Data;
+
+namespace ${namespace}.Tools.Migrations
+{
+    [Migration(${timestamp})]
+    public class Migration${timestamp} : FluentMigration
+    {
+        public override void Up()
+        {
+        }
+
+        public override void Down()
+        {
+        }
+    }
+
+}

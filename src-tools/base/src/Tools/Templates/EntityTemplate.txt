@@ -1,0 +1,84 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Simple.Reflection;
+using Simple.Entities;
+using ${namespace}.Services;
+
+namespace ${namespace}.Domain
+{
+    [Serializable]
+    public partial class $classname : Entity<${classname}, I${classname}Service>
+    {
+#foreach($field in $table.PrimaryKeysExceptFk)
+        public virtual $re.TypeFor($field) $re.NameFor($field) { get; set; } 
+#end
+
+#foreach($field in $table.OrdinaryFields)
+        public virtual $re.TypeFor($field) $re.NameFor($field) { get; set; } 
+#end
+
+#foreach($field in $table.ManyToOneRelations)
+        public virtual $re.TypeFor($field) $re.NameFor($field) { get; set; } 
+#end
+
+#if ($lazyload)
+#foreach($field in $table.OneToManyRelations)
+        public virtual $re.TypeFor($field) $re.NameFor($field) { get; set; } 
+#end
+#end
+
+        #region ' Generated Helpers '
+        static $classname()
+        {
+            Identifiers
+#foreach($field in $table.PrimaryKeysExceptFk)
+                .Add(x => x.$re.NameFor($field))
+#end
+#foreach($field in $table.KeyManyToOneFields)
+                .Add(x => x.$re.NameFor($field))
+#end;
+        }
+        
+        partial void Initialize();
+        
+        public static bool operator ==($classname obj1, $classname obj2)
+        {
+            return object.Equals(obj1, obj2);
+        }
+
+        public static bool operator !=($classname obj1, $classname obj2)
+        {
+            return !(obj1 == obj2);
+        }
+        
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        
+        public $classname() 
+        {  
+            Initialize();
+        }
+        
+        public $classname($idlist) : this()
+        {  
+#foreach($field in $table.PrimaryKeysExceptFk)
+            this.$re.NameFor($field) = $re.NameFor($field);
+#end
+#foreach($field in $table.KeyManyToOneFields)
+            this.$re.NameFor($field) = $re.NameFor($field);
+#end
+        }
+     
+        #endregion
+
+    }
+}
