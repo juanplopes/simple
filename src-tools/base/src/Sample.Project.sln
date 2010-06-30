@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "99_Tests", "Tests\99_Tests.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_Web", "Web\03_Web.csproj", "{48D3123B-0725-4C12-93F6-54123FA59E28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10_Generator", "Generator\10_Generator.csproj", "{DFF8F092-2E40-4F08-BE77-51954C9DBDF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10_Tools", "Tools\10_Tools.csproj", "{DFF8F092-2E40-4F08-BE77-51954C9DBDF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

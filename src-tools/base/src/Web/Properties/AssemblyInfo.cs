@@ -4,4 +4,3 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Sample.Project.Web")]
 [assembly: AssemblyDescription("")]
-[assembly: Guid("b1319e0c-b892-4e77-9455-fe0b86811578")]
