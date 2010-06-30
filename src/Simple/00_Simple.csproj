@@ -106,7 +106,6 @@
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="ConfigDef.cs" />
     <Compile Include="Config\AggregateFactory.cs" />
-    <Compile Include="Config\AggregateFactoryContext.cs" />
     <Compile Include="Config\DefaultConfigAttribute.cs" />
     <Compile Include="Config\DirectConfigSource.cs" />
     <Compile Include="Config\ConfiguratorInterface.cs" />
