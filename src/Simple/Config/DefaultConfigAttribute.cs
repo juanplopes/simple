@@ -25,15 +25,17 @@ namespace Simple.Config
         }
 
         /// <summary>
-        /// Gets the key for the specified reflected member.
+        /// Apply the key for the specified reflected member.
         /// </summary>
         /// <param name="info">A reflected <see cref="MemberInfo"/>. May be an instance of <see cref="Type"/></param>
         /// <returns>The default key for it.</returns>
-        public static object GetKey(MemberInfo info)
+        public static Simply ApplyKey(MemberInfo info, Simply simply)
         {
             DefaultConfigAttribute attr = AttributeCache.Do.First<DefaultConfigAttribute>(info);
-            object key = attr == null ? null : attr.Key;
-            return key;
+            if (attr == null)
+                return simply;
+
+            return simply[attr.Key];
         }
     }
 }

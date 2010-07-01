@@ -14,19 +14,18 @@ namespace Simple.Entities
         {
             get
             {
-                return
-                    Simply.Do[DefaultKey].Resolve<R>();
+                return MySimply.Resolve<R>();
             }
         }
 
-        protected static object DefaultKey
+        protected static Simply MySimply
         {
             get
             {
-                return SourceManager.Do.BestKeyOf(DefaultConfigAttribute.GetKey(typeof(T)));
+                var simply = DefaultConfigAttribute.ApplyKey(typeof(T), Simply.Do);
+                return simply;
             }
         }
-
         public static SpecBuilder<T> Do
         {
             get { return new SpecBuilder<T>(); }

@@ -11,14 +11,31 @@ namespace Sample.Project.Tools.Infra
 {
     public class Context : ContextBase
     {
-        protected override CommandResolver Configure(string name, bool defaultContext)
-        {
-            var resolver = new CommandResolver().WithHelp().Define(defaultContext);
-            var cfg = new Configurator(name);
+        public static IDisposable Development { get { return Simply.KeyContext(Configurator.Development); } }
+        public static IDisposable Test { get { return Simply.KeyContext(Configurator.Test); } }
 
-            cfg.StartServer<ServerStarter>();
+        public Context() : base(Default.DefaultNamespace) { }
+
+        protected override CommandResolver Configure()
+        {
+            var resolver = new CommandResolver().WithHelp().Define(Configurator.IsProduction);
+
+            if (Configurator.IsProduction)
+            {
+                InternalConfigure(null);
+            }
+            else
+            {
+                InternalConfigure(Configurator.Development);
+                InternalConfigure(Configurator.Test);
+            }
 
             return resolver;
+        }
+
+        protected void InternalConfigure(string name)
+        {
+            new Configurator(name, name).StartServer<ServerStarter>();
         }
     }
 }

@@ -7,8 +7,6 @@ namespace Simple.Services
         public object ConfigKey { get; protected set; }
         public IDataContext Context { get; protected set; }
 
-        public DefaultCallHook(CallHookArgs args)
-            : this(args, null) { }
 
         public DefaultCallHook(CallHookArgs args, object key)
             : base(args)

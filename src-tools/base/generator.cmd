@@ -1,1 +1,1 @@
-@util\Simple.Launcher bin\generator Sample.Project.Generator.exe
+@util\Simple.Launcher bin\tools Sample.Project.Tools.exe

@@ -6,31 +6,36 @@ using log4net;
 
 namespace Simple.Generator.Console
 {
-    public abstract class ContextBase : MarshalByRefObject, IContext
+    public abstract class ContextBase : MarshalByRefObject
     {
         CommandResolver resolver = null;
-        public string Name { get; private set; }
-        protected abstract CommandResolver Configure(string name, bool defaultContext);
+        protected abstract CommandResolver Configure();
         private ILog logger = null;
 
         protected bool OverrideLogConfig { get { return true; } }
+        protected string ProjectText { get; set; }
 
-        public void Init(string name, bool defaultContext)
+        protected ContextBase(string projectText)
         {
-            this.Name = name;
-            this.logger = Simply.Do.Log(this);
-            GeneratorContextSimplyExtensions._context = this;
+            ProjectText = projectText;
+            Init();
+        }
 
-            resolver = Configure(name, defaultContext);
+        protected void Init()
+        {
+            this.logger = Simply.Do.Log(this);
+
+            resolver = Configure();
             if (OverrideLogConfig)
                 Simply.Do.Configure.Log4net().FromXmlString(DefaultConfig.Log4net);
+
+            logger.InfoFormat("Simple.Net v{0} [{1}]", Simply.Do.GetVersion(), ProjectText);
         }
 
         public void Execute(string command)
         {
             try
             {
-                logger.InfoFormat("Running on context: {0}", Name ?? "<default>");
                 resolver.Resolve(command).Execute();
             }
             catch (ParserException e)

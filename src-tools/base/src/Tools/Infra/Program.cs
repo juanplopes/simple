@@ -14,18 +14,17 @@ namespace Sample.Project.Tools.Infra
 {
     public static class Program
     {
-        public static IContextManager Manager = new ContextManager<Context>();
-
 
         static void Main(string[] args)
         {
             if (RootFinder.ChangeToPathOf("generator.findme", "Sample.Project"))
                 Console.WriteLine("Found flag file. Changed current directory to:\n'{0}'.", Env.CurrentDirectory);
 
+            var context = new Context();
+
             for (string command; ReadCommand(out command); )
             {
-                Manager.Execute(command);
-                Console.WriteLine();
+                context.Execute(command);
             }
         }
 
@@ -33,7 +32,8 @@ namespace Sample.Project.Tools.Infra
         {
             do
             {
-                Console.Write(string.Join(">", Manager.Stack.ToArray()));
+                Console.WriteLine();
+                Console.Write(Configurator.IsProduction ? "production" : "development");
                 Console.Write(">");
                 command = Console.ReadLine();
             } while (command != null && command.Trim() == string.Empty);

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Castle.Core;
 using Simple.Generator;
 using Sample.Project.Tools.Infra;
 using Sample.Project.Environment;
 using Simple;
+using Sample.Project.Tools.Data.Development;
+using Simple.Generator.Data;
+using Simple.Patterns;
 
 namespace Sample.Project.Tools.Data
 {
@@ -14,24 +16,30 @@ namespace Sample.Project.Tools.Data
     {
         public string Environment { get; set; }
 
+
         #region ICommand Members
 
         public void Execute()
         {
-            var env = new Configurator(Environment ?? Simply.Do.GetGeneratorContext().Name);
 
-            if (env.IsDevelopment)
+            DataManager.Get<ExampleData>().Execute();
+
+            if (!Configurator.IsProduction)
             {
-                //DataManager.Get<ExampleData>().Execute();
-                //development data here   
-            }
+                using (Context.Development)
+                {
+                    
+                }
 
-            if (env.IsTest)
-            {
-                //unit test data here
+                using (Context.Test)
+                {
+                    //unit test data here
+                }
             }
-
         }
+
+
+
 
         #endregion
     }

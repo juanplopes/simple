@@ -41,19 +41,12 @@ namespace Simple.Entities
         }
 
 
-        protected virtual object ConfigKey
-        {
-            get
-            {
-                return DefaultConfigAttribute.GetKey(typeof(T));
-            }
-        }
-
         protected virtual Simply MySimply
         {
             get
             {
-                return Simply.Do[ConfigKey];
+                var simply = DefaultConfigAttribute.ApplyKey(typeof(T), Simply.Do);
+                return simply;
             }
         }
 

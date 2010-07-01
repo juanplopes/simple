@@ -22,15 +22,13 @@ namespace Simple
             }
         }
         public string Environment { get; protected set; }
+        public object ConfigKey { get; protected set; }
 
         public const string Test = "Test";
         public bool IsTest { get { return Is(Test); } }
 
         public const string Development = "Development";
         public bool IsDevelopment { get { return Is(Development); } }
-
-        public const string Production = "Production";
-        public bool IsProduction { get { return Is(Production); } }
 
         public virtual string DefaultEnvironment { get { return Development; } }
         public bool IsDefault { get { return Is(DefaultEnvironment); } }
@@ -42,12 +40,13 @@ namespace Simple
         }
 
 
-        public ConfigDef(string env)
+        public ConfigDef(string env, object key)
         {
             Environment = env ?? DefaultEnvironment;
+            ConfigKey = key;
         }
 
-        protected virtual Simply Do { get { return Simply.Do; } }
+        protected virtual Simply Do { get { return Simply.Do[ConfigKey]; } }
 
         protected string File(string file)
         {

@@ -18,7 +18,7 @@ namespace Simple
         public void Nop() { }
         public Version GetVersion()
         {
-            return new Version(this.GetType().Assembly.ImageRuntimeVersion);
+            return this.GetType().Assembly.GetName().Version;
         }
 
         public SimplyConfigure Configure

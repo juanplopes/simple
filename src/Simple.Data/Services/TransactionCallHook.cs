@@ -13,10 +13,6 @@ namespace Simple.Services
     {
         public object ConfigKey { get; protected set; }
 
-        public TransactionCallHook(CallHookArgs args)
-            : this(args, null) { }
-
-
         public TransactionCallHook(CallHookArgs args, object key)
             : base(args)
         {

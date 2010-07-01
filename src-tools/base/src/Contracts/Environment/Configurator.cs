@@ -13,11 +13,19 @@ namespace Sample.Project.Environment
 {
     public class Configurator : ConfigDef
     {
+#if DEBUG
+        public static bool IsProduction { get { return false; } }
+#else
+        public static bool IsProduction { get { return true; } }
+#endif
+
         public Configurator() : this(null) { }
-        public Configurator(string env) : base(env ?? Development) { }
+        public Configurator(string env) : this(env, null) { }
+        public Configurator(string env, object key) : base(env, key) { }
 
         protected override void InitLocations(FileLocator paths)
         {
+
             paths.Add(CodeBase("Environment", Environment));
             paths.Add(CodeBase("cfg"));
             paths.Add(CodeBase("..", "cfg"));
@@ -31,8 +39,8 @@ namespace Sample.Project.Environment
 
             Config(x => x.DefaultHost());
 
-            //if (Environment != Test)
-            //    Do.AddClientHook(x => new HttpIdentityInjector(x));
+            if (!IsTest)
+                Do.AddClientHook(x => new HttpIdentityInjector(x));
 
             return this;
         }
@@ -41,8 +49,8 @@ namespace Sample.Project.Environment
         {
             ConfigFile(x => x.NHibernate(), "NHibernate.config");
             Config(x => x.Validator(Assembly.GetExecutingAssembly()));
-            Do.AddServerHook(x => new TransactionCallHook(x));
-            Do.AddServerHook(x => new DefaultCallHook(x, null));
+            Do.AddServerHook(x => new TransactionCallHook(x, ConfigKey));
+            Do.AddServerHook(x => new DefaultCallHook(x, ConfigKey));
             return this;
         }
     }

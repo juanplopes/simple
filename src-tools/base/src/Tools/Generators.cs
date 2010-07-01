@@ -17,34 +17,24 @@ namespace Sample.Project.Tools
 {
     public static class Generators
     {
-        public static CommandResolver Define(this CommandResolver registry, bool enableContextCommands)
+        public static CommandResolver Define(this CommandResolver registry, bool production)
         {
-            //Migrations
-            registry.Register<NewMigrationTemplate>("new migration")
-                .WithArgument("name", x => x.Name);
-            
-            registry.Register<MigrateTool>("migrate")
-                .WithOption("to", x => x.Version);
-
-            //Table generators
-            registry.Register<ScaffoldGenerator>("scaffold").AsTableGenerator();
-
-            registry.Register<ServiceInterfaceTemplate>("g service interface").AsTableGenerator();
-            registry.Register<ServiceImplTemplate>("g service impl").AsTableGenerator();
-            registry.Register<EntityTemplate>("g entity").AsTableGenerator();
-            registry.Register<ValidatorTemplate>("g validator").AsTableGenerator();
-            registry.Register<MappingTemplate>("g mapping").AsTableGenerator();
-
+            registry.Register<MigrateTool>("migrate").WithOption("to", x => x.Version);
             registry.Register<InsertDataCommand>("data").WithOption("for", x => x.Environment);
 
-            if (enableContextCommands)
+            if (!production)
             {
-                registry.Register(() => new ExitCommand(Program.Manager), "@exit", "@quit");
-                registry.Register(() => new SetContextCommand(Program.Manager), "@enter")
-                    .WithArgument("new context", x => x.NewContext);
+                registry.Register<NewMigrationTemplate>("new migration").WithArgument("name", x => x.Name);
 
-                registry.Register(() => new ListContextsCommand(Program.Manager), "@list");
+                registry.Register<ScaffoldGenerator>("scaffold").AsTableGenerator();
+
+                registry.Register<ServiceInterfaceTemplate>("g service interface").AsTableGenerator();
+                registry.Register<ServiceImplTemplate>("g service impl").AsTableGenerator();
+                registry.Register<EntityTemplate>("g entity").AsTableGenerator();
+                registry.Register<ValidatorTemplate>("g validator").AsTableGenerator();
+                registry.Register<MappingTemplate>("g mapping").AsTableGenerator();
             }
+
 
             return registry;
         }
