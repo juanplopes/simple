@@ -28,17 +28,21 @@ namespace Sample.Project.Tools.Infra
 
         private IList<DbTable> GetTables()
         {
-            var config = Simply.Do.GetConfig<ApplicationConfig>();
-            var db = new DbSchema(config.ADOProvider, Simply.Do.GetConnectionString());
+            using (Context.Development)
+            {
 
-            var names = new TableNameTransformer(Default.TableNames)
-                .Transform(TableNames);
+                var config = Simply.Do.GetConfig<ApplicationConfig>();
+                var db = new DbSchema(config.ADOProvider, Simply.Do.GetConnectionString());
 
-            var ret = db.GetTables(names.Included, names.Excluded).ToList();
+                var names = new TableNameTransformer(Default.TableNames)
+                    .Transform(TableNames);
 
-            Simply.Do.Log(this).InfoFormat("Found tables: {0}", string.Join(", ", ret.Select(x => x.Name).ToArray()));
+                var ret = db.GetTables(names.Included, names.Excluded).ToList();
 
-            return ret;
+                Simply.Do.Log(this).InfoFormat("Found tables: {0}", string.Join(", ", ret.Select(x => x.Name).ToArray()));
+
+                return ret;
+            }
         }
         public virtual void Execute()
         {
@@ -47,7 +51,6 @@ namespace Sample.Project.Tools.Infra
                     Create(table);
                 else
                     Delete(table);
-
         }
 
 

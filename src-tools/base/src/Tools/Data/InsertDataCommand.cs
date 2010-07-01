@@ -6,7 +6,6 @@ using Simple.Generator;
 using Sample.Project.Tools.Infra;
 using Sample.Project.Environment;
 using Simple;
-using Sample.Project.Tools.Data.Development;
 using Simple.Generator.Data;
 using Simple.Patterns;
 
@@ -21,14 +20,14 @@ namespace Sample.Project.Tools.Data
 
         public void Execute()
         {
-
-            DataManager.Get<ExampleData>().Execute();
+            //here, samples that will run in all environments, even production
+            //DataManager.Get<ExampleData>().Execute();
 
             if (!Configurator.IsProduction)
             {
                 using (Context.Development)
                 {
-                    
+                    //here, development sample data
                 }
 
                 using (Context.Test)

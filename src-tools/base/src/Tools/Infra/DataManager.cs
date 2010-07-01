@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Generator.Data;
 
-namespace Sample.Project.Tools.Data
+namespace Sample.Project.Tools.Infra
 {
     public class DataManager
     {

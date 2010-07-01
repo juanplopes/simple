@@ -55,7 +55,7 @@
     </Compile>
     <Compile Include="Conventions.cs" />
     <Compile Include="Data\Development\ExampleData.cs" />
-    <Compile Include="Data\DataManager.cs" />
+    <Compile Include="Infra\DataManager.cs" />
     <Compile Include="Data\InsertDataCommand.cs" />
     <Compile Include="Generators.cs" />
     <Compile Include="Default.cs" />
