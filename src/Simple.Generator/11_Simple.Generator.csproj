@@ -71,6 +71,7 @@
     <Compile Include="Generator\Strings\IPluralizer.cs" />
     <Compile Include="Generator\Strings\GeneratorStrings.cs" />
     <Compile Include="Generator\TableNameTransformer.cs" />
+    <Compile Include="Migrator\MigratorOptions.cs" />
     <Compile Include="NVelocity\EngineWrapper.cs" />
     <Compile Include="NVelocity\NVelocityMemoryEngine.cs" />
     <Compile Include="Generator\AmbiguousCommandException.cs" />

@@ -24,7 +24,6 @@ namespace Simple.Generator.Console
         protected void Init()
         {
             this.logger = Simply.Do.Log(this);
-            bool fail = false;
             try
             {
                 resolver = Configure();
@@ -51,7 +50,7 @@ namespace Simple.Generator.Console
             }
         }
 
-        public void Execute(string command)
+        public virtual void Execute(string command, bool continueOnError)
         {
             try
             {
@@ -60,10 +59,12 @@ namespace Simple.Generator.Console
             catch (ParserException e)
             {
                 logger.Warn(e.Message);
+                if (!continueOnError) Environment.Exit(1);
             }
             catch (Exception e)
             {
                 logger.Error(e.Message, e);
+                if (!continueOnError) Environment.Exit(1);
             }
         }
     }

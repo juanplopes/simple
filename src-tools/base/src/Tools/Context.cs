@@ -18,11 +18,11 @@ namespace Sample.Project.Tools
         public static IDisposable Get(string name)
         {
             var logger = Simply.Do.Log<Context>();
-            logger.InfoFormat("Entering: '{0}'...", name);
+            logger.DebugFormat("Entering: '{0}'...", name);
             var ctx = Simply.KeyContext(name);
             return new DisposableAction(() =>
             {
-                logger.InfoFormat("Exiting: '{0}'...", name);
+                logger.DebugFormat("Exiting: '{0}'...", name);
                 ctx.Dispose();
             });
         }

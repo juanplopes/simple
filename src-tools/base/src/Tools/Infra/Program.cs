@@ -22,10 +22,12 @@ namespace Sample.Project.Tools.Infra
 
             var context = new Context();
 
-            for (string command; ReadCommand(out command); )
-            {
-                context.Execute(command);
-            }
+            if (args.Length == 0)
+                for (string command; ReadCommand(out command); )
+                    context.Execute(command, true);
+            else
+                foreach (var command in args)
+                    context.Execute(command, false);
         }
 
         private static bool ReadCommand(out string command)

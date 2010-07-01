@@ -14,12 +14,6 @@ namespace Simple.Migrator
         private readonly ITransformationProvider _provider;
         private readonly List<Type> _migrationsTypes = new List<Type>();
 
-        public MigrationLoader(ITransformationProvider provider, Assembly assembly, bool trace)
-            : this(provider, GetMigrationTypes(assembly), trace)
-        {
-
-        }
-
         public MigrationLoader(ITransformationProvider provider, IList<Type> types, bool trace)
         {
             _provider = provider;
@@ -33,12 +27,6 @@ namespace Simple.Migrator
                     provider.Logger.Trace("{0} {1}", GetMigrationVersion(t).ToString().PadLeft(5), StringUtils.ToHumanName(t.Name));
                 }
             }
-        }
-
-        public void AddMigrations(Assembly migrationAssembly)
-        {
-            if (migrationAssembly != null)
-                _migrationsTypes.AddRange(GetMigrationTypes(migrationAssembly));
         }
 
         public void AddMigrations(IList<Type> types)
@@ -86,28 +74,7 @@ namespace Simple.Migrator
             }
         }
 
-        /// <summary>
-        /// Collect migrations in one <c>Assembly</c>.
-        /// </summary>
-        /// <param name="asm">The <c>Assembly</c> to browse.</param>
-        /// <returns>The migrations collection</returns>
-        public static List<Type> GetMigrationTypes(Assembly asm)
-        {
-            List<Type> migrations = new List<Type>();
-            foreach (Type t in asm.GetExportedTypes())
-            {
-                MigrationAttribute attrib = 
-                    (MigrationAttribute)  Attribute.GetCustomAttribute(t, typeof (MigrationAttribute));
-
-                if (attrib != null && typeof(IMigration).IsAssignableFrom(t) && !attrib.Ignore)
-                {
-                    migrations.Add(t);
-                }
-            }
-
-            migrations.Sort(new MigrationTypeComparer(true));
-            return migrations;
-        }
+       
 
         /// <summary>
         /// Returns the version of the migration

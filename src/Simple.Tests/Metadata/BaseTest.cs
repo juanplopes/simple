@@ -30,7 +30,8 @@ namespace Simple.Tests.Metadata
 
         protected DbMigrator GetMigrator()
         {
-            return new DbMigrator(Database.Provider, Database.ConnectionString, GetMigrations().ToArray());
+            return new DbMigrator(
+                new MigratorOptions(Database.Provider, Database.ConnectionString).AddTypes(GetMigrations()));
         }
         protected DbSchema GetSchema()
         {

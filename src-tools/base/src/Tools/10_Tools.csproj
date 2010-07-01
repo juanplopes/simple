@@ -61,6 +61,7 @@
     <Compile Include="Default.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Infra\TableTemplate.cs" />
+    <Compile Include="Macros\PrepareMacro.cs" />
     <Compile Include="Migrations\MigrateTool.cs" />
     <Compile Include="Templates\ValidatorTemplate.cs" />
     <Compile Include="Templates\ServiceImplTemplate.cs" />

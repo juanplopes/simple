@@ -557,17 +557,25 @@ namespace Simple.Migrator.Providers
         {
             Logger.Trace(sql);
             Logger.ApplyingDBChange(sql);
-            using (IDbCommand cmd = BuildCommand(sql))
+            if (Writer == null)
             {
-                try
+                using (IDbCommand cmd = BuildCommand(sql))
                 {
-                    return cmd.ExecuteNonQuery();
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Warn(ex.Message);
+                        throw;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Logger.Warn(ex.Message);
-                    throw;
-                }
+            }
+            else
+            {
+                Writer(sql);
+                return 0;
             }
         }
 
@@ -871,6 +879,13 @@ namespace Simple.Migrator.Providers
         {
             if (_connection != null) _connection.Dispose();
         }
+
+        #endregion
+
+        #region ITransformationProvider Members
+
+
+        public Action<string> Writer { get; set; }
 
         #endregion
     }

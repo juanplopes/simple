@@ -29,6 +29,7 @@ namespace Simple.Migrator
         private readonly MigrationLoader _migrationLoader;
 
         private ILogger _logger = new Logger(false);
+        private MigratorOptions _options = null;
         protected bool _dryrun;
         private string[] _args;
 
@@ -38,67 +39,20 @@ namespace Simple.Migrator
             set { _args = value; }
         }
 
-        public DbMigrator(string provider, string connectionString, Assembly migrationAssembly)
-            : this(provider, connectionString, migrationAssembly, false)
+        public DbMigrator(MigratorOptions options)
         {
-        }
-
-        public DbMigrator(string provider, string connectionString, IList<Type> types)
-            : this(provider, connectionString, types, false)
-        {
-        }
-
-        public DbMigrator(string provider, string connectionString, Assembly migrationAssembly, bool trace)
-            : this(ProviderFactory.Create(provider, connectionString), migrationAssembly, trace)
-        {
-        }
-
-        public DbMigrator(string provider, string connectionString, IList<Type> types, bool trace)
-            : this(ProviderFactory.Create(provider, connectionString), types, trace)
-        {
-        }
-
-
-        public DbMigrator(string provider, string connectionString, Assembly migrationAssembly, bool trace, ILogger logger)
-            : this(ProviderFactory.Create(provider, connectionString), migrationAssembly, trace, logger)
-        {
-        }
-
-        public DbMigrator(string provider, string connectionString, IList<Type> types, bool trace, ILogger logger)
-            : this(ProviderFactory.Create(provider, connectionString), types, trace, logger)
-        {
-        }
-
-
-        protected DbMigrator(ITransformationProvider provider, Assembly migrationAssembly, bool trace)
-            : this(provider, migrationAssembly, trace, new Logger(trace, new ConsoleWriter()))
-        {
-        }
-
-        protected DbMigrator(ITransformationProvider provider, IList<Type> types, bool trace)
-            : this(provider, types, trace, new Logger(trace, new ConsoleWriter()))
-        {
-        }
-
-
-        protected DbMigrator(ITransformationProvider provider, IList<Type> types, bool trace, ILogger logger)
-            : this(provider, trace, logger)
-        {
-            _migrationLoader = new MigrationLoader(provider, types, trace);
+            var provider = ProviderFactory.Create(options.Provider, options.ConnectionString);
+            _migrationLoader = new MigrationLoader(provider, options.MigrationTypes, false);
             _migrationLoader.CheckForDuplicatedVersion();
-        }
+            _provider = provider;
+            Logger = new Logger(false, new ConsoleWriter());
+            _options = options;
+            provider.Writer = _options.Commands;
 
-        protected DbMigrator(ITransformationProvider provider, Assembly migrationAssembly, bool trace, ILogger logger)
-            : this(provider, trace, logger)
-        {
-            _migrationLoader = new MigrationLoader(provider, migrationAssembly, trace);
-            _migrationLoader.CheckForDuplicatedVersion();
         }
 
         protected DbMigrator(ITransformationProvider provider, bool trace, ILogger logger)
         {
-            _provider = provider;
-            Logger = logger;
         }
 
 
@@ -110,12 +64,12 @@ namespace Simple.Migrator
             get { return _migrationLoader.MigrationsTypes; }
         }
 
-        public void Migrate(long? version, string schemainfoname)
+        public void Migrate(long? version)
         {
             if (version.HasValue)
-                MigrateTo(version.Value, schemainfoname);
+                MigrateTo(version.Value, _options.SchemaInfoTable);
             else
-                MigrateToLastVersion(schemainfoname);
+                MigrateToLastVersion(_options.SchemaInfoTable);
         }
 
         /// <summary>

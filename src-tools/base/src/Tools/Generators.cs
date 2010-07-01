@@ -12,6 +12,7 @@ using Sample.Project.Tools.Infra;
 using Sample.Project.Tools.Migrations;
 using Simple.Generator.Console;
 using Sample.Project.Tools.Data;
+using Sample.Project.Tools.Macros;
 
 namespace Sample.Project.Tools
 {
@@ -26,7 +27,7 @@ namespace Sample.Project.Tools
                 .WithOption("test", x => x.WithTest)
                 .WithOption("dev", x => x.WithDevelopment);
 
-            registry.Register<InsertDataCommand>("data").WithOption("for", x => x.Environment);
+            registry.Register<InsertDataCommand>("data");
 
             if (!production)
             {
@@ -39,6 +40,8 @@ namespace Sample.Project.Tools
                 registry.Register<EntityTemplate>("g entity").AsTableGenerator();
                 registry.Register<ValidatorTemplate>("g validator").AsTableGenerator();
                 registry.Register<MappingTemplate>("g mapping").AsTableGenerator();
+
+                registry.Register<PrepareMacro>("prepare");
             }
 
 
