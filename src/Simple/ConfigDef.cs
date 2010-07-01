@@ -33,10 +33,14 @@ namespace Simple
         public virtual string DefaultEnvironment { get { return Development; } }
         public bool IsDefault { get { return Is(DefaultEnvironment); } }
 
+        public static bool EnvEquals(string value1, string value2)
+        {
+            return string.Compare(value1, value2, true) == 0;
+        }
+
         public bool Is(string env)
         {
-            env = env ?? DefaultEnvironment;
-            return string.Compare(Environment, env, true) == 0;
+            return EnvEquals(this.Environment, env ?? DefaultEnvironment);
         }
 
 

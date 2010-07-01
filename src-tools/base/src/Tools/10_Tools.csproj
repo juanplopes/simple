@@ -54,7 +54,9 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Conventions.cs" />
-    <Compile Include="Data\Development\ExampleData.cs" />
+    <Compile Include="Data\All\AllExampleData.cs" />
+    <Compile Include="Data\Development\DevExampleData.cs" />
+    <Compile Include="Data\Test\TestExampleData.cs" />
     <Compile Include="Infra\DataManager.cs" />
     <Compile Include="Data\InsertDataCommand.cs" />
     <Compile Include="Generators.cs" />
@@ -104,10 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\All\" />
-    <Folder Include="Data\Test\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

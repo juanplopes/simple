@@ -8,7 +8,7 @@ using Sample.Project.Environment;
 using Simple;
 using Simple.Generator.Data;
 using Simple.Patterns;
-using Sample.Project.Tools.Data.Development;
+//using Sample.Project.Tools.Data.Development;
 
 namespace Sample.Project.Tools.Data
 {
@@ -19,7 +19,6 @@ namespace Sample.Project.Tools.Data
         public void Execute()
         {
             //here, samples that will run in all environments, even production
-            
 
             if (!Configurator.IsProduction)
             {

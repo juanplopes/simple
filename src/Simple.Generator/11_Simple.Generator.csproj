@@ -64,9 +64,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DefaultConfig.resx</DependentUpon>
     </Compile>
+    <Compile Include="Generator\Data\TestData.cs" />
+    <Compile Include="Generator\Data\ProductionData.cs" />
     <Compile Include="Generator\Data\DataItem.cs" />
     <Compile Include="Generator\Data\DataList.cs" />
     <Compile Include="Generator\Data\IDataList.cs" />
+    <Compile Include="Generator\Data\DevelopmentData.cs" />
     <Compile Include="Generator\Strings\EnglishPluralizer.cs" />
     <Compile Include="Generator\Strings\IPluralizer.cs" />
     <Compile Include="Generator\Strings\GeneratorStrings.cs" />

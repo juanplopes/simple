@@ -92,5 +92,20 @@ namespace Simple.Generator.Data
                 }
             }
         }
+
+        #region IDataList Members
+
+        public abstract IEnumerable<string> WillRunOn { get; }
+
+        #endregion
+
+        #region IDataList Members
+
+        public bool Matches(string environment)
+        {
+            return WillRunOn.Count(x => ConfigDef.EnvEquals(x, environment)) > 0;
+        }
+
+        #endregion
     }
 }
