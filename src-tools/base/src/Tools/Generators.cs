@@ -21,6 +21,8 @@ namespace Sample.Project.Tools
         {
             registry.Register<MigrateTool>("migrate")
                 .WithOption("to", x => x.Version)
+                .WithOption("dry", x => x.DryRun)
+                .WithOption("script", x => x.FilePath)
                 .WithOption("test", x => x.WithTest)
                 .WithOption("dev", x => x.WithDevelopment);
 
