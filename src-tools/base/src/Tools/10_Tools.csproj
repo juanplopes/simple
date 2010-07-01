@@ -59,7 +59,7 @@
     <Compile Include="Data\InsertDataCommand.cs" />
     <Compile Include="Generators.cs" />
     <Compile Include="Default.cs" />
-    <Compile Include="Infra\Context.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="Infra\TableTemplate.cs" />
     <Compile Include="Migrations\MigrateTool.cs" />
     <Compile Include="Templates\ValidatorTemplate.cs" />

@@ -18,7 +18,7 @@ namespace Sample.Project.Tools.Templates
 
             var template = this.ToTemplate();
             template["timestamp"] = timestamp;
-            template["namespace"] = Default.DefaultNamespace;
+            template["namespace"] = Default.Namespace;
             
             using (var project = Default.ToolsProject.Writer())
                 project.AddNewCompile(filename, template.ToString());

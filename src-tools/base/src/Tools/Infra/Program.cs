@@ -17,8 +17,8 @@ namespace Sample.Project.Tools.Infra
 
         static void Main(string[] args)
         {
-            if (RootFinder.ChangeToPathOf("generator.findme", "Sample.Project"))
-                Console.WriteLine("Found flag file. Changed current directory to:\n'{0}'.", Env.CurrentDirectory);
+            RootFinder.ChangeToPathOf("simple.key", Configurator.DefaultNamespace);
+            Console.WriteLine("Dir: '{0}'.", Env.CurrentDirectory);
 
             var context = new Context();
 

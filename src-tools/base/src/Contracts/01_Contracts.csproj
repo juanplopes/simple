@@ -62,31 +62,31 @@
     <Compile Include="Validators\BookValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Environment\YourServerName\Application.config">
+    <None Include="Environment\Development\Application.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\Production\Application.config">
+    <None Include="Environment\YourServer\Application.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\Production\Log4net.config">
+    <None Include="Environment\YourServer\Log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\Production\NHibernate.config">
+    <None Include="Environment\YourServer\NHibernate.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\Production\Remoting.config">
+    <None Include="Environment\YourServer\Remoting.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Environment\Test\Application.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\YourServerName\Log4net.config">
+    <None Include="Environment\Development\Log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\YourServerName\NHibernate.config">
+    <None Include="Environment\Development\NHibernate.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\YourServerName\Remoting.config">
+    <None Include="Environment\Development\Remoting.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Environment\Test\Log4net.config">

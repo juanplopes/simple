@@ -23,5 +23,8 @@ namespace Sample.Project.Config
 
         [XmlElement("ado-provider")]
         public string ADOProvider { get; set; }
+
+        [XmlElement("schema-info-table")]
+        public string SchemaInfoTable { get; set; }
     }
 }

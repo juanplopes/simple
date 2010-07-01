@@ -28,9 +28,8 @@ namespace Sample.Project.Tools.Infra
 
         private IList<DbTable> GetTables()
         {
-            var db = new DbSchema(
-                Simply.Do.GetConfig<ApplicationConfig>().ADOProvider,
-                Simply.Do.GetConnectionString());
+            var config = Simply.Do.GetConfig<ApplicationConfig>();
+            var db = new DbSchema(config.ADOProvider, Simply.Do.GetConnectionString());
 
             var names = new TableNameTransformer(Default.TableNames)
                 .Transform(TableNames);

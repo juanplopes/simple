@@ -27,7 +27,7 @@ namespace Simple.Generator
             while (cwd.Parent != null)
             {
                 var file = Path.Combine(cwd.FullName, filename);
-                if (File.Exists(file) && File.ReadAllText(file) == content)
+                if (File.Exists(file) && File.ReadAllText(file).StartsWith(content, StringComparison.InvariantCultureIgnoreCase))
                     return new FileInfo(file);
 
                 cwd = cwd.Parent;

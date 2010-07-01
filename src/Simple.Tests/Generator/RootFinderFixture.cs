@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System.IO;
 using Simple.Generator;
 
-namespace Simple.Tests.IO
+namespace Simple.Tests.Generator
 {
     public class RootFinderFixture
     {
@@ -21,7 +21,7 @@ namespace Simple.Tests.IO
             dir = new DirectoryInfo("test");
 
             Directory.CreateDirectory("test/a/b/c/d/e");
-            File.WriteAllText("test/a/b/test.info", "teste-teste-teste");
+            File.WriteAllText("test/a/b/test.info", "teste-teste-teste #do not erase me");
         }
 
         [TearDown]

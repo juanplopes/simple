@@ -19,7 +19,11 @@ namespace Sample.Project.Tools
     {
         public static CommandResolver Define(this CommandResolver registry, bool production)
         {
-            registry.Register<MigrateTool>("migrate").WithOption("to", x => x.Version);
+            registry.Register<MigrateTool>("migrate")
+                .WithOption("to", x => x.Version)
+                .WithOption("test", x => x.WithTest)
+                .WithOption("dev", x => x.WithDevelopment);
+
             registry.Register<InsertDataCommand>("data").WithOption("for", x => x.Environment);
 
             if (!production)

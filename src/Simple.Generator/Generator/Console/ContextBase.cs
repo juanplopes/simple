@@ -24,12 +24,31 @@ namespace Simple.Generator.Console
         protected void Init()
         {
             this.logger = Simply.Do.Log(this);
-
-            resolver = Configure();
-            if (OverrideLogConfig)
-                Simply.Do.Configure.Log4net().FromXmlString(DefaultConfig.Log4net);
-
+            bool fail = false;
+            try
+            {
+                resolver = Configure();
+                ConfigureLogging();
+            }
+            catch (Exception e)
+            {
+                ConfigureLogging();
+                logger.WarnFormat("Failed to configure.", e);
+            }
             logger.InfoFormat("Simple.Net v{0} [{1}]", Simply.Do.GetVersion(), ProjectText);
+        }
+
+        private void ConfigureLogging()
+        {
+            try
+            {
+                if (OverrideLogConfig)
+                    Simply.Do.Configure.Log4net().FromXmlString(DefaultConfig.Log4net);
+            }
+            catch(Exception e)
+            {
+                System.Console.WriteLine("Error configuring logging: {0}", e.Message);
+            }
         }
 
         public void Execute(string command)

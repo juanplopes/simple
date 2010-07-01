@@ -13,6 +13,8 @@ namespace Sample.Project.Environment
 {
     public class Configurator : ConfigDef
     {
+        public const string DefaultNamespace = "Sample.Project";
+
 #if DEBUG
         public static bool IsProduction { get { return false; } }
 #else

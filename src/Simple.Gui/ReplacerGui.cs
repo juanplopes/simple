@@ -47,7 +47,6 @@ namespace Simple.Gui
                 ReplacerLogic.DefaultExecute(path, "SampleProject", txtCatalog.Text.Trim(), false);
                 ReplacerLogic.DefaultExecute(path, "sample-project", txtIISUrl.Text.Trim(), false);
                 ReplacerLogic.DefaultExecute(path, "sampleprojectsvc", txtSvcName.Text.Trim(), false);
-                ReplacerLogic.DefaultExecute(path, "SchemaInfo", txtSchemaInfo.Text.Trim(), false);
 
                 MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
@@ -65,7 +64,6 @@ namespace Simple.Gui
             txtCatalog.Text = txtNamespace.Text.Replace(".", "");
             txtIISUrl.Text = txtNamespace.Text.Replace(".", "-").ToLower();
             txtSvcName.Text = txtNamespace.Text.Replace(".", "").ToLower() + "svc";
-            txtSchemaInfo.Text = txtNamespace.Text.Replace(".", "") + "_Meta";
         }
 
         private void pictureBox1_DoubleClick(object sender, EventArgs e)

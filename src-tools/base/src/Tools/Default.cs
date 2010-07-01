@@ -7,13 +7,16 @@ using System.IO;
 using Simple.NVelocity;
 using Simple.Metadata;
 using System.Collections;
+using Sample.Project.Environment;
+using Simple;
+using Sample.Project.Config;
 
 namespace Sample.Project.Tools
 {
     public static class Default
     {
-        public const string DefaultNamespace = "Sample.Project";
-        public const string ContractsAssembly = DefaultNamespace + ".Contracts";
+        public const string Namespace = Configurator.DefaultNamespace;
+        public const string ContractsAssembly = Namespace + ".Contracts";
         public const bool LazyLoad = true;
 
         public const string ToolsProject = "src/Tools/??_Tools.csproj";
@@ -25,7 +28,7 @@ namespace Sample.Project.Tools
             get
             {
                 yield return "%";
-                yield return "-SchemaInfo";
+                yield return "-" + Simply.Do.GetConfig<ApplicationConfig>().SchemaInfoTable;
             }
         }
 
@@ -48,7 +51,7 @@ namespace Sample.Project.Tools
                 re = re,
                 table = table,
                 lazyload = LazyLoad,
-                @namespace = DefaultNamespace,
+                @namespace = Namespace,
                 contracts = ContractsAssembly,
                 classname = re.NameFor(table),
                 count = new Func<IEnumerable, int>(x => x.Cast<object>().Count()),

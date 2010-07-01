@@ -35,8 +35,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.AdvancedGroup = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtSchemaInfo = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtCatalog = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -113,8 +111,6 @@
             // 
             // AdvancedGroup
             // 
-            this.AdvancedGroup.Controls.Add(this.label4);
-            this.AdvancedGroup.Controls.Add(this.txtSchemaInfo);
             this.AdvancedGroup.Controls.Add(this.label3);
             this.AdvancedGroup.Controls.Add(this.txtCatalog);
             this.AdvancedGroup.Controls.Add(this.label2);
@@ -124,32 +120,9 @@
             this.AdvancedGroup.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AdvancedGroup.Location = new System.Drawing.Point(11, 125);
             this.AdvancedGroup.Name = "AdvancedGroup";
-            this.AdvancedGroup.Size = new System.Drawing.Size(501, 186);
+            this.AdvancedGroup.Size = new System.Drawing.Size(501, 147);
             this.AdvancedGroup.TabIndex = 15;
             this.AdvancedGroup.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(6, 141);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(195, 30);
-            this.label4.TabIndex = 21;
-            this.label4.Text = "Meta table:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtSchemaInfo
-            // 
-            this.txtSchemaInfo.BackColor = System.Drawing.Color.White;
-            this.txtSchemaInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSchemaInfo.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSchemaInfo.Location = new System.Drawing.Point(215, 140);
-            this.txtSchemaInfo.Name = "txtSchemaInfo";
-            this.txtSchemaInfo.Size = new System.Drawing.Size(272, 35);
-            this.txtSchemaInfo.TabIndex = 17;
-            this.txtSchemaInfo.Text = "SampleProject_Met";
             // 
             // label3
             // 
@@ -252,7 +225,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(523, 321);
+            this.ClientSize = new System.Drawing.Size(523, 284);
             this.ControlBox = false;
             this.Controls.Add(this.btnMore);
             this.Controls.Add(this.Version);
@@ -283,8 +256,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox AdvancedGroup;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtSchemaInfo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtCatalog;
         private System.Windows.Forms.Label label2;
