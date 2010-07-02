@@ -13,10 +13,20 @@ namespace ${namespace}.Tools.Migrations
     {
         public override void Up()
         {
+            /* try
+            Schema.AddTable("table_name", t =>
+            {
+                //id column is added automatically
+                t.AddString("some_column");
+            });
+            */
+            
         }
 
         public override void Down()
         {
+            //just undo what you've done at Up()
+            //Schema.RemoveTable("table_name");
         }
     }
 

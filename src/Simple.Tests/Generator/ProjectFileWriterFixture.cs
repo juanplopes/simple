@@ -155,5 +155,14 @@ namespace Simple.Tests.Generator
             StringAssert.Contains(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
             Assert.AreEqual(new byte[] { 1, 2, 3 }, File.ReadAllBytes("test/asd/qwe/simsim.txt"));
         }
+
+        [Test]
+        public void CanResolveFullPathInsideAProject()
+        {
+            var writer = new ProjectFileWriter("test/test.csproj");
+            var path = writer.GetFullPath("asd/qwe/simsim.txt");
+            StringAssert.EndsWith(@"test\asd\qwe\simsim.txt", path);
+
+        }
     }
 }

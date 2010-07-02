@@ -17,7 +17,7 @@ namespace Sample.Project.Tools.Infra
 
         static void Main(string[] args)
         {
-            RootFinder.ChangeToPathOf("simple.key", Configurator.DefaultNamespace);
+            RootFinder.ChangeToPathOf("simple.token", Configurator.DefaultNamespace);
             Console.WriteLine("Dir: '{0}'.", Env.CurrentDirectory);
 
             var context = new Context();

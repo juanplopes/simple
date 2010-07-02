@@ -38,7 +38,9 @@ namespace Sample.Project.Tools
             {
                 registry.Register<ResetDbCommand>("resetdb");
 
-                registry.Register<NewMigrationTemplate>("new migration").WithArgument("name", x => x.Name);
+                registry.Register<NewMigrationTemplate>("new migration")
+                    .WithArgument("name", x => x.Name)
+                    .WithOption("donotopen", x=>x.DoNotOpen);
 
                 registry.Register<ScaffoldGenerator>("scaffold").AsTableGenerator();
 

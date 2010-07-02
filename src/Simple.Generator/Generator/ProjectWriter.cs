@@ -46,7 +46,7 @@ namespace Simple.Generator
             var node = GetFileNode(file);
             if (node != null) return this;
 
-            file = file.Replace(@"/", @"\");
+            file = CorrectPaths(file);
             XmlNode nodeItemGroup = _doc.SelectSingleNode("//p:ItemGroup[p:{0}]".AsFormat(type), _names);
 
             if (nodeItemGroup == null)
@@ -60,6 +60,12 @@ namespace Simple.Generator
             newChild.SetAttribute("Include", file);
             nodeItemGroup.AppendChild(newChild);
             return this;
+        }
+
+        protected static string CorrectPaths(string file)
+        {
+            file = file.Replace(@"/", @"\");
+            return file;
         }
 
         public ProjectWriter RemoveFile(string file)

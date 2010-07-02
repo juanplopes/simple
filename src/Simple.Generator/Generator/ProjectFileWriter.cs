@@ -111,9 +111,10 @@ namespace Simple.Generator
             return this;
         }
 
-        private string GetFullPath(string relativePath)
+        public string GetFullPath(string relativePath)
         {
             var fullDir = Path.Combine(Path.GetDirectoryName(ProjectPath), relativePath);
+            fullDir = CorrectPaths(fullDir);
             return fullDir;
         }
 

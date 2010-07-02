@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using Simple.Generator;
 using System.IO;
+using System.Diagnostics;
 
 namespace Sample.Project.Tools.Templates
 {
     public class NewMigrationTemplate : ICommand
     {
         public string Name { get; set; }
+        public bool DoNotOpen { get; set; }
 
         public void Execute()
         {
@@ -19,9 +21,14 @@ namespace Sample.Project.Tools.Templates
             var template = this.ToTemplate();
             template["timestamp"] = timestamp;
             template["namespace"] = Default.Namespace;
-            
+
             using (var project = Default.ToolsProject.Writer())
+            {
                 project.AddNewCompile(filename, template.ToString());
+
+                if (!DoNotOpen)
+                    Process.Start(project.GetFullPath(filename));
+            }
         }
     }
 }
