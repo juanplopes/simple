@@ -8,23 +8,22 @@ using Sample.Project.Tools.Data;
 using log4net;
 using Simple;
 using System.Reflection;
-using Sample.Project.Environment;
 
 namespace Sample.Project.Tools.Macros
 {
-    public class PrepareMacro : ICommand
+    public class TestPrepareMacro : ICommand
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
-
+        
         public void Execute()
         {
             logger.Info("Migrating...");
-            new MigrateTool() { Environment = Configurator.Development, Version = null }.Execute();
-            new MigrateTool() { Environment = Configurator.Test, Version = 1 }.Execute();
-            new MigrateTool() { Environment = Configurator.Test, Version = null }.Execute();
+            new MigrateTool() { Version = 1 }.Execute();
+            new MigrateTool() { Version = null }.Execute();
 
+            
             logger.Info("Executing...");
-            new InsertDataCommand().Execute();
+            new InsertDataCommand { ForceTestData = true }.Execute();
         }
     }
 }

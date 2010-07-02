@@ -103,7 +103,10 @@ namespace Simple.Generator.Data
 
         public bool Matches(string environment)
         {
-            return WillRunOn.Count(x => ConfigDef.EnvEquals(x, environment)) > 0;
+            var willRun = WillRunOn;
+            if (willRun == null) return true;
+
+            return willRun.Count(x => ConfigDef.EnvEquals(x, environment)) > 0;
         }
 
         #endregion

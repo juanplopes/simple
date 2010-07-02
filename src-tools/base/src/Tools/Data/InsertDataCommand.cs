@@ -14,27 +14,26 @@ namespace Sample.Project.Tools.Data
 {
     public class InsertDataCommand : ICommand
     {
+        public bool ForceTestData { get; set; }
+
         #region ICommand Members
 
         public void Execute()
         {
-            //here, samples that will run in all environments, even production
+            var samples = DataManager.FromAssembly(GetType().Assembly);
+
+            samples.ExecuteAllThatMatches(null);
 
             if (!Configurator.IsProduction)
-            {
                 using (Context.Development)
-                {
-                    //here, development sample data
-                    //DataManager.Get<ExampleData>().Execute();
-                }
+                    samples.ExecuteAllThatMatches(Configurator.Development);
 
+            if (!Configurator.IsProduction || ForceTestData)
                 using (Context.Test)
-                {
-                    //unit test data here
+                    samples.ExecuteAllThatMatches(Configurator.Test);
 
-                }
-            }
         }
+
 
 
 

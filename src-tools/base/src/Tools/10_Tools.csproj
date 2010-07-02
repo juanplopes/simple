@@ -55,14 +55,12 @@
     </Compile>
     <Compile Include="Conventions.cs" />
     <Compile Include="Data\All\AllExampleData.cs" />
-    <Compile Include="Data\Development\DevExampleData.cs" />
-    <Compile Include="Data\Test\TestExampleData.cs" />
-    <Compile Include="Infra\DataManager.cs" />
     <Compile Include="Data\InsertDataCommand.cs" />
     <Compile Include="Generators.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Infra\TableTemplate.cs" />
+    <Compile Include="Macros\TestPrepareMacro.cs" />
     <Compile Include="Macros\PrepareMacro.cs" />
     <Compile Include="Migrations\MigrateTool.cs" />
     <Compile Include="Templates\ValidatorTemplate.cs" />
@@ -106,6 +104,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Development\" />
+    <Folder Include="Data\Test\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -24,10 +24,9 @@ namespace Sample.Project.Tools
                 .WithOption("to", x => x.Version)
                 .WithOption("dry", x => x.DryRun)
                 .WithOption("script", x => x.FilePath)
-                .WithOption("test", x => x.WithTest)
-                .WithOption("dev", x => x.WithDevelopment);
+                .WithOption("env", x => x.Environment);
 
-            registry.Register<InsertDataCommand>("data");
+            registry.Register<InsertDataCommand>("data").WithOption("testdata", x => x.ForceTestData);
 
             if (!production)
             {

@@ -16,29 +16,27 @@ namespace Sample.Project.Tools.Migrations
     public class MigrateTool : ICommand
     {
         public long? Version { get; set; }
-        public bool WithTest { get; set; }
-        public bool WithDevelopment { get; set; }
         public string FilePath { get; set; }
         public bool DryRun { get; set; }
-
-        public MigrateTool()
-        {
-            WithDevelopment = true;
-            WithTest = false;
-        }
+        public string Environment { get; set; }
 
         #region ICommand Members
+
+        protected bool Is(string env)
+        {
+            return new Configurator(Environment).Is(env);
+        }
 
         public void Execute()
         {
             
             if (!Configurator.IsProduction)
             {
-                if (WithDevelopment)
+                if (Is(Configurator.Development))
                     using (Context.Development)
                         Migrate(Version);
 
-                if (WithTest)
+                if (Is(Configurator.Test))
                     using (Context.Test)
                         Migrate(Version);
             }

@@ -10,7 +10,9 @@ using Simple.Generator.Data;
 
 namespace Sample.Project.Tools.Data.All
 {
-    public class DevExampleData : GenericData<Book>
+    public class AllExampleData : TestData<Book>
+    //public class DevExampleData : DevelopmentData<Book>
+    //public class DevExampleData : TestData<Book>
     {
         protected override void DefineItems()
         {
