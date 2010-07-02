@@ -8,10 +8,12 @@ using Sample.Project.Tools.Data;
 using log4net;
 using Simple;
 using System.Reflection;
+using Sample.Project.Tools.Infra;
+using Simple.Generator.Console;
 
 namespace Sample.Project.Tools.Macros
 {
-    public class TestPrepareMacro : ICommand
+    public class TestPrepareMacro : IUnsafeCommand
     {
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         

@@ -28,6 +28,11 @@ namespace Sample.Project.Tools
 
             registry.Register<InsertDataCommand>("data").WithOption("testdata", x => x.ForceTestData);
 
+            if (production)
+            {
+                registry.Register<TestPrepareMacro>("testprepare");
+            }
+
             if (!production)
             {
                 registry.Register<NewMigrationTemplate>("new migration").WithArgument("name", x => x.Name);

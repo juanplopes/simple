@@ -23,14 +23,17 @@ namespace Sample.Project.Tools.Data
             var samples = DataManager.FromAssembly(GetType().Assembly);
 
             samples.ExecuteAllThatMatches(null);
+            if (ForceTestData)
+                samples.ExecuteAllThatMatches(Configurator.Test);
 
             if (!Configurator.IsProduction)
+            {
                 using (Context.Development)
                     samples.ExecuteAllThatMatches(Configurator.Development);
 
-            if (!Configurator.IsProduction || ForceTestData)
                 using (Context.Test)
                     samples.ExecuteAllThatMatches(Configurator.Test);
+            }
 
         }
 

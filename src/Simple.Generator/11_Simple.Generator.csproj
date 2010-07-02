@@ -64,6 +64,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DefaultConfig.resx</DependentUpon>
     </Compile>
+    <Compile Include="Generator\Console\IUnsafeCommand.cs" />
     <Compile Include="Generator\Data\DataManager.cs" />
     <Compile Include="Generator\Data\TestData.cs" />
     <Compile Include="Generator\Data\ProductionData.cs" />

@@ -7,6 +7,7 @@ using Sample.Project.Environment;
 using Simple.Generator.Console;
 using Simple;
 using Simple.Patterns;
+using Sample.Project.Tools.Infra;
 
 namespace Sample.Project.Tools
 {
@@ -39,6 +40,18 @@ namespace Sample.Project.Tools
                 InternalConfigure(Configurator.Development, Configurator.Test);
 
             return resolver;
+        }
+
+        protected override void OnBeforeExecute(ICommand commandObject, string command, bool interactive)
+        {
+            if (interactive && Configurator.IsProduction)
+            {
+                Console.Write("You are in production environment. Are you sure (Y/N)? ");
+                var answer = Console.ReadLine();
+                if (answer == null || answer.ToLower().Trim() != "y")
+                    throw new ParserException("User aborted.");
+            }
+            base.OnBeforeExecute(commandObject, command, interactive);
         }
 
         protected void InternalConfigure(params string[] names)

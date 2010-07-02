@@ -44,27 +44,43 @@ namespace Simple.Generator.Console
                 if (OverrideLogConfig)
                     Simply.Do.Configure.Log4net().FromXmlString(DefaultConfig.Log4net);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 System.Console.WriteLine("Error configuring logging: {0}", e.Message);
             }
         }
 
-        public virtual void Execute(string command, bool continueOnError)
+        protected virtual void OnBeforeParse(string command, bool interactive) { }
+        protected virtual void OnBeforeExecute(ICommand commandObject, string command, bool interactive)
+        {
+            if (interactive && commandObject is IUnsafeCommand)
+                throw new ParserException("Command not allowed in interactive mode.");
+        }
+        protected virtual void OnAfterExecute(ICommand commandObject, string command, bool interactive) { }
+
+        public virtual void Execute(string command, bool interactive)
         {
             try
             {
-                resolver.Resolve(command).Execute();
+                OnBeforeParse(command, interactive);
+
+                var commandObject = resolver.Resolve(command);
+
+                OnBeforeExecute(commandObject, command, interactive);
+
+                commandObject.Execute();
+
+                OnAfterExecute(commandObject, command, interactive);
             }
             catch (ParserException e)
             {
                 logger.Warn(e.Message);
-                if (!continueOnError) Environment.Exit(1);
+                if (!interactive) Environment.Exit(1);
             }
             catch (Exception e)
             {
                 logger.Error(e.Message, e);
-                if (!continueOnError) Environment.Exit(1);
+                if (!interactive) Environment.Exit(1);
             }
         }
     }
