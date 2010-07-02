@@ -13,6 +13,7 @@ using Sample.Project.Tools.Migrations;
 using Simple.Generator.Console;
 using Sample.Project.Tools.Data;
 using Sample.Project.Tools.Macros;
+using Sample.Project.Tools.ResetDb;
 
 namespace Sample.Project.Tools
 {
@@ -35,6 +36,8 @@ namespace Sample.Project.Tools
 
             if (!production)
             {
+                registry.Register<ResetDbCommand>("resetdb");
+
                 registry.Register<NewMigrationTemplate>("new migration").WithArgument("name", x => x.Name);
 
                 registry.Register<ScaffoldGenerator>("scaffold").AsTableGenerator();

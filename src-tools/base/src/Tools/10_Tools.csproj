@@ -63,6 +63,12 @@
     <Compile Include="Macros\TestPrepareMacro.cs" />
     <Compile Include="Macros\PrepareMacro.cs" />
     <Compile Include="Migrations\MigrateTool.cs" />
+    <Compile Include="ResetDb\ResetDbCommand.cs" />
+    <Compile Include="ResetDb\Scripts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Scripts.resx</DependentUpon>
+    </Compile>
     <Compile Include="Templates\ValidatorTemplate.cs" />
     <Compile Include="Templates\ServiceImplTemplate.cs" />
     <Compile Include="Templates\ServiceInterfaceTemplate.cs" />
@@ -100,10 +106,18 @@
     <EmbeddedResource Include="Templates\ServiceImplTemplate.txt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ResetDb\Scripts.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Scripts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\ValidatorTemplate.txt" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ResetDb\CreateDatabases.sql" />
+    <None Include="ResetDb\DropDatabases.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Development\" />
