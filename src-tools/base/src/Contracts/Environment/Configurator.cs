@@ -27,7 +27,6 @@ namespace Sample.Project.Environment
 
         protected override void InitLocations(FileLocator paths)
         {
-
             paths.Add(CodeBase("Environment", Environment));
             paths.Add(CodeBase("cfg"));
             paths.Add(CodeBase("..", "cfg"));

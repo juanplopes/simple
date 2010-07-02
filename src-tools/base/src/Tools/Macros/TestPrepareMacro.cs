@@ -22,7 +22,6 @@ namespace Sample.Project.Tools.Macros
             logger.Info("Migrating...");
             new MigrateTool() { Version = 1 }.Execute();
             new MigrateTool() { Version = null }.Execute();
-
             
             logger.Info("Executing...");
             new InsertDataCommand { ForceTestData = true }.Execute();

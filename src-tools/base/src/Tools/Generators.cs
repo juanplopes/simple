@@ -28,10 +28,10 @@ namespace Sample.Project.Tools
 
             registry.Register<InsertDataCommand>("data").WithOption("testdata", x => x.ForceTestData);
 
+            registry.Register<PrepareMacro>("prepare");
+
             if (production)
-            {
                 registry.Register<TestPrepareMacro>("testprepare");
-            }
 
             if (!production)
             {
@@ -44,8 +44,6 @@ namespace Sample.Project.Tools
                 registry.Register<EntityTemplate>("g entity").AsTableGenerator();
                 registry.Register<ValidatorTemplate>("g validator").AsTableGenerator();
                 registry.Register<MappingTemplate>("g mapping").AsTableGenerator();
-
-                registry.Register<PrepareMacro>("prepare");
             }
 
 

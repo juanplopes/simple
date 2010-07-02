@@ -19,9 +19,16 @@ namespace Sample.Project.Tools.Macros
         public void Execute()
         {
             logger.Info("Migrating...");
-            new MigrateTool() { Environment = Configurator.Development, Version = null }.Execute();
-            new MigrateTool() { Environment = Configurator.Test, Version = 1 }.Execute();
-            new MigrateTool() { Environment = Configurator.Test, Version = null }.Execute();
+            if (!Configurator.IsProduction)
+            {
+                new MigrateTool() { Environment = Configurator.Development, Version = null }.Execute();
+                new MigrateTool() { Environment = Configurator.Test, Version = 1 }.Execute();
+                new MigrateTool() { Environment = Configurator.Test, Version = null }.Execute();
+            }
+            else
+            {
+                new MigrateTool().Execute();
+            }
 
             logger.Info("Executing...");
             new InsertDataCommand().Execute();

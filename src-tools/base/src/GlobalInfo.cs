@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Sample.Project")]
 [assembly: AssemblyCopyright("Copyright (c) Your Company Name (Year)")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.0.1007.102")]
-[assembly: AssemblyFileVersion("1.0.1007.102")]
+[assembly: AssemblyVersion("1.0.1007.212")]
+[assembly: AssemblyFileVersion("1.0.1007.212")]
 
 

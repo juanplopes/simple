@@ -74,6 +74,10 @@
       <Project>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</Project>
       <Name>02_Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools\10_Tools.csproj">
+      <Project>{DFF8F092-2E40-4F08-BE77-51954C9DBDF8}</Project>
+      <Name>10_Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
