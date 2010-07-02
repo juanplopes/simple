@@ -53,6 +53,10 @@
   </Target>
 
 
+  <Target Name="DryBuild" DependsOnTargets="GenerateAssemblyInfo">
+    <MSBuild Projects="@(SolutionFile)" Targets="Build" Properties="Configuration=$(Configuration)"/>
+  </Target>
+
   <Target Name="Clean" DependsOnTargets="GenerateAssemblyInfo">
     <MSBuild Projects="@(SolutionFile)" Targets="Clean"/>
     <DeleteTree Directories="$(BuildDir)" ContinueOnError="true"/>
@@ -75,6 +79,7 @@
     <MSBuild Projects="@(ServerProject);@(ToolsProject)" Properties="OutDir=$(ServerBuildDir);Configuration=$(Configuration)"/>
     <CallTarget Targets="MakeConfig"/>
     <DeleteTree Directories="$(ServerBuildDir)\Environment" ContinueOnError="true" />
+    <Copy SourceFiles="simple.token" DestinationFolder="$(BuildDir)"/>
   </Target>
 
   <Target Name="Web" DependsOnTargets="GenerateAssemblyInfo">
@@ -94,7 +99,6 @@
 
   <Target Name="Build">
     <CallTarget  Targets="Server;Web"/>
-    <Copy SourceFiles="simple.key" DestinationFolder="$(BuildDir)"/>
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build">

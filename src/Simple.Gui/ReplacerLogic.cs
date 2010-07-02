@@ -13,7 +13,7 @@ namespace Simple.Gui
         {
             Execute(path, find, replace, inName,
                 "cmd", "csproj", "sln", "xml", "txt", "config", 
-                "cs", "aspx", "resx", "tt", "ttinclude", "asax", "sql", "findme");
+                "cs", "aspx", "resx", "tt", "ttinclude", "asax", "sql", "token");
         }
 
         public static void Execute(string path, string find, string replace, bool inName, params string[] extensions)
