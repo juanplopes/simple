@@ -20,7 +20,7 @@ namespace Simple.Services.Default
         {
             lock (_classes)
             {
-                Simply.Do.Log(this).DebugFormat("Setting server object for contract {0}...", contract.Name);
+                Simply.Do.Log(this).InfoFormat("Setting server object for contract {0}...", contract.GetRealClassName());
                 _classes[contract] = server;
             }
         }
@@ -59,7 +59,7 @@ namespace Simple.Services.Default
         {
             lock (_classes)
             {
-                Simply.Do.Log(this).DebugFormat("Clearing server objects...");
+                Simply.Do.Log(this).InfoFormat("Clearing server objects...");
                 _classes.Clear();
             }
         }

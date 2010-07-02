@@ -50,7 +50,7 @@ namespace Simple.Services.Remoting
                 ServiceLocationFactory.Do[ConfigCache].Set(server, contract);
 
                 string key = ConfigCache.GetEndpointKey(contract);
-                logger.DebugFormat("Registering contract {0} at endpoint {1}...", contract.Name, key);
+                logger.DebugFormat("Registering contract {0} at endpoint {1}...", contract.GetRealClassName(), key);
                 
                 RemotingServices.Marshal(server as MarshalByRefObject, key, contract);
 
