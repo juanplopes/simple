@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Simple.Reflection;
 
 namespace Simple
 {
@@ -30,22 +32,7 @@ namespace Simple
 
         public static string GetRealClassName(this Type type)
         {
-            string baseName = type.Name;
-
-            if (type.IsGenericType)
-            {
-                string args = string.Join(",", new List<string>(
-                type.GetGenericArguments().Where(x => x.FullName != null)
-                    .Select(x => x.Name)).ToArray());
-
-                int index = baseName.IndexOf('`');
-                if (index >= 0)
-                    baseName = baseName.Substring(0, index);
-
-                baseName += "<" + args + ">";
-            }
-
-            return baseName;
+            return new TypeNameExtractor(type).GetName();
         }
 
         public static string GetFlatClassName(this Type type)
@@ -55,7 +42,7 @@ namespace Simple
             {
                 res = res.Replace(s, "_");
             }
-            return res;
+            return res.Replace(" ", "");
         }
     }
 }

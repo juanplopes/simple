@@ -11,6 +11,7 @@ using System.Xml;
 using System.Reflection;
 using Sample.Project.Environment;
 using System.Threading;
+using Sample.Project.Services;
 
 namespace Sample.Project
 {
@@ -18,6 +19,7 @@ namespace Sample.Project
     {
         static void Main(string[] args)
         {
+            var type = typeof(SystemService).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             ThreadPool.QueueUserWorkItem(x => new Configurator().StartServer<ServerStarter>());
             Simply.Do.WaitRequests();
         }

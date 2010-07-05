@@ -45,41 +45,6 @@ namespace Simple.Tests.Reflection
         }
 
         [Test]
-        public void NormalClassDefinitionName()
-        {
-            string className = TypesHelper.GetRealClassName(typeof(TypesHelperFixture));
-            Assert.AreEqual("TypesHelperFixture", className);
-        }
-
-        [Test]
-        public void GenericClassDefinitionName()
-        {
-            string className = TypesHelper.GetRealClassName(typeof(IList<>));
-            Assert.AreEqual("IList<>", className);
-        }
-
-        [Test]
-        public void GenericClassName()
-        {
-            string className = TypesHelper.GetRealClassName(typeof(IList<int>));
-            Assert.AreEqual("IList<Int32>", className);
-        }
-
-        [Test]
-        public void GenericClassTwoName()
-        {
-            string className = TypesHelper.GetRealClassName(typeof(IDictionary<string, int>));
-            Assert.AreEqual("IDictionary<String,Int32>", className);
-        }
-
-        [Test]
-        public void GenericClassInnerName()
-        {
-            string className = TypesHelper.GetRealClassName(typeof(Dictionary<string, int>.Enumerator));
-            Assert.AreEqual("Enumerator<String,Int32>", className);
-        }
-
-        [Test]
         public void FlatNormalClassDefinitionName()
         {
             string className = TypesHelper.GetFlatClassName(typeof(TypesHelperFixture));

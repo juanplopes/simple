@@ -17,6 +17,7 @@ namespace Sample.Project.Tools
     {
         public const string Namespace = Configurator.DefaultNamespace;
         public const string ContractsAssembly = Namespace + ".Contracts";
+        public const string ServerAssembly = Namespace + ".Server";
         public const bool LazyLoad = true;
 
         public const string ToolsProject = "src/Tools/??_Tools.csproj";

@@ -1,0 +1,6 @@
+#foreach($service in $services)
+    $service.Name
+#foreach($method in $service.GetMethods(Public, DeclaredOnl))
+        $method.Name
+#end
+#end

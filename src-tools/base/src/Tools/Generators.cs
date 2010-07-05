@@ -14,6 +14,7 @@ using Simple.Generator.Console;
 using Sample.Project.Tools.Data;
 using Sample.Project.Tools.Macros;
 using Sample.Project.Tools.ResetDb;
+using System.Reflection;
 
 namespace Sample.Project.Tools
 {
@@ -28,7 +29,6 @@ namespace Sample.Project.Tools
                 .WithOption("env", x => x.Environment);
 
             registry.Register<InsertDataCommand>("data").WithOption("testdata", x => x.ForceTestData);
-
             registry.Register<PrepareMacro>("prepare");
 
             if (production)
@@ -49,6 +49,8 @@ namespace Sample.Project.Tools
                 registry.Register<EntityTemplate>("g entity").AsTableGenerator();
                 registry.Register<ValidatorTemplate>("g validator").AsTableGenerator();
                 registry.Register<MappingTemplate>("g mapping").AsTableGenerator();
+
+                registry.Register<RefreshMacro>("refresh");
             }
 
 
