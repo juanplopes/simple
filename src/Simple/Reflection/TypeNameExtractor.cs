@@ -13,6 +13,9 @@ namespace Simple.Reflection
 
         protected TypeNameExtractor(Type observedType, Type[] genericArguments)
         {
+            if (observedType.IsByRef)
+                observedType = observedType.GetElementType();
+
             ObservedType = observedType;
             GenericArguments = genericArguments;
         }
@@ -32,23 +35,37 @@ namespace Simple.Reflection
 
         protected int WriteInternal(TextWriter writer)
         {
-            int skip = 0;
-            if (ObservedType.IsNested)
+
+            int skip = WriteParentType(writer);
+            int take = ObservedType.GetGenericArguments().Length - skip;
+
+            if (ObservedType == typeof(void))
             {
-                skip = new TypeNameExtractor(ObservedType.DeclaringType, GenericArguments).WriteInternal(writer);
-                writer.Write(".");
+                writer.Write("void");
+                return skip+take;
             }
 
-            int take = ObservedType.GetGenericArguments().Length - skip;
             var types = GenericArguments.Skip(skip).Take(take).ToArray();
 
             string args = types.Length > 0
-                ? "<" + string.Join(", ", types.Select(x => x.Name).ToArray()) + ">"
+                ? "<" + string.Join(", ", types.Select(x => new TypeNameExtractor(x).GetName()).ToArray()) + ">"
                 : "";
 
             writer.Write(GetReadableTypeName());
             writer.Write(args);
             return skip + take;
+        }
+
+        private int WriteParentType(TextWriter writer)
+        {
+
+            int skip = 0;
+            if (ObservedType.IsNested && !ObservedType.IsGenericParameter)
+            {
+                skip = new TypeNameExtractor(ObservedType.DeclaringType, GenericArguments).WriteInternal(writer);
+                writer.Write(".");
+            }
+            return skip;
         }
 
         private string GetReadableTypeName()

@@ -59,10 +59,25 @@ namespace Simple.Tests.Reflection
         }
 
         [Test]
+        public void GenericClassAsGenericParameter()
+        {
+            var extractor = new TypeNameExtractor(typeof(IDictionary<IList<int>, IList<string>>));
+            Assert.AreEqual("IDictionary<IList<Int32>, IList<String>>", extractor.GetName());
+        }
+
+
+        [Test]
         public void GenericClassInsideNonGenericInsideGenericClassName()
         {
             var extractor = new TypeNameExtractor(typeof(Test<,>.NonGeneric.Generic<,>));
             Assert.AreEqual("TypeNameExtractorFixture.Test<A, B>.NonGeneric.Generic<C, D>", extractor.GetName());
+        }
+
+        [Test]
+        public void CanReturnLowercaseNameForVoidType()
+        {
+            var extractor = new TypeNameExtractor(typeof(void));
+            Assert.AreEqual("void", extractor.GetName());
         }
 
         public class Test<A, B>
