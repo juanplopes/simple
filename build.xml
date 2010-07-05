@@ -23,8 +23,9 @@
 
     <ProductMajorVersion>3</ProductMajorVersion>
     <ProductMinorVersion>0</ProductMinorVersion>
-
-    <MainLibraryName>Simple$(ProductMajorVersion)</MainLibraryName>
+	<ProductBuildName>Avalon</ProductBuildName>
+	
+    <MainLibraryName>Simple.$(ProductBuildName)</MainLibraryName>
     
     <TestAssembly>$(BuildDir)\Simple.Tests.exe</TestAssembly>
   </PropertyGroup>
@@ -62,7 +63,7 @@
     <AssemblyInfo CodeLanguage="CS"
                OutputFile="$(SourceDir)\GlobalInfo.cs"
                AssemblyCompany="Living Consultoria"
-               AssemblyProduct="Simple.Net"
+               AssemblyProduct="Simple.Net ($(ProductBuildName))"
                AssemblyCopyright="Copyright (c) Living Consultoria 2009"
                AssemblyTrademark=""
                ComVisible="false"
