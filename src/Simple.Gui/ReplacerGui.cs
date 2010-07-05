@@ -17,7 +17,7 @@ namespace Simple.Gui
         {
             InitializeComponent();
             txtNamespace_TextChanged(this, new EventArgs());
-            Version.Text = string.Format("v{0}", this.GetType().Assembly.GetName().Version);
+            Version.Text = string.Format("v{0}", this.GetType().Assembly.GetName().Version.ToString(3));
 
             AdvancedGroup.Visible = false;
             AutoResize();
