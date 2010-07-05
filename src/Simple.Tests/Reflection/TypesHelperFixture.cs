@@ -55,7 +55,7 @@ namespace Simple.Tests.Reflection
         public void FlatGenericClassDefinitionName()
         {
             string className = TypesHelper.GetFlatClassName(typeof(IList<>));
-            Assert.AreEqual("IList__", className);
+            Assert.AreEqual("IList_T_", className);
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Simple.Tests.Reflection
         public void FlatGenericClassInnerName()
         {
             string className = TypesHelper.GetFlatClassName(typeof(Dictionary<string, int>.Enumerator));
-            Assert.AreEqual("Enumerator_String_Int32_", className);
+            Assert.AreEqual("Dictionary_String_Int32__Enumerator", className);
         }
 
         [Test]

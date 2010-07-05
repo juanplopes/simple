@@ -111,8 +111,8 @@ namespace Simple.Tests.Generator
             Assert.IsInstanceOf<SampleDateTimeList>(generator2);
         }
 
-        [Test, ExpectedException(typeof(AmbiguousCommandException), 
-            ExpectedMessage="SampleStringList, SampleDateTimeList",
+        [Test, ExpectedException(typeof(AmbiguousCommandException),
+            ExpectedMessage = "GeneratorResolverFixture.SampleStringList, GeneratorResolverFixture.SampleDateTimeList",
             MatchType=MessageMatch.Contains)]
         public void CannotSelectCorrectGeneratorWhenFoundMultiple()
         {

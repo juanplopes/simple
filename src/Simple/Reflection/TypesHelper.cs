@@ -38,7 +38,7 @@ namespace Simple
         public static string GetFlatClassName(this Type type)
         {
             string res = GetRealClassName(type);
-            foreach (string s in new string[] { "<", ">", "," })
+            foreach (string s in new string[] { "<", ">", ",", "." })
             {
                 res = res.Replace(s, "_");
             }

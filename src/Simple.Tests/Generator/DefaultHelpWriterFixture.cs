@@ -35,16 +35,16 @@ help <commands> (IList<String>)
 > Generator: HelpTextGenerator
 
 cmd1 a <cmd1_arguments> (IList<String>)
-> Generator: Sample1
+> Generator: DefaultHelpWriterFixture.Sample1
 
 cmd1 b <cmd1_arguments> (IList<String>)
-> Generator: Sample1
+> Generator: DefaultHelpWriterFixture.Sample1
 
 cmd2
-> Generator: Sample2
+> Generator: DefaultHelpWriterFixture.Sample2
 
 noopt
-> Generator: Sample2", text);
+> Generator: DefaultHelpWriterFixture.Sample2", text);
 
         }
 
