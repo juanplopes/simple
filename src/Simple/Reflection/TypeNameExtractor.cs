@@ -3,90 +3,95 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Simple.Reflection
 {
     public class TypeNameExtractor
     {
-        public Type ObservedType { get; protected set; }
-        public Type[] GenericArguments { get; protected set; }
+        public HashSet<string> Namespaces { get; set; }
 
-        protected TypeNameExtractor(Type observedType, Type[] genericArguments)
+        public TypeNameExtractor()
         {
-            if (observedType.IsByRef)
-                observedType = observedType.GetElementType();
-
-            ObservedType = observedType;
-            GenericArguments = genericArguments;
+            Namespaces = new HashSet<string>();
         }
 
-        public TypeNameExtractor(Type observedType)
-            : this(observedType, ExtractGenericArguments(observedType))
+        protected int AppendTypeName(StringBuilder builder, Type type)
         {
+            var generic = type.IsGenericType ? type.GetGenericArguments() : new Type[0];
+            return AppendTypeName(builder, type, generic);
         }
 
-        private static Type[] ExtractGenericArguments(Type observedType)
+        protected int AppendTypeName(StringBuilder builder, Type type, Type[] genericArguments)
         {
-            if (observedType.IsGenericType)
-                return observedType.GetGenericArguments();
-            else
-                return new Type[0];
-        }
+            type = VerifyRefType(type);
 
-        protected int WriteInternal(TextWriter writer)
-        {
+            int skip = AppendParentTypes(builder, type, genericArguments);
+            int take = type.GetGenericArguments().Length - skip;
+            var generic = genericArguments.Skip(skip).Take(take);
 
-            int skip = WriteParentType(writer);
-            int take = ObservedType.GetGenericArguments().Length - skip;
-
-            if (ObservedType == typeof(void))
+            if (type == typeof(void))
             {
-                writer.Write("void");
-                return skip+take;
+                builder.Append("void");
+                return skip + take;
             }
 
-            var types = GenericArguments.Skip(skip).Take(take).ToArray();
+            AppendReadableTypeName(builder, type);
+            AppendTypeArguments(builder, generic);
 
-            string args = types.Length > 0
-                ? "<" + string.Join(", ", types.Select(x => new TypeNameExtractor(x).GetName()).ToArray()) + ">"
-                : "";
-
-            writer.Write(GetReadableTypeName());
-            writer.Write(args);
             return skip + take;
         }
 
-        private int WriteParentType(TextWriter writer)
+        private void AppendTypeArguments(StringBuilder builder, IEnumerable<Type> generic)
+        {
+
+            if (generic.Any())
+            {
+                builder.Append("<");
+                generic.EagerForeach(x => AppendTypeName(builder, x), x => builder.Append(", "));
+                builder.Append(">");
+            }
+        }
+
+        private static Type VerifyRefType(Type type)
+        {
+            if (type.IsByRef)
+                type = type.GetElementType();
+            return type;
+        }
+
+        private int AppendParentTypes(StringBuilder builder, Type type, Type[] genericArguments)
         {
 
             int skip = 0;
-            if (ObservedType.IsNested && !ObservedType.IsGenericParameter)
+            if (type.IsNested && !type.IsGenericParameter)
             {
-                skip = new TypeNameExtractor(ObservedType.DeclaringType, GenericArguments).WriteInternal(writer);
-                writer.Write(".");
+                skip = AppendTypeName(builder, type.DeclaringType, genericArguments);
+                builder.Append(".");
             }
             return skip;
         }
 
-        private string GetReadableTypeName()
+        private void AppendReadableTypeName(StringBuilder builder, Type type)
         {
-            var baseName = ObservedType.Name;
+            var baseName = type.Name;
             int index = baseName.IndexOf('`');
             if (index >= 0)
                 baseName = baseName.Substring(0, index);
-            return baseName;
+            builder.Append(baseName);
         }
 
-        public void WriteName(TextWriter writer)
+
+        public string GetName(Type type)
         {
-           WriteInternal(writer);
+            var builder = new StringBuilder();
+            AppendTypeName(builder, type);
+            return builder.ToString();
         }
 
-        public string GetName()
+        public string GetFlatName(Type type, string replacement)
         {
-            var writer = new StringWriter();
-            WriteName(writer);
-            return writer.ToString();
+            return Regex.Replace(GetName(type), "[<>,.]", replacement).Replace(" ", "");
         }
     }
 }

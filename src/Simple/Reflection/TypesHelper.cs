@@ -32,17 +32,12 @@ namespace Simple
 
         public static string GetRealClassName(this Type type)
         {
-            return new TypeNameExtractor(type).GetName();
+            return new TypeNameExtractor().GetName(type);
         }
 
         public static string GetFlatClassName(this Type type)
         {
-            string res = GetRealClassName(type);
-            foreach (string s in new string[] { "<", ">", ",", "." })
-            {
-                res = res.Replace(s, "_");
-            }
-            return res.Replace(" ", "");
+            return new TypeNameExtractor().GetFlatName(type, "_");
         }
     }
 }

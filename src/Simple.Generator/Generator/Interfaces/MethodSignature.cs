@@ -10,6 +10,21 @@ namespace Simple.Generator.Interfaces
     {
         public MethodInfo Method { get; protected set; }
 
+        public string MakeCall(params string[] skipWith)
+        {
+            var str = new StringBuilder();
+            AppendMethodName(str);
+            AppendGenericDefinition(str);
+            AppendParameters(str, skipWith);
+
+            return str.ToString();
+        }
+
+        public string MakeSignature()
+        {
+            return MakeSignature(0);
+        }
+
         public string MakeSignature(int skip)
         {
             var str = new StringBuilder();
@@ -22,7 +37,6 @@ namespace Simple.Generator.Interfaces
 
             return str.ToString();
         }
-
 
         public IEnumerable<string> InvolvedNamespaces
         {
@@ -102,12 +116,21 @@ namespace Simple.Generator.Interfaces
             }
         }
 
+        private void AppendParameters(StringBuilder str, string[] skip)
+        {
+            var parameters = Method.GetParameters().Skip(skip.Length);
+            str.AppendFormat("({0})",
+                skip.Union(parameters.Select(x => string.Format("{0}{1}", 
+                    GetParameterModifiers(x, false), x.Name))).StringJoin(", "));
+        }
+
+
         private void AppendParameters(StringBuilder str, int skip)
         {
             var parameters = Method.GetParameters().Skip(skip);
             str.AppendFormat("({0})",
                 string.Join(", ",
-                parameters.Select(x => string.Format("{0}{1} {2}", GetParameterModifiers(x), x.ParameterType.GetRealClassName(), x.Name)).ToArray()));
+                parameters.Select(x => string.Format("{0}{1} {2}", GetParameterModifiers(x, true), x.ParameterType.GetRealClassName(), x.Name)).ToArray()));
         }
 
         private void AppendMethodName(StringBuilder str)
@@ -120,12 +143,12 @@ namespace Simple.Generator.Interfaces
             str.Append(Method.ReturnType.GetRealClassName());
         }
 
-        private string GetParameterModifiers(ParameterInfo x)
+        private string GetParameterModifiers(ParameterInfo x, bool includeParams)
         {
             if (x.ParameterType.IsByRef)
                 if (x.IsOut) return "out ";
                 else return "ref ";
-            else if (x.IsDefined(typeof(ParamArrayAttribute), false))
+            else if (x.IsDefined(typeof(ParamArrayAttribute), false) && includeParams)
                 return "params ";
             else
                 return string.Empty;

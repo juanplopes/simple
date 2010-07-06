@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using NUnit.Framework;
+using System.Text;
 
 namespace Simple.Tests.Common
 {
@@ -44,6 +45,55 @@ namespace Simple.Tests.Common
             var str = seq.AggregateJoin((x, y) => x + "," + y);
 
             CollectionAssert.AreEqual("um,dois,três", str);
+        }
+
+        [Test]
+        public void CanStringJoinArrayOfStrings()
+        {
+            var seq = new[] { "um", "dois", "três" };
+            var str = seq.StringJoin();
+
+            CollectionAssert.AreEqual("umdoistrês", str);
+        }
+
+        [Test]
+        public void CanStringJoinArrayOfStringsWithCommaSeparator()
+        {
+            var seq = new[] { "um", "dois", "três" };
+            var str = seq.StringJoin(",");
+
+            CollectionAssert.AreEqual("um,dois,três", str);
+        }
+
+        [Test]
+        public void CanEagerForeachWithoutBetween()
+        {
+            var seq = new[] { "um", "dois", "três" };
+            
+            var builder = new StringBuilder();
+            seq.EagerForeach(x => builder.Append(x));
+
+            CollectionAssert.AreEqual("umdoistrês", builder.ToString());
+        }
+
+        [Test]
+        public void CanEagerForeachWithBetween()
+        {
+            var seq = new[] { "um", "dois", "três" };
+
+            var builder = new StringBuilder();
+            seq.EagerForeach(x => builder.Append(x), x=>builder.Append(","));
+
+            CollectionAssert.AreEqual("um,dois,três", builder.ToString());
+        }
+
+        [Test]
+        public void CanStringJoinArrayOfIntsWithCommaSeparator()
+        {
+            var seq = new[] { 1, 2, 3 };
+            var str = seq.StringJoin(",");
+
+            CollectionAssert.AreEqual("1,2,3", str);
         }
     }
 }

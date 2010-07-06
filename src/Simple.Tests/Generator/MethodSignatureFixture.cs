@@ -12,56 +12,62 @@ namespace Simple.Tests.Generator
     public class MethodSignatureFixture
     {
         [Test]
-        public void CanGetSignatureForStringEndsWithMethod()
+        public void StringEndsWithMethod()
         {
             var method = typeof(string).GetMethod("EndsWith", new[] { typeof(string), typeof(bool), typeof(CultureInfo) });
             var sig = new MethodSignature(method);
-            Assert.AreEqual("Boolean EndsWith(String value, Boolean ignoreCase, CultureInfo culture)", sig.MakeSignature(0));
+            Assert.AreEqual("Boolean EndsWith(String value, Boolean ignoreCase, CultureInfo culture)", sig.MakeSignature());
+            Assert.AreEqual("EndsWith(value, ignoreCase, culture)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForSingleStringMethod()
+        public void SingleStringMethod()
         {
             var method = typeof(Sample1).GetMethod("SingleStringParameter");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void SingleStringParameter(String a)", sig.MakeSignature(0));
+            Assert.AreEqual("void SingleStringParameter(String a)", sig.MakeSignature());
+            Assert.AreEqual("SingleStringParameter(a)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForTwoIntMethod()
+        public void TwoIntMethod()
         {
             var method = typeof(Sample1).GetMethod("TwoIntParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoIntParameters(Int32 a, Int32 b)", sig.MakeSignature(0));
+            Assert.AreEqual("void TwoIntParameters(Int32 a, Int32 b)", sig.MakeSignature());
+            Assert.AreEqual("TwoIntParameters(a, b)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForTwoIntMethodSkippingFirst()
+        public void TwoIntMethodSkippingFirst()
         {
             var method = typeof(Sample1).GetMethod("TwoIntParameters");
             var sig = new MethodSignature(method);
             Assert.AreEqual("void TwoIntParameters(Int32 b)", sig.MakeSignature(1));
+            Assert.AreEqual("TwoIntParameters(this, b)", sig.MakeCall("this"));
         }
 
         [Test]
-        public void CanGetSignatureForSingleStringOutMethod()
+        public void SingleStringOutMethod()
         {
             var method = typeof(Sample1).GetMethod("SingleStringOutParameter");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void SingleStringOutParameter(out String a)", sig.MakeSignature(0));
+            Assert.AreEqual("void SingleStringOutParameter(out String a)", sig.MakeSignature());
+            Assert.AreEqual("SingleStringOutParameter(out a)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForSingleStringRefMethod()
+        public void SingleStringRefMethod()
         {
             var method = typeof(Sample1).GetMethod("SingleStringRefParameter");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void SingleStringRefParameter(ref String a)", sig.MakeSignature(0));
+            Assert.AreEqual("void SingleStringRefParameter(ref String a)", sig.MakeSignature());
+            Assert.AreEqual("SingleStringRefParameter(ref a)", sig.MakeCall());
         }
 
 
         [Test]
-        public void CanGetInvolvedNamespacesSingleStringOutMethod()
+        public void NamespacesForSingleStringOutMethod()
         {
             var method = typeof(Sample1).GetMethod("SingleStringOutParameter");
             var sig = new MethodSignature(method);
@@ -74,7 +80,7 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
-        public void CanGetInvolvedNamespacesForSingleSelfMethod()
+        public void NamespacesForSingleSelfMethod()
         {
             var method = typeof(Sample1).GetMethod("SingleSelfParameter");
             var sig = new MethodSignature(method);
@@ -87,7 +93,7 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
-        public void CanGetInvolvedNamespacesForSingleSelfReturnMethod()
+        public void NamespacesForSingleSelfReturnMethod()
         {
             var method = typeof(Sample1).GetMethod("SingleSelfReturn");
             var sig = new MethodSignature(method);
@@ -99,73 +105,81 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
-        public void CanGetSignatureForTwoGenericParametersMethod()
+        public void TwoGenericParametersMethod()
         {
             var method = typeof(Sample1).GetMethod("TwoGenericParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoGenericParameters<T>(T a, T b)", sig.MakeSignature(0));
+            Assert.AreEqual("void TwoGenericParameters<T>(T a, T b)", sig.MakeSignature());
+            Assert.AreEqual("TwoGenericParameters<T>(a, b)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForOneGenericParamsParametersMethod()
+        public void OneGenericParamsParametersMethod()
         {
             var method = typeof(Sample1).GetMethod("OneGenericParamsParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void OneGenericParamsParameters<T>(params T[] a)", sig.MakeSignature(0));
+            Assert.AreEqual("void OneGenericParamsParameters<T>(params T[] a)", sig.MakeSignature());
+            Assert.AreEqual("OneGenericParamsParameters<T>(a)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForTwoConstrainedGenericParametersMethod()
+        public void TwoConstrainedGenericParametersMethod()
         {
             var method = typeof(Sample1).GetMethod("TwoConstrainedGenericParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoConstrainedGenericParameters<T>(T a, T b) where T : class, IConvertible, new()", sig.MakeSignature(0));
+            Assert.AreEqual("void TwoConstrainedGenericParameters<T>(T a, T b) where T : class, IConvertible, new()", sig.MakeSignature());
+            Assert.AreEqual("TwoConstrainedGenericParameters<T>(a, b)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForTwoConstrainedStructGenericParametersMethod()
+        public void TwoConstrainedStructGenericParametersMethod()
         {
             var method = typeof(Sample1).GetMethod("TwoConstrainedStructGenericParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoConstrainedStructGenericParameters<T>(T a, T b) where T : struct, IConvertible", sig.MakeSignature(0));
+            Assert.AreEqual("void TwoConstrainedStructGenericParameters<T>(T a, T b) where T : struct, IConvertible", sig.MakeSignature());
+            Assert.AreEqual("TwoConstrainedStructGenericParameters<T>(a, b)", sig.MakeCall());
         }
 
 
         [Test]
-        public void CanGetSignatureForTwoConstrainedRefGenericParametersMethod()
+        public void TwoConstrainedRefGenericParametersMethod()
         {
             var method = typeof(Sample1).GetMethod("TwoConstrainedRefGenericParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoConstrainedRefGenericParameters<T>(ref T a, T b) where T : struct, IConvertible", sig.MakeSignature(0));
+            Assert.AreEqual("void TwoConstrainedRefGenericParameters<T>(ref T a, T b) where T : struct, IConvertible", sig.MakeSignature());
+            Assert.AreEqual("TwoConstrainedRefGenericParameters<T>(ref a, b)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForGenericParameterInsideGenericClass()
+        public void GenericParameterInsideGenericClass()
         {
             var method = typeof(Sample2<int>).GetMethod("GenericParameter");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void GenericParameter<Q>(Q a)", sig.MakeSignature(0));
+            Assert.AreEqual("void GenericParameter<Q>(Q a)", sig.MakeSignature());
+            Assert.AreEqual("GenericParameter<Q>(a)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForGenericParameterInsideGenericClassWithConstraint()
+        public void GenericParameterInsideGenericClassWithConstraint()
         {
             var method = typeof(Sample2<int>).GetMethod("GenericParameterInheriting");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void GenericParameterInheriting<Q>(Q a) where Q : MethodSignatureFixture.Sample1, IConvertible, new()", sig.MakeSignature(0));
+            Assert.AreEqual("void GenericParameterInheriting<Q>(Q a) where Q : MethodSignatureFixture.Sample1, IConvertible, new()", sig.MakeSignature());
+            Assert.AreEqual("GenericParameterInheriting<Q>(a)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetSignatureForSeveralGenericParameters()
+        public void SeveralGenericParameters()
         {
             var method = typeof(Sample2<int>).GetMethod("SeveralClasses");
             var sig = new MethodSignature(method);
             Assert.AreEqual(
-                "A SeveralClasses<A, B, C>(B b, C c) where A : struct where B : class, ICollection, IEnumerable, IList, new() where C : List<B>, ICollection, ICollection<B>, IEnumerable, IEnumerable<B>, IList, IList<B>, new()", sig.MakeSignature(0));
+                "A SeveralClasses<A, B, C>(B b, C c) where A : struct where B : class, ICollection, IEnumerable, IList, new() where C : List<B>, ICollection, ICollection<B>, IEnumerable, IEnumerable<B>, IList, IList<B>, new()", sig.MakeSignature());
+            Assert.AreEqual("SeveralClasses<A, B, C>(b, c)", sig.MakeCall());
         }
 
         [Test]
-        public void CanGetInvolvedNamespacesForSeveralGenericParameters()
+        public void NamespacesForSeveralGenericParameters()
         {
             var method = typeof(Sample2<int>).GetMethod("SeveralClasses");
             var sig = new MethodSignature(method);
@@ -178,7 +192,7 @@ namespace Simple.Tests.Generator
 
             CollectionAssert.AreEquivalent(expected, sig.InvolvedNamespaces.ToArray());
         }
-         
+
         class Sample1
         {
             public void SingleStringParameter(string a) { }

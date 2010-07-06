@@ -28,22 +28,37 @@ namespace Simple
             return result;
         }
 
-        public static string StringJoin(this IEnumerable enumerable)
+        public static IEnumerable<T> EagerForeach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        {
+            return enumerable.EagerForeach(action, null);
+        }
+        public static IEnumerable<T> EagerForeach<T>(this IEnumerable<T> enumerable, Action<T> action, Action<T> between)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.MoveNext();
+            
+            action(enumerator.Current);
+
+            while (enumerator.MoveNext())
+            {
+                if (between != null)
+                    between(enumerator.Current);
+                if (action != null)
+                    action(enumerator.Current);
+            }
+
+            return enumerable;
+        }
+
+        public static string StringJoin<T>(this IEnumerable<T> enumerable)
         {
             return enumerable.StringJoin(string.Empty);
         }
 
-        public static string StringJoin(this IEnumerable enumerable, string separator)
+        public static string StringJoin<T>(this IEnumerable<T> enumerable, string separator)
         {
-            var enumerator = enumerable.GetEnumerator();
-            enumerator.MoveNext();
             var builder = new StringBuilder();
-
-            builder.Append(enumerator.Current);
-            
-            while(enumerator.MoveNext())
-                builder.Append(separator).Append(enumerator.Current);
-
+            enumerable.EagerForeach(x => builder.Append(x), x => builder.Append(separator));
             return builder.ToString();
         }
     }

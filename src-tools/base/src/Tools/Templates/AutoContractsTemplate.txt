@@ -1,6 +1,15 @@
-#foreach($service in $services)
-    $service.Name
-#foreach($method in $service.GetMethods(Public, DeclaredOnl))
-        $method.Name
+#foreach($ns in $namespaces)
+using namespace ${ns};
 #end
+
+namespace ${namespace}.Services
+{
+#foreach($svc in $services)
+    public interface I${svc.Type.Name}
+    {
+#foreach($method in $svc.Methods)
+        ${method.MakeSignature()};
 #end
+    }
+#end
+}
