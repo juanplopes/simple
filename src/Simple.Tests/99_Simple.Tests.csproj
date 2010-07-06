@@ -153,6 +153,7 @@
     <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
+    <Compile Include="Reflection\ClassSignatureFixture.cs" />
     <Compile Include="Reflection\MethodSignatureFixture.cs" />
     <Compile Include="Generator\ProjectFileWriterFixture.cs" />
     <Compile Include="Generator\ProjectWriterFixture.cs" />

@@ -218,13 +218,14 @@
     <Compile Include="Reflection\EnumTypeAttribute.cs" />
     <Compile Include="Patterns\IWorkingDaysProvider.cs" />
     <Compile Include="Expressions\ExpressionHelper.cs" />
+    <Compile Include="Reflection\GenericSignature.cs" />
     <Compile Include="Reflection\InvokerFactory.cs" />
     <Compile Include="Reflection\AttributeCache.cs" />
     <Compile Include="Reflection\EqualityHelper.cs" />
     <Compile Include="Expressions\PredicateBuilder.cs" />
     <Compile Include="Reflection\MethodCache.cs" />
     <Compile Include="Reflection\MethodSignature.cs" />
-    <Compile Include="Reflection\TypeMethodsReader.cs" />
+    <Compile Include="Reflection\ClassSignature.cs" />
     <Compile Include="Reflection\TypeNameExtractor.cs" />
     <Compile Include="Reflection\TypesHelper.cs" />
     <Compile Include="Resources.Designer.cs">

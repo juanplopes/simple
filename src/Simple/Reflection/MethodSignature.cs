@@ -68,33 +68,11 @@ namespace Simple.Reflection
             str.Append(typeParameters.Select(x => CreateConstraintString(x)).StringJoin());
         }
 
-        private string CreateConstraintString(Type type)
+        private string CreateConstraintString(Type x)
         {
-            var constraints = EnumerateConstraints(type).ToList();
-            if (constraints.Count == 0) return string.Empty;
-            else return " where {0} : {1}".AsFormat(TypeNames.GetName(type), constraints.StringJoin(", "));
+            return new GenericSignature(x, TypeNames.Namespaces).MakeConstraints();
         }
-
-        private IEnumerable<string> EnumerateConstraints(Type type)
-        {
-            if ((type.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) != 0)
-                yield return "class";
-
-            if ((type.GenericParameterAttributes & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0)
-                yield return "struct";
-
-            if (type.BaseType != typeof(object) && type.BaseType != typeof(ValueType))
-                yield return TypeNames.GetName(type.BaseType);
-
-            var interfaces = type.GetInterfaces().Select(x => TypeNames.GetName(x)).ToList();
-            interfaces.Sort();
-            foreach (var inter in interfaces)
-                yield return inter;
-
-            if ((type.GenericParameterAttributes & GenericParameterAttributes.DefaultConstructorConstraint) != 0 &&
-                type.BaseType != typeof(ValueType))
-                yield return "new()";
-        }
+       
 
         private void AppendGenericDefinition(StringBuilder str)
         {

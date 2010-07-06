@@ -12,7 +12,7 @@ namespace Simple
         {
             var i = enum1.GetEnumerator();
             var j = enum2.GetEnumerator();
-            while(i.MoveNext() && j.MoveNext())
+            while (i.MoveNext() && j.MoveNext())
             {
                 yield return func(i.Current, j.Current);
             }
@@ -35,8 +35,9 @@ namespace Simple
         public static IEnumerable<T> EagerForeach<T>(this IEnumerable<T> enumerable, Action<T> action, Action<T> between)
         {
             var enumerator = enumerable.GetEnumerator();
-            enumerator.MoveNext();
-            
+            if (!enumerator.MoveNext())
+                return enumerable;
+
             action(enumerator.Current);
 
             while (enumerator.MoveNext())

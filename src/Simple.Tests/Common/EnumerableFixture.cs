@@ -63,7 +63,20 @@ namespace Simple.Tests.Common
             var str = seq.StringJoin(",");
 
             CollectionAssert.AreEqual("um,dois,três", str);
+        
         }
+
+        [Test]
+        public void CanEagerForeachWithEmptyCollection()
+        {
+            var seq = new string[0];
+
+            var builder = new StringBuilder();
+            seq.EagerForeach(x => builder.Append(x));
+
+            CollectionAssert.AreEqual("", builder.ToString());
+        }
+
 
         [Test]
         public void CanEagerForeachWithoutBetween()
@@ -74,6 +87,17 @@ namespace Simple.Tests.Common
             seq.EagerForeach(x => builder.Append(x));
 
             CollectionAssert.AreEqual("umdoistrês", builder.ToString());
+        }
+
+        [Test]
+        public void CanEagerForeachWithBetweenInEmptyCollection()
+        {
+            var seq = new string[0] { };
+
+            var builder = new StringBuilder();
+            seq.EagerForeach(x => builder.Append(x), x => builder.Append(","));
+
+            CollectionAssert.AreEqual("", builder.ToString());
         }
 
         [Test]
