@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
+using System.Text;
 
 namespace Simple
 {
@@ -24,6 +26,25 @@ namespace Simple
                 result = joiner(result, other);
 
             return result;
+        }
+
+        public static string StringJoin(this IEnumerable enumerable)
+        {
+            return enumerable.StringJoin(string.Empty);
+        }
+
+        public static string StringJoin(this IEnumerable enumerable, string separator)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.MoveNext();
+            var builder = new StringBuilder();
+
+            builder.Append(enumerator.Current);
+            
+            while(enumerator.MoveNext())
+                builder.Append(separator).Append(enumerator.Current);
+
+            return builder.ToString();
         }
     }
 }

@@ -9,36 +9,6 @@ namespace Simple.Generator.Interfaces
     public class MethodSignature
     {
         public MethodInfo Method { get; protected set; }
-        public ParameterInfo[] Parameters { get; protected set; }
-        public Type ReturnType { get; protected set; }
-
-        public IEnumerable<string> InvolvedNamespaces
-        {
-            get
-            {
-                return EnumerateInvolvedNamespaces().Distinct();
-            }
-        }
-
-        private IEnumerable<string> EnumerateInvolvedNamespaces()
-        {
-            yield return ReturnType.Namespace;
-            foreach (var parameter in Parameters)
-                yield return parameter.ParameterType.Namespace;
-        }
-
-        public MethodSignature(MethodInfo method)
-        {
-            this.Method = method;
-            this.Parameters = method.GetParameters();
-            this.ReturnType = method.ReturnType;
-        }
-
-        public bool FirstParameterIs(Type type)
-        {
-            if (Parameters.Length == 0) return false;
-            return Parameters[0].ParameterType == type;
-        }
 
         public string MakeSignature(int skip)
         {
@@ -53,9 +23,74 @@ namespace Simple.Generator.Interfaces
             return str.ToString();
         }
 
+
+        public IEnumerable<string> InvolvedNamespaces
+        {
+            get
+            {
+                return EnumerateInvolvedNamespaces().Distinct();
+            }
+        }
+
+        private IEnumerable<string> EnumerateInvolvedNamespaces()
+        {
+            yield return Method.ReturnType.Namespace;
+            foreach (var parameter in Method.GetParameters())
+                yield return parameter.ParameterType.Namespace;
+
+            foreach (var generic in Method.GetGenericArguments())
+            {
+                yield return generic.BaseType.Namespace;
+                foreach (var inter in generic.GetInterfaces())
+                    yield return inter.Namespace;
+            }
+        }
+
+        public MethodSignature(MethodInfo method)
+        {
+            this.Method = method;
+        }
+
+        public bool FirstParameterIs(Type type)
+        {
+            var parameters = Method.GetParameters();
+            if (parameters.Length == 0) return false;
+            return parameters[0].ParameterType == type;
+        }
+
+
         private void AppendTypeConstraints(StringBuilder str)
         {
+            var typeParameters = Method.GetGenericArguments();
+            str.Append(typeParameters.Select(x => CreateConstraintString(x)).StringJoin());
+        }
 
+        private string CreateConstraintString(Type type)
+        {
+            var constraints = EnumerateConstraints(type).ToList();
+            if (constraints.Count == 0) return string.Empty;
+            else return " where {0} : {1}".AsFormat(type.GetRealClassName(), constraints.StringJoin(", "));
+        }
+
+        private IEnumerable<string> EnumerateConstraints(Type type)
+        {
+            if ((type.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) != 0)
+                yield return "class";
+
+            if ((type.GenericParameterAttributes & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0)
+                yield return "struct";
+
+            if (type.BaseType != typeof(object) && type.BaseType != typeof(ValueType))
+                yield return type.BaseType.GetRealClassName();
+
+            var interfaces = type.GetInterfaces().Select(x => x.GetRealClassName()).ToList();
+            interfaces.Sort();
+            foreach (var inter in interfaces)
+                yield return inter;
+
+            if ((type.GenericParameterAttributes & GenericParameterAttributes.DefaultConstructorConstraint) != 0 &&
+                type.BaseType != typeof(ValueType))
+                yield return "new()";
         }
 
         private void AppendGenericDefinition(StringBuilder str)
@@ -69,7 +104,7 @@ namespace Simple.Generator.Interfaces
 
         private void AppendParameters(StringBuilder str, int skip)
         {
-            var parameters = Parameters.Skip(skip);
+            var parameters = Method.GetParameters().Skip(skip);
             str.AppendFormat("({0})",
                 string.Join(", ",
                 parameters.Select(x => string.Format("{0}{1} {2}", GetParameterModifiers(x), x.ParameterType.GetRealClassName(), x.Name)).ToArray()));
@@ -82,7 +117,7 @@ namespace Simple.Generator.Interfaces
 
         private void AppendReturnType(StringBuilder str)
         {
-            str.Append(ReturnType.GetRealClassName());
+            str.Append(Method.ReturnType.GetRealClassName());
         }
 
         private string GetParameterModifiers(ParameterInfo x)
@@ -90,8 +125,12 @@ namespace Simple.Generator.Interfaces
             if (x.ParameterType.IsByRef)
                 if (x.IsOut) return "out ";
                 else return "ref ";
+            else if (x.IsDefined(typeof(ParamArrayAttribute), false))
+                return "params ";
             else
                 return string.Empty;
+
+
 
         }
     }
