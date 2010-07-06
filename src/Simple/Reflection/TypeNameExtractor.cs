@@ -11,44 +11,40 @@ namespace Simple.Reflection
     {
         public HashSet<string> Namespaces { get; set; }
 
-        public TypeNameExtractor()
+        public TypeNameExtractor() : this(new HashSet<string>()) { }
+
+        public TypeNameExtractor(HashSet<string> visitedNamespaces)
         {
-            Namespaces = new HashSet<string>();
+            Namespaces = visitedNamespaces;
         }
 
-        protected int AppendTypeName(StringBuilder builder, Type type)
+
+        protected int AppendTypeName(StringBuilder builder, Type type, bool fullyQualified)
         {
             var generic = type.IsGenericType ? type.GetGenericArguments() : new Type[0];
-            return AppendTypeName(builder, type, generic);
+            return AppendTypeName(builder, type, generic, fullyQualified);
         }
 
-        protected int AppendTypeName(StringBuilder builder, Type type, Type[] genericArguments)
+        protected int AppendTypeName(StringBuilder builder, Type type, Type[] genericArguments, bool fullyQualified)
         {
             type = VerifyRefType(type);
 
-            int skip = AppendParentTypes(builder, type, genericArguments);
+            int skip = AppendParentTypes(builder, type, genericArguments, fullyQualified);
             int take = type.GetGenericArguments().Length - skip;
             var generic = genericArguments.Skip(skip).Take(take);
 
-            if (type == typeof(void))
-            {
-                builder.Append("void");
-                return skip + take;
-            }
-
-            AppendReadableTypeName(builder, type);
-            AppendTypeArguments(builder, generic);
+            AppendReadableTypeName(builder, type, fullyQualified && !type.IsNested);
+            AppendTypeArguments(builder, generic, fullyQualified);
 
             return skip + take;
         }
 
-        private void AppendTypeArguments(StringBuilder builder, IEnumerable<Type> generic)
+        private void AppendTypeArguments(StringBuilder builder, IEnumerable<Type> generic, bool fullyQualified)
         {
-
             if (generic.Any())
             {
                 builder.Append("<");
-                generic.EagerForeach(x => AppendTypeName(builder, x), x => builder.Append(", "));
+                generic.EagerForeach(x => AppendTypeName(builder, x, fullyQualified), x => builder.Append(", "));
                 builder.Append(">");
             }
         }
@@ -60,32 +56,54 @@ namespace Simple.Reflection
             return type;
         }
 
-        private int AppendParentTypes(StringBuilder builder, Type type, Type[] genericArguments)
+        private int AppendParentTypes(StringBuilder builder, Type type, Type[] genericArguments, bool fullyQualified)
         {
 
             int skip = 0;
             if (type.IsNested && !type.IsGenericParameter)
             {
-                skip = AppendTypeName(builder, type.DeclaringType, genericArguments);
+                skip = AppendTypeName(builder, type.DeclaringType, genericArguments, fullyQualified);
                 builder.Append(".");
             }
             return skip;
         }
 
-        private void AppendReadableTypeName(StringBuilder builder, Type type)
+        private void AppendReadableTypeName(StringBuilder builder, Type type, bool fullyQualified)
         {
             var baseName = type.Name;
             int index = baseName.IndexOf('`');
             if (index >= 0)
                 baseName = baseName.Substring(0, index);
-            builder.Append(baseName);
+
+
+            if (type == typeof(void))
+            {
+                builder.Append("void");
+            }
+            else
+            {
+                if (fullyQualified)
+                {
+                    builder.Append(type.Namespace);
+                    builder.Append(".");
+                }
+                builder.Append(baseName);
+            }
+
+            Namespaces.Add(type.Namespace);
         }
 
 
         public string GetName(Type type)
         {
+            return GetName(type, false);
+        }
+
+
+        public string GetName(Type type, bool fullyQualified)
+        {
             var builder = new StringBuilder();
-            AppendTypeName(builder, type);
+            AppendTypeName(builder, type, fullyQualified);
             return builder.ToString();
         }
 

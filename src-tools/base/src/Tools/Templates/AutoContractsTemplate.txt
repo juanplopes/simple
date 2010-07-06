@@ -1,15 +1,13 @@
-#foreach($ns in $namespaces)
-using namespace ${ns};
+#foreach($ns in $service.Namespaces)
+using ${ns};
 #end
 
 namespace ${namespace}.Services
 {
-#foreach($svc in $services)
-    public interface I${svc.Type.Name}
+    public partial interface I${service.Type.Name} : Simple.Services.IService
     {
-#foreach($method in $svc.Methods)
+#foreach($method in $service.Methods)
         ${method.MakeSignature()};
 #end
     }
-#end
 }

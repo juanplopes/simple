@@ -6,15 +6,15 @@ using Simple.Generator;
 using System.Reflection;
 using Simple;
 using Simple.Services;
-using Simple.Generator.Interfaces;
+using Simple.Reflection;
 
 namespace Sample.Project.Tools.Templates
 {
     public class AutoContractsTemplate : ICommand
     {
-        public string FilePath()
+        public string FilePath(string service)
         {
-            return "Services/_AutoContracts.cs";
+            return "Services/I{0}.cs".AsFormat(service);
         }
 
         #region ICommand Members
@@ -22,14 +22,18 @@ namespace Sample.Project.Tools.Templates
         public void Execute()
         {
             var asm = Assembly.Load(Default.ServerAssembly);
-            var types = asm.GetTypes().Where(x => x.CanAssign(typeof(IService))).Select(x => new TypeMethods(x));
+            var types = asm.GetTypes().Where(x => x.CanAssign(typeof(IService)))
+                .Select(x => new TypeMethodsReader(x).InitializeNamespaces()).ToList();
 
-            var template = this.ToTemplate();
-            template["services"] = types;
-            template["namespace"] = Default.Namespace;
-            template["namespaces"] = types.SelectMany(x => x.Methods.SelectMany(y => y.InvolvedNamespaces)).Distinct().OrderBy(x => x);
+            foreach (var type in types)
+            {
+                var template = this.ToTemplate();
+                template["service"] = type;
+                template["namespace"] = Default.Namespace;
 
-            Console.WriteLine(template);
+                using (var project = Default.ContractsProject.Writer())
+                    project.AddNewCompile(FilePath(type.Type.GetRealClassName()), template.ToString());
+            }
         }
 
         #endregion

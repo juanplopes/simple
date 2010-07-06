@@ -15,6 +15,7 @@ namespace Sample.Project.Tools
     {
         public static IDisposable Development { get { return Get(Configurator.Development); } }
         public static IDisposable Test { get { return Get(Configurator.Test); } }
+        public bool WillConfigure { get; protected set; }
 
         public static IDisposable Get(string name)
         {
@@ -28,16 +29,23 @@ namespace Sample.Project.Tools
             });
         }
 
-        public Context() : base(Default.Namespace) { }
+        public Context(bool willConfigure)
+            : base(Default.Namespace)
+        {
+            WillConfigure = willConfigure;
+        }
 
         protected override CommandResolver Configure()
         {
             var resolver = new CommandResolver().WithHelp().Define(Configurator.IsProduction);
 
-            if (Configurator.IsProduction)
-                InternalConfigure(null);
-            else
-                InternalConfigure(Configurator.Development, Configurator.Test);
+            if (WillConfigure)
+            {
+                if (Configurator.IsProduction)
+                    InternalConfigure(null);
+                else
+                    InternalConfigure(Configurator.Development, Configurator.Test);
+            }
 
             return resolver;
         }

@@ -72,8 +72,6 @@
     <Compile Include="Generator\Data\DataList.cs" />
     <Compile Include="Generator\Data\IDataList.cs" />
     <Compile Include="Generator\Data\DevelopmentData.cs" />
-    <Compile Include="Generator\Interfaces\TypeMethods.cs" />
-    <Compile Include="Generator\Interfaces\MethodSignature.cs" />
     <Compile Include="Generator\Strings\EnglishPluralizer.cs" />
     <Compile Include="Generator\Strings\IPluralizer.cs" />
     <Compile Include="Generator\Strings\GeneratorStrings.cs" />

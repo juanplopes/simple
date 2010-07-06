@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
-using Simple.Generator.Interfaces;
 using NUnit.Framework;
 using System.Collections;
+using Simple.Reflection;
 
-namespace Simple.Tests.Generator
+namespace Simple.Tests.Reflection
 {
     public class MethodSignatureFixture
     {
@@ -71,12 +71,12 @@ namespace Simple.Tests.Generator
         {
             var method = typeof(Sample1).GetMethod("SingleStringOutParameter");
             var sig = new MethodSignature(method);
-            var expected = new[] {
-                "System"
-            };
+            sig.MakeSignature();
+
+            var expected = new[] { "System" };
 
 
-            CollectionAssert.AreEquivalent(expected, sig.InvolvedNamespaces.ToArray());
+            CollectionAssert.AreEquivalent(expected, sig.Namespaces.ToArray());
         }
 
         [Test]
@@ -84,12 +84,11 @@ namespace Simple.Tests.Generator
         {
             var method = typeof(Sample1).GetMethod("SingleSelfParameter");
             var sig = new MethodSignature(method);
-            var expected = new[] {
-                "System", 
-                "Simple.Tests.Generator"
-            };
+            sig.MakeSignature();
 
-            CollectionAssert.AreEquivalent(expected, sig.InvolvedNamespaces.ToArray());
+            var expected = new[] { "System", "Simple.Tests.Reflection" };
+
+            CollectionAssert.AreEquivalent(expected, sig.Namespaces.ToArray());
         }
 
         [Test]
@@ -97,11 +96,11 @@ namespace Simple.Tests.Generator
         {
             var method = typeof(Sample1).GetMethod("SingleSelfReturn");
             var sig = new MethodSignature(method);
-            var expected = new[] {
-                "Simple.Tests.Generator"
-            };
+            sig.MakeSignature();
 
-            CollectionAssert.AreEquivalent(expected, sig.InvolvedNamespaces.ToArray());
+            var expected = new[] { "Simple.Tests.Reflection" };
+
+            CollectionAssert.AreEquivalent(expected, sig.Namespaces.ToArray());
         }
 
         [Test]
@@ -183,14 +182,15 @@ namespace Simple.Tests.Generator
         {
             var method = typeof(Sample2<int>).GetMethod("SeveralClasses");
             var sig = new MethodSignature(method);
+            sig.MakeSignature();
+
             var expected = new[] {
-                "Simple.Tests.Generator",
+                "Simple.Tests.Reflection",
                 "System.Collections",
-                "System.Collections.Generic",
-                "System"
+                "System.Collections.Generic"
             };
 
-            CollectionAssert.AreEquivalent(expected, sig.InvolvedNamespaces.ToArray());
+            CollectionAssert.AreEquivalent(expected, sig.Namespaces.ToArray());
         }
 
         class Sample1
