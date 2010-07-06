@@ -4,7 +4,7 @@ using ${ns};
 
 namespace ${namespace}.Services
 {
-    public partial interface I${service.Type.Name} : Simple.Services.IService
+    public partial interface ${interface} : ${service.MakeImplementingSignature(${interface})}
     {
 #foreach($method in $service.Methods)
         ${method.MakeSignature()};

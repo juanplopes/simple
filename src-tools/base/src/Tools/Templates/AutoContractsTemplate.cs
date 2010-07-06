@@ -23,11 +23,12 @@ namespace Sample.Project.Tools.Templates
         {
             var asm = Assembly.Load(Default.ServerAssembly);
             var types = asm.GetTypes().Where(x => x.CanAssign(typeof(IService)))
-                .Select(x => new TypeMethodsReader(x).InitializeNamespaces()).ToList();
+                .Select(x => new ClassSignature(x).InitializeNamespaces()).ToList();
 
             foreach (var type in types)
             {
                 var template = this.ToTemplate();
+                template["interface"] = "I" + type.Type.GetRealClassName();
                 template["service"] = type;
                 template["namespace"] = Default.Namespace;
 

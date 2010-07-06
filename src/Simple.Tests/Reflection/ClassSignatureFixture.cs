@@ -23,6 +23,14 @@ namespace Simple.Tests.Reflection
         }
 
         [Test]
+        public void DoubleImplementationExcept1()
+        {
+            var sig = new ClassSignature(typeof(DoubleImplementationClass));
+            Assert.AreEqual("ClassSignatureFixture.ITest2", 
+                sig.MakeImplementingSignature("ClassSignatureFixture.ITest1"));
+        }
+
+        [Test]
         public void GenericImplementation()
         {
             var sig = new ClassSignature(typeof(GenericImplementationClass));
@@ -50,6 +58,15 @@ namespace Simple.Tests.Reflection
         }
 
         [Test]
+        public void ConstrainedGenericImplementationExcept3()
+        {
+            var sig = new ClassSignature(typeof(ConstrainedGenericClass<>));
+            Assert.AreEqual(" where T : struct, IConvertible", 
+                sig.MakeImplementingSignature("ClassSignatureFixture.ITest3<T>"));
+        }
+
+
+        [Test]
         public void DoubleConstrainedGenericImplementation()
         {
             var sig = new ClassSignature(typeof(DoubleConstrainedGenericClass<>));
@@ -69,7 +86,9 @@ namespace Simple.Tests.Reflection
         class UnresolvedGenericImplementationClass<T> : ITest3<T> { }
         class ConstrainedGenericClass<T> : ITest3<T>
             where T : struct, IConvertible
-        { }
+        {
+            public void Test() { }
+        }
 
         class DoubleConstrainedGenericClass<T> : ITest3<T>, ITest4<T>
             where T : struct, IConvertible

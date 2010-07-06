@@ -15,24 +15,29 @@ namespace Simple.Reflection
 
         public ClassSignature(Type type, HashSet<string> namespaces)
         {
+            this.TypeNames = new TypeNameExtractor(namespaces);
             this.Type = type;
             this.Methods = EnumerateMethods().ToList();
-            this.TypeNames = new TypeNameExtractor(namespaces);
         }
         public ClassSignature(Type type) : this(type, new HashSet<string>()) { }
 
         public ClassSignature InitializeNamespaces()
         {
+            MakeImplementingSignature();
             foreach (var method in Methods)
                 method.MakeSignature();
             return this;
         }
-
         public string MakeImplementingSignature()
+        {
+            return MakeImplementingSignature(null);
+        }
+
+        public string MakeImplementingSignature(string except)
         {
             var builder = new StringBuilder();
             var interfaces = Type.GetInterfaces();
-            interfaces.Select(x => TypeNames.GetName(x)).OrderBy(x => x).EagerForeach(
+            interfaces.Select(x => TypeNames.GetName(x)).Except(new[] { except }).OrderBy(x => x).EagerForeach(
                 x => builder.Append(x),
                 x => builder.Append(", "));
 
