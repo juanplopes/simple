@@ -18,7 +18,7 @@ namespace Sample.Project.Tools.ResetDb
             //this command can only be used with SqlServer
             var cs = @"Server=.\SQLExpress;initial catalog=master;Integrated Security=SSPI";
             ResetInternal(cs, "SampleProject");
-            ResetInternal(cs, "SampleProject_Test");
+            ResetInternal(cs, "SampleProject_Tests");
         }
 
         protected void ResetInternal(string cs, string dbName)
