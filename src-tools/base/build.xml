@@ -85,7 +85,7 @@
   <Target Name="Web" DependsOnTargets="GenerateAssemblyInfo">
     <MakeDir Directories="$(WebSourceDir)"/>
     <MSBuild Projects="@(WebProject)"
-             Targets="ResolveReferences;_CopyWebApplication"
+             Targets="Build;ResolveReferences;_CopyWebApplication"
              Properties="OutDir=$(WebSourceDir)\bin\;WebProjectOutputDir=$(WebSourceDir);Configuration=$(Configuration)"/>
 
     <DeleteTree Directories="$(WebBuildDir)" ContinueOnError="true"/>
