@@ -25,7 +25,6 @@ namespace Sample.Project.Environment
         public const string DefaultNamespace = "Sample.Project";
         public const string SimpleKey = "simple.token";
 
-
         protected override void InitLocations(FileLocator paths)
         {
             paths.Add(CodeBase(this.GetType(), "Environment", Environment));
@@ -56,11 +55,17 @@ namespace Sample.Project.Environment
             return this;
         }
 
-		private string NHibernateCacheFile
+        private string NHibernateCacheFile
         {
-            get { return "nhibernate.{0}.cache".AsFormat(IsProduction ? "default" : Environment); }
+            get { return "nhibernate.{0}.cache".AsFormat(Environment); }
         }
-		
+
+        public override string DefaultEnvironment
+        {
+            get { return IsProduction ? "default" : base.DefaultEnvironment; }
+        }
+
+
         private void ConfigureNHibernate()
         {
             var nhCache = new NHibernateCache(

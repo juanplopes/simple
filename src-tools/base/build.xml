@@ -64,7 +64,9 @@
 
   <Target Name="Test" DependsOnTargets="GenerateAssemblyInfo">
     <MSBuild Projects="@(TestProject);@(ToolsProject)" Properties="OutDir=$(TestBuildDir);Configuration=$(Configuration)"/>
-    <ItemGroup>
+    <Copy SourceFiles="simple.token" DestinationFolder="$(BuildDir)"/>
+
+	<ItemGroup>
       <TestConfigFiles Include="$(TestBuildDir)\Environment\Test\*.config"/>
     </ItemGroup>
     <Copy SourceFiles="@(TestConfigFiles)" DestinationFolder="$(TestBuildDir)\cfg"/>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Simple;
 using log4net;
 
 namespace Simple.Generator.Console
@@ -32,7 +33,7 @@ namespace Simple.Generator.Console
             catch (Exception e)
             {
                 ConfigureLogging();
-                logger.WarnFormat("Failed to configure.", e);
+                logger.Warn("Failed to configure: {0}".AsFormat(e.Message) , e);
             }
             logger.InfoFormat("Simple.Net v{0} [{1}]", Simply.Do.GetVersion(), ProjectText);
         }
