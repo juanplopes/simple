@@ -56,10 +56,15 @@ namespace Sample.Project.Environment
             return this;
         }
 
+		private string NHibernateCacheFile
+        {
+            get { return "nhibernate.{0}.cache".AsFormat(IsProduction ? "default" : Environment); }
+        }
+		
         private void ConfigureNHibernate()
         {
             var nhCache = new NHibernateCache(
-                GetRootedPath("nhibernate.{0}.cache".AsFormat(Environment)), this.GetType().Assembly);
+                GetRootedPath(NHibernateCacheFile), this.GetType().Assembly);
             var nhConfig = nhCache.Get();
 
             if (nhConfig != null)
