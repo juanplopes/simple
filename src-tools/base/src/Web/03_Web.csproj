@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\avalon.css" />
-    <Content Include="Content\form.css" />
     <Content Include="Content\images\content-bg.png" />
     <Content Include="Content\images\error-bg.png" />
     <Content Include="Content\images\logo.png" />

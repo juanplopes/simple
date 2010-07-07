@@ -54,7 +54,8 @@ namespace Simple.Reflection
         {
 
             foreach (var method in Type.GetMethods(
-                BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .Where(x => !x.IsDefined(typeof(LeaveMeAloneAttribute), false)))
                 yield return new MethodSignature(method, Namespaces);
 
         }

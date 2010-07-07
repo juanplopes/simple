@@ -9,7 +9,6 @@
 		<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
 		
 		<%= Html.Stylesheet("avalon.css") %>
-		<%= Html.Stylesheet("form.css") %>
         <%= Html.Script("jquery-1.4.2.min.js") %>
 		
 		<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
