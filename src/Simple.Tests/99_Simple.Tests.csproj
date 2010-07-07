@@ -165,7 +165,7 @@
     <Compile Include="IO\CommandLineReaderFixture.cs" />
     <Compile Include="IO\FileSizeFixture.cs" />
     <Compile Include="IO\LazySerializerFixture.cs" />
-    <Compile Include="Generator\RootFinderFixture.cs" />
+    <Compile Include="IO\RootFinderFixture.cs" />
     <Compile Include="Metadata\AllTypesTest\Migration1.cs" />
     <Compile Include="Metadata\ChangeColumnTest\Migration1.cs" />
     <Compile Include="Metadata\ChangeTableTest\Migration2.cs" />

@@ -2,7 +2,7 @@
 {
     interface INHibernateFactory
     {
-        NHibernate.Cfg.Configuration NHConfiguration { get; }
+        NHibernate.Cfg.Configuration NHConfiguration { get; set; }
         NHibernate.ISession OpenNewSession();
     }
 }

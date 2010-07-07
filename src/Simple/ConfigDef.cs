@@ -78,6 +78,40 @@ namespace Simple
         protected abstract void InitLocations(FileLocator paths);
         public abstract ConfigDef ConfigClient();
         public abstract ConfigDef ConfigServer();
+        public abstract FileInfo FindKeyFile();
+
+        public string GetRootedPath(string relativePath)
+        {
+            var key = FindKeyFile();
+            return Path.Combine(key.Exists ? key.Directory.FullName :
+                System.Environment.CurrentDirectory, relativePath);
+        }
+
+        public bool ChangeToRoot()
+        {
+            var file = FindKeyFile();
+            if (file != null)
+            {
+                Simply.Do.Log(this).DebugFormat("Found key file, changing to {0}..", file.Directory.FullName);
+                System.Environment.CurrentDirectory = file.Directory.FullName;
+                return true;
+            }
+            else
+            {
+                Simply.Do.Log(this).Warn("Key file not found.");
+                return false;
+            }
+        }
+
+        protected FileInfo DefaultFindKeyFile(string file, string content)
+        {
+            var fileInfo = RootFinder.Find(file, content);
+            if (!fileInfo.Exists)
+                fileInfo = RootFinder.Find(
+                    new DirectoryInfo(CodeBase(this.GetType())), file, content);
+            if (fileInfo.Exists) return fileInfo;
+            else return null;
+        }
 
         public virtual ConfigDef ConfigAll()
         {
@@ -85,10 +119,10 @@ namespace Simple
         }
 
 
-        protected string CodeBase(params string[] pathComponents)
+        protected static string CodeBase(Type type, params string[] pathComponents)
         {
             string ret = Path.GetDirectoryName(Uri.UnescapeDataString(
-                new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath));
+                new Uri(type.Assembly.CodeBase).AbsolutePath));
 
             foreach (string component in pathComponents)
                 ret = Path.Combine(ret, component);

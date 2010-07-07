@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Simple.Config;
 using Simple.Data;
 using Simple.Tests.Resources;
+using FluentNHibernate.Cfg;
 
 namespace Simple.Tests.Data
 {
@@ -21,6 +22,21 @@ namespace Simple.Tests.Data
 
             Assert.IsTrue(factory.NHConfiguration.GetProperty("dialect").StartsWith("NHibernate.Dialect.SQLiteDialect"));
         }
+
+        [Test]
+        public void TestInjectConfiguration()
+        {
+            var cfg = Fluently.Configure().
+                Database(SQLiteConfiguration.Standard.UsingFile("myfilemyfilemyfile")).BuildConfiguration();
+
+            Simply.Do[this].Release.NHibernate();
+            Assert.AreEqual(null, Simply.Do[this].GetNHibernateConfig().GetProperty("dialect"));
+            Simply.Do[this].SetNHibernateConfig(cfg);
+            StringAssert.StartsWith("NHibernate.Dialect.SQLiteDialect", Simply.Do[this].GetNHibernateConfig().GetProperty("dialect"));
+
+            Assert.IsTrue(Simply.Do[this].GetConnectionString().Contains("myfilemyfilemyfile"));
+        }
+
 
         [Test]
         public void TestGetConnectionString()

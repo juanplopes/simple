@@ -117,6 +117,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\INHibernateFactory.cs" />
+    <Compile Include="Data\NHibernateCache.cs" />
     <Compile Include="Data\NHibernateConfig.cs" />
     <Compile Include="Data\NHibernateConfigSource.cs" />
     <Compile Include="Data\NHibernateFactory.cs" />

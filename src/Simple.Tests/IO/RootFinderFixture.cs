@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using System.IO;
-using Simple.Generator;
+using Simple.IO;
 
-namespace Simple.Tests.Generator
+namespace Simple.Tests.IO
 {
     public class RootFinderFixture
     {

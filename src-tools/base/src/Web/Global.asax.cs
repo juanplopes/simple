@@ -23,13 +23,12 @@ namespace Sample.Project.Web
                 "{controller}/{action}/{id}",                           // URL with parameters
                 new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
             );
-
         }
 
         protected void Application_Start()
         {
-            new Configurator().StartServer<ServerStarter>();
             RegisterRoutes(RouteTable.Routes);
+            new Configurator().StartServer<ServerStarter>();
         }
 
         protected void Application_BeginRequest()

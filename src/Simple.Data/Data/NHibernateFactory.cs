@@ -48,6 +48,10 @@ namespace Simple.Data
                     return _configuration;
                 }
             }
+            set
+            {
+                _configuration = value;
+            }
         }
 
         public virtual ISession OpenNewSession()

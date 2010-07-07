@@ -37,6 +37,13 @@ namespace Simple
         {
             return Factory(simply).NHConfiguration;
         }
+
+        public static Simply SetNHibernateConfig(this Simply simply, Configuration config)
+        {
+            Factory(simply).NHConfiguration = config;
+            return simply;
+        }
+
         public static string GetConnectionString(this Simply simply)
         {
             return GetNHibernateConfig(simply).GetProperty(NH.Cfg.Environment.ConnectionString);
@@ -123,6 +130,7 @@ namespace Simple
         public static SimplyRelease NHibernate(this SimplyRelease config)
         {
             SourceManager.Do.Remove<NHConfigurator>(config.ConfigKey);
+            
             return config;
         }
     }
