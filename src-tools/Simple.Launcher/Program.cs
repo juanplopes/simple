@@ -32,19 +32,19 @@ namespace Simple.Launcher
             foreach (string ext in watchExt)
                 Console.WriteLine("Watching extension: " + ext);
 
-            var timer = new Timer((x) =>
-            {
-                Start(dirPath, filePath);
-            });
-            timer.Change(2500, Timeout.Infinite);
+            new Thread(x => Start(dirPath, filePath)).Start();
 
+            Thread.Sleep(2500);
             watcher.Changed += (o, p) =>
             {
-                Console.WriteLine("Detected change of: " + p.FullPath);
                 if (watchExt.Any(y => p.Name.EndsWith(y)) || watchExt.Count == 0)
                 {
-                    Console.WriteLine("Catching...");
-                    timer.Change(1000, Timeout.Infinite);
+                    Console.Clear();
+                    Console.WriteLine("$$$" + p.FullPath);
+                    watcher.EnableRaisingEvents = false;
+                    Thread.Sleep(1000);
+                    new Thread(x => Start(dirPath, filePath)).Start();
+                    watcher.EnableRaisingEvents = true;
                 }
             };
             watcher.EnableRaisingEvents = true;
@@ -72,6 +72,7 @@ namespace Simple.Launcher
 
         static void Start(string dir, string file)
         {
+
             Console.WriteLine("Loading " + file + "...");
             Console.WriteLine("Current directory: " + dir);
 
