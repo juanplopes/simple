@@ -10,6 +10,7 @@ using System.IO;
 using Sample.Project.Config;
 using Simple.Generator;
 using Simple.Data;
+using FluentValidation;
 
 namespace Sample.Project.Environment
 {
@@ -48,6 +49,7 @@ namespace Sample.Project.Environment
 
         public override ConfigDef ConfigServer()
         {
+            ValidatorOptions.ResourceProviderType = typeof(ValidationMessages);
             ConfigureNHibernate();
             Config(x => x.Validator(Assembly.GetExecutingAssembly()));
             Do.AddServerHook(x => new TransactionCallHook(x, ConfigKey));

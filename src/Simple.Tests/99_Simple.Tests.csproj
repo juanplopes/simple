@@ -127,6 +127,7 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Common\EnumerableFixture.cs" />
+    <Compile Include="Common\SafeNullableFixture.cs" />
     <Compile Include="Config\AggregateFactoryFixture.cs" />
     <Compile Include="CsProjects.Designer.cs">
       <AutoGen>True</AutoGen>

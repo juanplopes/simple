@@ -77,11 +77,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\avalon.css" />
-    <Content Include="Content\images\content-bg.png" />
-    <Content Include="Content\images\error-bg.png" />
-    <Content Include="Content\images\logo.png" />
-    <Content Include="Content\images\main-bg.png" />
-    <Content Include="Content\images\success-bg.png" />
+    <Content Include="Content\avalon\content-bg.png" />
+    <Content Include="Content\avalon\error-bg.png" />
+    <Content Include="Content\avalon\logo.png" />
+    <Content Include="Content\avalon\main-bg.png" />
+    <Content Include="Content\avalon\success-bg.png" />
     <Content Include="Content\system_check.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />

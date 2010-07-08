@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Simple.IO;
 
-namespace Simple.Tests.IO
+namespace Simple.Tests.Common
 {
     [TestFixture]
     public class StringUtilsFixture
