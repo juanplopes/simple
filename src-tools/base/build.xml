@@ -72,7 +72,7 @@
     <Copy SourceFiles="@(TestConfigFiles)" DestinationFolder="$(TestBuildDir)\cfg"/>
  
     <DeleteTree Directories="$(TestBuildDir)\Environment" ContinueOnError="true" />
-    <Exec Command="$(TestBuildDir)\$(ToolsAssembly) testprepare"/>
+    <Exec Command="$(TestBuildDir)\$(ToolsAssembly) testprepare" WorkingDirectory="$(ServerBuildDir)/>
     <Nunit Assemblies="$(TestBuildDir)\$(TestAssembly)" ToolPath="util\nunit"/>
     <DeleteTree Directories="$(TestBuildDir)" ContinueOnError="true"/>
   </Target>
@@ -107,7 +107,7 @@
   </Target>
 
   <Target Name="Prepare" DependsOnTargets="Server">
-    <Exec Command="$(ServerBuildDir)\$(ToolsAssembly) prepare"/>
+    <Exec Command="$(ServerBuildDir)\$(ToolsAssembly) prepare" WorkingDirectory="$(ServerBuildDir)"/>
   </Target>
 
   <Target Name="MakeConfig">

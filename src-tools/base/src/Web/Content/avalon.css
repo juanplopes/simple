@@ -222,7 +222,7 @@ div.error
     -webkit-border-radius: 5px;
     border-radius: 5px;
     border: 2px solid #a70000;
-    background: #ff9f9f url(images/error-bg.png) repeat-x;
+    background: white url(images/error-bg.png) repeat-x;
     margin: 5px 0;
     padding: 0px 10px;
 }
