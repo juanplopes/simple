@@ -46,7 +46,7 @@ namespace Simple.Generator.Data
             var items = sample.SelectMany(x =>
             {
                 var t = new T();
-                x.PopulateKey(t);
+                x.PopulateKeyAction(t);
                 return Entity<T>.List(FindPredicate(t));
             });
             return items;
@@ -75,6 +75,11 @@ namespace Simple.Generator.Data
             initialized = true;
         }
 
+        protected virtual T OnSave(T model)
+        {
+            return model.Save();
+        }
+
         public virtual void Execute()
         {
             Simply.Do.Log(this).InfoFormat("Executing {0}...", this.GetType().Name);
@@ -84,11 +89,12 @@ namespace Simple.Generator.Data
             foreach (var item in items)
             {
                 var t = new T();
-                item.PopulateKey(t);
+                item.PopulateKeyAction(t);
                 if (Entity<T>.Count(FindPredicate(t)) == 0)
                 {
-                    item.PopulateValues(t);
-                    t.Save();
+                    item.PreSaveAction(t);
+                    OnSave(t);
+                    item.PostSaveAction(t);
                 }
             }
         }
