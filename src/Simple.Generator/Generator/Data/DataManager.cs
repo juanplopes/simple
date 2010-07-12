@@ -8,8 +8,6 @@ namespace Simple.Generator.Data
 {
     public static class DataManager
     {
-        //Take a look at InsertDataCommand. It's more interesting.
-
         static IDictionary<Type, IDataList> items = new Dictionary<Type, IDataList>();
         public static IDataList Get(Type type)
         {
@@ -21,21 +19,17 @@ namespace Simple.Generator.Data
         }
 
         public static T Get<T>()
+            where T:IDataList
         {
             return (T)Get(typeof(T));
         }
 
-        public static IList<IDataList> FromAssembly(Assembly asm)
+        public static T Execute<T>()
+            where T:IDataList
         {
-            return asm.GetTypes()
-                .Where(x => x.CanAssign(typeof(IDataList)))
-                .Select(x => Get(x)).ToList();
-        }
-
-        public static void ExecuteAllThatMatches(this IList<IDataList> samples, string env)
-        {
-            foreach (var sample in samples.Where(x => x.Matches(env)))
-                sample.Execute();
+            var t = Get<T>();
+            t.Execute();
+            return t;
         }
     }
 }

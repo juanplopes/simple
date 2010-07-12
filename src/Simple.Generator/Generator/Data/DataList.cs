@@ -98,23 +98,6 @@ namespace Simple.Generator.Data
                 }
             }
         }
-
-        #region IDataList Members
-
-        public abstract IEnumerable<string> WillRunOn { get; }
-
-        #endregion
-
-        #region IDataList Members
-
-        public bool Matches(string environment)
-        {
-            var willRun = WillRunOn;
-            if (willRun == null) return true;
-
-            return willRun.Count(x => ConfigDef.EnvEquals(x, environment)) > 0;
-        }
-
-        #endregion
+     
     }
 }
