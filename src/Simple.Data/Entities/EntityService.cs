@@ -76,7 +76,12 @@ namespace Simple.Entities
         protected virtual bool ValidateOnSave { get { return true; } }
         protected virtual void ValidateAndThrow(object obj)
         {
-            MySimply.Validate(obj).AndThrow();
+            var result = MySimply.Validate(obj);
+            if (!result.IsValid)
+            {
+                Session.Evict(obj);
+                result.AndThrow();
+            }
         }
 
         public virtual T Load(object id)

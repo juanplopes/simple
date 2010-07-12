@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using NHibernate;
+using log4net;
+using System.Reflection;
 
 namespace Simple.Data.Context
 {
     public class DataContext : IDataContext
     {
+        ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
+
         #region IDataContext Members
 
         protected Func<ISession> _mainCreator = null;
@@ -75,7 +79,7 @@ namespace Simple.Data.Context
                 if (!_defaultSession.IsOpen)
                     throw new InvalidOperationException("You shoudn't close the main session. Correct your code right now");
 
-                _defaultSession.Flush();
+                FlushSession(_defaultSession);
                 _defaultSession.Close();
             }
         }
@@ -84,8 +88,20 @@ namespace Simple.Data.Context
         {
             foreach (ISession session in _addSessions)
             {
-                session.Flush();
+                FlushSession(session);
                 session.Close();
+            }
+        }
+
+        private void FlushSession(ISession session)
+        {
+            try
+            {
+                session.Flush();
+            }
+            catch (AssertionFailure)
+            {
+                logger.Warn("Exception ocurred. Skipping AssertionFailure");
             }
         }
 

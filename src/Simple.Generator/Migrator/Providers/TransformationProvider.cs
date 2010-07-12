@@ -772,19 +772,26 @@ namespace Simple.Migrator.Providers
         {
             get
             {
-                if (_appliedMigrations == null)
+                try
                 {
-                    _appliedMigrations = new List<long>();
-                    CreateSchemaInfoTable();
-                    using (IDataReader reader = Select("version", _schemainfoname, "1=1", "version"))
+                    if (_appliedMigrations == null)
                     {
-                        while (reader.Read())
+                        _appliedMigrations = new List<long>();
+                        CreateSchemaInfoTable();
+                        using (IDataReader reader = Select("version", _schemainfoname, "1=1", "version"))
                         {
-                            _appliedMigrations.Add(Convert.ToInt64(reader[0]));
+                            while (reader.Read())
+                            {
+                                _appliedMigrations.Add(Convert.ToInt64(reader[0]));
+                            }
                         }
                     }
+                    return _appliedMigrations;
                 }
-                return _appliedMigrations;
+                catch
+                {
+                    return new List<long> { };
+                }
             }
         }
 
