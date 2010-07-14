@@ -7,6 +7,7 @@ using NHibernate.Cfg;
 using Simple.Config;
 using Simple.Data;
 using NH = NHibernate;
+using Simple.Data.DirtyCheck;
 
 namespace Simple
 {
@@ -81,6 +82,16 @@ namespace Simple
         public static SimplyConfigure NHibernate(this SimplyConfigure config, IConfigSource<NHibernateConfig> source)
         {
             SourceManager.Do.Register(config.ConfigKey, new NHibernateConfigSource().Load(source));
+            return config;
+        }
+
+        public static SimplyConfigure DisableDirtyEntityUpdate(this SimplyConfigure config)
+        {
+            SourceManager.Do.Get<NHConfigurator>(config.ConfigKey).AddTransform(x =>
+            {
+                x.Add(y => y.RegisterDisableAutoDirtyCheckListeners());
+                return x;
+            });
             return config;
         }
 

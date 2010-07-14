@@ -116,6 +116,11 @@
     <Compile Include="Data\Context\IDataContextFactory.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\DirtyCheck\ConfigurationExtensions.cs" />
+    <Compile Include="Data\DirtyCheck\ResetReadOnlyCascadeAction.cs" />
+    <Compile Include="Data\DirtyCheck\ResetReadOnlyEntityDeleteListener.cs" />
+    <Compile Include="Data\DirtyCheck\ResetReadOnlyEntityListener.cs" />
+    <Compile Include="Data\DirtyCheck\SetReadOnlyEntityPostLoadListener.cs" />
     <Compile Include="Data\INHibernateFactory.cs" />
     <Compile Include="Data\NHibernateCache.cs" />
     <Compile Include="Data\NHibernateConfig.cs" />
