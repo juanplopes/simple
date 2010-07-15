@@ -23,7 +23,7 @@ namespace Simple.Tests.Mvc
 
 
         [Test]
-        public void CanCreateFromIntegerListAndSelectSomeItem()
+        public void CanCreateFromIntegerListAndSelectOnItem()
         {
             var items = new[] { 1, 3, 5 };
             var list = items.ToSelectList(x => x, x => x + 1, 1).ToArray();
@@ -32,6 +32,17 @@ namespace Simple.Tests.Mvc
             AssertItem("5", "6", false, list[2]);
 
         }
+
+        [Test]
+        public void CanCreateFromIntegerListAndSelectTwoItems()
+        {
+            var items = new[] { 1, 3, 5 };
+            var list = items.ToSelectList(x => x, x => x + 1, 1, 5).ToArray();
+            AssertItem("1", "2", true, list[0]);
+            AssertItem("3", "4", false, list[1]);
+            AssertItem("5", "6", true, list[2]);
+        }
+
 
         [Test]
         public void CanCreateFromIntegerListAndSelectSomeInvalidItem()
@@ -44,6 +55,38 @@ namespace Simple.Tests.Mvc
 
         }
 
+        [Test]
+        public void CanCreateFromIntegerListAndSelectOnItemByPredicate()
+        {
+            var items = new[] { 1, 3, 5 };
+            var list = items.ToMultiSelectList(x => x, x => x + 1, x => x == 1).ToArray();
+            AssertItem("1", "2", true, list[0]);
+            AssertItem("3", "4", false, list[1]);
+            AssertItem("5", "6", false, list[2]);
+
+        }
+
+        [Test]
+        public void CanCreateFromIntegerListAndSelectTwoItemsByPredicate()
+        {
+            var items = new[] { 1, 3, 5 };
+            var list = items.ToMultiSelectList(x => x, x => x + 1, x => x == 1 || x == 5).ToArray();
+            AssertItem("1", "2", true, list[0]);
+            AssertItem("3", "4", false, list[1]);
+            AssertItem("5", "6", true, list[2]);
+        }
+
+
+        [Test]
+        public void CanCreateFromIntegerListAndSelectSomeInvalidItemByPredicate()
+        {
+            var items = new[] { 1, 3, 5 };
+            var list = items.ToMultiSelectList(x => x, x => x + 1, x => x == 2).ToArray();
+            AssertItem("1", "2", false, list[0]);
+            AssertItem("3", "4", false, list[1]);
+            AssertItem("5", "6", false, list[2]);
+
+        }
 
         protected void AssertItem(string value, string text, bool selected, SelectListItem list)
         {
