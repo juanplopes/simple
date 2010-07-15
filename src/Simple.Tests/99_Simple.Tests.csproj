@@ -120,6 +120,10 @@
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +158,7 @@
     <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
+    <Compile Include="Mvc\SelectListFixture.cs" />
     <Compile Include="Reflection\ClassSignatureFixture.cs" />
     <Compile Include="Reflection\MethodSignatureFixture.cs" />
     <Compile Include="Generator\ProjectFileWriterFixture.cs" />
@@ -327,6 +332,10 @@
     <ProjectReference Include="..\Simple.Generator\11_Simple.Generator.csproj">
       <Project>{0D3A5B7E-9BA9-43B1-A500-BF89CBFC0E7B}</Project>
       <Name>11_Simple.Generator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Web.Mvc\02_Simple.Web.Mvc.csproj">
+      <Project>{F2EA0217-E269-4211-83B0-575E51B18906}</Project>
+      <Name>02_Simple.Web.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simple\00_Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>

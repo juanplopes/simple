@@ -132,6 +132,7 @@
     <ItemGroup>
       <MergeItems Include="$(BuildDir)\Simple.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.Data.dll"/>
+      <MergeItems Include="$(BuildDir)\Simple.Web.Mvc.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.Generator.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.NVelocity.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.NHibernate.dll"/>

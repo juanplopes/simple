@@ -1,0 +1,77 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Reflection;
+using System.Web.Routing;
+using System.Web.Mvc;
+
+namespace Simple.Web.Mvc
+{
+    public class SimpleModule : IHttpModule
+    {
+        HttpApplication context;
+
+        public void Dispose()
+        {
+        }
+
+        public void Init(HttpApplication context)
+        {
+            this.context = context;
+            context.BeginRequest += new EventHandler(OnBeginRequest);
+            context.EndRequest += new EventHandler(OnEndRequest);
+            context.Error += new EventHandler(OnError);
+        }
+
+        protected virtual void OnError(object sender, EventArgs e)
+        {
+            Exception exception = context.Server.GetLastError();
+            context.Response.Clear();
+
+            if (exception is HttpException)
+                exception = exception.GetBaseException();
+
+            if (exception is TargetInvocationException)
+                exception = exception.InnerException;
+
+            if (HandleException(exception))
+                context.Server.ClearError();
+        }
+
+        protected virtual bool HandleException(Exception exception)
+        {
+            ExecuteController(CreateRouteData(exception));
+            return true;
+        }
+
+        protected virtual void ExecuteController(RouteData routeData)
+        {
+            var httpContext = new HttpContextWrapper(context.Context);
+            var requestContext = new RequestContext(httpContext, routeData);
+            var factory = ControllerBuilder.Current.GetControllerFactory();
+            var controller = factory.CreateController(requestContext, routeData.Values["controller"] as string);
+            controller.Execute(requestContext);
+        }
+
+        protected virtual RouteData CreateRouteData(Exception exception)
+        {
+            RouteData routeData = new RouteData();
+            routeData.Values.Add("controller", "System");
+            routeData.Values.Add("action", "Error");
+            routeData.Values.Add("exception", exception);
+
+            return routeData;
+        }
+
+        protected virtual void OnBeginRequest(object sender, EventArgs e)
+        {
+        }
+
+        protected virtual void OnEndRequest(object sender, EventArgs e)
+        {
+        }
+
+    }
+}
