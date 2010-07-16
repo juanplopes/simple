@@ -62,7 +62,9 @@
     <Compile Include="HtmlButtons.cs" />
     <Compile Include="HtmlNotice.cs" />
     <Compile Include="HtmlUrl.cs" />
+    <Compile Include="NoticeDefinition.cs" />
     <Compile Include="NullTempDataProvider.cs" />
+    <Compile Include="NoticeActionResult.cs" />
     <Compile Include="SelectListExtensions.cs" />
     <Compile Include="SimpleModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

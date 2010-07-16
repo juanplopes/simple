@@ -29,56 +29,108 @@ namespace Simple.Web.Mvc
             if (contents == null) return null;
 
             TagBuilder builder = new TagBuilder("div");
-            builder.AddCssClass("validation-summary-errors");
+            builder.AddCssClass("simple-notification-error");
             builder.InnerHtml = contents.ToString();
             return builder;
         }
 
+        public static string DefaultNotificationFormat = "simple-notification-{0}";
+        public static string DefaultSucessClass = "success";
+        public static string DefaultErrorClass = "error";
+        
+        public static NoticeDefinition Notify(this IDictionary<string, object> data, string key)
+        {
+            var not = new NoticeDefinition();
+            data[DefaultNotificationFormat.AsFormat(key)] = not;
+            return not;
+        }
 
+        public static NoticeDefinition NotifySuccess(this IDictionary<string, object> data, string text)
+        {
+            return data.Notify(DefaultSucessClass).WithTitle(text);
+        }
 
-        //public static TagBuilder Notice(this HtmlHelper helper)
-        //{
-        //    return helper.ViewData.GenericNotice(BaseController.NoticeKey);
-        //}
+        public static NoticeDefinition NotifyError(this IDictionary<string, object> data, string text)
+        {
+            return data.Notify(DefaultErrorClass).WithTitle(text);
+        }
 
-        //public static TagBuilder TempNotice(this HtmlHelper helper)
-        //{
-        //    return helper.ViewContext.TempData
-        //        .GenericNotice(BaseController.TempNoticeKey).WithClasses("noticeMessage", "autoFadeOut");
-        //}
-        //private static TagBuilder GenericNotice(this IDictionary<string, object> data, string key)
-        //{
-        //    object defObj = null;
-        //    data.TryGetValue(key, out defObj);
-        //    var def = defObj as BaseController.NoticeDefinition;
-        //    return GenericNotice(def);
-        //}
+        public static NoticeActionResult NotifySuccess(this ViewResultBase result, string text)
+        {
+            return new NoticeActionResult(result, x => x.Controller.ViewData.NotifySuccess(text));
+        }
 
-        //private static TagBuilder GenericNotice(BaseController.NoticeDefinition noticeDef)
-        //{
-        //    if (noticeDef != null && noticeDef.Title != null)
-        //    {
-        //        TagBuilder notice = new TagBuilder("div");
-        //        notice.AddCssClass("noticeMessage");
+        public static NoticeActionResult NotifyError(this ViewResultBase result, string text)
+        {
+            return new NoticeActionResult(result, x => x.Controller.ViewData.NotifyError(text));
+        }
 
-        //        TagBuilder noticeH3 = new TagBuilder("h3");
-        //        noticeH3.AddCssClass("noticeH3");
-        //        noticeH3.SetInnerText(noticeDef.Title);
+        public static NoticeActionResult NotifySuccess(this RedirectToRouteResult result, string text)
+        {
+            return new NoticeActionResult(result, x => x.Controller.TempData.NotifySuccess(text));
+        }
 
-        //        notice.InnerHtml += noticeH3.ToString();
+        public static NoticeActionResult NotifyError(this RedirectToRouteResult result, string text)
+        {
+            return new NoticeActionResult(result, x => x.Controller.TempData.NotifyError(text));
+        }
 
-        //        if (noticeDef.Message != null)
-        //        {
-        //            TagBuilder noticeP = new TagBuilder("p");
-        //            noticeP.AddCssClass("noticeP");
-        //            noticeP.SetInnerText(noticeDef.Message);
+        public static NoticeActionResult NotifySuccess(this RedirectResult result, string text)
+        {
+            return new NoticeActionResult(result, x => x.Controller.TempData.NotifySuccess(text));
+        }
 
-        //            notice.InnerHtml += noticeP.ToString();
-        //        }
+        public static NoticeActionResult NotifyError(this RedirectResult result, string text)
+        {
+            return new NoticeActionResult(result, x => x.Controller.TempData.NotifyError(text));
+        }
 
-        //        return notice;
-        //    }
-        //    else return null;
-        //}
+        public static string NoticeAll(this HtmlHelper helper, Func<TagBuilder, TagBuilder> func)
+        {
+            var builder = new StringBuilder();
+            builder.Append(func(helper.ViewData.NoticeSuccess()));
+            builder.Append(func(helper.ViewData.NoticeError()));
+            builder.Append(func(helper.ViewContext.TempData.NoticeSuccess()));
+            builder.Append(func(helper.ViewContext.TempData.NoticeError()));
+            return builder.ToString();
+        }
+
+        public static TagBuilder NoticeSuccess(this IDictionary<string, object> data)
+        {
+            return data.Notice(DefaultSucessClass);
+        }
+
+        public static TagBuilder NoticeError(this IDictionary<string, object> data)
+        {
+            return data.Notice(DefaultErrorClass);
+        }
+
+        public static TagBuilder Notice(this IDictionary<string, object> data, string key)
+        {
+            key = DefaultNotificationFormat.AsFormat(key);
+            var definition = data[key] as NoticeDefinition;
+            if (definition != null)
+            {
+                var notice = new TagBuilder("div").WithClasses(key);
+
+                if (definition.Title != null)
+                {
+                    var span = new TagBuilder("span").WithText(definition.Title);
+                    notice.InnerHtml += span.ToString();
+                }
+
+                if (definition.Items != null && definition.Items.Count > 0)
+                {
+                    var ul = new TagBuilder("ul").WithHtml(
+                      definition.Items.Aggregate(new StringBuilder(), 
+                        (str, y) => str.Append(new TagBuilder("li").WithText(y))).ToString());
+
+                    notice.InnerHtml += ul.ToString();
+                }
+
+                return notice;
+            }
+            else return null; ;
+        }
     }
 }

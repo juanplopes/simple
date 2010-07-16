@@ -51,5 +51,18 @@ namespace Simple.Web.Mvc
 
             return builder.WithAttrs(id => newId);
         }
+
+        public static TagBuilder WithText(this TagBuilder builder, string text)
+        {
+            if (builder == null) return builder;
+            builder.SetInnerText(text);
+            return builder;
+        }
+        public static TagBuilder WithHtml(this TagBuilder builder, string html)
+        {
+            if (builder == null) return builder;
+            builder.InnerHtml = html;
+            return builder;
+        }
     }
 }
