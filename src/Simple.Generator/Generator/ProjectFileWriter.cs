@@ -35,6 +35,17 @@ namespace Simple.Generator
             return this;
         }
 
+        public ProjectFileWriter AddNewNone(string relativePath, string content)
+        {
+            return AddNewFile(relativePath, None, content);
+        }
+
+
+        public ProjectFileWriter AddNewNone(string relativePath, byte[] content)
+        {
+            return AddNewFile(relativePath, None, content);
+        }
+
 
         public ProjectFileWriter AddNewEmbeddedResource(string relativePath, string content)
         {

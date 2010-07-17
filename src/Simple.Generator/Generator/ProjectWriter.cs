@@ -35,6 +35,12 @@ namespace Simple.Generator
             return AddFile(file, Compile);
         }
 
+        public const string None = "None";
+        public ProjectWriter AddNone(string file)
+        {
+            return AddFile(file, None);
+        }
+
         public const string EmbeddedResource = "EmbeddedResource";
         public ProjectWriter AddEmbeddedResource(string file)
         {
