@@ -80,6 +80,16 @@ namespace Simple.Generator
             return AddNewFile(relativePath, Compile, content);
         }
 
+        public ProjectFileWriter AddNewContent(string relativePath, string content)
+        {
+            return AddNewFile(relativePath, Content, content);
+        }
+
+        public ProjectFileWriter AddNewContent(string relativePath, byte[] content)
+        {
+            return AddNewFile(relativePath, Content, content);
+        }
+
         public ProjectFileWriter AddNewFile(string relativePath, string type, string content)
         {
             var info = CreateFile(relativePath, content);

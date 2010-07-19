@@ -47,6 +47,12 @@ namespace Simple.Generator
             return AddFile(file, EmbeddedResource);
         }
 
+        public const string Content = "Content";
+        public ProjectWriter AddContent(string file)
+        {
+            return AddFile(file, Content);
+        }
+
         public ProjectWriter AddFile(string file, string type)
         {
             var node = GetFileNode(file);
