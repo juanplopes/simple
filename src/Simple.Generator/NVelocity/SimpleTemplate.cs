@@ -92,5 +92,6 @@ namespace Simple.NVelocity
                 writer.Write(mi.Message);
             }
         }
+     
     }
 }

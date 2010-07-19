@@ -12,15 +12,27 @@ namespace Simple.Generator
     {
         public string ProjectPath { get; protected set; }
         ILog log = Simply.Do.Log(MethodInfo.GetCurrentMethod());
-        bool autocommit = false;
+        bool autocommit = true;
         string lastXml = null;
 
         public ProjectFileWriter(string projectPath) :
-            base(File.ReadAllText(projectPath))
+            base(File.ReadAllText(projectPath = GetFirstFile(projectPath)))
         {
             log.DebugFormat("Read project '{0}'", projectPath);
             ProjectPath = Path.GetFullPath(projectPath);
             lastXml = GetXml();
+        }
+
+        protected static string GetFirstFile(string pattern)
+        {
+            var dir = Path.GetDirectoryName(pattern);
+            var file = Path.GetFileName(pattern);
+            if (string.IsNullOrEmpty(dir)) dir = ".";
+            var firstFile = Directory.GetFiles(dir, file).FirstOrDefault();
+            if (firstFile == null)
+                throw new FileNotFoundException("Not found.", pattern);
+            else
+                return firstFile;
         }
 
         public ProjectFileWriter AutoCommit()

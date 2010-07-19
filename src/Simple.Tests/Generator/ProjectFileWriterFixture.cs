@@ -50,6 +50,36 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
+        public void CanOpenFileUsingPatternOnly()
+        {
+            var writer = new ProjectFileWriter("test/te??.csproj");
+            Assert.AreEqual(Path.GetFullPath("test/test.csproj"), writer.ProjectPath);
+        }
+
+        [Test]
+        public void CanOpenFileUsingPatternWithNoDirectory()
+        {
+            Environment.CurrentDirectory = Environment.CurrentDirectory + "/test";
+            var writer = new ProjectFileWriter("te??.csproj");
+            Assert.AreEqual(Path.GetFullPath("test.csproj"), writer.ProjectPath);
+        }
+
+        [Test, ExpectedException(typeof(FileNotFoundException))]
+        public void CannotOpenFileUsingPatternOnlyWhenItDoesntExist()
+        {
+            var writer = new ProjectFileWriter("test/te?.csproj");
+            Assert.AreEqual(Path.GetFullPath("test/test.csproj"), writer.ProjectPath);
+        }
+
+        [Test, ExpectedException(typeof(FileNotFoundException))]
+        public void CannotOpenFileUsingPatternWithNoDirectoryWhenItDoesntExist()
+        {
+            Environment.CurrentDirectory = Environment.CurrentDirectory + "/test";
+            var writer = new ProjectFileWriter("te?.csproj");
+            Assert.AreEqual(Path.GetFullPath("test.csproj"), writer.ProjectPath);
+        }
+
+        [Test]
         public void CanCheckIfFileExists()
         {
             var writer = new ProjectFileWriter("test/test.csproj");
@@ -84,12 +114,24 @@ namespace Simple.Tests.Generator
         }
 
         [Test]
-        public void CanAddCompileFileToProjectWithoutWriteChangesWithDisposeButWithoutAutoCommit()
+        public void CanAddCompileFileToProjectWithoutWriteChangesWithDisposeButWithManualCommit()
+        {
+            using (var writer = new ProjectFileWriter("test/test.csproj").ManualCommit())
+                writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
+
+            StringAssert.DoesNotContain(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
+            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+
+        }
+
+
+        [Test]
+        public void CanAddCompileFileToProjectWithoutWriteChanges()
         {
             using (var writer = new ProjectFileWriter("test/test.csproj"))
                 writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
 
-            StringAssert.DoesNotContain(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
+            StringAssert.Contains(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
             Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
 
         }
