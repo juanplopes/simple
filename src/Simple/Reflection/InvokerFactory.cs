@@ -20,7 +20,10 @@ namespace Simple.Reflection
                 new Type[] { typeof(object), typeof(object[]) }, methodBase.DeclaringType.Module, true);
             ILGenerator il = dynamicMethod.GetILGenerator();
             ParameterInfo[] ps = methodBase.GetParameters();
+
+
             Type[] paramTypes = new Type[ps.Length];
+
             for (int i = 0; i < paramTypes.Length; i++)
             {
                 if (ps[i].ParameterType.IsByRef)
@@ -34,15 +37,21 @@ namespace Simple.Reflection
             {
                 locals[i] = il.DeclareLocal(paramTypes[i], true);
             }
+
             for (int i = 0; i < paramTypes.Length; i++)
             {
+
+                il.EmitWriteLine(i.ToString());
                 il.Emit(OpCodes.Ldarg_1);
                 EmitFastInt(il, i);
                 il.Emit(OpCodes.Ldelem_Ref);
                 EmitCastToReference(il, paramTypes[i]);
                 il.Emit(OpCodes.Stloc, locals[i]);
+                il.EmitWriteLine(locals[i]);
             }
-            if (!methodBase.IsStatic)
+
+
+            if (!methodBase.IsStatic && !methodBase.IsConstructor)
             {
                 il.Emit(OpCodes.Ldarg_0);
             }
@@ -53,6 +62,8 @@ namespace Simple.Reflection
                 else
                     il.Emit(OpCodes.Ldloc, locals[i]);
             }
+
+
             if (methodBase is MethodInfo)
             {
                 var methodInfo = methodBase as MethodInfo;
@@ -65,7 +76,12 @@ namespace Simple.Reflection
                 else
                     EmitBoxIfNeeded(il, methodInfo.ReturnType);
             }
-           
+            else if (methodBase is ConstructorInfo)
+            {
+                var ctorInfo = methodBase as ConstructorInfo;
+                il.Emit(OpCodes.Newobj, ctorInfo);
+            }
+
 
             for (int i = 0; i < paramTypes.Length; i++)
             {

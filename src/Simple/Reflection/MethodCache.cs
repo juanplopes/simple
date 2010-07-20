@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using Simple.Patterns;
+using System;
 
 namespace Simple.Reflection
 {
@@ -19,6 +20,11 @@ namespace Simple.Reflection
 
                 return res;
             }
+        }
+
+        public object CreateInstance(Type type, params object[] parameters)
+        {
+            return GetInvoker(type.GetConstructor(Type.GetTypeArray(parameters)))(null, parameters);
         }
 
         public InvocationDelegate GetGetter(PropertyInfo prop)

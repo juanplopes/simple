@@ -14,5 +14,6 @@ namespace Simple.Generator
         string NameFor(DbColumn column);
         string TypeFor(DbManyToOne fk);
         string TypeFor(DbColumn column);
+        string Pluralize(string entity);
     }
 }

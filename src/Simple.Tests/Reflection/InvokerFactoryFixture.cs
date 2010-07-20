@@ -2,6 +2,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using Simple.Reflection;
+using Moq;
 
 namespace Simple.Tests.Reflection
 {
@@ -17,6 +18,30 @@ namespace Simple.Tests.Reflection
         }
 
         [Test]
+        public void TestStaticIntReturn()
+        {
+            var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestStaticInt"));
+            object res = inv.Invoke(null);
+            Assert.AreEqual(30, res);
+        }
+
+        [Test]
+        public void TestStaticIntReturnWithParam()
+        {
+            var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestStaticIntString"));
+            object res = inv.Invoke(null, "444");
+            Assert.AreEqual(444, res);
+        }
+
+        [Test]
+        public void TestStaticIntReturnWithTwoParams()
+        {
+            var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestStaticIntTwo"));
+            object res = inv.Invoke(null, "444", 2);
+            Assert.AreEqual(446, res);
+        }
+
+        [Test]
         public void TestLambdaVoid()
         {
             Action action = () => { };
@@ -27,7 +52,7 @@ namespace Simple.Tests.Reflection
         [Test]
         public void TestTypedLambda()
         {
-            Func<int,int> func = x => x+x ;
+            Func<int, int> func = x => x + x;
             var inv = InvokerFactory.Do.Create(func.Method);
             Assert.AreEqual(100, inv.Invoke(null, 50));
         }
@@ -134,8 +159,45 @@ namespace Simple.Tests.Reflection
             Assert.AreEqual("42", res);
         }
 
+        [Test]
+        public void TestCreateInstance1()
+        {
+            var inv = InvokerFactory.Do.Create(typeof(TestClassConstructors)
+                .GetConstructor(new[] { typeof(string), typeof(string) }));
+
+            var obj = inv(null, "A", "B") as TestClassConstructors;
+
+            Assert.AreEqual("A", obj.param1);
+            Assert.AreEqual("B", obj.param2);
+        }
+
+        [Test]
+        public void TestCreateInstance2()
+        {
+            var inv = InvokerFactory.Do.Create(typeof(TestClassConstructors)
+                .GetConstructor(new[] { typeof(int), typeof(int) }));
+
+            var obj = inv(null, 1, 2) as TestClassConstructors;
+
+            Assert.AreEqual(1, obj.param1);
+            Assert.AreEqual(2, obj.param2);
+        }
+
+
+        class TestClassConstructors
+        {
+            public object param1 = null;
+            public object param2 = null;
+            public TestClassConstructors(string a, string b) { param1 = a; param2 = b; }
+            public TestClassConstructors(int a, int b) { param1 = a; param2 = b; }
+            public TestClassConstructors(string a) { param1 = a; }
+        }
+
         class TestClass
         {
+            public static int TestStaticInt() { return 30; }
+            public static int TestStaticIntString(string a) { return int.Parse(a); }
+            public static int TestStaticIntTwo(string a, int b) { return int.Parse(a) + b; }
             public int TestInt() { return 42; }
             public void TestVoid() { }
             public string TestString() { return "whatever"; }
