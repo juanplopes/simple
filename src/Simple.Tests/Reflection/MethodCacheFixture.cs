@@ -10,6 +10,10 @@ namespace Simple.Tests.Reflection
     {
         public class Sample1
         {
+            public Sample1() { }
+            public Sample1(string a) { Prop = int.Parse(a); }
+            protected Sample1(int a, int? b) { Prop = a + (b ?? 0); }
+
             public int Prop { get; set; }
             public int Method() { return 1; }
         }
@@ -92,6 +96,57 @@ namespace Simple.Tests.Reflection
 
             Assert.AreSame(p1, p2);
             Assert.AreSame(d1, d2);
+        }
+
+        [Test]
+        public void TestConstructorResolutionWithNoParams()
+        {
+            MethodCache cache = new MethodCache();
+            var obj1 = cache.CreateInstance<Sample1>();
+
+            Assert.AreEqual(0, obj1.Prop);
+        }
+
+        [Test]
+        public void TestConstructorResolutionWith1StringParam()
+        {
+            MethodCache cache = new MethodCache();
+            var obj1 = cache.CreateInstance<Sample1>("1");
+
+            Assert.AreEqual(1, obj1.Prop);
+        }
+
+        [Test]
+        public void TestConstructorResolutionWith1StringWrongParam()
+        {
+            MethodCache cache = new MethodCache();
+            Assert.Throws<FormatException>(() =>
+                    cache.CreateInstance<Sample1>("a"));
+        }
+
+        [Test]
+        public void TestConstructorResolutionWith2IntParam()
+        {
+            MethodCache cache = new MethodCache();
+            var obj1 = cache.CreateInstance<Sample1>(BindingFlags.NonPublic | BindingFlags.Instance, 1, 2);
+
+            Assert.AreEqual(3, obj1.Prop);
+        }
+
+        [Test]
+        public void TestConstructorResolutionWith2IntParamWhenOneIsNull()
+        {
+            MethodCache cache = new MethodCache();
+            var obj = cache.CreateInstance<Sample1>(BindingFlags.NonPublic | BindingFlags.Instance, 1, null);
+            Assert.AreEqual(1, obj.Prop);
+        }
+
+        [Test]
+        public void TestConstructorThatDoesntExist()
+        {
+            MethodCache cache = new MethodCache();
+            Assert.Throws<MissingMethodException>(()=>
+                    cache.CreateInstance<Sample1>("asd", null, 1));
         }
     }
 }

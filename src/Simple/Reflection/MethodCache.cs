@@ -2,6 +2,7 @@
 using System.Reflection;
 using Simple.Patterns;
 using System;
+using System.Linq;
 
 namespace Simple.Reflection
 {
@@ -22,9 +23,31 @@ namespace Simple.Reflection
             }
         }
 
+        public T CreateInstance<T>(params object[] parameters)
+        {
+            return (T)CreateInstance(typeof(T), parameters);
+        }
+
+        public T CreateInstance<T>(BindingFlags? flags, params object[] parameters)
+        {
+            return (T)CreateInstance(typeof(T), flags, parameters);
+        }
+
         public object CreateInstance(Type type, params object[] parameters)
         {
-            return GetInvoker(type.GetConstructor(Type.GetTypeArray(parameters)))(null, parameters);
+            return CreateInstance(type, null, parameters);
+        }
+
+        public object CreateInstance(Type type, BindingFlags? flags, params object[] parameters)
+        {
+            var ctors = flags != null ? type.GetConstructors(flags.Value) : type.GetConstructors();
+            object state;
+            var method = Type.DefaultBinder.BindToMethod(
+                flags??BindingFlags.Default, ctors, ref parameters, 
+                null, null, null, out state) as ConstructorInfo;
+            
+
+            return GetInvoker(method)(null, parameters);
         }
 
         public InvocationDelegate GetGetter(PropertyInfo prop)

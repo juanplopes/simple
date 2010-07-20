@@ -79,8 +79,7 @@ namespace Simple.Reflection
             }
 
             il.Emit(OpCodes.Ret);
-            InvocationDelegate invoder = (InvocationDelegate)dynamicMethod.CreateDelegate(typeof(InvocationDelegate));
-            return invoder;
+            return (InvocationDelegate)dynamicMethod.CreateDelegate(typeof(InvocationDelegate));
         }
 
         private static void EmitCallMethod(ILGenerator il, MethodInfo methodInfo)
