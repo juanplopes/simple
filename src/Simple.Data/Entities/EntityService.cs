@@ -97,6 +97,8 @@ namespace Simple.Entities
 
         public virtual T Reload(T entity)
         {
+            Session.Flush();
+            Session.Evict(entity);
             return Load(NHMetadata.GetIdentifier(entity, Session.GetSessionImplementation().EntityMode));
         }
 

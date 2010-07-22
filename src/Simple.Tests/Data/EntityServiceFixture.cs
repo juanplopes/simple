@@ -5,7 +5,7 @@ using NHibernate;
 using NUnit.Framework;
 using Simple.Entities;
 using Simple.Tests.Resources;
-
+using NHibernate.Linq;
 namespace Simple.Tests.Data
 {
     [TestFixture]
@@ -310,6 +310,16 @@ namespace Simple.Tests.Data
 
             Assert.AreEqual(c.CompanyName, c.CompanyName);
         }
+
+        [Test]
+        public void TestSaveWithReferenceAndReload()
+        {
+            var c = new Product() { Name="test", Category = new Category() { Id =Session.Query<Category>().Select(x=>x.Id).First() }}.Save();
+            Assert.IsNull(c.Category.Name);
+            c = c.Reload();
+            Assert.IsNotNull(c.Category.Name);
+        }
+
 
         [Test]
         public void TestDeleteOne()
