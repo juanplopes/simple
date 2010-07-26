@@ -164,6 +164,7 @@
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
     <Compile Include="Mvc\HtmlNoticeFixture.cs" />
     <Compile Include="Mvc\SelectListFixture.cs" />
+    <Compile Include="Mvc\SelectListFinderFixture.cs" />
     <Compile Include="Reflection\ClassSignatureFixture.cs" />
     <Compile Include="Reflection\MethodSignatureFixture.cs" />
     <Compile Include="Generator\ProjectFileWriterFixture.cs" />

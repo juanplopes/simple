@@ -9,6 +9,7 @@ using Moq;
 
 namespace Simple.Tests.Mvc
 {
+    [TestFixture]
     public class HtmlNoticeFixture
     {
         [Test]

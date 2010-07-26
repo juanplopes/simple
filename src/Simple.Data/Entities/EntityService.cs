@@ -99,7 +99,8 @@ namespace Simple.Entities
         {
             Session.Flush();
             Session.Evict(entity);
-            return Load(NHMetadata.GetIdentifier(entity, Session.GetSessionImplementation().EntityMode));
+            var id = NHMetadata.GetIdentifier(entity, Session.GetSessionImplementation().EntityMode);
+            return Refresh(Load(id));
         }
 
         public virtual T Merge(T entity)
