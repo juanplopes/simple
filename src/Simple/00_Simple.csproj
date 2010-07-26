@@ -215,6 +215,7 @@
     <Compile Include="Logging\NullLog.cs" />
     <Compile Include="Logging\Log4netSimplyExtensions.cs" />
     <Compile Include="Patterns\WorkingDays.cs" />
+    <Compile Include="Reflection\ConversionConstructors.cs" />
     <Compile Include="Reflection\DictionaryHelper.cs" />
     <Compile Include="Reflection\EasyEquatable.cs" />
     <Compile Include="Reflection\EnumTypeAttribute.cs" />
