@@ -170,6 +170,7 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <Content Include="Content\avalon\warning.png" />
+    <Content Include="Scripts\clickable.js" />
     <Content Include="Views\Shared\Confirm.ascx" />
   </ItemGroup>
   <ItemGroup>

@@ -12,17 +12,21 @@ namespace Simple.Web.Mvc
     public class SimpleModule : IHttpModule
     {
         HttpApplication context;
+        protected HttpApplication Context { get { return context; } }
 
         public void Dispose()
         {
+            context.BeginRequest -= OnBeginRequest;
+            context.EndRequest -= OnEndRequest;
+            context.Error -= OnError;
         }
 
         public void Init(HttpApplication context)
         {
             this.context = context;
-            context.BeginRequest += new EventHandler(OnBeginRequest);
-            context.EndRequest += new EventHandler(OnEndRequest);
-            context.Error += new EventHandler(OnError);
+            context.BeginRequest += OnBeginRequest;
+            context.EndRequest += OnEndRequest;
+            context.Error += OnError;
         }
 
         protected virtual void OnError(object sender, EventArgs e)

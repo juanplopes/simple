@@ -17,9 +17,10 @@ namespace Simple.Web.Mvc
             var type = propertyDescriptor.PropertyType;
             if (typeof(IEntity).IsAssignableFrom(type))
             {
+                var fullName = CreateSubPropertyName(bindingContext.ModelName, propertyDescriptor.Name);
                 var ctor = ctors.GetBest(type);
-                var value = bindingContext.ValueProvider.GetValue(propertyDescriptor.Name);
-                bindingContext.ModelState.SetModelValue(propertyDescriptor.Name, value);
+                var value = bindingContext.ValueProvider.GetValue(fullName);
+                bindingContext.ModelState.SetModelValue(fullName, value);
 
                 try
                 {
@@ -34,9 +35,11 @@ namespace Simple.Web.Mvc
                 }
                 return;
             }
+           
 
             base.BindProperty(controllerContext, bindingContext, propertyDescriptor);
 
         }
+     
     }
 }

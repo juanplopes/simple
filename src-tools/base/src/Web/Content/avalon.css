@@ -26,7 +26,7 @@ div.header span.logo
     margin: 10px 0;
     font-weight: bold;
     float: left;
-    text-shadow: 2px 2px 6px #650C00;
+    text-shadow: 2px 2px 4px black;
 }
 
 div.header div.menu
@@ -325,25 +325,6 @@ div.http_error a
     float: right;
 }
 
-a.home_action
-{
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    border: 2px solid #BBBBBB;
-    padding: 5px;
-    background-color: white;
-    color: #666666;
-    display: block;
-}
-
-a.home_action:hover 
-{
-    color:Black;
-    background-color: #EEEEEE;
-    border: 2px solid black;
-}
-
 hr
 {
 	clear: both;
@@ -367,3 +348,32 @@ div.confirm div.buttons
 	text-align: right;
 }
 
+div.home_actions 
+{
+	overflow: auto;
+	width: 100%;
+}
+
+div.home_action
+{
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: 2px solid #BBBBBB;
+    padding: 5px;
+    margin: 1%;
+    background-color: white;
+    color: #666666;
+    cursor: pointer;
+    display: block;
+    width: 46%;
+    float: left;
+    border-spacing: 30px;
+}
+
+div.home_action:hover 
+{
+    color:Black;
+    background-color: #EEEEEE;
+    border: 2px solid black;
+}

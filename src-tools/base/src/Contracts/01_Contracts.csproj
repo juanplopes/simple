@@ -64,16 +64,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Environment\CCNet1\Application.config">
+    <None Include="Environment\YourServer\Application.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\CCNet1\Log4net.config">
+    <None Include="Environment\YourServer\Log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\CCNet1\NHibernate.config">
+    <None Include="Environment\YourServer\NHibernate.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Environment\CCNet1\Remoting.config">
+    <None Include="Environment\YourServer\Remoting.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Environment\Development\Application.config">

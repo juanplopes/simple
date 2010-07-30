@@ -19,7 +19,7 @@
     <WebBuildDir>$(BuildDir)\web\</WebBuildDir>
     <WebSourceDir>$(BuildDir)\web-src\</WebSourceDir>
 
-    <WebVirtualPath>/elephant</WebVirtualPath>
+    <WebVirtualPath>/sample-project</WebVirtualPath>
     <Environment>Development</Environment>
 
     <PackageZipFile>sample-project-$(ProductVersion).zip</PackageZipFile>
