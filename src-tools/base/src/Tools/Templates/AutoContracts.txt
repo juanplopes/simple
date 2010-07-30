@@ -1,0 +1,13 @@
+#foreach($ns in $service.Namespaces)
+using ${ns};
+#end
+
+namespace ${opt.Namespace}.Services
+{
+    public partial interface ${interface} : ${service.MakeImplementingSignature(${interface})}
+    {
+#foreach($method in $service.Methods)
+        ${method.MakeSignature()};
+#end
+    }
+}

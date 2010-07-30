@@ -1,0 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Simple.Entities;
+using ${opt.Namespace}.Domain;
+
+namespace ${opt.Namespace}.Services
+{
+    public partial interface I${classname}Service : IEntityService<${classname}>
+    {
+    }
+}

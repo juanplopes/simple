@@ -1,0 +1,38 @@
+﻿div.system_check_failure
+{
+	background: #fff4e7;
+	border: 2px solid #cc0000; /*	height: 44px;*/
+	margin: 5px 0;
+	padding: 6px 5px 0px 55px;
+	text-align: left;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	height: 44px;
+}
+
+div.system_check_warning
+{
+	background: #ffeeaa;
+	border: 2px solid #ccaa99;
+	margin: 5px 0;
+	padding: 6px 5px 0px 55px;
+	text-align: left;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	height: 44px;
+}
+
+div.system_check_success
+{
+	background: #edffe7;
+	border: 2px solid #32b200;
+	margin: 5px 0;
+	padding: 6px 5px 0px 55px;
+	text-align: left;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	height: 44px;
+}

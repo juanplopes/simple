@@ -1,0 +1,148 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="GenerateAssemblyInfo">
+  <PropertyGroup>
+    <BuildBase>$(MSBuildProjectDirectory)\</BuildBase>
+
+    <BuildDir>$(BuildBase)\build\</BuildDir>
+    <PackageDir>$(BuildBase)\pkg\</PackageDir>
+    <SourceDir>$(BuildBase)\src\</SourceDir>
+    <Configdir>$(BuildDir)\cfg\</Configdir>
+
+    <Configuration>Release</Configuration>
+    <ProductVersion>1.0</ProductVersion>
+
+    <TestAssembly>Sample.Project.Tests.dll</TestAssembly>
+    <ToolsAssembly>Sample.Project.Tools.exe</ToolsAssembly>
+
+    <TestBuildDir>$(BuildDir)\test\</TestBuildDir>
+    <ServerBuildDirName>server</ServerBuildDirName>
+    <ServerBuildDir>$(BuildDir)\$(ServerBuildDirName)\</ServerBuildDir>
+    <WebBuildDir>$(BuildDir)\web\</WebBuildDir>
+    <WebSourceDir>$(BuildDir)\web-src\</WebSourceDir>
+
+    <WebVirtualPath>/elephant</WebVirtualPath>
+    <Environment>Development</Environment>
+
+    <PackageZipFile>sample-project-$(ProductVersion).zip</PackageZipFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <TestProject Include="$(SourceDir)\Tests\*.csproj"/>
+    <ServerProject Include="$(SourceDir)\Server\*.csproj"/>
+    <ToolsProject Include="$(SourceDir)\Tools\*.csproj"/>
+    <WebProject Include="$(SourceDir)\Web\*.csproj"/>
+    <SolutionFile Include="$(SourceDir)\*.sln" />
+  </ItemGroup>
+
+
+  <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
+
+  <Target Name="GenerateAssemblyInfo" DependsOnTargets="GenerateTag">
+    <AssemblyInfo CodeLanguage="CS"
+               OutputFile="$(SourceDir)\GlobalInfo.cs"
+               AssemblyCompany="Your Company Name"
+               AssemblyProduct="Sample.Project"
+               AssemblyCopyright="Copyright (c) Your Company Name (Year)"
+               AssemblyTrademark=""
+               ComVisible="false"
+               AssemblyVersion="$(ProductVersion).$(BuildTag)"
+               AssemblyFileVersion="$(ProductVersion).$(BuildTag)" />
+  </Target>
+
+  <Target Name="GenerateTag">
+    <Time Format="yMM.dhh">
+      <Output TaskParameter="FormattedTime" PropertyName="BuildTag" />
+    </Time>
+
+    <Message Text="Build tag: $(BuildTag)"/>
+  </Target>
+
+
+  <Target Name="DryBuild" DependsOnTargets="GenerateAssemblyInfo">
+    <MSBuild Projects="@(SolutionFile)" Targets="Build" Properties="Configuration=$(Configuration)"/>
+  </Target>
+
+  <Target Name="Clean" DependsOnTargets="GenerateAssemblyInfo">
+    <MSBuild Projects="@(SolutionFile)" Targets="Clean"/>
+    <DeleteTree Directories="$(BuildDir)" ContinueOnError="true"/>
+  </Target>
+
+  <Target Name="Test" DependsOnTargets="GenerateAssemblyInfo">
+    <MSBuild Projects="@(TestProject);@(ToolsProject)" Properties="OutDir=$(TestBuildDir);Configuration=$(Configuration)"/>
+    <Copy SourceFiles="simple.token" DestinationFolder="$(BuildDir)"/>
+
+    <ItemGroup>
+      <TestConfigFiles Include="$(TestBuildDir)\Environment\Test\*.config"/>
+    </ItemGroup>
+    <Copy SourceFiles="@(TestConfigFiles)" DestinationFolder="$(TestBuildDir)\cfg"/>
+
+    <DeleteTree Directories="$(TestBuildDir)\Environment" ContinueOnError="true" />
+    <Exec Command="$(TestBuildDir)\$(ToolsAssembly) testprepare" WorkingDirectory="$(TestBuildDir)"/>
+    <Nunit Assemblies="$(TestBuildDir)\$(TestAssembly)" ToolPath="util\nunit"/>
+    <DeleteTree Directories="$(TestBuildDir)" ContinueOnError="true"/>
+  </Target>
+
+  <Target Name="Server" DependsOnTargets="GenerateAssemblyInfo">
+    <MSBuild Projects="@(ServerProject);@(ToolsProject)" Properties="OutDir=$(ServerBuildDir);Configuration=$(Configuration)"/>
+    <CallTarget Targets="MakeConfig"/>
+    <DeleteTree Directories="$(ServerBuildDir)\Environment" ContinueOnError="true" />
+    <Copy SourceFiles="simple.token" DestinationFolder="$(BuildDir)"/>
+    <WriteLinesToFile  File="$(BuildDir)\simple.cmd" Lines ="$(ServerBuildDirName)\$(ToolsAssembly)" Overwrite="true"/>
+  </Target>
+
+  <Target Name="Web" DependsOnTargets="GenerateAssemblyInfo">
+    <MakeDir Directories="$(WebSourceDir)"/>
+    <MSBuild Projects="@(WebProject)"
+             Targets="Build;ResolveReferences;_CopyWebApplication"
+             Properties="OutDir=$(WebSourceDir)\bin\;WebProjectOutputDir=$(WebSourceDir);Configuration=$(Configuration)"/>
+
+    <DeleteTree Directories="$(WebBuildDir)" ContinueOnError="true"/>
+    <AspNetCompiler Debug="False" PhysicalPath="$(WebSourceDir)" VirtualPath="$(WebVirtualPath)" TargetPath="$(WebBuildDir)"/>
+    
+    <DeleteTree Directories="$(WebSourceDir)" ContinueOnError="true"/>
+
+    <CallTarget Targets="MakeConfig"/>
+    <DeleteTree Directories="$(WebBuildDir)\bin\Environment" ContinueOnError="true" />
+
+    <FileUpdate Files="$(WebBuildDir)\web.config"
+              Regex="\&lt;compilation debug=&quot;true&quot;\&gt;"
+              ReplacementText="&lt;compilation debug=&quot;false&quot;&gt;" />
+  </Target>
+
+
+  <Target Name="Build">
+    <CallTarget  Targets="Server;Web"/>
+  </Target>
+
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build">
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Rebuild">
+    <ItemGroup>
+      <ZipDir Include="$(BuildDir)\**\*"/>
+    </ItemGroup>
+
+    <MakeDir Directories="$(PackageDir)"/>
+
+    <Delete Files="$(PackageDir)\$(PackageZipFile)"/>
+    <Zip Files="@(ZipDir)" ZipFileName="$(PackageDir)\$(PackageZipFile)" WorkingDirectory="$(BuildDir)"/>
+  </Target>
+
+  <Target Name="Prepare" DependsOnTargets="Server">
+    <Exec Command="$(ServerBuildDir)\$(ToolsAssembly) prepare" WorkingDirectory="$(ServerBuildDir)"/>
+  </Target>
+
+  <Target Name="MakeConfig">
+    <ItemGroup>
+      <PackageConfigBase Include="$(ServerBuildDir)\Environment\$(Environment)\*.*"/>
+      <PackageConfigBase Include="$(WebBuildDir)\bin\Environment\$(Environment)\*.*"/>
+    </ItemGroup>
+
+    <MakeDir Directories="$(ConfigDir)"/>
+    <Copy SourceFiles="@(PackageConfigBase)" DestinationFolder="$(ConfigDir)"/>
+
+  </Target>
+
+  <Target Name="CIBuild">
+    <CallTarget Targets="Test;Rebuild;Prepare"/>
+  </Target>
+</Project>

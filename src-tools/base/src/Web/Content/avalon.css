@@ -1,0 +1,369 @@
+body
+{
+    font-family: Trebuchet MS, Garuda, sans-serif;
+    margin: 0;
+	background: #F0F0F0;
+}
+
+div.container
+{
+	width: 1000px;
+	margin: auto;
+	height: 100%;
+}
+
+div.header
+{
+    height: 60px;
+    background: #9C1200;
+    border-bottom: solid 4px #CD6A5C;
+}
+
+div.header span.logo
+{
+    color: white;
+    font-size: 2em;
+    margin: 10px 0;
+    font-weight: bold;
+    float: left;
+    text-shadow: 2px 2px 6px #650C00;
+}
+
+div.header div.menu
+{
+	margin-top: 5px;
+    float: right;
+}
+
+div.header div.menu ul
+{
+    list-style: none;
+}
+
+div.header div.menu li
+{
+    float: left;
+}
+
+div.header div.menu li a
+{
+    color: white;
+    font-style: normal;
+    padding: 4px;
+    margin: 5px 0px 5px 12px;
+    font-weight: bold;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+div.header div.menu li a:hover
+{
+    background: #75271D;
+}
+
+
+div.content div.container
+{
+	background: white;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+    width: 970px;
+    border: 1px solid LightGray;
+}
+
+div.footer
+{
+    font-size: 0.8em;
+    text-align: center;
+}
+
+div.footer div.container 
+{
+	border-top: 1px solid Gray;
+}
+
+
+a
+{
+    text-decoration: none;
+    font-weight: bold;
+    color: #650C00;
+}
+a:hover
+{
+	color: #CE4533;
+}
+
+
+table
+{
+	padding-top: 15px;
+    border-spacing: 0;
+    min-width: 300px;
+}
+
+table th
+{
+    padding: 4px 5px;
+    text-align: left;
+    background: #EEEEEE;
+}
+table td
+{
+    background: White;
+    padding: 4px;
+    border: 0;
+}
+
+
+table.collapsed
+{
+    border-collapse: collapse;
+}
+h1, h2, h3, h4, h5, h6
+{
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+div.form-title > h2
+{
+    margin-bottom: 0;
+}
+div.form-title > p
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+div.form-title
+{
+    border-bottom: 1px solid gray;
+    margin-bottom: 20px;
+}
+
+fieldset
+{
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+fieldset label
+{
+    display: block;
+    font-weight: bold;
+}
+
+textarea
+{
+    overflow: auto;
+}
+
+input, select, textarea
+{
+    font-family: Trebuchet MS, sans-serif;
+}
+
+input[type=text], input[type=password], select, textarea
+{
+    border: 1px solid gray;
+    width: 400px;
+    padding: 4px;
+    font-size: 1em;
+}
+
+input[type=text]:hover, input[type=password]:hover, select:hover, textarea:hover
+{
+    border: 1px solid black;
+}
+
+.input-validation-error
+{
+    border: 2px solid #9C1200 !important;
+}
+
+input[type=submit], input[type=button], a.button, a.backlink
+{
+    font-size: 0.9em;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 6px;
+    color: White;
+    background-color: #75271D;
+	display: inline-block;
+	border: none;
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+	line-height: 20px;
+	vertical-align: middle;
+	
+	width: auto;
+	overflow: visible;
+	
+	text-align: center;
+}
+
+input[type=submit], input[type=button]
+{
+	height: 32px;
+}
+
+
+input[type=submit]:hover, input[type=button]:hover, a.button:hover, a.backlink:hover
+{
+    background-color: #9C1200;
+}
+
+input[type=submit]:active, input[type=button]:active, a.button:active, a.backlink:active
+{
+    background-color: #CE6A5C;
+}
+
+fieldset input[type=checkbox] + label
+{
+    display: inline;
+}
+
+div.simple-notification-error
+{
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #9C1200;
+    border: 2px solid #9C1200;
+    background: white url(avalon/error-bg.png) repeat-x;
+    margin: 5px 0;
+    padding: 0px 10px;
+}
+
+div.simple-notification-success
+{
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    color: #008000;
+    border: 2px solid #00aa00;
+    background: white url(avalon/success-bg.png) repeat-x;
+    margin: 5px 0;
+    padding: 0px 10px;
+}
+
+div.simple-notification-success span, div.simple-notification-error span
+{
+    font-weight: bold;
+}
+
+div.simple-notification-success ul, div.simple-notification-error ul
+{
+    font-size: 0.9em;
+}
+
+div.http_error
+{
+    border: 2px solid red;
+    width: 870px;
+    height: 306px;
+    background: url(avalon/http-error.png) no-repeat;
+    margin: auto;
+    text-align: right;
+    margin-top: 50px;
+    padding-right: 30px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+div.http_error > div.default
+{
+    margin-top: 50px;
+    width: 580px;
+    float: right;
+}
+
+div.http_error > div.stacktrace
+{
+    clear:both;
+}
+div.http_error span
+{
+    font-size: 15pt;
+    text-align: right;
+    word-wrap: break-word;
+    clear: both;
+}
+
+div.http_error h1
+{
+    margin: 0;
+    font-weight: normal;
+    text-shadow: 1px 1px 1px gray;
+    font-size: 30pt;
+    text-align: right;
+    word-wrap: break-word;
+}
+
+div.http_error pre
+{
+    text-align: left;
+    overflow: auto;
+    float: right;
+    width: 600px;
+    height: 230px;
+}
+
+div.http_error a
+{
+    display: block;
+    clear: both;
+    float: right;
+}
+
+a.home_action
+{
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: 2px solid #BBBBBB;
+    padding: 5px;
+    background-color: white;
+    color: #666666;
+    display: block;
+}
+
+a.home_action:hover 
+{
+    color:Black;
+    background-color: #EEEEEE;
+    border: 2px solid black;
+}
+
+hr
+{
+	clear: both;
+}
+
+div.confirm
+{
+	margin: 15px;
+}
+div.confirm span 
+{
+	background: url(avalon/warning.png) no-repeat;
+	padding-left: 50px;
+	min-height: 50px;
+	display: block;
+	font-weight: bold;
+}
+
+div.confirm div.buttons 
+{
+	text-align: right;
+}
+

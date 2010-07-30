@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Mvc.Ajax;
+using ${opt.Namespace}.Domain;
+using ${opt.Namespace}.Web.Helpers;
+using Simple.Validation;
+using Simple.Web.Mvc;
+using Sample.Project.Web.Helpers;
+
+namespace ${opt.Namespace}.Web.Controllers
+{
+    [SimpleValidationFilter]
+    public class ${classname_2}Controller : Controller
+    { 
+        public ActionResult Index()
+        {
+            return View(${classname}.ListAll());
+        }
+
+        public ActionResult Details(int id)
+        {
+            return View(${classname}.Load(id));
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(${classname} model)
+        {
+            model.Save();
+            return RedirectToAction("Index")
+                .NotifySuccess("Success!");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            return View(${classname}.Load(id));
+        }
+
+
+        [HttpPost]
+        public ActionResult Edit(int id, object diff)
+        {
+			${classname}.Load(id)
+				.BindWith(TryUpdateModel).Update();
+
+            return RedirectToAction("Index")
+                .NotifySuccess("Success!");
+                
+        }
+        
+        public virtual ActionResult Delete(int id)
+        {
+            return this.DeleteView(${classname}.Load(id));
+        }
+
+        [HttpPost]
+        public virtual ActionResult Delete(int id, object diff)
+        {
+            ${classname}.Delete(id);
+            return RedirectToAction("Index")
+                .NotifySuccess("Success!");
+        }
+    }
+}

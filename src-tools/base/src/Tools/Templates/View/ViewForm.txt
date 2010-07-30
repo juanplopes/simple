@@ -1,0 +1,13 @@
+﻿<%@ Control Language="C#" Inherits="ModelViewUserControl<${classname}>" %>
+<% using (Html.BeginForm())
+   {%>
+<fieldset>
+    <p>
+       <%-- <%= this.TextBox(x => x.Name).Label("Name:") %> --%>
+    </p>
+    <p>
+        <%= Html.BackLink(Url.Action("Index"), "back") %>
+        <%= Html.Submit("send") %>
+    </p>
+</fieldset>
+<% } %>
