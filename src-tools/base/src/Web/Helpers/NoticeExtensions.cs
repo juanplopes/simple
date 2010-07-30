@@ -22,7 +22,7 @@ namespace Sample.Project.Web.Helpers
 
         public static TagBuilder SimpleValidationSummary(this HtmlHelper helper)
         {
-            return helper.SimpleValidationSummary("Erro(s) durante o processamento:");
+            return helper.SimpleValidationSummary("Error during processing.");
         }
 
     }

@@ -36,9 +36,6 @@ namespace Sample.Project.Web
             DefaultModelBinder.ResourceClassKey = "ValidationMessages";
             ModelBinders.Binders.DefaultBinder = new EntityModelBinder();
 
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Insert(0, new MobileCapableWebFormViewEngine());
-
             ModelValidatorProviders.Providers.Clear();
             new Configurator().StartServer<ServerStarter>();
         }

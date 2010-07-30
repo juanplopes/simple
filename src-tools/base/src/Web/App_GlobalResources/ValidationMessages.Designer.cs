@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O valor &apos;{0}&apos; não é válido..
+        ///   Looks up a localized string similar to Value &apos;{0}&apos; is not valid..
         /// </summary>
         internal static string PropertyValueInvalid {
             get {
@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Valor requerido..
+        ///   Looks up a localized string similar to Value required..
         /// </summary>
         internal static string PropertyValueRequired {
             get {

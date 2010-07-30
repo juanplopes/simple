@@ -118,48 +118,48 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="email_error" xml:space="preserve">
-    <value>'{PropertyName}' não é um email válido.</value>
+    <value>'{PropertyName}' is not a valid email address.</value>
   </data>
   <data name="greaterthanorequal_error" xml:space="preserve">
-    <value>'{PropertyName}' deve ser maior que ou igual a '{ComparisonValue}'.</value>
+    <value>'{PropertyName}' must be greater than or equal to '{ComparisonValue}'.</value>
   </data>
   <data name="greaterthan_error" xml:space="preserve">
-    <value>'{PropertyName}' deve ser maior que '{ComparisonValue}'.</value>
+    <value>'{PropertyName}' must be greater than '{ComparisonValue}'.</value>
   </data>
   <data name="length_error" xml:space="preserve">
-    <value>'{PropertyName}' deve ter entre {MinLength} e {MaxLength} caracteres. Você informou {TotalLength} caracteres.</value>
+    <value>'{PropertyName}' must be between {MinLength} and {MaxLength} characters. You entered {TotalLength} characters.</value>
   </data>
   <data name="lessthanorequal_error" xml:space="preserve">
-    <value>'{PropertyName}' deve ser menor que ou igual a '{ComparisonValue}'.</value>
+    <value>'{PropertyName}' must be less than or equal to '{ComparisonValue}'.</value>
   </data>
   <data name="lessthan_error" xml:space="preserve">
-    <value>'{PropertyName}' dev ser menor que '{ComparisonValue}'.</value>
+    <value>'{PropertyName}' must be less than '{ComparisonValue}'.</value>
   </data>
   <data name="notempty_error" xml:space="preserve">
-    <value>'{PropertyName}' não pode ser vazio.</value>
+    <value>'{PropertyName}' should not be empty.</value>
   </data>
   <data name="notequal_error" xml:space="preserve">
-    <value>'{PropertyName}' não pode ser igual a '{PropertyValue}'.</value>
+    <value>'{PropertyName}' should not be equal to '{PropertyValue}'.</value>
   </data>
   <data name="notnull_error" xml:space="preserve">
-    <value>'{PropertyName}' não pode ser vazio.</value>
+    <value>'{PropertyName}' must not be empty.</value>
   </data>
   <data name="predicate_error" xml:space="preserve">
-    <value>Valor para '{PropertyName}' é inválido.</value>
+    <value>The specified condition was not met for '{PropertyName}'.</value>
   </data>
   <data name="regex_error" xml:space="preserve">
-    <value>'{PropertyName}' está em formato incorreto.</value>
+    <value>'{PropertyName}' is not in the correct format.</value>
   </data>
   <data name="equal_error" xml:space="preserve">
-    <value>'{PropertyName}' deve ser igual a '{PropertyValue}'.</value>
+    <value>'{PropertyName}' should be equal to '{PropertyValue}'.</value>
   </data>
   <data name="exact_length_error" xml:space="preserve">
-    <value>'{PropertyName}' deve ter exatamente {MaxLength} caracteres. Você informou {TotalLength} caracters.</value>
+    <value>'{PropertyName}' must be {MaxLength} characters in length. You entered {TotalLength} characters.</value>
   </data>
   <data name="inclusivebetween_error" xml:space="preserve">
-    <value>'{PropertyName}' deve estar entre {From} e {To}. Você informou {Value}.</value>
+    <value>'{PropertyName}' must be between {From} and {To}. You entered {Value}.</value>
   </data>
   <data name="exclusivebetween_error" xml:space="preserve">
-    <value>'{PropertyName}' deve estar entre {From} e {To} (exclusive). Você informou {Value}.</value>
+    <value>'{PropertyName}' must be between {From} and {To} (exclusive). You entered {Value}.</value>
   </data>
 </root>
