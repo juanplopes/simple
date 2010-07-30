@@ -8,7 +8,6 @@ using ${opt.Namespace}.Domain;
 using ${opt.Namespace}.Web.Helpers;
 using Simple.Validation;
 using Simple.Web.Mvc;
-using Sample.Project.Web.Helpers;
 
 namespace ${opt.Namespace}.Web.Controllers
 {

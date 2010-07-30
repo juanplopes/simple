@@ -26,7 +26,7 @@ namespace Simple.Web.Mvc
                 {
                     ModelState modelState;
                     viewData.ModelState.TryGetValue(member.GetMemberName(), out modelState);
-                    if (modelState != null)
+                    if (modelState != null && modelState.Value != null)
                         list = list.SelectValue(modelState.Value.AttemptedValue);
                 }
 

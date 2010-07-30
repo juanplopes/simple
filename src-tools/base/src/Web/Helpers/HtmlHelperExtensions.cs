@@ -69,13 +69,18 @@ namespace Sample.Project.Web.Helpers
         }
 
         public static Select<T> AutoSelect<T, P>(this IViewModelContainer<T> html, Expression<Func<T, P>> member, string viewDataKey)
-            where T : class
+           where T : class
         {
             var expr = Expression.Lambda<Func<T, object>>(member.Body, member.Parameters);
+            var list = html.FindSelectList(member, viewDataKey);
+            if (list == null) throw new ArgumentException("viewDataKey must contain a ModelSelectList<T>");
+
             return html
                 .Select(expr)
-                .Options(html.FindSelectList(member, viewDataKey));
+                .Options(list);
         }
+
+     
 
      
 
