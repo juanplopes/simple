@@ -21,7 +21,7 @@ namespace Sample.Project.Tools.Templates
 
             var template = new SimpleTemplate(Templates.NewMigration);
             template["timestamp"] = timestamp;
-            template["namespace"] = Options.Do.Namespace;
+            template["opt"] = Options.Do;
 
             using (var project = Options.Do.DatabaseProject)
             {
