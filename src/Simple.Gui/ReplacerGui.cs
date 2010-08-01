@@ -17,7 +17,7 @@ namespace Simple.Gui
         {
             InitializeComponent();
             txtNamespace_TextChanged(this, new EventArgs());
-            Version.Text = string.Format("v{0}", this.GetType().Assembly.GetName().Version.ToString(3));
+            Version.Text = string.Format("v{0} (build {1})", this.GetType().Assembly.GetName().Version.ToString(3), VersionName.Text);
 
             AdvancedGroup.Visible = false;
             AutoResize();
@@ -40,8 +40,8 @@ namespace Simple.Gui
         private void btnOk_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string message = "Replacer will be executed at: " + path + Environment.NewLine + "Are you sure?";
-            if (MessageBox.Show(message, "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            string message = "Project will be installed at: " + path + "\n\nAre you sure?";
+            if (MessageBox.Show(message, "Simple.Net", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 ReplacerLogic.DefaultExecute(path, "Sample.Project", txtNamespace.Text.Trim(), true);
                 ReplacerLogic.DefaultExecute(path, "SampleProject", txtCatalog.Text.Trim(), false);
@@ -78,6 +78,37 @@ namespace Simple.Gui
             AutoResize();
         }
 
-       
+        private Point ClickedPoint;
+        private bool IsDragging = false;
+
+        private void Drag_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+
+            this.IsDragging = true;
+            this.ClickedPoint = new Point(e.X, e.Y);
+
+        }
+
+        private void Drag_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+
+            this.IsDragging = false;
+
+        }
+
+        private void Drag_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (this.IsDragging)
+            {
+                Point NewPoint;
+
+                NewPoint = this.PointToScreen(new Point(e.X, e.Y));
+                NewPoint.Offset(this.ClickedPoint.X * -1, this.ClickedPoint.Y * -1);
+
+                this.Location = NewPoint;
+
+            }
+        }
+
     }
 }

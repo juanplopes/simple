@@ -35,7 +35,7 @@ namespace Simple.Generator.Console
                 ConfigureLogging();
                 logger.Warn("Failed to configure: {0}".AsFormat(e.Message) , e);
             }
-            logger.InfoFormat("Simple.Net v{0} [{1}]", Simply.Do.GetVersion(), ProjectText);
+            logger.InfoFormat("Simple.Net v{0} [{1}]", Simply.Do.Version.ToString(3), ProjectText);
         }
 
         private void ConfigureLogging()

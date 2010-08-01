@@ -43,8 +43,11 @@
             this.txtIISUrl = new System.Windows.Forms.TextBox();
             this.Version = new System.Windows.Forms.Label();
             this.btnMore = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.line1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.AdvancedGroup.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtNamespace
@@ -52,9 +55,9 @@
             this.txtNamespace.BackColor = System.Drawing.Color.White;
             this.txtNamespace.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNamespace.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNamespace.Location = new System.Drawing.Point(118, 50);
+            this.txtNamespace.Location = new System.Drawing.Point(14, 135);
             this.txtNamespace.Name = "txtNamespace";
-            this.txtNamespace.Size = new System.Drawing.Size(346, 35);
+            this.txtNamespace.Size = new System.Drawing.Size(452, 35);
             this.txtNamespace.TabIndex = 0;
             this.txtNamespace.Text = "Sample.Project";
             this.txtNamespace.TextChanged += new System.EventHandler(this.txtNamespace_TextChanged);
@@ -64,7 +67,7 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCancel.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(424, 91);
+            this.btnCancel.Location = new System.Drawing.Point(426, 176);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 28);
             this.btnCancel.TabIndex = 3;
@@ -76,7 +79,7 @@
             // 
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnOk.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOk.Location = new System.Drawing.Point(362, 91);
+            this.btnOk.Location = new System.Drawing.Point(364, 176);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(56, 28);
             this.btnOk.TabIndex = 2;
@@ -87,21 +90,23 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(23, -1);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
+            this.pictureBox1.Size = new System.Drawing.Size(215, 92);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseMove);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseDown);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseUp);
             // 
             // label5
             // 
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(113, 17);
+            this.label5.Location = new System.Drawing.Point(9, 102);
             this.label5.Margin = new System.Windows.Forms.Padding(0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(228, 30);
@@ -118,7 +123,7 @@
             this.AdvancedGroup.Controls.Add(this.txtSvcName);
             this.AdvancedGroup.Controls.Add(this.txtIISUrl);
             this.AdvancedGroup.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AdvancedGroup.Location = new System.Drawing.Point(11, 125);
+            this.AdvancedGroup.Location = new System.Drawing.Point(12, 207);
             this.AdvancedGroup.Name = "AdvancedGroup";
             this.AdvancedGroup.Size = new System.Drawing.Size(501, 147);
             this.AdvancedGroup.TabIndex = 15;
@@ -197,26 +202,53 @@
             // 
             this.Version.BackColor = System.Drawing.Color.Transparent;
             this.Version.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Version.ForeColor = System.Drawing.Color.Black;
-            this.Version.Location = new System.Drawing.Point(359, 9);
+            this.Version.ForeColor = System.Drawing.Color.White;
+            this.Version.Location = new System.Drawing.Point(288, 70);
             this.Version.Margin = new System.Windows.Forms.Padding(0);
             this.Version.Name = "Version";
-            this.Version.Size = new System.Drawing.Size(153, 20);
+            this.Version.Size = new System.Drawing.Size(226, 20);
             this.Version.TabIndex = 16;
             this.Version.Text = "version";
             this.Version.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.Version.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseMove);
+            this.Version.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseDown);
+            this.Version.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseUp);
             // 
             // btnMore
             // 
             this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnMore.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMore.Location = new System.Drawing.Point(470, 50);
+            this.btnMore.Location = new System.Drawing.Point(472, 135);
             this.btnMore.Name = "btnMore";
             this.btnMore.Size = new System.Drawing.Size(42, 35);
             this.btnMore.TabIndex = 1;
             this.btnMore.Text = "...";
             this.btnMore.UseVisualStyleBackColor = true;
             this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.DarkRed;
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.Version);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(523, 90);
+            this.panel1.TabIndex = 17;
+            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseMove);
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseDown);
+            this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseUp);
+            // 
+            // line1
+            // 
+            this.line1.BackColor = System.Drawing.Color.IndianRed;
+            this.line1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.line1.Location = new System.Drawing.Point(0, 90);
+            this.line1.Name = "line1";
+            this.line1.Size = new System.Drawing.Size(523, 4);
+            this.line1.TabIndex = 18;
             // 
             // ReplacerGui
             // 
@@ -225,16 +257,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(523, 284);
+            this.ClientSize = new System.Drawing.Size(523, 378);
             this.ControlBox = false;
+            this.Controls.Add(this.line1);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnMore);
-            this.Controls.Add(this.Version);
             this.Controls.Add(this.AdvancedGroup);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.txtNamespace);
-            this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -243,6 +275,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.AdvancedGroup.ResumeLayout(false);
             this.AdvancedGroup.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,6 +298,8 @@
         private System.Windows.Forms.TextBox txtIISUrl;
         private System.Windows.Forms.Label Version;
         private System.Windows.Forms.Button btnMore;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label line1;
     }
 }
 

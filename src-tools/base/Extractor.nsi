@@ -3,7 +3,7 @@ OutFile "Simple.exe"
 Icon "..\..\gfx\Icon.ico"
 RequestExecutionLevel user
 AutoCloseWindow true
-BrandingText "juanplopes@gmail.com"
+BrandingText "contact@juanlopes.net"
 
 ;Default installation folder
 InstallDir "$EXEDIR\sample-project\"

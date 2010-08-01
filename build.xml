@@ -23,10 +23,10 @@
 
     <ProductMajorVersion>3</ProductMajorVersion>
     <ProductMinorVersion>0</ProductMinorVersion>
-	<ProductBuildName>Avalon</ProductBuildName>
-	
+    <ProductBuildName>Avalon</ProductBuildName>
+
     <MainLibraryName>Simple.$(ProductBuildName)</MainLibraryName>
-    
+
     <TestAssembly>$(BuildDir)\Simple.Tests.exe</TestAssembly>
   </PropertyGroup>
 
@@ -60,6 +60,8 @@
   </Target>
 
   <Target Name="GenerateAssemblyInfo" DependsOnTargets="GenerateTag">
+    <WriteLinesToFile File="$(SourceDir)\Version.cs" 
+                      Lines="namespace Simple { class VersionName { public const string Text = &quot;$(ProductBuildName)&quot;%3B } }" Overwrite="true" />
     <AssemblyInfo CodeLanguage="CS"
                OutputFile="$(SourceDir)\GlobalInfo.cs"
                AssemblyCompany="Living Consultoria"
@@ -102,7 +104,7 @@
              />
   </Target>
 
-  
+
   <Target Name="MergeNVelocity">
     <ItemGroup>
       <NVelocityItems Include="$(LibDir)\NVelocity\NVelocity.dll"/>
@@ -114,7 +116,7 @@
             LogFile=""
              />
   </Target>
-  
+
   <Target Name="MergeFluentValidation">
     <ItemGroup>
       <FluentValidationItems Include="$(LibDir)\FluentValidation\FluentValidation.dll"/>

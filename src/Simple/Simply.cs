@@ -10,15 +10,26 @@ namespace Simple
             action(obj);
             return obj;
         }
-       
+
     }
 
     public class Simply : AggregateFactory<Simply>
     {
         public void Nop() { }
-        public Version GetVersion()
+        public Version Version
         {
-            return this.GetType().Assembly.GetName().Version;
+            get
+            {
+                return this.GetType().Assembly.GetName().Version;
+            }
+        }
+
+        public string VersionName
+        {
+            get
+            {
+                return Simple.VersionName.Text;
+            }
         }
 
         public SimplyConfigure Configure

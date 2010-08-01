@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="footer">
-            <div class="container">Simple.Net v<%= Simply.Do.GetVersion().ToString(3) %>
+            <div class="container">Simple.Net v<%= Simply.Do.Version.ToString(3) %>
                 by
                 <a href="http://www.livingnet.com.br">Living Consultoria</a>
             </div>
