@@ -206,7 +206,7 @@ namespace Links {
         private const string URLPATH = "~/Scripts";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string categories_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/categories.min.js") ? Url("categories.min.js") : Url("categories.js");
+        public static readonly string clickable_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/clickable.min.js") ? Url("clickable.min.js") : Url("clickable.js");
                       
         public static readonly string jquery_1_4_2_min_js = Url("jquery-1.4.2.min.js");
         public static readonly string jquery_fancybox_1_3_1_pack_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.fancybox-1.3.1.pack.min.js") ? Url("jquery.fancybox-1.3.1.pack.min.js") : Url("jquery.fancybox-1.3.1.pack.js");

@@ -5,7 +5,7 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48D3123B-0725-4C12-93F6-54123FA59E28}</ProjectGuid>
-    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{F85E285D-A4E0-4152-9332-AB1D724D3325};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sample.Project.Web</RootNamespace>
@@ -139,7 +139,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\master.js" />
-    <Content Include="Views\System\Check.aspx" />
+    <Content Include="Views\System\Index.aspx" />
     <Content Include="Views\System\Error.aspx" />
     <Content Include="Web.config" />
     <Content Include="Views\Home\About.aspx" />

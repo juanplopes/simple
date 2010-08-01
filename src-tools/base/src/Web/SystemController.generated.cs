@@ -48,7 +48,7 @@ namespace Sample.Project.Web.Controllers {
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
-            public readonly string Check = "Check";
+            public readonly string Index = "Index";
             public readonly string Error = "Error";
         }
 
@@ -58,8 +58,8 @@ namespace Sample.Project.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string Check = "~/Views/System/Check.aspx";
             public readonly string Error = "~/Views/System/Error.aspx";
+            public readonly string Index = "~/Views/System/Index.aspx";
         }
     }
 
@@ -67,8 +67,8 @@ namespace Sample.Project.Web.Controllers {
     public class T4MVC_SystemController: Sample.Project.Web.Controllers.SystemController {
         public T4MVC_SystemController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Check() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Check);
+        public override System.Web.Mvc.ActionResult Index() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
             return callInfo;
         }
 

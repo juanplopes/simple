@@ -22,7 +22,7 @@ namespace Sample.Project.Web.Controllers
 
         //
         // GET: /System/
-        public virtual ActionResult Check()
+        public virtual ActionResult Index()
         {
             var runner = new TaskRunner();
 

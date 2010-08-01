@@ -16,9 +16,6 @@ namespace Simple.Web.Mvc
 
         public void Dispose()
         {
-            context.BeginRequest -= OnBeginRequest;
-            context.EndRequest -= OnEndRequest;
-            context.Error -= OnError;
         }
 
         public void Init(HttpApplication context)

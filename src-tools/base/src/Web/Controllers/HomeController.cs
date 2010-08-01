@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Simple.Web.Mvc;
+using System.CodeDom.Compiler;
 
 namespace Sample.Project.Web.Controllers
 {
@@ -12,7 +13,14 @@ namespace Sample.Project.Web.Controllers
     {
         public virtual ActionResult Index()
         {
-            ViewData["Message"] = "Welcome to ASP.NET MVC!";
+            try
+            {
+                ViewData["Urls"] =
+                    this.GetType().Assembly.GetTypes()
+                        .Where(x => typeof(IController).IsAssignableFrom(x) && !Attribute.IsDefined(x, typeof(GeneratedCodeAttribute)))
+                        .Select(x => x.Name.Remove(x.Name.Length - "Controller".Length)).ToArray();
+            }
+            catch { ViewData["Urls"] = new string[0]; };
 
             return View();
         }
