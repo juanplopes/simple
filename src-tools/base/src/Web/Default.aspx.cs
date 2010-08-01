@@ -2,7 +2,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 
-namespace Sample.Project.Web
+namespace Example.Project.Web
 {
     public partial class _Default : Page
     {

@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Sample.Project.Environment;
+using Example.Project.Environment;
 using Simple;
 using Simple.IO;
-using Sample.Project.Domain;
+using Example.Project.Domain;
 using Simple.Migrator;
 using Simple.Generator;
-using Sample.Project.Tools.Infra;
+using Example.Project.Tools.Infra;
 using System.IO;
-using Sample.Project.Database;
+using Example.Project.Database;
 
-namespace Sample.Project.Tools.Database
+namespace Example.Project.Tools.Database
 {
     public class MigrateTool : ICommand
     {

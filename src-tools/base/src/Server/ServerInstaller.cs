@@ -5,10 +5,10 @@ using System.Text;
 using Simple.Hosting;
 using System.ComponentModel;
 using Simple;
-using Sample.Project.Environment;
-using Sample.Project.Domain;
+using Example.Project.Environment;
+using Example.Project.Domain;
 
-namespace Sample.Project
+namespace Example.Project
 {
     [RunInstaller(true)]
     public class ServerInstaller : SimpleInstaller

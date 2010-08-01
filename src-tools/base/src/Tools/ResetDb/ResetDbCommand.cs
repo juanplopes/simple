@@ -6,9 +6,9 @@ using Simple.Generator;
 using System.Data.SqlClient;
 using Simple;
 using Simple.NVelocity;
-using Sample.Project.Tools.Macros;
+using Example.Project.Tools.Macros;
 
-namespace Sample.Project.Tools.ResetDb
+namespace Example.Project.Tools.ResetDb
 {
     public class ResetDbCommand : ICommand
     {
@@ -21,8 +21,8 @@ namespace Sample.Project.Tools.ResetDb
         {
             //this command can only be used with SqlServer
             var cs = @"Server=.\SQLExpress;initial catalog=master;Integrated Security=SSPI";
-            ResetInternal(cs, "SampleProject");
-            ResetInternal(cs, "SampleProject_Tests");
+            ResetInternal(cs, "ExampleProject");
+            ResetInternal(cs, "ExampleProject_Tests");
             
             if (Prepare)
                 new PrepareMacro().Execute();

@@ -13,7 +13,7 @@ using System.Linq.Expressions;
 using Simple.Common;
 using Simple.Entities;
 using Simple.Validation;
-namespace Sample.Project.Web.Helpers
+namespace Example.Project.Web.Helpers
 {
     public static class HtmlHelperExtensions
     {

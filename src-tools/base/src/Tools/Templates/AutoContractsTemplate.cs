@@ -9,7 +9,7 @@ using Simple.Services;
 using Simple.Reflection;
 using Simple.NVelocity;
 
-namespace Sample.Project.Tools.Templates
+namespace Example.Project.Tools.Templates
 {
     public class AutoContractsTemplate : ICommand
     {

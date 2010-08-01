@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Sample.Project.Environment;
+using Example.Project.Environment;
 using Env = System.Environment;
 using Simple;
 using log4net;
 using System.Reflection;
 using Simple.Generator.Console;
 
-namespace Sample.Project.Tools.Infra
+namespace Example.Project.Tools.Infra
 {
     public static class Program
     {

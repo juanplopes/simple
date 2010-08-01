@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Metadata;
-using Sample.Project.Tools.Infra;
+using Example.Project.Tools.Infra;
 using Simple.Generator.Strings;
 using Simple;
 using Simple.Generator;
 
-namespace Sample.Project.Tools
+namespace Example.Project.Tools
 {
     public class Conventions : ITableConventions
     {

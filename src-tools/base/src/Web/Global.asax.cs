@@ -4,16 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Sample.Project.Environment;
+using Example.Project.Environment;
 using Simple;
-using Sample.Project.Web.Controllers;
+using Example.Project.Web.Controllers;
 using MvcContrib.SimplyRestful;
-using Sample.Project.Web.Helpers;
+using Example.Project.Web.Helpers;
 using Simple.Entities;
 using Simple.Reflection;
 using Simple.Web.Mvc;
 
-namespace Sample.Project.Web
+namespace Example.Project.Web
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801

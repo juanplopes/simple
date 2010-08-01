@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Sample.Project;
+using Example.Project;
 using Simple.Entities;
 using Simple;
 using NHibernate.Tool.hbm2ddl;
 using System.Xml.Linq;
 using System.Xml;
 using System.Reflection;
-using Sample.Project.Environment;
+using Example.Project.Environment;
 using System.Threading;
-using Sample.Project.Services;
+using Example.Project.Services;
 
-namespace Sample.Project
+namespace Example.Project
 {
     public class ServerStarter
     {

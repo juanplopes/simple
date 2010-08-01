@@ -5,9 +5,9 @@ using System.Text;
 using NUnit.Framework;
 using Simple;
 using Simple.Patterns;
-using Sample.Project.Environment;
+using Example.Project.Environment;
 
-namespace Sample.Project.Tests
+namespace Example.Project.Tests
 {
     public class ConfiguredFixture
     {

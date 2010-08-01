@@ -8,7 +8,7 @@ using Simple.Data.Context;
 using Simple;
 using Simple.Patterns;
 
-namespace Sample.Project.Tests
+namespace Example.Project.Tests
 {
     public class TransactionedFixture : ConfiguredFixture
     {

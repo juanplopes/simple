@@ -19,7 +19,7 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace Sample.Project.Web.Controllers {
+namespace Example.Project.Web.Controllers {
     public partial class SystemController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected SystemController(Dummy d) { }
@@ -64,7 +64,7 @@ namespace Sample.Project.Web.Controllers {
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_SystemController: Sample.Project.Web.Controllers.SystemController {
+    public class T4MVC_SystemController: Example.Project.Web.Controllers.SystemController {
         public T4MVC_SystemController() : base(Dummy.Instance) { }
 
         public override System.Web.Mvc.ActionResult Index() {

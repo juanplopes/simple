@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Simple.Web.Mvc;
 using System.CodeDom.Compiler;
 
-namespace Sample.Project.Web.Controllers
+namespace Example.Project.Web.Controllers
 {
     [HandleError]
     public partial class HomeController : Controller

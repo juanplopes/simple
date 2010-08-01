@@ -8,11 +8,11 @@
     <ProjectGuid>{DFF8F092-2E40-4F08-BE77-51954C9DBDF8}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample.Project.Tools</RootNamespace>
-    <AssemblyName>Sample.Project.Tools</AssemblyName>
+    <RootNamespace>Example.Project.Tools</RootNamespace>
+    <AssemblyName>Example.Project.Tools</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>Sample.Project.Tools.Infra.Program</StartupObject>
+    <StartupObject>Example.Project.Tools.Infra.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

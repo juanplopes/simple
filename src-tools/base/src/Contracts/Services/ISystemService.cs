@@ -1,9 +1,9 @@
-using Sample.Project.Services;
+using Example.Project.Services;
 using Simple.Services;
 using System.Collections.Generic;
 using Simple.Patterns;
 
-namespace Sample.Project.Services
+namespace Example.Project.Services
 {
     public partial interface ISystemService : IService
     {

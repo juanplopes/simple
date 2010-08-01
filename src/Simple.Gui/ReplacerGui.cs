@@ -43,10 +43,10 @@ namespace Simple.Gui
             string message = "Project will be installed at: " + path + "\n\nAre you sure?";
             if (MessageBox.Show(message, "Simple.Net", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                ReplacerLogic.DefaultExecute(path, "Sample.Project", txtNamespace.Text.Trim(), true);
-                ReplacerLogic.DefaultExecute(path, "SampleProject", txtCatalog.Text.Trim(), false);
-                ReplacerLogic.DefaultExecute(path, "sample-project", txtIISUrl.Text.Trim(), false);
-                ReplacerLogic.DefaultExecute(path, "sampleprojectsvc", txtSvcName.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "Example.Project", txtNamespace.Text.Trim(), true);
+                ReplacerLogic.DefaultExecute(path, "ExampleProject", txtCatalog.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "example-project", txtIISUrl.Text.Trim(), false);
+                ReplacerLogic.DefaultExecute(path, "exampleprojectsvc", txtSvcName.Text.Trim(), false);
 
                 MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();

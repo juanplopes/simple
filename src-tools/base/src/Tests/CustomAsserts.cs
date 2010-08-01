@@ -5,7 +5,7 @@ using System.Text;
 using Simple.Validation;
 using NUnit.Framework;
 
-namespace Sample.Project.Tests
+namespace Example.Project.Tests
 {
     public class CustomAsserts
     {

@@ -7,7 +7,7 @@ using System.IO;
 using System.Diagnostics;
 using Simple.NVelocity;
 
-namespace Sample.Project.Tools.Templates
+namespace Example.Project.Tools.Templates
 {
     public class NewMigrationTemplate : ICommand
     {

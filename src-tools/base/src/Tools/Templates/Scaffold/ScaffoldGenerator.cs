@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Metadata;
-using Sample.Project.Tools.Templates;
+using Example.Project.Tools.Templates;
 using Simple;
-using Sample.Project.Services;
-using Sample.Project.Tools.Infra;
+using Example.Project.Services;
+using Example.Project.Tools.Infra;
 using Simple.Generator;
-using Sample.Project.Domain;
+using Example.Project.Domain;
 using Simple.NVelocity;
 using System.Collections;
 
-namespace Sample.Project.Tools.Templates.Scaffold
+namespace Example.Project.Tools.Templates.Scaffold
 {
     public class ScaffoldGenerator : ICommand
     {

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Simple.Web.Mvc;
 
-namespace Sample.Project.Web.Helpers
+namespace Example.Project.Web.Helpers
 {
     public static class NoticeExtensions
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Generator;
 
-namespace Sample.Project.Tools.Templates.Scaffold
+namespace Example.Project.Tools.Templates.Scaffold
 {
     public class ScaffoldRemover : ICommand
     {

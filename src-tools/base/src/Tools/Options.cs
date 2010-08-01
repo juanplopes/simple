@@ -7,12 +7,12 @@ using System.IO;
 using Simple.NVelocity;
 using Simple.Metadata;
 using System.Collections;
-using Sample.Project.Environment;
+using Example.Project.Environment;
 using Simple;
-using Sample.Project.Domain;
+using Example.Project.Domain;
 using Simple.Patterns;
 
-namespace Sample.Project.Tools
+namespace Example.Project.Tools
 {
     public class Options : Singleton<Options>
     {

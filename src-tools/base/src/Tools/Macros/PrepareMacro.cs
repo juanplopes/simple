@@ -6,10 +6,10 @@ using Simple.Generator;
 using log4net;
 using Simple;
 using System.Reflection;
-using Sample.Project.Environment;
-using Sample.Project.Tools.Database;
+using Example.Project.Environment;
+using Example.Project.Tools.Database;
 
-namespace Sample.Project.Tools.Macros
+namespace Example.Project.Tools.Macros
 {
     public class PrepareMacro : ICommand
     {

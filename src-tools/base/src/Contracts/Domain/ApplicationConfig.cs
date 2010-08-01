@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Sample.Project.Domain
+namespace Example.Project.Domain
 {
     [XmlRoot("application")]
     public class ApplicationConfig

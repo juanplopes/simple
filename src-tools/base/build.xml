@@ -10,8 +10,8 @@
     <Configuration>Release</Configuration>
     <ProductVersion>1.0</ProductVersion>
 
-    <TestAssembly>Sample.Project.Tests.dll</TestAssembly>
-    <ToolsAssembly>Sample.Project.Tools.exe</ToolsAssembly>
+    <TestAssembly>Example.Project.Tests.dll</TestAssembly>
+    <ToolsAssembly>Example.Project.Tools.exe</ToolsAssembly>
 
     <TestBuildDir>$(BuildDir)\test\</TestBuildDir>
     <ServerBuildDirName>server</ServerBuildDirName>
@@ -19,10 +19,10 @@
     <WebBuildDir>$(BuildDir)\web\</WebBuildDir>
     <WebSourceDir>$(BuildDir)\web-src\</WebSourceDir>
 
-    <WebVirtualPath>/sample-project</WebVirtualPath>
+    <WebVirtualPath>/example-project</WebVirtualPath>
     <Environment>Development</Environment>
 
-    <PackageZipFile>sample-project-$(ProductVersion).zip</PackageZipFile>
+    <PackageZipFile>example-project-$(ProductVersion).zip</PackageZipFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,7 +40,7 @@
     <AssemblyInfo CodeLanguage="CS"
                OutputFile="$(SourceDir)\GlobalInfo.cs"
                AssemblyCompany="Your Company Name"
-               AssemblyProduct="Sample.Project"
+               AssemblyProduct="Example.Project"
                AssemblyCopyright="Copyright (c) Your Company Name (Year)"
                AssemblyTrademark=""
                ComVisible="false"

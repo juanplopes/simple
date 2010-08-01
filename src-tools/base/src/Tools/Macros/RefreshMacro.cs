@@ -6,11 +6,11 @@ using Simple.Generator;
 using log4net;
 using Simple;
 using System.Reflection;
-using Sample.Project.Tools.Infra;
+using Example.Project.Tools.Infra;
 using Simple.Generator.Console;
-using Sample.Project.Tools.Templates;
+using Example.Project.Tools.Templates;
 
-namespace Sample.Project.Tools.Macros
+namespace Example.Project.Tools.Macros
 {
     public class RefreshMacro : ICommand
     {

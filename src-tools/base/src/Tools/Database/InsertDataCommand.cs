@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Sample.Project.Tools.Infra;
-using Sample.Project.Environment;
+using Example.Project.Tools.Infra;
+using Example.Project.Environment;
 using Simple;
 using Simple.Generator.Data;
 using Simple.Patterns;
-using Sample.Project.Database;
+using Example.Project.Database;
 
-namespace Sample.Project.Tools.Database
+namespace Example.Project.Tools.Database
 {
     public class InsertDataCommand : ICommand
     {

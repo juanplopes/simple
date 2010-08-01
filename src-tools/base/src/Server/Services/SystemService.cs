@@ -6,9 +6,9 @@ using Simple.Patterns;
 using NHibernate.Tool.hbm2ddl;
 using Simple;
 using System.ServiceProcess;
-using Sample.Project.Domain;
+using Example.Project.Domain;
 
-namespace Sample.Project.Services
+namespace Example.Project.Services
 {
     public class SystemService : MarshalByRefObject, ISystemService
     {

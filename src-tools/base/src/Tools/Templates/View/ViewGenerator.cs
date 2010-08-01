@@ -8,7 +8,7 @@ using log4net.Appender;
 using Simple;
 using NVelocity.Util;
 
-namespace Sample.Project.Tools.Templates.View
+namespace Example.Project.Tools.Templates.View
 {
     public class ViewGenerator : ICommand
     {

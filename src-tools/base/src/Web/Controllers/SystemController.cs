@@ -6,12 +6,12 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using Simple.Patterns;
 using Simple;
-using Sample.Project.Services;
+using Example.Project.Services;
 using System.Reflection;
-using Sample.Project.Web.Helpers;
+using Example.Project.Web.Helpers;
 using Simple.Web.Mvc;
 
-namespace Sample.Project.Web.Controllers
+namespace Example.Project.Web.Controllers
 {
     public partial class SystemController : Controller
     {

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Sample.Project.Environment;
+using Example.Project.Environment;
 using Simple.Generator.Console;
 using Simple;
 using Simple.Patterns;
-using Sample.Project.Tools.Infra;
+using Example.Project.Tools.Infra;
 
-namespace Sample.Project.Tools
+namespace Example.Project.Tools
 { 
     public class Context : ContextBase
     { 

@@ -38,9 +38,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtCatalog = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.txtSvcName = new System.Windows.Forms.TextBox();
             this.txtIISUrl = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.Version = new System.Windows.Forms.Label();
             this.btnMore = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -59,13 +59,15 @@
             this.txtNamespace.Name = "txtNamespace";
             this.txtNamespace.Size = new System.Drawing.Size(452, 35);
             this.txtNamespace.TabIndex = 0;
-            this.txtNamespace.Text = "Sample.Project";
+            this.txtNamespace.Text = "Example.Project";
             this.txtNamespace.TextChanged += new System.EventHandler(this.txtNamespace_TextChanged);
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
+            this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(426, 176);
             this.btnCancel.Name = "btnCancel";
@@ -77,7 +79,9 @@
             // 
             // btnOk
             // 
-            this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnOk.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
+            this.btnOk.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
+            this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOk.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOk.Location = new System.Drawing.Point(364, 176);
             this.btnOk.Name = "btnOk";
@@ -150,7 +154,6 @@
             this.txtCatalog.Name = "txtCatalog";
             this.txtCatalog.Size = new System.Drawing.Size(272, 35);
             this.txtCatalog.TabIndex = 14;
-            this.txtCatalog.Text = "SampleProject";
             // 
             // label2
             // 
@@ -164,6 +167,26 @@
             this.label2.Text = "Initial Catalog =";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // txtSvcName
+            // 
+            this.txtSvcName.BackColor = System.Drawing.Color.White;
+            this.txtSvcName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSvcName.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSvcName.Location = new System.Drawing.Point(215, 99);
+            this.txtSvcName.Name = "txtSvcName";
+            this.txtSvcName.Size = new System.Drawing.Size(272, 35);
+            this.txtSvcName.TabIndex = 16;
+            // 
+            // txtIISUrl
+            // 
+            this.txtIISUrl.BackColor = System.Drawing.Color.White;
+            this.txtIISUrl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIISUrl.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIISUrl.Location = new System.Drawing.Point(215, 58);
+            this.txtIISUrl.Name = "txtIISUrl";
+            this.txtIISUrl.Size = new System.Drawing.Size(272, 35);
+            this.txtIISUrl.TabIndex = 15;
+            // 
             // label1
             // 
             this.label1.BackColor = System.Drawing.Color.Transparent;
@@ -175,28 +198,6 @@
             this.label1.TabIndex = 18;
             this.label1.Text = "http://localhost/";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtSvcName
-            // 
-            this.txtSvcName.BackColor = System.Drawing.Color.White;
-            this.txtSvcName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSvcName.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSvcName.Location = new System.Drawing.Point(215, 99);
-            this.txtSvcName.Name = "txtSvcName";
-            this.txtSvcName.Size = new System.Drawing.Size(272, 35);
-            this.txtSvcName.TabIndex = 16;
-            this.txtSvcName.Text = "sampleprojectsvc";
-            // 
-            // txtIISUrl
-            // 
-            this.txtIISUrl.BackColor = System.Drawing.Color.White;
-            this.txtIISUrl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIISUrl.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIISUrl.Location = new System.Drawing.Point(215, 58);
-            this.txtIISUrl.Name = "txtIISUrl";
-            this.txtIISUrl.Size = new System.Drawing.Size(272, 35);
-            this.txtIISUrl.TabIndex = 15;
-            this.txtIISUrl.Text = "sample-project";
             // 
             // Version
             // 
@@ -216,7 +217,9 @@
             // 
             // btnMore
             // 
-            this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnMore.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
+            this.btnMore.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
+            this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMore.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMore.Location = new System.Drawing.Point(472, 135);
             this.btnMore.Name = "btnMore";

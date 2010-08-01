@@ -1,12 +1,12 @@
 using Simple.Generator;
-using Sample.Project.Tools.Templates;
-using Sample.Project.Tools.Macros;
-using Sample.Project.Tools.ResetDb;
-using Sample.Project.Tools.Templates.Scaffold;
-using Sample.Project.Tools.Templates.View;
-using Sample.Project.Tools.Database;
+using Example.Project.Tools.Templates;
+using Example.Project.Tools.Macros;
+using Example.Project.Tools.ResetDb;
+using Example.Project.Tools.Templates.Scaffold;
+using Example.Project.Tools.Templates.View;
+using Example.Project.Tools.Database;
 
-namespace Sample.Project.Tools
+namespace Example.Project.Tools
 {
     public static class Generators
     {

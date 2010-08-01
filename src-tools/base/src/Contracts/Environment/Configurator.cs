@@ -7,12 +7,12 @@ using Simple.IO;
 using System.Reflection;
 using Simple.Services;
 using System.IO;
-using Sample.Project.Domain;
+using Example.Project.Domain;
 using Simple.Generator;
 using Simple.Data;
 using FluentValidation;
 
-namespace Sample.Project.Environment
+namespace Example.Project.Environment
 {
     public class Configurator : ConfigDef
     {
@@ -23,7 +23,7 @@ namespace Sample.Project.Environment
 #endif
 
 
-        public const string DefaultNamespace = "Sample.Project";
+        public const string DefaultNamespace = "Example.Project";
         public const string SimpleKey = "simple.token";
 
 

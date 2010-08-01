@@ -5,12 +5,12 @@ using System.Web;
 using Simple;
 using System.Web.Routing;
 using System.Web.Mvc;
-using Sample.Project.Web.Controllers;
+using Example.Project.Web.Controllers;
 using System.Reflection;
 using Simple.Web.Mvc;
 using Simple.Data.Context;
 
-namespace Sample.Project.Web.Helpers
+namespace Example.Project.Web.Helpers
 {
     public class DataContextModule : SimpleModule
     {
