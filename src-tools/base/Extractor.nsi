@@ -1,4 +1,4 @@
-Name "Simple.Net project"
+Name "Simple.Net Project"
 OutFile "Simple.exe"
 Icon "..\..\gfx\Icon.ico"
 RequestExecutionLevel user
