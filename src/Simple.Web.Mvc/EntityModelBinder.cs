@@ -26,7 +26,10 @@ namespace Simple.Web.Mvc
                 {
                     if (value == null) return;
                     var paramType = ctor.GetParameters().Single().ParameterType;
-                    var obj = MethodCache.Do.CreateInstance(type, value.ConvertTo(paramType));
+                    var convertedValue = value.ConvertTo(paramType);
+
+                    var obj = convertedValue != null ? MethodCache.Do.CreateInstance(type, convertedValue) : null;
+                    
                     propertyDescriptor.SetValue(bindingContext.Model, obj);
                 }
                 catch (Exception e)
