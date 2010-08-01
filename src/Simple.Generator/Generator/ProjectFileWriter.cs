@@ -92,6 +92,7 @@ namespace Simple.Generator
 
         public ProjectFileWriter AddNewFile(string relativePath, string type, string content)
         {
+            log.InfoFormat("Adding '{0}' to '{1}' as '{2}'", relativePath, Path.GetFileName(ProjectPath), type);
             var info = CreateFile(relativePath, content);
             AddFile(relativePath, type);
             return info;
@@ -99,6 +100,7 @@ namespace Simple.Generator
 
         public ProjectFileWriter AddNewFile(string relativePath, string type, byte[] content)
         {
+            log.InfoFormat("Adding '{0}' to '{1}' as '{2}'", relativePath, Path.GetFileName(ProjectPath), type);
             var info = CreateFile(relativePath, content);
             AddFile(relativePath, type);
             return info;

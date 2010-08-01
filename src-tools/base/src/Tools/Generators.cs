@@ -32,7 +32,7 @@ namespace Sample.Project.Tools
 
                 registry.Register<NewMigrationTemplate>("new migration")
                     .WithArgument("name", x => x.Name)
-                    .WithOption("donotopen", x => x.DoNotOpen);
+                    .WithOption("donotopen", x => x.OpenIt);
 
                 registry.Register<MagicMacro>("magic");
 

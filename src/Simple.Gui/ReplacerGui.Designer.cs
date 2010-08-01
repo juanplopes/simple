@@ -119,9 +119,9 @@
             this.AdvancedGroup.Controls.Add(this.label3);
             this.AdvancedGroup.Controls.Add(this.txtCatalog);
             this.AdvancedGroup.Controls.Add(this.label2);
-            this.AdvancedGroup.Controls.Add(this.label1);
             this.AdvancedGroup.Controls.Add(this.txtSvcName);
             this.AdvancedGroup.Controls.Add(this.txtIISUrl);
+            this.AdvancedGroup.Controls.Add(this.label1);
             this.AdvancedGroup.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AdvancedGroup.Location = new System.Drawing.Point(12, 207);
             this.AdvancedGroup.Name = "AdvancedGroup";
@@ -171,7 +171,7 @@
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(6, 59);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(203, 30);
+            this.label1.Size = new System.Drawing.Size(219, 30);
             this.label1.TabIndex = 18;
             this.label1.Text = "http://localhost/";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

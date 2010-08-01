@@ -12,7 +12,7 @@ namespace Sample.Project.Tools.Templates
     public class NewMigrationTemplate : ICommand
     {
         public string Name { get; set; }
-        public bool DoNotOpen { get; set; }
+        public bool OpenIt { get; set; }
 
         public void Execute()
         {
@@ -27,7 +27,7 @@ namespace Sample.Project.Tools.Templates
             {
                 project.AddNewCompile(filename, template.ToString());
 
-                if (!DoNotOpen)
+                if (OpenIt)
                     Process.Start(project.GetFullPath(filename));
             }
         }
