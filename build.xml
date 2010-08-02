@@ -166,7 +166,7 @@
      Password="$(GCPassword)"
      ProjectName="$(GCProjectName)"
      LocalFile="$(PackageDir)\$(MainLibraryName).zip"
-     TargetFileName="$(MainLibraryName)-Nightly.zip"
+     TargetFileName="$(MainLibraryName).zip"
      Summary="Simple.Net Library v$(ProductVersion)"
      Labels="Nightly;Type-Package"
       />
@@ -176,7 +176,7 @@
       Password="$(GCPassword)"
       ProjectName="$(GCProjectName)"
       LocalFile="$(PackageDir)\$(MainLibraryName).exe"
-      TargetFileName="$(MainLibraryName)-Nightly.exe"
+      TargetFileName="$(MainLibraryName).exe"
       Summary="Simple.Net Project Starter v$(ProductVersion)"
       Labels="Nightly;Type-Executable;Featured"
       />
