@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
+using System.Diagnostics;
 
 namespace Simple.Gui
 {
@@ -108,6 +109,11 @@ namespace Simple.Gui
                 this.Location = NewPoint;
 
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://www.livingnet.com.br");
         }
 
     }
