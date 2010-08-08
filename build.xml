@@ -56,7 +56,8 @@
       <Output TaskParameter="Value" PropertyName="ProductVersion" />
     </CreateProperty>
 
-    <Message Text="Product version: $(ProductVersion)"/>
+    <Message Text="Product version: "/>
+	<Message Text="##teamcity[buildNumber '$(ProductVersion)']"/>
   </Target>
 
   <Target Name="GenerateAssemblyInfo" DependsOnTargets="GenerateTag">
