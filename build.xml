@@ -157,7 +157,7 @@
     <Copy SourceFiles="$(PackageDir)\$(MainLibraryName).dll" DestinationFolder="$(SourceBaseLibDir)"/>
     <Copy SourceFiles="$(BuildDir)\Simple.Gui.exe" DestinationFolder="$(SourceBaseDir)"/>
 
-    <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile $(PackageDir2)\$(MainLibraryName).exe&quot;"/>
+    <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile &#39;$(PackageDir2)\$(MainLibraryName).exe&#39;&quot;"/>
     <Zip Files="$(PackageDir)\$(MainLibraryName).dll" ZipFileName="$(PackageDir)\$(MainLibraryName).zip" WorkingDirectory="$(PackageDir)"/>
   </Target>
 
