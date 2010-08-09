@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <Module>
   <ModulePrefs title="Simple.Net CodeBetter TeamCity Builds" />
-  <Content type="url" href="http://teamcity.codebetter.com/externalStatus.html?projectId=project87" />
+  <Content type="url" href="http://teamcity.codebetter.com/externalStatus.html?projectId=project87&withCss=true" />
 </Module>
