@@ -23,6 +23,32 @@ namespace Simple.Migrator.Fluent
             return this;
         }
 
+        public ForeignKeyAddAction OnConflictCascade()
+        {
+            return ConstrainedAs(ForeignKeyConstraint.Cascade);
+        }
+
+        public ForeignKeyAddAction OnConflictRestrict()
+        {
+            return ConstrainedAs(ForeignKeyConstraint.Restrict);
+        }
+
+        public ForeignKeyAddAction OnConflictSetDefault()
+        {
+            return ConstrainedAs(ForeignKeyConstraint.SetDefault);
+        }
+
+        public ForeignKeyAddAction OnConflictSetNull()
+        {
+            return ConstrainedAs(ForeignKeyConstraint.SetNull);
+        }
+
+        public ForeignKeyAddAction OnConflictNoAction()
+        {
+            return ConstrainedAs(ForeignKeyConstraint.NoAction);
+        }
+
+
         public override void Execute(ITransformationProvider provider)
         {
             provider.AddForeignKey(this.Name, Table.Name, this.FkColumns.ToArray(), this.PkTable, this.PkColumns.ToArray(), 
