@@ -33,7 +33,7 @@ namespace Simple.Tests.Services
         {
             process = Process.Start(new ProcessStartInfo()
             {
-                FileName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath,
+                FileName = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath,
                 Arguments = string.Join(" ", new string[] {
                     Server.RemotingTest,
                     Uri.ToString()}),
