@@ -17,7 +17,7 @@ namespace Simple.Migrator.Fluent
 
         public ForeignKeyConstraint? Constraint { get; set; }
 
-        public ForeignKeyAddAction ConstrainedAs(ForeignKeyConstraint constraint)
+        public ForeignKeyAddAction OnConflict(ForeignKeyConstraint constraint)
         {
             this.Constraint = constraint;
             return this;
@@ -25,27 +25,27 @@ namespace Simple.Migrator.Fluent
 
         public ForeignKeyAddAction OnConflictCascade()
         {
-            return ConstrainedAs(ForeignKeyConstraint.Cascade);
+            return OnConflict(ForeignKeyConstraint.Cascade);
         }
 
         public ForeignKeyAddAction OnConflictRestrict()
         {
-            return ConstrainedAs(ForeignKeyConstraint.Restrict);
+            return OnConflict(ForeignKeyConstraint.Restrict);
         }
 
         public ForeignKeyAddAction OnConflictSetDefault()
         {
-            return ConstrainedAs(ForeignKeyConstraint.SetDefault);
+            return OnConflict(ForeignKeyConstraint.SetDefault);
         }
 
         public ForeignKeyAddAction OnConflictSetNull()
         {
-            return ConstrainedAs(ForeignKeyConstraint.SetNull);
+            return OnConflict(ForeignKeyConstraint.SetNull);
         }
 
         public ForeignKeyAddAction OnConflictNoAction()
         {
-            return ConstrainedAs(ForeignKeyConstraint.NoAction);
+            return OnConflict(ForeignKeyConstraint.NoAction);
         }
 
 
