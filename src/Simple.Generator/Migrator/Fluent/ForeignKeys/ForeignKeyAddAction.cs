@@ -25,7 +25,8 @@ namespace Simple.Migrator.Fluent
 
         public override void Execute(ITransformationProvider provider)
         {
-            provider.AddForeignKey(this.Name, Table.Name, this.FkColumns.ToArray(), this.PkTable, this.PkColumns.ToArray());
+            provider.AddForeignKey(this.Name, Table.Name, this.FkColumns.ToArray(), this.PkTable, this.PkColumns.ToArray(), 
+                Constraint ?? ForeignKeyConstraint.NoAction);
         }
     }
 }

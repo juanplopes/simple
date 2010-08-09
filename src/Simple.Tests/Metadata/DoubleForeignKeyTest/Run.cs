@@ -33,7 +33,7 @@ namespace Simple.Tests.Metadata.DoubleForeignKeyTest
             {
                 t.ForeignKey("t_double_fk_2_t_double_fk_1_fk", "t_double_fk_1",
                     t.AddInt32("id1").PrimaryKey().LinkedTo("id1"),
-                    t.AddString("id2").PrimaryKey().LinkedTo("id2"));
+                    t.AddString("id2").PrimaryKey().LinkedTo("id2")).ConstrainedAs(ForeignKeyConstraint.Cascade);
 
                 t.UniqueColumns("uk_teste",
                     t.AddInt32("unique_field_1"),
