@@ -10,23 +10,23 @@ namespace Simple.Tests.Metadata.ChangeColumnTest
     [Migration(1)]
     public class Migration1 : FluentMigration
     {
-        public override void Up()
+        public override void Up(SchemaAction schema)
         {
-            Schema.AddTable("t_change_column", t =>
+            schema.AddTable("t_change_column", t =>
             {
                 t.AddString("string1").WithSize(123);
                 t.AddInt32("int1");
             });
 
-            Schema.ChangeTable("t_change_column", t =>
+            schema.ChangeTable("t_change_column", t =>
             {
                 t.ChangeString("string1").WithSize(42);
             });
         }
 
-        public override void Down()
+        public override void Down(SchemaAction schema)
         {
-            Schema.RemoveTable("t_change_column");
+            schema.RemoveTable("t_change_column");
         }
     }
 

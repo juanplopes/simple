@@ -70,28 +70,28 @@ namespace Simple.Migrator.Fluent
             return WithProperties(ColumnProperty.PrimaryKey);
         }
 
-        public ColumnAction AutoForeignKey(string primaryKeyTable)
+        public ForeignKeyAddAction AutoForeignKey(string primaryKeyTable)
         {
             return AutoForeignKey(primaryKeyTable, null);
         }
 
-        public ColumnAction AutoForeignKey(string primaryKeyTable, string tag)
+        public ForeignKeyAddAction AutoForeignKey(string primaryKeyTable, string tag)
         {
             return ForeignKey(
                 Table.Database.Convention.ForeignKeyConstraint(Table.Name, string.Empty, primaryKeyTable, string.Empty, tag), 
                 primaryKeyTable);
         }
 
-        public ColumnAction ForeignKey(string name, string primaryKeyTable)
+        public ForeignKeyAddAction ForeignKey(string name, string primaryKeyTable)
         {
             return ForeignKey(name, primaryKeyTable, Table.Database.Convention.PrimaryKeyColumn(primaryKeyTable));
         }
 
 
-        public ColumnAction ForeignKey(string name, string primaryKeyTable, string primaryKeyColumn)
+        public ForeignKeyAddAction ForeignKey(string name, string primaryKeyTable, string primaryKeyColumn)
         {
-            Table.ForeignKey(name, primaryKeyTable, this.LinkedTo(primaryKeyColumn));
-            return WithProperties(ColumnProperty.ForeignKey);
+            WithProperties(ColumnProperty.ForeignKey);
+            return Table.ForeignKey(name, primaryKeyTable, this.LinkedTo(primaryKeyColumn));
         }
 
         public override ForeignKeyRelation LinkedTo(string column)

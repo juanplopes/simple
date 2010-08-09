@@ -10,9 +10,9 @@ namespace Simple.Tests.Metadata.AllTypesTest
     [Migration(1)]
     public class Migration1 : FluentMigration
     {
-        public override void Up()
+        public override void Up(SchemaAction schema)
         {
-            Schema.AddTable("t_all_types_1", false, t =>
+            schema.AddTable("t_all_types_1", false, t =>
             {
                 t.AddAnsiString("fieldAnsiString").PrimaryKey();
                 t.AddBinary("fieldBinary").PrimaryKey();
@@ -29,7 +29,7 @@ namespace Simple.Tests.Metadata.AllTypesTest
                 t.AddString("fieldString").PrimaryKey();
             });
 
-            Schema.AddTable("t_all_types_2", false, t =>
+            schema.AddTable("t_all_types_2", false, t =>
             {
                 t.AutoForeignKey("t_all_types_1"
                                     , t.AddAnsiString("fieldAnsiString").PrimaryKey()
@@ -51,10 +51,10 @@ namespace Simple.Tests.Metadata.AllTypesTest
 
         }
 
-        public override void Down()
+        public override void Down(SchemaAction schema)
         {
-            Schema.RemoveTable("t_all_types_2");
-            Schema.RemoveTable("t_all_types_1");
+            schema.RemoveTable("t_all_types_2");
+            schema.RemoveTable("t_all_types_1");
         }
     }
 

@@ -10,18 +10,18 @@ namespace Simple.Tests.Metadata.SimpleTableTest
     [Migration(1)]
     public class Migration1 : FluentMigration
     {
-        public override void Up()
+        public override void Up(SchemaAction schema)
         {
-            Schema.AddTable("t_all_types_1", t =>
+            schema.AddTable("t_all_types_1", t =>
             {
                 t.AddString("string1").WithSize(123);
                 t.AddInt32("int1");
             });
         }
 
-        public override void Down()
+        public override void Down(SchemaAction schema)
         {
-            Schema.RemoveTable("t_all_types_1");
+            schema.RemoveTable("t_all_types_1");
         }
     }
 

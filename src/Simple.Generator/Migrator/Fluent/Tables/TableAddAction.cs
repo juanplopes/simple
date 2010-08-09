@@ -8,7 +8,7 @@ namespace Simple.Migrator.Fluent
 {
     public class TableAddAction : TableAction
     {
-        public TableAddAction(SchemaBuilder database, string name) : base(database, name) { }
+        public TableAddAction(SchemaAction database, string name) : base(database, name) { }
 
         public override void Execute(ITransformationProvider provider)
         {

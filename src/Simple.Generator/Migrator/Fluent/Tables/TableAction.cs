@@ -11,11 +11,11 @@ namespace Simple.Migrator.Fluent
 
     public abstract partial class TableAction : IAction
     {
-        public SchemaBuilder Database { get; set; }
+        public SchemaAction Database { get; set; }
         public string Name { get; set; }
         public IList<IAction> Actions { get; set; }
 
-        public TableAction(SchemaBuilder database, string name)
+        public TableAction(SchemaAction database, string name)
         {
             Name = name;
             Database = database;

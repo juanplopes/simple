@@ -12,7 +12,6 @@ namespace Simple.Migrator.Fluent
         public IList<string> FkColumns { get; set; }
         public string PkTable { get; set; }
         public IList<string> PkColumns { get; set; }
-
         public ForeignKeyAction(TableAction table, string name)
             : base(table)
         {

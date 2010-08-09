@@ -12,7 +12,8 @@ namespace Simple.Tests.Metadata.AllTypesTest
     public class Run : BaseTest
     {
         public Run(DatabasesXml.Entry entry) : base(entry) { }
-
+        
+       
 
         public override IEnumerable<Type> GetMigrations()
         {

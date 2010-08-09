@@ -8,7 +8,7 @@ namespace Simple.Migrator.Fluent
 {
     public partial class TableChangeAction : TableAction
     {
-        public TableChangeAction(SchemaBuilder database, string name) : base(database, name) { }
+        public TableChangeAction(SchemaAction database, string name) : base(database, name) { }
 
         public ColumnChangeAction ChangeColumn(string name, DbType type)
         {

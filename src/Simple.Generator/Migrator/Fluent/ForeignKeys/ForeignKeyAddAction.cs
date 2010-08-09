@@ -15,6 +15,14 @@ namespace Simple.Migrator.Fluent
             : base(table, name, foreignKeyColumns, primaryKeyTable, primaryKeyColumns) { }
 
 
+        public ForeignKeyConstraint? Constraint { get; set; }
+
+        public ForeignKeyAddAction ConstrainedAs(ForeignKeyConstraint constraint)
+        {
+            this.Constraint = constraint;
+            return this;
+        }
+
         public override void Execute(ITransformationProvider provider)
         {
             provider.AddForeignKey(this.Name, Table.Name, this.FkColumns.ToArray(), this.PkTable, this.PkColumns.ToArray());

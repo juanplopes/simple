@@ -25,4 +25,5 @@ namespace Simple.Tests.Metadata
         [XmlElement("Entry")]
         public List<Entry> Entries { get; set; }
     }
+
 }

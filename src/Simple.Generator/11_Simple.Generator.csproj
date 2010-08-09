@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0D3A5B7E-9BA9-43B1-A500-BF89CBFC0E7B}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -135,7 +135,7 @@
     <Compile Include="Migrator\Fluent\IAction.cs" />
     <Compile Include="Migrator\Fluent\IConvention.cs" />
     <Compile Include="Migrator\Fluent\InsideTableAction.cs" />
-    <Compile Include="Migrator\Fluent\SchemaBuilder.cs" />
+    <Compile Include="Migrator\Fluent\SchemaAction.cs" />
     <Compile Include="Migrator\Fluent\Tables\TableAction.cs" />
     <Compile Include="Migrator\Fluent\Tables\TableAction2.cs">
       <AutoGen>True</AutoGen>

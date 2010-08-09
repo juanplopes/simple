@@ -10,9 +10,9 @@ namespace Simple.Tests.Metadata.DoubleForeignKeyTest
     [Migration(1)]
     public class Migration1 : FluentMigration
     {
-        public override void Up()
+        public override void Up(SchemaAction schema)
         {
-            Schema.AddTable("t_double_fk_1", false, t =>
+            schema.AddTable("t_double_fk_1", false, t =>
             {
                 t.AddInt32("id1").PrimaryKey();
                 t.AddString("id2").PrimaryKey();
@@ -20,7 +20,7 @@ namespace Simple.Tests.Metadata.DoubleForeignKeyTest
                 t.AddDateTime("field1");
             });
 
-            Schema.AddTable("t_double_fk_2", false, t =>
+            schema.AddTable("t_double_fk_2", false, t =>
             {
                 t.AutoForeignKey("t_double_fk_1",
                     t.AddInt32("id1").PrimaryKey().LinkedTo("id1"),
@@ -35,10 +35,10 @@ namespace Simple.Tests.Metadata.DoubleForeignKeyTest
 
         }
 
-        public override void Down()
+        public override void Down(SchemaAction schema)
         {
-            Schema.RemoveTable("t_double_fk_2");
-            Schema.RemoveTable("t_double_fk_1");
+            schema.RemoveTable("t_double_fk_2");
+            schema.RemoveTable("t_double_fk_1");
         }
     }
 

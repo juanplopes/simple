@@ -12,6 +12,13 @@ namespace Simple.Tests.Metadata
 {
     public abstract class BaseTest
     {
+        public override string ToString()
+        {
+            return "{0} ({1})".AsFormat(this.Database.Provider, 
+                this.GetType().Namespace.Replace(typeof(BaseTest).Namespace + ".", ""));
+        }
+
+
         public DatabasesXml.Entry Database { get; protected set; }
         public BaseTest(DatabasesXml.Entry entry)
         {

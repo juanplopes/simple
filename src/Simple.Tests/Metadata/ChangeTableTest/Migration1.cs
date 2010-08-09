@@ -10,18 +10,18 @@ namespace Simple.Tests.Metadata.ChangeTableTest
     [Migration(1)]
     public class Migration1 : FluentMigration
     {
-        public override void Up()
+        public override void Up(SchemaAction schema)
         {
-            Schema.AddTable("t_change_table", t =>
+            schema.AddTable("t_change_table", t =>
             {
                 t.AddString("string1").WithSize(123);
                 t.AddInt32("int1");
             });
         }
 
-        public override void Down()
+        public override void Down(SchemaAction schema)
         {
-            Schema.RemoveTable("t_change_table");
+            schema.RemoveTable("t_change_table");
         }
     }
 

@@ -8,33 +8,31 @@ namespace Simple.Migrator.Fluent
 {
     public abstract class FluentMigration : Migration
     {
-        private IConvention _convention = null;
-        public virtual IConvention Convention
+        public virtual SchemaAction BuildSchema()
         {
-            get
-            {
-                if (_convention == null)
-                    _convention = new DefaultConvention();
-
-                return _convention;
-            }
-            set { _convention = value; }
+            return new SchemaAction(new DefaultConvention());
         }
 
-        private SchemaBuilder _schemaBuilder;
-        public virtual SchemaBuilder Schema
+        public virtual void ExecuteSchema(SchemaAction action)
         {
-            get
-            {
-                if (_schemaBuilder == null)
-                    _schemaBuilder = new SchemaBuilder(Database, Convention);
+            action.Execute(Database);
+        }
 
-                return _schemaBuilder;
-            }
-            set
-            {
-                _schemaBuilder = value;
-            }
+        public abstract void Up(SchemaAction schema);
+        public abstract void Down(SchemaAction schema);
+
+        public override void Up()
+        {
+            var schema = BuildSchema();
+            Up(schema);
+            ExecuteSchema(schema);
+        }
+
+        public override void Down()
+        {
+            var schema = BuildSchema();
+            Down(schema);
+            ExecuteSchema(schema);
         }
     }
 }

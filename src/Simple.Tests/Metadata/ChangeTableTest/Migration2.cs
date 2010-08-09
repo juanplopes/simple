@@ -10,9 +10,9 @@ namespace Simple.Tests.Metadata.ChangeTableTest
     [Migration(2)]
     public class Migration2 : FluentMigration
     {
-        public override void Up()
+        public override void Up(SchemaAction schema)
         {
-            Schema.ChangeTable("t_change_table", t =>
+            schema.ChangeTable("t_change_table", t =>
             {
                 t.RemoveColumn("string1");
                 t.RemoveColumn("int1");
@@ -20,9 +20,9 @@ namespace Simple.Tests.Metadata.ChangeTableTest
             });
         }
 
-        public override void Down()
+        public override void Down(SchemaAction schema)
         {
-            Schema.ChangeTable("t_change_table", t =>
+            schema.ChangeTable("t_change_table", t =>
             {
                 t.AddString("string1").WithSize(123);
                 t.AddInt32("int1");
