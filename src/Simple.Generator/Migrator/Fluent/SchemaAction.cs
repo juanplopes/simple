@@ -5,13 +5,13 @@ using System.Text;
 using Simple.Migrator.Framework;
 
 namespace Simple.Migrator.Fluent
-{   
+{
     public class SchemaAction : IAction
     {
         public IConvention Convention { get; set; }
         public IList<IAction> Actions { get; set; }
 
-            public SchemaAction(IConvention convention)
+        public SchemaAction(IConvention convention)
         {
             Actions = new List<IAction>();
             Convention = convention;
@@ -58,6 +58,13 @@ namespace Simple.Migrator.Fluent
             definition(table);
             Actions.Add(table);
             return table;
+        }
+
+        public FreeAction Do(Action<ITransformationProvider> action)
+        {
+            var item = new FreeAction(action);
+            Actions.Add(item);
+            return item;
         }
 
         #region IAction Members

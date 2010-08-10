@@ -76,6 +76,7 @@
     <Compile Include="Generator\TableNameTransformer.cs" />
     <Compile Include="Generator\ITableConventions.cs" />
     <Compile Include="Generator\TableTemplateBase.cs" />
+    <Compile Include="Migrator\Fluent\FreeAction.cs" />
     <Compile Include="Migrator\MigratorOptions.cs" />
     <Compile Include="NVelocity\EngineWrapper.cs" />
     <Compile Include="NVelocity\NVelocityMemoryEngine.cs" />
