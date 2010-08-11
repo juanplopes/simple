@@ -2,10 +2,10 @@
   <PropertyGroup>
     <BuildBase>$(MSBuildProjectDirectory)\</BuildBase>
 
-    <BuildDir>$(BuildBase)\build\</BuildDir>
-    <PackageDir>$(BuildBase)\pkg\</PackageDir>
-    <SourceDir>$(BuildBase)\src\</SourceDir>
-    <Configdir>$(BuildDir)\cfg\</Configdir>
+    <BuildDir>$(BuildBase)build\</BuildDir>
+    <PackageDir>$(BuildBase)pkg\</PackageDir>
+    <SourceDir>$(BuildBase)src\</SourceDir>
+    <Configdir>$(BuildDir)cfg\</Configdir>
 
     <Configuration>Release</Configuration>
     <ProductVersion>1.0</ProductVersion>
@@ -13,13 +13,13 @@
     <TestAssembly>Example.Project.Tests.dll</TestAssembly>
     <ToolsAssembly>Example.Project.Tools.exe</ToolsAssembly>
 
-    <TestBuildDir>$(BuildDir)\test\</TestBuildDir>
+    <TestBuildDir>$(BuildDir)test\</TestBuildDir>
     <ServerBuildDirName>server</ServerBuildDirName>
-    <ServerBuildDir>$(BuildDir)\$(ServerBuildDirName)\</ServerBuildDir>
-    <WebBuildDir>$(BuildDir)\web\</WebBuildDir>
-    <WebSourceDir>$(BuildDir)\web-src\</WebSourceDir>
+    <ServerBuildDir>$(BuildDir)$(ServerBuildDirName)\</ServerBuildDir>
+    <WebBuildDir>$(BuildDir)web\</WebBuildDir>
+    <WebSourceDir>$(BuildDir)web-src\</WebSourceDir>
 
-    <WebVirtualPath>/example-project</WebVirtualPath>
+    <WebVirtualPath>example-project</WebVirtualPath>
     <Environment>Development</Environment>
 
     <PackageZipFile>example-project-$(ProductVersion).zip</PackageZipFile>
@@ -143,6 +143,12 @@
   </Target>
 
   <Target Name="CIBuild">
-    <CallTarget Targets="Test;Rebuild;Prepare"/>
+    <CallTarget Targets="Test;Rebuild;Prepare;Publish"/>
+  </Target>
+  
+  <Target Name="Publish">
+  	<WebDirectoryDelete VirtualDirectoryName="$(WebVirtualPath)" ContinueOnError="true" />
+    <WebDirectoryCreate VirtualDirectoryName="$(WebVirtualPath)"
+                VirtualDirectoryPhysicalPath="$(WebBuildDir)" />
   </Target>
 </Project>
