@@ -33,8 +33,8 @@ namespace ${opt.Namespace}.Web.Controllers
         [HttpPost]
         public ActionResult Create(object diff)
         {
-            var model = new ${classname}();
-            model.BindWith(TryUpdateModel).Save();
+            var model = new ${classname}()
+                .BindWith(TryUpdateModel).Save();
             
             return RedirectToAction("Index")
                 .NotifySuccess("Success!");
