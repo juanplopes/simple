@@ -11,10 +11,10 @@ namespace ${opt.Namespace}.Tools.Migrations
     [Migration(${timestamp})]
     public class Migration${timestamp} : FluentMigration
     {
-        public override void Up()
+        public override void Up(SchemaAction schema)
         {
             /* try
-            Schema.AddTable("table_name", t =>
+            schema.AddTable("table_name", t =>
             {
                 //id column is added automatically
                 t.AddString("some_column");
@@ -23,10 +23,10 @@ namespace ${opt.Namespace}.Tools.Migrations
             
         }
 
-        public override void Down()
+        public override void Down(SchemaAction schema)
         {
             //just undo what you've done at Up()
-            //Schema.RemoveTable("table_name");
+            //schema.RemoveTable("table_name");
         }
     }
 
