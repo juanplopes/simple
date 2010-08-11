@@ -12,6 +12,7 @@ namespace Simple.Web.Mvc
     {
         public string ViewName { get; set; }
         public bool Clear { get; set; }
+        public bool HandleAnyException { get; set; }
 
         public SimpleValidationFilter() { }
         public SimpleValidationFilter(string view)
@@ -19,18 +20,18 @@ namespace Simple.Web.Mvc
             this.ViewName = view;
         }
 
-        public void AddValidationErrors(Controller controller, IList<Pair<string>> errors)
+        public void AddValidationErrors(ControllerBase controller, IList<Pair<string>> errors)
         {
             var groupedErrors = errors.GroupBy(x => x.First ?? string.Empty);
             foreach (var error in groupedErrors)
             {
-                var state = controller.ModelState[error.Key];
+                var state = controller.ViewData.ModelState[error.Key];
 
                 if (state != null) state.Errors.Clear();
 
                 foreach (var message in error)
                 {
-                    controller.ModelState.AddModelError(
+                    controller.ViewData.ModelState.AddModelError(
                         error.Key,
                         message.Second);
                 }
@@ -42,12 +43,12 @@ namespace Simple.Web.Mvc
         public void OnException(ExceptionContext filterContext)
         {
             var ex = filterContext.Exception;
-            var controller = filterContext.Controller as Controller;
+            var controller = filterContext.Controller;
             if (controller == null) return;
 
             List<Pair<string>> errors = new List<Pair<string>>();
             if (Clear)
-                controller.ModelState.Where(x => x.Value.Errors.Any()).ToList().ForEach(x => x.Value.Errors.Clear());
+                controller.ViewData.ModelState.Where(x => x.Value.Errors.Any()).ToList().ForEach(x => x.Value.Errors.Clear());
 
             if (ex is SimpleValidationException)
             {
@@ -58,11 +59,20 @@ namespace Simple.Web.Mvc
                 filterContext.Result = GetResult(filterContext, controller);
                 filterContext.ExceptionHandled = true;
             }
+            else if (HandleAnyException)
+            {
+                controller.ViewData.ModelState.AddModelError(string.Empty, ex);
+                filterContext.Result = GetResult(filterContext, controller);
+                filterContext.ExceptionHandled = true;
+            }
         }
 
 
-        private ViewResult GetResult(ControllerContext filterContext, Controller controller)
+        private ViewResult GetResult(ControllerContext filterContext, ControllerBase controller)
         {
+            if (controller is IFormController)
+                (controller as IFormController).PrepareForm(controller);
+
             var result = new ViewResult()
             {
                 ViewName = this.ViewName ?? ((string)filterContext.RouteData.Values["action"]),

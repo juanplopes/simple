@@ -64,6 +64,7 @@
     <Compile Include="HtmlButtons.cs" />
     <Compile Include="HtmlNotice.cs" />
     <Compile Include="HtmlUrl.cs" />
+    <Compile Include="IFormController.cs" />
     <Compile Include="ModelSelectList.cs" />
     <Compile Include="NoticeDefinition.cs" />
     <Compile Include="NullTempDataProvider.cs" />
