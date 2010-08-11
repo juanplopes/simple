@@ -89,9 +89,16 @@
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -128,6 +135,9 @@
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
     <Compile Include="Mvc\HtmlNoticeFixture.cs" />
+    <Compile Include="Mvc\MobileCapableWebFormEngineFixture.cs" />
+    <Compile Include="Mvc\Mocks\MockMobileCapableWebFormViewEngine.cs" />
+    <Compile Include="Mvc\Mocks\MvcMockHelpers.cs" />
     <Compile Include="Mvc\SelectListFixture.cs" />
     <Compile Include="Mvc\SelectListFinderFixture.cs" />
     <Compile Include="Reflection\ClassSignatureFixture.cs" />
