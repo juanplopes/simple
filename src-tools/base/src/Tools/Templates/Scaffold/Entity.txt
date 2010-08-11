@@ -68,7 +68,7 @@ namespace ${opt.Namespace}.Domain
         {
 #if ($opt.LazyLoad)
 #foreach($field in $table.OneToManyRelations)
-			this.$re.NameFor($field) = new ${re.ConcreteTypeFor($field)}();
+            this.$re.NameFor($field) = new ${re.ConcreteTypeFor($field)}();
 #end
 #end  
             Initialize();

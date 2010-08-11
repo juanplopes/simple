@@ -8,6 +8,7 @@ using ${opt.Namespace}.Domain;
 using ${opt.Namespace}.Web.Helpers;
 using Simple.Validation;
 using Simple.Web.Mvc;
+using Living.Elephant.Web.Helpers;
 
 namespace ${opt.Namespace}.Web.Controllers
 {
@@ -30,9 +31,11 @@ namespace ${opt.Namespace}.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(${classname} model)
+        public ActionResult Create(object diff)
         {
-            model.Save();
+            var model = new ${classname}();
+            model.BindWith(TryUpdateModel).Save();
+            
             return RedirectToAction("Index")
                 .NotifySuccess("Success!");
         }
@@ -46,8 +49,8 @@ namespace ${opt.Namespace}.Web.Controllers
         [HttpPost]
         public ActionResult Edit(int id, object diff)
         {
-			${classname}.Load(id)
-				.BindWith(TryUpdateModel).Update();
+            ${classname}.Load(id)
+                .BindWith(TryUpdateModel).Update();
 
             return RedirectToAction("Index")
                 .NotifySuccess("Success!");

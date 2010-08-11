@@ -5,11 +5,11 @@
     <%= Html.PageTitle("Details", "See the details here") %>
     <fieldset>
         <p>
-			<%-- <%= this.Literal(x => x.Name).Label("Name:") %> --%>
+            <%-- <%= this.Literal(x => x.Name).Label("Name:") %> --%>
         </p>
         <p>
             <%= Html.BackLink(Url.Action("Index"), "back") %>
-	        <%= Html.ActionLink("edit", "Edit", new { id = Model.Id }, new { @class = "button" }) %>
+            <%= Html.ActionLink("edit", "Edit", new { id = Model.Id }, new { @class = "button" }) %>
         </p>
     </fieldset>
 </asp:Content>
