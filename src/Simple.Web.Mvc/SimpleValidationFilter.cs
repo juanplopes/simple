@@ -61,7 +61,7 @@ namespace Simple.Web.Mvc
             }
             else if (HandleAnyException)
             {
-                controller.ViewData.ModelState.AddModelError(string.Empty, ex);
+                controller.ViewData.ModelState.AddModelError(string.Empty, ex.Message);
                 filterContext.Result = GetResult(filterContext, controller);
                 filterContext.ExceptionHandled = true;
             }
@@ -70,8 +70,7 @@ namespace Simple.Web.Mvc
 
         private ViewResult GetResult(ControllerContext filterContext, ControllerBase controller)
         {
-            if (controller is IFormController)
-                (controller as IFormController).PrepareForm(controller);
+            TryPrepareFormIfNeeded(controller);
 
             var result = new ViewResult()
             {
@@ -80,6 +79,19 @@ namespace Simple.Web.Mvc
                 TempData = controller.TempData
             };
             return result;
+        }
+
+        private static void TryPrepareFormIfNeeded(ControllerBase controller)
+        {
+            try
+            {
+                if (controller is IFormController)
+                    (controller as IFormController).PrepareForm(controller);
+            }
+            catch (Exception e)
+            {
+                controller.ViewData.ModelState.AddModelError(string.Empty, e.Message);
+            }
         }
 
         #endregion

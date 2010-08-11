@@ -29,9 +29,13 @@ namespace Simple.Web.Mvc
                     if (modelState != null && modelState.Value != null)
                         list = list.SelectValue(modelState.Value.AttemptedValue);
                 }
-
+                return list;
             }
-            return list;
+            else
+            {
+                return new ModelSelectList<P>(new P[0], x => x, x => x);
+            }
+            
         }
 
 
