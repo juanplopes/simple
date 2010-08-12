@@ -22,6 +22,11 @@ namespace Simple.Tests.Mvc
             public Test Other { get; set; }
         }
 
+        class TestList
+        {
+            public IList<TestChild> Children { get; set; }
+        }
+
         class Test
         {
             public TestChild Child { get; set; }
@@ -41,6 +46,25 @@ namespace Simple.Tests.Mvc
             
             obj.Should().Be.OfType<Test>().And
                 .Value.Child.ID.Should().Be(2);
+        }
+
+        [Test]
+        public void CanBindMultipleIntProperty()
+        {
+            var obj = TestBind<Test>(new NameValueCollection { { "Child", "4" }, { "Child", "3" } });
+
+            obj.Should().Be.OfType<Test>().And
+                .Value.Child.ID.Should().Be(4);
+        }
+
+        [Test, Ignore]
+        public void CanBindMultipleIntListProperty()
+        {
+            var obj = TestBind<TestList>(new NameValueCollection { { "Child", "4" }, { "Child", "3" } });
+
+            var asserter = obj.Should().Be.OfType<TestList>().And.Value;
+            asserter.Children.Count.Should().Be(2);
+            asserter.Children.Select(x => x.ID).Should().Have.SameSequenceAs(4, 3);
         }
 
         [Test]
