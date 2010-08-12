@@ -12,6 +12,15 @@ namespace Simple.Web.Mvc
     {
         ConversionConstructors ctors = new ConversionConstructors();
 
+
+        public EntityModelBinder() { }
+
+        public EntityModelBinder(ModelBinderDictionary binders)
+        {
+            Binders = binders;
+            binders.DefaultBinder = this;
+        }
+
         protected override void BindProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, System.ComponentModel.PropertyDescriptor propertyDescriptor)
         {
             var type = propertyDescriptor.PropertyType;
@@ -43,6 +52,7 @@ namespace Simple.Web.Mvc
             base.BindProperty(controllerContext, bindingContext, propertyDescriptor);
 
         }
-     
+    
+
     }
 }

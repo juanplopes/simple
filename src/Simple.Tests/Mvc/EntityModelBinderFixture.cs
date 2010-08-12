@@ -17,6 +17,11 @@ namespace Simple.Tests.Mvc
     [TestFixture]
     public class EntityModelBinderFixture
     {
+        class TestParent
+        {
+            public Test Other { get; set; }
+        }
+
         class Test
         {
             public TestChild Child { get; set; }
@@ -38,10 +43,29 @@ namespace Simple.Tests.Mvc
                 .Value.Child.ID.Should().Be(2);
         }
 
+        [Test]
+        public void CanBindNullToProperty()
+        {
+            var obj = TestBind<Test>(new NameValueCollection { { "Child", "" } });
+
+            obj.Should().Be.OfType<Test>().And
+                .Value.Child.Should().Be.Null();
+        }
+
+
+        [Test]
+        public void CanBindInnerIntProperty()
+        {
+            var obj = TestBind<TestParent>(new NameValueCollection { { "Other.Child", "2" } });
+
+            obj.Should().Be.OfType<TestParent>().And
+                .Value.Other.Child.ID.Should().Be(2);
+        }
+
         private static object TestBind<T>(NameValueCollection col)
             where T : new()
         {
-            var binder = new EntityModelBinder();
+            var binder = new EntityModelBinder(new ModelBinderDictionary());
 
             var context = new Mock<ControllerContext>();
             context
