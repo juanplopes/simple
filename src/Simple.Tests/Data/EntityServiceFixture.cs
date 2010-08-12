@@ -31,7 +31,8 @@ namespace Simple.Tests.Data
 
             result.TotalPages(take).Should().Be((int)Math.Ceiling((decimal)q.Count() / take));
             result.Count.Should().Be(comp.Count);
-            Assert.Greater(comp.Count, 0);
+            
+            comp.Count.Should().Be.GreaterThan(0);
 
             for (int i = 0; i < comp.Count; i++)
             {
@@ -44,7 +45,7 @@ namespace Simple.Tests.Data
             var comp = func(_customers.AsQueryable()).ToList();
 
             result.Length.Should().Be(comp.Count);
-            Assert.Greater(comp.Count, 0);
+            comp.Count.Should().Be.GreaterThan(0);
 
             for (int i = 0; i < comp.Count; i++)
             {
@@ -62,8 +63,8 @@ namespace Simple.Tests.Data
         [Test]
         public void TestReloadById()
         {
-            Assert.IsNotNull(new Customer() { Id = "BERGS" }.Reload().Phone);
-            Assert.IsNotNull(new Customer() { Id = "ANTON" }.Reload().Phone);
+            new Customer() { Id = "BERGS" }.Reload().Phone.Should().Not.Be.Null();
+            new Customer() { Id = "ANTON" }.Reload().Phone.Should().Not.Be.Null();
         }
 
         [Test]
@@ -134,17 +135,17 @@ namespace Simple.Tests.Data
             var l = Product.List(x => x.Category.Name == "Meat/Poultry");
 
             l.Count.Should().Be(6);
-            Assert.IsTrue(l.All(x => x.Category.Id == 6));
+            l.All(x => x.Category.Id == 6).Should().Be.True();
         }
 
         public void TestListProductsByCategoryId()
         {
             var c = Category.Find(x => x.Name == "Meat/Poutrly");
-            Assert.IsNotNull(c);
+            c.Should().Not.Be.Null();
 
             var p = Product.List(x => x.Category.Id == c.Id);
             p.Count.Should().Be(6);
-            Assert.IsTrue(p.All(x => x.Category.Id == 6));
+            p.All(x => x.Category.Id == 6).Should().Be.True();
         }
 
         [Test]
@@ -167,7 +168,7 @@ namespace Simple.Tests.Data
         {
             var p = Product.ListAll(q => q.OrderByDesc(x => x.Category.Name));
             var p2 = Product.ListAll().OrderByDescending(x => x.Category.Name);
-            Assert.IsTrue(p.SequenceEqual(p2));
+            p2.Should().Have.SameSequenceAs(p);
         }
 
         [Test]
@@ -376,7 +377,7 @@ namespace Simple.Tests.Data
 
             var c2 = c.Clone();
             c2.CompanyName = "WHATEVER";
-            Assert.Throws<NonUniqueObjectException>(() => c2.SaveOrUpdate());
+            c2.Executing(x => x.SaveOrUpdate()).Throws<NonUniqueObjectException>();
 
             c2 = c2.Merge();
             c2.SaveOrUpdate();
@@ -392,7 +393,7 @@ namespace Simple.Tests.Data
             var p = Product.Load(1).Clone();
             p.Id = 0;
             p = p.Save();
-            Assert.AreNotEqual(0, p.Id);
+            p.Id.Should().Not.Be(0);
         }
 
         [Test]
@@ -401,7 +402,7 @@ namespace Simple.Tests.Data
             var p = Product.Load(1).Clone();
             p.Id = 0;
             p = p.SaveOrUpdate();
-            Assert.AreNotEqual(0, p.Id);
+            p.Id.Should().Not.Be(0);
         }
 
 

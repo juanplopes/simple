@@ -100,7 +100,7 @@ namespace Simple.Tests.Data
             {
                 p = EmployeeTerritory.Find(x => true, q => q.Fetch(x => x.Territory).ThenFetch(x => x.Region));
             }
-            Assert.AreEqual("Eastern".PadRight(50, ' '), p.Territory.Region.Description);
+            p.Territory.Region.Description.Should().Be("Eastern".PadRight(50, ' '));
         }
 
 

@@ -63,11 +63,11 @@ namespace Simple.Tests.Reflection
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
 
-            Assert.IsTrue(value.ContainsKey("aaa"));
-            Assert.IsFalse(value.ContainsKey("Aaa"));
+            value.ContainsKey("aaa").Should().Be.True();
+            value.ContainsKey("Aaa").Should().Be.False();
 
-            Assert.IsTrue(value.ContainsKey("bbb"));
-            Assert.IsFalse(value.ContainsKey("Bbb"));
+            value.ContainsKey("bbb").Should().Be.True();
+            value.ContainsKey("Bbb").Should().Be.False();
         }
 
         [Test]
@@ -81,11 +81,11 @@ namespace Simple.Tests.Reflection
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
 
-            Assert.IsTrue(value.ContainsKey("aaa"));
-            Assert.IsFalse(value.ContainsKey("Aaa"));
+            value.ContainsKey("aaa").Should().Be.True();
+            value.ContainsKey("Aaa").Should().Be.False();
 
-            Assert.IsTrue(value.ContainsKey("bbb"));
-            Assert.IsFalse(value.ContainsKey("Bbb"));
+            value.ContainsKey("bbb").Should().Be.True();
+            value.ContainsKey("Bbb").Should().Be.False();
         }
 
         [Test]
@@ -96,11 +96,11 @@ namespace Simple.Tests.Reflection
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
 
-            Assert.IsTrue(value.ContainsKey("aaa"));
-            Assert.IsTrue(value.ContainsKey("Aaa"));
+            value.ContainsKey("aaa").Should().Be.True();
+            value.ContainsKey("Aaa").Should().Be.True();
 
-            Assert.IsTrue(value.ContainsKey("bbb"));
-            Assert.IsTrue(value.ContainsKey("Bbb"));
+            value.ContainsKey("bbb").Should().Be.True();
+            value.ContainsKey("Bbb").Should().Be.True();
         }
 
         [Test]
@@ -111,11 +111,11 @@ namespace Simple.Tests.Reflection
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
 
-            Assert.IsTrue(value.ContainsKey("aaa"));
-            Assert.IsTrue(value.ContainsKey("Aaa"));
+            value.ContainsKey("aaa").Should().Be.True();
+            value.ContainsKey("Aaa").Should().Be.True();
 
-            Assert.IsTrue(value.ContainsKey("bbb"));
-            Assert.IsTrue(value.ContainsKey("Bbb"));
+            value.ContainsKey("bbb").Should().Be.True();
+            value.ContainsKey("Bbb").Should().Be.True();
         }
 
         class Sample1

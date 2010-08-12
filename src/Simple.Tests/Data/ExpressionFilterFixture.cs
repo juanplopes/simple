@@ -27,7 +27,7 @@ namespace Simple.Tests.Data
         public void TestCustomerLoadIdContainsFalse()
         {
             var c = Customer.Find(x => x.Id.Contains("DRACDasd"));
-            Assert.IsNull(c);
+            c.Should().Be.Null();
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Simple.Tests.Data
         public void TestProductLoadByIdAndCategoryFalse()
         {
             var p = Product.Find(x => x.Id == 2 && x.Category.Name == "OutroNome");
-            Assert.IsNull(p);
+            p.Should().Be.Null();
         }
     }
 }

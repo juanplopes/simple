@@ -29,7 +29,7 @@ namespace Simple.Tests.Serialization
 
             var newExpr = (Expression<Func<int, int>>)ser.Deserialize(ser.Serialize(expr));
 
-            Assert.AreNotEqual(expr, newExpr);
+            newExpr.Should().Not.Be(expr);
             newExpr.Compile()(21).Should().Be(42);
         }
 
@@ -42,7 +42,7 @@ namespace Simple.Tests.Serialization
 
             var newExpr = (LambdaExpression)ser.Deserialize(ser.Serialize(expr));
 
-            Assert.AreNotEqual(expr, newExpr);
+            newExpr.Should().Not.Be(expr);
             var obj = newExpr.Compile().DynamicInvoke(21);
             Assert.AreEqual(42, obj.GetType().GetProperty("asd").GetValue(obj, null));
         }

@@ -63,7 +63,7 @@ namespace Simple.Tests.Services
         public void TestParams()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual("42", test.ReturnString(4, "1", "2", "2", "4", "2"));
+            test.ReturnString(4, "1", "2", "2", "4", "2").Should().Be("42");
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Simple.Tests.Services
         public void TestSelectiveHook()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreNotEqual("123456", test.ReturnString());
+            test.ReturnString().Should().Not.Be("123456");
 
             IOtherService other = Simply.Do[ConfigKey].Resolve<IOtherService>();
             other.ReturnString().Should().Be("123456");
@@ -124,7 +124,7 @@ namespace Simple.Tests.Services
         public void TestNonHookedExceptionOnFinally()
         {
             IOtherService other = new OtherService();
-            Assert.AreEqual(new DateTime(2009, 09, 09), other.ThrowExceptionOnFinally());
+            other.ThrowExceptionOnFinally().Should().Be(new DateTime(2009, 09, 09));
         }
 
         [Test, ExpectedException(typeof(ArgumentException))]

@@ -36,7 +36,7 @@ namespace Simple.Tests.Reflection
             Assert.IsNotNull(attr2);
 
             var attr3 = AttributeCache.Do.First<Attribute3Attribute>(typeof(AttributeTest));
-            Assert.IsNull(attr3);
+            attr3.Should().Be.Null();
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Simple.Tests.Reflection
         public void PropAttributesFirstTest()
         {
             var attr1 = AttributeCache.Do.First<Attribute1Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
-            Assert.IsNull(attr1);
+            attr1.Should().Be.Null();
 
             var attr2 = AttributeCache.Do.First<Attribute2Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
             Assert.IsNotNull(attr2);

@@ -31,7 +31,7 @@ namespace Simple.Tests.Services
         public void TestAllCallsAreInSameThread()
         {
             var service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
-            Assert.IsTrue(service.CheckSameThread(Thread.CurrentThread.ManagedThreadId));
+            service.CheckSameThread(Thread.CurrentThread.ManagedThreadId).Should().Be.True();
         }
     }
 }

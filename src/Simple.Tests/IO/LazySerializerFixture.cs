@@ -59,14 +59,14 @@ namespace Simple.Tests.IO
             var newSerializable = SerializeAndDeserialize(serializable);
             var value2 = newSerializable.Real;
 
-            Assert.IsNull(value2);
+            value2.Should().Be.Null();
         }
 
         [Test]
         public void WhenTheClassIsNullTheProxyIsNullAsWell()
         {
             var serializable = new SerializeAsString(null);
-            Assert.IsNull(serializable.Proxy);
+            serializable.Proxy.Should().Be.Null();
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Simple.Tests.IO
             var value = new NonSerializable() { Value = "asd" };
             var serializable = new SerializeAsString(value);
 
-            Assert.IsFalse(serializable.IsProxyActivated);
+            serializable.IsProxyActivated.Should().Be.False();
         }
 
         [Test]
@@ -84,10 +84,10 @@ namespace Simple.Tests.IO
             var serializable = new SerializeAsString(null);
             var newSerializable = SimpleSerializer.Binary().RoundTrip(serializable);
 
-            Assert.IsFalse(newSerializable.IsProxyActivated);
-            Assert.IsFalse(newSerializable.IsRealActivated);
-            Assert.IsNull(newSerializable.Real);
-            Assert.IsTrue(newSerializable.IsRealActivated);
+            newSerializable.IsProxyActivated.Should().Be.False();
+            newSerializable.IsRealActivated.Should().Be.False();
+            newSerializable.Real.Should().Be.Null();
+            newSerializable.IsRealActivated.Should().Be.True();
         }
 
         [Test]
@@ -98,8 +98,8 @@ namespace Simple.Tests.IO
             var proxy = serializable.Proxy;
 
             Assert.IsNotNull(proxy);
-            Assert.IsTrue(serializable.IsRealActivated);
-            Assert.IsTrue(serializable.IsProxyActivated);
+            serializable.IsRealActivated.Should().Be.True();
+            serializable.IsProxyActivated.Should().Be.True();
         }
 
         [Test]
@@ -109,8 +109,8 @@ namespace Simple.Tests.IO
             var serializable = new SerializeAsString(value);
             var newSerializable = SerializeAndDeserialize(serializable);
 
-            Assert.IsFalse(newSerializable.IsRealActivated);
-            Assert.IsTrue(serializable.IsProxyActivated);
+            newSerializable.IsRealActivated.Should().Be.False();
+            serializable.IsProxyActivated.Should().Be.True();
         }
 
         [Test]
@@ -122,8 +122,8 @@ namespace Simple.Tests.IO
             var real = newSerializable.Real;
 
             Assert.IsNotNull(real);
-            Assert.IsTrue(newSerializable.IsRealActivated);
-            Assert.IsTrue(serializable.IsProxyActivated);
+            newSerializable.IsRealActivated.Should().Be.True();
+            serializable.IsProxyActivated.Should().Be.True();
         }
 
         [Test]
@@ -132,9 +132,9 @@ namespace Simple.Tests.IO
             var serializable = new SerializeAsString(null);
             var newSerializable = SerializeAndDeserialize(serializable);
 
-            Assert.IsNull(serializable.Proxy);
-            Assert.IsNull(newSerializable.Real);
-            Assert.IsNull(newSerializable.Proxy);
+            serializable.Proxy.Should().Be.Null();
+            newSerializable.Real.Should().Be.Null();
+            newSerializable.Proxy.Should().Be.Null();
         }
 
         protected T SerializeAndDeserialize<T>(T value)

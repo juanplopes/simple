@@ -68,7 +68,7 @@ namespace Simple.Tests.Services
         {
             ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             service.GetOverloadedMethod(10).Should().Be(10);
-            Assert.AreEqual(15, service.GetOverloadedMethod(10, 5));
+            service.GetOverloadedMethod(10, 5).Should().Be(15);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Simple.Tests.Services
         {
             ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
             SimpleContext.Get().Username = null;
-            Assert.IsFalse(service.TestPassedIdentity());
+            service.TestPassedIdentity().Should().Be.False();
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace Simple.Tests.Services
                 ex = true;
             }
 
-            Assert.IsTrue(ex);
+            ex.Should().Be.True();
             ISecondService service2 = Simply.Do[ConfigKey].Resolve<ISecondService>();
             service2.OtherString().Should().Be("42");
         }
@@ -215,7 +215,7 @@ namespace Simple.Tests.Services
             type.SelfProperty = type;
 
             ISimpleService svc = Simply.Do[ConfigKey].Resolve<ISimpleService>();
-            Assert.IsTrue(svc.TestSelfType(type));
+            svc.TestSelfType(type).Should().Be.True();
         }
 
         [Test]
@@ -232,7 +232,7 @@ namespace Simple.Tests.Services
         public void TestSerializingLambdaExpressions()
         {
             ISimpleService svc = Simply.Do[ConfigKey].Resolve<ISimpleService>();
-            Assert.AreEqual(42, svc.Calculate((x, y) => x * 2 * y, 3, 7));
+            svc.Calculate((x, y) => x * 2 * y, 3, 7).Should().Be(42);
         }
 
         //[Test]

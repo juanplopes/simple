@@ -26,7 +26,7 @@ namespace Simple.Tests.Serialization
             var value2 = GetSerializer<Sample1>().Deserialize(data);
             var value3 = value2 as Sample1;
             Assert.IsInstanceOf<Sample1>(value2);
-            Assert.AreNotEqual(value, value3);
+            value3.Should().Not.Be(value);
             value3.Prop1.Should().Be(value.Prop1);
             value3.Prop2.Should().Be(value.Prop2);
         }
@@ -50,7 +50,7 @@ namespace Simple.Tests.Serialization
 
             var value2 = GetSerializer<Sample1>().Deserialize(data);
             var value3 = (Sample1)value2;
-            Assert.IsNull(value2);
+            value2.Should().Be.Null();
             value3.Should().Be(value);
         }
 

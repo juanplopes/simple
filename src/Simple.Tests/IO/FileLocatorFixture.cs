@@ -31,7 +31,7 @@ namespace Simple.Tests.IO
         public void TearDown()
         {
             Directory.Delete("testdir", true);
-            Assert.IsFalse(Directory.Exists("testdir"));
+            Directory.Exists("testdir").Should().Be.False();
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Simple.Tests.IO
             locator.Add("testdir/B/C");
 
             string file = locator.Find("5", false);
-            Assert.IsNull(file);
+            file.Should().Be.Null();
         }
     }
 }

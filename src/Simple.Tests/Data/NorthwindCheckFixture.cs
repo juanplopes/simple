@@ -76,7 +76,7 @@ namespace Simple.Tests.Data
             var t2 = t.Clone();
 
             Assert.IsFalse(object.ReferenceEquals(t, t2));
-            Assert.IsTrue(t.Equals(t2));
+            t.Equals(t2).Should().Be.True();
         }
     }
 }

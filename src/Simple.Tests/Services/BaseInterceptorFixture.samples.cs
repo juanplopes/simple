@@ -138,7 +138,7 @@ namespace Simple.Tests.Services
 
             public void ReturnVoidG<T>(T value) where T : IConvertible
             {
-                Assert.IsFalse(this is IDynamicProxy);
+                this.Should().Not.Be.InstanceOf<IDynamicProxy>();
                 value.ToDouble(CultureInfo.InvariantCulture);
             }
             public double ReturnDoubleG<T>(T value) where T : IConvertible

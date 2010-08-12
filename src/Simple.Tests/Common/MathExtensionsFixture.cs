@@ -31,16 +31,16 @@ namespace Simple.Tests.Common
         [Test]
         public void TestNoNegativePrimes()
         {
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(-11));
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(-9));
+            MathExtensions.GetPrimes().IsPrime(-11).Should().Be.False();
+            MathExtensions.GetPrimes().IsPrime(-9).Should().Be.False();
         }
 
         [Test]
         public void TestPrimeCacheLimits()
         {
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(65520));
-            Assert.IsTrue(MathExtensions.GetPrimes().IsPrime(65521));
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(65522));
+            MathExtensions.GetPrimes().IsPrime(65520).Should().Be.False();
+            MathExtensions.GetPrimes().IsPrime(65521).Should().Be.True();
+            MathExtensions.GetPrimes().IsPrime(65522).Should().Be.False();
         }
 
         [Test]
@@ -52,24 +52,26 @@ namespace Simple.Tests.Common
         [Test]
         public void TestLargeInt32PrimeNumbers()
         {
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(982451652));
-            Assert.IsTrue(MathExtensions.GetPrimes().IsPrime(982451653));
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(982451654));
+            MathExtensions.GetPrimes().IsPrime(982451652).Should().Be.False();
+            MathExtensions.GetPrimes().IsPrime(982451653).Should().Be.True();
+            MathExtensions.GetPrimes().IsPrime(982451654).Should().Be.False();
 
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(2147483628));
-            Assert.IsTrue(MathExtensions.GetPrimes().IsPrime(2147483629));
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(2147483630));
+            MathExtensions.GetPrimes().IsPrime(2147483628).Should().Be.False();
+            MathExtensions.GetPrimes().IsPrime(2147483629).Should().Be.True();
+            MathExtensions.GetPrimes().IsPrime(2147483630).Should().Be.False();
         }
 
 
         [Test]
         public void TestFactorization()
         {
-            CollectionAssert.AreEqual(new[] { 2, 982451653 }, MathExtensions.GetPrimes().Factorize(2 * 982451653).ToList());
-
-            CollectionAssert.AreEqual(new[] { 2, 3, 3, 5, 13 }, MathExtensions.GetPrimes().Factorize(2 * 3 * 3 * 5 * 13).ToList());
-
             var primes = MathExtensions.GetPrimes();
+
+            primes.Factorize(2 * 982451653)
+                .Should().Have.SameSequenceAs(2, 982451653);
+
+            primes.Factorize(2 * 3 * 3 * 5 * 13)
+                .Should().Have.SameSequenceAs(2, 3, 3, 5, 13);
 
             primes.Factorize(982451653)
                 .Should().Have.SameSequenceAs(new[] { 982451653 });
@@ -91,47 +93,46 @@ namespace Simple.Tests.Common
         [Test]
         public void ModRound()
         {
-            Assert.AreEqual(8, MathExtensions.ModRound(10, 4));
-            Assert.AreEqual(9, MathExtensions.ModRound(10, 3));
-            Assert.AreEqual(100, MathExtensions.ModRound(106, 100));
+            MathExtensions.ModRound(10, 4).Should().Be(8);
+            MathExtensions.ModRound(10, 3).Should().Be(9);
+            MathExtensions.ModRound(106, 100).Should().Be(100);
 
-            Assert.AreEqual(8L, MathExtensions.ModRound(10L, 4L));
-            Assert.AreEqual(9L, MathExtensions.ModRound(10L, 3L));
-            Assert.AreEqual(100L, MathExtensions.ModRound(106L, 100L));
+            MathExtensions.ModRound(10L, 4L).Should().Be(8L);
+            MathExtensions.ModRound(10L, 3L).Should().Be(9L);
+            MathExtensions.ModRound(106L, 100L).Should().Be(100L);
         }
 
         [Test]
         public void NegativeModRound()
         {
-            Assert.AreEqual(-12, MathExtensions.ModRound(-10, 4));
-            Assert.AreEqual(-12, MathExtensions.ModRound(-10, 3));
-            Assert.AreEqual(-200, MathExtensions.ModRound(-106, 100));
+            MathExtensions.ModRound(-10, 4).Should().Be(-12);
+            MathExtensions.ModRound(-10, 3).Should().Be(-12);
+            MathExtensions.ModRound(-106, 100).Should().Be(-200);
 
-            Assert.AreEqual(-12L, MathExtensions.ModRound(-10L, 4L));
-            Assert.AreEqual(-12L, MathExtensions.ModRound(-10L, 3L));
-            Assert.AreEqual(-200L, MathExtensions.ModRound(-106L, 100L));
+            MathExtensions.ModRound(-10L, 4L).Should().Be(-12L);
+            MathExtensions.ModRound(-10L, 3L).Should().Be(-12L);
+            MathExtensions.ModRound(-106L, 100L).Should().Be(-200L);
         }
 
         [Test]
         public void TestRealMod()
         {
-            Assert.AreEqual(2, MathExtensions.RealMod(10, 4));
-            Assert.AreEqual(2, MathExtensions.RealMod(-10, 4));
+            MathExtensions.RealMod(10, 4).Should().Be(2);
+            MathExtensions.RealMod(-10, 4).Should().Be(2);
 
-            Assert.AreEqual(1, MathExtensions.RealMod(10, 3));
-            Assert.AreEqual(2, MathExtensions.RealMod(-10, 3));
+            MathExtensions.RealMod(10, 3).Should().Be(1);
+            MathExtensions.RealMod(-10, 3).Should().Be(2);
 
-            Assert.AreEqual(6, MathExtensions.RealMod(106, 100));
-            Assert.AreEqual(94, MathExtensions.RealMod(-106, 100));
+            MathExtensions.RealMod(106, 100).Should().Be(6);
+            MathExtensions.RealMod(-106, 100).Should().Be(94);
         }
 
         [Test]
         public void TestFloatEqTests()
         {
-            Assert.IsTrue(MathExtensions.FloatEq(10.099m, 10m, 0.1m));
-            Assert.IsFalse(MathExtensions.FloatEq(10.1m, 10m, 0.1m));
-
-            Assert.IsTrue(MathExtensions.FloatEq(10.099, 10, 0.1));
+            MathExtensions.FloatEq(10.099m, 10m, 0.1m).Should().Be.True();
+            MathExtensions.FloatEq(10.1m, 10m, 0.1m).Should().Be.False();
+            MathExtensions.FloatEq(10.099, 10, 0.1).Should().Be.True();
         }
     }
 }

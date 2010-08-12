@@ -63,7 +63,7 @@ namespace Simple.Tests.Reflection
         {
             var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestVoid"));
             object res = inv.Invoke(new TestClass());
-            Assert.IsNull(res);
+            res.Should().Be.Null();
         }
 
         [Test]

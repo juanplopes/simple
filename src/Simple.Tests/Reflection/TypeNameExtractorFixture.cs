@@ -25,7 +25,7 @@ namespace Simple.Tests.Reflection
         public void NormalClassDefinitionFullName()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual(typeof(TypeNameExtractorFixture).FullName, extractor.GetName(typeof(TypeNameExtractorFixture), true));
+            extractor.GetName(typeof(TypeNameExtractorFixture), true).Should().Be(typeof(TypeNameExtractorFixture).FullName);
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(TypeNameExtractorFixture).Namespace
@@ -48,7 +48,7 @@ namespace Simple.Tests.Reflection
         public void GenericClassDefinitionFullName()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("System.Collections.Generic.IList<T>", extractor.GetName(typeof(IList<>), true));
+            extractor.GetName(typeof(IList<>), true).Should().Be("System.Collections.Generic.IList<T>");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(IList<>).Namespace
@@ -214,7 +214,7 @@ namespace Simple.Tests.Reflection
         public void CanReturnLowercaseFullNameForVoidType()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("void", extractor.GetName(typeof(void), true));
+            extractor.GetName(typeof(void), true).Should().Be("void");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(void).Namespace,

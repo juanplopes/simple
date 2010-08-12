@@ -271,7 +271,7 @@ namespace Simple.Tests.Config
 
             var src = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
             src.AddTransform(x => x.AString = "42");
-            Assert.IsNull(src.Get());
+            src.Get().Should().Be.Null();
 
             src.Load(mySample);
             Assert.IsNotNull(src.Get());
@@ -287,7 +287,7 @@ namespace Simple.Tests.Config
 
             var src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>();
             src.AddTransform(x => x.AString = "42");
-            Assert.IsNull(src.Get());
+            src.Get().Should().Be.Null();
 
             src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(mySample));
             Assert.IsNotNull(src.Get());
@@ -304,7 +304,7 @@ namespace Simple.Tests.Config
                   </BasicTypesSampleWithoutAttr>";
             var src = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
             var cfg = src.Load(brokenXml).Get();
-            Assert.IsNull(cfg.AString);
+            cfg.AString.Should().Be.Null();
         }
 
         [Test]

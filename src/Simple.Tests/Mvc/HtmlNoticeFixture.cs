@@ -123,7 +123,7 @@ namespace Simple.Tests.Mvc
         {
             var data = new ViewDataDictionary();
             var html = data.Notice("test");
-            Assert.IsNull(html);
+            html.Should().Be.Null();
         }
 
         [Test]

@@ -24,7 +24,7 @@ namespace Simple.Tests.Data
             using (var dx = MySimply.EnterContext())
             {
                 s1 = dx.Session;
-                Assert.IsTrue(s1.IsOpen);
+                s1.IsOpen.Should().Be.True();
 
                 using (var dx2 = MySimply.EnterContext())
                 {
@@ -32,19 +32,19 @@ namespace Simple.Tests.Data
                     s2.Should().Be(s1);
 
                     s3 = dx2.NewSession();
-                    Assert.IsTrue(s3.IsOpen);
+                    s3.IsOpen.Should().Be.True();
 
                     s4 = dx.NewSession();
                 }
 
-                Assert.IsFalse(s3.IsOpen);
+                s3.IsOpen.Should().Be.False();
 
-                Assert.IsTrue(s2.IsOpen);
-                Assert.IsTrue(s4.IsOpen);
+                s2.IsOpen.Should().Be.True();
+                s4.IsOpen.Should().Be.True();
             }
 
-            Assert.IsFalse(s2.IsOpen);
-            Assert.IsFalse(s4.IsOpen);
+            s2.IsOpen.Should().Be.False();
+            s4.IsOpen.Should().Be.False();
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Simple.Tests.Data
             using (var dx = MySimply.EnterContext())
             {
                 var s1 = dx.Session;
-                Assert.IsTrue(dx.IsOpen);
+                dx.IsOpen.Should().Be.True();
             }
         }
 
@@ -116,7 +116,7 @@ namespace Simple.Tests.Data
                     tx1.Rollback();
                 }
 
-                Assert.AreNotEqual("NewName", c.Name);
+                c.Name.Should().Not.Be("NewName");
 
             }
         }

@@ -163,7 +163,7 @@ namespace Simple.Tests.Expressions
 
             var bytes = SimpleSerializer.Binary().Serialize(expr1);
             var expr2 = (EditableExpression)SimpleSerializer.Binary().Deserialize(bytes);
-            Assert.IsNotNull(expr2);
+            expr2.Should().Not.Be.Null();
         }
 
 

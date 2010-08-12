@@ -38,8 +38,8 @@ namespace Simple.Tests.Reflection
             var obj1 = new Sample1() { IntProp = 1, StringProp = "2", IgnoreProp = DateTime.Now };
             var obj2 = new Sample1() { IntProp = 1, StringProp = "3", IgnoreProp = DateTime.Now.AddDays(1) };
 
-            Assert.AreNotEqual(obj1, obj2);
-            Assert.AreNotEqual(obj1.GetHashCode(), obj2.GetHashCode());
+            obj2.Should().Not.Be(obj1);
+            obj2.GetHashCode().Should().Not.Be(obj1.GetHashCode());
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Simple.Tests.Data
 
             list.Count.Should().Be(5);
             foreach (var obj in list)
-                Assert.IsNull(obj.SampleProduct); //here is a NHibernate bug
+                obj.SampleProduct.Should().Be.Null(); //here is a NHibernate bug
         }
 
         [Test]

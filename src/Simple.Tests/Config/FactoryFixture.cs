@@ -56,17 +56,17 @@ namespace Simple.Tests.Config
         [Test]
         public void BestKeyOfTests()
         {
-            Assert.AreEqual(1, SourceManager.Do.BestKeyOf(1, SourceManager.Do.DefaultKey, 3));
-            Assert.AreEqual(1, SourceManager.Do.BestKeyOf(1, null, 3));
+            SourceManager.Do.BestKeyOf(1, SourceManager.Do.DefaultKey, 3).Should().Be(1);
+            SourceManager.Do.BestKeyOf(1, null, 3).Should().Be(1);
 
-            Assert.AreEqual(2, SourceManager.Do.BestKeyOf(null, 2, 3));
-            Assert.AreEqual(2, SourceManager.Do.BestKeyOf(SourceManager.Do.DefaultKey, 2, 3));
+            SourceManager.Do.BestKeyOf(null, 2, 3).Should().Be(2);
+            SourceManager.Do.BestKeyOf(SourceManager.Do.DefaultKey, 2, 3).Should().Be(2);
 
-            Assert.AreEqual(3, SourceManager.Do.BestKeyOf(null, SourceManager.Do.DefaultKey, 3));
-            Assert.AreEqual(3, SourceManager.Do.BestKeyOf(SourceManager.Do.DefaultKey, null, 3));
+            SourceManager.Do.BestKeyOf(null, SourceManager.Do.DefaultKey, 3).Should().Be(3);
+            SourceManager.Do.BestKeyOf(SourceManager.Do.DefaultKey, null, 3).Should().Be(3);
 
-            Assert.AreEqual(null, SourceManager.Do.BestKeyOf(null, SourceManager.Do.DefaultKey, null));
-            Assert.AreEqual(SourceManager.Do.DefaultKey, SourceManager.Do.BestKeyOf(null, null, SourceManager.Do.DefaultKey));
+            SourceManager.Do.BestKeyOf(null, SourceManager.Do.DefaultKey, null).Should().Be(null);
+            SourceManager.Do.BestKeyOf(null, null, SourceManager.Do.DefaultKey).Should().Be(SourceManager.Do.DefaultKey);
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Simple.Tests.Config
                 long time = DateTime.Now.Ticks;
                 while (!flag && new TimeSpan(DateTime.Now.Ticks - time).TotalSeconds < 3) ;
 
-                Assert.IsTrue(flag);
+                flag.Should().Be.True();
             }
         }
 

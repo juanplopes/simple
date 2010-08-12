@@ -89,7 +89,7 @@ namespace Simple.Tests.Config
                 long time = DateTime.Now.Ticks;
                 while (!flag && new TimeSpan(DateTime.Now.Ticks - time).TotalSeconds < 3) ;
 
-                Assert.IsTrue(flag);
+                flag.Should().Be.True();
             }
 
 
@@ -121,7 +121,7 @@ namespace Simple.Tests.Config
                 long time = DateTime.Now.Ticks;
                 while (!flag && new TimeSpan(DateTime.Now.Ticks - time).TotalSeconds < 3) ;
 
-                Assert.IsTrue(flag);
+                flag.Should().Be.True();
             }
 
 

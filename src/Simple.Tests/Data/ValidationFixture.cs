@@ -14,18 +14,18 @@ namespace Simple.Tests.Data
         public void TestValidateOnSave()
         {
             var c = Customer.ListAll(1).FirstOrDefault();
-            Assert.IsNotNull(c);
+            c.Should().Not.Be.Null();
 
             c.CompanyName = new string('0', 42);
             c.ContactName = new string('0', 42);
 
-            Assert.Throws<SimpleValidationException>(() => c.Save());
+            c.Executing(x => x.Save()).Throws<SimpleValidationException>();
             MySimply.GetSession().Clear();
-            Assert.Throws<SimpleValidationException>(() => c.Update());
+            c.Executing(x => x.Update()).Throws<SimpleValidationException>();
             MySimply.GetSession().Clear();
-            Assert.Throws<SimpleValidationException>(() => c.SaveOrUpdate());
+            c.Executing(x => x.SaveOrUpdate()).Throws<SimpleValidationException>();
             MySimply.GetSession().Clear();
-            Assert.Throws<SimpleValidationException>(() => c.Persist());
+            c.Executing(x => x.Persist()).Throws<SimpleValidationException>();
             MySimply.GetSession().Clear();
         }
 
@@ -33,7 +33,7 @@ namespace Simple.Tests.Data
         public void TestSerializeValidationException()
         {
             var c = Customer.ListAll(1).FirstOrDefault();
-            Assert.IsNotNull(c);
+            c.Should().Not.Be.Null();
 
             c.CompanyName = new string('0', 42);
             c.ContactName = new string('0', 42);
@@ -42,14 +42,13 @@ namespace Simple.Tests.Data
             var bytes = SimpleSerializer.Binary().Serialize(obj);
             var obj2 = SimpleSerializer.Binary().Deserialize(bytes) as SimpleValidationException;
 
-            Assert.IsNotNull(obj2.Errors);
             obj2.Errors.Count().Should().Be(obj.Errors.Count());
         }
 
         protected void GenericTest(Func<Customer, ValidationList> func, params string[] props)
         {
             var c = Customer.ListAll(1).FirstOrDefault();
-            Assert.IsNotNull(c);
+            c.Should().Not.Be.Null();
 
             c.CompanyName = new string('0', 42);
             c.ContactName = new string('0', 42);
@@ -58,7 +57,7 @@ namespace Simple.Tests.Data
             list.Count.Should().Be(props.Length);
 
             foreach (string s in props)
-                Assert.IsTrue(list.Any(x => x.PropertyName == s));
+                list.Any(x => x.PropertyName == s).Should().Be.True();
         }
 
         [Test]
@@ -90,7 +89,9 @@ namespace Simple.Tests.Data
         public void TestValidateInstanceByProperty()
         {
             Region r = new Region() { Description = new string('a', 101) };
-            Assert.Throws<SimpleValidationException>(() => r.Validate().AndThrow());
+            
+            r.Executing(x => x.Validate().AndThrow()).Throws<SimpleValidationException>();
+
             new Region() { Description = new string('a', 99) }.Validate().AndThrow();
 
         }
@@ -102,7 +103,7 @@ namespace Simple.Tests.Data
             c.CompanyName = "CompanyName";            
 
             var expr = c.UniqueProperties("q", x => x.CompanyName);
-            Assert.IsTrue(Customer.Count(expr) == 0);
+            Customer.Count(expr).Should().Be(0);
         }
 
         [Test]
@@ -112,7 +113,7 @@ namespace Simple.Tests.Data
             c.CompanyName = "Alfreds Futterkiste";
 
             var expr = c.UniqueProperties("q", x => x.CompanyName);
-            Assert.IsFalse(Customer.Count(expr) == 0);
+            Customer.Count(expr).Should().Be(1);
         }
 
         [Test]
@@ -121,7 +122,7 @@ namespace Simple.Tests.Data
             var c = new Customer();
             c.CompanyName = "CompanyName";
 
-            Assert.IsTrue(c.Validate().Count == 0);
+            c.Validate().Count.Should().Be(0);
         }
 
         [Test]
@@ -130,7 +131,7 @@ namespace Simple.Tests.Data
             var c = new Customer();
             c.CompanyName = "Alfreds Futterkiste";
 
-            Assert.IsFalse(c.Validate().Count == 0);
+            c.Validate().Count.Should().Be(1);
         }
     }
 }

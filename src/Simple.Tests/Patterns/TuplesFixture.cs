@@ -16,7 +16,7 @@ namespace Simple.Tests.Patterns
             var tuple3 = new Tuple<int>(1, 2, 3, 4, 6);
 
             tuple2.Should().Be(tuple1);
-            Assert.AreNotEqual(tuple1, tuple3);
+            tuple3.Should().Not.Be(tuple1);
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Simple.Tests.Patterns
             var tuple3 = new Tuple<string>("1", "2", "3", "4", "6");
 
             tuple2.Should().Be(tuple1);
-            Assert.AreNotEqual(tuple1, tuple3);
+            tuple3.Should().Not.Be(tuple1);
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Simple.Tests.Patterns
             var tuple3 = new Tuple<int>(1, 2, 3, 4, 6);
 
             tuple2.GetHashCode().Should().Be(tuple1.GetHashCode());
-            Assert.AreNotEqual(tuple1.GetHashCode(), tuple3.GetHashCode());
+            tuple3.GetHashCode().Should().Not.Be(tuple1.GetHashCode());
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Simple.Tests.Patterns
             var tuple1 = new Tuple<int>(1, 2, 3, 4, 5);
             var tuple2 = new Tuple<int>(1, 2, 3, 4, 5, 6);
 
-            Assert.AreNotEqual(tuple1, tuple2);
+            tuple2.Should().Not.Be(tuple1);
         }
         [Test]
         public void CannotHashCodeTwoDifferentSizesTuples()
@@ -55,7 +55,7 @@ namespace Simple.Tests.Patterns
             var tuple1 = new Tuple<int>(1, 2, 3, 4, 5);
             var tuple2 = new Tuple<int>(1, 2, 3, 4, 5, 6);
 
-            Assert.AreNotEqual(tuple1.GetHashCode(), tuple2.GetHashCode());
+            tuple2.GetHashCode().Should().Not.Be(tuple1.GetHashCode());
         }
 
 
@@ -67,7 +67,7 @@ namespace Simple.Tests.Patterns
             var tuple3 = new Tuple<int?>(1, 2, 3, 4, null);
 
             tuple2.Should().Be(tuple1);
-            Assert.AreNotEqual(tuple1, tuple3);
+            tuple3.Should().Not.Be(tuple1);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Simple.Tests.Patterns
             var tuple3 = new Tuple<int?>(1, 2, 3, 4, null);
 
             tuple2.GetHashCode().Should().Be(tuple1.GetHashCode());
-            Assert.AreNotEqual(tuple1.GetHashCode(), tuple3.GetHashCode());
+            tuple3.GetHashCode().Should().Not.Be(tuple1.GetHashCode());
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Simple.Tests.Patterns
             var pair3 = new Pair<int?>(null, 2);
 
             pair2.Should().Be(pair1);
-            Assert.AreNotEqual(pair1, pair3);
+            pair3.Should().Not.Be(pair1);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace Simple.Tests.Patterns
             var pair3 = new Pair<string, int?>("1", null);
 
             pair2.Should().Be(pair1);
-            Assert.AreNotEqual(pair1, pair3);
+            pair3.Should().Not.Be(pair1);
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace Simple.Tests.Patterns
             var pair3 = new Pair<int?>(null, 2);
 
             pair2.GetHashCode().Should().Be(pair1.GetHashCode());
-            Assert.AreNotEqual(pair1.GetHashCode(), pair3.GetHashCode());
+            pair3.GetHashCode().Should().Not.Be(pair1.GetHashCode());
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace Simple.Tests.Patterns
             var pair3 = new Pair<string, int?>("1", null);
 
             pair2.GetHashCode().Should().Be(pair1.GetHashCode());
-            Assert.AreNotEqual(pair1.GetHashCode(), pair3.GetHashCode());
+            pair3.GetHashCode().Should().Not.Be(pair1.GetHashCode());
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Simple.Tests.Patterns
             var pair3 = new Triplet<int?>(null, 2, null);
 
             pair2.Should().Be(pair1);
-            Assert.AreNotEqual(pair1, pair3);
+            pair3.Should().Not.Be(pair1);
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace Simple.Tests.Patterns
             var triplet3 = new Triplet<string, int?, Type>("1", null, typeof(Console));
 
             triplet2.Should().Be(triplet1);
-            Assert.AreNotEqual(triplet1, triplet3);
+            triplet3.Should().Not.Be(triplet1);
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace Simple.Tests.Patterns
             var pair3 = new Triplet<int?>(null, 2, null);
 
             pair2.GetHashCode().Should().Be(pair1.GetHashCode());
-            Assert.AreNotEqual(pair1.GetHashCode(), pair3.GetHashCode());
+            pair3.GetHashCode().Should().Not.Be(pair1.GetHashCode());
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace Simple.Tests.Patterns
             var triplet3 = new Triplet<string, int?, Type>("1", null, typeof(Console));
 
             triplet2.GetHashCode().Should().Be(triplet1.GetHashCode());
-            Assert.AreNotEqual(triplet1.GetHashCode(), triplet3.GetHashCode());
+            triplet3.GetHashCode().Should().Not.Be(triplet1.GetHashCode());
         }
 
 

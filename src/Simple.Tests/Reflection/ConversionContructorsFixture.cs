@@ -19,7 +19,7 @@ namespace Simple.Tests.Reflection
 
             var obj = ctor(null, 2);
             Assert.IsInstanceOf<Type1>(obj);
-            Assert.IsTrue(((Type1)obj).ok);
+            ((Type1)obj).ok.Should().Be.True();
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Simple.Tests.Reflection
         {
             var ctors = new ConversionConstructors();
             var ctor = ctors.GetBest(typeof(Type2));
-            Assert.IsNull(ctor);
+            ctor.Should().Be.Null();
         }
 
 

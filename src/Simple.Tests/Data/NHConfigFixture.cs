@@ -21,7 +21,7 @@ namespace Simple.Tests.Data
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
             var factory = factories[this];
 
-            Assert.IsTrue(factory.NHConfiguration.GetProperty("dialect").StartsWith("NHibernate.Dialect.SQLiteDialect"));
+            factory.NHConfiguration.GetProperty("dialect").StartsWith("NHibernate.Dialect.SQLiteDialect").Should().Be.True();
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Simple.Tests.Data
             Simply.Do[this].SetNHibernateConfig(cfg);
             StringAssert.StartsWith("NHibernate.Dialect.SQLiteDialect", Simply.Do[this].GetNHibernateConfig().GetProperty("dialect"));
 
-            Assert.IsTrue(Simply.Do[this].GetConnectionString().Contains("myfilemyfilemyfile"));
+            Simply.Do[this].GetConnectionString().Contains("myfilemyfilemyfile").Should().Be.True();
         }
 
 

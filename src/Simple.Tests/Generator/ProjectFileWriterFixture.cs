@@ -185,7 +185,7 @@ namespace Simple.Tests.Generator
             writer.WriteChanges();
 
             StringAssert.DoesNotContain(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
-            Assert.IsFalse(File.Exists("test/asd/qwe/simsim.txt"));
+            File.Exists("test/asd/qwe/simsim.txt").Should().Be.False();
         }
 
         [Test]

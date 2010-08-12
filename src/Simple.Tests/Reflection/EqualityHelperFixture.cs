@@ -43,20 +43,20 @@ namespace Simple.Tests.Reflection
             helper.Add((Sample1 x) => x.IntProp);
             helper.Add((Sample1 x) => x.StringProp);
 
-            Assert.IsTrue(helper.ObjectEquals(obj2));
+            helper.ObjectEquals(obj2).Should().Be.True();
 
             obj1.IntProp = obj2.IntProp = 42;
-            Assert.IsTrue(helper.ObjectEquals(obj2));
+            helper.ObjectEquals(obj2).Should().Be.True();
             helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode());
 
             obj1.StringProp = "A";
-            Assert.IsFalse(helper.ObjectEquals(obj2));
+            helper.ObjectEquals(obj2).Should().Be.False();
 
             obj2.StringProp = "B";
-            Assert.IsFalse(helper.ObjectEquals(obj2));
+            helper.ObjectEquals(obj2).Should().Be.False();
 
             obj1.StringProp = "B";
-            Assert.IsTrue(helper.ObjectEquals(obj2));
+            helper.ObjectEquals(obj2).Should().Be.True();
             helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode());
         }
 

@@ -17,14 +17,14 @@ namespace Simple.Tests.Data
             var t3 = new Category();
             t3.Id = 13;
 
-            Assert.AreNotEqual(t1, t2);
-            Assert.AreNotEqual(t2, t1);
+            t2.Should().Not.Be(t1);
+            t1.Should().Not.Be(t2);
 
-            Assert.AreNotEqual(t1, t3);
-            Assert.AreNotEqual(t3, t1);
+            t3.Should().Not.Be(t1);
+            t1.Should().Not.Be(t3);
 
-            Assert.AreNotEqual(t2, t3);
-            Assert.AreNotEqual(t3, t2);
+            t3.Should().Not.Be(t2);
+            t2.Should().Not.Be(t3);
         }
 
         [Test]
@@ -40,11 +40,11 @@ namespace Simple.Tests.Data
             t2.Should().Be(t1);
             t1.Should().Be(t2);
 
-            Assert.AreNotEqual(t1, t3);
-            Assert.AreNotEqual(t3, t1);
+            t3.Should().Not.Be(t1);
+            t1.Should().Not.Be(t3);
 
-            Assert.AreNotEqual(t2, t3);
-            Assert.AreNotEqual(t3, t2);
+            t3.Should().Not.Be(t2);
+            t2.Should().Not.Be(t3);
         }
 
         [Test]
@@ -57,14 +57,14 @@ namespace Simple.Tests.Data
             var t3 = new Category();
             t3.Id = 13;
 
-            Assert.AreNotEqual(t1.GetHashCode(), t2.GetHashCode());
-            Assert.AreNotEqual(t2.GetHashCode(), t1.GetHashCode());
+            t2.GetHashCode().Should().Not.Be(t1.GetHashCode());
+            t1.GetHashCode().Should().Not.Be(t2.GetHashCode());
 
-            Assert.AreNotEqual(t1.GetHashCode(), t3.GetHashCode());
-            Assert.AreNotEqual(t3.GetHashCode(), t1.GetHashCode());
+            t3.GetHashCode().Should().Not.Be(t1.GetHashCode());
+            t1.GetHashCode().Should().Not.Be(t3.GetHashCode());
 
-            Assert.AreNotEqual(t2.GetHashCode(), t3.GetHashCode());
-            Assert.AreNotEqual(t3.GetHashCode(), t2.GetHashCode());
+            t3.GetHashCode().Should().Not.Be(t2.GetHashCode());
+            t2.GetHashCode().Should().Not.Be(t3.GetHashCode());
         }
 
         [Test]
@@ -80,11 +80,11 @@ namespace Simple.Tests.Data
             t2.GetHashCode().Should().Be(t1.GetHashCode());
             t1.GetHashCode().Should().Be(t2.GetHashCode());
 
-            Assert.AreNotEqual(t1.GetHashCode(), t3.GetHashCode());
-            Assert.AreNotEqual(t3.GetHashCode(), t1.GetHashCode());
+            t3.GetHashCode().Should().Not.Be(t1.GetHashCode());
+            t1.GetHashCode().Should().Not.Be(t3.GetHashCode());
 
-            Assert.AreNotEqual(t2.GetHashCode(), t3.GetHashCode());
-            Assert.AreNotEqual(t3.GetHashCode(), t2.GetHashCode());
+            t3.GetHashCode().Should().Not.Be(t2.GetHashCode());
+            t2.GetHashCode().Should().Not.Be(t3.GetHashCode());
         }
 
         [Test]
@@ -129,11 +129,11 @@ namespace Simple.Tests.Data
             t2.Should().Be(t1);
             t1.Should().Be(t2);
 
-            Assert.AreNotEqual(t1, t3);
-            Assert.AreNotEqual(t3, t1);
+            t3.Should().Not.Be(t1);
+            t1.Should().Not.Be(t3);
 
-            Assert.AreNotEqual(t2, t3);
-            Assert.AreNotEqual(t3, t2);
+            t3.Should().Not.Be(t2);
+            t2.Should().Not.Be(t3);
         }
         [Test]
         public void TestHashCodeOnCompositeKey()
@@ -153,11 +153,11 @@ namespace Simple.Tests.Data
             t2.GetHashCode().Should().Be(t1.GetHashCode());
             t1.GetHashCode().Should().Be(t2.GetHashCode());
 
-            Assert.AreNotEqual(t1.GetHashCode(), t3.GetHashCode());
-            Assert.AreNotEqual(t3.GetHashCode(), t1.GetHashCode());
+            t3.GetHashCode().Should().Not.Be(t1.GetHashCode());
+            t1.GetHashCode().Should().Not.Be(t3.GetHashCode());
 
-            Assert.AreNotEqual(t2.GetHashCode(), t3.GetHashCode());
-            Assert.AreNotEqual(t3.GetHashCode(), t2.GetHashCode());
+            t3.GetHashCode().Should().Not.Be(t2.GetHashCode());
+            t2.GetHashCode().Should().Not.Be(t3.GetHashCode());
         }
 
         [Test]

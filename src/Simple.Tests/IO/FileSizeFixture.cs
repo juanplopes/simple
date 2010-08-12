@@ -26,7 +26,7 @@ namespace Simple.Tests.IO
             sizeInMBytes.Equals(sizeInKBytes).Should().Be.True();
 
             sizeInMBytes.ToString(CultureInfo.InvariantCulture).Should().Be("1.01 MB");
-            Assert.AreEqual("1.011 MB", sizeInMBytes.ToString("0.###", CultureInfo.InvariantCulture));
+            sizeInMBytes.ToString("0.###", CultureInfo.InvariantCulture).Should().Be("1.011 MB");
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Simple.Tests.IO
             sizeInKBytes.Equals(sizeInBytes).Should().Be.True();
 
 
-            Assert.AreEqual("1,01 KB", sizeInKBytes.ToString(CultureInfo.GetCultureInfo("pt-BR")));
+            sizeInKBytes.ToString(CultureInfo.GetCultureInfo("pt-BR")).Should().Be("1,01 KB");
         }
 
         [Test]

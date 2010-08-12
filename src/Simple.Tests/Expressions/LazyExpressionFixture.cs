@@ -16,11 +16,11 @@ namespace Simple.Tests.Expressions
 
             var newLazy = SimpleSerializer.Binary().RoundTrip(lazy);
             
-            Assert.IsFalse(newLazy.IsRealActivated);
-            Assert.IsTrue(newLazy.IsProxyActivated);
+            newLazy.IsRealActivated.Should().Be.False();
+            newLazy.IsProxyActivated.Should().Be.True();
             var newReal = newLazy.Real;
-            Assert.IsTrue(newLazy.IsRealActivated);
-            Assert.IsTrue(newLazy.IsProxyActivated);
+            newLazy.IsRealActivated.Should().Be.True();
+            newLazy.IsProxyActivated.Should().Be.True();
 
 
             Assert.AreNotSame(real, newReal);
@@ -34,11 +34,11 @@ namespace Simple.Tests.Expressions
 
             var newLazy = SimpleSerializer.Binary().RoundTrip(lazy);
 
-            Assert.IsFalse(newLazy.IsRealActivated);
-            Assert.IsFalse(newLazy.IsProxyActivated);
+            newLazy.IsRealActivated.Should().Be.False();
+            newLazy.IsProxyActivated.Should().Be.False();
             var newReal = newLazy.Real;
-            Assert.IsTrue(newLazy.IsRealActivated);
-            Assert.IsFalse(newLazy.IsProxyActivated);
+            newLazy.IsRealActivated.Should().Be.True();
+            newLazy.IsProxyActivated.Should().Be.False();
 
 
             newReal.Should().Be(real);

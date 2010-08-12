@@ -24,7 +24,7 @@ namespace Simple.Tests.Config
         {
             var fac1 = TestFactory.Do["asd"];
             var fac2 = TestFactory.Do["asd2"];
-            Assert.AreNotEqual(fac1, fac2);
+            fac2.Should().Not.Be(fac1);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Simple.Tests.Config
                 var fac4 = TestFactory.Do["qwe"];
                 fac2.Should().Be(fac1);
                 fac4.Should().Be(fac3);
-                Assert.AreNotEqual(fac1, fac3);
+                fac3.Should().Not.Be(fac1);
             }
             var fac5 = TestFactory.Do;
             fac5.Should().Be(fac2);
