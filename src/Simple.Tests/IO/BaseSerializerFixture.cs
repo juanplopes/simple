@@ -25,7 +25,7 @@ namespace Simple.Tests.Serialization
 
             var value2 = GetSerializer<Sample1>().Deserialize(data);
             var value3 = value2 as Sample1;
-            Assert.IsInstanceOf<Sample1>(value2);
+            value2.Should().Be.InstanceOf<Sample1>();
             value3.Should().Not.Be(value);
             value3.Prop1.Should().Be(value.Prop1);
             value3.Prop2.Should().Be(value.Prop2);
@@ -38,7 +38,7 @@ namespace Simple.Tests.Serialization
 
             var value2 = GetSerializer<int>().Deserialize(data);
             var value3 = (int)value2;
-            Assert.IsInstanceOf<int>(value2);
+            value2.Should().Be.InstanceOf<int>();
             value3.Should().Be(value);
         }
 
@@ -61,7 +61,7 @@ namespace Simple.Tests.Serialization
             var data = GetSerializer<object>().Serialize(value);
 
             var value2 = GetSerializer<object>().Deserialize(data);
-            Assert.IsInstanceOf<object>(value2);
+            value2.Should().Be.InstanceOf<object>();
         }
 
 
@@ -81,7 +81,7 @@ namespace Simple.Tests.Serialization
 
             var value2 = GetStringSerializer<int>().DeserializeFromString(data);
             var value3 = (int)value2;
-            Assert.IsInstanceOf<int>(value2);
+            value2.Should().Be.InstanceOf<int>();
             value3.Should().Be(value);
         }
     }

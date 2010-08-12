@@ -18,7 +18,7 @@ namespace Simple.Tests.Reflection
             var ctor = MethodCache.Do.GetInvoker(ctors.GetBest(typeof(Type1)));
 
             var obj = ctor(null, 2);
-            Assert.IsInstanceOf<Type1>(obj);
+            obj.Should().Be.InstanceOf<Type1>();
             ((Type1)obj).ok.Should().Be.True();
         }
 

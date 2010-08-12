@@ -48,7 +48,7 @@ namespace Simple.Tests.Mvc
             var view = new Mock<IViewDataContainer>();
             view.SetupGet(x => x.ViewData).Returns(new ViewDataDictionary());
             var list = view.Object.FindSelectList<TestParent, Test>(x => x.B, "list");
-            Assert.IsNotNull(list);
+            list.Should().Not.Be.Null();
             Assert.IsEmpty(list);
         }
 

@@ -11,7 +11,7 @@ namespace Simple.Tests.Data
         public void TestCustomerLoadById()
         {
             var c = Customer.Find(x => x.Id == "DRACD");
-            Assert.IsNotNull(c);
+            c.Should().Not.Be.Null();
             c.CompanyName.Should().Be("Drachenblut Delikatessen");
         }
 
@@ -19,7 +19,7 @@ namespace Simple.Tests.Data
         public void TestCustomerLoadIdContains()
         {
             var c = Customer.Find(x => x.Id.Contains("DRACD"));
-            Assert.IsNotNull(c);
+            c.Should().Not.Be.Null();
             c.CompanyName.Should().Be("Drachenblut Delikatessen");
         }
 
@@ -34,7 +34,7 @@ namespace Simple.Tests.Data
         public void TestCustomerLoadMultipleColumn()
         {
             var c = Customer.Find(x => x.Id.Contains("DRACD") && x.Country == "Germany");
-            Assert.IsNotNull(c);
+            c.Should().Not.Be.Null();
             c.CompanyName.Should().Be("Drachenblut Delikatessen");
         }
 
@@ -42,7 +42,7 @@ namespace Simple.Tests.Data
         public void TestProductLoadByIdAndCategory()
         {
             var p = Product.Find(x => x.Id == 2 && x.Category.Name == "Beverages");
-            Assert.IsNotNull(p);
+            p.Should().Not.Be.Null();
             p.Name.Should().Be("Chang");
         }
 

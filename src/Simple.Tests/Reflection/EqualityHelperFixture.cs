@@ -69,20 +69,20 @@ namespace Simple.Tests.Reflection
             EqualityHelper helper = new EqualityHelper(typeof(Sample1));
             helper.AddAllProperties();
 
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
 
             obj1.IntProp = obj2.IntProp = 42;
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
             helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
 
             obj1.StringProp = "A";
-            Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.False();
 
             obj2.StringProp = "B";
-            Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.False();
 
             obj1.StringProp = "B";
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
             helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
         }
 
@@ -95,16 +95,16 @@ namespace Simple.Tests.Reflection
             var helper = new EqualityHelper<Sample1>();
             helper.Add(x => x.StringProp, StringComparer.InvariantCultureIgnoreCase);
 
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
 
             obj1.StringProp = "A";
-            Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.False();
 
             obj2.StringProp = "A";
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
 
             obj1.StringProp = "a";
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
             helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
         }
 
@@ -168,20 +168,20 @@ namespace Simple.Tests.Reflection
             EqualityHelper helper = new EqualityHelper(typeof(Sample1));
             helper.AddAllProperties();
 
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
 
             obj1.IntProp = obj2.IntProp = 42;
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
             helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
 
             obj1.StringProp = "A";
-            Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.False();
 
             obj2.StringProp = "B";
-            Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.False();
 
             obj1.StringProp = "B";
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
             helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
         }
 
@@ -192,7 +192,7 @@ namespace Simple.Tests.Reflection
             int obj2 = 42;
 
             EqualityHelper helper = new EqualityHelper(typeof(Sample1));
-            Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.False();
         }
 
         [Test]
@@ -203,16 +203,16 @@ namespace Simple.Tests.Reflection
 
             EqualityHelper helper = new EqualityHelper(typeof(Sample1));
 
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
 
             obj2 = null;
-            Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.False();
 
             obj2 = obj1; obj1 = null;
-            Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.False();
 
             obj1 = obj2 = null;
-            Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
         }
     }
 }

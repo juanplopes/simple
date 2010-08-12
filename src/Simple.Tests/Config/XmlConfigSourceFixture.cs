@@ -274,7 +274,7 @@ namespace Simple.Tests.Config
             src.Get().Should().Be.Null();
 
             src.Load(mySample);
-            Assert.IsNotNull(src.Get());
+            src.Get().Should().Not.Be.Null();
             src.Get().AString.Should().Be("42");
         }
 
@@ -290,7 +290,7 @@ namespace Simple.Tests.Config
             src.Get().Should().Be.Null();
 
             src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(mySample));
-            Assert.IsNotNull(src.Get());
+            src.Get().Should().Not.Be.Null();
             src.Get().AString.Should().Be("42");
         }
 

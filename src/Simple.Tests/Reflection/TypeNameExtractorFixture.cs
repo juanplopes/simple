@@ -189,8 +189,9 @@ namespace Simple.Tests.Reflection
         public void GenericClassInsideNonGenericInsideGenericClassFullName()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("Simple.Tests.Reflection.TypeNameExtractorFixture.Test<A, B>.NonGeneric.Generic<C, D>",
-                extractor.GetName(typeof(Test<,>.NonGeneric.Generic<,>), true));
+            
+            extractor.GetName(typeof(Test<,>.NonGeneric.Generic<,>), true).Should().Be(
+                "Simple.Tests.Reflection.TypeNameExtractorFixture.Test<A, B>.NonGeneric.Generic<C, D>");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(TypeNameExtractorFixture).Namespace,

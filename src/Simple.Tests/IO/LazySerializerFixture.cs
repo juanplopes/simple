@@ -97,7 +97,7 @@ namespace Simple.Tests.IO
             var serializable = new SerializeAsString(value);
             var proxy = serializable.Proxy;
 
-            Assert.IsNotNull(proxy);
+            proxy.Should().Not.Be.Null();
             serializable.IsRealActivated.Should().Be.True();
             serializable.IsProxyActivated.Should().Be.True();
         }
@@ -121,7 +121,7 @@ namespace Simple.Tests.IO
             var newSerializable = SerializeAndDeserialize(serializable);
             var real = newSerializable.Real;
 
-            Assert.IsNotNull(real);
+            real.Should().Not.Be.Null();
             newSerializable.IsRealActivated.Should().Be.True();
             serializable.IsProxyActivated.Should().Be.True();
         }

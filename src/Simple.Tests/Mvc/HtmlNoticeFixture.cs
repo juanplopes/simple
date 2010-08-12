@@ -20,9 +20,9 @@ namespace Simple.Tests.Mvc
             dic.Notify("test");
 
             var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat("test")] as NoticeDefinition;
-            Assert.IsNotNull(item);
+            item.Should().Not.Be.Null();
             item.Title.Should().Be(null);
-            CollectionAssert.IsEmpty(item.Items);
+            item.Items.Should().Be.Empty();
         }
 
         [Test]
@@ -32,9 +32,9 @@ namespace Simple.Tests.Mvc
             dic.NotifySuccess("some text");
 
             var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultSucessClass)] as NoticeDefinition;
-            Assert.IsNotNull(item);
+            item.Should().Not.Be.Null();
             item.Title.Should().Be("some text");
-            CollectionAssert.IsEmpty(item.Items);
+            item.Items.Should().Be.Empty();
         }
 
 
@@ -45,9 +45,9 @@ namespace Simple.Tests.Mvc
             dic.NotifyError("some text");
 
             var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultErrorClass)] as NoticeDefinition;
-            Assert.IsNotNull(item);
+            item.Should().Not.Be.Null();
             item.Title.Should().Be("some text");
-            CollectionAssert.IsEmpty(item.Items);
+            item.Items.Should().Be.Empty();
         }
 
 
@@ -133,7 +133,7 @@ namespace Simple.Tests.Mvc
             data.Notify("test");
 
             var html = data.Notice("test").ToString();
-            StringAssert.Contains("class=\"{0}\"".AsFormat(HtmlNotice.DefaultNotificationFormat.AsFormat("test")), html);
+            html.Should().Contain("class=\"{0}\"".AsFormat(HtmlNotice.DefaultNotificationFormat.AsFormat("test")));
         }
 
         [Test]
@@ -143,9 +143,9 @@ namespace Simple.Tests.Mvc
             data.NotifySuccess("test");
 
             var html = data.NoticeSuccess().ToString();
-            StringAssert.Contains("class=\"{0}\"".AsFormat(
-                HtmlNotice.DefaultNotificationFormat.AsFormat("success")), html);
-            StringAssert.Contains("<span>test</span>", html);
+            html.Should().Contain("class=\"{0}\"".AsFormat(
+                HtmlNotice.DefaultNotificationFormat.AsFormat("success")));
+            html.Should().Contain("<span>test</span>");
         }
 
         [Test]
@@ -155,8 +155,8 @@ namespace Simple.Tests.Mvc
             data.Notify("test").AddItems("a<sd");
 
             var html = data.Notice("test").ToString();
-            StringAssert.Contains("class=\"{0}\"".AsFormat(HtmlNotice.DefaultNotificationFormat.AsFormat("test")), html);
-            StringAssert.Contains("<ul><li>a&lt;sd</li></ul>",html);
+            html.Should().Contain("class=\"{0}\"".AsFormat(HtmlNotice.DefaultNotificationFormat.AsFormat("test")));
+            html.Should().Contain("<ul><li>a&lt;sd</li></ul>");
         }
 
     }

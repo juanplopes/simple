@@ -13,21 +13,21 @@ namespace Simple.Tests.Services
         public void TestTcp()
         {
             var handler = ChannelSelector.Do.GetHandler(new Uri("tcp://localhost"));
-            Assert.IsInstanceOf(typeof(TcpChannelHandler), handler);
+            handler.Should().Be.InstanceOf<TcpChannelHandler>();
         }
 
         [Test]
         public void TestHttp()
         {
             var handler = ChannelSelector.Do.GetHandler(new Uri("http://localhost"));
-            Assert.IsInstanceOf(typeof(HttpChannelHandler), handler);
+            handler.Should().Be.InstanceOf<HttpChannelHandler>();
         }
 
         [Test]
         public void TestIpc()
         {
             var handler = ChannelSelector.Do.GetHandler(new Uri("ipc://localhost"));
-            Assert.IsInstanceOf(typeof(IpcChannelHandler), handler);
+            handler.Should().Be.InstanceOf<IpcChannelHandler>();
         }
 
         [Test, ExpectedException(typeof(ArgumentException))]

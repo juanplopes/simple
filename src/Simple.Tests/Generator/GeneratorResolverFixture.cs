@@ -22,8 +22,8 @@ namespace Simple.Tests.Generator
             var generator2 = resolver.Resolve("test2 test", true);
 
 
-            Assert.IsInstanceOf<SampleStringList>(generator1);
-            Assert.IsInstanceOf<SampleDateTimeList>(generator2);
+            generator1.Should().Be.InstanceOf<SampleStringList>();
+            generator2.Should().Be.InstanceOf<SampleDateTimeList>();
         }
 
         [Test]
@@ -47,8 +47,8 @@ namespace Simple.Tests.Generator
             var generator2 = resolver.Resolve(" test2 test", true);
 
 
-            Assert.IsInstanceOf<SampleStringList>(generator1);
-            Assert.IsInstanceOf<SampleDateTimeList>(generator2);
+            generator1.Should().Be.InstanceOf<SampleStringList>();
+            generator2.Should().Be.InstanceOf<SampleDateTimeList>();
         }
 
         [Test]
@@ -61,9 +61,8 @@ namespace Simple.Tests.Generator
             var generator1 = resolver.Resolve("test1 test ", true);
             var generator2 = resolver.Resolve("test2 test ", true);
 
-
-            Assert.IsInstanceOf<SampleStringList>(generator1);
-            Assert.IsInstanceOf<SampleDateTimeList>(generator2);
+            generator1.Should().Be.InstanceOf<SampleStringList>();
+            generator2.Should().Be.InstanceOf<SampleDateTimeList>();
         }
 
 
@@ -78,8 +77,8 @@ namespace Simple.Tests.Generator
             var generator2 = resolver.Resolve("test2    b", true);
 
 
-            Assert.IsInstanceOf<SampleStringList>(generator1);
-            Assert.IsInstanceOf<SampleDateTimeList>(generator2);
+            generator1.Should().Be.InstanceOf<SampleStringList>();
+            generator2.Should().Be.InstanceOf<SampleDateTimeList>();
         }
 
         [Test]
@@ -93,8 +92,8 @@ namespace Simple.Tests.Generator
             var generator2 = resolver.Resolve("test2    b(test)", true);
 
 
-            Assert.IsInstanceOf<SampleStringList>(generator1);
-            Assert.IsInstanceOf<SampleDateTimeList>(generator2);
+            generator1.Should().Be.InstanceOf<SampleStringList>();
+            generator2.Should().Be.InstanceOf<SampleDateTimeList>();
         }
 
         [Test]
@@ -108,8 +107,8 @@ namespace Simple.Tests.Generator
             var generator2 = resolver.Resolve("test2    b (test)", true);
 
 
-            Assert.IsInstanceOf<SampleStringList>(generator1);
-            Assert.IsInstanceOf<SampleDateTimeList>(generator2);
+            generator1.Should().Be.InstanceOf<SampleStringList>();
+            generator2.Should().Be.InstanceOf<SampleDateTimeList>();
         }
 
         [Test, ExpectedException(typeof(AmbiguousCommandException),

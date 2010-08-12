@@ -41,7 +41,7 @@ namespace Simple.Tests.IO
         {
             Environment.CurrentDirectory = Path.Combine(dir.FullName, "a/b/c/d/e");
             
-            Assert.IsTrue(RootFinder.ChangeToPathOf("test.info", "teste-teste-teste"));
+            RootFinder.ChangeToPathOf("test.info", "teste-teste-teste").Should().Be.True();
             Environment.CurrentDirectory.Should().Be(Path.Combine(dir.FullName, @"a\b"));
         }
 
@@ -50,7 +50,7 @@ namespace Simple.Tests.IO
         {
             Environment.CurrentDirectory = Path.Combine(dir.FullName, "a/b/c/d/e");
 
-            Assert.IsFalse(RootFinder.ChangeToPathOf("test.info", "teste-teste-teste2"));
+            RootFinder.ChangeToPathOf("test.info", "teste-teste-teste2").Should().Be.False();
             Environment.CurrentDirectory.Should().Be(Path.Combine(dir.FullName, @"a\b\c\d\e"));
         }
 
@@ -59,7 +59,7 @@ namespace Simple.Tests.IO
         {
             Environment.CurrentDirectory = Path.Combine(dir.FullName, "a/b/c/d/e");
 
-            Assert.IsFalse(RootFinder.ChangeToPathOf("test2.info", "teste-teste-teste"));
+            RootFinder.ChangeToPathOf("test2.info", "teste-teste-teste").Should().Be.False();
             Environment.CurrentDirectory.Should().Be(Path.Combine(dir.FullName, @"a\b\c\d\e"));
         }
     }

@@ -110,7 +110,7 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample lasers:1,2,3");
 
-            Assert.IsInstanceOf<SampleIntList>(generator);
+            generator.Should().Be.InstanceOf<SampleIntList>();
             generator.Should().Be.OfType<SampleIntList>()
                 .And.Value.Test.Should().Have.SameSequenceAs(1, 2, 3);
         }

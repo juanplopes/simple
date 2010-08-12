@@ -28,8 +28,8 @@ namespace Simple.Tests.Data
             Product.ListAll(1);
 
             Product p = Product.Load(2);
-            Assert.IsNotNull(p.Category); p.Category.Name.Should().Be("Beverages");
-            Assert.IsNotNull(p.Supplier); p.Supplier.CompanyName.Should().Be("Exotic Liquids");
+            p.Category.Name.Should().Be("Beverages");
+            p.Supplier.CompanyName.Should().Be("Exotic Liquids");
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Simple.Tests.Data
             var t = EmployeeTerritory.ListAll(1)[0];
             var t2 = t.Clone();
 
-            Assert.IsFalse(object.ReferenceEquals(t, t2));
+            t.Should().Not.Be.SameInstanceAs(t2);
             t.Equals(t2).Should().Be.True();
         }
     }

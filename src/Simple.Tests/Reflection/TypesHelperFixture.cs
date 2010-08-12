@@ -34,15 +34,15 @@ namespace Simple.Tests.Reflection
         [Test]
         public void CanAssignToInterface()
         {
-            Assert.IsTrue(TypesHelper.CanAssign(typeof(List<int>), typeof(IList<int>)));
-            Assert.IsFalse(TypesHelper.CanAssign(typeof(List<string>), typeof(IList<int>)));
+            TypesHelper.CanAssign(typeof(List<int>), typeof(IList<int>)).Should().Be.True();
+            TypesHelper.CanAssign(typeof(List<string>), typeof(IList<int>)).Should().Be.False();
         }
 
         [Test]
         public void CanAssignToAbstractClass()
         {
-            Assert.IsTrue(TypesHelper.CanAssign(typeof(MemoryStream), typeof(Stream)));
-            Assert.IsFalse(TypesHelper.CanAssign(typeof(Stream), typeof(MemoryStream)));
+            TypesHelper.CanAssign(typeof(MemoryStream), typeof(Stream)).Should().Be.True();
+            TypesHelper.CanAssign(typeof(Stream), typeof(MemoryStream)).Should().Be.False();
         }
 
         [Test]

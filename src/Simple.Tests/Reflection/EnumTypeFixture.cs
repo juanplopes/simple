@@ -23,12 +23,12 @@ namespace Simple.Tests.Reflection
 
             foreach (var obj in list)
             {
-                Assert.IsTrue(EnumTypeAttribute.IsDefined(SampleEnum1.Value1, obj));
+                EnumTypeAttribute.IsDefined(SampleEnum1.Value1, obj).Should().Be.True();
             }
 
-            Assert.IsTrue(EnumTypeAttribute.IsDefined(SampleEnum1.Value1, "asd"));
-            Assert.IsTrue(EnumTypeAttribute.IsDefined(SampleEnum1.Value1, 123));
-            Assert.IsFalse(EnumTypeAttribute.IsDefined(SampleEnum1.Value1, 234));
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value1, "asd").Should().Be.True();
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value1, 123).Should().Be.True();
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value1, 234).Should().Be.False();
         }
 
         [Test]
@@ -39,12 +39,12 @@ namespace Simple.Tests.Reflection
 
             foreach (var obj in list)
             {
-                Assert.IsTrue(EnumTypeAttribute.IsDefined(SampleEnum1.Value2, obj));
+                EnumTypeAttribute.IsDefined(SampleEnum1.Value2, obj).Should().Be.True();
             }
 
-            Assert.IsTrue(EnumTypeAttribute.IsDefined(SampleEnum1.Value2, "asd"));
-            Assert.IsFalse(EnumTypeAttribute.IsDefined(SampleEnum1.Value2, 123));
-            Assert.IsFalse(EnumTypeAttribute.IsDefined(SampleEnum1.Value2, 234));
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value2, "asd").Should().Be.True();
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value2, 123).Should().Be.False();
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value2, 234).Should().Be.False();
         }
 
         [Test]
@@ -55,12 +55,12 @@ namespace Simple.Tests.Reflection
 
             foreach (var obj in list)
             {
-                Assert.IsTrue(EnumTypeAttribute.IsDefined(SampleEnum1.Value3, obj));
+                EnumTypeAttribute.IsDefined(SampleEnum1.Value3, obj).Should().Be.True();
             }
 
-            Assert.IsFalse(EnumTypeAttribute.IsDefined(SampleEnum1.Value3, "asd"));
-            Assert.IsTrue(EnumTypeAttribute.IsDefined(SampleEnum1.Value3, 123));
-            Assert.IsFalse(EnumTypeAttribute.IsDefined(SampleEnum1.Value3, 234));
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value3, "asd").Should().Be.False();
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value3, 123).Should().Be.True();
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value3, 234).Should().Be.False();
         }
 
         [Test]
@@ -71,12 +71,12 @@ namespace Simple.Tests.Reflection
 
             foreach (var obj in list)
             {
-                Assert.IsTrue(EnumTypeAttribute.IsDefined(SampleEnum1.Value4, obj));
+                EnumTypeAttribute.IsDefined(SampleEnum1.Value4, obj).Should().Be.True();
             }
 
-            Assert.IsFalse(EnumTypeAttribute.IsDefined(SampleEnum1.Value4, "asd"));
-            Assert.IsFalse(EnumTypeAttribute.IsDefined(SampleEnum1.Value4, 123));
-            Assert.IsFalse(EnumTypeAttribute.IsDefined(SampleEnum1.Value4, 234));
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value4, "asd").Should().Be.False();
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value4, 123).Should().Be.False();
+            EnumTypeAttribute.IsDefined(SampleEnum1.Value4, 234).Should().Be.False();
         }
 
     }

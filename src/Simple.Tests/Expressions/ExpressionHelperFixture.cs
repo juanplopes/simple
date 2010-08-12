@@ -67,7 +67,7 @@ namespace Simple.Tests.Expressions
             ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new B() { Diff = 42 });
 
 
-            Assert.IsNotNull(a.BProp);
+            a.BProp.Should().Not.Be.Null();
             a.BProp.Diff.Should().Be(42);
         }
 
@@ -79,7 +79,7 @@ namespace Simple.Tests.Expressions
             A a = new A();
             ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new[] { new D(1), new D(2) });
 
-            Assert.IsNotNull(a.BProp.CProp.DList);
+            a.BProp.CProp.DList.Should().Not.Be.Null();
         }
 
 
@@ -103,7 +103,7 @@ namespace Simple.Tests.Expressions
             ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new B());
 
 
-            Assert.IsNotNull(a.BProp);
+            a.BProp.Should().Not.Be.Null();
             a.BProp.Diff.Should().Be(0);
         }
 
@@ -115,9 +115,9 @@ namespace Simple.Tests.Expressions
             A a = new A();
             ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 42);
 
-            Assert.IsNotNull(a.BProp);
+            a.BProp.Should().Not.Be.Null();
             a.BProp.Diff.Should().Be(0);
-            Assert.IsNotNull(a.BProp.CProp);
+            a.BProp.CProp.Should().Not.Be.Null();
             a.BProp.CProp.IntProp.Should().Be(42);
         }
 

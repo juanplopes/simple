@@ -16,7 +16,6 @@ namespace Simple.Tests.Reflection
         {
             var value = DictionaryHelper.FromAnonymous(new { aaa = 123, bbb = "asd" });
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
             value["aaa"].Should().Be(123);
             value["bbb"].Should().Be("asd");
@@ -27,7 +26,6 @@ namespace Simple.Tests.Reflection
         {
             var value = DictionaryHelper.FromExpressions(aaa => 123, bbb => "asd");
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
             value["aaa"].Should().Be(123);
             value["bbb"].Should().Be("asd");
@@ -38,7 +36,6 @@ namespace Simple.Tests.Reflection
         {
             var value = DictionaryHelper.FromAnonymous(new { aaa = (int?)null, bbb = (string)null });
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
             value["aaa"].Should().Be(null);
             value["bbb"].Should().Be(null);
@@ -49,7 +46,6 @@ namespace Simple.Tests.Reflection
         {
             var value = DictionaryHelper.FromExpressions(aaa => null, bbb => null);
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
             value["aaa"].Should().Be(null);
             value["bbb"].Should().Be(null);
@@ -60,7 +56,6 @@ namespace Simple.Tests.Reflection
         {
             var value = DictionaryHelper.FromAnonymous(new { aaa = 123, bbb = "asd" }, true);
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
 
             value.ContainsKey("aaa").Should().Be.True();
@@ -78,7 +73,6 @@ namespace Simple.Tests.Reflection
 
             var value = DictionaryHelper.FromExpressions(array, true);
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
 
             value.ContainsKey("aaa").Should().Be.True();
@@ -93,7 +87,6 @@ namespace Simple.Tests.Reflection
         {
             var value = DictionaryHelper.FromAnonymous(new { aaa = 123, bbb = "asd" });
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
 
             value.ContainsKey("aaa").Should().Be.True();
@@ -108,7 +101,6 @@ namespace Simple.Tests.Reflection
         {
             var value = DictionaryHelper.FromExpressions(aaa => 123, bbb => "asd");
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
 
             value.ContainsKey("aaa").Should().Be.True();
@@ -130,7 +122,6 @@ namespace Simple.Tests.Reflection
             var obj = new Sample1() { AAA = now, BBB = "ASD" };
             var value = DictionaryHelper.FromAnonymous(obj);
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(2);
             value["AAA"].Should().Be(now);
             value["BBB"].Should().Be("ASD");
@@ -141,7 +132,6 @@ namespace Simple.Tests.Reflection
         {
             var value = DictionaryHelper.FromExpressions(null);
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(0);
         }
 
@@ -150,7 +140,6 @@ namespace Simple.Tests.Reflection
         {
             var value = DictionaryHelper.FromAnonymous(null);
 
-            Assert.IsInstanceOf<IDictionary<string, object>>(value);
             value.Count.Should().Be(0);
         }
 

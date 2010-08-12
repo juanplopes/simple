@@ -30,10 +30,10 @@ namespace Simple.Tests.Reflection
         public void ClassAttributesFirstTest()
         {
             var attr1 = AttributeCache.Do.First<Attribute1Attribute>(typeof(AttributeTest));
-            Assert.IsNotNull(attr1);
+            attr1.Should().Not.Be.Null();
 
             var attr2 = AttributeCache.Do.First<Attribute2Attribute>(typeof(AttributeTest));
-            Assert.IsNotNull(attr2);
+            attr2.Should().Not.Be.Null();
 
             var attr3 = AttributeCache.Do.First<Attribute3Attribute>(typeof(AttributeTest));
             attr3.Should().Be.Null();
@@ -54,10 +54,10 @@ namespace Simple.Tests.Reflection
             attr1.Should().Be.Null();
 
             var attr2 = AttributeCache.Do.First<Attribute2Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
-            Assert.IsNotNull(attr2);
+            attr2.Should().Not.Be.Null();
 
             var attr3 = AttributeCache.Do.First<Attribute3Attribute>(typeof(AttributeTest).GetProperty("TestProp"));
-            Assert.IsNotNull(attr3);
+            attr3.Should().Not.Be.Null();
         }
 
         [Test]

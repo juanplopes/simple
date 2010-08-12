@@ -37,8 +37,8 @@ namespace Simple.Tests.Services
                 Expression<Predicate<int>> pred = i => i == 42;
                 EditableExpression expr = EditableExpression.Create(Funcletizer.PartialEval(pred));
 
-                Assert.IsFalse(service.TestExpression(expr, 41));
-                Assert.IsTrue(service.TestExpression(expr, 42));
+                service.TestExpression(expr, 41).Should().Be.False();
+                service.TestExpression(expr, 42).Should().Be.True();
             }
         }
 
@@ -50,8 +50,8 @@ namespace Simple.Tests.Services
             Expression<Predicate<int>> pred = i => i == hh;
             EditableExpression expr = EditableExpression.Create(Funcletizer.PartialEval(pred));
 
-            Assert.IsFalse(service.TestExpression(expr, 41));
-            Assert.IsTrue(service.TestExpression(expr, 42));
+            service.TestExpression(expr, 41).Should().Be.False();
+            service.TestExpression(expr, 42).Should().Be.True();
         }
 
         [Test]

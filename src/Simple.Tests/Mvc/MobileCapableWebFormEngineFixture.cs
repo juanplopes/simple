@@ -82,9 +82,9 @@ namespace Simple.Tests.Mvc
 
             var viewEngineResult = webFormViewEngine.FindView(testControllerContext, viewName, string.Empty, false);
 
-            Assert.IsNotNull(viewEngineResult);
-            Assert.IsNotNull(viewEngineResult.View);
-            Assert.IsNotNull(viewEngineResult.ViewEngine);
+            viewEngineResult.Should().Not.Be.Null();
+            viewEngineResult.View.Should().Not.Be.Null();
+            viewEngineResult.ViewEngine.Should().Not.Be.Null();
             ((WebFormView)viewEngineResult.View).ViewPath.Should().Be(viewPathExpected);
         }
 

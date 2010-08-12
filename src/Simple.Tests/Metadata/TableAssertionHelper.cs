@@ -86,8 +86,9 @@ namespace Simple.Tests.Metadata
 
         protected void AssertSingleRelation(ForeignKeyAddAction fk, DbForeignKey actualForeignKey)
         {
-            StringAssert.AreEqualIgnoringCase(fk.Name, actualForeignKey.Name);
+            actualForeignKey.Name.ToLower().Should().Be(fk.Name.ToLower());
             fk.PkColumns.Count.Should().Be(fk.FkColumns.Count);
+
             var fkColumns = actualForeignKey.Columns.OrderBy(x => x.FkOrdinalPosition).ToList();
             for (int i = 0; i < fk.FkColumns.Count; i++)
             {

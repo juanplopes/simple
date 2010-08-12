@@ -16,7 +16,7 @@ namespace Simple.Tests.DynamicProxy
 
         protected static void TestCreatedSimpleProxy(ISimpleInterface testClassProxy)
         {
-            Assert.IsNotNull(testClassProxy);
+            testClassProxy.Should().Not.Be.Null();
 
             // No test for method 1, just make sure it doesn't bomb ;-)
             testClassProxy.Method1();
@@ -35,12 +35,12 @@ namespace Simple.Tests.DynamicProxy
 
             // Test casting
             IImplemented implementedInterface = (IImplemented)testClassProxy;
-            Assert.IsNotNull(implementedInterface);
+            implementedInterface.Should().Not.Be.Null();
             implementedInterface.ImplementedMethod();
 
             // Test IDynamicProxy test
             IDynamicProxy dynProxy = (IDynamicProxy)testClassProxy;
-            Assert.IsNotNull(dynProxy);
+            dynProxy.Should().Not.Be.Null();
         }
 
 		[Test]
@@ -55,7 +55,7 @@ namespace Simple.Tests.DynamicProxy
 		public void TestInvalidCastWithoutStrict() {
 			SimpleClass testClass = new SimpleClass();
 			ISimpleInterface testClassProxy = (ISimpleInterface) DynamicProxyFactory.Instance.CreateProxy(testClass, new InvocationDelegate(InvocationHandler));
-			Assert.IsNotNull(testClassProxy);
+			testClassProxy.Should().Not.Be.Null();
 
 			// Test invalid cast
 			INotImplemented notImplementedInterface = (INotImplemented)testClassProxy;
@@ -66,7 +66,7 @@ namespace Simple.Tests.DynamicProxy
 		public void TestStrictness() {
 			SimpleClass testClass = new SimpleClass();
 			ISimpleInterface testClassProxy = (ISimpleInterface) DynamicProxyFactory.Instance.CreateProxy(testClass, new InvocationDelegate(InvocationHandler), true);
-			Assert.IsNotNull(testClassProxy);
+			testClassProxy.Should().Not.Be.Null();
 
 			// No test for method 1, just make sure it doesn't bomb ;-)
 			testClassProxy.Method1();
@@ -81,7 +81,7 @@ namespace Simple.Tests.DynamicProxy
 		public void TestStrictnessWithInvalidCast() {
 			SimpleClass testClass = new SimpleClass();
 			ISimpleInterface testClassProxy = (ISimpleInterface) DynamicProxyFactory.Instance.CreateProxy(testClass, new InvocationDelegate(InvocationHandler), true);
-			Assert.IsNotNull(testClassProxy);
+			testClassProxy.Should().Not.Be.Null();
 
 			// No test for method 1, just make sure it doesn't bomb ;-)
 			testClassProxy.Method1();
@@ -96,20 +96,20 @@ namespace Simple.Tests.DynamicProxy
 		public void TestStrictnessWithSupportedList() {
 			SimpleClass testClass = new SimpleClass();
 			ISimpleInterface testClassProxy = (ISimpleInterface) DynamicProxyFactory.Instance.CreateProxy(testClass, new InvocationDelegate(InvocationHandler), true, new Type[] { typeof(INotImplemented) });
-			Assert.IsNotNull(testClassProxy);
+			testClassProxy.Should().Not.Be.Null();
 
 			// No test for method 1, just make sure it doesn't bomb ;-)
 			testClassProxy.Method1();
 
 			// Test casting
 			IImplemented implementedInterface = (IImplemented)testClassProxy;
-			Assert.IsNotNull(implementedInterface);
+			implementedInterface.Should().Not.Be.Null();
 			implementedInterface.ImplementedMethod();
 
 			// Test invalid cast but which is supported via the supported type list
 			INotImplemented notImplementedInterface = null;
 			notImplementedInterface = (INotImplemented)testClassProxy;
-			Assert.IsNotNull(notImplementedInterface);
+			notImplementedInterface.Should().Not.Be.Null();
 		}
 
 		[Test]
@@ -117,7 +117,7 @@ namespace Simple.Tests.DynamicProxy
 		public void TestStrictnessWithSupportedListAndInvalidCast() {
 			SimpleClass testClass = new SimpleClass();
 			ISimpleInterface testClassProxy = (ISimpleInterface) DynamicProxyFactory.Instance.CreateProxy(testClass, new InvocationDelegate(InvocationHandler), true, new Type[] { typeof(INotImplemented) });
-			Assert.IsNotNull(testClassProxy);
+			testClassProxy.Should().Not.Be.Null();
 
 			// No test for method 1, just make sure it doesn't bomb ;-)
 			testClassProxy.Method1();

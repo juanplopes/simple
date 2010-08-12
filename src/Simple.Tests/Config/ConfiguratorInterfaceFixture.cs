@@ -16,7 +16,7 @@ namespace Simple.Tests.Config
             new ConfiguratorInterface<BasicTypesSampleWithoutAttr, int>(
                 x => { source = x; return 1; }).FromXmlString(XmlConfigSourceFixture.SAMPLE_XML);
 
-            Assert.IsNotNull(source);
+            source.Should().Not.Be.Null();
             var value = source.Get();
 
             XmlConfigSourceFixture.TestCreatedSimpleSample(value);
@@ -30,7 +30,7 @@ namespace Simple.Tests.Config
                 x => { source = x; return 1; }).FromStream(
                 new MemoryStream(Encoding.UTF8.GetBytes(XmlConfigSourceFixture.SAMPLE_XML)));
 
-            Assert.IsNotNull(source);
+            source.Should().Not.Be.Null();
             var value = source.Get();
 
             XmlConfigSourceFixture.TestCreatedSimpleSample(value);
@@ -48,7 +48,7 @@ namespace Simple.Tests.Config
                     AString = "whatever"
                 });
 
-            Assert.IsNotNull(source);
+            source.Should().Not.Be.Null();
             var value = source.Get();
 
             XmlConfigSourceFixture.TestCreatedSimpleSample(value);
