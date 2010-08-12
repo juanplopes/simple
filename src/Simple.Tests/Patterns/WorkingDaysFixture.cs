@@ -36,21 +36,21 @@ namespace Simple.Tests.Patterns
         public void Ref1Ref2FromToConsider()
         {
             var d = GeneralTest(true, true, true, true, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 8));
+            new DateTime(2008, 01, 8).Should().Be(d);
         }
 
         [Test]
         public void Ref1Ref2FromToNot()
         {
             var d = GeneralTest(true, true, true, true, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 6));
+            new DateTime(2008, 01, 6).Should().Be(d);
         }
 
         [Test]
         public void Ref1Ref2FromNotConsider()
         {
             var d = GeneralTest(true, true, true, false, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 12));
+            new DateTime(2008, 01, 12).Should().Be(d);
 
         }
 
@@ -58,7 +58,7 @@ namespace Simple.Tests.Patterns
         public void Ref1Ref2FromNotNot()
         {
             var d = GeneralTest(true, true, true, false, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 14));
+            new DateTime(2008, 01, 14).Should().Be(d);
 
         }
         #endregion
@@ -68,21 +68,21 @@ namespace Simple.Tests.Patterns
         public void Ref1Ref2NotToConsider()
         {
             var d = GeneralTest(true, true, false, true, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 20));
+            new DateTime(2008, 01, 20).Should().Be(d);
         }
 
         [Test]
         public void Ref1Ref2NotToNot()
         {
             var d = GeneralTest(true, true, false, true, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 18));
+            new DateTime(2008, 01, 18).Should().Be(d);
         }
 
         [Test]
         public void Ref1Ref2NotNotConsider()
         {
             var d = GeneralTest(true, true, false, false, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 24));
+            new DateTime(2008, 01, 24).Should().Be(d);
 
         }
 
@@ -90,7 +90,7 @@ namespace Simple.Tests.Patterns
         public void Ref1Ref2NotNotNot()
         {
             var d = GeneralTest(true, true, false, false, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 26));
+            new DateTime(2008, 01, 26).Should().Be(d);
 
         }
         #endregion
@@ -102,21 +102,21 @@ namespace Simple.Tests.Patterns
         public void Ref1NotFromToConsider()
         {
             var d = GeneralTest(true, false, true, true, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 6));
+            new DateTime(2008, 01, 6).Should().Be(d);
         }
 
         [Test]
         public void Ref1NotFromToNot()
         {
             var d = GeneralTest(true, false, true, true, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 6));
+            new DateTime(2008, 01, 6).Should().Be(d);
         }
 
         [Test]
         public void Ref1NotFromNotConsider()
         {
             var d = GeneralTest(true, false, true, false, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 12));
+            new DateTime(2008, 01, 12).Should().Be(d);
 
         }
 
@@ -124,7 +124,7 @@ namespace Simple.Tests.Patterns
         public void Ref1NotFromNotNot()
         {
             var d = GeneralTest(true, false, true, false, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 12));
+            new DateTime(2008, 01, 12).Should().Be(d);
 
         }
         #endregion
@@ -134,21 +134,21 @@ namespace Simple.Tests.Patterns
         public void Ref1NotNotToConsider()
         {
             var d = GeneralTest(true, false, false, true, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 20));
+            new DateTime(2008, 01, 20).Should().Be(d);
         }
 
         [Test]
         public void Ref1NotNotToNot()
         {
             var d = GeneralTest(true, false, false, true, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 20));
+            new DateTime(2008, 01, 20).Should().Be(d);
         }
 
         [Test]
         public void Ref1NotNotNotConsider()
         {
             var d = GeneralTest(true, false, false, false, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 26));
+            new DateTime(2008, 01, 26).Should().Be(d);
 
         }
 
@@ -156,7 +156,7 @@ namespace Simple.Tests.Patterns
         public void Ref1NotNotNotNot()
         {
             var d = GeneralTest(true, false, false, false, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 26));
+            new DateTime(2008, 01, 26).Should().Be(d);
 
         }
         #endregion
@@ -169,21 +169,21 @@ namespace Simple.Tests.Patterns
         public void NotRef2FromToConsider()
         {
             var d = GeneralTest(false, true, true, true, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 8));
+            new DateTime(2008, 01, 8).Should().Be(d);
         }
 
         [Test]
         public void NotRef2FromToNot()
         {
             var d = GeneralTest(false, true, true, true, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 6));
+            new DateTime(2008, 01, 6).Should().Be(d);
         }
 
         [Test]
         public void NotRef2FromNotConsider()
         {
             var d = GeneralTest(false, true, true, false, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 12));
+            new DateTime(2008, 01, 12).Should().Be(d);
 
         }
 
@@ -191,7 +191,7 @@ namespace Simple.Tests.Patterns
         public void NotRef2FromNotNot()
         {
             var d = GeneralTest(false, true, true, false, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 14));
+            new DateTime(2008, 01, 14).Should().Be(d);
 
         }
         #endregion
@@ -201,21 +201,21 @@ namespace Simple.Tests.Patterns
         public void NotRef2NotToConsider()
         {
             var d = GeneralTest(false, true, false, true, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 22));
+            new DateTime(2008, 01, 22).Should().Be(d);
         }
 
         [Test]
         public void NotRef2NotToNot()
         {
             var d = GeneralTest(false, true, false, true, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 20));
+            new DateTime(2008, 01, 20).Should().Be(d);
         }
 
         [Test]
         public void NotRef2NotNotConsider()
         {
             var d = GeneralTest(false, true, false, false, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 26));
+            new DateTime(2008, 01, 26).Should().Be(d);
 
         }
 
@@ -223,7 +223,7 @@ namespace Simple.Tests.Patterns
         public void NotRef2NotNotNot()
         {
             var d = GeneralTest(false, true, false, false, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 28));
+            new DateTime(2008, 01, 28).Should().Be(d);
 
         }
         #endregion
@@ -235,21 +235,21 @@ namespace Simple.Tests.Patterns
         public void NotNotFromToConsider()
         {
             var d = GeneralTest(false, false, true, true, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 8));
+            new DateTime(2008, 01, 8).Should().Be(d);
         }
 
         [Test]
         public void NotNotFromToNot()
         {
             var d = GeneralTest(false, false, true, true, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 8));
+            new DateTime(2008, 01, 8).Should().Be(d);
         }
 
         [Test]
         public void NotNotFromNotConsider()
         {
             var d = GeneralTest(false, false, true, false, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 14));
+            new DateTime(2008, 01, 14).Should().Be(d);
 
         }
 
@@ -257,7 +257,7 @@ namespace Simple.Tests.Patterns
         public void NotNotFromNotNot()
         {
             var d = GeneralTest(false, false, true, false, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 14));
+            new DateTime(2008, 01, 14).Should().Be(d);
 
         }
         #endregion
@@ -267,21 +267,21 @@ namespace Simple.Tests.Patterns
         public void NotNotNotToConsider()
         {
             var d = GeneralTest(false, false, false, true, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 20));
+            new DateTime(2008, 01, 20).Should().Be(d);
         }
 
         [Test]
         public void NotNotNotToNot()
         {
             var d = GeneralTest(false, false, false, true, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 20));
+            new DateTime(2008, 01, 20).Should().Be(d);
         }
 
         [Test]
         public void NotNotNotNotConsider()
         {
             var d = GeneralTest(false, false, false, false, true);
-            Assert.AreEqual(d, new DateTime(2008, 01, 26));
+            new DateTime(2008, 01, 26).Should().Be(d);
 
         }
 
@@ -289,7 +289,7 @@ namespace Simple.Tests.Patterns
         public void NotNotNotNotNot()
         {
             var d = GeneralTest(false, false, false, false, false);
-            Assert.AreEqual(d, new DateTime(2008, 01, 26));
+            new DateTime(2008, 01, 26).Should().Be(d);
 
         }
         #endregion

@@ -34,14 +34,14 @@ namespace Simple.Tests.Common
         public void CanGetIntValueWithNullableValueAndDefValue()
         {
             object a = null;
-            Assert.AreEqual(42, SafeNullable.Get(() => int.Parse(a.ToString()), 42));
+            SafeNullable.Get(() => int.Parse(a.ToString()), 42).Should().Be(42);
         }
 
         [Test]
         public void CanGetStringValueWithNullableValueAndDefValue()
         {
             object a = null;
-            Assert.AreEqual("42", SafeNullable.Get(() => a.ToString(), "42"));
+            SafeNullable.Get(() => a.ToString(), "42").Should().Be("42");
         }
     }
 }

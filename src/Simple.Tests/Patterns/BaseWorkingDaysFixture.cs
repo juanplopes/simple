@@ -18,7 +18,7 @@ namespace Simple.Tests.Patterns
                     if (prov.IsWorkingDay(curr))
                         count++;
 
-                    Assert.AreEqual(count, prov.GetNetWorkingDays(baseDate, curr));
+                    prov.GetNetWorkingDays(baseDate, curr).Should().Be(count);
 
                     curr = curr.AddDays(1);
                 }
@@ -40,9 +40,9 @@ namespace Simple.Tests.Patterns
                         curr = curr.AddDays(one);
 
                     if (forward)
-                        Assert.AreEqual(curr, w.GetInAdvance(i, baseDate, consider));
+                        w.GetInAdvance(i, baseDate, consider).Should().Be(curr);
                     else
-                        Assert.AreEqual(curr, w.GetBackwards(i, baseDate, consider));
+                        w.GetBackwards(i, baseDate, consider).Should().Be(curr);
 
                     curr = curr.AddDays(one);
                 }

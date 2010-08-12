@@ -17,8 +17,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(string).GetMethod("EndsWith", new[] { typeof(string), typeof(bool), typeof(CultureInfo) });
             var sig = new MethodSignature(method);
-            Assert.AreEqual("Boolean EndsWith(String value, Boolean ignoreCase, CultureInfo culture)", sig.MakeSignature());
-            Assert.AreEqual("EndsWith(value, ignoreCase, culture)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("Boolean EndsWith(String value, Boolean ignoreCase, CultureInfo culture)");
+            sig.MakeCall().Should().Be("EndsWith(value, ignoreCase, culture)");
         }
 
         [Test]
@@ -35,8 +35,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("TwoIntParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoIntParameters(Int32 a, Int32 b)", sig.MakeSignature());
-            Assert.AreEqual("TwoIntParameters(a, b)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void TwoIntParameters(Int32 a, Int32 b)");
+            sig.MakeCall().Should().Be("TwoIntParameters(a, b)");
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Simple.Tests.Reflection
             var method = typeof(Sample1).GetMethod("TwoIntParameters");
             var sig = new MethodSignature(method);
             sig.MakeSignature(1).Should().Be("void TwoIntParameters(Int32 b)");
-            Assert.AreEqual("TwoIntParameters(this, b)", sig.MakeCall("this"));
+            sig.MakeCall("this").Should().Be("TwoIntParameters(this, b)");
         }
 
         [Test]
@@ -109,8 +109,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("TwoGenericParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoGenericParameters<T>(T a, T b)", sig.MakeSignature());
-            Assert.AreEqual("TwoGenericParameters<T>(a, b)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void TwoGenericParameters<T>(T a, T b)");
+            sig.MakeCall().Should().Be("TwoGenericParameters<T>(a, b)");
         }
 
         [Test]
@@ -127,8 +127,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("TwoConstrainedGenericParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoConstrainedGenericParameters<T>(T a, T b) where T : class, IConvertible, new()", sig.MakeSignature());
-            Assert.AreEqual("TwoConstrainedGenericParameters<T>(a, b)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void TwoConstrainedGenericParameters<T>(T a, T b) where T : class, IConvertible, new()");
+            sig.MakeCall().Should().Be("TwoConstrainedGenericParameters<T>(a, b)");
         }
 
         [Test]
@@ -136,8 +136,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("TwoConstrainedStructGenericParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoConstrainedStructGenericParameters<T>(T a, T b) where T : struct, IConvertible", sig.MakeSignature());
-            Assert.AreEqual("TwoConstrainedStructGenericParameters<T>(a, b)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void TwoConstrainedStructGenericParameters<T>(T a, T b) where T : struct, IConvertible");
+            sig.MakeCall().Should().Be("TwoConstrainedStructGenericParameters<T>(a, b)");
         }
 
 
@@ -146,8 +146,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("TwoConstrainedRefGenericParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoConstrainedRefGenericParameters<T>(ref T a, T b) where T : struct, IConvertible", sig.MakeSignature());
-            Assert.AreEqual("TwoConstrainedRefGenericParameters<T>(ref a, b)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void TwoConstrainedRefGenericParameters<T>(ref T a, T b) where T : struct, IConvertible");
+            sig.MakeCall().Should().Be("TwoConstrainedRefGenericParameters<T>(ref a, b)");
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample2<int>).GetMethod("GenericParameterInheriting");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void GenericParameterInheriting<Q>(Q a) where Q : MethodSignatureFixture.Sample1, IConvertible, new()", sig.MakeSignature());
+            sig.MakeSignature().Should().Be("void GenericParameterInheriting<Q>(Q a) where Q : MethodSignatureFixture.Sample1, IConvertible, new()");
             sig.MakeCall().Should().Be("GenericParameterInheriting<Q>(a)");
         }
 
@@ -175,7 +175,7 @@ namespace Simple.Tests.Reflection
             var sig = new MethodSignature(method);
             Assert.AreEqual(
                 "A SeveralClasses<A, B, C>(B b, C c) where A : struct where B : class, ICollection, IEnumerable, IList, new() where C : List<B>, ICollection, ICollection<B>, IEnumerable, IEnumerable<B>, IList, IList<B>, new()", sig.MakeSignature());
-            Assert.AreEqual("SeveralClasses<A, B, C>(b, c)", sig.MakeCall());
+            sig.MakeCall().Should().Be("SeveralClasses<A, B, C>(b, c)");
         }
 
         [Test]

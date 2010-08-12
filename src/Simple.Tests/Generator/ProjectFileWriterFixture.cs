@@ -196,7 +196,7 @@ namespace Simple.Tests.Generator
             writer.WriteChanges();
 
             StringAssert.Contains(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
-            Assert.AreEqual(new byte[] { 1, 2, 3 }, File.ReadAllBytes("test/asd/qwe/simsim.txt"));
+            File.ReadAllBytes("test/asd/qwe/simsim.txt").Should().Have.SameSequenceAs<byte>(1, 2, 3);
         }
 
         [Test]

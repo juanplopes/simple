@@ -20,7 +20,7 @@ namespace Simple.Tests.Reflection
         public void DoubleImplementation()
         {
             var sig = new ClassSignature(typeof(DoubleImplementationClass));
-            Assert.AreEqual("ClassSignatureFixture.ITest1, ClassSignatureFixture.ITest2", sig.MakeImplementingSignature());
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest1, ClassSignatureFixture.ITest2");
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Simple.Tests.Reflection
         public void GenericImplementation()
         {
             var sig = new ClassSignature(typeof(GenericImplementationClass));
-            Assert.AreEqual("ClassSignatureFixture.ITest1, ClassSignatureFixture.ITest2, ClassSignatureFixture.ITest3<Int32>", sig.MakeImplementingSignature());
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest1, ClassSignatureFixture.ITest2, ClassSignatureFixture.ITest3<Int32>");
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Simple.Tests.Reflection
         public void ConstrainedGenericImplementation()
         {
             var sig = new ClassSignature(typeof(ConstrainedGenericClass<>));
-            Assert.AreEqual("ClassSignatureFixture.ITest3<T> where T : struct, IConvertible", sig.MakeImplementingSignature());
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest3<T> where T : struct, IConvertible");
         }
 
         [Test]
@@ -71,14 +71,14 @@ namespace Simple.Tests.Reflection
         public void DoubleConstrainedGenericImplementation()
         {
             var sig = new ClassSignature(typeof(DoubleConstrainedGenericClass<>));
-            Assert.AreEqual("ClassSignatureFixture.ITest3<T>, ClassSignatureFixture.ITest4<T> where T : struct, IConvertible", sig.MakeImplementingSignature());
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest3<T>, ClassSignatureFixture.ITest4<T> where T : struct, IConvertible");
         }
 
         [Test]
         public void ResolvedConstrainedGenericImplementation()
         {
             var sig = new ClassSignature(typeof(DoubleConstrainedGenericClass<int>));
-            Assert.AreEqual("ClassSignatureFixture.ITest3<Int32>, ClassSignatureFixture.ITest4<Int32>", sig.MakeImplementingSignature());
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest3<Int32>, ClassSignatureFixture.ITest4<Int32>");
         }
 
         class SingleImplementationClass : ITest1 { }

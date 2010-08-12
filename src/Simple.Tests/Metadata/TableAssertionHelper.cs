@@ -67,7 +67,7 @@ namespace Simple.Tests.Metadata
 
         protected void AssertItems<T1, T2>(IList<T1> list1, IList<T2> list2, Action<T1, T2> asserter, string name)
         {
-            Assert.AreEqual(list1.Count, list2.Count, name);
+            list2.Count.Should(name).Be(list1.Count);
             for (int i = 0; i < list1.Count; i++)
                 asserter(list1[i], list2[i]);
         }
@@ -81,7 +81,7 @@ namespace Simple.Tests.Metadata
             StringAssert.StartsWith(actualColumn.DataTypeName.ToUpper(), type.ToUpper());
             //Assert.AreEqual(column.Type, actualColumn.GetDbColumnType(), "column type for {0}", columnId);
             if (column.Size != null)
-                Assert.AreEqual(column.Size, actualColumn.ColumnSize, "column size for {0}", columnId);
+                actualColumn.ColumnSize.Should("column size for {0}".AsFormat(columnId)).Be(column.Size);
         }
 
         protected void AssertSingleRelation(ForeignKeyAddAction fk, DbForeignKey actualForeignKey)

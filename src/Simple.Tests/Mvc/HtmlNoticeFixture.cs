@@ -68,7 +68,7 @@ namespace Simple.Tests.Mvc
             dic.Notify("test").AddItems("item1").AddItems("item2");
 
             var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat("test")] as NoticeDefinition;
-            CollectionAssert.AreEqual(new[] { "item1", "item2" }, item.Items);
+            item.Items.Should().Have.SameSequenceAs("item1", "item2");
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Simple.Tests.Mvc
             dic.Notify("test").AddItems("item1", "item2");
 
             var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat("test")] as NoticeDefinition;
-            CollectionAssert.AreEqual(new[] { "item1", "item2" }, item.Items);
+            item.Items.Should().Have.SameSequenceAs("item1", "item2");
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Simple.Tests.Mvc
 
             var item = controller.Object.TempData[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultSucessClass)] as NoticeDefinition;
             item.Title.Should().Be("test");
-            CollectionAssert.AreEqual(new[] { "test1", "test2" }, item.Items);
+            item.Items.Should().Have.SameSequenceAs("test1", "test2");
         }
 
         [Test]

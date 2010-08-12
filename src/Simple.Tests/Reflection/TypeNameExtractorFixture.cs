@@ -84,7 +84,7 @@ namespace Simple.Tests.Reflection
         public void GenericClassDefinitionTwoName()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("IDictionary<TKey, TValue>", extractor.GetName(typeof(IDictionary<,>)));
+            extractor.GetName(typeof(IDictionary<,>)).Should().Be("IDictionary<TKey, TValue>");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(IDictionary<,>).Namespace,
@@ -96,7 +96,7 @@ namespace Simple.Tests.Reflection
         public void GenericClassDefinitionTwoFullName()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("System.Collections.Generic.IDictionary<TKey, TValue>", extractor.GetName(typeof(IDictionary<,>), true));
+            extractor.GetName(typeof(IDictionary<,>), true).Should().Be("System.Collections.Generic.IDictionary<TKey, TValue>");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(IDictionary<,>).Namespace,
@@ -108,7 +108,7 @@ namespace Simple.Tests.Reflection
         public void GenericClassTwoName()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("IDictionary<String, Int32>", extractor.GetName(typeof(IDictionary<string, int>)));
+            extractor.GetName(typeof(IDictionary<string, int>)).Should().Be("IDictionary<String, Int32>");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(IDictionary<,>).Namespace,

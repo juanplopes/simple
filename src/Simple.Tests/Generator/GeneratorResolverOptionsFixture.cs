@@ -20,8 +20,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample with lasers");
 
-            Assert.IsInstanceOf<SampleString>(generator);
-            (generator as SampleString).Test.Should().Be("lasers");
+            generator.Should().Be.OfType<SampleString>()
+                 .And.Value.Test.Should().Be("lasers");
         }
 
         [Test]
@@ -33,8 +33,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample with=lasers");
 
-            Assert.IsInstanceOf<SampleString>(generator);
-            (generator as SampleString).Test.Should().Be("lasers");
+            generator.Should().Be.OfType<SampleString>()
+                .And.Value.Test.Should().Be("lasers");
         }
 
         [Test]
@@ -46,8 +46,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample +lasers");
 
-            Assert.IsInstanceOf<SampleBoolean>(generator);
-            (generator as SampleBoolean).Test.Should().Be(true);
+            generator.Should().Be.OfType<SampleBoolean>()
+                 .And.Value.Test.Should().Be.True();
         }
 
         [Test]
@@ -57,8 +57,8 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleBoolean(), "sample")
                 .WithOption("lasers", x => x.Test);
 
-            Assert.Throws<UnrecognizedOptionsException>(
-                ()=>resolver.Resolve("sample +lasers:true"));
+            resolver.Executing(x => x.Resolve("sample +lasers:true"))
+                .Throws<UnrecognizedOptionsException>();
         }
 
         [Test]
@@ -70,8 +70,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample lasers=true");
 
-            Assert.IsInstanceOf<SampleBoolean>(generator);
-            (generator as SampleBoolean).Test.Should().Be(true);
+            generator.Should().Be.OfType<SampleBoolean>()
+                .And.Value.Test.Should().Be.True();
         }
 
         [Test]
@@ -83,8 +83,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample");
 
-            Assert.IsInstanceOf<SampleBoolean>(generator);
-            (generator as SampleBoolean).Test.Should().Be(false);
+            generator.Should().Be.OfType<SampleBoolean>()
+                .And.Value.Test.Should().Be.False();
         }
 
 
@@ -97,8 +97,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample lasers true");
 
-            Assert.IsInstanceOf<SampleBoolean>(generator);
-            (generator as SampleBoolean).Test.Should().Be(true);
+            generator.Should().Be.OfType<SampleBoolean>()
+                .And.Value.Test.Should().Be.True();
         }
 
         [Test]
@@ -111,7 +111,8 @@ namespace Simple.Tests.Generator
             var generator = resolver.Resolve("sample lasers:1,2,3");
 
             Assert.IsInstanceOf<SampleIntList>(generator);
-            CollectionAssert.AreEqual(new[] { 1, 2, 3 }, (generator as SampleIntList).Test);
+            generator.Should().Be.OfType<SampleIntList>()
+                .And.Value.Test.Should().Have.SameSequenceAs(1, 2, 3);
         }
 
         [Test]
@@ -123,8 +124,9 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample lasers=t,f,y,n,yes,no,1,0,true,false");
 
-            Assert.IsInstanceOf<SampleBoolList>(generator);
-            CollectionAssert.AreEqual(new[] { true, false, true, false, true, false, true, false, true, false }, (generator as SampleBoolList).Test);
+            generator.Should().Be.OfType<SampleBoolList>()
+                .And.Value.Test.Should().Have.SameSequenceAs(true, false, true, false, true, false, true, false, true, false);
+
         }
 
         [Test]
@@ -134,7 +136,8 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleString(), "sample")
                 .WithOption("with", x => x.Test);
 
-            Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample with lasers, test "));
+            resolver.Executing(x => x.Resolve("sample with lasers, test "))
+                .Throws<InvalidArgumentCountException>();
         }
 
         public class SampleString : ICommand

@@ -44,7 +44,7 @@ namespace Simple.Tests.Serialization
 
             newExpr.Should().Not.Be(expr);
             var obj = newExpr.Compile().DynamicInvoke(21);
-            Assert.AreEqual(42, obj.GetType().GetProperty("asd").GetValue(obj, null));
+            obj.GetType().GetProperty("asd").GetValue(obj, null).Should().Be(42);
         }
 
         private Expression<Func<int, T>> Expr<T>(Expression<Func<int, T>> expr)

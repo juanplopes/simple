@@ -67,7 +67,7 @@ namespace Simple.Tests.Entities
 
             var expr = sample.UniqueProperties("q", x => x.Age);
 
-            Assert.AreEqual("q => (((q.Id != 123) && (q.Name != \"asd\")) && (q.Age = \"23,5\"))", expr.ToString());
+            expr.ToString().Should().Be("q => (((q.Id != 123) && (q.Name != \"asd\")) && (q.Age = \"23,5\"))");
         }
 
 
