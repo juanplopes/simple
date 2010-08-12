@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Common;
 
 namespace Simple.Tests.Common
@@ -12,19 +13,19 @@ namespace Simple.Tests.Common
         public void FirstPrimes()
         {
             List<int> primes = new List<int>(MathExtensions.GetPrimes().Limit(12));
-            Assert.AreEqual(5, primes.Count);
+            primes.Count.Should().Be(5);
 
-            Assert.AreEqual(2, primes[0]);
-            Assert.AreEqual(3, primes[1]);
-            Assert.AreEqual(5, primes[2]);
-            Assert.AreEqual(7, primes[3]);
-            Assert.AreEqual(11, primes[4]);
+            primes[0].Should().Be(2);
+            primes[1].Should().Be(3);
+            primes[2].Should().Be(5);
+            primes[3].Should().Be(7);
+            primes[4].Should().Be(11);
         }
 
         [Test]
         public void TestPrimeCacheInfo()
         {
-            Assert.AreEqual(6542, MathExtensions.GetPrimes().CachedCount);
+            MathExtensions.GetPrimes().CachedCount.Should().Be(6542);
         }
 
         [Test]
@@ -45,7 +46,7 @@ namespace Simple.Tests.Common
         [Test]
         public void Test6543rdPrime()
         {
-            Assert.AreEqual(65537, MathExtensions.GetPrimes().Skip(6542).Take(1).Single());
+            MathExtensions.GetPrimes().Skip(6542).Take(1).Single().Should().Be(65537);
         }
 
         [Test]
@@ -68,18 +69,23 @@ namespace Simple.Tests.Common
 
             CollectionAssert.AreEqual(new[] { 2, 3, 3, 5, 13 }, MathExtensions.GetPrimes().Factorize(2 * 3 * 3 * 5 * 13).ToList());
 
-            CollectionAssert.AreEqual(new[] { 982451653 }, MathExtensions.GetPrimes().Factorize(982451653).ToList());
+            var primes = MathExtensions.GetPrimes();
 
-            CollectionAssert.AreEqual(new[] { 2, 2, 65537 }, MathExtensions.GetPrimes().Factorize(2 * 2 * 65537).ToList());
+            primes.Factorize(982451653)
+                .Should().Have.SameSequenceAs(new[] { 982451653 });
+
+            primes.Factorize(2 * 2 * 65537)
+                .Should().Have.SameSequenceAs(new[] { 2, 2, 65537 });
         }
 
 
         [Test]
         public void TestLastOfCachedPrimes()
         {
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(65520));
-            Assert.IsTrue(MathExtensions.GetPrimes().IsPrime(65521));
-            Assert.IsFalse(MathExtensions.GetPrimes().IsPrime(65522));
+            var primes = MathExtensions.GetPrimes();
+            primes.IsPrime(65520).Should().Be.False();
+            primes.IsPrime(65521).Should().Be.True();
+            primes.IsPrime(65522).Should().Be.False();
         }
 
         [Test]

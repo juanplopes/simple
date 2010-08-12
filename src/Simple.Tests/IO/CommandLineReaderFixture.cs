@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.IO;
 
 namespace Simple.Tests.IO
@@ -20,10 +21,10 @@ namespace Simple.Tests.IO
         public void CanReadSomeNullableIntValues()
         {
             var reader = new CommandLineReader("/a:1", "-b:2", "--c", "3");
-            Assert.AreEqual(1, reader.Get<int?>("a"));
-            Assert.AreEqual(2, reader.Get<int?>("b"));
-            Assert.AreEqual(3, reader.Get<int?>("c"));
-            Assert.AreEqual(null, reader.Get<int?>("d"));
+            reader.Get<int?>("a").Should().Be(1);
+            reader.Get<int?>("b").Should().Be(2);
+            reader.Get<int?>("c").Should().Be(3);
+            reader.Get<int?>("d").Should().Be(null);
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace Simple.Tests.IO
         public void CanReadEnumValues()
         {
             var reader = new CommandLineReader("/a:machine");
-            Assert.AreEqual(EnvironmentVariableTarget.Machine, reader.Get<EnvironmentVariableTarget>("a"));
+            reader.Get<EnvironmentVariableTarget>("a").Should().Be(EnvironmentVariableTarget.Machine);
         }
     }
 }

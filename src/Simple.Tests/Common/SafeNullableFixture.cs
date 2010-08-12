@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Common;
 
 namespace Simple.Tests.Common
@@ -12,21 +13,21 @@ namespace Simple.Tests.Common
         [Test]
         public void CanGetValuesWithNoNullableValue()
         {
-            Assert.AreEqual(2, SafeNullable.Get(() => 2));
+            SafeNullable.Get(() => 2).Should().Be(2);
         }
 
         [Test]
         public void CanGetValuesWithNullableValue()
         {
             object a = null;
-            Assert.AreEqual(null, SafeNullable.Get(() => a.ToString()));
+            SafeNullable.Get(() => a.ToString()).Should().Be(null);
         }
 
         [Test]
         public void CanGetIntValueWithNullableValue()
         {
             object a = null;
-            Assert.AreEqual(0, SafeNullable.Get(() => int.Parse(a.ToString())));
+            SafeNullable.Get(() => int.Parse(a.ToString())).Should().Be(0);
         }
 
         [Test]

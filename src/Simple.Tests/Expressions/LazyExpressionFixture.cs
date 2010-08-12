@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Expressions.Editable;
 using Simple.IO.Serialization;
 
@@ -40,7 +41,7 @@ namespace Simple.Tests.Expressions
             Assert.IsFalse(newLazy.IsProxyActivated);
 
 
-            Assert.AreEqual(real, newReal);
+            newReal.Should().Be(real);
        }
     }
 }

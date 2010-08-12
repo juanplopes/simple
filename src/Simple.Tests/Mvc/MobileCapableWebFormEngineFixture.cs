@@ -6,6 +6,7 @@ using Moq;
 using System.Web.Mvc;
 using System.Globalization;
 using NUnit.Framework;
+using SharpTestsEx;
 using System.Web;
 using System.Web.Routing;
 using Simple.Tests.Mvc.Mocks;
@@ -84,7 +85,7 @@ namespace Simple.Tests.Mvc
             Assert.IsNotNull(viewEngineResult);
             Assert.IsNotNull(viewEngineResult.View);
             Assert.IsNotNull(viewEngineResult.ViewEngine);
-            Assert.AreEqual(viewPathExpected, ((WebFormView)viewEngineResult.View).ViewPath);
+            ((WebFormView)viewEngineResult.View).ViewPath.Should().Be(viewPathExpected);
         }
 
         private static ControllerContext RetrieveTestControllerContext(bool isMobileDevice, string browser)

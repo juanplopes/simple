@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.IO.Serialization;
 
 namespace Simple.Tests.Serialization
@@ -26,8 +27,8 @@ namespace Simple.Tests.Serialization
             var value3 = value2 as Sample1;
             Assert.IsInstanceOf<Sample1>(value2);
             Assert.AreNotEqual(value, value3);
-            Assert.AreEqual(value.Prop1, value3.Prop1);
-            Assert.AreEqual(value.Prop2, value3.Prop2);
+            value3.Prop1.Should().Be(value.Prop1);
+            value3.Prop2.Should().Be(value.Prop2);
         }
         [Test]
         public void TestSerializeStruct()
@@ -38,7 +39,7 @@ namespace Simple.Tests.Serialization
             var value2 = GetSerializer<int>().Deserialize(data);
             var value3 = (int)value2;
             Assert.IsInstanceOf<int>(value2);
-            Assert.AreEqual(value, value3);
+            value3.Should().Be(value);
         }
 
         [Test]
@@ -50,7 +51,7 @@ namespace Simple.Tests.Serialization
             var value2 = GetSerializer<Sample1>().Deserialize(data);
             var value3 = (Sample1)value2;
             Assert.IsNull(value2);
-            Assert.AreEqual(value, value3);
+            value3.Should().Be(value);
         }
 
         [Test]
@@ -81,7 +82,7 @@ namespace Simple.Tests.Serialization
             var value2 = GetStringSerializer<int>().DeserializeFromString(data);
             var value3 = (int)value2;
             Assert.IsInstanceOf<int>(value2);
-            Assert.AreEqual(value, value3);
+            value3.Should().Be(value);
         }
     }
 }

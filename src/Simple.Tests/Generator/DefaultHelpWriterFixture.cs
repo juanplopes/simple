@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Generator;
 using System.IO;
 
@@ -143,7 +144,7 @@ Available options:
 
         public void AssertTexts(string expected, string actual)
         {
-            Assert.AreEqual(Clean(expected), Clean(actual));
+            Clean(actual).Should().Be(Clean(expected));
         }
 
         public string Clean(string text)

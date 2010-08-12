@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Patterns;
 
 namespace Simple.Tests.Patterns
@@ -13,10 +14,10 @@ namespace Simple.Tests.Patterns
 
             using (new DisposableAction(() => x++))
             {
-                Assert.AreEqual(20, x);
+                x.Should().Be(20);
             }
 
-            Assert.AreEqual(21, x);
+            x.Should().Be(21);
         }
         [Test]
         public void TestNormalPathEnsuring()
@@ -25,10 +26,10 @@ namespace Simple.Tests.Patterns
 
             using (new DisposableAction(() => x++, true))
             {
-                Assert.AreEqual(20, x);
+                x.Should().Be(20);
             }
 
-            Assert.AreEqual(21, x);
+            x.Should().Be(21);
         }
 
 
@@ -41,10 +42,10 @@ namespace Simple.Tests.Patterns
             using (var d = new DisposableAction(() => x++))
             {
                 using (d)
-                    Assert.AreEqual(20, x);
+                    x.Should().Be(20);
             }
 
-            Assert.AreEqual(22, x);
+            x.Should().Be(22);
         }
 
         [Test]
@@ -55,10 +56,10 @@ namespace Simple.Tests.Patterns
             using (var d = new DisposableAction(() => x++, true))
             {
                 using(d)
-                    Assert.AreEqual(20, x);
+                    x.Should().Be(20);
             }
 
-            Assert.AreEqual(21, x);
+            x.Should().Be(21);
         }
 
        

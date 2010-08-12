@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.IO.Serialization;
 
 namespace Simple.Tests.Serialization

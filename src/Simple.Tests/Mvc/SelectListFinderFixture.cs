@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using System.Web.Mvc;
 using Moq;
 using System.Globalization;
@@ -23,8 +24,8 @@ namespace Simple.Tests.Mvc
                 GetModelState(2)));
 
             var list = view.Object.FindSelectList<TestParent, Test>(x => x.B, "list");
-            Assert.AreEqual(5, list.Count);
-            Assert.AreEqual(true, list[1].Selected);
+            list.Count.Should().Be(5);
+            list[1].Selected.Should().Be(true);
         }
 
         [Test]
@@ -37,8 +38,8 @@ namespace Simple.Tests.Mvc
                 new TestParent() { B = new Test() { A = 2 } }));
 
             var list = view.Object.FindSelectList<TestParent, Test>(x => x.B, "list");
-            Assert.AreEqual(5, list.Count);
-            Assert.AreEqual(true, list[1].Selected);
+            list.Count.Should().Be(5);
+            list[1].Selected.Should().Be(true);
         }
 
         [Test]

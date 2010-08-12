@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Services.Remoting;
 using Simple.Services.Remoting.Channels;
 

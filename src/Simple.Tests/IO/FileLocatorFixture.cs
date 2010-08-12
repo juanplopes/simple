@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.IO;
 
 namespace Simple.Tests.IO

@@ -3,6 +3,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Config;
 
 namespace Simple.Tests.Config
@@ -12,8 +13,8 @@ namespace Simple.Tests.Config
     {
         public static void TestCreatedSimpleSample(BasicTypesSampleWithoutAttr config)
         {
-            Assert.AreEqual("whatever", config.AString);
-            Assert.AreEqual(42, config.AnIntegral);
+            config.AString.Should().Be("whatever");
+            config.AnIntegral.Should().Be(42);
             Assert.AreEqual(42.42, config.AFloat, 0.001);
         }
 
@@ -204,7 +205,7 @@ namespace Simple.Tests.Config
 
             IXPathConfigSource<BasicTypesSampleWithoutAttr, string> src =
                 new XmlConfigSource<BasicTypesSampleWithoutAttr>();
-            Assert.AreEqual("whatever", src.Load(mySample).Get().AString);
+            src.Load(mySample).Get().AString.Should().Be("whatever");
         }
 
         [Test]
@@ -217,7 +218,7 @@ namespace Simple.Tests.Config
             var src = XmlConfig.LoadXml<BasicTypesSampleWithoutAttr>(mySample)
                 .AddTransform(x => x.AString = "42");
 
-            Assert.AreEqual("42", src.Get().AString);
+            src.Get().AString.Should().Be("42");
         }
 
         [Test]
@@ -231,7 +232,7 @@ namespace Simple.Tests.Config
                 XmlConfig.LoadXml<BasicTypesSampleWithoutAttr>(mySample)
                 .AddTransform(x => x.AString = "42"));
 
-            Assert.AreEqual("42", src.Get().AString);
+            src.Get().AString.Should().Be("42");
         }
 
         [Test]
@@ -242,9 +243,9 @@ namespace Simple.Tests.Config
                   </BasicTypesSampleWithoutAttr>"; ;
 
             var src = XmlConfig.LoadXml<BasicTypesSampleWithoutAttr>(mySample);
-            Assert.AreEqual("whatever", src.Get().AString);
+            src.Get().AString.Should().Be("whatever");
             src.AddTransform(x => x.AString = "42");
-            Assert.AreEqual("42", src.Get().AString);
+            src.Get().AString.Should().Be("42");
         }
 
         [Test]
@@ -256,9 +257,9 @@ namespace Simple.Tests.Config
 
             var src = new WrappedConfigSource<BasicTypesSampleWithoutAttr>().Load(
                 XmlConfig.LoadXml<BasicTypesSampleWithoutAttr>(mySample));
-            Assert.AreEqual("whatever", src.Get().AString);
+            src.Get().AString.Should().Be("whatever");
             src.AddTransform(x => x.AString = "42");
-            Assert.AreEqual("42", src.Get().AString);
+            src.Get().AString.Should().Be("42");
         }
 
         [Test]
@@ -274,7 +275,7 @@ namespace Simple.Tests.Config
 
             src.Load(mySample);
             Assert.IsNotNull(src.Get());
-            Assert.AreEqual("42", src.Get().AString);
+            src.Get().AString.Should().Be("42");
         }
 
         [Test]
@@ -290,7 +291,7 @@ namespace Simple.Tests.Config
 
             src.Load(new XmlConfigSource<BasicTypesSampleWithoutAttr>().Load(mySample));
             Assert.IsNotNull(src.Get());
-            Assert.AreEqual("42", src.Get().AString);
+            src.Get().AString.Should().Be("42");
         }
 
         [Test]
@@ -332,7 +333,7 @@ namespace Simple.Tests.Config
             var cfg = src.Load(complexXml).Get();
 
             TestCreatedSimpleSample(cfg.Basic);
-            Assert.AreEqual(3, cfg.Basics.Length);
+            cfg.Basics.Length.Should().Be(3);
             foreach (var simple in cfg.Basics)
             {
                 TestCreatedSimpleSample(simple);
@@ -356,7 +357,7 @@ namespace Simple.Tests.Config
             var src2 = new XmlConfigSource<BasicTypesSampleWithoutAttr>();
 
             TestCreatedSimpleSample(src2.Load(cfg.Basic).Get());
-            Assert.AreEqual(3, cfg.Basics.Length);
+            cfg.Basics.Length.Should().Be(3);
             foreach (var simple in cfg.Basics)
             {
                 TestCreatedSimpleSample(src2.Load(cfg.Basic).Get());

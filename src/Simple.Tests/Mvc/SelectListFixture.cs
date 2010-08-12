@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Web.Mvc;
 using System.Web.Mvc;
 
@@ -89,9 +90,9 @@ namespace Simple.Tests.Mvc
 
         protected void AssertItem(string value, string text, bool selected, SelectListItem list)
         {
-            Assert.AreEqual(text, list.Text);
-            Assert.AreEqual(value, list.Value);
-            Assert.AreEqual(selected, list.Selected);
+            list.Text.Should().Be(text);
+            list.Value.Should().Be(value);
+            list.Selected.Should().Be(selected);
         }
     }
 }

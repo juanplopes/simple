@@ -1,5 +1,6 @@
 ﻿using NHibernate;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Data.Context;
 
 namespace Simple.Tests.Data

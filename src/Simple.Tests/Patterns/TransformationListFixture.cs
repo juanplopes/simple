@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Patterns;
 
 namespace Simple.Tests.Patterns
@@ -11,7 +12,7 @@ namespace Simple.Tests.Patterns
         public void TestNoTransformation()
         {
             TransformationList<int> t = new TransformationList<int>();
-            Assert.AreEqual(1, t.Invoke(1));
+            t.Invoke(1).Should().Be(1);
         }
 
         [Test]
@@ -19,7 +20,7 @@ namespace Simple.Tests.Patterns
         {
             TransformationList<int> t = new TransformationList<int>();
             t.Add(x => x + 2);
-            Assert.AreEqual(3, t.Invoke(1));
+            t.Invoke(1).Should().Be(3);
         }
 
         [Test]
@@ -28,7 +29,7 @@ namespace Simple.Tests.Patterns
             TransformationList<int> t = new TransformationList<int>();
             t.Add(x => x + 1);
             t.Add(x => x + 2);
-            Assert.AreEqual(4, t.Invoke(1));
+            t.Invoke(1).Should().Be(4);
         }
 
 
@@ -42,7 +43,7 @@ namespace Simple.Tests.Patterns
 
             t.Add(func);
 
-            Assert.AreEqual(100, t.Invoke(1));
+            t.Invoke(1).Should().Be(100);
         }
 
 
@@ -55,11 +56,11 @@ namespace Simple.Tests.Patterns
             t.Add(func);
             t.Add(x => x + 2);
 
-            Assert.AreEqual(4, t.Invoke(1));
+            t.Invoke(1).Should().Be(4);
 
             t.Remove(func);
 
-            Assert.AreEqual(3, t.Invoke(1));
+            t.Invoke(1).Should().Be(3);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.DynamicProxy;
 using Simple.Reflection;
 
@@ -25,22 +26,22 @@ namespace Simple.Tests.DynamicProxy
         public void TestIntReturning()
         {
             SimpleServer server = new SimpleServer();
-            Assert.AreEqual(10, server.GetInt());
+            server.GetInt().Should().Be(10);
 
             server = (SimpleServer)DynamicProxyFactory.Instance.CreateMarshallableProxy(server,
                 (o, m, p) => 42);
-            Assert.AreEqual(42, server.GetInt());
+            server.GetInt().Should().Be(42);
         }
 
         [Test]
         public void TestStringReturning()
         {
             SimpleServer server = new SimpleServer();
-            Assert.AreEqual("4", server.GetString());
+            server.GetString().Should().Be("4");
 
             server = (SimpleServer)DynamicProxyFactory.Instance.CreateMarshallableProxy(server,
                 (o, m, p) => m.Invoke(o, p) + "2");
-            Assert.AreEqual("42", server.GetString());
+            server.GetString().Should().Be("42");
         }
 
         [Test]
@@ -58,22 +59,22 @@ namespace Simple.Tests.DynamicProxy
         public void TestIntParamReturning()
         {
             SimpleServer server = new SimpleServer();
-            Assert.AreEqual(10, server.TestIntParamReturn(10));
+            server.TestIntParamReturn(10).Should().Be(10);
 
             server = (SimpleServer)DynamicProxyFactory.Instance.CreateMarshallableProxy(server,
                 (o, m, p) => (int)m.Invoke(o, p) + 1);
-            Assert.AreEqual(11, server.TestIntParamReturn(10));
+            server.TestIntParamReturn(10).Should().Be(11);
         }
 
         [Test]
         public void TestGenericParamReturning()
         {
             SimpleServer server = new SimpleServer();
-            Assert.AreEqual(10, server.TestGenericParamReturn(10));
+            server.TestGenericParamReturn(10).Should().Be(10);
 
             server = (SimpleServer)DynamicProxyFactory.Instance.CreateMarshallableProxy(server,
                 (o, m, p) => (string)m.Invoke(o, p) + "2");
-            Assert.AreEqual("42", server.TestGenericParamReturn("4"));
+            server.TestGenericParamReturn("4").Should().Be("42");
         }
 
         [Test, ExpectedException(typeof(InvalidCastException))]
@@ -100,15 +101,15 @@ namespace Simple.Tests.DynamicProxy
             int a = 10; int b;
 
             server.TestRefAndOut(ref a, out b);
-            Assert.AreEqual(42, a);
-            Assert.AreEqual(10, b);
+            a.Should().Be(42);
+            b.Should().Be(10);
 
             server = (SimpleServer)DynamicProxyFactory.Instance.CreateMarshallableProxy(server,
                 (o, m, p) => { p[0] = 41; p[1] = 42; return null; });
 
             server.TestRefAndOut(ref a, out b);
-            Assert.AreEqual(41, a);
-            Assert.AreEqual(42, b);
+            a.Should().Be(41);
+            b.Should().Be(42);
         }
 
 

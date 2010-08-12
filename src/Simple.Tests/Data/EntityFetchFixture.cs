@@ -2,6 +2,7 @@
 using System.Linq;
 using NHibernate;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Tests.Resources;
 
 namespace Simple.Tests.Data
@@ -35,7 +36,7 @@ namespace Simple.Tests.Data
             {
                 p = Product.Find(x => true, q => q.Fetch(x => x.Category));
             }
-            Assert.AreEqual("Beverages", p.Category.Name);
+            p.Category.Name.Should().Be("Beverages");
         }
 
         [Test]
@@ -46,7 +47,7 @@ namespace Simple.Tests.Data
             {
                 p = Product.Find(x => true, q => q.Fetch(x => x.Category));
             }
-            Assert.AreEqual("Beverages", p.Category.Name);
+            p.Category.Name.Should().Be("Beverages");
             Assert.Throws<LazyInitializationException>(() => p.Supplier.ContactName.ToString());
         }
 
@@ -58,8 +59,8 @@ namespace Simple.Tests.Data
             {
                 p = Product.Find(x => true, q => q.Fetch(x => x.Category).Fetch(x => x.Supplier));
             }
-            Assert.AreEqual("Beverages", p.Category.Name);
-            Assert.AreEqual("Charlotte Cooper", p.Supplier.ContactName);
+            p.Category.Name.Should().Be("Beverages");
+            p.Supplier.ContactName.Should().Be("Charlotte Cooper");
 
         }
 
@@ -84,8 +85,11 @@ namespace Simple.Tests.Data
                 c = Category.Find(x => x.Name == "Beverages",
                     q => q.FetchMany(x => x.Products).ThenFetch(x => x.Supplier));
             }
-            CollectionAssert.AreEqual(new[] { "Beverages" }, c.Products.Select(x => x.Category.Name).ToArray());
-            CollectionAssert.AllItemsAreNotNull(c.Products.Select(x => x.Supplier.ContactName).ToArray());
+            c.Products.Select(x => x.Category.Name)
+                .Should().Have.SameSequenceAs(new[] { "Beverages" });
+            
+            c.Products.Select(x => x.Supplier.ContactName)
+                .Should().Not.Contain(null);
         }
 
         [Test]
@@ -114,7 +118,7 @@ namespace Simple.Tests.Data
 
                     Product p = Product.Find(x => x.Id == p1.Id, q => q.Fetch(x => x.Category));
 
-                    Assert.AreEqual(null, p.Category);
+                    p.Category.Should().Be(null);
                 }
             }
         }

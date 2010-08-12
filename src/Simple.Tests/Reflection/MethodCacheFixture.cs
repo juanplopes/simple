@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Reflection;
 
 namespace Simple.Tests.Reflection
@@ -104,7 +105,7 @@ namespace Simple.Tests.Reflection
             MethodCache cache = new MethodCache();
             var obj1 = cache.CreateInstance<Sample1>();
 
-            Assert.AreEqual(0, obj1.Prop);
+            obj1.Prop.Should().Be(0);
         }
 
         [Test]
@@ -113,7 +114,7 @@ namespace Simple.Tests.Reflection
             MethodCache cache = new MethodCache();
             var obj1 = cache.CreateInstance<Sample1>("1");
 
-            Assert.AreEqual(1, obj1.Prop);
+            obj1.Prop.Should().Be(1);
         }
 
         [Test]
@@ -130,7 +131,7 @@ namespace Simple.Tests.Reflection
             MethodCache cache = new MethodCache();
             var obj1 = cache.CreateInstance<Sample1>(BindingFlags.NonPublic | BindingFlags.Instance, 1, 2);
 
-            Assert.AreEqual(3, obj1.Prop);
+            obj1.Prop.Should().Be(3);
         }
 
         [Test]
@@ -138,7 +139,7 @@ namespace Simple.Tests.Reflection
         {
             MethodCache cache = new MethodCache();
             var obj = cache.CreateInstance<Sample1>(BindingFlags.NonPublic | BindingFlags.Instance, 1, null);
-            Assert.AreEqual(1, obj.Prop);
+            obj.Prop.Should().Be(1);
         }
 
         [Test]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Generator;
 using System.Text.RegularExpressions;
 
@@ -20,7 +21,7 @@ namespace Simple.Tests.Generator
             var generator = resolver.Resolve("sample with lasers");
 
             Assert.IsInstanceOf<SampleString>(generator);
-            Assert.AreEqual("lasers", (generator as SampleString).Test);
+            (generator as SampleString).Test.Should().Be("lasers");
         }
 
         [Test]
@@ -33,7 +34,7 @@ namespace Simple.Tests.Generator
             var generator = resolver.Resolve("sample with=lasers");
 
             Assert.IsInstanceOf<SampleString>(generator);
-            Assert.AreEqual("lasers", (generator as SampleString).Test);
+            (generator as SampleString).Test.Should().Be("lasers");
         }
 
         [Test]
@@ -46,7 +47,7 @@ namespace Simple.Tests.Generator
             var generator = resolver.Resolve("sample +lasers");
 
             Assert.IsInstanceOf<SampleBoolean>(generator);
-            Assert.AreEqual(true, (generator as SampleBoolean).Test);
+            (generator as SampleBoolean).Test.Should().Be(true);
         }
 
         [Test]
@@ -70,7 +71,7 @@ namespace Simple.Tests.Generator
             var generator = resolver.Resolve("sample lasers=true");
 
             Assert.IsInstanceOf<SampleBoolean>(generator);
-            Assert.AreEqual(true, (generator as SampleBoolean).Test);
+            (generator as SampleBoolean).Test.Should().Be(true);
         }
 
         [Test]
@@ -83,7 +84,7 @@ namespace Simple.Tests.Generator
             var generator = resolver.Resolve("sample");
 
             Assert.IsInstanceOf<SampleBoolean>(generator);
-            Assert.AreEqual(false, (generator as SampleBoolean).Test);
+            (generator as SampleBoolean).Test.Should().Be(false);
         }
 
 
@@ -97,7 +98,7 @@ namespace Simple.Tests.Generator
             var generator = resolver.Resolve("sample lasers true");
 
             Assert.IsInstanceOf<SampleBoolean>(generator);
-            Assert.AreEqual(true, (generator as SampleBoolean).Test);
+            (generator as SampleBoolean).Test.Should().Be(true);
         }
 
         [Test]

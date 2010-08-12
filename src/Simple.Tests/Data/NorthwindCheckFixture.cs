@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Tests.Resources;
 
 namespace Simple.Tests.Data
@@ -9,62 +10,62 @@ namespace Simple.Tests.Data
         [Test]
         public void CheckCategories()
         {
-            Assert.AreEqual(8, Category.Count());
+            Category.Count().Should().Be(8);
             Category.ListAll(1);
         }
 
         [Test]
         public void CheckCustomer()
         {
-            Assert.AreEqual(91, Customer.Count());
+            Customer.Count().Should().Be(91);
             Customer.ListAll(1);
         }
 
         [Test]
         public void CheckProducts()
         {
-            Assert.AreEqual(77, Product.Count());
+            Product.Count().Should().Be(77);
             Product.ListAll(1);
 
             Product p = Product.Load(2);
-            Assert.IsNotNull(p.Category); Assert.AreEqual("Beverages", p.Category.Name);
-            Assert.IsNotNull(p.Supplier); Assert.AreEqual("Exotic Liquids", p.Supplier.CompanyName);
+            Assert.IsNotNull(p.Category); p.Category.Name.Should().Be("Beverages");
+            Assert.IsNotNull(p.Supplier); p.Supplier.CompanyName.Should().Be("Exotic Liquids");
         }
 
         [Test]
         public void CheckSuppliers()
         {
-            Assert.AreEqual(29, Supplier.Count());
+            Supplier.Count().Should().Be(29);
             Supplier.ListAll(1);
         }
 
         [Test]
         public void CheckRegions()
         {
-            Assert.AreEqual(4, Region.Count());
+            Region.Count().Should().Be(4);
             Region.ListAll(1);
         }
 
         [Test]
         public void CheckTerritories()
         {
-            Assert.AreEqual(53, Territory.Count());
+            Territory.Count().Should().Be(53);
             Territory.ListAll(1);
             var t = Territory.Load("03049");
-            Assert.AreEqual(3, t.Region.Id);
+            t.Region.Id.Should().Be(3);
         }
 
         [Test]
         public void CheckEmployees()
         {
-            Assert.AreEqual(9, Employee.Count());
+            Employee.Count().Should().Be(9);
             Employee.ListAll(1);
         }
 
         [Test]
         public void CheckEmployeeTerritories()
         {
-            Assert.AreEqual(49, EmployeeTerritory.Count());
+            EmployeeTerritory.Count().Should().Be(49);
             EmployeeTerritory.Find(x => x.Territory.Id == "85014" && x.Employee.Id == 6);
         }
 

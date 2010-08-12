@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Globalization;
 using NUnit.Framework;
+using SharpTestsEx;
 using System.Collections;
 using Simple.Reflection;
 
@@ -25,8 +26,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("SingleStringParameter");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void SingleStringParameter(String a)", sig.MakeSignature());
-            Assert.AreEqual("SingleStringParameter(a)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void SingleStringParameter(String a)");
+            sig.MakeCall().Should().Be("SingleStringParameter(a)");
         }
 
         [Test]
@@ -43,7 +44,7 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("TwoIntParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void TwoIntParameters(Int32 b)", sig.MakeSignature(1));
+            sig.MakeSignature(1).Should().Be("void TwoIntParameters(Int32 b)");
             Assert.AreEqual("TwoIntParameters(this, b)", sig.MakeCall("this"));
         }
 
@@ -52,8 +53,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("SingleStringOutParameter");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void SingleStringOutParameter(out String a)", sig.MakeSignature());
-            Assert.AreEqual("SingleStringOutParameter(out a)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void SingleStringOutParameter(out String a)");
+            sig.MakeCall().Should().Be("SingleStringOutParameter(out a)");
         }
 
         [Test]
@@ -61,8 +62,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("SingleStringRefParameter");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void SingleStringRefParameter(ref String a)", sig.MakeSignature());
-            Assert.AreEqual("SingleStringRefParameter(ref a)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void SingleStringRefParameter(ref String a)");
+            sig.MakeCall().Should().Be("SingleStringRefParameter(ref a)");
         }
 
 
@@ -117,8 +118,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("OneGenericParamsParameters");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void OneGenericParamsParameters<T>(params T[] a)", sig.MakeSignature());
-            Assert.AreEqual("OneGenericParamsParameters<T>(a)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void OneGenericParamsParameters<T>(params T[] a)");
+            sig.MakeCall().Should().Be("OneGenericParamsParameters<T>(a)");
         }
 
         [Test]
@@ -154,8 +155,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample2<int>).GetMethod("GenericParameter");
             var sig = new MethodSignature(method);
-            Assert.AreEqual("void GenericParameter<Q>(Q a)", sig.MakeSignature());
-            Assert.AreEqual("GenericParameter<Q>(a)", sig.MakeCall());
+            sig.MakeSignature().Should().Be("void GenericParameter<Q>(Q a)");
+            sig.MakeCall().Should().Be("GenericParameter<Q>(a)");
         }
 
         [Test]
@@ -164,7 +165,7 @@ namespace Simple.Tests.Reflection
             var method = typeof(Sample2<int>).GetMethod("GenericParameterInheriting");
             var sig = new MethodSignature(method);
             Assert.AreEqual("void GenericParameterInheriting<Q>(Q a) where Q : MethodSignatureFixture.Sample1, IConvertible, new()", sig.MakeSignature());
-            Assert.AreEqual("GenericParameterInheriting<Q>(a)", sig.MakeCall());
+            sig.MakeCall().Should().Be("GenericParameterInheriting<Q>(a)");
         }
 
         [Test]

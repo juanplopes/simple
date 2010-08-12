@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace Simple.Tests.Services
 {

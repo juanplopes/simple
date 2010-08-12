@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Tests.Resources;
 
 namespace Simple.Tests.Data
@@ -24,11 +25,11 @@ namespace Simple.Tests.Data
                 int c = Customer.Count();
                 Assert.Throws<Exception>(() => Customer.Service.DeleteTwoCustomers());
                 int c2 = Customer.Count();
-                Assert.AreEqual(2, c - c2);
+                (c - c2).Should().Be(2);
                 tx.Rollback();
 
                 int c3 = Customer.Count();
-                Assert.AreEqual(0, c - c3);
+                (c - c3).Should().Be(0);
             }
         }
 
@@ -41,7 +42,7 @@ namespace Simple.Tests.Data
                 Assert.Throws<Exception>(() => Customer.Service.DeleteTwoCustomers());
                 int c2 = Customer.Count();
 
-                Assert.AreEqual(0, c - c2);
+                (c - c2).Should().Be(0);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using FluentNHibernate.Cfg.Db;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Config;
 using Simple.Data;
 using Simple.Tests.Resources;
@@ -30,7 +31,7 @@ namespace Simple.Tests.Data
                 Database(SQLiteConfiguration.Standard.UsingFile("myfilemyfilemyfile")).BuildConfiguration();
 
             Simply.Do[this].Release.NHibernate();
-            Assert.AreEqual(null, Simply.Do[this].GetNHibernateConfig().GetProperty("dialect"));
+            Simply.Do[this].GetNHibernateConfig().GetProperty("dialect").Should().Be(null);
             Simply.Do[this].SetNHibernateConfig(cfg);
             StringAssert.StartsWith("NHibernate.Dialect.SQLiteDialect", Simply.Do[this].GetNHibernateConfig().GetProperty("dialect"));
 
@@ -59,7 +60,7 @@ namespace Simple.Tests.Data
             var factories = new FactoryManager<NHibernateFactory, NHConfigurator>();
             var factory = factories[this];
 
-            Assert.AreEqual(1, factory.NHConfiguration.ClassMappings.Count);
+            factory.NHConfiguration.ClassMappings.Count.Should().Be(1);
         }
         [Test]
         public void TestMapEntityAssembly()
@@ -70,7 +71,7 @@ namespace Simple.Tests.Data
 
             var config = Simply.Do[this].GetNHibernateConfig();
 
-            Assert.AreEqual(8, config.ClassMappings.Count);
+            config.ClassMappings.Count.Should().Be(8);
         }
     }
 }

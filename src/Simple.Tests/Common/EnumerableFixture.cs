@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using NUnit.Framework;
+using SharpTestsEx;
 using System.Text;
 
 namespace Simple.Tests.Common
@@ -53,7 +54,7 @@ namespace Simple.Tests.Common
             var seq = new[] { "um", "dois", "três" };
             var str = seq.StringJoin();
 
-            CollectionAssert.AreEqual("umdoistrês", str);
+            str.Should().Be("umdoistrês");
         }
 
         [Test]
@@ -62,7 +63,7 @@ namespace Simple.Tests.Common
             var seq = new[] { "um", "dois", "três" };
             var str = seq.StringJoin(",");
 
-            CollectionAssert.AreEqual("um,dois,três", str);
+            str.Should().Be("um,dois,três");
         
         }
 
@@ -74,7 +75,7 @@ namespace Simple.Tests.Common
             var builder = new StringBuilder();
             seq.EagerForeach(x => builder.Append(x));
 
-            CollectionAssert.AreEqual("", builder.ToString());
+            builder.ToString().Should().Be("");
         }
 
 
@@ -86,7 +87,7 @@ namespace Simple.Tests.Common
             var builder = new StringBuilder();
             seq.EagerForeach(x => builder.Append(x));
 
-            CollectionAssert.AreEqual("umdoistrês", builder.ToString());
+            builder.ToString().Should().Be("umdoistrês");
         }
 
         [Test]
@@ -97,7 +98,7 @@ namespace Simple.Tests.Common
             var builder = new StringBuilder();
             seq.EagerForeach(x => builder.Append(x), x => builder.Append(","));
 
-            CollectionAssert.AreEqual("", builder.ToString());
+            builder.ToString().Should().Be("");
         }
 
         [Test]
@@ -108,7 +109,7 @@ namespace Simple.Tests.Common
             var builder = new StringBuilder();
             seq.EagerForeach(x => builder.Append(x), x=>builder.Append(","));
 
-            CollectionAssert.AreEqual("um,dois,três", builder.ToString());
+            builder.ToString().Should().Be("um,dois,três");
         }
 
         [Test]
@@ -117,7 +118,7 @@ namespace Simple.Tests.Common
             var seq = new[] { 1, 2, 3 };
             var str = seq.StringJoin(",");
 
-            CollectionAssert.AreEqual("1,2,3", str);
+            str.Should().Be("1,2,3");
         }
     }
 }

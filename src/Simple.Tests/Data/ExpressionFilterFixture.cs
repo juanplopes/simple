@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Tests.Resources;
 
 namespace Simple.Tests.Data
@@ -11,7 +12,7 @@ namespace Simple.Tests.Data
         {
             var c = Customer.Find(x => x.Id == "DRACD");
             Assert.IsNotNull(c);
-            Assert.AreEqual("Drachenblut Delikatessen", c.CompanyName);
+            c.CompanyName.Should().Be("Drachenblut Delikatessen");
         }
 
         [Test]
@@ -19,7 +20,7 @@ namespace Simple.Tests.Data
         {
             var c = Customer.Find(x => x.Id.Contains("DRACD"));
             Assert.IsNotNull(c);
-            Assert.AreEqual("Drachenblut Delikatessen", c.CompanyName);
+            c.CompanyName.Should().Be("Drachenblut Delikatessen");
         }
 
         [Test]
@@ -34,7 +35,7 @@ namespace Simple.Tests.Data
         {
             var c = Customer.Find(x => x.Id.Contains("DRACD") && x.Country == "Germany");
             Assert.IsNotNull(c);
-            Assert.AreEqual("Drachenblut Delikatessen", c.CompanyName);
+            c.CompanyName.Should().Be("Drachenblut Delikatessen");
         }
 
         [Test]
@@ -42,7 +43,7 @@ namespace Simple.Tests.Data
         {
             var p = Product.Find(x => x.Id == 2 && x.Category.Name == "Beverages");
             Assert.IsNotNull(p);
-            Assert.AreEqual("Chang", p.Name);
+            p.Name.Should().Be("Chang");
         }
 
         [Test]

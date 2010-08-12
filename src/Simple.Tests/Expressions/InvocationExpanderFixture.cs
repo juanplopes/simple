@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Expressions;
 using Simple.Expressions.Editable;
 
@@ -18,17 +19,17 @@ namespace Simple.Tests.Expressions
 
             // x => x > 2 && invoke(y => y < 3, x);
             p1 = Expression.Lambda<Predicate<int>>(Expression.AndAlso(p1.Body, Expression.Invoke(p2, p1.Parameters.ToArray())), p1.Parameters.ToArray());
-            Assert.AreEqual(5, p1.Nodes().OfType<ParameterExpression>().Count());
-            Assert.AreEqual(1, p1.Nodes().OfType<InvocationExpression>().Count());
+            p1.Nodes().OfType<ParameterExpression>().Count().Should().Be(5);
+            p1.Nodes().OfType<InvocationExpression>().Count().Should().Be(1);
 
             // x => x > 2 && x < 3
             p1 = InvocationExpander.Expand(p1);
-            Assert.AreEqual(3, p1.Nodes().OfType<ParameterExpression>().Count());
-            Assert.AreEqual(0, p1.Nodes().OfType<InvocationExpression>().Count());
+            p1.Nodes().OfType<ParameterExpression>().Count().Should().Be(3);
+            p1.Nodes().OfType<InvocationExpression>().Count().Should().Be(0);
 
             //expected result
             Expression<Predicate<int>> pExp = x => x > 2 && x < 3;
-            Assert.AreEqual(pExp.ToString(), p1.ToString());
+            p1.ToString().Should().Be(pExp.ToString());
 
         }
 
@@ -40,17 +41,17 @@ namespace Simple.Tests.Expressions
 
             // (x, y) => x > y || invoke((y, x) => x > y, x, y);
             p1 = Expression.Lambda<Func<int, int, bool>>(Expression.OrElse(p1.Body, Expression.Invoke(p2, p1.Parameters.ToArray())), p1.Parameters.ToArray());
-            Assert.AreEqual(10, p1.Nodes().OfType<ParameterExpression>().Count());
-            Assert.AreEqual(1, p1.Nodes().OfType<InvocationExpression>().Count());
+            p1.Nodes().OfType<ParameterExpression>().Count().Should().Be(10);
+            p1.Nodes().OfType<InvocationExpression>().Count().Should().Be(1);
 
             // (x, y) => x > y || y > x;
             p1 = InvocationExpander.Expand(p1);
-            Assert.AreEqual(6, p1.Nodes().OfType<ParameterExpression>().Count());
-            Assert.AreEqual(0, p1.Nodes().OfType<InvocationExpression>().Count());
+            p1.Nodes().OfType<ParameterExpression>().Count().Should().Be(6);
+            p1.Nodes().OfType<InvocationExpression>().Count().Should().Be(0);
 
             //expected result
             Expression<Func<int, int, bool>> pExp = (x, y) => x > y || y > x;
-            Assert.AreEqual(pExp.ToString(), p1.ToString());
+            p1.ToString().Should().Be(pExp.ToString());
 
         }
     }

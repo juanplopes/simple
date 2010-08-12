@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Remoting;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Config;
 using Simple.Services;
 
@@ -15,8 +16,8 @@ namespace Simple.Tests.Services
             SourceManager.Do.Remove<IServiceClientProvider>(this);
             var svc = Simply.Do.Resolve<ITestClientConnector>();
 
-            Assert.AreEqual(0, svc.TestInt());
-            Assert.AreEqual(null, svc.TestString());
+            svc.TestInt().Should().Be(0);
+            svc.TestString().Should().Be(null);
         }
 
         [Test]
@@ -27,11 +28,11 @@ namespace Simple.Tests.Services
             Simply.Do[guid].Configure.DefaultHost();
             Simply.Do[guid].Host(typeof(SimpleService));
 
-            Assert.AreEqual(42, Simply.Do[guid].Resolve<ISimpleService>().GetInt32());
+            Simply.Do[guid].Resolve<ISimpleService>().GetInt32().Should().Be(42);
 
             Simply.Do[guid].Configure.Remoting().FromXmlString(Helper.MakeConfig(Helper.MakeUri("http", 8001)));
 
-            Assert.AreEqual(42, Simply.Do[guid].Resolve<ISimpleService>().GetInt32());
+            Simply.Do[guid].Resolve<ISimpleService>().GetInt32().Should().Be(42);
 
             Simply.Do[guid].Release.Remoting();
         }
@@ -46,13 +47,13 @@ namespace Simple.Tests.Services
             Simply.Do[guid2].Configure.Remoting().FromXmlString(Helper.MakeConfig(Helper.MakeUri("http", 8002)));
 
             Simply.Do[guid1].Host(typeof(SimpleService));
-            Assert.AreEqual(42, Simply.Do[guid2].Resolve<ISimpleService>().GetInt32());
+            Simply.Do[guid2].Resolve<ISimpleService>().GetInt32().Should().Be(42);
 
             Simply.Do[guid1].Configure.DefaultHost();
 
             Assert.Throws(typeof(RemotingException), () =>
             {
-                Assert.AreEqual(42, Simply.Do[guid2].Resolve<ISimpleService>().GetInt32());
+                Simply.Do[guid2].Resolve<ISimpleService>().GetInt32().Should().Be(42);
             });
         }
 
@@ -72,7 +73,7 @@ namespace Simple.Tests.Services
 
             int a = 42;
             svc.TestRefMethod(ref a);
-            Assert.AreEqual(42, a);
+            a.Should().Be(42);
         }
 
 
@@ -84,7 +85,7 @@ namespace Simple.Tests.Services
 
             int a;
             svc.TestOutMethod(out a);
-            Assert.AreEqual(0, a);
+            a.Should().Be(0);
         }
     }
 

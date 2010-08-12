@@ -68,6 +68,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="SharpTestsEx.NUnit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharpTestsEx.NUnit.dll</HintPath>
+    </Reference>
     <Reference Include="Simple.NHibernate, Version=3.0.0.1001, Culture=neutral, PublicKeyToken=71e14f0ea88dd4a5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Simple.NHibernate.dll</HintPath>
@@ -134,6 +138,7 @@
     <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
+    <Compile Include="Mvc\EntityModelBinderFixture.cs" />
     <Compile Include="Mvc\HtmlNoticeFixture.cs" />
     <Compile Include="Mvc\MobileCapableWebFormEngineFixture.cs" />
     <Compile Include="Mvc\Mocks\MockMobileCapableWebFormViewEngine.cs" />

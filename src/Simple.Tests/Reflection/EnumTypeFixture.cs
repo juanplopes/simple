@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Reflection;
 
 namespace Simple.Tests.Reflection
@@ -18,7 +19,7 @@ namespace Simple.Tests.Reflection
         public void TestValue1()
         {
             var list = EnumTypeAttribute.GetEnumTypes(SampleEnum1.Value1);
-            Assert.AreEqual(2, list.Count);
+            list.Count.Should().Be(2);
 
             foreach (var obj in list)
             {
@@ -34,7 +35,7 @@ namespace Simple.Tests.Reflection
         public void TestValue2()
         {
             var list = EnumTypeAttribute.GetEnumTypes(SampleEnum1.Value2);
-            Assert.AreEqual(1, list.Count);
+            list.Count.Should().Be(1);
 
             foreach (var obj in list)
             {
@@ -50,7 +51,7 @@ namespace Simple.Tests.Reflection
         public void TestValue3()
         {
             var list = EnumTypeAttribute.GetEnumTypes(SampleEnum1.Value3);
-            Assert.AreEqual(1, list.Count);
+            list.Count.Should().Be(1);
 
             foreach (var obj in list)
             {
@@ -66,7 +67,7 @@ namespace Simple.Tests.Reflection
         public void TestValue4()
         {
             var list = EnumTypeAttribute.GetEnumTypes(SampleEnum1.Value4);
-            Assert.AreEqual(0, list.Count);
+            list.Count.Should().Be(0);
 
             foreach (var obj in list)
             {

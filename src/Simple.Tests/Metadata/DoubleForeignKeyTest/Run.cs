@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using Migrator1 = Simple.Migrator.DbMigrator;
 using Simple.Metadata;
 using Simple.Migrator.Framework;

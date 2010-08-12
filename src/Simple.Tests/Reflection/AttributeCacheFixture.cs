@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Reflection;
 
 namespace Simple.Tests.Reflection
@@ -43,7 +44,7 @@ namespace Simple.Tests.Reflection
         {
             var attr1 = new List<Attribute1Attribute>(
                 AttributeCache.Do.Enumerate<Attribute1Attribute>(typeof(AttributeTest)));
-            Assert.AreEqual(2, attr1.Count);
+            attr1.Count.Should().Be(2);
         }
 
         [Test]
@@ -64,7 +65,7 @@ namespace Simple.Tests.Reflection
         {
             var attr3 = new List<Attribute3Attribute>(
                 AttributeCache.Do.Enumerate<Attribute3Attribute>(typeof(AttributeTest).GetProperty("TestProp")));
-            Assert.AreEqual(2, attr3.Count);
+            attr3.Count.Should().Be(2);
         }
     }
 }

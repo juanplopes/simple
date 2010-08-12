@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NHibernate;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Data;
 using Simple.Tests.Resources;
 
@@ -45,11 +46,11 @@ namespace Simple.Tests.Data
             
             var list = q.List<SampleDTO>();
 
-            Assert.AreEqual(5, list.Count);
+            list.Count.Should().Be(5);
             foreach (var obj in list)
             {
-                Assert.AreEqual(obj.SampleInt, obj.SampleProduct.Supplier.Id);
-                Assert.AreEqual(obj.SampleString, obj.SampleProduct.Name);
+                obj.SampleProduct.Supplier.Id.Should().Be(obj.SampleInt);
+                obj.SampleProduct.Name.Should().Be(obj.SampleString);
             }
         }
 
@@ -62,11 +63,11 @@ namespace Simple.Tests.Data
 
             var list = q.List<SampleDTO>();
 
-            Assert.AreEqual(5, list.Count);
+            list.Count.Should().Be(5);
             foreach (var obj in list)
             {
-                Assert.AreEqual(obj.SampleInt, obj.SampleProduct.Supplier.Id);
-                Assert.AreEqual(obj.SampleString, obj.SampleProduct.Name);
+                obj.SampleProduct.Supplier.Id.Should().Be(obj.SampleInt);
+                obj.SampleProduct.Name.Should().Be(obj.SampleString);
             }
         }
 
@@ -82,7 +83,7 @@ namespace Simple.Tests.Data
 
             var list = q.List<SampleDTO>();
 
-            Assert.AreEqual(5, list.Count);
+            list.Count.Should().Be(5);
             foreach (var obj in list)
                 Assert.IsNull(obj.SampleProduct); //here is a NHibernate bug
         }
@@ -96,11 +97,11 @@ namespace Simple.Tests.Data
 
             var list = q.List<SampleDTO>();
 
-            Assert.AreEqual(5, list.Count);
+            list.Count.Should().Be(5);
             foreach (var obj in list)
             {
-                Assert.AreEqual(obj.SampleInt, obj.SampleProduct.Supplier.Id);
-                Assert.AreEqual(obj.SampleString, obj.SampleProduct.Name);
+                obj.SampleProduct.Supplier.Id.Should().Be(obj.SampleInt);
+                obj.SampleProduct.Name.Should().Be(obj.SampleString);
             }
         }
 
@@ -117,11 +118,11 @@ namespace Simple.Tests.Data
 
             var list = q.List<SampleDTO2>();
 
-            Assert.AreEqual(5, list.Count);
+            list.Count.Should().Be(5);
             foreach (var obj in list)
             {
-                Assert.AreEqual(obj.SampleInt, obj.Supplier.Id);
-                Assert.AreEqual(obj.SampleString, obj.Name);
+                obj.Supplier.Id.Should().Be(obj.SampleInt);
+                obj.Name.Should().Be(obj.SampleString);
             }
         }
 
@@ -134,11 +135,11 @@ namespace Simple.Tests.Data
 
             var list = q.List<SampleDTO2>();
 
-            Assert.AreEqual(5, list.Count);
+            list.Count.Should().Be(5);
             foreach (var obj in list)
             {
-                Assert.AreEqual(obj.SampleInt, obj.Supplier.Id);
-                Assert.AreEqual(obj.SampleString, obj.Name);
+                obj.Supplier.Id.Should().Be(obj.SampleInt);
+                obj.Name.Should().Be(obj.SampleString);
             }
         }
 
@@ -165,13 +166,15 @@ namespace Simple.Tests.Data
             q.SetResultTransformer(SimpleTransformers.ToDictionary);
 
             var dics = q.List<Dictionary<string, object>>();
-            Assert.AreEqual(5, dics.Count);
+            dics.Count.Should().Be(5);
 
             foreach (var dic in dics)
             {
-                Assert.AreEqual(3, dic.Count);
-                Assert.AreEqual(dic["SampleInt"], ((Product)dic["SampleProduct"]).Supplier.Id);
-                Assert.AreEqual(dic["SampleString"], ((Product)dic["SampleProduct"]).Name);
+                dic.Count.Should().Be(3);
+                var asserter = dic["SampleProduct"].Should().Be.OfType<Product>().And;
+ 
+                asserter.Value.Supplier.Id.Should().Be((int)dic["SampleInt"]);
+                asserter.Value.Name.Should().Be((string)dic["SampleString"]);
             }
         }
 
@@ -186,11 +189,11 @@ namespace Simple.Tests.Data
             q.SetResultTransformer(SimpleTransformers.ToDictionary);
 
             var dics = q.List<Dictionary<string, object>>();
-            Assert.AreEqual(5, dics.Count);
+            dics.Count.Should().Be(5);
 
             foreach (var dic in dics)
             {
-                Assert.AreEqual(2, dic.Count);
+                dic.Count.Should().Be(2);
                 Assert.That(dic.ContainsKey("SampleString"));
                 Assert.That(dic.ContainsKey("SampleInt"));
             }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using NHibernate.Linq;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Tests.Resources;
 
 namespace Simple.Tests.Data
@@ -18,17 +19,17 @@ namespace Simple.Tests.Data
 
             var list = q.ToDictionary(x => x.Key);
 
-            Assert.AreEqual(9, list.Count);
+            list.Count.Should().Be(9);
 
-            Assert.AreEqual(2, list[1].Count);
-            Assert.AreEqual(7, list[2].Count);
-            Assert.AreEqual(4, list[3].Count);
-            Assert.AreEqual(3, list[4].Count);
-            Assert.AreEqual(7, list[5].Count);
-            Assert.AreEqual(5, list[6].Count);
-            Assert.AreEqual(10, list[7].Count);
-            Assert.AreEqual(4, list[8].Count);
-            Assert.AreEqual(7, list[9].Count);
+            list[1].Count.Should().Be(2);
+            list[2].Count.Should().Be(7);
+            list[3].Count.Should().Be(4);
+            list[4].Count.Should().Be(3);
+            list[5].Count.Should().Be(7);
+            list[6].Count.Should().Be(5);
+            list[7].Count.Should().Be(10);
+            list[8].Count.Should().Be(4);
+            list[9].Count.Should().Be(7);
         }
 
       

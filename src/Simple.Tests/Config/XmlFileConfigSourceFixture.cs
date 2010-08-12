@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Config;
 using Simple.IO;
 
@@ -76,7 +77,7 @@ namespace Simple.Tests.Config
                 src.Reloaded += x =>
                 {
                     cfg = x;
-                    Assert.AreEqual(43, cfg.AnIntegral);
+                    cfg.AnIntegral.Should().Be(43);
                     Assert.AreEqual(43.43, cfg.AFloat, 0.001);
                     flag = true;
                 };
@@ -107,7 +108,7 @@ namespace Simple.Tests.Config
                 src.Reloaded += x =>
                 {
                     cfg = x;
-                    Assert.AreEqual(43, cfg.AnIntegral);
+                    cfg.AnIntegral.Should().Be(43);
                     Assert.AreEqual(44.44, cfg.AFloat, 0.001);
                     flag = true;
                 };

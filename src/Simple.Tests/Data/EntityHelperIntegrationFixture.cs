@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Tests.Resources;
 
 namespace Simple.Tests.Data
@@ -36,8 +37,8 @@ namespace Simple.Tests.Data
             Territory t3 = new Territory();
             t3.Id = "asd2";
 
-            Assert.AreEqual(t1, t2);
-            Assert.AreEqual(t2, t1);
+            t2.Should().Be(t1);
+            t1.Should().Be(t2);
 
             Assert.AreNotEqual(t1, t3);
             Assert.AreNotEqual(t3, t1);
@@ -76,8 +77,8 @@ namespace Simple.Tests.Data
             Territory t3 = new Territory();
             t3.Id = "asd2";
 
-            Assert.AreEqual(t1.GetHashCode(), t2.GetHashCode());
-            Assert.AreEqual(t2.GetHashCode(), t1.GetHashCode());
+            t2.GetHashCode().Should().Be(t1.GetHashCode());
+            t1.GetHashCode().Should().Be(t2.GetHashCode());
 
             Assert.AreNotEqual(t1.GetHashCode(), t3.GetHashCode());
             Assert.AreNotEqual(t3.GetHashCode(), t1.GetHashCode());
@@ -94,8 +95,8 @@ namespace Simple.Tests.Data
             Category t2 = new Category();
             t2.Id = 13;
 
-            Assert.AreEqual(t1.GetType().FullName, t1.ToString());
-            Assert.AreEqual(t2.GetType().FullName, t2.ToString());
+            t1.ToString().Should().Be(t1.GetType().FullName);
+            t2.ToString().Should().Be(t2.GetType().FullName);
         }
 
         [Test]
@@ -106,8 +107,8 @@ namespace Simple.Tests.Data
             Territory t2 = new Territory();
             t2.Id = "asd2";
 
-            Assert.AreEqual("(Id=asd)", t1.ToString());
-            Assert.AreEqual("(Id=asd2)", t2.ToString());
+            t1.ToString().Should().Be("(Id=asd)");
+            t2.ToString().Should().Be("(Id=asd2)");
         }
 
         [Test]
@@ -125,8 +126,8 @@ namespace Simple.Tests.Data
             t3.Employee = new Employee() { Id = 3 };
             t3.Territory = new Territory() { Id = "asd" };
 
-            Assert.AreEqual(t1, t2);
-            Assert.AreEqual(t2, t1);
+            t2.Should().Be(t1);
+            t1.Should().Be(t2);
 
             Assert.AreNotEqual(t1, t3);
             Assert.AreNotEqual(t3, t1);
@@ -149,8 +150,8 @@ namespace Simple.Tests.Data
             t3.Employee = new Employee() { Id = 3 };
             t3.Territory = new Territory() { Id = "asd" };
 
-            Assert.AreEqual(t1.GetHashCode(), t2.GetHashCode());
-            Assert.AreEqual(t2.GetHashCode(), t1.GetHashCode());
+            t2.GetHashCode().Should().Be(t1.GetHashCode());
+            t1.GetHashCode().Should().Be(t2.GetHashCode());
 
             Assert.AreNotEqual(t1.GetHashCode(), t3.GetHashCode());
             Assert.AreNotEqual(t3.GetHashCode(), t1.GetHashCode());
@@ -174,9 +175,9 @@ namespace Simple.Tests.Data
             t3.Employee = new Employee() { Id = 3 };
             t3.Territory = new Territory() { Id = "asd" };
 
-            Assert.AreEqual("(Employee=(Id=2) | Territory=(Id=asd))", t1.ToString());
-            Assert.AreEqual("(Employee=(Id=2) | Territory=(Id=asd))", t2.ToString());
-            Assert.AreEqual("(Employee=(Id=3) | Territory=(Id=asd))", t3.ToString());
+            t1.ToString().Should().Be("(Employee=(Id=2) | Territory=(Id=asd))");
+            t2.ToString().Should().Be("(Employee=(Id=2) | Territory=(Id=asd))");
+            t3.ToString().Should().Be("(Employee=(Id=3) | Territory=(Id=asd))");
         }
     }
 }

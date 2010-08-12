@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Expressions;
 
 namespace Simple.Tests.Expressions
@@ -14,7 +15,7 @@ namespace Simple.Tests.Expressions
             var queryable = new EmptyQueryable<int>(Parameter<int>("q"));
             var newQuery = queryable.Where(x => x > 2);
 
-            Assert.AreEqual("q.Where(x => (x > 2))", newQuery.Expression.ToString());
+            newQuery.Expression.ToString().Should().Be("q.Where(x => (x > 2))");
         }
 
         [Test]
@@ -23,7 +24,7 @@ namespace Simple.Tests.Expressions
             var queryable = new EmptyQueryable<int>(Parameter<int>("q"));
             var newQuery = queryable.Where(x => x > 2).Distinct();
 
-            Assert.AreEqual("q.Where(x => (x > 2)).Distinct()", newQuery.Expression.ToString());
+            newQuery.Expression.ToString().Should().Be("q.Where(x => (x > 2)).Distinct()");
         }
         
         [Test]
@@ -32,7 +33,7 @@ namespace Simple.Tests.Expressions
             var queryable = new EmptyQueryable<DateTime>(Parameter<DateTime>("q"));
             var newQuery = queryable.Where(x => x > DateTime.Now).Distinct().Select(x => x.Day);
 
-            Assert.AreEqual("q.Where(x => (x > DateTime.Now)).Distinct().Select(x => x.Day)", newQuery.Expression.ToString());
+            newQuery.Expression.ToString().Should().Be("q.Where(x => (x > DateTime.Now)).Distinct().Select(x => x.Day)");
         }
 
         [Test]

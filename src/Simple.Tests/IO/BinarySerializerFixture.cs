@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using NHibernate.Criterion;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.IO.Serialization;
 
 namespace Simple.Tests.Serialization
@@ -29,7 +30,7 @@ namespace Simple.Tests.Serialization
             var newExpr = (Expression<Func<int, int>>)ser.Deserialize(ser.Serialize(expr));
 
             Assert.AreNotEqual(expr, newExpr);
-            Assert.AreEqual(42, newExpr.Compile()(21));
+            newExpr.Compile()(21).Should().Be(42);
         }
 
         [Test]

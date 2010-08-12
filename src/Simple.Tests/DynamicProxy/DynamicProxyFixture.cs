@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.DynamicProxy;
 
 namespace Simple.Tests.DynamicProxy
@@ -20,17 +21,17 @@ namespace Simple.Tests.DynamicProxy
             // No test for method 1, just make sure it doesn't bomb ;-)
             testClassProxy.Method1();
 
-            Assert.AreEqual("Hello World!", testClassProxy.Method2());
-            Assert.AreEqual(10000, testClassProxy.Method3());
-            Assert.AreEqual(123456, testClassProxy.Method4(123456));
+            testClassProxy.Method2().Should().Be("Hello World!");
+            testClassProxy.Method3().Should().Be(10000);
+            testClassProxy.Method4(123456).Should().Be(123456);
 
             int outValue = 1234;
             testClassProxy.Method5(3456, out outValue);
-            Assert.AreEqual(3456, outValue);
+            outValue.Should().Be(3456);
 
             int refValue = 56748;
             testClassProxy.Method6(ref refValue);
-            Assert.AreEqual(98765, refValue);
+            refValue.Should().Be(98765);
 
             // Test casting
             IImplemented implementedInterface = (IImplemented)testClassProxy;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Generator;
 using System.Text.RegularExpressions;
 
@@ -19,8 +20,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample test");
 
-            Assert.IsInstanceOf<SampleStringList>(generator);
-            CollectionAssert.AreEqual(new[] { "test" }, (generator as SampleStringList).TestList);
+            generator.Should().Be.OfType<SampleStringList>()
+                .And.Value.TestList.Should().Have.SameSequenceAs(new[] { "test" });
         }
 
         [Test]
@@ -32,8 +33,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample test, test2, test3");
 
-            Assert.IsInstanceOf<SampleStringList>(generator);
-            CollectionAssert.AreEqual(new[] { "test", "test2", "test3" }, (generator as SampleStringList).TestList);
+            generator.Should().Be.OfType<SampleStringList>()
+                .And.Value.TestList.Should().Have.SameSequenceAs(new[] { "test", "test2", "test3" });
         }
 
         [Test]
@@ -45,8 +46,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample +test, @test2, t^est3");
 
-            Assert.IsInstanceOf<SampleStringList>(generator);
-            CollectionAssert.AreEqual(new[] { "+test", "@test2", "t^est3" }, (generator as SampleStringList).TestList);
+            generator.Should().Be.OfType<SampleStringList>()
+                .And.Value.TestList.Should().Have.SameSequenceAs(new[] { "+test", "@test2", "t^est3" });
         }
 
         [Test]
@@ -58,8 +59,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample 1, 2, 3");
 
-            Assert.IsInstanceOf<SampleIntList>(generator);
-            CollectionAssert.AreEqual(new[] { 1, 2, 3 }, (generator as SampleIntList).TestList);
+            generator.Should().Be.OfType<SampleIntList>()
+                .And.Value.TestList.Should().Have.SameSequenceAs(new[] { 1, 2, 3 });
         }
 
         [Test]
@@ -71,8 +72,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample 1, 2, 3");
 
-            Assert.IsInstanceOf<SampleIntNullableList>(generator);
-            CollectionAssert.AreEqual(new[] { 1, 2, 3 }, (generator as SampleIntNullableList).TestList);
+            generator.Should().Be.OfType<SampleIntNullableList>()
+                .And.Value.TestList.Should().Have.SameSequenceAs(new int?[] { 1, 2, 3 });
         }
 
         [Test]
@@ -84,8 +85,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample 1");
 
-            Assert.IsInstanceOf<SampleSingleInt>(generator);
-            Assert.AreEqual(1, (generator as SampleSingleInt).Test);
+            generator.Should().Be.OfType<SampleSingleInt>()
+                 .And.Value.Test.Should().Be(1);
         }
 
         [Test]
@@ -97,8 +98,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample ");
 
-            Assert.IsInstanceOf<SampleSingleInt>(generator);
-            Assert.AreEqual(0, (generator as SampleSingleInt).Test);
+            generator.Should().Be.OfType<SampleSingleInt>()
+                 .And.Value.Test.Should().Be(0);
         }
 
         [Test]
@@ -108,7 +109,9 @@ namespace Simple.Tests.Generator
             resolver.Register(() => new SampleSingleInt(), "sample")
                 .WithArgument(null, x => x.Test);
 
-            Assert.Throws<InvalidArgumentCountException>(() => resolver.Resolve("sample 1,2"), "invalid number of arguments: 2");
+            resolver.Executing(x=> x.Resolve("sample 1,2"))
+                .Throws<InvalidArgumentCountException>()
+                .And.Exception.Message.Should().Be("Invalid argument count in ' 1,2'. Expected: 1. Found: 2");
         }
 
         [Test]
@@ -120,8 +123,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample 1");
 
-            Assert.IsInstanceOf<SampleSingleIntNullable>(generator);
-            Assert.AreEqual(1, (generator as SampleSingleIntNullable).Test);
+            generator.Should().Be.OfType<SampleSingleIntNullable>()
+                .And.Value.Test.Should().Be(1);
         }
 
 
@@ -134,8 +137,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample");
 
-            Assert.IsInstanceOf<SampleIntNullableList>(generator);
-            CollectionAssert.AreEqual(new int?[] { }, (generator as SampleIntNullableList).TestList);
+            generator.Should().Be.OfType<SampleIntNullableList>()
+                .And.Value.TestList.Should().Be.Empty();
         }
 
         [Test]
@@ -147,8 +150,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample (test, test2, test3)");
 
-            Assert.IsInstanceOf<SampleStringList>(generator);
-            CollectionAssert.AreEqual(new[] { "test", "test2", "test3" }, (generator as SampleStringList).TestList);
+            generator.Should().Be.OfType<SampleStringList>()
+                .And.Value.TestList.Should().Have.SameSequenceAs("test", "test2", "test3");
         }
 
         [Test]
@@ -160,8 +163,8 @@ namespace Simple.Tests.Generator
 
             var generator = resolver.Resolve("sample 'test 1'");
 
-            Assert.IsInstanceOf<SampleStringList>(generator);
-            CollectionAssert.AreEqual(new[] { "test 1" }, (generator as SampleStringList).TestList);
+            generator.Should().Be.OfType<SampleStringList>()
+                .And.Value.TestList.Should().Have.SameSequenceAs("test 1");
         }
 
 

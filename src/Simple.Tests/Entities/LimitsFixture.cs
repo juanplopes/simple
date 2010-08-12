@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Expressions;
 using Simple.IO.Serialization;
 using Simple.Tests.Resources;
@@ -12,7 +13,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Do.Skip(10);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.Skip(10)", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.Skip(10)");
         }
 
         [Test]
@@ -20,7 +21,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Do.Take(10);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.Take(10)", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.Take(10)");
 
         }
 
@@ -29,7 +30,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Do.Skip(10).Take(11);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.Skip(10).Take(11)", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.Skip(10).Take(11)");
         }
 
         [Test]
@@ -37,7 +38,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Do.Take(10).Skip(11);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.Take(10).Skip(11)", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.Take(10).Skip(11)");
 
         }
 

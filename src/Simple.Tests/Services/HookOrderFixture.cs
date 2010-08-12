@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Services;
 
 namespace Simple.Tests.Services
@@ -108,11 +109,11 @@ namespace Simple.Tests.Services
             Guid guid = Configure();
 
             var svc1 = Simply.Do[guid].Resolve<ISimpleService>();
-            Assert.AreEqual(42, svc1.GetInt32());
+            svc1.GetInt32().Should().Be(42);
 
             var svc2 = Simply.Do[guid].Resolve<BaseInterceptorFixture.ITestService>();
-            Assert.AreEqual(1000, svc2.ReturnInt(1000));
-            Assert.AreEqual(1001, svc2.ReturnInt(1001));
+            svc2.ReturnInt(1000).Should().Be(1000);
+            svc2.ReturnInt(1001).Should().Be(1001);
 
             Release(guid);
         }
@@ -133,7 +134,7 @@ namespace Simple.Tests.Services
             HookFunc2(guid, x => new Set9998AfterHook(x));
 
             var svc = Simply.Do[guid].Resolve<ISimpleService>();
-            Assert.AreEqual(9998, svc.GetInt32());
+            svc.GetInt32().Should().Be(9998);
 
             Release(guid);
         }
@@ -146,7 +147,7 @@ namespace Simple.Tests.Services
             HookFunc2(guid, x => new AddOneHook(x));
 
             var svc = Simply.Do[guid].Resolve<ISimpleService>();
-            Assert.AreEqual(9999, svc.GetInt32());
+            svc.GetInt32().Should().Be(9999);
 
             Release(guid);
         }
@@ -159,7 +160,7 @@ namespace Simple.Tests.Services
             HookFunc2(guid, x => new Set9998BeforeHook(x));
 
             var svc = Simply.Do[guid].Resolve<BaseInterceptorFixture.ITestService>();
-            Assert.AreEqual(10000, svc.ReturnInt(666));
+            svc.ReturnInt(666).Should().Be(10000);
 
             Release(guid);
         }
@@ -172,7 +173,7 @@ namespace Simple.Tests.Services
             HookFunc2(guid, x => new AddOneHook(x));
 
             var svc = Simply.Do[guid].Resolve<BaseInterceptorFixture.ITestService>();
-            Assert.AreEqual(9999, svc.ReturnInt(777));
+            svc.ReturnInt(777).Should().Be(9999);
 
             Release(guid);
         }

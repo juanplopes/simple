@@ -3,9 +3,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Expressions;
 using Simple.Expressions.Editable;
 using Simple.IO.Serialization;
+using System.Collections;
 
 namespace Simple.Tests.Expressions
 {
@@ -43,7 +45,11 @@ namespace Simple.Tests.Expressions
             byte[] data = serializer.Serialize(expr1);
             EditableExpression expr2 = (EditableExpression)serializer.Deserialize(data);
             T func2 = ((Expression<T>)expr2.ToExpression()).Compile();
-            Assert.AreEqual(howToCall(expr.Compile()), howToCall(func2));
+
+            var value1 = howToCall(func2);
+            var value2 = howToCall(expr.Compile());
+
+            Assert.AreEqual(value2, value1);
         }
 
         [Test]
@@ -137,16 +143,16 @@ namespace Simple.Tests.Expressions
             var type = typeof(Expression<Func<int, bool>>);
             var bytes = SimpleSerializer.Binary().Serialize(type);
             var type2 = (Type)SimpleSerializer.Binary().Deserialize(bytes);
-            Assert.AreEqual(type, type2);
+            type2.Should().Be(type);
         }
 
         [Test]
         public void TestMethodSerialization()
         {
-            var method = typeof(Queryable).GetMember("Where").OfType<MethodInfo>().Where(x=>x.GetParameters().Length == 2).First();
+            var method = typeof(Queryable).GetMember("Where").OfType<MethodInfo>().Where(x => x.GetParameters().Length == 2).First();
             var bytes = SimpleSerializer.Binary().Serialize(method);
             var method2 = (MethodInfo)SimpleSerializer.Binary().Deserialize(bytes);
-            Assert.AreEqual(method, method2);
+            method2.Should().Be(method);
         }
 
         [Test]
@@ -183,7 +189,7 @@ namespace Simple.Tests.Expressions
 
             public Q ConvertTo<T, Q>()
             {
-                var t= (T)Convert.ChangeType(this.MyInt, typeof(T));
+                var t = (T)Convert.ChangeType(this.MyInt, typeof(T));
                 return (Q)Convert.ChangeType(t, typeof(Q));
             }
         }

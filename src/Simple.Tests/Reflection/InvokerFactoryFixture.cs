@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Reflection;
 using Moq;
 
@@ -14,7 +15,7 @@ namespace Simple.Tests.Reflection
         {
             var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestInt"));
             object res = inv.Invoke(new TestClass());
-            Assert.AreEqual(42, res);
+            res.Should().Be(42);
         }
 
         [Test]
@@ -22,7 +23,7 @@ namespace Simple.Tests.Reflection
         {
             var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestStaticInt"));
             object res = inv.Invoke(null);
-            Assert.AreEqual(30, res);
+            res.Should().Be(30);
         }
 
         [Test]
@@ -30,7 +31,7 @@ namespace Simple.Tests.Reflection
         {
             var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestStaticIntString"));
             object res = inv.Invoke(null, "444");
-            Assert.AreEqual(444, res);
+            res.Should().Be(444);
         }
 
         [Test]
@@ -38,7 +39,7 @@ namespace Simple.Tests.Reflection
         {
             var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestStaticIntTwo"));
             object res = inv.Invoke(null, "444", 2);
-            Assert.AreEqual(446, res);
+            res.Should().Be(446);
         }
 
         [Test]
@@ -70,7 +71,7 @@ namespace Simple.Tests.Reflection
         {
             var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestString"));
             object res = inv.Invoke(new TestClass());
-            Assert.AreEqual("whatever", res);
+            res.Should().Be("whatever");
         }
 
         [Test]
@@ -79,7 +80,7 @@ namespace Simple.Tests.Reflection
             var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestIntParam"));
             object res = inv.Invoke(new TestClass(), 42);
 
-            Assert.AreEqual(42, res);
+            res.Should().Be(42);
         }
 
         [Test]
@@ -89,8 +90,8 @@ namespace Simple.Tests.Reflection
             var objs = new object[] { 10, null };
 
             object res = inv.Invoke(new TestClass(), objs);
-            Assert.AreEqual("10", objs[1]);
-            Assert.AreEqual("whatever", res);
+            objs[1].Should().Be("10");
+            res.Should().Be("whatever");
         }
 
         [Test]
@@ -99,8 +100,8 @@ namespace Simple.Tests.Reflection
             var inv = InvokerFactory.Do.Create(typeof(TestClass).GetMethod("TestRefParam"));
             object[] p = { 42 };
             object res = inv.Invoke(new TestClass(), p);
-            Assert.AreEqual("42", res);
-            Assert.AreEqual(43, p[0]);
+            res.Should().Be("42");
+            p[0].Should().Be(43);
         }
 
         [Test, ExpectedException(typeof(InvalidCastException))]
@@ -137,7 +138,7 @@ namespace Simple.Tests.Reflection
             var inv = InvokerFactory.Do.Create(typeof(TestClass)
                 .GetMethod("TestGenerics").MakeGenericMethod(typeof(string)));
             object res = inv.Invoke(new TestClass(), "42");
-            Assert.AreEqual(42, res);
+            res.Should().Be(42);
         }
 
 
@@ -156,7 +157,7 @@ namespace Simple.Tests.Reflection
                 .GetMethod("TestParams"));
 
             object res = inv.Invoke(new TestClass(), 4, new string[] { "1", "2", "3" });
-            Assert.AreEqual("42", res);
+            res.Should().Be("42");
         }
 
         [Test]
@@ -167,8 +168,8 @@ namespace Simple.Tests.Reflection
 
             var obj = inv(null, "A", "B") as TestClassConstructors;
 
-            Assert.AreEqual("A", obj.param1);
-            Assert.AreEqual("B", obj.param2);
+            obj.param1.Should().Be("A");
+            obj.param2.Should().Be("B");
         }
 
         [Test]
@@ -179,8 +180,8 @@ namespace Simple.Tests.Reflection
 
             var obj = inv(null, 1, 2) as TestClassConstructors;
 
-            Assert.AreEqual(1, obj.param1);
-            Assert.AreEqual(2, obj.param2);
+            obj.param1.Should().Be(1);
+            obj.param2.Should().Be(2);
         }
 
 

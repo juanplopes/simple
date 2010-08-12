@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Web.Mvc;
 using System.Web.Mvc;
 using Moq;
@@ -20,7 +21,7 @@ namespace Simple.Tests.Mvc
 
             var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat("test")] as NoticeDefinition;
             Assert.IsNotNull(item);
-            Assert.AreEqual(null, item.Title);
+            item.Title.Should().Be(null);
             CollectionAssert.IsEmpty(item.Items);
         }
 
@@ -32,7 +33,7 @@ namespace Simple.Tests.Mvc
 
             var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultSucessClass)] as NoticeDefinition;
             Assert.IsNotNull(item);
-            Assert.AreEqual("some text", item.Title);
+            item.Title.Should().Be("some text");
             CollectionAssert.IsEmpty(item.Items);
         }
 
@@ -45,7 +46,7 @@ namespace Simple.Tests.Mvc
 
             var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultErrorClass)] as NoticeDefinition;
             Assert.IsNotNull(item);
-            Assert.AreEqual("some text", item.Title);
+            item.Title.Should().Be("some text");
             CollectionAssert.IsEmpty(item.Items);
         }
 
@@ -57,7 +58,7 @@ namespace Simple.Tests.Mvc
             dic.Notify("test").WithTitle("some title");
 
             var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat("test")] as NoticeDefinition;
-            Assert.AreEqual("some title", item.Title);
+            item.Title.Should().Be("some title");
         }
 
         [Test]
@@ -94,7 +95,7 @@ namespace Simple.Tests.Mvc
             action.Verify(x => x.ExecuteResult(context.Object), Times.Exactly(1));
 
             var item = controller.Object.ViewData[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultErrorClass)] as NoticeDefinition;
-            Assert.AreEqual("test", item.Title);
+            item.Title.Should().Be("test");
         }
 
         [Test]
@@ -113,7 +114,7 @@ namespace Simple.Tests.Mvc
             action.Verify(x => x.ExecuteResult(context.Object), Times.Exactly(1));
 
             var item = controller.Object.TempData[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultSucessClass)] as NoticeDefinition;
-            Assert.AreEqual("test", item.Title);
+            item.Title.Should().Be("test");
             CollectionAssert.AreEqual(new[] { "test1", "test2" }, item.Items);
         }
 

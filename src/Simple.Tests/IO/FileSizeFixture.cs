@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.IO;
 
 namespace Simple.Tests.IO
@@ -15,16 +16,16 @@ namespace Simple.Tests.IO
             var sizeInKBytes = sizeInBytes.In(FileSizeUnit.KB);
             var sizeInMBytes = sizeInBytes.In(FileSizeUnit.MB);
 
-            Assert.AreEqual(originalSize, sizeInBytes);
-            Assert.AreEqual(originalSize, sizeInKBytes);
-            Assert.AreEqual(originalSize, sizeInMBytes);
+            sizeInBytes.Equals(originalSize).Should().Be.True();
+            sizeInKBytes.Equals(originalSize).Should().Be.True();
+            sizeInMBytes.Equals(originalSize).Should().Be.True();
 
-            Assert.AreEqual(sizeInBytes, sizeInKBytes);
-            Assert.AreEqual(sizeInBytes, sizeInMBytes);
+            sizeInKBytes.Equals(sizeInBytes).Should().Be.True();
+            sizeInMBytes.Equals(sizeInBytes).Should().Be.True();
 
-            Assert.AreEqual(sizeInKBytes, sizeInMBytes);
+            sizeInMBytes.Equals(sizeInKBytes).Should().Be.True();
 
-            Assert.AreEqual("1.01 MB", sizeInMBytes.ToString(CultureInfo.InvariantCulture));
+            sizeInMBytes.ToString(CultureInfo.InvariantCulture).Should().Be("1.01 MB");
             Assert.AreEqual("1.011 MB", sizeInMBytes.ToString("0.###", CultureInfo.InvariantCulture));
         }
 
@@ -35,10 +36,10 @@ namespace Simple.Tests.IO
             var sizeInBytes = new FileSize(originalSize);
             var sizeInKBytes = sizeInBytes.In(FileSizeUnit.KB);
 
-            Assert.AreEqual(originalSize, sizeInBytes);
-            Assert.AreEqual(originalSize, sizeInKBytes);
+            sizeInBytes.Equals(originalSize).Should().Be.True();
+            sizeInKBytes.Equals(originalSize).Should().Be.True();
 
-            Assert.AreEqual(sizeInBytes, sizeInKBytes);
+            sizeInKBytes.Equals(sizeInBytes).Should().Be.True();
 
 
             Assert.AreEqual("1,01 KB", sizeInKBytes.ToString(CultureInfo.GetCultureInfo("pt-BR")));
@@ -47,12 +48,12 @@ namespace Simple.Tests.IO
         [Test]
         public void CanFindBestUnitsForSomeSizes()
         {
-            Assert.AreEqual(FileSizeUnit.KB, new FileSize(1010).InBestUnit().Unit);
-            Assert.AreEqual(FileSizeUnit.KB, new FileSize(1000).InBestUnit().Unit);
-            Assert.AreEqual(FileSizeUnit.B, new FileSize(999).InBestUnit().Unit);
-            Assert.AreEqual(FileSizeUnit.MB, new FileSize(1024000).InBestUnit().Unit);
+            new FileSize(1010).InBestUnit().Unit.Should().Be(FileSizeUnit.KB);
+            new FileSize(1000).InBestUnit().Unit.Should().Be(FileSizeUnit.KB);
+            new FileSize(999).InBestUnit().Unit.Should().Be(FileSizeUnit.B);
+            new FileSize(1024000).InBestUnit().Unit.Should().Be(FileSizeUnit.MB);
 
-            Assert.AreEqual("0.98 MB", new FileSize(1024000).InBestUnit().ToString(CultureInfo.InvariantCulture));
+            new FileSize(1024000).InBestUnit().ToString(CultureInfo.InvariantCulture).Should().Be("0.98 MB");
         }
     }
 }

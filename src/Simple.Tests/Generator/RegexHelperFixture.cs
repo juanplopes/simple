@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Generator;
 using NUnit.Framework;
+using SharpTestsEx;
 using System.Text.RegularExpressions;
 
 namespace Simple.Tests.Generator
@@ -13,19 +14,19 @@ namespace Simple.Tests.Generator
         [Test]
         public void CanCorrectDoubleSpacedStrings()
         {
-            Assert.AreEqual("asd qwe", "asd      qwe".CorrectInput());
+            "asd      qwe".CorrectInput().Should().Be("asd qwe");
         }
 
         [Test]
         public void CanCorrectNonSpacedNonWordMarkAtStart()
         {
-            Assert.AreEqual("asd qwe (test)", "asd qwe(test)".CorrectInput());
+            "asd qwe(test)".CorrectInput().Should().Be("asd qwe (test)");
         }
 
         [Test]
         public void CanCorrectNonSpacedNonWordMarkAtEnd()
         {
-            Assert.AreEqual("asd qwe (test) zxc", "asd qwe(test)zxc".CorrectInput());
+            "asd qwe(test)zxc".CorrectInput().Should().Be("asd qwe (test) zxc");
         }
 
     }

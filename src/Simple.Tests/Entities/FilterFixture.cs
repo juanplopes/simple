@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Expressions;
 using Simple.IO.Serialization;
 using Simple.Tests.Resources;
@@ -12,7 +13,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Do.Filter(x => x.CompanyName == "asd");
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.Where(x => (x.CompanyName = \"asd\"))", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName = \"asd\"))");
         }
 
         [Test]
@@ -21,7 +22,7 @@ namespace Simple.Tests.Entities
             string value = "asd";
             var spec = Customer.Do.Filter(x => x.CompanyName == value);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.Where(x => (x.CompanyName = \"asd\"))", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName = \"asd\"))");
         }
 
         [Test]

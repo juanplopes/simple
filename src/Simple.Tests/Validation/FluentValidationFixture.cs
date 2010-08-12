@@ -2,6 +2,7 @@
 using System.Linq;
 using FluentValidation;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Tests.Validation.ValidationResources;
 
 
@@ -76,8 +77,8 @@ namespace Simple.Tests.Validation
             var model = new Company() { };
 
             Assert.IsFalse(validator.Validate(model).IsValid);
-            Assert.AreEqual(validator.Validate(model).Errors[0].ErrorMessage, Messages.NotNull("Name"));
-            Assert.AreEqual(validator.Validate(model).Errors[1].ErrorMessage, Messages.NotNull("Company Value"));
+            Messages.NotNull("Name").Should().Be(validator.Validate(model).Errors[0].ErrorMessage);
+            Messages.NotNull("Company Value").Should().Be(validator.Validate(model).Errors[1].ErrorMessage);
 
             model = new Company() { Name = "", CompanyValue = new Decimal() };
             Assert.IsTrue(validator.Validate(model).IsValid);
@@ -92,7 +93,7 @@ namespace Simple.Tests.Validation
             var model = new User() { Name = "" };
 
             Assert.IsFalse(validator.Validate(model).IsValid);
-            Assert.AreEqual(validator.Validate(model).Errors.First().ErrorMessage, Messages.NotEmpty("Name"));
+            Messages.NotEmpty("Name").Should().Be(validator.Validate(model).Errors.First().ErrorMessage);
 
             model = new User() { Name = "Stevie" };
             Assert.IsTrue(validator.Validate(model).IsValid);
@@ -108,8 +109,8 @@ namespace Simple.Tests.Validation
             var model = new User() { Id = new Int32(), BirthDate = new DateTime() };
 
             Assert.IsFalse(validator.Validate(model).IsValid);
-            Assert.AreEqual(validator.Validate(model).Errors[0].ErrorMessage, Messages.NotEmpty("Id"));
-            Assert.AreEqual(validator.Validate(model).Errors[1].ErrorMessage, Messages.NotEmpty("Birth Date"));
+            Messages.NotEmpty("Id").Should().Be(validator.Validate(model).Errors[0].ErrorMessage);
+            Messages.NotEmpty("Birth Date").Should().Be(validator.Validate(model).Errors[1].ErrorMessage);
 
             model = new User() { Id = 3, BirthDate = DateTime.Now };
             Assert.IsTrue(validator.Validate(model).IsValid);
@@ -217,8 +218,8 @@ namespace Simple.Tests.Validation
             var model = new User() { Company = company };
 
             Assert.IsFalse(userValidator.Validate(model).IsValid);
-            Assert.AreEqual(userValidator.Validate(model).Errors[0].ErrorMessage, Messages.NotEmpty("Company Value"));
-            Assert.AreEqual(userValidator.Validate(model).Errors[0].PropertyName, "Company.CompanyValue");
+            Messages.NotEmpty("Company Value").Should().Be(userValidator.Validate(model).Errors[0].ErrorMessage);
+            "Company.CompanyValue".Should().Be(userValidator.Validate(model).Errors[0].PropertyName);
 
             model = new User() { Company = new Company() { CompanyValue = 20 } };
 

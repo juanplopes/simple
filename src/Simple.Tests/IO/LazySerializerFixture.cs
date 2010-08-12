@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.IO.Serialization;
 
 namespace Simple.Tests.IO

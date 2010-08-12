@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace Simple.Tests.Reflection
 {
@@ -11,22 +12,22 @@ namespace Simple.Tests.Reflection
         [Test]
         public void CanCreateNewIntegerOrFloat()
         {
-            Assert.AreEqual(0, TypesHelper.GetBoxedDefaultInstance(typeof(int)));
-            Assert.AreEqual(0f, TypesHelper.GetBoxedDefaultInstance(typeof(float)));
+            TypesHelper.GetBoxedDefaultInstance(typeof(int)).Should().Be(0);
+            TypesHelper.GetBoxedDefaultInstance(typeof(float)).Should().Be(0f);
 
-            Assert.AreEqual(null, TypesHelper.GetBoxedDefaultInstance(typeof(int?)));
-            Assert.AreEqual(null, TypesHelper.GetBoxedDefaultInstance(typeof(float?)));
+            TypesHelper.GetBoxedDefaultInstance(typeof(int?)).Should().Be(null);
+            TypesHelper.GetBoxedDefaultInstance(typeof(float?)).Should().Be(null);
         }
 
         [Test]
         public void CanCreateNewVoid()
         {
-            Assert.AreEqual(null, TypesHelper.GetBoxedDefaultInstance(typeof(void)));
+            TypesHelper.GetBoxedDefaultInstance(typeof(void)).Should().Be(null);
         }
         [Test]
         public void CanCreateNewRefType()
         {
-            Assert.AreEqual(null, TypesHelper.GetBoxedDefaultInstance(typeof(Console)));
+            TypesHelper.GetBoxedDefaultInstance(typeof(Console)).Should().Be(null);
         }
 
 
@@ -48,53 +49,53 @@ namespace Simple.Tests.Reflection
         public void FlatNormalClassDefinitionName()
         {
             string className = TypesHelper.GetFlatClassName(typeof(TypesHelperFixture));
-            Assert.AreEqual("TypesHelperFixture", className);
+            className.Should().Be("TypesHelperFixture");
         }
 
         [Test]
         public void FlatGenericClassDefinitionName()
         {
             string className = TypesHelper.GetFlatClassName(typeof(IList<>));
-            Assert.AreEqual("IList_T_", className);
+            className.Should().Be("IList_T_");
         }
 
         [Test]
         public void FlatGenericClassName()
         {
             string className = TypesHelper.GetFlatClassName(typeof(IList<int>));
-            Assert.AreEqual("IList_Int32_", className);
+            className.Should().Be("IList_Int32_");
         }
 
         [Test]
         public void FlatGenericClassTwoName()
         {
             string className = TypesHelper.GetFlatClassName(typeof(IDictionary<string, int>));
-            Assert.AreEqual("IDictionary_String_Int32_", className);
+            className.Should().Be("IDictionary_String_Int32_");
         }
 
         [Test]
         public void FlatGenericClassInnerName()
         {
             string className = TypesHelper.GetFlatClassName(typeof(Dictionary<string, int>.Enumerator));
-            Assert.AreEqual("Dictionary_String_Int32__Enumerator", className);
+            className.Should().Be("Dictionary_String_Int32__Enumerator");
         }
 
         [Test]
         public void CanGetValueTypeIfItsNotNullable()
         {
-            Assert.AreEqual(typeof(int), typeof(int).GetValueTypeIfNullable());
+            typeof(int).GetValueTypeIfNullable().Should().Be(typeof(int));
         }
 
         [Test]
         public void CanGetValueTypeIfItsNullable()
         {
-            Assert.AreEqual(typeof(int), typeof(int?).GetValueTypeIfNullable());
+            typeof(int?).GetValueTypeIfNullable().Should().Be(typeof(int));
         }
 
         [Test]
         public void CanGetValueTypeIfItsReferenceType()
         {
-            Assert.AreEqual(typeof(string), typeof(string).GetValueTypeIfNullable());
+            typeof(string).GetValueTypeIfNullable().Should().Be(typeof(string));
         }
     }
 }

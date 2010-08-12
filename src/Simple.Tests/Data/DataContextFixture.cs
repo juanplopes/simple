@@ -1,6 +1,7 @@
 ﻿using System;
 using NHibernate;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Tests.Resources;
 
 namespace Simple.Tests.Data
@@ -28,7 +29,7 @@ namespace Simple.Tests.Data
                 using (var dx2 = MySimply.EnterContext())
                 {
                     s2 = dx2.Session;
-                    Assert.AreEqual(s1, s2);
+                    s2.Should().Be(s1);
 
                     s3 = dx2.NewSession();
                     Assert.IsTrue(s3.IsOpen);
@@ -95,13 +96,13 @@ namespace Simple.Tests.Data
                         c.SaveOrUpdate();
 
                         c = Category.Load(1);
-                        Assert.AreEqual("NewName", c.Name);
+                        c.Name.Should().Be("NewName");
 
                         tx2.Commit();
                     }
 
                     c = Category.Load(1);
-                    Assert.AreEqual("NewName", c.Name);
+                    c.Name.Should().Be("NewName");
 
                     using (var tx2 = dx.Session.BeginTransaction())
                     {

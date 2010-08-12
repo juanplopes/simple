@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Expressions;
 using Simple.IO.Serialization;
 using Simple.Tests.Resources;
@@ -12,7 +13,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Do.Fetch(x => x.Address);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.Fetch(x => x.Address)", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.Fetch(x => x.Address)");
         }
 
         [Test]
@@ -20,7 +21,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Category.Do.FetchMany(x => x.Products);
             var queryable = new EmptyQueryable<Category>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.FetchMany(x => x.Products)", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.FetchMany(x => x.Products)");
         }
 
         [Test]

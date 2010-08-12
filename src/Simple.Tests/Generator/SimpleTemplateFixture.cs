@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.NVelocity;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace Simple.Tests.Generator
 {
@@ -14,7 +15,7 @@ namespace Simple.Tests.Generator
         {
             var t = new SimpleTemplate("asd${asd}asd");
             t["asd"] = 123;
-            Assert.AreEqual("asd123asd", t.Render());
+            t.Render().Should().Be("asd123asd");
         }
 
         [Test]
@@ -22,7 +23,7 @@ namespace Simple.Tests.Generator
         {
             var t = new SimpleTemplate("asd${asd}asd");
             t["asd"] = 123;
-            Assert.AreEqual("asd123asd", t.ToString());
+            t.ToString().Should().Be("asd123asd");
         }
 
         [Test]
@@ -32,7 +33,7 @@ namespace Simple.Tests.Generator
 
             t.SetMany(new { asd = 123, qwe = 456 });
 
-            Assert.AreEqual("asd123asd456", t.ToString());
+            t.ToString().Should().Be("asd123asd456");
         }
 
 
@@ -43,7 +44,7 @@ namespace Simple.Tests.Generator
 
             t.SetMany(asd => 123, qwe => 456);
 
-            Assert.AreEqual("asd123asd456", t.ToString());
+            t.ToString().Should().Be("asd123asd456");
         }
     }
 }

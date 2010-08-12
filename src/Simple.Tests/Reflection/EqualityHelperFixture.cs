@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Entities;
 using Simple.Reflection;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace Simple.Tests.Reflection
 
             obj1.IntProp = obj2.IntProp = 42;
             Assert.IsTrue(helper.ObjectEquals(obj2));
-            Assert.AreEqual(helper.ObjectGetHashCode(), helper.ObjectGetHashCode(obj2));
+            helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode());
 
             obj1.StringProp = "A";
             Assert.IsFalse(helper.ObjectEquals(obj2));
@@ -56,7 +57,7 @@ namespace Simple.Tests.Reflection
 
             obj1.StringProp = "B";
             Assert.IsTrue(helper.ObjectEquals(obj2));
-            Assert.AreEqual(helper.ObjectGetHashCode(), helper.ObjectGetHashCode(obj2));
+            helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode());
         }
 
         [Test]
@@ -72,7 +73,7 @@ namespace Simple.Tests.Reflection
 
             obj1.IntProp = obj2.IntProp = 42;
             Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
-            Assert.AreEqual(helper.ObjectGetHashCode(obj1), helper.ObjectGetHashCode(obj2));
+            helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
 
             obj1.StringProp = "A";
             Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
@@ -82,7 +83,7 @@ namespace Simple.Tests.Reflection
 
             obj1.StringProp = "B";
             Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
-            Assert.AreEqual(helper.ObjectGetHashCode(obj1), helper.ObjectGetHashCode(obj2));
+            helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
         }
 
         [Test]
@@ -104,7 +105,7 @@ namespace Simple.Tests.Reflection
 
             obj1.StringProp = "a";
             Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
-            Assert.AreEqual(helper.ObjectGetHashCode(obj1), helper.ObjectGetHashCode(obj2));
+            helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
         }
 
         [Test]
@@ -114,7 +115,7 @@ namespace Simple.Tests.Reflection
             var helper = new EqualityHelper<Sample1>(x => x.IntProp);
             obj1.IntProp = 123;
 
-            Assert.AreEqual("(IntProp=123)", helper.ObjectToString(obj1));
+            helper.ObjectToString(obj1).Should().Be("(IntProp=123)");
         }
 
         [Test]
@@ -125,7 +126,7 @@ namespace Simple.Tests.Reflection
             obj1.IntProp = 123;
             obj1.StringProp = "asd";
 
-            Assert.AreEqual("(IntProp=123 | StringProp=asd)", helper.ObjectToString(obj1));
+            helper.ObjectToString(obj1).Should().Be("(IntProp=123 | StringProp=asd)");
         }
 
         [Test]
@@ -154,7 +155,7 @@ namespace Simple.Tests.Reflection
             obj1.IntProp = 123;
             obj1.StringProp = null;
 
-            Assert.AreEqual("(IntProp=123 | StringProp=<null>)", helper.ObjectToString(obj1));
+            helper.ObjectToString(obj1).Should().Be("(IntProp=123 | StringProp=<null>)");
         }
 
 
@@ -171,7 +172,7 @@ namespace Simple.Tests.Reflection
 
             obj1.IntProp = obj2.IntProp = 42;
             Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
-            Assert.AreEqual(helper.ObjectGetHashCode(obj1), helper.ObjectGetHashCode(obj2));
+            helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
 
             obj1.StringProp = "A";
             Assert.IsFalse(helper.ObjectEquals(obj1, obj2));
@@ -181,7 +182,7 @@ namespace Simple.Tests.Reflection
 
             obj1.StringProp = "B";
             Assert.IsTrue(helper.ObjectEquals(obj1, obj2));
-            Assert.AreEqual(helper.ObjectGetHashCode(obj1), helper.ObjectGetHashCode(obj2));
+            helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
         }
 
         [Test]

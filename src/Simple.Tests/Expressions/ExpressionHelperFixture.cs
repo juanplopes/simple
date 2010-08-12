@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using NUnit.Framework;
+using SharpTestsEx;
 using System.Collections.Generic;
 
 namespace Simple.Tests.Expressions
@@ -40,21 +41,21 @@ namespace Simple.Tests.Expressions
         public void TestSimplePropertyName()
         {
             var propName = ExpressionHelper.GetMemberName((A a) => a.BProp);
-            Assert.AreEqual("BProp", propName);
+            propName.Should().Be("BProp");
         }
 
         [Test]
         public void TestNestedPropertyName()
         {
             var propName = ExpressionHelper.GetMemberName((A a) => a.BProp.CProp.IntProp);
-            Assert.AreEqual("BProp.CProp.IntProp", propName);
+            propName.Should().Be("BProp.CProp.IntProp");
         }
 
         [Test]
         public void TestNestedMethodName()
         {
             var propName = ExpressionHelper.GetMemberName((A a) => a.BProp.CProp.DProp.GetValue());
-            Assert.AreEqual("BProp.CProp.DProp.GetValue", propName);
+            propName.Should().Be("BProp.CProp.DProp.GetValue");
         }
 
         [Test]
@@ -67,7 +68,7 @@ namespace Simple.Tests.Expressions
 
 
             Assert.IsNotNull(a.BProp);
-            Assert.AreEqual(42, a.BProp.Diff);
+            a.BProp.Diff.Should().Be(42);
         }
 
         [Test]
@@ -103,7 +104,7 @@ namespace Simple.Tests.Expressions
 
 
             Assert.IsNotNull(a.BProp);
-            Assert.AreEqual(0, a.BProp.Diff);
+            a.BProp.Diff.Should().Be(0);
         }
 
         [Test]
@@ -115,9 +116,9 @@ namespace Simple.Tests.Expressions
             ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 42);
 
             Assert.IsNotNull(a.BProp);
-            Assert.AreEqual(0, a.BProp.Diff);
+            a.BProp.Diff.Should().Be(0);
             Assert.IsNotNull(a.BProp.CProp);
-            Assert.AreEqual(42, a.BProp.CProp.IntProp);
+            a.BProp.CProp.IntProp.Should().Be(42);
         }
 
         [Test, ExpectedException(typeof(MissingMethodException))]
@@ -210,7 +211,7 @@ namespace Simple.Tests.Expressions
             var expr = Expression.Parameter(typeof(A), "x");
             var prop = str.GetPropertyExpression(expr);
 
-            Assert.AreEqual("x.BProp.CProp.DProp", prop.ToString());
+            prop.ToString().Should().Be("x.BProp.CProp.DProp");
         }
 
         [Test]
@@ -221,7 +222,7 @@ namespace Simple.Tests.Expressions
             var expr = Expression.Parameter(typeof(A), "x");
             var prop = str.GetPropertyExpression(expr);
 
-            Assert.AreEqual("x.BProp.CProp.DProp", prop.ToString());
+            prop.ToString().Should().Be("x.BProp.CProp.DProp");
 
         }
 
@@ -232,7 +233,7 @@ namespace Simple.Tests.Expressions
 
             var prop = str.GetPropertyLambda<A>();
 
-            Assert.AreEqual("x => x.BProp.CProp.DProp", prop.ToString());
+            prop.ToString().Should().Be("x => x.BProp.CProp.DProp");
 
         }
 
@@ -243,7 +244,7 @@ namespace Simple.Tests.Expressions
 
             var prop = str.GetPropertyLambda<A, D>();
 
-            Assert.AreEqual("x => x.BProp.CProp.DProp", prop.ToString());
+            prop.ToString().Should().Be("x => x.BProp.CProp.DProp");
 
         }
 
@@ -254,7 +255,7 @@ namespace Simple.Tests.Expressions
 
             var prop = str.GetPropertyLambda<A>();
 
-            Assert.AreEqual("x => x.BProp.CProp.DProp", prop.ToString());
+            prop.ToString().Should().Be("x => x.BProp.CProp.DProp");
 
         }
 
@@ -265,7 +266,7 @@ namespace Simple.Tests.Expressions
 
             var prop = str.GetPropertyLambda<A, D>();
 
-            Assert.AreEqual("x => x.BProp.CProp.DProp", prop.ToString());
+            prop.ToString().Should().Be("x => x.BProp.CProp.DProp");
 
         }
 
@@ -277,7 +278,7 @@ namespace Simple.Tests.Expressions
             var expr = Expression.Parameter(typeof(A), "x");
             var prop = str.GetPropertyExpression(expr);
 
-            Assert.AreEqual("x", prop.ToString());
+            prop.ToString().Should().Be("x");
         }
 
         [Test]

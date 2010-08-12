@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Config;
 
 namespace Simple.Tests.Config
@@ -31,8 +32,8 @@ namespace Simple.Tests.Config
             BasicFactory b = new BasicFactory();
             (b as IFactory<BasicTypesSampleWithoutAttr>).Init(src);
 
-            Assert.AreEqual(42, b.BuildInt());
-            Assert.AreEqual("whatever", b.BuildString());
+            b.BuildInt().Should().Be(42);
+            b.BuildString().Should().Be("whatever");
         }
 
         [Test]
@@ -48,8 +49,8 @@ namespace Simple.Tests.Config
             var b = new BasicFactory();
             SourceManager.Do.AttachFactory(b);
 
-            Assert.AreEqual(42, b.BuildInt());
-            Assert.AreEqual("whatever", b.BuildString());
+            b.BuildInt().Should().Be(42);
+            b.BuildString().Should().Be("whatever");
         }
 
         [Test]
@@ -80,16 +81,16 @@ namespace Simple.Tests.Config
             var b = new BasicFactory();
 
             SourceManager.Do.AttachFactory(b);
-            Assert.AreEqual(default(string), b.BuildString());
-            Assert.AreEqual(default(int), b.BuildInt());
+            b.BuildString().Should().Be(default(string));
+            b.BuildInt().Should().Be(default(int));
 
             SourceManager.Do.Register(src);
-            Assert.AreEqual("whatever", b.BuildString());
-            Assert.AreEqual(42, b.BuildInt());
+            b.BuildString().Should().Be("whatever");
+            b.BuildInt().Should().Be(42);
 
             SourceManager.Do.Remove<BasicTypesSampleWithoutAttr>();
-            Assert.AreEqual(default(string), b.BuildString());
-            Assert.AreEqual(default(int), b.BuildInt());
+            b.BuildString().Should().Be(default(string));
+            b.BuildInt().Should().Be(default(int));
         }
 
         [Test]
@@ -104,16 +105,16 @@ namespace Simple.Tests.Config
             var b = new BasicFactory();
 
             SourceManager.Do.AttachFactory(2, b);
-            Assert.AreEqual(default(string), b.BuildString());
-            Assert.AreEqual(default(int), b.BuildInt());
+            b.BuildString().Should().Be(default(string));
+            b.BuildInt().Should().Be(default(int));
 
             SourceManager.Do.Register(2, src);
-            Assert.AreEqual("whatever", b.BuildString());
-            Assert.AreEqual(42, b.BuildInt());
+            b.BuildString().Should().Be("whatever");
+            b.BuildInt().Should().Be(42);
 
             SourceManager.Do.Remove<BasicTypesSampleWithoutAttr>(2);
-            Assert.AreEqual(default(string), b.BuildString());
-            Assert.AreEqual(default(int), b.BuildInt());
+            b.BuildString().Should().Be(default(string));
+            b.BuildInt().Should().Be(default(int));
         }
 
 
@@ -130,12 +131,12 @@ namespace Simple.Tests.Config
 
                 src.Reloaded += x =>
                 {
-                    Assert.AreEqual(43, b.BuildInt());
-                    Assert.AreEqual("whatever2", b.BuildString());
+                    b.BuildInt().Should().Be(43);
+                    b.BuildString().Should().Be("whatever2");
                     flag = true;
                 };
 
-                Assert.AreEqual(42, b.BuildInt());
+                b.BuildInt().Should().Be(42);
 
                 File.WriteAllText(XmlFileConfigSourceFixture.TEST_FILE_NAME, XmlFileConfigSourceFixture.SAMPLE_XML);
 
@@ -157,8 +158,7 @@ namespace Simple.Tests.Config
             XmlConfigSourceFixture.TestCreatedSimpleSample(b);
 
             src.Load(NullConfigSource<BasicTypesSampleWithoutAttr>.Instance);
-            b = src.Get();
-            Assert.AreEqual(b, null);
+            src.Get().Should().Be.Null();
         }
 
         [Test]
@@ -173,12 +173,12 @@ namespace Simple.Tests.Config
 
             var f = new BasicFactory();
             SourceManager.Do.AttachFactory(f);
-            Assert.AreEqual("whatever", f.BuildString());
-            Assert.AreEqual(42, f.BuildInt());
+            f.BuildString().Should().Be("whatever");
+            f.BuildInt().Should().Be(42);
 
             src.Load(NullConfigSource<BasicTypesSampleWithoutAttr>.Instance);
-            Assert.AreEqual(default(string), f.BuildString());
-            Assert.AreEqual(default(int), f.BuildInt());
+            f.BuildString().Should().Be(default(string));
+            f.BuildInt().Should().Be(default(int));
         }
 
         [Test]
@@ -192,12 +192,12 @@ namespace Simple.Tests.Config
                 new FactoryManager<BasicFactory, BasicTypesSampleWithoutAttr>(() => new BasicFactory());
 
             var f = factories.SafeGet();
-            Assert.AreEqual(default(string), f.BuildString());
-            Assert.AreEqual(default(int), f.BuildInt());
+            f.BuildString().Should().Be(default(string));
+            f.BuildInt().Should().Be(default(int));
 
             SourceManager.Do.Register(src);
-            Assert.AreEqual("whatever", f.BuildString());
-            Assert.AreEqual(42, f.BuildInt());
+            f.BuildString().Should().Be("whatever");
+            f.BuildInt().Should().Be(42);
         }
 
         [Test]
@@ -213,12 +213,12 @@ namespace Simple.Tests.Config
             object key = new object();
 
             var f = factories[key];
-            Assert.AreEqual(default(string), f.BuildString());
-            Assert.AreEqual(default(int), f.BuildInt());
+            f.BuildString().Should().Be(default(string));
+            f.BuildInt().Should().Be(default(int));
 
             SourceManager.Do.Register(key, src);
-            Assert.AreEqual("whatever", f.BuildString());
-            Assert.AreEqual(42, f.BuildInt());
+            f.BuildString().Should().Be("whatever");
+            f.BuildInt().Should().Be(42);
         }
     }
     #region Samples

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using NHibernate.Criterion;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Reflection;
 
 namespace Simple.Tests.Reflection
@@ -16,9 +17,9 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromAnonymous(new { aaa = 123, bbb = "asd" });
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(2, value.Count);
-            Assert.AreEqual(123, value["aaa"]);
-            Assert.AreEqual("asd", value["bbb"]);
+            value.Count.Should().Be(2);
+            value["aaa"].Should().Be(123);
+            value["bbb"].Should().Be("asd");
         }
 
         [Test]
@@ -27,9 +28,9 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromExpressions(aaa => 123, bbb => "asd");
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(2, value.Count);
-            Assert.AreEqual(123, value["aaa"]);
-            Assert.AreEqual("asd", value["bbb"]);
+            value.Count.Should().Be(2);
+            value["aaa"].Should().Be(123);
+            value["bbb"].Should().Be("asd");
         }
 
         [Test]
@@ -38,9 +39,9 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromAnonymous(new { aaa = (int?)null, bbb = (string)null });
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(2, value.Count);
-            Assert.AreEqual(null, value["aaa"]);
-            Assert.AreEqual(null, value["bbb"]);
+            value.Count.Should().Be(2);
+            value["aaa"].Should().Be(null);
+            value["bbb"].Should().Be(null);
         }
 
         [Test]
@@ -49,9 +50,9 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromExpressions(aaa => null, bbb => null);
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(2, value.Count);
-            Assert.AreEqual(null, value["aaa"]);
-            Assert.AreEqual(null, value["bbb"]);
+            value.Count.Should().Be(2);
+            value["aaa"].Should().Be(null);
+            value["bbb"].Should().Be(null);
         }
 
         [Test]
@@ -60,7 +61,7 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromAnonymous(new { aaa = 123, bbb = "asd" }, true);
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(2, value.Count);
+            value.Count.Should().Be(2);
 
             Assert.IsTrue(value.ContainsKey("aaa"));
             Assert.IsFalse(value.ContainsKey("Aaa"));
@@ -78,7 +79,7 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromExpressions(array, true);
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(2, value.Count);
+            value.Count.Should().Be(2);
 
             Assert.IsTrue(value.ContainsKey("aaa"));
             Assert.IsFalse(value.ContainsKey("Aaa"));
@@ -93,7 +94,7 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromAnonymous(new { aaa = 123, bbb = "asd" });
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(2, value.Count);
+            value.Count.Should().Be(2);
 
             Assert.IsTrue(value.ContainsKey("aaa"));
             Assert.IsTrue(value.ContainsKey("Aaa"));
@@ -108,7 +109,7 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromExpressions(aaa => 123, bbb => "asd");
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(2, value.Count);
+            value.Count.Should().Be(2);
 
             Assert.IsTrue(value.ContainsKey("aaa"));
             Assert.IsTrue(value.ContainsKey("Aaa"));
@@ -130,9 +131,9 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromAnonymous(obj);
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(2, value.Count);
-            Assert.AreEqual(now, value["AAA"]);
-            Assert.AreEqual("ASD", value["BBB"]);
+            value.Count.Should().Be(2);
+            value["AAA"].Should().Be(now);
+            value["BBB"].Should().Be("ASD");
         }
 
         [Test]
@@ -141,7 +142,7 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromExpressions(null);
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(0, value.Count);
+            value.Count.Should().Be(0);
         }
 
         [Test]
@@ -150,7 +151,7 @@ namespace Simple.Tests.Reflection
             var value = DictionaryHelper.FromAnonymous(null);
 
             Assert.IsInstanceOf<IDictionary<string, object>>(value);
-            Assert.AreEqual(0, value.Count);
+            value.Count.Should().Be(0);
         }
 
 

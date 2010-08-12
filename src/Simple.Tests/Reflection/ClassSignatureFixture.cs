@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Reflection;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace Simple.Tests.Reflection
 {
@@ -13,7 +14,7 @@ namespace Simple.Tests.Reflection
         public void SingleImplementation()
         {
             var sig = new ClassSignature(typeof(SingleImplementationClass));
-            Assert.AreEqual("ClassSignatureFixture.ITest1", sig.MakeImplementingSignature());
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest1");
         }
         [Test]
         public void DoubleImplementation()
@@ -41,13 +42,13 @@ namespace Simple.Tests.Reflection
         public void UnresolvedGenericImplementation()
         {
             var sig = new ClassSignature(typeof(UnresolvedGenericImplementationClass<>));
-            Assert.AreEqual("ClassSignatureFixture.ITest3<T>", sig.MakeImplementingSignature());
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest3<T>");
         }
         [Test]
         public void ResolvedGenericImplementation()
         {
             var sig = new ClassSignature(typeof(UnresolvedGenericImplementationClass<String>));
-            Assert.AreEqual("ClassSignatureFixture.ITest3<String>", sig.MakeImplementingSignature());
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest3<String>");
         }
 
         [Test]

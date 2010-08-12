@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Reflection;
 
 namespace Simple.Tests.Reflection
@@ -13,7 +14,7 @@ namespace Simple.Tests.Reflection
         public void NormalClassDefinitionName()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("TypeNameExtractorFixture", extractor.GetName(typeof(TypeNameExtractorFixture)));
+            extractor.GetName(typeof(TypeNameExtractorFixture)).Should().Be("TypeNameExtractorFixture");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(TypeNameExtractorFixture).Namespace
@@ -36,7 +37,7 @@ namespace Simple.Tests.Reflection
         public void GenericClassDefinitionName()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("IList<T>", extractor.GetName(typeof(IList<>)));
+            extractor.GetName(typeof(IList<>)).Should().Be("IList<T>");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(IList<>).Namespace
@@ -58,7 +59,7 @@ namespace Simple.Tests.Reflection
         public void GenericClassName()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("IList<Int32>", extractor.GetName(typeof(IList<int>)));
+            extractor.GetName(typeof(IList<int>)).Should().Be("IList<Int32>");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(IList<>).Namespace,
@@ -201,7 +202,7 @@ namespace Simple.Tests.Reflection
         public void CanReturnLowercaseNameForVoidType()
         {
             var extractor = new TypeNameExtractor();
-            Assert.AreEqual("void", extractor.GetName(typeof(void)));
+            extractor.GetName(typeof(void)).Should().Be("void");
 
             CollectionAssert.AreEquivalent(new[] {
                 typeof(void).Namespace,

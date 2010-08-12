@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Patterns;
 
 namespace Simple.Tests.Patterns
@@ -16,14 +17,14 @@ namespace Simple.Tests.Patterns
             runner.Run("Test2", "OK", x => x.FailUnless(true, "Erro"));
             runner.Run("Test3", "OK", x => x.FailUnless(!false, "Erro"));
 
-            Assert.AreEqual(3, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success));
-            Assert.AreEqual(3, runner.Results.Count(x => x.ResultTypeTag == "success"));
-            Assert.AreEqual(3, runner.Results.Count(x => x.Message == "OK"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success).Should().Be(3);
+            runner.Results.Count(x => x.ResultTypeTag == "success").Should().Be(3);
+            runner.Results.Count(x => x.Message == "OK").Should().Be(3);
 
-            Assert.AreEqual(3, runner.Results.Count());
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test1"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test2"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test3"));
+            runner.Results.Count().Should().Be(3);
+            runner.Results.Count(x => x.Description == "Test1").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test2").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test3").Should().Be(1);
         }
 
         [Test]
@@ -34,18 +35,18 @@ namespace Simple.Tests.Patterns
             runner.Run("Test2", "OK", x => x.WarnUnless(false, "Warn"));
             runner.Run("Test3", "OK", x => x.FailUnless(!false, "Erro"));
 
-            Assert.AreEqual(2, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success));
-            Assert.AreEqual(2, runner.Results.Count(x => x.ResultTypeTag == "success"));
-            Assert.AreEqual(2, runner.Results.Count(x => x.Message == "OK"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success).Should().Be(2);
+            runner.Results.Count(x => x.ResultTypeTag == "success").Should().Be(2);
+            runner.Results.Count(x => x.Message == "OK").Should().Be(2);
 
-            Assert.AreEqual(1, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Warning));
-            Assert.AreEqual(1, runner.Results.Count(x => x.ResultTypeTag == "warning"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Message == "Warn"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Warning).Should().Be(1);
+            runner.Results.Count(x => x.ResultTypeTag == "warning").Should().Be(1);
+            runner.Results.Count(x => x.Message == "Warn").Should().Be(1);
 
-            Assert.AreEqual(3, runner.Results.Count());
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test1"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test2"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test3"));
+            runner.Results.Count().Should().Be(3);
+            runner.Results.Count(x => x.Description == "Test1").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test2").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test3").Should().Be(1);
         }
 
         [Test]
@@ -56,18 +57,18 @@ namespace Simple.Tests.Patterns
             runner.Run("Test2", "OK", x => x.FailUnless(false, "OMG"));
             runner.Run("Test3", "OK", x => x.FailUnless(!false, "Erro"));
 
-            Assert.AreEqual(2, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success));
-            Assert.AreEqual(2, runner.Results.Count(x => x.ResultTypeTag == "success"));
-            Assert.AreEqual(2, runner.Results.Count(x => x.Message == "OK"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success).Should().Be(2);
+            runner.Results.Count(x => x.ResultTypeTag == "success").Should().Be(2);
+            runner.Results.Count(x => x.Message == "OK").Should().Be(2);
 
-            Assert.AreEqual(1, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure));
-            Assert.AreEqual(1, runner.Results.Count(x => x.ResultTypeTag == "failure"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Message == "OMG"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure).Should().Be(1);
+            runner.Results.Count(x => x.ResultTypeTag == "failure").Should().Be(1);
+            runner.Results.Count(x => x.Message == "OMG").Should().Be(1);
 
-            Assert.AreEqual(3, runner.Results.Count());
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test1"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test2"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test3"));
+            runner.Results.Count().Should().Be(3);
+            runner.Results.Count(x => x.Description == "Test1").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test2").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test3").Should().Be(1);
         }
 
         [Test]
@@ -78,18 +79,18 @@ namespace Simple.Tests.Patterns
             runner.Run("Test2", "OK", x => { throw new Exception("Whatever"); });
             runner.Run("Test3", "OK", x => x.FailUnless(!false, "Erro"));
 
-            Assert.AreEqual(2, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success));
-            Assert.AreEqual(2, runner.Results.Count(x => x.ResultTypeTag == "success"));
-            Assert.AreEqual(2, runner.Results.Count(x => x.Message == "OK"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success).Should().Be(2);
+            runner.Results.Count(x => x.ResultTypeTag == "success").Should().Be(2);
+            runner.Results.Count(x => x.Message == "OK").Should().Be(2);
 
-            Assert.AreEqual(1, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure));
-            Assert.AreEqual(1, runner.Results.Count(x => x.ResultTypeTag == "failure"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Message == "Whatever"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure).Should().Be(1);
+            runner.Results.Count(x => x.ResultTypeTag == "failure").Should().Be(1);
+            runner.Results.Count(x => x.Message == "Whatever").Should().Be(1);
 
-            Assert.AreEqual(3, runner.Results.Count());
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test1"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test2"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test3"));
+            runner.Results.Count().Should().Be(3);
+            runner.Results.Count(x => x.Description == "Test1").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test2").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test3").Should().Be(1);
         }
 
         [Test]
@@ -100,14 +101,14 @@ namespace Simple.Tests.Patterns
             runner.Run("Test2", "OK", x => { throw new Exception("Whatever"); });
             runner.Run("Test3", "OK", x => { throw new Exception("Whatever"); });
 
-            Assert.AreEqual(3, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure));
-            Assert.AreEqual(3, runner.Results.Count(x => x.ResultTypeTag == "failure"));
-            Assert.AreEqual(3, runner.Results.Count(x => x.Message == "Whatever"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure).Should().Be(3);
+            runner.Results.Count(x => x.ResultTypeTag == "failure").Should().Be(3);
+            runner.Results.Count(x => x.Message == "Whatever").Should().Be(3);
 
-            Assert.AreEqual(3, runner.Results.Count());
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test1"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test2"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test3"));
+            runner.Results.Count().Should().Be(3);
+            runner.Results.Count(x => x.Description == "Test1").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test2").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test3").Should().Be(1);
         }
 
         [Test]
@@ -118,14 +119,14 @@ namespace Simple.Tests.Patterns
             runner.Run("Test2", "OK", x => x.FailUnless(false, "OKOK"));
             runner.Run("Test3", "OK", x => x.FailUnless(false, "OKOK"));
 
-            Assert.AreEqual(3, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure));
-            Assert.AreEqual(3, runner.Results.Count(x => x.ResultTypeTag == "failure"));
-            Assert.AreEqual(3, runner.Results.Count(x => x.Message == "OKOK"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure).Should().Be(3);
+            runner.Results.Count(x => x.ResultTypeTag == "failure").Should().Be(3);
+            runner.Results.Count(x => x.Message == "OKOK").Should().Be(3);
 
-            Assert.AreEqual(3, runner.Results.Count());
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test1"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test2"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test3"));
+            runner.Results.Count().Should().Be(3);
+            runner.Results.Count(x => x.Description == "Test1").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test2").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test3").Should().Be(1);
         }
 
         [Test]
@@ -142,16 +143,16 @@ namespace Simple.Tests.Patterns
                 return runner2.Results;
             });
 
-            Assert.AreEqual(4, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success));
-            Assert.AreEqual(4, runner.Results.Count(x => x.ResultTypeTag == "success"));
-            Assert.AreEqual(3, runner.Results.Count(x => x.Message == "OK"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Message == "OK!!!"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success).Should().Be(4);
+            runner.Results.Count(x => x.ResultTypeTag == "success").Should().Be(4);
+            runner.Results.Count(x => x.Message == "OK").Should().Be(3);
+            runner.Results.Count(x => x.Message == "OK!!!").Should().Be(1);
 
-            Assert.AreEqual(4, runner.Results.Count());
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test0"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test1"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test2"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test3"));
+            runner.Results.Count().Should().Be(4);
+            runner.Results.Count(x => x.Description == "Test0").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test1").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test2").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test3").Should().Be(1);
         }
 
         [Test]
@@ -168,19 +169,19 @@ namespace Simple.Tests.Patterns
                 return runner2.Results;
             });
 
-            Assert.AreEqual(3, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure));
-            Assert.AreEqual(3, runner.Results.Count(x => x.ResultTypeTag == "failure"));
-            Assert.AreEqual(3, runner.Results.Count(x => x.Message == "Erro"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Failure).Should().Be(3);
+            runner.Results.Count(x => x.ResultTypeTag == "failure").Should().Be(3);
+            runner.Results.Count(x => x.Message == "Erro").Should().Be(3);
 
-            Assert.AreEqual(1, runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success));
-            Assert.AreEqual(1, runner.Results.Count(x => x.ResultTypeTag == "success"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Message == "OK!!!"));
+            runner.Results.Count(x => x.ResultType == TaskRunner.Result.Type.Success).Should().Be(1);
+            runner.Results.Count(x => x.ResultTypeTag == "success").Should().Be(1);
+            runner.Results.Count(x => x.Message == "OK!!!").Should().Be(1);
 
-            Assert.AreEqual(4, runner.Results.Count());
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test0"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test1"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test2"));
-            Assert.AreEqual(1, runner.Results.Count(x => x.Description == "Test3"));
+            runner.Results.Count().Should().Be(4);
+            runner.Results.Count(x => x.Description == "Test0").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test1").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test2").Should().Be(1);
+            runner.Results.Count(x => x.Description == "Test3").Should().Be(1);
         }
 
 

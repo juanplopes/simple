@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.DynamicProxy;
 using Simple.Services;
 

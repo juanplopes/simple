@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Entities;
 using Simple.Tests.Resources;
 using NHibernate.Linq;
@@ -25,16 +26,16 @@ namespace Simple.Tests.Data
 
             int count = q.Count();
 
-            Assert.AreEqual(count, result.TotalCount);
+            result.TotalCount.Should().Be(count);
             var comp = q.Skip(skip).Take(take).ToList();
 
-            Assert.AreEqual((int)Math.Ceiling((decimal)q.Count() / take), result.TotalPages(take));
-            Assert.AreEqual(comp.Count, result.Count);
+            result.TotalPages(take).Should().Be((int)Math.Ceiling((decimal)q.Count() / take));
+            result.Count.Should().Be(comp.Count);
             Assert.Greater(comp.Count, 0);
 
             for (int i = 0; i < comp.Count; i++)
             {
-                Assert.AreEqual(comp[i].Id, result[i].Id);
+                result[i].Id.Should().Be(comp[i].Id);
             }
         }
 
@@ -42,12 +43,12 @@ namespace Simple.Tests.Data
         {
             var comp = func(_customers.AsQueryable()).ToList();
 
-            Assert.AreEqual(comp.Count, result.Length);
+            result.Length.Should().Be(comp.Count);
             Assert.Greater(comp.Count, 0);
 
             for (int i = 0; i < comp.Count; i++)
             {
-                Assert.AreEqual(comp[i].Id, result[i].Id);
+                result[i].Id.Should().Be(comp[i].Id);
             }
         }
 
@@ -132,7 +133,7 @@ namespace Simple.Tests.Data
         {
             var l = Product.List(x => x.Category.Name == "Meat/Poultry");
 
-            Assert.AreEqual(6, l.Count);
+            l.Count.Should().Be(6);
             Assert.IsTrue(l.All(x => x.Category.Id == 6));
         }
 
@@ -142,7 +143,7 @@ namespace Simple.Tests.Data
             Assert.IsNotNull(c);
 
             var p = Product.List(x => x.Category.Id == c.Id);
-            Assert.AreEqual(6, p.Count);
+            p.Count.Should().Be(6);
             Assert.IsTrue(p.All(x => x.Category.Id == 6));
         }
 
@@ -150,15 +151,15 @@ namespace Simple.Tests.Data
         public void TestListTop10ProductsAll()
         {
             var list = Product.ListAll(10);
-            Assert.AreEqual(10, list.Count);
-            Assert.AreEqual(77, list.TotalCount);
+            list.Count.Should().Be(10);
+            list.TotalCount.Should().Be(77);
         }
 
         [Test]
         public void TestFindLastProduct()
         {
             var p = Product.Find(x => true, q => q.OrderByDesc(x => x.Id));
-            Assert.AreEqual(77, p.Id);
+            p.Id.Should().Be(77);
         }
 
         [Test]
@@ -282,7 +283,7 @@ namespace Simple.Tests.Data
 
             var c3 = Customer.Load("OLDWO");
 
-            Assert.AreEqual(c.CompanyName, c.CompanyName);
+            c.CompanyName.Should().Be(c.CompanyName);
         }
 
         [Test]
@@ -295,7 +296,7 @@ namespace Simple.Tests.Data
 
             var c3 = Customer.Load("OLDWO");
 
-            Assert.AreEqual(c.CompanyName, c.CompanyName);
+            c.CompanyName.Should().Be(c.CompanyName);
         }
 
         [Test]
@@ -308,16 +309,16 @@ namespace Simple.Tests.Data
 
             var c3 = Customer.Load("AAAAA");
 
-            Assert.AreEqual(c.CompanyName, c.CompanyName);
+            c.CompanyName.Should().Be(c.CompanyName);
         }
 
         [Test]
         public void TestSaveWithReferenceAndReload()
         {
             var c = new Product() { Name="test", Category = new Category() { Id =Session.Query<Category>().Select(x=>x.Id).First() }}.Save();
-            Assert.IsNull(c.Category.Name);
+            c.Category.Name.Should().Be.Null();
             c = c.Reload();
-            Assert.IsNotNull(c.Category.Name);
+            c.Category.Name.Should().Not.Be.Null();
         }
 
 
@@ -325,7 +326,9 @@ namespace Simple.Tests.Data
         public void TestDeleteOne()
         {
             Customer.Load("OLDWO").Delete();
-            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OLDWO").ToString());
+
+            "OLDWO".Executing(x => Customer.Load(x).ToString())
+                .Throws<ObjectNotFoundException>();
         }
 
 
@@ -333,34 +336,37 @@ namespace Simple.Tests.Data
         public void TestDeleteOneByFilter()
         {
             int count = Customer.Delete(x => x.ContactName == "Yvonne Moncada");
-            Assert.AreEqual(1, count);
-            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("OCEAN").ToString());
+            count.Should().Be(1);
+
+            "OCEAN".Executing(x => Customer.Load(x).ToString())
+                .Throws<ObjectNotFoundException>();
         }
 
         [Test]
         public void TestDeleteOneById()
         {
             Customer.Delete("AROUT");
-            Assert.Throws<ObjectNotFoundException>(() => Customer.Load("AROUT").ToString());
+            "AROUT".Executing(x => Customer.Load(x).ToString())
+                .Throws<ObjectNotFoundException>();
         }
 
         [Test]
         public void TestCountByFilter()
         {
             int c = Customer.Count(x => x.Id == "AROUT");
-            Assert.AreEqual(1, c);
+            c.Should().Be(1);
         }
 
         [Test]
         public void TestRefreshEntity()
         {
             var c = Customer.Load("BLAUS");
-            Assert.AreEqual("Hanna Moos", c.ContactName);
+            c.ContactName.Should().Be("Hanna Moos");
 
             c.ContactName = "WHATEVER";
 
             c = c.Refresh();
-            Assert.AreEqual("Hanna Moos", c.ContactName);
+            c.ContactName.Should().Be("Hanna Moos");
         }
 
         [Test]
@@ -376,7 +382,7 @@ namespace Simple.Tests.Data
             c2.SaveOrUpdate();
 
             var c3 = Customer.Load("BLAUS");
-            Assert.AreEqual("WHATEVER", c3.CompanyName);
+            c3.CompanyName.Should().Be("WHATEVER");
 
         }
 

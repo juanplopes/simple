@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Common;
 using Simple.Config;
 using Simple.Services.Remoting;

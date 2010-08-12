@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Expressions;
 using Simple.IO.Serialization;
 using Simple.Tests.Resources;
@@ -12,7 +13,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Do.OrderBy(x => x.Address);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.OrderBy(x => x.Address)", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.OrderBy(x => x.Address)");
         }
 
         [Test]
@@ -29,7 +30,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Do.OrderByDesc(x => x.Address);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            Assert.AreEqual("q.OrderByDescending(x => x.Address)", queryable.Expression.ToString());
+            queryable.Expression.ToString().Should().Be("q.OrderByDescending(x => x.Address)");
         }
 
         [Test]

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Metadata;
 using NUnit.Framework;
+using SharpTestsEx;
 using System.Linq.Expressions;
 using Simple.Migrator.Fluent;
 using Simple.Migrator.Framework;
@@ -49,9 +50,9 @@ namespace Simple.Tests.Metadata
             var fkPkColumnCount = expectedColumns.Count(x => (x.Properties & ColumnProperty.ForeignKey) != 0);
             var columnCount = expectedColumns.Count;
 
-            Assert.AreEqual(columnCount - fkColumnCount - pkColumnCount + fkPkColumnCount, actualTable.OrdinaryFields.Count());
-            Assert.AreEqual(fkColumnCount, actualTable.ForeignKeyColumns.Count());
-            Assert.AreEqual(pkColumnCount - fkPkColumnCount, actualTable.PrimaryKeysExceptFk.Count());
+            actualTable.OrdinaryFields.Count().Should().Be(columnCount - fkColumnCount - pkColumnCount + fkPkColumnCount);
+            actualTable.ForeignKeyColumns.Count().Should().Be(fkColumnCount);
+            actualTable.PrimaryKeysExceptFk.Count().Should().Be(pkColumnCount - fkPkColumnCount);
 
             var actualColumns = actualTable.AllColumns.OrderBy(x => x.ColumnOrdinal).ToList();
             var actualPrimaryKeys = actualTable.PrimaryKeyColumns.OrderBy(x => x.ColumnOrdinal).ToList();
@@ -86,7 +87,7 @@ namespace Simple.Tests.Metadata
         protected void AssertSingleRelation(ForeignKeyAddAction fk, DbForeignKey actualForeignKey)
         {
             StringAssert.AreEqualIgnoringCase(fk.Name, actualForeignKey.Name);
-            Assert.AreEqual(fk.FkColumns.Count, fk.PkColumns.Count);
+            fk.PkColumns.Count.Should().Be(fk.FkColumns.Count);
             var fkColumns = actualForeignKey.Columns.OrderBy(x => x.FkOrdinalPosition).ToList();
             for (int i = 0; i < fk.FkColumns.Count; i++)
             {

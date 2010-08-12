@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Entities;
 
 namespace Simple.Tests.Entities
@@ -53,7 +54,7 @@ namespace Simple.Tests.Entities
 
             var expr = sample.UniqueProperties("q", x => x.CompanyName);
 
-            Assert.AreEqual("q => ((q.Id != \"Alan\") && (q.CompanyName = \"Living\"))", expr.ToString());
+            expr.ToString().Should().Be("q => ((q.Id != \"Alan\") && (q.CompanyName = \"Living\"))");
         }
 
         [Test]
@@ -79,7 +80,7 @@ namespace Simple.Tests.Entities
 
             var expr = sample.UniqueProperties("q", x => x.Phone);
 
-            Assert.AreEqual("q => ((q.Id != 123) && (q.Phone = \"asd\"))", expr.ToString());
+            expr.ToString().Should().Be("q => ((q.Id != 123) && (q.Phone = \"asd\"))");
         }
 
         [Test]
@@ -91,7 +92,7 @@ namespace Simple.Tests.Entities
 
             var expr = sample.UniqueProperties("q", x => x.Phone);
 
-            Assert.AreEqual("q => ((q.Id != null) && (q.Phone = \"asd\"))", expr.ToString());
+            expr.ToString().Should().Be("q => ((q.Id != null) && (q.Phone = \"asd\"))");
         }
 
         [Test]

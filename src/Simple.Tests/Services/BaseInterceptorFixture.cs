@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Principal;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Services;
 
 namespace Simple.Tests.Services
@@ -69,7 +70,7 @@ namespace Simple.Tests.Services
         public virtual void TestFindAttributeInConcreteClass()
         {
             IFindMeService test = Simply.Do[ConfigKey].Resolve<IFindMeService>();
-            Assert.AreEqual(true, test.FindMe());
+            test.FindMe().Should().Be(true);
         }
 
         [Test]
@@ -77,7 +78,7 @@ namespace Simple.Tests.Services
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
             var ident = test.ReturnIdentityString();
-            Assert.AreEqual(WindowsIdentity.GetCurrent().Name, ident);
+            ident.Should().Be(WindowsIdentity.GetCurrent().Name);
         }
 
         [Test]
@@ -85,14 +86,14 @@ namespace Simple.Tests.Services
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
             var ident = test.ReturnIdentityStringG<double>(2);
-            Assert.AreEqual(WindowsIdentity.GetCurrent().Name+"2", ident);
+            ident.Should().Be(WindowsIdentity.GetCurrent().Name+"2");
         }
 
         [Test]
         public void TestGenerics()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual(42.5, test.ReturnDoubleG("42.5"));
+            test.ReturnDoubleG("42.5").Should().Be(42.5);
         }
 
         [Test]
@@ -109,14 +110,14 @@ namespace Simple.Tests.Services
             Assert.AreNotEqual("123456", test.ReturnString());
 
             IOtherService other = Simply.Do[ConfigKey].Resolve<IOtherService>();
-            Assert.AreEqual("123456", other.ReturnString());
+            other.ReturnString().Should().Be("123456");
         }
 
         [Test]
         public void TestNonHookedException()
         {
             IOtherService other = new OtherService();
-            Assert.AreEqual(42.42f, other.ThrowException());
+            other.ThrowException().Should().Be(42.42f);
         }
 
         [Test]
@@ -147,7 +148,7 @@ namespace Simple.Tests.Services
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
             string res;
             test.ReturnVoid(out res);
-            Assert.AreEqual("42", res);
+            res.Should().Be("42");
         }
 
         [Test]
@@ -156,8 +157,8 @@ namespace Simple.Tests.Services
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
             string res = "10";
             double intRes = test.ReturnDouble(ref res);
-            Assert.AreEqual(10.0, intRes);
-            Assert.AreEqual("42", res);
+            intRes.Should().Be(10.0);
+            res.Should().Be("42");
         }
 
         [Test]
@@ -171,21 +172,21 @@ namespace Simple.Tests.Services
         public void TestInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual(42, test.ReturnInt());
+            test.ReturnInt().Should().Be(42);
         }
 
         [Test]
         public virtual void TestGenericInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual(42, test.ReturnIntG("44"));
+            test.ReturnIntG("44").Should().Be(42);
         }
 
         [Test]
         public void TestString()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual("10", test.ReturnString());
+            test.ReturnString().Should().Be("10");
         }
 
         [Test]
@@ -199,14 +200,14 @@ namespace Simple.Tests.Services
         public void TestIntInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual(42, test.ReturnInt(30));
+            test.ReturnInt(30).Should().Be(42);
         }
 
         [Test]
         public void TestStringInt()
         {
             ITestService test = Simply.Do[ConfigKey].Resolve<ITestService>();
-            Assert.AreEqual("42", test.ReturnString(42));
+            test.ReturnString(42).Should().Be("42");
         }
 
         [Test, ExpectedException(typeof(ApplicationException), ExpectedMessage = "AAA")]

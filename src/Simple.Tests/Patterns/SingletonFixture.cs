@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.Patterns;
 
 namespace Simple.Tests.Patterns
@@ -14,15 +15,15 @@ namespace Simple.Tests.Patterns
 
             var t1 = new Thread(() =>
             {
-                Assert.AreEqual(0, ThreadSingletonSample.Do.Test);
+                ThreadSingletonSample.Do.Test.Should().Be(0);
                 ThreadSingletonSample.Do.Test = 3;
-                Assert.AreEqual(3, ThreadSingletonSample.Do.Test);
+                ThreadSingletonSample.Do.Test.Should().Be(3);
             });
 
             t1.Start();
             t1.Join();
 
-            Assert.AreEqual(2, ThreadSingletonSample.Do.Test);
+            ThreadSingletonSample.Do.Test.Should().Be(2);
         }
 
         [Test]
@@ -32,15 +33,15 @@ namespace Simple.Tests.Patterns
 
             var t1 = new Thread(() =>
             {
-                Assert.AreEqual(2, SingletonSample.Do.Test);
+                SingletonSample.Do.Test.Should().Be(2);
                 SingletonSample.Do.Test = 3;
-                Assert.AreEqual(3, SingletonSample.Do.Test);
+                SingletonSample.Do.Test.Should().Be(3);
             });
 
             t1.Start();
             t1.Join();
 
-            Assert.AreEqual(3, SingletonSample.Do.Test);
+            SingletonSample.Do.Test.Should().Be(3);
         }
 
         class ThreadSingletonSample : ThreadSingleton<ThreadSingletonSample>

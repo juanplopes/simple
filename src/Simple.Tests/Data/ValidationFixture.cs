@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
+using SharpTestsEx;
 using Simple.IO.Serialization;
 using Simple.Tests.Resources;
 using Simple.Validation;
@@ -42,7 +43,7 @@ namespace Simple.Tests.Data
             var obj2 = SimpleSerializer.Binary().Deserialize(bytes) as SimpleValidationException;
 
             Assert.IsNotNull(obj2.Errors);
-            Assert.AreEqual(obj.Errors.Count(), obj2.Errors.Count());
+            obj2.Errors.Count().Should().Be(obj.Errors.Count());
         }
 
         protected void GenericTest(Func<Customer, ValidationList> func, params string[] props)
@@ -54,7 +55,7 @@ namespace Simple.Tests.Data
             c.ContactName = new string('0', 42);
 
             var list = func(c);
-            Assert.AreEqual(props.Length, list.Count);
+            list.Count.Should().Be(props.Length);
 
             foreach (string s in props)
                 Assert.IsTrue(list.Any(x => x.PropertyName == s));

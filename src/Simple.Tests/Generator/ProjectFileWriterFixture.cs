@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using SharpTestsEx;
 using System.IO;
 using Simple.Generator;
 
@@ -53,7 +54,7 @@ namespace Simple.Tests.Generator
         public void CanOpenFileUsingPatternOnly()
         {
             var writer = new ProjectFileWriter("test/te??.csproj");
-            Assert.AreEqual(Path.GetFullPath("test/test.csproj"), writer.ProjectPath);
+            writer.ProjectPath.Should().Be(Path.GetFullPath("test/test.csproj"));
         }
 
         [Test]
@@ -61,14 +62,14 @@ namespace Simple.Tests.Generator
         {
             Environment.CurrentDirectory = Environment.CurrentDirectory + "/test";
             var writer = new ProjectFileWriter("te??.csproj");
-            Assert.AreEqual(Path.GetFullPath("test.csproj"), writer.ProjectPath);
+            writer.ProjectPath.Should().Be(Path.GetFullPath("test.csproj"));
         }
 
         [Test, ExpectedException(typeof(FileNotFoundException))]
         public void CannotOpenFileUsingPatternOnlyWhenItDoesntExist()
         {
             var writer = new ProjectFileWriter("test/te?.csproj");
-            Assert.AreEqual(Path.GetFullPath("test/test.csproj"), writer.ProjectPath);
+            writer.ProjectPath.Should().Be(Path.GetFullPath("test/test.csproj"));
         }
 
         [Test, ExpectedException(typeof(FileNotFoundException))]
@@ -76,7 +77,7 @@ namespace Simple.Tests.Generator
         {
             Environment.CurrentDirectory = Environment.CurrentDirectory + "/test";
             var writer = new ProjectFileWriter("te?.csproj");
-            Assert.AreEqual(Path.GetFullPath("test.csproj"), writer.ProjectPath);
+            writer.ProjectPath.Should().Be(Path.GetFullPath("test.csproj"));
         }
 
         [Test]
@@ -99,7 +100,7 @@ namespace Simple.Tests.Generator
             writer.WriteChanges();
 
             StringAssert.Contains(@"<ASDASD Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
-            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+            File.ReadAllText("test/asd/qwe/simsim.txt").Should().Be("olá");
         }
 
 
@@ -110,7 +111,7 @@ namespace Simple.Tests.Generator
             writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
 
             StringAssert.DoesNotContain(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
-            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+            File.ReadAllText("test/asd/qwe/simsim.txt").Should().Be("olá");
         }
 
         [Test]
@@ -120,7 +121,7 @@ namespace Simple.Tests.Generator
                 writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
 
             StringAssert.DoesNotContain(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
-            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+            File.ReadAllText("test/asd/qwe/simsim.txt").Should().Be("olá");
 
         }
 
@@ -132,7 +133,7 @@ namespace Simple.Tests.Generator
                 writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
 
             StringAssert.Contains(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
-            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+            File.ReadAllText("test/asd/qwe/simsim.txt").Should().Be("olá");
 
         }
 
@@ -143,7 +144,7 @@ namespace Simple.Tests.Generator
                 writer.AddNewCompile("asd/qwe/simsim.txt", "olá");
 
             StringAssert.Contains(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
-            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+            File.ReadAllText("test/asd/qwe/simsim.txt").Should().Be("olá");
         }
 
         [Test]
@@ -156,7 +157,7 @@ namespace Simple.Tests.Generator
             writer.WriteChanges();
 
             StringAssert.Contains(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test.csproj"));
-            Assert.AreEqual("olá", File.ReadAllText("asd/qwe/simsim.txt"));
+            File.ReadAllText("asd/qwe/simsim.txt").Should().Be("olá");
         }
 
         [Test]
@@ -170,7 +171,7 @@ namespace Simple.Tests.Generator
             writer.WriteChanges();
 
             StringAssert.DoesNotContain(@"<Compile Include=""asd\qwe\simsim.txt"" />", File.ReadAllText("test/test.csproj"));
-            Assert.AreEqual("olá", File.ReadAllText("test/asd/qwe/simsim.txt"));
+            File.ReadAllText("test/asd/qwe/simsim.txt").Should().Be("olá");
         }
 
         [Test]
