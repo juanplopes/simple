@@ -138,9 +138,7 @@
     <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
-    <Compile Include="Mvc\ModelBinder\ArrayCollectionFixture.cs" />
-    <Compile Include="Mvc\ModelBinder\IListCollectionFixture.cs" />
-    <Compile Include="Mvc\ModelBinder\ISetCollectionFixture.cs" />
+    <Compile Include="Mvc\ModelBinder\CollectionFixtures.cs" />
     <Compile Include="Mvc\ModelBinder\SimpleValuesFixture.cs" />
     <Compile Include="Mvc\ModelBinder\BaseCollectionFixture.cs" />
     <Compile Include="Mvc\ModelBinder\Samples.cs" />

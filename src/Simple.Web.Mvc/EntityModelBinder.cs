@@ -49,30 +49,33 @@ namespace Simple.Web.Mvc
         private static bool IsEntityCollection(ModelBindingContext bindingContext, Type type, ref Type elType)
         {
             return IsOf(type, typeof(ICollection<>), out elType)
-                && bindingContext.Model != null
+                && !type.IsArray
+                && (!type.IsInterface || bindingContext.Model != null)
                 && elType.CanAssign(typeof(IEntity));
         }
 
         private object BindEntityCollection(ControllerContext controllerContext, ModelBindingContext bindingContext, Type elType)
         {
             var array = BindEntityArray(controllerContext, bindingContext, elType);
-            var invoker = new DynamicInvoker(bindingContext.Model.GetType());
+            var model = bindingContext.Model;
+            var invoker = new DynamicInvoker(typeof(ICollection<>).MakeGenericType(elType));
 
-            if ((bool)methodCache.GetGetter(bindingContext.Model.GetType().GetProperty("IsReadOnly"))(bindingContext.Model))
-                return array;
+            if (model != null)
+                invoker.Invoke(model, "Clear");
+            else
+                model = methodCache.CreateInstance(bindingContext.ModelType);
 
-            invoker.Invoke(bindingContext.Model, "Clear");
             foreach (var item in array)
                 try
                 {
-                    invoker.Invoke(bindingContext.Model, "Add", item);
+                    invoker.Invoke(model, "Add", item);
                 }
                 catch(Exception e) 
                 {
                     bindingContext.ModelState.AddModelError(bindingContext.ModelName, e);
                 }
 
-            return bindingContext.Model;
+            return model;
         }
 
         private Array BindEntityArray(ControllerContext controllerContext, ModelBindingContext bindingContext, Type elType)

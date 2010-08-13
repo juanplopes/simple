@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Iesi.Collections.Generic;
 using Simple.Entities;
+using System.Collections.ObjectModel;
 
 namespace Simple.Tests.Mvc.ModelBinder
 {
@@ -20,14 +21,21 @@ namespace Simple.Tests.Mvc.ModelBinder
     public class Address : IEntity
     {
         public Address() { }
-        public Address(int id) { ID = id; }
-        public int ID { get; set; }
+        public Address(int id) { Id = id; }
+        public int Id { get; set; }
     }
 
     public class Company<T>
         where T : IEnumerable<Address>
     {
         public T Places { get; set; }
+    }
+
+    public class Holding<C, T>
+        where C : Company<T>
+        where T : IEnumerable<Address>
+    {
+        public Company<T> MyCompany { get; set; }
     }
 
     public class CompanyArray : Company<Address[]>
@@ -41,6 +49,11 @@ namespace Simple.Tests.Mvc.ModelBinder
     public class CompanyISet : Company<ISet<Address>>
     {
         public CompanyISet() { Places = new HashedSet<Address>(); }
+    }
+
+
+    public class CompanyLinkedList : Company<LinkedList<Address>>
+    {
     }
 
 

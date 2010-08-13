@@ -5,6 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using System.Collections.Specialized;
 using SharpTestsEx;
+using System.Web.Mvc;
 
 namespace Simple.Tests.Mvc.ModelBinder
 {
@@ -12,14 +13,30 @@ namespace Simple.Tests.Mvc.ModelBinder
         where C : Company<T>, new()
         where T : IEnumerable<Address>
     {
+        protected virtual bool AllowNulls
+        {
+            get { return true; }
+        }
+
+        [Test]
+        public void BindZeroAddressToList()
+        {
+            var obj = Util.TestBind<C>(new NameValueCollection { });
+
+            obj.Should().Be.OfType<C>()
+                .And.Value.Places.Should().Have.SameSequenceAs(new C().Places);
+        }
+
+
         [Test]
         public void BindOneAddressToList()
         {
             var obj = Util.TestBind<C>(new NameValueCollection { { "Places", "4" } });
 
             var asserter = obj.Should().Be.OfType<C>().And.Value;
-            asserter.Places.Count().Should().Be(1);
-            asserter.Places.Select(x => x.ID).Should().Have.SameSequenceAs(4);
+
+            asserter.Places.Select(x => x.Id)
+                .Should().Have.SameSequenceAs(4);
         }
 
         [Test]
@@ -28,65 +45,83 @@ namespace Simple.Tests.Mvc.ModelBinder
             var obj = Util.TestBind<C>(new NameValueCollection { { "Places", "4" }, { "Places", "3" } });
 
             var asserter = obj.Should().Be.OfType<C>().And.Value;
-            asserter.Places.Count().Should().Be(2);
-            asserter.Places.Select(x => x.ID).Should().Have.SameSequenceAs(4, 3);
+
+            asserter.Places.Select(x => x.Id)
+                .Should().Have.SameSequenceAs(4, 3);
         }
 
-        //[Test]
-        //public void CanBindMultipleIntArrayProperty()
-        //{
-        //    var obj = TestBind<CompanyArray>(new NameValueCollection { { "Children", "4" }, { "Children", "3" } });
+        [Test, Ignore("Will cause problems with ISet. Must fix it now!")]
+        public void BindTwoAddressesToWithinPropertyList()
+        {
+            var obj = Util.TestBind<Holding<C, T>>(
+                new NameValueCollection { { "MyCompany.Places", "4" }, { "MyCompany.Places", "3" } });
 
-        //    var asserter = obj.Should().Be.OfType<CompanyArray>().And.Value;
-        //    asserter.Places.Length.Should().Be(2);
-        //    asserter.Places.Select(x => x.ID).Should().Have.SameSequenceAs(4, 3);
-        //}
+            var asserter = obj.Should().Be.OfType<Holding<C, T>>().And.Value;
 
-        //[Test]
-        //public void CanBindMultipleIntSetProperty()
-        //{
-        //    var obj = TestBind<CompanyISet>(new NameValueCollection { { "Children", "3" }, { "Children", "4" } });
+            asserter.MyCompany.Places.Select(x => x.Id)
+                .Should().Have.SameSequenceAs(4, 3);
+        }
 
-        //    var asserter = obj.Should().Be.OfType<CompanyISet>().And.Value;
-        //    asserter.Places.Count.Should().Be(2);
-        //    asserter.Places.Select(x => x.ID).Should().Have.SameSequenceAs(3, 4);
-        //}
+        [Test]
+        public void BindNullValue()
+        {
+            ModelBindingContext context;
+            var obj = Util.TestBind<C>(new NameValueCollection { { "Places", "" } }, out context);
 
-        //[Test]
-        //public void CanBindMultipleIntSetPropertyWithNullValues()
-        //{
-        //    ModelBindingContext context;
-        //    var obj = TestBind<CompanyISet>(new NameValueCollection { { "Children", "" } }, out context);
+            var asserter = obj.Should().Be.OfType<C>().And.Value;
+            if (AllowNulls)
+            {
+                asserter.Places.Should().Have.SameSequenceAs((Address)null);
+            }
+            else
+            {
+                asserter.Places.Count().Should().Be(0);
+                context.ModelState["Places"].Errors.Count().Should().Be(1);
+            }
+        }
 
-        //    var asserter = obj.Should().Be.OfType<CompanyISet>().And.Value;
-        //    asserter.Places.Count.Should().Be(0);
+        [Test]
+        public void BindInvalidValue()
+        {
+            ModelBindingContext context;
+            var obj = Util.TestBind<C>(new NameValueCollection { { "Places", "asd" } }, out context);
 
-        //    context.ModelState["Children"].Errors.Count.Should().Be(1);
-        //}
+            var asserter = obj.Should().Be.OfType<C>().And.Value;
 
-        //[Test]
-        //public void CanBindMultipleIntArrayPropertyWithNullValues()
-        //{
-        //    ModelBindingContext context;
-        //    var obj = TestBind<CompanyArray>(new NameValueCollection { { "Children", "" } }, out context);
+            if (AllowNulls)
+            {
+                asserter.Places.Should().Have.SameSequenceAs((Address)null);
+                context.ModelState["Places"].Errors.Count.Should().Be(1);
+            }
+            else
+            {
+                asserter.Places.Count().Should().Be(0);
+                context.ModelState["Places"].Errors.Count().Should().Be(2);
+            }
+        }
 
-        //    var asserter = obj.Should().Be.OfType<CompanyArray>().And.Value;
-        //    asserter.Places.Length.Should().Be(1);
-        //    asserter.Places.Should().Have.SameSequenceAs((Address)null);
+        [Test]
+        public void BindInvalidValueBetweenCorrectOnes()
+        {
+            ModelBindingContext context;
+            var obj = Util.TestBind<C>(new NameValueCollection { { "Places", "1" }, { "Places", "asd" }, { "Places", "3" } }, out context);
 
-        //    context.ModelState["Children"].Errors.Count.Should().Be(0);
-        //}
+            var asserter = obj.Should().Be.OfType<C>().And.Value;
 
-        //[Test]
-        //public void CanBindMultipleIntSetPropertyWithInvalidValues()
-        //{
-        //    ModelBindingContext context;
-        //    var obj = TestBind<CompanyISet>(new NameValueCollection { { "Children", "asd" } }, out context);
+            if (AllowNulls)
+            {
+                asserter.Places.Select(x => x == null ? -1 : x.Id)
+                    .Should().Have.SameSequenceAs(1, -1, 3);
 
-        //    var asserter = obj.Should().Be.OfType<CompanyISet>().And.Value;
-        //    asserter.Places.Count.Should().Be(0);
+                context.ModelState["Places"].Errors.Count.Should().Be(1);
+            }
+            else
+            {
+                asserter.Places.Select(x => x.Id)
+                   .Should().Have.SameSequenceAs(1, 3);
+                context.ModelState["Places"].Errors.Count().Should().Be(2);
+            }
 
-        //    context.ModelState["Children"].Errors.Count.Should().Be(2);
-        //}
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace Simple.Tests.Mvc.ModelBinder
             var obj = Util.TestBind<ContactInfo>(new NameValueCollection { { "HomeAddress", "2" } });
             
             obj.Should().Be.OfType<ContactInfo>().And
-                .Value.HomeAddress.ID.Should().Be(2);
+                .Value.HomeAddress.Id.Should().Be(2);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Simple.Tests.Mvc.ModelBinder
             var obj = Util.TestBind<ContactInfo>(new NameValueCollection { { "HomeAddress.ID", "2" } });
 
             obj.Should().Be.OfType<ContactInfo>().And
-                .Value.HomeAddress.ID.Should().Be(2);
+                .Value.HomeAddress.Id.Should().Be(2);
         }
 
 
@@ -55,7 +55,7 @@ namespace Simple.Tests.Mvc.ModelBinder
             var obj = Util.TestBind<ContactInfo>(new NameValueCollection { { "HomeAddress", "4" }, { "HomeAddress", "3" } });
 
             obj.Should().Be.OfType<ContactInfo>().And
-                .Value.HomeAddress.ID.Should().Be(4);
+                .Value.HomeAddress.Id.Should().Be(4);
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace Simple.Tests.Mvc.ModelBinder
             var obj = Util.TestBind<Employee>(new NameValueCollection { { "Contact.HomeAddress", "2" } });
 
             obj.Should().Be.OfType<Employee>().And
-                .Value.Contact.HomeAddress.ID.Should().Be(2);
+                .Value.Contact.HomeAddress.Id.Should().Be(2);
         }
 
 
@@ -83,7 +83,7 @@ namespace Simple.Tests.Mvc.ModelBinder
             var obj = Util.TestBind<Employee>(new NameValueCollection { { "Contact.HomeAddress.ID", "2" } });
 
             obj.Should().Be.OfType<Employee>().And
-                .Value.Contact.HomeAddress.ID.Should().Be(2);
+                .Value.Contact.HomeAddress.Id.Should().Be(2);
         }
     }
 }
