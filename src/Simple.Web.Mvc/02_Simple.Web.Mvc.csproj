@@ -59,6 +59,7 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="ElementalValueProvider.cs" />
     <Compile Include="EntityModelBinder.cs" />
     <Compile Include="EntityValidationExtensions.cs" />
     <Compile Include="HtmlButtons.cs" />

@@ -34,16 +34,15 @@ namespace Simple.Tests.Reflection
                 .Should().Be(expected);
         }
 
-        [Test, Explicit]
-        public void InvokeGenericUsingTwoParameters_ItShouldInferType()
+        [Test]
+        public void CannotInvokeGenericMethod()
         {
             var expected = 42.GetHashCode() + "qwe".GetHashCode();
             object sample = new Sample<int>();
 
             var invoker = new DynamicInvoker(sample.GetType());
 
-            invoker.Invoke(sample, "ReturnHashCode", "qwe", 42)
-                .Should().Be(expected);
+            invoker.Executing(x => x.Invoke(sample, "ReturnHashCode", "qwe", 42)).Throws<MissingMethodException>();
         }
 
         [Test]
@@ -93,7 +92,7 @@ namespace Simple.Tests.Reflection
             public int ReturnHashCode<Q>(Q value1, T value2) { return value1.GetHashCode() + value2.GetHashCode(); }
 
             public void SetFlag(T value) { Flag = value; }
-            
+
             public void SetValue(out T value, T test) { value = test; }
         }
     }

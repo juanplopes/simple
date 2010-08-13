@@ -27,9 +27,10 @@ namespace Simple.Reflection
             object state;
 
             return Type.DefaultBinder.BindToMethod(
-                flags ?? BindingFlags.Default, methods, ref args,
+                flags ?? (BindingFlags.Default), methods, ref args,
                 null, null, null, out state);
 
         }
     }
 }
+
