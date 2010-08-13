@@ -147,6 +147,7 @@
     <Compile Include="Mvc\SelectListFinderFixture.cs" />
     <Compile Include="Reflection\ClassSignatureFixture.cs" />
     <Compile Include="Reflection\ConversionContructorsFixture.cs" />
+    <Compile Include="Reflection\DynamicInvokerFixture.cs" />
     <Compile Include="Reflection\MethodSignatureFixture.cs" />
     <Compile Include="Generator\ProjectFileWriterFixture.cs" />
     <Compile Include="Generator\ProjectWriterFixture.cs" />

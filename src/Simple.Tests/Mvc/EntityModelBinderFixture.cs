@@ -28,6 +28,16 @@ namespace Simple.Tests.Mvc
         }
 
         [Test]
+        public void CanBindSimpleIntPropertyWithoutConstructor()
+        {
+            var obj = TestBind<Test>(new NameValueCollection { { "Child.ID", "2" } });
+
+            obj.Should().Be.OfType<Test>().And
+                .Value.Child.ID.Should().Be(2);
+        }
+
+
+        [Test]
         public void CannotBindSimpleIntPropertyWithNonIntValue()
         {
             ModelBindingContext context;
@@ -47,7 +57,7 @@ namespace Simple.Tests.Mvc
                 .Value.Child.ID.Should().Be(4);
         }
 
-        [Test, Ignore("I hate DefaultModelBinder")]
+        [Test, Explicit("Still hate DefaulModelBinder")]
         public void CanBindMultipleIntListProperty()
         {
             var obj = TestBind<TestList>(new NameValueCollection { { "Children", "4" }, { "Children", "3" } });
@@ -55,6 +65,16 @@ namespace Simple.Tests.Mvc
             var asserter = obj.Should().Be.OfType<TestList>().And.Value;
             asserter.Children.Count.Should().Be(2);
             asserter.Children.Select(x => x.ID).Should().Have.SameSequenceAs(4, 3);
+        }
+
+        [Test, Explicit("Still hate DefaulModelBinder")]
+        public void CanBindMultipleIntListPropertyWithoutConstructor()
+        {
+            var obj = TestBind<TestList>(new NameValueCollection { { "Children.Name", "asd" }, { "Children", "qwe" } });
+
+            var asserter = obj.Should().Be.OfType<TestList>().And.Value;
+            asserter.Children.Count.Should().Be(2);
+            asserter.Children.Select(x => x.Name).Should().Have.SameSequenceAs("asd", "qwe");
         }
 
         [Test]
@@ -76,6 +96,17 @@ namespace Simple.Tests.Mvc
                 .Value.Other.Child.ID.Should().Be(2);
         }
 
+
+        [Test]
+        public void CanBindInnerIntPropertyWithoutConstructor()
+        {
+            var obj = TestBind<TestParent>(new NameValueCollection { { "Other.Child.ID", "2" } });
+
+            obj.Should().Be.OfType<TestParent>().And
+                .Value.Other.Child.ID.Should().Be(2);
+        }
+
+
         class TestParent
         {
             public Test Other { get; set; }
@@ -93,8 +124,10 @@ namespace Simple.Tests.Mvc
 
         class TestChild : IEntity
         {
+            public TestChild() { }
             public TestChild(int id) { ID = id; }
             public int ID { get; set; }
+            public string Name { get; set; }
         }
 
         private static object TestBind<T>(NameValueCollection col)

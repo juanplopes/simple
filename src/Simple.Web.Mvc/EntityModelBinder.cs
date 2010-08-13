@@ -5,12 +5,14 @@ using System.Text;
 using System.Web.Mvc;
 using Simple.Reflection;
 using Simple.Entities;
+using System.Collections.ObjectModel;
 
 namespace Simple.Web.Mvc
 {
     public class EntityModelBinder : DefaultModelBinder
     {
         ConversionConstructors ctors = new ConversionConstructors();
+        MethodCache methodCache = new MethodCache();
 
         public EntityModelBinder() { }
 
@@ -25,13 +27,30 @@ namespace Simple.Web.Mvc
             var type = bindingContext.ModelType;
             if (typeof(IEntity).IsAssignableFrom(type))
             {
-                return BindEntity(bindingContext, type);
+                return BindEntity(controllerContext, bindingContext, type);
             }
+            //else if (typeof(Array).IsAssignableFrom(type))
+            //{
+                
+            //}
+            //else if (IsOf(type, typeof(ICollection<>)) && bindingContext.Model != null && (bindingContext.Model as ICollection))
+            //{
+
+            //}
+            //else if (IsOf(type, typeof(IEnumerable<>)))
+            //{
+
+            //}
 
             return base.BindModel(controllerContext, bindingContext);
         }
 
-        private object BindEntity(ModelBindingContext bindingContext, Type type)
+        private static bool IsOf(Type type, Type typeToTest)
+        {
+            return type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeToTest);
+        }
+
+        private object BindEntity(ControllerContext context, ModelBindingContext bindingContext, Type type)
         {
             var fullName = bindingContext.ModelName;
             var ctor = ctors.GetBest(type);
@@ -40,11 +59,13 @@ namespace Simple.Web.Mvc
 
             try
             {
-                if (value == null) return null;
+                if (value == null)
+                    return base.BindModel(context, bindingContext);
+
                 var paramType = ctor.GetParameters().Single().ParameterType;
                 var convertedValue = value.ConvertTo(paramType);
 
-                var obj = convertedValue != null ? MethodCache.Do.CreateInstance(type, convertedValue) : null;
+                var obj = convertedValue != null ? methodCache.CreateInstance(type, convertedValue) : null;
 
                 return obj;
             }
@@ -57,13 +78,9 @@ namespace Simple.Web.Mvc
 
         protected override void BindProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, System.ComponentModel.PropertyDescriptor propertyDescriptor)
         {
-
-           
-
             base.BindProperty(controllerContext, bindingContext, propertyDescriptor);
-
         }
-    
+
 
     }
 }

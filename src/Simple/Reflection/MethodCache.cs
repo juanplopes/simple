@@ -43,9 +43,9 @@ namespace Simple.Reflection
             var ctors = flags != null ? type.GetConstructors(flags.Value) : type.GetConstructors();
             object state;
             var method = Type.DefaultBinder.BindToMethod(
-                flags??BindingFlags.Default, ctors, ref parameters, 
+                flags ?? BindingFlags.Default, ctors, ref parameters,
                 null, null, null, out state) as ConstructorInfo;
-            
+
 
             return GetInvoker(method)(null, parameters);
         }
