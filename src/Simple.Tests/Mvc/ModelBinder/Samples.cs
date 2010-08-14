@@ -35,7 +35,7 @@ namespace Simple.Tests.Mvc.ModelBinder
         where C : Company<T>
         where T : IEnumerable<Address>
     {
-        public Company<T> MyCompany { get; set; }
+        public C MyCompany { get; set; }
     }
 
     public class CompanyArray : Company<Address[]>

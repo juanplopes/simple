@@ -50,7 +50,7 @@ namespace Simple.Tests.Mvc.ModelBinder
                 .Should().Have.SameSequenceAs(4, 3);
         }
 
-        [Test, Ignore("Will cause problems with ISet. Must fix it now!")]
+        [Test]
         public void BindTwoAddressesToWithinPropertyList()
         {
             var obj = Util.TestBind<Holding<C, T>>(
