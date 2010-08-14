@@ -27,7 +27,6 @@ namespace Simple.Tests.Mvc.ModelBinder
                 .And.Value.Places.Should().Have.SameSequenceAs(new C().Places);
         }
 
-
         [Test]
         public void BindOneAddressToList()
         {

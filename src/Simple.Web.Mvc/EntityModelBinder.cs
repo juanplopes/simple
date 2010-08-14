@@ -107,8 +107,9 @@ namespace Simple.Web.Mvc
         private object BindEntity(ControllerContext context, ModelBindingContext bindingContext, Type type)
         {
             var fullName = bindingContext.ModelName;
-            var ctor = ctors.GetBest(type);
             var value = bindingContext.ValueProvider.GetValue(fullName);
+            var ctor = ctors.MakeConversionPlan(type);
+            
             bindingContext.ModelState.SetModelValue(fullName, value);
 
             try
@@ -116,10 +117,9 @@ namespace Simple.Web.Mvc
                 if (value == null)
                     return base.BindModel(context, bindingContext);
 
-                var paramType = ctor.GetParameters().Single().ParameterType;
-                var convertedValue = value.ConvertTo(paramType);
+                var convertedValue = value.ConvertTo(ctor.ExpectedType);
 
-                var obj = convertedValue != null ? methodCache.CreateInstance(type, convertedValue) : null;
+                var obj = convertedValue != null ? ctor.Converter(convertedValue) : null;
 
                 return obj;
             }

@@ -5,6 +5,7 @@ using System.Text;
 using Iesi.Collections.Generic;
 using Simple.Entities;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace Simple.Tests.Mvc.ModelBinder
 {

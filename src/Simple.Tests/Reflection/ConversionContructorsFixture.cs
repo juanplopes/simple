@@ -15,21 +15,42 @@ namespace Simple.Tests.Reflection
         public void CanFindCorrectConversionConstructor()
         {
             var ctors = new ConversionConstructors();
-            var ctor = MethodCache.Do.GetInvoker(ctors.GetBest(typeof(Type1)));
+            var ctor = ctors.MakeConversionPlan(typeof(Type1));
 
-            var obj = ctor(null, 2);
-            obj.Should().Be.InstanceOf<Type1>();
-            ((Type1)obj).ok.Should().Be.True();
+            var obj = ctor.Converter(2);
+            obj.Should().Be.OfType<Type1>()
+                .And.ValueOf.ok.Should().Be.True();
         }
+
+        [Test]
+        public void CanFindCorrectConversionConstructorWith2Levels()
+        {
+            var ctors = new ConversionConstructors();
+            var ctor = ctors.MakeConversionPlan(typeof(Type3));
+
+            var obj = ctor.Converter(2);
+            obj.Should().Be.OfType<Type3>()
+                .And.ValueOf.a1.ok.Should().Be.True();
+        }
+
 
         [Test]
         public void ReturnsNullWhenNoGoodConstructorFound()
         {
             var ctors = new ConversionConstructors();
-            var ctor = ctors.GetBest(typeof(Type2));
+            var ctor = ctors.MakeConversionPlan(typeof(Type2));
             ctor.Should().Be.Null();
         }
 
+
+        public class Type3
+        {
+            public Type1 a1 = null;
+            public Type3(Type1 type)
+            {
+                a1 = type;
+            }
+        }
 
         public class Type1
         {
