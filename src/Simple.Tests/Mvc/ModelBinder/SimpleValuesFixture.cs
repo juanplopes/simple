@@ -37,6 +37,16 @@ namespace Simple.Tests.Mvc.ModelBinder
                 .Value.HomeAddress.Id.Should().Be(2);
         }
 
+        [Test]
+        public void BindLocationByInnerConstructor()
+        {
+            var obj = Util.TestBind<ContactInfo>(new NameValueCollection { { "Location", "2" } });
+
+            obj.Should().Be.OfType<ContactInfo>().And
+                .Value.Location.Address.Id.Should().Be(2);
+        }
+
+
 
         [Test]
         public void BindAddressWithInvalidValueCauseModelStateError()

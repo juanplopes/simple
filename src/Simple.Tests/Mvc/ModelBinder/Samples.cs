@@ -17,6 +17,7 @@ namespace Simple.Tests.Mvc.ModelBinder
     public class ContactInfo
     {
         public Address HomeAddress { get; set; }
+        public Location Location { get; set; }
     }
 
     public class Address : IEntity
@@ -24,6 +25,12 @@ namespace Simple.Tests.Mvc.ModelBinder
         public Address() { }
         public Address(int id) { Id = id; }
         public int Id { get; set; }
+    }
+
+    public class Location : IEntity
+    {
+        public Address Address { get; set; }
+        public Location(Address address) { Address = address; }
     }
 
     public class Company<T>

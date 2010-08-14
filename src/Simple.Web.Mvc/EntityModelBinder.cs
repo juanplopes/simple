@@ -70,7 +70,7 @@ namespace Simple.Web.Mvc
                 {
                     invoker.Invoke(model, "Add", item);
                 }
-                catch(Exception e) 
+                catch (Exception e)
                 {
                     bindingContext.ModelState.AddModelError(bindingContext.ModelName, e);
                 }
@@ -109,7 +109,7 @@ namespace Simple.Web.Mvc
             var fullName = bindingContext.ModelName;
             var value = bindingContext.ValueProvider.GetValue(fullName);
             var ctor = ctors.MakeConversionPlan(type);
-            
+
             bindingContext.ModelState.SetModelValue(fullName, value);
 
             try
