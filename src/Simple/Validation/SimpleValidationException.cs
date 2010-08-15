@@ -32,6 +32,10 @@ namespace Simple.Validation
         }
 
         public SimpleValidationException() : this(new ValidationList()) { }
+
+        public SimpleValidationException(string propertyName, string message) : this(new ValidationList() { new ValidationItem(propertyName, message) }) 
+        { }
+        
         public SimpleValidationException(ValidationList list)
             : base(CreateExceptionMessage(list))
         {
