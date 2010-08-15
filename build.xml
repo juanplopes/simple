@@ -169,7 +169,7 @@
      LocalFile="$(PackageDir)\$(MainLibraryName).zip"
      TargetFileName="$(MainLibraryName).zip"
      Summary="Simple.Net Library v$(ProductVersion)"
-     Labels="Nightly;Type-Package"
+     Labels="Nightly;Type-Package;BetterDownloadThis"
       />
 
     <UploadToGoogleCode
