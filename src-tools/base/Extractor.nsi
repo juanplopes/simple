@@ -16,8 +16,7 @@ Section
   CreateDirectory $0
 
   SetOutPath $0\data
-  File /r /x _svn /x .svn /x bin /x build /x obj /x *.nsi /x *.suo /x *.cache /x *.log /x Simple.exe /x Simple.*.dll /x TestResult.xml *.* 
-  File /oname=lib\Simple.Avalon.dll lib\Simple.Avalon.dll 
+  File /r /x _svn /x .svn /x bin /x build /x obj /x *.nsi /x *.suo /x *.cache /x *.log /x Simple.exe /x Simple.*.exe /x TestResult.xml *.* 
   
   SetOutPath $0
   File Simple.Gui.exe
