@@ -28,11 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReplacerGui));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgressGui));
             this.txtNamespace = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.AdvancedGroup = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,70 +40,58 @@
             this.txtSvcName = new System.Windows.Forms.TextBox();
             this.txtIISUrl = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.Version = new System.Windows.Forms.Label();
             this.btnMore = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.line1 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.label4 = new System.Windows.Forms.Label();
+            this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnDirectory = new System.Windows.Forms.Button();
+            this.header1 = new Simple.Gui.Header();
             this.AdvancedGroup.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtNamespace
             // 
+            this.txtNamespace.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNamespace.BackColor = System.Drawing.Color.White;
             this.txtNamespace.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNamespace.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNamespace.Location = new System.Drawing.Point(14, 135);
             this.txtNamespace.Name = "txtNamespace";
-            this.txtNamespace.Size = new System.Drawing.Size(452, 35);
+            this.txtNamespace.Size = new System.Drawing.Size(542, 35);
             this.txtNamespace.TabIndex = 0;
             this.txtNamespace.Text = "Example.Project";
             this.txtNamespace.TextChanged += new System.EventHandler(this.txtNamespace_TextChanged);
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(426, 176);
+            this.btnCancel.Location = new System.Drawing.Point(366, 424);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 28);
-            this.btnCancel.TabIndex = 3;
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnOk
             // 
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
             this.btnOk.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOk.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOk.Location = new System.Drawing.Point(364, 176);
+            this.btnOk.Location = new System.Drawing.Point(304, 424);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(56, 28);
-            this.btnOk.TabIndex = 2;
+            this.btnOk.TabIndex = 4;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(22, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(215, 92);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseMove);
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseDown);
-            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseUp);
             // 
             // label5
             // 
@@ -121,6 +108,8 @@
             // 
             // AdvancedGroup
             // 
+            this.AdvancedGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.AdvancedGroup.Controls.Add(this.label3);
             this.AdvancedGroup.Controls.Add(this.txtCatalog);
             this.AdvancedGroup.Controls.Add(this.label2);
@@ -128,9 +117,9 @@
             this.AdvancedGroup.Controls.Add(this.txtIISUrl);
             this.AdvancedGroup.Controls.Add(this.label1);
             this.AdvancedGroup.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AdvancedGroup.Location = new System.Drawing.Point(12, 207);
+            this.AdvancedGroup.Location = new System.Drawing.Point(14, 269);
             this.AdvancedGroup.Name = "AdvancedGroup";
-            this.AdvancedGroup.Size = new System.Drawing.Size(501, 147);
+            this.AdvancedGroup.Size = new System.Drawing.Size(542, 147);
             this.AdvancedGroup.TabIndex = 15;
             this.AdvancedGroup.TabStop = false;
             // 
@@ -148,13 +137,15 @@
             // 
             // txtCatalog
             // 
+            this.txtCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCatalog.BackColor = System.Drawing.Color.White;
             this.txtCatalog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCatalog.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCatalog.Location = new System.Drawing.Point(215, 17);
             this.txtCatalog.Name = "txtCatalog";
-            this.txtCatalog.Size = new System.Drawing.Size(272, 35);
-            this.txtCatalog.TabIndex = 14;
+            this.txtCatalog.Size = new System.Drawing.Size(313, 35);
+            this.txtCatalog.TabIndex = 1;
             // 
             // label2
             // 
@@ -170,23 +161,27 @@
             // 
             // txtSvcName
             // 
+            this.txtSvcName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSvcName.BackColor = System.Drawing.Color.White;
             this.txtSvcName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSvcName.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSvcName.Location = new System.Drawing.Point(215, 99);
             this.txtSvcName.Name = "txtSvcName";
-            this.txtSvcName.Size = new System.Drawing.Size(272, 35);
-            this.txtSvcName.TabIndex = 16;
+            this.txtSvcName.Size = new System.Drawing.Size(313, 35);
+            this.txtSvcName.TabIndex = 3;
             // 
             // txtIISUrl
             // 
+            this.txtIISUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtIISUrl.BackColor = System.Drawing.Color.White;
             this.txtIISUrl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtIISUrl.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIISUrl.Location = new System.Drawing.Point(215, 58);
             this.txtIISUrl.Name = "txtIISUrl";
-            this.txtIISUrl.Size = new System.Drawing.Size(272, 35);
-            this.txtIISUrl.TabIndex = 15;
+            this.txtIISUrl.Size = new System.Drawing.Size(313, 35);
+            this.txtIISUrl.TabIndex = 2;
             // 
             // label1
             // 
@@ -200,75 +195,62 @@
             this.label1.Text = "http://localhost/";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Version
-            // 
-            this.Version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Version.BackColor = System.Drawing.Color.Transparent;
-            this.Version.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Version.ForeColor = System.Drawing.Color.White;
-            this.Version.Location = new System.Drawing.Point(297, 48);
-            this.Version.Margin = new System.Windows.Forms.Padding(0);
-            this.Version.Name = "Version";
-            this.Version.Size = new System.Drawing.Size(226, 20);
-            this.Version.TabIndex = 16;
-            this.Version.Text = "version";
-            this.Version.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.Version.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseMove);
-            this.Version.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseDown);
-            this.Version.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseUp);
-            // 
             // btnMore
             // 
+            this.btnMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMore.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
             this.btnMore.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMore.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMore.Location = new System.Drawing.Point(472, 135);
+            this.btnMore.Location = new System.Drawing.Point(460, 424);
             this.btnMore.Name = "btnMore";
-            this.btnMore.Size = new System.Drawing.Size(42, 35);
-            this.btnMore.TabIndex = 1;
-            this.btnMore.Text = "...";
+            this.btnMore.Size = new System.Drawing.Size(98, 28);
+            this.btnMore.TabIndex = 6;
+            this.btnMore.Text = "More >>";
             this.btnMore.UseVisualStyleBackColor = true;
             this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
             // 
-            // panel1
+            // label4
             // 
-            this.panel1.BackColor = System.Drawing.Color.DarkRed;
-            this.panel1.Controls.Add(this.linkLabel1);
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.Version);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(523, 90);
-            this.panel1.TabIndex = 17;
-            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseMove);
-            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseDown);
-            this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseUp);
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(9, 173);
+            this.label4.Margin = new System.Windows.Forms.Padding(0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(228, 30);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Location:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // line1
+            // folderBrowser
             // 
-            this.line1.BackColor = System.Drawing.Color.IndianRed;
-            this.line1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.line1.Location = new System.Drawing.Point(0, 90);
-            this.line1.Name = "line1";
-            this.line1.Size = new System.Drawing.Size(523, 4);
-            this.line1.TabIndex = 18;
+            this.folderBrowser.Description = "Select the folder where you project will be installed.";
             // 
-            // linkLabel1
+            // btnDirectory
             // 
-            this.linkLabel1.ActiveLinkColor = System.Drawing.Color.IndianRed;
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.LinkColor = System.Drawing.Color.White;
-            this.linkLabel1.Location = new System.Drawing.Point(385, 68);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(138, 18);
-            this.linkLabel1.TabIndex = 17;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "by Living Consultoria";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.btnDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDirectory.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
+            this.btnDirectory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
+            this.btnDirectory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDirectory.Font = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDirectory.Location = new System.Drawing.Point(14, 206);
+            this.btnDirectory.Name = "btnDirectory";
+            this.btnDirectory.Size = new System.Drawing.Size(542, 57);
+            this.btnDirectory.TabIndex = 20;
+            this.btnDirectory.Text = "More >>";
+            this.btnDirectory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDirectory.UseVisualStyleBackColor = true;
+            this.btnDirectory.Click += new System.EventHandler(this.btnDirectory_Click);
+            // 
+            // header1
+            // 
+            this.header1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.header1.Location = new System.Drawing.Point(0, 0);
+            this.header1.Name = "header1";
+            this.header1.Size = new System.Drawing.Size(570, 99);
+            this.header1.TabIndex = 21;
             // 
             // ReplacerGui
             // 
@@ -277,10 +259,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(523, 378);
+            this.ClientSize = new System.Drawing.Size(570, 464);
             this.ControlBox = false;
-            this.Controls.Add(this.line1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.header1);
+            this.Controls.Add(this.btnDirectory);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnMore);
             this.Controls.Add(this.AdvancedGroup);
             this.Controls.Add(this.label5);
@@ -292,11 +275,8 @@
             this.MaximizeBox = false;
             this.Name = "ReplacerGui";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.AdvancedGroup.ResumeLayout(false);
             this.AdvancedGroup.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,7 +287,6 @@
         private System.Windows.Forms.TextBox txtNamespace;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox AdvancedGroup;
         private System.Windows.Forms.Label label3;
@@ -316,11 +295,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtSvcName;
         private System.Windows.Forms.TextBox txtIISUrl;
-        private System.Windows.Forms.Label Version;
         private System.Windows.Forms.Button btnMore;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label line1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowser;
+        private System.Windows.Forms.Button btnDirectory;
+        private Header header1;
     }
 }
 

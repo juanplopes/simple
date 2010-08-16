@@ -1,20 +1,30 @@
+!include "WinMessages.nsh"
+
 Name "Simple.Net Project"
 OutFile "Simple.exe"
 Icon "..\..\gfx\Icon.ico"
 RequestExecutionLevel user
 AutoCloseWindow true
 BrandingText "contact@juanlopes.net"
-
-;Default installation folder
-InstallDir "$EXEDIR\example-project\"
-
-Page directory
-Page instfiles
+SilentInstall silent
 
 Section
-  SetOutPath $INSTDIR
+  Banner::show "Preparing environment..."
+
+  GetTempFileName $0
+  Delete $0
+  CreateDirectory $0
+
+  SetOutPath $0\data
   File /r /x _svn /x .svn /x bin /x build /x obj /x *.nsi /x *.suo /x *.cache /x *.log /x Simple.exe /x Simple.*.dll /x TestResult.xml *.* 
   File /oname=lib\Simple.Avalon.dll lib\Simple.Avalon.dll 
-  ExecWait $OUTDIR\Simple.Gui.exe
-  Delete $OUTDIR\Simple.Gui.exe
+  
+  SetOutPath $0
+  File Simple.Gui.exe
+
+  SetOutPath $EXEDIR
+  ExecWait $0\Simple.Gui.exe
+  RMDir /r /REBOOTOK $0
+
+  Banner::destroy
 SectionEnd

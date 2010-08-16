@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Simple.Gui
 {
@@ -17,39 +18,71 @@ namespace Simple.Gui
         public ReplacerGui()
         {
             InitializeComponent();
-            txtNamespace_TextChanged(this, new EventArgs());
-            Version.Text = string.Format("v{0} (build {1})", this.GetType().Assembly.GetName().Version.ToString(3), VersionName.Text);
+            txtNamespace_TextChanged(this, null);
 
             AdvancedGroup.Visible = false;
             AutoResize();
+        }
+
+        public static void InvokeControlAction<T>(T cont, Action<T> action) where T : Control
+        {
+            if (cont.InvokeRequired)
+            {
+                cont.Invoke(new Action<T, Action<T>>(InvokeControlAction),
+                          new object[] { cont, action });
+            }
+            else
+            { action(cont); }
         }
 
         private void AutoResize()
         {
             if (AdvancedGroup.Visible)
             {
-                this.Height = AdvancedGroup.Top + AdvancedGroup.ClientSize.Height + AdvancedGroup.Left;
+                this.Height = AdvancedGroup.Top + AdvancedGroup.ClientSize.Height + 2 * AdvancedGroup.Left + btnOk.Height;
                 txtCatalog.Focus();
+                btnMore.Text = "<< Less";
             }
             else
             {
-                this.Height = AdvancedGroup.Top + AdvancedGroup.Left;
+                this.Height = AdvancedGroup.Top + AdvancedGroup.Left + btnOk.Height;
                 txtNamespace.Focus();
+                btnMore.Text = "More >>";
             }
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string message = "Project will be installed at: " + path + "\n\nAre you sure?";
+            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data");
+            string message = "Temporary data is on:\n" + path + "\n\nAnd will be installed on:\n" + btnDirectory.Text + "\n\nAre you sure?";
+
             if (MessageBox.Show(message, "Simple.Net", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                ReplacerLogic.DefaultExecute(path, "Example.Project", txtNamespace.Text.Trim(), true);
-                ReplacerLogic.DefaultExecute(path, "ExampleProject", txtCatalog.Text.Trim(), false);
-                ReplacerLogic.DefaultExecute(path, "example-project", txtIISUrl.Text.Trim(), false);
-                ReplacerLogic.DefaultExecute(path, "exampleprojectsvc", txtSvcName.Text.Trim(), false);
+                this.Hide();
 
-                MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var progress = new ProgressGui();
+                progress.SetText("Creating project...");
+
+                var t = new Thread(() =>
+                {
+
+                    InvokeControlAction(progress, x => x.SetText("Replacing default template..."));
+
+                    ReplacerLogic.DefaultExecute(path, "Example.Project", txtNamespace.Text.Trim(), true);
+                    ReplacerLogic.DefaultExecute(path, "ExampleProject", txtCatalog.Text.Trim(), false);
+                    ReplacerLogic.DefaultExecute(path, "example-project", txtIISUrl.Text.Trim(), false);
+                    ReplacerLogic.DefaultExecute(path, "exampleprojectsvc", txtSvcName.Text.Trim(), false);
+
+                    InvokeControlAction(progress, x => x.SetText("Copying directory..."));
+
+                    CopyDirectory(path, btnDirectory.Text);
+
+                    InvokeControlAction(progress, x => x.SetText("Done!"));
+                    InvokeControlAction(progress, x => x.ShowFinished());
+                });
+                t.Start();
+
+                progress.ShowDialog(this);
                 this.Close();
             }
         }
@@ -65,6 +98,13 @@ namespace Simple.Gui
             txtCatalog.Text = txtNamespace.Text.Replace(".", "");
             txtIISUrl.Text = txtNamespace.Text.Replace(".", "-").ToLower();
             txtSvcName.Text = txtNamespace.Text.Replace(".", "").ToLower() + "svc";
+            
+            var instDir = txtIISUrl.Text;
+
+            if (e == null)
+                btnDirectory.Text = Path.Combine(Environment.CurrentDirectory, instDir);
+            else
+                btnDirectory.Text = Path.Combine(Path.GetDirectoryName(btnDirectory.Text), instDir);
         }
 
         private void pictureBox1_DoubleClick(object sender, EventArgs e)
@@ -79,42 +119,43 @@ namespace Simple.Gui
             AutoResize();
         }
 
-        private Point ClickedPoint;
-        private bool IsDragging = false;
-
-        private void Drag_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-
-            this.IsDragging = true;
-            this.ClickedPoint = new Point(e.X, e.Y);
-
-        }
-
-        private void Drag_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-
-            this.IsDragging = false;
-
-        }
-
-        private void Drag_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            if (this.IsDragging)
-            {
-                Point NewPoint;
-
-                NewPoint = this.PointToScreen(new Point(e.X, e.Y));
-                NewPoint.Offset(this.ClickedPoint.X * -1, this.ClickedPoint.Y * -1);
-
-                this.Location = NewPoint;
-
-            }
-        }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("http://www.livingnet.com.br");
         }
 
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDirectory_Click(object sender, EventArgs e)
+        {
+            folderBrowser.SelectedPath = btnDirectory.Text;
+            folderBrowser.ShowDialog(this);
+            btnDirectory.Text = folderBrowser.SelectedPath;
+        }
+
+        public static void CopyDirectory(string src, string dst)
+        {
+            String[] Files;
+
+            if (dst[dst.Length - 1] != Path.DirectorySeparatorChar)
+                dst += Path.DirectorySeparatorChar;
+            if (!Directory.Exists(dst)) Directory.CreateDirectory(dst);
+            Files = Directory.GetFileSystemEntries(src);
+
+            foreach (string Element in Files)
+            {
+                if (Directory.Exists(Element))
+                    CopyDirectory(Element, dst + Path.GetFileName(Element));
+                else
+                    File.Copy(Element, dst + Path.GetFileName(Element), true);
+            }
+        }
+
+
     }
 }
+
