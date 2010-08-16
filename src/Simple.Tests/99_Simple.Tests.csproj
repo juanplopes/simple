@@ -138,6 +138,7 @@
     <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
+    <Compile Include="Gui\PathsFixture.cs" />
     <Compile Include="Mvc\ModelBinder\CollectionFixtures.cs" />
     <Compile Include="Mvc\ModelBinder\SimpleValuesFixture.cs" />
     <Compile Include="Mvc\ModelBinder\BaseCollectionFixture.cs" />
@@ -325,6 +326,10 @@
     <ProjectReference Include="..\Simple.Generator\11_Simple.Generator.csproj">
       <Project>{0D3A5B7E-9BA9-43B1-A500-BF89CBFC0E7B}</Project>
       <Name>11_Simple.Generator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Gui\10_Simple.Gui.csproj">
+      <Project>{E45B5534-55FF-4E60-83D8-FE907F111F92}</Project>
+      <Name>10_Simple.Gui</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simple.Web.Mvc\02_Simple.Web.Mvc.csproj">
       <Project>{F2EA0217-E269-4211-83B0-575E51B18906}</Project>

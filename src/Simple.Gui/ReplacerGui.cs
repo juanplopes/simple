@@ -10,6 +10,7 @@ using System.Reflection;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
+using Microsoft.Build.Utilities;
 
 namespace Simple.Gui
 {
@@ -77,6 +78,10 @@ namespace Simple.Gui
 
                     CopyDirectory(path, btnDirectory.Text);
 
+                    InvokeControlAction(progress, x => x.SetText("Preparing environment..."));
+
+                    EnsureNetFxPath();
+
                     InvokeControlAction(progress, x => x.SetText("Done!"));
                     InvokeControlAction(progress, x => x.ShowFinished());
                 });
@@ -129,6 +134,22 @@ namespace Simple.Gui
             folderBrowser.SelectedPath = btnDirectory.Text;
             folderBrowser.ShowDialog(this);
             btnDirectory.Text = folderBrowser.SelectedPath;
+        }
+
+        public static void EnsureNetFxPath()
+        {
+            var dotnetPath = ToolLocationHelper.GetPathToDotNetFramework(
+                TargetDotNetFrameworkVersion.VersionLatest);
+            
+            var paths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine));
+            var userPaths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User));
+
+            if (!paths.Contains(dotnetPath) && !userPaths.Contains(dotnetPath))
+            {
+                userPaths.Add(dotnetPath);
+                Environment.SetEnvironmentVariable("PATH", 
+                    userPaths.ToString(), EnvironmentVariableTarget.User);
+            }
         }
 
         public static void CopyDirectory(string src, string dst)
