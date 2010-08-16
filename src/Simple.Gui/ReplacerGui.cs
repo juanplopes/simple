@@ -162,6 +162,7 @@ namespace Simple.Gui
                 psi.Arguments = string.Format("first-build.xml \"/p:WebVirtualPath={0}\"", txtIISUrl.Text);
                 psi.WorkingDirectory = btnDirectory.Text;
                 psi.Verb = "runas";
+                psi.WindowStyle = ProcessWindowStyle.Hidden;
 
                 var p = Process.Start(psi);
                 p.WaitForExit();
