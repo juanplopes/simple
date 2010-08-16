@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <BuildBase>$(MSBuildProjectDirectory)\</BuildBase>
+    <WebVirtualPath>example-project</WebVirtualPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SolutionFile Include="$(BuildBase)\src\*.sln" />
+  </ItemGroup>
+
+  <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
+
+  <Target Name="Build">
+    <MSBuild Projects="$(BuildBase)build.xml" Targets="GenerateAssemblyInfo"/>
+    <MSBuild Projects="@(SolutionFile)" Targets="Build"/>
+    
+    <WebDirectoryDelete VirtualDirectoryName="$(WebVirtualPath)" ContinueOnError="true" />
+    <WebDirectoryCreate VirtualDirectoryName="$(WebVirtualPath)"
+                VirtualDirectoryPhysicalPath="$(BuildBase)src\Web\" />
+  </Target>
+</Project>

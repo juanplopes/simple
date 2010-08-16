@@ -82,8 +82,18 @@ namespace Simple.Gui
 
                     EnsureNetFxPath();
 
-                    InvokeControlAction(progress, x => x.SetText("Done!"));
-                    InvokeControlAction(progress, x => x.ShowFinished());
+                    InvokeControlAction(progress, x => x.SetText("Building project for the first time..."));
+
+                    if (RunMsBuild() == 0)
+                    {
+                        Process.Start(string.Format("http://localhost/{0}", txtIISUrl.Text));
+                        InvokeControlAction(progress, x => x.Close());
+                    }
+                    else
+                    {
+                        InvokeControlAction(progress, x => x.SetText("Done with errors."));
+                        InvokeControlAction(progress, x => x.ShowFinished());
+                    }
                 });
                 t.Start();
 
@@ -136,18 +146,38 @@ namespace Simple.Gui
             btnDirectory.Text = folderBrowser.SelectedPath;
         }
 
-        public static void EnsureNetFxPath()
+        public int RunMsBuild()
+        {
+            try
+            {
+                var psi = new ProcessStartInfo();
+                psi.FileName = "msbuild";
+                psi.Arguments = string.Format("first-build.xml \"/p:WebVirtualPath={0}\"", txtIISUrl.Text);
+                psi.WorkingDirectory = btnDirectory.Text;
+                psi.Verb = "runas";
+
+                var p = Process.Start(psi);
+                p.WaitForExit();
+                return p.ExitCode;
+            }
+            catch
+            {
+                return 1;
+            }
+        }
+
+        public void EnsureNetFxPath()
         {
             var dotnetPath = ToolLocationHelper.GetPathToDotNetFramework(
                 TargetDotNetFrameworkVersion.VersionLatest);
-            
+
             var paths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine));
             var userPaths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User));
 
             if (!paths.Contains(dotnetPath) && !userPaths.Contains(dotnetPath))
             {
                 userPaths.Add(dotnetPath);
-                Environment.SetEnvironmentVariable("PATH", 
+                Environment.SetEnvironmentVariable("PATH",
                     userPaths.ToString(), EnvironmentVariableTarget.User);
             }
         }
