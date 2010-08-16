@@ -98,13 +98,13 @@ namespace Simple.Gui
             txtCatalog.Text = txtNamespace.Text.Replace(".", "");
             txtIISUrl.Text = txtNamespace.Text.Replace(".", "-").ToLower();
             txtSvcName.Text = txtNamespace.Text.Replace(".", "").ToLower() + "svc";
-            
+
             var instDir = txtIISUrl.Text;
 
             if (e == null)
                 btnDirectory.Text = Path.Combine(Environment.CurrentDirectory, instDir);
             else
-                btnDirectory.Text = Path.Combine(Path.GetDirectoryName(btnDirectory.Text), instDir);
+                btnDirectory.Text = Path.Combine(Path.GetDirectoryName(btnDirectory.Text) ?? btnDirectory.Text, instDir);
         }
 
         private void pictureBox1_DoubleClick(object sender, EventArgs e)
