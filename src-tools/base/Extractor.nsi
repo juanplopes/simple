@@ -22,8 +22,9 @@ Section
   File Simple.Gui.exe
 
   SetOutPath $EXEDIR
-  ExecWait $0\Simple.Gui.exe
-  RMDir /r /REBOOTOK $0
 
   Banner::destroy
+  ExecWait $0\Simple.Gui.exe
+
+  RMDir /r /REBOOTOK $0
 SectionEnd
