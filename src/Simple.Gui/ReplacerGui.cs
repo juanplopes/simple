@@ -166,6 +166,10 @@ namespace Simple.Gui
 
                 var p = Process.Start(psi);
                 p.WaitForExit();
+
+                if (p.ExitCode == 0)
+                    File.Delete(Path.Combine(btnDirectory.Text, "first-build.xml"));
+
                 return p.ExitCode;
             }
             catch

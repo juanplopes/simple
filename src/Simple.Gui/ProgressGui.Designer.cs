@@ -32,6 +32,7 @@
             this.ProgressText = new System.Windows.Forms.Label();
             this.header1 = new Simple.Gui.Header();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ProgressText
@@ -68,6 +69,22 @@
             this.btnClose.Visible = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // btnStart
+            // 
+            this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
+            this.btnStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
+            this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStart.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStart.Location = new System.Drawing.Point(356, 135);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(98, 28);
+            this.btnStart.TabIndex = 24;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Visible = false;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
             // ProgressGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -75,6 +92,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(570, 172);
             this.ControlBox = false;
+            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.ProgressText);
             this.Controls.Add(this.header1);
@@ -92,6 +110,7 @@
         private Header header1;
         private System.Windows.Forms.Label ProgressText;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnStart;
     }
 }
 

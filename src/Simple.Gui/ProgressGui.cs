@@ -28,11 +28,8 @@ namespace Simple.Gui
         public void ShowFinished(string url)
         {
             finishedUrl = url;
-            if (url == null)
-                btnClose.Text = "Close";
-            else
-                btnClose.Text = "Start";
 
+            if (url != null) btnStart.Show();
             this.btnClose.Show();
         }
 
@@ -42,6 +39,11 @@ namespace Simple.Gui
         }
 
         private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
         {
             if (finishedUrl != null)
                 Process.Start(finishedUrl);
