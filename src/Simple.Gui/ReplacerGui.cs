@@ -78,21 +78,28 @@ namespace Simple.Gui
 
                     CopyDirectory(path, btnDirectory.Text);
 
-                    InvokeControlAction(progress, x => x.SetText("Preparing environment..."));
-
-                    EnsureNetFxPath();
-
-                    InvokeControlAction(progress, x => x.SetText("Building project for the first time..."));
-
-                    if (RunMsBuild() == 0)
+                    if (chkPrepare.Checked)
                     {
-                        Process.Start(string.Format("http://localhost/{0}", txtIISUrl.Text));
-                        InvokeControlAction(progress, x => x.Close());
+                        InvokeControlAction(progress, x => x.SetText("Preparing environment..."));
+
+                        EnsureNetFxPath();
+
+                        InvokeControlAction(progress, x => x.SetText("Building project for the first time..."));
+
+                        if (RunMsBuild() == 0)
+                        {
+                            InvokeControlAction(progress, x => x.SetText("Done."));
+                            InvokeControlAction(progress, x => x.ShowFinished(string.Format("http://localhost/{0}", txtIISUrl.Text)));
+                        }
+                        else
+                        {
+                            InvokeControlAction(progress, x => x.SetText("Done with errors."));
+                            InvokeControlAction(progress, x => x.ShowFinished(null));
+                        }
                     }
                     else
                     {
-                        InvokeControlAction(progress, x => x.SetText("Done with errors."));
-                        InvokeControlAction(progress, x => x.ShowFinished());
+                        InvokeControlAction(progress, x => x.ShowFinished(null));
                     }
                 });
                 t.Start();

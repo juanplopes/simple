@@ -45,6 +45,8 @@
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.btnDirectory = new System.Windows.Forms.Button();
             this.header1 = new Simple.Gui.Header();
+            this.label6 = new System.Windows.Forms.Label();
+            this.chkPrepare = new System.Windows.Forms.CheckBox();
             this.AdvancedGroup.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,7 +72,7 @@
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(366, 424);
+            this.btnCancel.Location = new System.Drawing.Point(366, 462);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 28);
             this.btnCancel.TabIndex = 5;
@@ -85,7 +87,7 @@
             this.btnOk.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOk.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOk.Location = new System.Drawing.Point(304, 424);
+            this.btnOk.Location = new System.Drawing.Point(304, 462);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(56, 28);
             this.btnOk.TabIndex = 4;
@@ -110,6 +112,8 @@
             // 
             this.AdvancedGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.AdvancedGroup.Controls.Add(this.chkPrepare);
+            this.AdvancedGroup.Controls.Add(this.label6);
             this.AdvancedGroup.Controls.Add(this.label3);
             this.AdvancedGroup.Controls.Add(this.txtCatalog);
             this.AdvancedGroup.Controls.Add(this.label2);
@@ -119,7 +123,7 @@
             this.AdvancedGroup.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AdvancedGroup.Location = new System.Drawing.Point(14, 269);
             this.AdvancedGroup.Name = "AdvancedGroup";
-            this.AdvancedGroup.Size = new System.Drawing.Size(542, 147);
+            this.AdvancedGroup.Size = new System.Drawing.Size(542, 187);
             this.AdvancedGroup.TabIndex = 15;
             this.AdvancedGroup.TabStop = false;
             // 
@@ -202,7 +206,7 @@
             this.btnMore.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMore.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMore.Location = new System.Drawing.Point(460, 424);
+            this.btnMore.Location = new System.Drawing.Point(460, 462);
             this.btnMore.Name = "btnMore";
             this.btnMore.Size = new System.Drawing.Size(98, 28);
             this.btnMore.TabIndex = 6;
@@ -252,6 +256,31 @@
             this.header1.Size = new System.Drawing.Size(570, 99);
             this.header1.TabIndex = 21;
             // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.Location = new System.Drawing.Point(6, 140);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(195, 30);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "Environment:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // chkPrepare
+            // 
+            this.chkPrepare.AutoSize = true;
+            this.chkPrepare.Checked = true;
+            this.chkPrepare.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPrepare.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkPrepare.Location = new System.Drawing.Point(215, 140);
+            this.chkPrepare.Name = "chkPrepare";
+            this.chkPrepare.Size = new System.Drawing.Size(115, 33);
+            this.chkPrepare.TabIndex = 22;
+            this.chkPrepare.Text = "Prepare";
+            this.chkPrepare.UseVisualStyleBackColor = true;
+            // 
             // ReplacerGui
             // 
             this.AcceptButton = this.btnOk;
@@ -259,7 +288,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(570, 464);
+            this.ClientSize = new System.Drawing.Size(570, 502);
             this.ControlBox = false;
             this.Controls.Add(this.header1);
             this.Controls.Add(this.btnDirectory);
@@ -300,6 +329,8 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         private System.Windows.Forms.Button btnDirectory;
         private Header header1;
+        private System.Windows.Forms.CheckBox chkPrepare;
+        private System.Windows.Forms.Label label6;
     }
 }
 

@@ -14,6 +14,7 @@ namespace Simple.Gui
 {
     public partial class ProgressGui : Form
     {
+        string finishedUrl = null;
         public ProgressGui()
         {
             InitializeComponent();
@@ -24,8 +25,14 @@ namespace Simple.Gui
             this.ProgressText.Text = text;
         }
 
-        public void ShowFinished()
+        public void ShowFinished(string url)
         {
+            finishedUrl = url;
+            if (url == null)
+                btnClose.Text = "Close";
+            else
+                btnClose.Text = "Start";
+
             this.btnClose.Show();
         }
 
@@ -36,6 +43,9 @@ namespace Simple.Gui
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+            if (finishedUrl != null)
+                Process.Start(finishedUrl);
+
             this.Close();
         }
     }
