@@ -107,12 +107,6 @@ namespace Simple.Gui
                 btnDirectory.Text = Path.Combine(Path.GetDirectoryName(btnDirectory.Text) ?? btnDirectory.Text, instDir);
         }
 
-        private void pictureBox1_DoubleClick(object sender, EventArgs e)
-        {
-            if (txtNamespace.Text.ToLower() == "dirtyhack")
-                new SimpleOtherGui().Show();
-        }
-
         private void btnMore_Click(object sender, EventArgs e)
         {
             AdvancedGroup.Visible = !AdvancedGroup.Visible;

@@ -49,5 +49,12 @@ namespace Simple.Gui
             }
         }
 
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        {
+            if (ParentForm.Controls.Find("txtNamespace", true).First().Text.ToLower() == "dirtyhack")
+                new SimpleOtherGui().Show();
+        }
+
+
     }
 }

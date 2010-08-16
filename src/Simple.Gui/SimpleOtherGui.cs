@@ -26,7 +26,6 @@ namespace Simple.Gui
             {
                 ReplacerLogic.DefaultExecute(path, textBox1.Text, textBox2.Text, checkBox1.Checked);
                 MessageBox.Show("Done!", "Message");
-                this.Close();
             }
         }
     }
