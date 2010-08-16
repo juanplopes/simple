@@ -176,8 +176,7 @@ namespace Simple.Gui
 
         public void EnsureNetFxPath()
         {
-            var dotnetPath = ToolLocationHelper.GetPathToDotNetFramework(
-                TargetDotNetFrameworkVersion.VersionLatest);
+            var dotnetPath = GetNetFxPath();
 
             var paths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine));
             var userPaths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User));
@@ -187,7 +186,16 @@ namespace Simple.Gui
                 userPaths.Add(dotnetPath);
                 Environment.SetEnvironmentVariable("PATH",
                     userPaths.ToString(), EnvironmentVariableTarget.User);
+                Environment.SetEnvironmentVariable("PATH",
+                    userPaths.ToString(), EnvironmentVariableTarget.Process);
             }
+        }
+
+        private static string GetNetFxPath()
+        {
+            var dotnetPath = ToolLocationHelper.GetPathToDotNetFramework(
+                TargetDotNetFrameworkVersion.VersionLatest);
+            return dotnetPath;
         }
 
         public static void CopyDirectory(string src, string dst)
