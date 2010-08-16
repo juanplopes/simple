@@ -4,8 +4,6 @@ Name "Simple.Net Project"
 OutFile "Simple.exe"
 Icon "..\..\gfx\Icon.ico"
 RequestExecutionLevel user
-AutoCloseWindow true
-BrandingText "contact@juanlopes.net"
 SilentInstall silent
 
 Section
