@@ -21,17 +21,22 @@ namespace Simple.Gui
             InitializeComponent();
         }
 
-        public void SetProgress(string text)
+        public void SetProgress(string text, string subText)
         {
-            this.ProgressText.Text = text;
+            if (text != null)
+                this.ProgressText.Text = text;
+
+            if (subText != null)
+                this.ProgressSubText.Text = subText;
+
         }
 
         public void ShowFinished(bool success, string url)
         {
             if (success)
-                SetProgress("Done.");
+                SetProgress("Done.", "");
             else
-                SetProgress("Done with errors.");
+                SetProgress("Done with errors.", "");
 
             finishedUrl = url;
 

@@ -22,11 +22,11 @@ namespace Simple.Gui
         public string InstallPath { get; set; }
         public bool SetupEnv { get; set; }
 
-        public event Action<string> OnProgress;
-        protected void ReportProgress(string text)
+        public event Action<string, string> OnProgress;
+        protected void ReportProgress(string text, string subText)
         {
             if (OnProgress != null)
-                OnProgress(text);
+                OnProgress(text, subText);
         }
 
         public event Action<bool, string> OnFinish;
@@ -38,25 +38,16 @@ namespace Simple.Gui
 
         public void Execute()
         {
-            ReportProgress("Replacing default template...");
+            DoReplace();
 
-            ReplacerLogic.DefaultExecute(ReplacePath, "Example.Project", Namespace, true);
-            ReplacerLogic.DefaultExecute(ReplacePath, "ExampleProject", Catalog, false);
-            ReplacerLogic.DefaultExecute(ReplacePath, "example-project", IISUrl, false);
-            ReplacerLogic.DefaultExecute(ReplacePath, "exampleprojectsvc", ServiceName, false);
-
-            ReportProgress("Copying directory...");
-
+            ReportProgress("Copying directory...", null);
             CopyDirectory(ReplacePath, InstallPath);
 
 
             if (SetupEnv)
             {
-                ReportProgress("Setting up development environment...");
+                ReportProgress("Setting up development environment...", "Ensuring .Net framework is on path");
                 EnsureNetFxPath();
-
-
-                ReportProgress("Building project...");
 
                 int msbuild = RunMsBuild();
 
@@ -76,12 +67,25 @@ namespace Simple.Gui
             }
         }
 
+        private void DoReplace()
+        {
+            ReportProgress("Replacing default template...", "Step 1 of 4");
+            ReplacerLogic.DefaultExecute(ReplacePath, "Example.Project", Namespace, true);
+            ReportProgress(null, "Step 2 of 4");
+            ReplacerLogic.DefaultExecute(ReplacePath, "ExampleProject", Catalog, false);
+            ReportProgress(null, "Step 3 of 4");
+            ReplacerLogic.DefaultExecute(ReplacePath, "example-project", IISUrl, false);
+            ReportProgress(null, "Step 4 of 4");
+            ReplacerLogic.DefaultExecute(ReplacePath, "exampleprojectsvc", ServiceName, false);
+        }
+
         private void PrecacheResults(string url)
         {
             int retries = 0;
             while (retries++ < 3)
             {
-                ReportProgress(string.Format("Precaching results ({0}/3)...", retries));
+                ReportProgress(string.Format("Precaching results ({0}/3)...", retries),
+                    string.Format("Accessing '{0}'", url));
                 try
                 {
                     WebRequest.Create(url).GetResponse().GetResponseStream().ReadByte();
@@ -111,15 +115,16 @@ namespace Simple.Gui
             }
         }
 
-        private static string GetNetFxPath()
+        private string GetNetFxPath()
         {
             var dotnetPath = ToolLocationHelper.GetPathToDotNetFramework(
                 TargetDotNetFrameworkVersion.VersionLatest);
             return dotnetPath;
         }
 
-        private static void CopyDirectory(string src, string dst)
+        private void CopyDirectory(string src, string dst)
         {
+            ReportProgress(null, Path.GetFileName(src));
             String[] Files;
 
             if (dst[dst.Length - 1] != Path.DirectorySeparatorChar)
@@ -147,6 +152,8 @@ namespace Simple.Gui
         {
             try
             {
+                ReportProgress("Building project...", "Running MSBuild");
+
                 var psi = new ProcessStartInfo();
                 psi.FileName = "msbuild";
                 psi.Arguments = string.Format("first-build.xml \"/p:WebVirtualPath={0}\"", IISUrl);

@@ -32,17 +32,18 @@
             this.ProgressText = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
+            this.ProgressSubText = new System.Windows.Forms.Label();
             this.header1 = new Simple.Gui.Header();
             this.SuspendLayout();
             // 
             // ProgressText
             // 
             this.ProgressText.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProgressText.Location = new System.Drawing.Point(12, 102);
+            this.ProgressText.Location = new System.Drawing.Point(12, 117);
             this.ProgressText.Name = "ProgressText";
-            this.ProgressText.Size = new System.Drawing.Size(546, 61);
+            this.ProgressText.Size = new System.Drawing.Size(546, 25);
             this.ProgressText.TabIndex = 22;
-            this.ProgressText.Text = "label1";
+            this.ProgressText.Text = "Starting";
             this.ProgressText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnClose
@@ -77,6 +78,16 @@
             this.btnStart.Visible = false;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
+            // ProgressSubText
+            // 
+            this.ProgressSubText.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ProgressSubText.Location = new System.Drawing.Point(12, 142);
+            this.ProgressSubText.Name = "ProgressSubText";
+            this.ProgressSubText.Size = new System.Drawing.Size(546, 21);
+            this.ProgressSubText.TabIndex = 25;
+            this.ProgressSubText.Text = "Loading messages";
+            this.ProgressSubText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // header1
             // 
             this.header1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -96,6 +107,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.ProgressText);
             this.Controls.Add(this.header1);
+            this.Controls.Add(this.ProgressSubText);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -111,6 +123,7 @@
         private System.Windows.Forms.Label ProgressText;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Label ProgressSubText;
     }
 }
 

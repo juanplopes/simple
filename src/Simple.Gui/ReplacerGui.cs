@@ -65,7 +65,7 @@ namespace Simple.Gui
                         SetupEnv = chkSetup.Checked,
                         ReplacePath = path,
                     };
-                    logic.OnProgress += (text) => progress.InvokeControlAction(x => x.SetProgress(text));
+                    logic.OnProgress += (text, subText) => progress.InvokeControlAction(x => x.SetProgress(text, subText));
                     logic.OnFinish += (success, url) => progress.InvokeControlAction(x => x.ShowFinished(success, url));
 
                     logic.Execute();
