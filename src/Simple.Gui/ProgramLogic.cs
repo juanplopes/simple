@@ -29,8 +29,8 @@ namespace Simple.Gui
                 OnProgress(text, subText);
         }
 
-        public event Action<bool, string> OnFinish;
-        protected void ReportFinish(bool success, string url)
+        public event Action<string, string> OnFinish;
+        protected void ReportFinish(string success, string url)
         {
             if (OnFinish != null)
                 OnFinish(success, url);
@@ -38,32 +38,39 @@ namespace Simple.Gui
 
         public void Execute()
         {
-            DoReplace();
-
-            ReportProgress("Copying files", "<starting>");
-            CopyDirectory(null, ReplacePath, InstallPath);
-
-
-            if (SetupEnv)
+            try
             {
-                ReportProgress("Setting up development environment", "Ensuring .Net framework is on path");
-                EnsureNetFxPath();
+                DoReplace();
 
-                int msbuild = RunMsBuild();
+                ReportProgress("Copying files", "<starting>");
+                CopyDirectory(null, ReplacePath, InstallPath);
 
-                if (msbuild == 0)
+
+                if (SetupEnv)
                 {
-                    var url = string.Format("http://localhost/{0}", IISUrl);
+                    ReportProgress("Setting up development environment", "Ensuring .Net framework is on path");
+                    EnsureNetFxPath();
 
-                    PrecacheResults(url);
-                    ReportFinish(true, url);
+                    int msbuild = RunMsBuild();
+
+                    if (msbuild == 0)
+                    {
+                        var url = string.Format("http://localhost/{0}", IISUrl);
+
+                        PrecacheResults(url);
+                        ReportFinish("Done", url);
+                    }
+                    else
+                        ReportFinish("Done, with errors", null);
                 }
                 else
-                    ReportFinish(false, null);
+                {
+                    ReportFinish("Done", null);
+                }
             }
-            else
+            catch(Exception e)
             {
-                ReportFinish(true, null);
+                ReportFinish(string.Format("Fatal error: {0}", e.Message), null);
             }
         }
 
@@ -134,7 +141,7 @@ namespace Simple.Gui
 
             foreach (string Element in Files)
             {
-                ReportProgress(null, Element.Substring(baseDir.Length+1));
+                ReportProgress(null, Element.Substring(baseDir.Length + 1));
 
                 if (Directory.Exists(Element))
                     CopyDirectory(baseDir, Element, dst + Path.GetFileName(Element));
@@ -160,11 +167,10 @@ namespace Simple.Gui
                 psi.FileName = "msbuild";
                 psi.Arguments = string.Format("first-build.xml \"/p:WebVirtualPath={0}\"", IISUrl);
                 psi.WorkingDirectory = InstallPath;
+                psi.WindowStyle = ProcessWindowStyle.Hidden;
 
                 if (!IsAdmin())
                     psi.Verb = "runas";
-
-                psi.WindowStyle = ProcessWindowStyle.Hidden;
 
                 var p = Process.Start(psi);
                 p.WaitForExit();

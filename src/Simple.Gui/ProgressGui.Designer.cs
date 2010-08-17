@@ -39,21 +39,23 @@
             // ProgressText
             // 
             this.ProgressText.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProgressText.Location = new System.Drawing.Point(12, 117);
+            this.ProgressText.Location = new System.Drawing.Point(12, 119);
             this.ProgressText.Name = "ProgressText";
-            this.ProgressText.Size = new System.Drawing.Size(546, 25);
+            this.ProgressText.Size = new System.Drawing.Size(546, 30);
             this.ProgressText.TabIndex = 22;
             this.ProgressText.Text = "Starting";
             this.ProgressText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ProgressText.Click += new System.EventHandler(this.ProgressText_Click);
             // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Enabled = false;
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(460, 142);
+            this.btnClose.Location = new System.Drawing.Point(288, 161);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(98, 28);
             this.btnClose.TabIndex = 23;
@@ -65,11 +67,12 @@
             // btnStart
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStart.Enabled = false;
             this.btnStart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
             this.btnStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStart.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.Location = new System.Drawing.Point(356, 142);
+            this.btnStart.Location = new System.Drawing.Point(184, 161);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(98, 28);
             this.btnStart.TabIndex = 24;
@@ -81,7 +84,7 @@
             // ProgressSubText
             // 
             this.ProgressSubText.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProgressSubText.Location = new System.Drawing.Point(12, 142);
+            this.ProgressSubText.Location = new System.Drawing.Point(12, 149);
             this.ProgressSubText.Name = "ProgressSubText";
             this.ProgressSubText.Size = new System.Drawing.Size(546, 21);
             this.ProgressSubText.TabIndex = 25;
@@ -101,13 +104,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(570, 179);
+            this.ClientSize = new System.Drawing.Size(570, 201);
             this.ControlBox = false;
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.ProgressText);
             this.Controls.Add(this.header1);
             this.Controls.Add(this.ProgressSubText);
+            this.Controls.Add(this.ProgressText);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;

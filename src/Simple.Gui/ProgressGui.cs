@@ -31,17 +31,18 @@ namespace Simple.Gui
 
         }
 
-        public void ShowFinished(bool success, string url)
+        public void ShowFinished(string success, string url)
         {
-            if (success)
-                SetProgress("Done.", "");
-            else
-                SetProgress("Done with errors.", "");
-
+            SetProgress(success, "");
             finishedUrl = url;
 
-            if (url != null) btnStart.Show();
-            this.btnClose.Show();
+            btnClose.Show();
+            btnStart.Show();
+
+            btnClose.Enabled = true;
+            if (url != null)
+                btnStart.Enabled = true;
+
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -55,6 +56,11 @@ namespace Simple.Gui
                 Process.Start(finishedUrl);
 
             this.Close();
+        }
+
+        private void ProgressText_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(this, ProgressText.Text, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
