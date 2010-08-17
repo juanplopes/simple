@@ -76,7 +76,9 @@
     <Compile Include="..\Version.cs">
       <Link>Version.cs</Link>
     </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Paths.cs" />
+    <Compile Include="ProgramLogic.cs" />
     <Compile Include="ProgressGui.cs">
       <SubType>Form</SubType>
     </Compile>

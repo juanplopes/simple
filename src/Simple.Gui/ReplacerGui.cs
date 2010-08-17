@@ -25,16 +25,6 @@ namespace Simple.Gui
             AutoResize();
         }
 
-        public static void InvokeControlAction<T>(T cont, Action<T> action) where T : Control
-        {
-            if (cont.InvokeRequired)
-            {
-                cont.Invoke(new Action<T, Action<T>>(InvokeControlAction),
-                          new object[] { cont, action });
-            }
-            else
-            { action(cont); }
-        }
 
         private void AutoResize()
         {
@@ -62,45 +52,23 @@ namespace Simple.Gui
                 this.Hide();
 
                 var progress = new ProgressGui();
-                progress.SetText("Creating project...");
 
                 var t = new Thread(() =>
                 {
-
-                    InvokeControlAction(progress, x => x.SetText("Replacing default template..."));
-
-                    ReplacerLogic.DefaultExecute(path, "Example.Project", txtNamespace.Text.Trim(), true);
-                    ReplacerLogic.DefaultExecute(path, "ExampleProject", txtCatalog.Text.Trim(), false);
-                    ReplacerLogic.DefaultExecute(path, "example-project", txtIISUrl.Text.Trim(), false);
-                    ReplacerLogic.DefaultExecute(path, "exampleprojectsvc", txtSvcName.Text.Trim(), false);
-
-                    InvokeControlAction(progress, x => x.SetText("Copying directory..."));
-
-                    CopyDirectory(path, btnDirectory.Text);
-
-                    if (chkPrepare.Checked)
+                    var logic = new ProgramLogic()
                     {
-                        InvokeControlAction(progress, x => x.SetText("Preparing environment..."));
+                        Catalog = txtCatalog.Text.Trim(),
+                        IISUrl = txtIISUrl.Text.Trim(),
+                        InstallPath = btnDirectory.Text.Trim(),
+                        Namespace = txtNamespace.Text.Trim(),
+                        PrepareEnv = chkPrepare.Checked,
+                        ReplacePath = path,
+                        ServiceName = txtSvcName.Text.Trim()
+                    };
+                    logic.OnProgress += (text, value) => progress.InvokeControlAction(x => x.SetProgress(text, value));
+                    logic.OnFinish += (success, url) => progress.InvokeControlAction(x => x.ShowFinished(success, url));
 
-                        EnsureNetFxPath();
-
-                        InvokeControlAction(progress, x => x.SetText("Building project for the first time..."));
-
-                        if (RunMsBuild() == 0)
-                        {
-                            InvokeControlAction(progress, x => x.SetText("Done."));
-                            InvokeControlAction(progress, x => x.ShowFinished(string.Format("http://localhost/{0}", txtIISUrl.Text)));
-                        }
-                        else
-                        {
-                            InvokeControlAction(progress, x => x.SetText("Done with errors."));
-                            InvokeControlAction(progress, x => x.ShowFinished(null));
-                        }
-                    }
-                    else
-                    {
-                        InvokeControlAction(progress, x => x.ShowFinished(null));
-                    }
+                    logic.Execute();
                 });
                 t.Start();
 
@@ -153,72 +121,9 @@ namespace Simple.Gui
             btnDirectory.Text = folderBrowser.SelectedPath;
         }
 
-        public int RunMsBuild()
-        {
-            try
-            {
-                var psi = new ProcessStartInfo();
-                psi.FileName = "msbuild";
-                psi.Arguments = string.Format("first-build.xml \"/p:WebVirtualPath={0}\"", txtIISUrl.Text);
-                psi.WorkingDirectory = btnDirectory.Text;
-                psi.Verb = "runas";
-                psi.WindowStyle = ProcessWindowStyle.Hidden;
 
-                var p = Process.Start(psi);
-                p.WaitForExit();
 
-                if (p.ExitCode == 0)
-                    File.Delete(Path.Combine(btnDirectory.Text, "first-build.xml"));
 
-                return p.ExitCode;
-            }
-            catch
-            {
-                return 1;
-            }
-        }
-
-        public void EnsureNetFxPath()
-        {
-            var dotnetPath = GetNetFxPath();
-
-            var paths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine));
-            var userPaths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User));
-
-            if (!paths.Contains(dotnetPath) && !userPaths.Contains(dotnetPath))
-            {
-                userPaths.Add(dotnetPath);
-                Environment.SetEnvironmentVariable("PATH",
-                    userPaths.ToString(), EnvironmentVariableTarget.User);
-                Environment.SetEnvironmentVariable("PATH",
-                    userPaths.ToString(), EnvironmentVariableTarget.Process);
-            }
-        }
-
-        private static string GetNetFxPath()
-        {
-            var dotnetPath = ToolLocationHelper.GetPathToDotNetFramework(
-                TargetDotNetFrameworkVersion.VersionLatest);
-            return dotnetPath;
-        }
-
-        public static void CopyDirectory(string src, string dst)
-        {
-            String[] Files;
-
-            if (dst[dst.Length - 1] != Path.DirectorySeparatorChar)
-                dst += Path.DirectorySeparatorChar;
-            if (!Directory.Exists(dst)) Directory.CreateDirectory(dst);
-            Files = Directory.GetFileSystemEntries(src);
-
-            foreach (string Element in Files)
-            {
-                if (Directory.Exists(Element))
-                    CopyDirectory(Element, dst + Path.GetFileName(Element));
-                else
-                    File.Copy(Element, dst + Path.GetFileName(Element), true);
-            }
-        }
 
 
     }

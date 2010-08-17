@@ -34,6 +34,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Version = new System.Windows.Forms.Label();
+            this.RunningAs = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -87,6 +88,7 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.DarkRed;
+            this.panel1.Controls.Add(this.RunningAs);
             this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.Version);
@@ -116,6 +118,23 @@
             this.Version.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseDown);
             this.Version.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseUp);
             // 
+            // RunningAs
+            // 
+            this.RunningAs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.RunningAs.BackColor = System.Drawing.Color.Transparent;
+            this.RunningAs.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RunningAs.ForeColor = System.Drawing.Color.White;
+            this.RunningAs.Location = new System.Drawing.Point(295, 28);
+            this.RunningAs.Margin = new System.Windows.Forms.Padding(0);
+            this.RunningAs.Name = "RunningAs";
+            this.RunningAs.Size = new System.Drawing.Size(226, 20);
+            this.RunningAs.TabIndex = 18;
+            this.RunningAs.Text = "version";
+            this.RunningAs.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.RunningAs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseMove);
+            this.RunningAs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseDown);
+            this.RunningAs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseUp);
+            // 
             // Header
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -138,5 +157,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label Version;
+        private System.Windows.Forms.Label RunningAs;
     }
 }
