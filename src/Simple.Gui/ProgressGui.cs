@@ -28,7 +28,7 @@ namespace Simple.Gui
                 this.progressBar1.Style = ProgressBarStyle.Marquee;
             else
             {
-                this.progressBar1.Style = ProgressBarStyle.Continuous;
+                this.progressBar1.Style = ProgressBarStyle.Blocks;
                 this.progressBar1.Value = value;
             }
         }
