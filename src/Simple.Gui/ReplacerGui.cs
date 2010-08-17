@@ -65,7 +65,7 @@ namespace Simple.Gui
                         ReplacePath = path,
                         ServiceName = txtSvcName.Text.Trim()
                     };
-                    logic.OnProgress += (text, value) => progress.InvokeControlAction(x => x.SetProgress(text, value));
+                    logic.OnProgress += (text) => progress.InvokeControlAction(x => x.SetProgress(text));
                     logic.OnFinish += (success, url) => progress.InvokeControlAction(x => x.ShowFinished(success, url));
 
                     logic.Execute();

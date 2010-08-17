@@ -20,11 +20,11 @@ namespace Simple.Gui
         public string InstallPath { get; set; }
         public bool PrepareEnv { get; set; }
 
-        public event Action<string, int> OnProgress;
-        protected void ReportProgress(string text, int value)
+        public event Action<string> OnProgress;
+        protected void ReportProgress(string text)
         {
             if (OnProgress != null)
-                OnProgress(text, value);
+                OnProgress(text);
         }
 
         public event Action<bool, string> OnFinish;
@@ -34,36 +34,27 @@ namespace Simple.Gui
                 OnFinish(success, url);
         }
 
-
-        private int _progress = 10;
-        protected int Represents(int value)
-        {
-            var old = _progress;
-            _progress += value;
-            return old;
-        }
-
         public void Execute()
         {
-            ReportProgress("Replacing default template...", Represents(20));
+            ReportProgress("Replacing default template...");
 
             ReplacerLogic.DefaultExecute(ReplacePath, "Example.Project", Namespace, true);
             ReplacerLogic.DefaultExecute(ReplacePath, "ExampleProject", Catalog, false);
             ReplacerLogic.DefaultExecute(ReplacePath, "example-project", IISUrl, false);
             ReplacerLogic.DefaultExecute(ReplacePath, "exampleprojectsvc", ServiceName, false);
 
-            ReportProgress("Copying directory...", Represents(30));
+            ReportProgress("Copying directory...");
 
             CopyDirectory(ReplacePath, InstallPath);
 
 
             if (PrepareEnv)
             {
-                ReportProgress("Preparing environment...", Represents(20));
+                ReportProgress("Preparing environment...");
                 EnsureNetFxPath();
 
 
-                ReportProgress("Building project...", -1);
+                ReportProgress("Building project...");
                 if (RunMsBuild() == 0)
                     ReportFinish(true, string.Format("http://localhost/{0}", IISUrl));
                 else

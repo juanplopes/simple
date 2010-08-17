@@ -32,7 +32,6 @@
             this.ProgressText = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.header1 = new Simple.Gui.Header();
             this.SuspendLayout();
             // 
@@ -41,7 +40,7 @@
             this.ProgressText.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ProgressText.Location = new System.Drawing.Point(12, 102);
             this.ProgressText.Name = "ProgressText";
-            this.ProgressText.Size = new System.Drawing.Size(546, 44);
+            this.ProgressText.Size = new System.Drawing.Size(546, 61);
             this.ProgressText.TabIndex = 22;
             this.ProgressText.Text = "label1";
             this.ProgressText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -78,15 +77,6 @@
             this.btnStart.Visible = false;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // progressBar1
-            // 
-            this.progressBar1.ForeColor = System.Drawing.Color.Maroon;
-            this.progressBar1.Location = new System.Drawing.Point(12, 149);
-            this.progressBar1.MarqueeAnimationSpeed = 30;
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(546, 14);
-            this.progressBar1.TabIndex = 25;
-            // 
             // header1
             // 
             this.header1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -102,7 +92,6 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(570, 172);
             this.ControlBox = false;
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.ProgressText);
@@ -122,7 +111,6 @@
         private System.Windows.Forms.Label ProgressText;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

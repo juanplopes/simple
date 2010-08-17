@@ -21,28 +21,19 @@ namespace Simple.Gui
             InitializeComponent();
         }
 
-        public void SetProgress(string text, int value)
+        public void SetProgress(string text)
         {
             this.ProgressText.Text = text;
-            if (value < 0 || value > 100)
-                this.progressBar1.Style = ProgressBarStyle.Marquee;
-            else
-            {
-                this.progressBar1.Style = ProgressBarStyle.Blocks;
-                this.progressBar1.Value = value;
-            }
         }
 
         public void ShowFinished(bool success, string url)
         {
             if (success)
-                SetProgress("Done.", 100);
+                SetProgress("Done.");
             else
-                SetProgress("Done with errors.", 100);
+                SetProgress("Done with errors.");
 
             finishedUrl = url;
-
-            progressBar1.Visible = false;
 
             if (url != null) btnStart.Show();
             this.btnClose.Show();
