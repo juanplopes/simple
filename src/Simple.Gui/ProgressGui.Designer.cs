@@ -80,6 +80,7 @@
             // 
             // progressBar1
             // 
+            this.progressBar1.ForeColor = System.Drawing.Color.Maroon;
             this.progressBar1.Location = new System.Drawing.Point(12, 149);
             this.progressBar1.MarqueeAnimationSpeed = 30;
             this.progressBar1.Name = "progressBar1";
