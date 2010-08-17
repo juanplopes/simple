@@ -89,12 +89,18 @@ namespace Simple.Gui
             txtIISUrl.Text = txtNamespace.Text.Replace(".", "-").ToLower();
             txtSvcName.Text = txtNamespace.Text.Replace(".", "").ToLower() + "svc";
 
-            var instDir = txtIISUrl.Text;
+            var instDir = GetInstDir();
 
             if (e == null)
                 txtDirectory.Text = Path.Combine(Environment.CurrentDirectory, instDir);
             else
                 txtDirectory.Text = Path.Combine(Path.GetDirectoryName(txtDirectory.Text) ?? txtDirectory.Text, instDir);
+        }
+
+        private string GetInstDir()
+        {
+            var instDir = string.IsNullOrEmpty(txtIISUrl.Text) ? "project" : txtIISUrl.Text;
+            return instDir;
         }
 
         private void btnMore_Click(object sender, EventArgs e)
@@ -116,11 +122,13 @@ namespace Simple.Gui
 
         private void btnDirectory_Click(object sender, EventArgs e)
         {
+            var instDir = GetInstDir();
+
             folderBrowser.SelectedPath = txtDirectory.Text;
             folderBrowser.ShowDialog(this);
-            txtDirectory.Text = (Path.GetFileName(folderBrowser.SelectedPath.ToLower()) == txtIISUrl.Text.ToLower())
+            txtDirectory.Text = (Path.GetFileName(folderBrowser.SelectedPath.ToLower()) == instDir.ToLower())
                 ? folderBrowser.SelectedPath
-                : Path.Combine(folderBrowser.SelectedPath, txtIISUrl.Text);
+                : Path.Combine(folderBrowser.SelectedPath, instDir);
         }
 
 
