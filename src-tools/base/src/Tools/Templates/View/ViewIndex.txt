@@ -2,15 +2,15 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
    
-    <%= Html.PageTitle("${classname_2}", "All ${classname_2}.") %>
+    <%= Html.PageTitle("${classname_2}", "All ${classname_2} is shown here.") %>
     <%= Html.Grid(Model).Columns(c=> 
     {
-        c.For(x => Html.ActionLink("details", MVC.${classname_2}.Details(x.Id))).Encode(false);
-        c.For(x => Html.ActionLink("edit", MVC.${classname_2}.Edit(x.Id))).Encode(false);
-        c.For(x => Html.ActionLink("delete", MVC.${classname_2}.Delete(x.Id), new { @class = "fancy" })).Encode(false);
-    }).Empty("No ${classname_2}") %>
+        c.For(x => Html.ActionLink("details", "Details", new { id = x.Id })).Encode(false);
+        c.For(x => Html.ActionLink("edit", "Edit", new { id = x.Id })).Encode(false);
+        c.For(x => Html.ActionLink("delete", "Delete", new { id = x.Id }, new { @class = "fancy" })).Encode(false);
+    }).Empty("No ${classname_2} found.") %>
     <p>
-        <%= Html.ButtonLink("new ${classname}", MVC.${classname_2}.Create())%>
+        <%= Html.ActionLink("New ${classname}", "Create", new { @class = "button" })%>
     </p>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
