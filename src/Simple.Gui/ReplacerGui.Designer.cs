@@ -34,6 +34,8 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.AdvancedGroup = new System.Windows.Forms.GroupBox();
+            this.chkPrepare = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtCatalog = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,9 +46,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.btnDirectory = new System.Windows.Forms.Button();
+            this.txtDirectory = new System.Windows.Forms.TextBox();
             this.header1 = new Simple.Gui.Header();
-            this.label6 = new System.Windows.Forms.Label();
-            this.chkPrepare = new System.Windows.Forms.CheckBox();
             this.AdvancedGroup.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +58,7 @@
             this.txtNamespace.BackColor = System.Drawing.Color.White;
             this.txtNamespace.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNamespace.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNamespace.Location = new System.Drawing.Point(14, 135);
+            this.txtNamespace.Location = new System.Drawing.Point(14, 148);
             this.txtNamespace.Name = "txtNamespace";
             this.txtNamespace.Size = new System.Drawing.Size(542, 35);
             this.txtNamespace.TabIndex = 0;
@@ -100,7 +101,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(9, 102);
+            this.label5.Location = new System.Drawing.Point(9, 115);
             this.label5.Margin = new System.Windows.Forms.Padding(0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(228, 30);
@@ -121,11 +122,36 @@
             this.AdvancedGroup.Controls.Add(this.txtIISUrl);
             this.AdvancedGroup.Controls.Add(this.label1);
             this.AdvancedGroup.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AdvancedGroup.Location = new System.Drawing.Point(14, 269);
+            this.AdvancedGroup.Location = new System.Drawing.Point(12, 269);
             this.AdvancedGroup.Name = "AdvancedGroup";
-            this.AdvancedGroup.Size = new System.Drawing.Size(542, 187);
+            this.AdvancedGroup.Size = new System.Drawing.Size(544, 187);
             this.AdvancedGroup.TabIndex = 15;
             this.AdvancedGroup.TabStop = false;
+            // 
+            // chkPrepare
+            // 
+            this.chkPrepare.AutoSize = true;
+            this.chkPrepare.Checked = true;
+            this.chkPrepare.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPrepare.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkPrepare.Location = new System.Drawing.Point(215, 140);
+            this.chkPrepare.Name = "chkPrepare";
+            this.chkPrepare.Size = new System.Drawing.Size(115, 33);
+            this.chkPrepare.TabIndex = 22;
+            this.chkPrepare.Text = "Prepare";
+            this.chkPrepare.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.Location = new System.Drawing.Point(6, 140);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(195, 30);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "Environment:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
             // 
@@ -148,7 +174,7 @@
             this.txtCatalog.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCatalog.Location = new System.Drawing.Point(215, 17);
             this.txtCatalog.Name = "txtCatalog";
-            this.txtCatalog.Size = new System.Drawing.Size(313, 35);
+            this.txtCatalog.Size = new System.Drawing.Size(315, 35);
             this.txtCatalog.TabIndex = 1;
             // 
             // label2
@@ -172,7 +198,7 @@
             this.txtSvcName.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSvcName.Location = new System.Drawing.Point(215, 99);
             this.txtSvcName.Name = "txtSvcName";
-            this.txtSvcName.Size = new System.Drawing.Size(313, 35);
+            this.txtSvcName.Size = new System.Drawing.Size(315, 35);
             this.txtSvcName.TabIndex = 3;
             // 
             // txtIISUrl
@@ -184,7 +210,7 @@
             this.txtIISUrl.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIISUrl.Location = new System.Drawing.Point(215, 58);
             this.txtIISUrl.Name = "txtIISUrl";
-            this.txtIISUrl.Size = new System.Drawing.Size(313, 35);
+            this.txtIISUrl.Size = new System.Drawing.Size(315, 35);
             this.txtIISUrl.TabIndex = 2;
             // 
             // label1
@@ -219,7 +245,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(9, 173);
+            this.label4.Location = new System.Drawing.Point(9, 186);
             this.label4.Margin = new System.Windows.Forms.Padding(0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(228, 30);
@@ -239,14 +265,26 @@
             this.btnDirectory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnDirectory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDirectory.Font = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDirectory.Location = new System.Drawing.Point(14, 206);
+            this.btnDirectory.Location = new System.Drawing.Point(511, 219);
             this.btnDirectory.Name = "btnDirectory";
-            this.btnDirectory.Size = new System.Drawing.Size(542, 57);
+            this.btnDirectory.Size = new System.Drawing.Size(45, 26);
             this.btnDirectory.TabIndex = 20;
-            this.btnDirectory.Text = "More >>";
-            this.btnDirectory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDirectory.Text = "...";
             this.btnDirectory.UseVisualStyleBackColor = true;
             this.btnDirectory.Click += new System.EventHandler(this.btnDirectory_Click);
+            // 
+            // txtDirectory
+            // 
+            this.txtDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDirectory.BackColor = System.Drawing.Color.White;
+            this.txtDirectory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDirectory.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDirectory.Location = new System.Drawing.Point(14, 219);
+            this.txtDirectory.Name = "txtDirectory";
+            this.txtDirectory.Size = new System.Drawing.Size(491, 26);
+            this.txtDirectory.TabIndex = 22;
+            this.txtDirectory.Text = "Example.Project";
             // 
             // header1
             // 
@@ -255,31 +293,6 @@
             this.header1.Name = "header1";
             this.header1.Size = new System.Drawing.Size(570, 99);
             this.header1.TabIndex = 21;
-            // 
-            // label6
-            // 
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(6, 140);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(195, 30);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "Environment:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // chkPrepare
-            // 
-            this.chkPrepare.AutoSize = true;
-            this.chkPrepare.Checked = true;
-            this.chkPrepare.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPrepare.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkPrepare.Location = new System.Drawing.Point(215, 140);
-            this.chkPrepare.Name = "chkPrepare";
-            this.chkPrepare.Size = new System.Drawing.Size(115, 33);
-            this.chkPrepare.TabIndex = 22;
-            this.chkPrepare.Text = "Prepare";
-            this.chkPrepare.UseVisualStyleBackColor = true;
             // 
             // ReplacerGui
             // 
@@ -290,6 +303,7 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(570, 502);
             this.ControlBox = false;
+            this.Controls.Add(this.txtDirectory);
             this.Controls.Add(this.header1);
             this.Controls.Add(this.btnDirectory);
             this.Controls.Add(this.label4);
@@ -331,6 +345,7 @@
         private Header header1;
         private System.Windows.Forms.CheckBox chkPrepare;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtDirectory;
     }
 }
 

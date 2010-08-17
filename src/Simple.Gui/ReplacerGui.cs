@@ -45,7 +45,7 @@ namespace Simple.Gui
         private void btnOk_Click(object sender, EventArgs e)
         {
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data");
-            string message = "Temporary data is on:\n" + path + "\n\nAnd will be installed on:\n" + btnDirectory.Text + "\n\nAre you sure?";
+            string message = "Temporary data is on:\n" + path + "\n\nAnd will be installed on:\n" + txtDirectory.Text + "\n\nAre you sure?";
 
             if (MessageBox.Show(message, "Simple.Net", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -59,7 +59,7 @@ namespace Simple.Gui
                     {
                         Catalog = txtCatalog.Text.Trim(),
                         IISUrl = txtIISUrl.Text.Trim(),
-                        InstallPath = btnDirectory.Text.Trim(),
+                        InstallPath = txtDirectory.Text.Trim(),
                         Namespace = txtNamespace.Text.Trim(),
                         PrepareEnv = chkPrepare.Checked,
                         ReplacePath = path,
@@ -92,9 +92,9 @@ namespace Simple.Gui
             var instDir = txtIISUrl.Text;
 
             if (e == null)
-                btnDirectory.Text = Path.Combine(Environment.CurrentDirectory, instDir);
+                txtDirectory.Text = Path.Combine(Environment.CurrentDirectory, instDir);
             else
-                btnDirectory.Text = Path.Combine(Path.GetDirectoryName(btnDirectory.Text) ?? btnDirectory.Text, instDir);
+                txtDirectory.Text = Path.Combine(Path.GetDirectoryName(txtDirectory.Text) ?? txtDirectory.Text, instDir);
         }
 
         private void btnMore_Click(object sender, EventArgs e)
@@ -116,11 +116,12 @@ namespace Simple.Gui
 
         private void btnDirectory_Click(object sender, EventArgs e)
         {
-            folderBrowser.SelectedPath = btnDirectory.Text;
+            folderBrowser.SelectedPath = txtDirectory.Text;
             folderBrowser.ShowDialog(this);
-            btnDirectory.Text = folderBrowser.SelectedPath;
+            txtDirectory.Text = (Path.GetFileName(folderBrowser.SelectedPath.ToLower()) == txtIISUrl.Text.ToLower())
+                ? folderBrowser.SelectedPath
+                : Path.Combine(folderBrowser.SelectedPath, txtIISUrl.Text);
         }
-
 
 
 
