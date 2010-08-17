@@ -122,7 +122,7 @@
             this.AdvancedGroup.Controls.Add(this.txtIISUrl);
             this.AdvancedGroup.Controls.Add(this.label1);
             this.AdvancedGroup.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AdvancedGroup.Location = new System.Drawing.Point(12, 269);
+            this.AdvancedGroup.Location = new System.Drawing.Point(14, 284);
             this.AdvancedGroup.Name = "AdvancedGroup";
             this.AdvancedGroup.Size = new System.Drawing.Size(544, 187);
             this.AdvancedGroup.TabIndex = 15;
@@ -245,7 +245,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(9, 186);
+            this.label4.Location = new System.Drawing.Point(9, 198);
             this.label4.Margin = new System.Windows.Forms.Padding(0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(228, 30);
@@ -265,7 +265,7 @@
             this.btnDirectory.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnDirectory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDirectory.Font = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDirectory.Location = new System.Drawing.Point(511, 219);
+            this.btnDirectory.Location = new System.Drawing.Point(511, 231);
             this.btnDirectory.Name = "btnDirectory";
             this.btnDirectory.Size = new System.Drawing.Size(45, 26);
             this.btnDirectory.TabIndex = 20;
@@ -280,7 +280,7 @@
             this.txtDirectory.BackColor = System.Drawing.Color.White;
             this.txtDirectory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtDirectory.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDirectory.Location = new System.Drawing.Point(14, 219);
+            this.txtDirectory.Location = new System.Drawing.Point(14, 231);
             this.txtDirectory.Name = "txtDirectory";
             this.txtDirectory.Size = new System.Drawing.Size(491, 26);
             this.txtDirectory.TabIndex = 22;
