@@ -7,7 +7,7 @@ RequestExecutionLevel user
 SilentInstall silent
 
 Section
-  Banner::show "Preparing environment..."
+  Banner::show "Simple.Net is preparing required files..."
 
   GetTempFileName $0
   Delete $0

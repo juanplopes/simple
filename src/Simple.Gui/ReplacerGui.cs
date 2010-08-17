@@ -61,9 +61,9 @@ namespace Simple.Gui
                         IISUrl = txtIISUrl.Text.Trim(),
                         InstallPath = txtDirectory.Text.Trim(),
                         Namespace = txtNamespace.Text.Trim(),
-                        PrepareEnv = chkPrepare.Checked,
+                        ServiceName = txtSvcName.Text.Trim(),
+                        SetupEnv = chkSetup.Checked,
                         ReplacePath = path,
-                        ServiceName = txtSvcName.Text.Trim()
                     };
                     logic.OnProgress += (text) => progress.InvokeControlAction(x => x.SetProgress(text));
                     logic.OnFinish += (success, url) => progress.InvokeControlAction(x => x.ShowFinished(success, url));

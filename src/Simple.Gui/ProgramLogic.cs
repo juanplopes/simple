@@ -7,6 +7,8 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using System.Security.Principal;
+using System.Net;
+using System.Windows.Forms;
 
 namespace Simple.Gui
 {
@@ -18,7 +20,7 @@ namespace Simple.Gui
         public string ServiceName { get; set; }
         public string ReplacePath { get; set; }
         public string InstallPath { get; set; }
-        public bool PrepareEnv { get; set; }
+        public bool SetupEnv { get; set; }
 
         public event Action<string> OnProgress;
         protected void ReportProgress(string text)
@@ -48,21 +50,47 @@ namespace Simple.Gui
             CopyDirectory(ReplacePath, InstallPath);
 
 
-            if (PrepareEnv)
+            if (SetupEnv)
             {
-                ReportProgress("Preparing environment...");
+                ReportProgress("Setting up development environment...");
                 EnsureNetFxPath();
 
 
                 ReportProgress("Building project...");
-                if (RunMsBuild() == 0)
-                    ReportFinish(true, string.Format("http://localhost/{0}", IISUrl));
+
+                int msbuild = RunMsBuild();
+
+                if (msbuild == 0)
+                {
+                    var url = string.Format("http://localhost/{0}", IISUrl);
+
+                    PrecacheResults(url);
+                    ReportFinish(true, url);
+                }
                 else
                     ReportFinish(false, null);
             }
             else
             {
                 ReportFinish(true, null);
+            }
+        }
+
+        private void PrecacheResults(string url)
+        {
+            int retries = 0;
+            while (retries++ < 3)
+            {
+                ReportProgress(string.Format("Precaching results ({0}/3)...", retries));
+                try
+                {
+                    WebRequest.Create(url).GetResponse().GetResponseStream().ReadByte();
+                    break;
+                }
+                catch
+                {
+                    Thread.Sleep(1000);
+                }
             }
         }
 
