@@ -40,13 +40,13 @@ namespace Simple.Gui
         {
             DoReplace();
 
-            ReportProgress("Copying directory...", null);
-            CopyDirectory(ReplacePath, InstallPath);
+            ReportProgress("Copying files", "<starting>");
+            CopyDirectory(null, ReplacePath, InstallPath);
 
 
             if (SetupEnv)
             {
-                ReportProgress("Setting up development environment...", "Ensuring .Net framework is on path");
+                ReportProgress("Setting up development environment", "Ensuring .Net framework is on path");
                 EnsureNetFxPath();
 
                 int msbuild = RunMsBuild();
@@ -69,7 +69,7 @@ namespace Simple.Gui
 
         private void DoReplace()
         {
-            ReportProgress("Replacing default template...", "Step 1 of 4");
+            ReportProgress("Replacing default template", "Step 1 of 4");
             ReplacerLogic.DefaultExecute(ReplacePath, "Example.Project", Namespace, true);
             ReportProgress(null, "Step 2 of 4");
             ReplacerLogic.DefaultExecute(ReplacePath, "ExampleProject", Catalog, false);
@@ -84,7 +84,7 @@ namespace Simple.Gui
             int retries = 0;
             while (retries++ < 3)
             {
-                ReportProgress(string.Format("Precaching results ({0}/3)...", retries),
+                ReportProgress(string.Format("Precaching results ({0}/3)", retries),
                     string.Format("Accessing '{0}'", url));
                 try
                 {
@@ -122,10 +122,10 @@ namespace Simple.Gui
             return dotnetPath;
         }
 
-        private void CopyDirectory(string src, string dst)
+        private void CopyDirectory(string baseDir, string src, string dst)
         {
-            ReportProgress(null, Path.GetFileName(src));
             String[] Files;
+            baseDir = baseDir ?? src;
 
             if (dst[dst.Length - 1] != Path.DirectorySeparatorChar)
                 dst += Path.DirectorySeparatorChar;
@@ -134,8 +134,10 @@ namespace Simple.Gui
 
             foreach (string Element in Files)
             {
+                ReportProgress(null, Element.Substring(baseDir.Length+1));
+
                 if (Directory.Exists(Element))
-                    CopyDirectory(Element, dst + Path.GetFileName(Element));
+                    CopyDirectory(baseDir, Element, dst + Path.GetFileName(Element));
                 else
                     File.Copy(Element, dst + Path.GetFileName(Element), true);
             }
@@ -152,7 +154,7 @@ namespace Simple.Gui
         {
             try
             {
-                ReportProgress("Building project...", "Running MSBuild");
+                ReportProgress("Building project", "Running MSBuild");
 
                 var psi = new ProcessStartInfo();
                 psi.FileName = "msbuild";

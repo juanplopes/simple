@@ -53,7 +53,7 @@
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(460, 135);
+            this.btnClose.Location = new System.Drawing.Point(460, 142);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(98, 28);
             this.btnClose.TabIndex = 23;
@@ -69,7 +69,7 @@
             this.btnStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStart.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.Location = new System.Drawing.Point(356, 135);
+            this.btnStart.Location = new System.Drawing.Point(356, 142);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(98, 28);
             this.btnStart.TabIndex = 24;
@@ -101,7 +101,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(570, 172);
+            this.ClientSize = new System.Drawing.Size(570, 179);
             this.ControlBox = false;
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnClose);
