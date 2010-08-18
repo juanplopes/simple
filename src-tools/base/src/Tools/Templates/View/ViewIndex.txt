@@ -10,7 +10,7 @@
         c.For(x => Html.ActionLink("delete", "Delete", new { id = x.Id }, new { @class = "fancy" })).Encode(false);
     }).Empty("No ${classname_2} found.") %>
     <p>
-        <%= Html.ActionLink("New ${classname}", "Create", new { @class = "button" })%>
+        <%= Html.ActionLink("New ${classname}", "Create", null, new { @class = "button" })%>
     </p>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
