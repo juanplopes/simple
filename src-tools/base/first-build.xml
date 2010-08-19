@@ -11,9 +11,13 @@
   <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
 
   <Target Name="Build">
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\util\Microsoft.WebApplication.targets" 
+          DestinationFolder="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\"
+          Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets')" />
+    
     <MSBuild Projects="$(BuildBase)build.xml" Targets="GenerateAssemblyInfo"/>
     <MSBuild Projects="@(SolutionFile)" Targets="Build"/>
-    
+
     <WebDirectoryDelete VirtualDirectoryName="$(WebVirtualPath)" ContinueOnError="true" />
     <WebDirectoryCreate VirtualDirectoryName="$(WebVirtualPath)"
                 VirtualDirectoryPhysicalPath="$(BuildBase)src\Web\" />
