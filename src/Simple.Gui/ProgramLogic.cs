@@ -180,7 +180,7 @@ namespace Simple.Gui
 
             var psi = new ProcessStartInfo();
             psi.FileName = "msbuild";
-            psi.Arguments = string.Format("first-build.xml", IISUrl);
+            psi.Arguments = "first-build.xml";
             psi.WorkingDirectory = InstallPath;
             psi.WindowStyle = ProcessWindowStyle.Hidden;
 
