@@ -176,11 +176,11 @@ namespace Simple.Gui
         public int RunMsBuild()
         {
 
-            ReportProgress("Building project", "Running MSBuild");
+            ReportProgress("Building project", "msbuild first-build.xml");
 
             var psi = new ProcessStartInfo();
             psi.FileName = "msbuild";
-            psi.Arguments = string.Format("first-build.xml \"/p:WebVirtualPath={0}\"", IISUrl);
+            psi.Arguments = string.Format("first-build.xml", IISUrl);
             psi.WorkingDirectory = InstallPath;
             psi.WindowStyle = ProcessWindowStyle.Hidden;
 
@@ -188,6 +188,7 @@ namespace Simple.Gui
                 psi.Verb = "runas";
 
             var p = Process.Start(psi);
+
             p.WaitForExit();
             if (p.ExitCode == 0)
                 File.Delete(Path.Combine(InstallPath, "first-build.xml"));
