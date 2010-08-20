@@ -75,12 +75,22 @@ namespace Simple.Gui
             }
         }
 
-        private void SetPermissions(string file)
+        private void SetPermissions(string file, bool directory)
         {
-            var sec = new FileSecurity(file, AccessControlSections.Access);
-            sec.AddAccessRule(
-                 new FileSystemAccessRule("Everyone", FileSystemRights.FullControl, AccessControlType.Allow));
-            File.SetAccessControl(file, sec);
+            if (directory)
+            {
+                var sec = Directory.GetAccessControl(file);
+                sec.AddAccessRule(
+                     new FileSystemAccessRule("Everyone", FileSystemRights.Modify, AccessControlType.Allow));
+                Directory.SetAccessControl(file, sec);
+            }
+            else
+            {
+                var sec = File.GetAccessControl(file);
+                sec.AddAccessRule(
+                     new FileSystemAccessRule("Everyone", FileSystemRights.FullControl, AccessControlType.Allow));
+                File.SetAccessControl(file, sec);
+            }
         }
 
         private void DoReplace()
@@ -149,15 +159,20 @@ namespace Simple.Gui
                 if (!Directory.Exists(destination))
                     Directory.CreateDirectory(destination);
 
+                SetPermissions(destination, true);
+
                 foreach (var item in Directory.GetFileSystemEntries(source))
                     CopyItem(baseDir, item, Path.Combine(destination, Path.GetFileName(item)));
             }
             else
             {
                 File.Copy(source, destination, true);
+
+                SetPermissions(destination, false);
+
             }
 
-            SetPermissions(destination);
+
         }
 
         public static bool IsAdmin()
