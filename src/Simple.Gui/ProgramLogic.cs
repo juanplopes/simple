@@ -45,7 +45,7 @@ namespace Simple.Gui
 
                 ReportProgress("Copying files", "<starting>");
                 CopyItem(null, ReplacePath, InstallPath);
-
+                SetPermissions(InstallPath);
 
                 if (SetupEnv)
                 {
@@ -75,22 +75,18 @@ namespace Simple.Gui
             }
         }
 
-        private void SetPermissions(string file, bool directory)
+        private void SetPermissions(string file)
         {
-            if (directory)
-            {
-                var sec = Directory.GetAccessControl(file);
-                sec.AddAccessRule(
-                     new FileSystemAccessRule("Everyone", FileSystemRights.Modify, AccessControlType.Allow));
-                Directory.SetAccessControl(file, sec);
-            }
-            else
-            {
-                var sec = File.GetAccessControl(file);
-                sec.AddAccessRule(
-                     new FileSystemAccessRule("Everyone", FileSystemRights.FullControl, AccessControlType.Allow));
-                File.SetAccessControl(file, sec);
-            }
+            ;
+            var sec = Directory.GetAccessControl(file);
+            sec.AddAccessRule(
+                 new FileSystemAccessRule(
+                     new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null),
+                     FileSystemRights.FullControl,
+                     InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit,
+                     PropagationFlags.InheritOnly,
+                     AccessControlType.Allow));
+            Directory.SetAccessControl(file, sec);
         }
 
         private void DoReplace()
@@ -159,17 +155,12 @@ namespace Simple.Gui
                 if (!Directory.Exists(destination))
                     Directory.CreateDirectory(destination);
 
-                SetPermissions(destination, true);
-
                 foreach (var item in Directory.GetFileSystemEntries(source))
                     CopyItem(baseDir, item, Path.Combine(destination, Path.GetFileName(item)));
             }
             else
             {
                 File.Copy(source, destination, true);
-
-                SetPermissions(destination, false);
-
             }
 
 
@@ -184,30 +175,25 @@ namespace Simple.Gui
 
         public int RunMsBuild()
         {
-            try
-            {
-                ReportProgress("Building project", "Running MSBuild");
 
-                var psi = new ProcessStartInfo();
-                psi.FileName = "msbuild";
-                psi.Arguments = string.Format("first-build.xml \"/p:WebVirtualPath={0}\"", IISUrl);
-                psi.WorkingDirectory = InstallPath;
-                psi.WindowStyle = ProcessWindowStyle.Hidden;
+            ReportProgress("Building project", "Running MSBuild");
 
-                if (!IsAdmin())
-                    psi.Verb = "runas";
+            var psi = new ProcessStartInfo();
+            psi.FileName = "msbuild";
+            psi.Arguments = string.Format("first-build.xml \"/p:WebVirtualPath={0}\"", IISUrl);
+            psi.WorkingDirectory = InstallPath;
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
 
-                var p = Process.Start(psi);
-                p.WaitForExit();
-                if (p.ExitCode == 0)
-                    File.Delete(Path.Combine(InstallPath, "first-build.xml"));
+            if (!IsAdmin())
+                psi.Verb = "runas";
 
-                return p.ExitCode;
-            }
-            catch
-            {
-                return 1;
-            }
+            var p = Process.Start(psi);
+            p.WaitForExit();
+            if (p.ExitCode == 0)
+                File.Delete(Path.Combine(InstallPath, "first-build.xml"));
+
+            return p.ExitCode;
+
         }
     }
 }

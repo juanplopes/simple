@@ -86,10 +86,10 @@
             this.ProgressSubText.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ProgressSubText.Location = new System.Drawing.Point(12, 149);
             this.ProgressSubText.Name = "ProgressSubText";
-            this.ProgressSubText.Size = new System.Drawing.Size(546, 21);
+            this.ProgressSubText.Size = new System.Drawing.Size(546, 50);
             this.ProgressSubText.TabIndex = 25;
             this.ProgressSubText.Text = "Loading messages";
-            this.ProgressSubText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ProgressSubText.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // header1
             // 
