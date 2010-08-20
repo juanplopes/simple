@@ -9,6 +9,7 @@ using System.Threading;
 using System.Security.Principal;
 using System.Net;
 using System.Windows.Forms;
+using System.Security.AccessControl;
 
 namespace Simple.Gui
 {
@@ -43,7 +44,7 @@ namespace Simple.Gui
                 DoReplace();
 
                 ReportProgress("Copying files", "<starting>");
-                CopyDirectory(null, ReplacePath, InstallPath);
+                CopyItem(null, ReplacePath, InstallPath);
 
 
                 if (SetupEnv)
@@ -68,10 +69,18 @@ namespace Simple.Gui
                     ReportFinish("Done", null);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ReportFinish(string.Format("Fatal error: {0}", e.Message), null);
             }
+        }
+
+        private void SetPermissions(string file)
+        {
+            var sec = new FileSecurity(file, AccessControlSections.Access);
+            sec.AddAccessRule(
+                 new FileSystemAccessRule("Everyone", FileSystemRights.FullControl, AccessControlType.Allow));
+            File.SetAccessControl(file, sec);
         }
 
         private void DoReplace()
@@ -129,25 +138,26 @@ namespace Simple.Gui
             return dotnetPath;
         }
 
-        private void CopyDirectory(string baseDir, string src, string dst)
+        private void CopyItem(string baseDir, string source, string destination)
         {
-            String[] Files;
-            baseDir = baseDir ?? src;
+            baseDir = baseDir ?? source;
 
-            if (dst[dst.Length - 1] != Path.DirectorySeparatorChar)
-                dst += Path.DirectorySeparatorChar;
-            if (!Directory.Exists(dst)) Directory.CreateDirectory(dst);
-            Files = Directory.GetFileSystemEntries(src);
+            ReportProgress(null, source.Substring(baseDir.Length - 1));
 
-            foreach (string Element in Files)
+            if (Directory.Exists(source))
             {
-                ReportProgress(null, Element.Substring(baseDir.Length + 1));
+                if (!Directory.Exists(destination))
+                    Directory.CreateDirectory(destination);
 
-                if (Directory.Exists(Element))
-                    CopyDirectory(baseDir, Element, dst + Path.GetFileName(Element));
-                else
-                    File.Copy(Element, dst + Path.GetFileName(Element), true);
+                foreach (var item in Directory.GetFileSystemEntries(source))
+                    CopyItem(baseDir, item, Path.Combine(destination, Path.GetFileName(item)));
             }
+            else
+            {
+                File.Copy(source, destination, true);
+            }
+
+            SetPermissions(destination);
         }
 
         public static bool IsAdmin()

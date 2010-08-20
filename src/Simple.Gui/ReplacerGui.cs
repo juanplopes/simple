@@ -44,7 +44,7 @@ namespace Simple.Gui
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data");
+            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"data\");
             string message = "Temporary data is on:\n" + path + "\n\nAnd will be installed on:\n" + txtDirectory.Text + "\n\nAre you sure?";
 
             if (MessageBox.Show(message, "Simple.Net", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
