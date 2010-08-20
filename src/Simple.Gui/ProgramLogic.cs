@@ -77,7 +77,6 @@ namespace Simple.Gui
 
         private void SetPermissions(string file)
         {
-            ;
             var sec = Directory.GetAccessControl(file);
             sec.AddAccessRule(
                  new FileSystemAccessRule(
@@ -104,10 +103,11 @@ namespace Simple.Gui
         private void PrecacheResults(string url)
         {
             int retries = 0;
+            ReportProgress("Precaching results", "starting");
             while (retries++ < 3)
             {
-                ReportProgress(string.Format("Precaching results ({0}/3)", retries),
-                    string.Format("Accessing '{0}'", url));
+                ReportProgress(null,
+                    string.Format("{0} ({1})", url, retries));
                 try
                 {
                     WebRequest.Create(url).GetResponse().GetResponseStream().ReadByte();
