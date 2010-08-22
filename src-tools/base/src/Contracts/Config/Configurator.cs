@@ -12,7 +12,7 @@ using Simple.Generator;
 using Simple.Data;
 using FluentValidation;
 
-namespace Example.Project.Environment
+namespace Example.Project.Config
 {
     public class Configurator : ConfigDef
     {
@@ -29,7 +29,7 @@ namespace Example.Project.Environment
 
         protected override void InitLocations(FileLocator paths)
         {
-            paths.Add(CodeBase(this.GetType(), "Environment", Environment));
+            paths.Add(CodeBase(this.GetType(), "Config", Environment));
             paths.Add(CodeBase(this.GetType(), "cfg"));
             paths.Add(CodeBase(this.GetType(), "..", "cfg"));
             paths.Add(CodeBase(this.GetType(), "..", "..", "cfg"));

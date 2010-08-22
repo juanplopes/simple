@@ -6,7 +6,7 @@ using Simple.Generator;
 using log4net;
 using Simple;
 using System.Reflection;
-using Example.Project.Environment;
+using Example.Project.Config;
 using Example.Project.Tools.Database;
 
 namespace Example.Project.Tools.Macros

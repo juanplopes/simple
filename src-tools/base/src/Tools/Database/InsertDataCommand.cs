@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Generator;
 using Example.Project.Tools.Infra;
-using Example.Project.Environment;
+using Example.Project.Config;
 using Simple;
 using Simple.Generator.Data;
 using Simple.Patterns;

@@ -7,7 +7,7 @@ using System.IO;
 using Simple.NVelocity;
 using Simple.Metadata;
 using System.Collections;
-using Example.Project.Environment;
+using Example.Project.Config;
 using Simple;
 using Example.Project.Domain;
 using Simple.Patterns;

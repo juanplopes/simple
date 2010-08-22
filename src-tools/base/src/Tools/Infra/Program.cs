@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Example.Project.Environment;
+using Example.Project.Config;
 using Env = System.Environment;
 using Simple;
 using log4net;

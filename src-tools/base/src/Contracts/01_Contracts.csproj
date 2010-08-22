@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,8 +53,8 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="Config\Configurator.cs" />
     <Compile Include="Domain\ApplicationConfig.cs" />
-    <Compile Include="Environment\Configurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ISystemService.cs" />
     <Compile Include="ValidationMessages.Designer.cs">
@@ -64,39 +64,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Environment\YourServer\Application.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\YourServer\Log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\YourServer\NHibernate.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\YourServer\Remoting.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\Development\Application.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\Test\Application.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\Development\Log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\Development\NHibernate.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\Development\Remoting.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\Test\Log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Environment\Test\NHibernate.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="Config\Development\Application.config" />
+    <None Include="Config\Development\Log4net.config" />
+    <None Include="Config\Development\NHibernate.config" />
+    <None Include="Config\Development\Remoting.config" />
+    <None Include="Config\Test\Application.config" />
+    <None Include="Config\Test\Log4net.config" />
+    <None Include="Config\Test\NHibernate.config" />
+    <None Include="Config\YourServer\Application.config" />
+    <None Include="Config\YourServer\Log4net.config" />
+    <None Include="Config\YourServer\NHibernate.config" />
+    <None Include="Config\YourServer\Remoting.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

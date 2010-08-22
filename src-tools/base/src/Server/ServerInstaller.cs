@@ -5,7 +5,7 @@ using System.Text;
 using Simple.Hosting;
 using System.ComponentModel;
 using Simple;
-using Example.Project.Environment;
+using Example.Project.Config;
 using Example.Project.Domain;
 
 namespace Example.Project

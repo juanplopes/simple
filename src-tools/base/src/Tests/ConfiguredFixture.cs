@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Simple;
 using Simple.Patterns;
-using Example.Project.Environment;
+using Example.Project.Config;
 
 namespace Example.Project.Tests
 {

@@ -83,7 +83,7 @@ namespace Simple
         public string GetRootedPath(string relativePath)
         {
             var key = FindKeyFile();
-            return Path.Combine(key.Exists ? key.Directory.FullName :
+            return Path.Combine((key != null && key.Exists) ? key.Directory.FullName :
                 System.Environment.CurrentDirectory, relativePath);
         }
 

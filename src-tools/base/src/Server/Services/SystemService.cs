@@ -21,7 +21,7 @@ namespace Example.Project.Services
 
             runner.Run("Windows Service installed", "Installed",
                 x => x.WarnUnless(ServiceController.GetServices()
-                    .Count(y => y.ServiceName == Simply.Do.GetConfig<ApplicationConfig>().Service.Name) == 1, "Not installed"));
+                    .Any(y => y.ServiceName == Simply.Do.GetConfig<ApplicationConfig>().Service.Name), "Not installed"));
 
             return new List<TaskRunner.Result>(runner.Results);
         }
