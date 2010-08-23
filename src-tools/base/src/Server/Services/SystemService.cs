@@ -23,6 +23,7 @@ namespace Example.Project.Services
                 x => x.WarnUnless(ServiceController.GetServices()
                     .Any(y => y.ServiceName == Simply.Do.GetConfig<ApplicationConfig>().Service.Name), "Not installed"));
 
+
             return new List<TaskRunner.Result>(runner.Results);
         }
     }

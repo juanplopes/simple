@@ -10,6 +10,10 @@ using Example.Project.Services;
 using System.Reflection;
 using Example.Project.Web.Helpers;
 using Simple.Web.Mvc;
+using System.IO;
+using System.Security.Permissions;
+using System.Security.Principal;
+using System.Security.AccessControl;
 
 namespace Example.Project.Web.Controllers
 {
@@ -40,28 +44,11 @@ namespace Example.Project.Web.Controllers
             ViewData["stacktrace"] = "";
             while (exception != null)
             {
-                ViewData["stacktrace"] += exception.GetType().Name + "\n"+ exception.StackTrace+ "\n\n";
+                ViewData["stacktrace"] += exception.GetType().Name + "\n" + exception.StackTrace + "\n\n";
                 exception = exception.InnerException;
             }
             Response.StatusCode = 500;
             return View();
-        }
-
-        protected string ErrorMessage(int id)
-        {
-            switch (id)
-            {
-                case 400: return "Bad request";
-                case 401: return "Unauthorized access";
-                case 402: return "Access forbidden";
-                case 403: return "Forbidden";
-                case 404: return "Resource not found";
-                case 405: return "Method not Allowed";
-                case 408: return "Request timeout";
-                case 500: return "Internal Server Error";
-                default: return "Error";
-            }
-
         }
 
     }
