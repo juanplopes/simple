@@ -233,26 +233,28 @@ fieldset input[type=checkbox] + label
 
 div.simple-notification-error
 {
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
+   	background: #fff4e7;
+	border: 2px solid #cc0000;
+	margin: 5px 0;
+	padding: 6px;
+	text-align: left;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
     color: #9C1200;
-    border: 2px solid #9C1200;
-    background: white url(avalon/error-bg.png) repeat-x;
-    margin: 5px 0;
-    padding: 0px 10px;
 }
 
 div.simple-notification-success
 {
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    color: #008000;
-    border: 2px solid #00aa00;
-    background: white url(avalon/success-bg.png) repeat-x;
-    margin: 5px 0;
-    padding: 0px 10px;
+    background: #edffe7;
+	border: 2px solid #32b200;
+	margin: 5px 0;
+	padding: 6px;
+	text-align: left;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;    
+	color: #008000;
 }
 
 div.simple-notification-success span, div.simple-notification-error span
