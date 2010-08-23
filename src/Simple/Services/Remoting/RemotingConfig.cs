@@ -21,6 +21,9 @@ namespace Simple.Services.Remoting
         [XmlElement("objectMode"), DefaultValue(WellKnownObjectMode.SingleCall)]
         public WellKnownObjectMode ObjectMode { get; set; }
 
+        [XmlElement("localOnly"), DefaultValue(false)]
+        public bool LocalOnly { get; set; }
+
         public string GetEndpointKey(Type type)
         {
             string mask = EndpointMask ?? MaskVariable;

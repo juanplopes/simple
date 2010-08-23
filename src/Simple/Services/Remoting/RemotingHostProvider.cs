@@ -13,30 +13,34 @@ namespace Simple.Services.Remoting
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         IList<object> services = new List<object>();
         bool started = false;
-        
+        bool wasStared = false;
+
         IChannelReceiver channel = null;
+
+        protected override void OnDisposeOldConfig()
+        {
+            lock (this)
+                if (started)
+                {
+                    Stop();
+                    wasStared = true;
+                }
+        }
 
         protected override void OnConfig(RemotingConfig config)
         {
-            if (started)
-            {
-                Stop();
-                Start();
-            }
+            lock (this)
+                if (wasStared)
+                {
+                    wasStared = false;
+                    Start();
+                }
         }
 
         public override void Dispose()
         {
             this.Stop();
             base.Dispose();
-        }
-
-        protected override void OnClearConfig()
-        {
-            if (started)
-            {
-                Stop();
-            }
         }
 
         public void Host(object server, Type contract)
@@ -50,39 +54,47 @@ namespace Simple.Services.Remoting
                 ServiceLocationFactory.Do[ConfigCache].Set(server, contract);
 
                 string key = ConfigCache.GetEndpointKey(contract);
-                logger.DebugFormat("Registering contract {0} at endpoint {1}...", contract.GetRealClassName(), key);
-                
-                RemotingServices.Marshal(server as MarshalByRefObject, key, contract);
 
-                logger.InfoFormat("{0} hosted", key);
-                foreach (string url in channel.GetUrlsForUri(key))
+                if (!ConfigCache.LocalOnly)
                 {
-                    logger.DebugFormat("* {0}.", url);
+                    logger.DebugFormat("Registering contract {0} at endpoint {1}...", contract.GetRealClassName(), key);
+                    RemotingServices.Marshal(server as MarshalByRefObject, key, contract);
+                    logger.InfoFormat("{0} hosted", key);
+
+                    foreach (string url in channel.GetUrlsForUri(key))
+                    {
+                        logger.DebugFormat("* {0}.", url);
+                    }
                 }
+                else
+                {
+                    logger.InfoFormat("{0} locally hosted", key);
+                }
+
             }
         }
 
-        
-        
+
+
         public void Stop()
         {
             lock (this)
             {
-                if (started)
+                if (!started) return;
+
+                if (!ConfigCache.LocalOnly)
                 {
                     foreach (MarshalByRefObject obj in services)
                         RemotingServices.Disconnect(obj);
 
                     ChannelServices.UnregisterChannel(channel);
                     channel.StopListening(null);
-                    
-                    //Context.UnregisterDynamicProperty(DefaultDynamicProperty.PropertyName, null, null);
-                    //ChannelServices.UnregisterChannel(channel);
-                    started = false;
-
-
                 }
+                //Context.UnregisterDynamicProperty(DefaultDynamicProperty.PropertyName, null, null);
+                //ChannelServices.UnregisterChannel(channel);
+                started = false;
             }
+
         }
 
 
@@ -90,12 +102,15 @@ namespace Simple.Services.Remoting
         {
             lock (this)
             {
-                logger.DebugFormat("Initializing Remoting Channel...");
+                if (started) return;
 
-                channel = ConfigCache.GetChannel();
-                ChannelServices.RegisterChannel(channel, false);
-                
-                channel.StartListening(null);
+                if (!ConfigCache.LocalOnly)
+                {
+                    logger.DebugFormat("Initializing Remoting Channel...");
+                    channel = ConfigCache.GetChannel();
+                    ChannelServices.RegisterChannel(channel, false);
+                    channel.StartListening(null);
+                }
 
                 started = true;
             }

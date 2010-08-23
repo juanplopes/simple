@@ -40,7 +40,7 @@ namespace Example.Project.Config
             ValidatorOptions.ResourceProviderType = typeof(ValidationMessages);
             ConfigFile(x => x.Log4net(), "Log4net.config");
             ConfigFile(x => x.The<ApplicationConfig>(), "Application.config");
-            Config(x => x.DefaultHost());
+            ConfigFile(x => x.Remoting(), "Remoting.config");
 
             if (!IsTest)
                 Do.AddClientHook(x => new HttpIdentityInjector(x));

@@ -85,6 +85,9 @@
     <None Include="Config\Test\NHibernate.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Config\Test\Remoting.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Config\YourServer\Application.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -61,7 +61,7 @@ namespace Simple.Config
             {
                 if (!object.Equals(default(T), ConfigCache)) OnDisposeOldConfig();
 
-                ConfigCache = config ;
+                ConfigCache = config;
 
                 if (!object.Equals(default(T), config)) OnConfig(config);
                 else OnClearConfig();
@@ -76,8 +76,8 @@ namespace Simple.Config
             Init(new NullConfigSource<T>());
         }
 
-        protected abstract void OnConfig(T config);
-        protected abstract void OnClearConfig();
+        protected virtual void OnConfig(T config) { }
+        protected virtual void OnClearConfig() { }
 
         #region IDisposable Members
 

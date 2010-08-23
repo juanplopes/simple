@@ -13,7 +13,7 @@ namespace Example.Project.Tools
 { 
     public class Context : ContextBase
     { 
-        public static IDisposable Development { get { return Get(Configurator.Development); } }
+        public static IDisposable Development { get { return Get(null); } }
         public static IDisposable Test { get { return Get(Configurator.Test); } }
 
         public static IDisposable Get(string name)
@@ -40,7 +40,7 @@ namespace Example.Project.Tools
             if (Configurator.IsProduction)
                 InternalConfigure(null);
             else
-                InternalConfigure(Configurator.Development, Configurator.Test);
+                InternalConfigure(null, Configurator.Test);
 
 
             return resolver;
