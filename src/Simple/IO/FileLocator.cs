@@ -8,6 +8,18 @@ namespace Simple.IO
 {
     public class FileLocator : List<string>
     {
+        public static string ByPattern(string pattern)
+        {
+            var dir = Path.GetDirectoryName(pattern);
+            var file = Path.GetFileName(pattern);
+            if (string.IsNullOrEmpty(dir)) dir = ".";
+            var firstFile = Directory.GetFiles(dir, file).FirstOrDefault();
+            if (firstFile == null)
+                throw new FileNotFoundException("Not found.", pattern);
+            else
+                return firstFile;
+        }
+
         public IEnumerable<string> ExistsWhere(string file)
         {
             string temp;

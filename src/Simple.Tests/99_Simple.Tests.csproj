@@ -139,6 +139,7 @@
     <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
+    <Compile Include="Generator\InterfaceReplacerFixture.cs" />
     <Compile Include="Gui\PathsFixture.cs" />
     <Compile Include="Mvc\ModelBinder\CollectionFixtures.cs" />
     <Compile Include="Mvc\ModelBinder\SimpleValuesFixture.cs" />

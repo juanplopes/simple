@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using log4net;
 using System.Reflection;
+using Simple.IO;
 
 namespace Simple.Generator
 {
@@ -25,14 +26,7 @@ namespace Simple.Generator
 
         protected static string GetFirstFile(string pattern)
         {
-            var dir = Path.GetDirectoryName(pattern);
-            var file = Path.GetFileName(pattern);
-            if (string.IsNullOrEmpty(dir)) dir = ".";
-            var firstFile = Directory.GetFiles(dir, file).FirstOrDefault();
-            if (firstFile == null)
-                throw new FileNotFoundException("Not found.", pattern);
-            else
-                return firstFile;
+            return FileLocator.ByPattern(pattern);
         }
 
         public ProjectFileWriter AutoCommit()

@@ -70,6 +70,7 @@
     <Compile Include="Generator\Data\DataList.cs" />
     <Compile Include="Generator\Data\IDataList.cs" />
     <Compile Include="Generator\ITableTemplate.cs" />
+    <Compile Include="Generator\Misc\CSharpInterfaceReplacer.cs" />
     <Compile Include="Generator\Strings\EnglishPluralizer.cs" />
     <Compile Include="Generator\Strings\IPluralizer.cs" />
     <Compile Include="Generator\Strings\GeneratorStrings.cs" />

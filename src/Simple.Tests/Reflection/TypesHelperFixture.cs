@@ -97,5 +97,33 @@ namespace Simple.Tests.Reflection
         {
             typeof(string).GetValueTypeIfNullable().Should().Be(typeof(string));
         }
+
+        [Test]
+        public void CanGetListGenericArgumentsByInterface()
+        {
+            typeof(List<DateTime>).GetTypeArgumentsFor(typeof(IList<>))
+                .Should().Have.SameSequenceAs(typeof(DateTime));
+
+            typeof(List<>).GetTypeArgumentsFor(typeof(IList<>))
+              .Should().Have.SameSequenceAs(typeof(List<>).GetGenericArguments());
+        }
+
+        [Test]
+        public void CanGetDictionaryGenericArgumentsByInterface()
+        {
+            typeof(Dictionary<DateTime, int>).GetTypeArgumentsFor(typeof(ICollection<>))
+                .Should().Have.SameSequenceAs(typeof(KeyValuePair<DateTime, int>));
+
+            typeof(Dictionary<DateTime, int>).GetTypeArgumentsFor(typeof(IDictionary<,>))
+                .Should().Have.SameSequenceAs(typeof(DateTime), typeof(int));
+
+        }
+
+        [Test]
+        public void CanGetGenericArgumentsByInterfaceFromNonImplementingType()
+        {
+            typeof(Dictionary<DateTime, int>).GetTypeArgumentsFor(typeof(IList<>))
+                .Should().Be.Empty();
+        }
     }
 }

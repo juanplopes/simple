@@ -30,6 +30,15 @@ namespace Simple
                 Activator.CreateInstance(type) : null;
         }
 
+        public static Type[] GetTypeArgumentsFor(this Type toTest, Type toImplement)
+        {
+            foreach (var iface in toTest.GetInterfaces())
+                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == toImplement)
+                    return iface.GetGenericArguments();
+
+            return new Type[0];
+        }
+
         public static string GetRealClassName(this Type type)
         {
             return new TypeNameExtractor().GetName(type);
