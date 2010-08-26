@@ -109,7 +109,6 @@
   <Target Name="MergeNVelocity">
     <ItemGroup>
       <NVelocityItems Include="$(LibDir)\NVelocity\NVelocity.dll"/>
-      <NVelocityItems Include="$(LibDir)\NVelocity\Commons.dll"/>
     </ItemGroup>
     <ILMerge OutputFile="$(LibDir)\Simple.NVelocity.dll"
             InputAssemblies="@(NVelocityItems)"

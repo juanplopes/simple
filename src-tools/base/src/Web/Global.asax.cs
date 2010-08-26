@@ -24,10 +24,23 @@ namespace Example.Project.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("Default",
-                 "{controller}/{action}/{id}",
-                 new { controller = "Home", action = "Index", id = 0 }
-             );
+            MapDefault(routes, "Default", 
+                "{controller}/{action}/{id}",
+                "{controller}.{format}",
+                "{controller}/{action}.{format}",
+                "{controller}/{action}/{id}.{format}"
+            );
+        }
+
+        protected static void MapDefault(RouteCollection routes, string name, params string[] patterns)
+        {
+            for (int i = 0; i < patterns.Length; i++)
+            {
+                routes.MapRoute(name + i, patterns[i],
+                    new { controller = "Home", action = "Index", id = 0, format = "html" },
+                    new { controller = "[^\\.]*", action = "[^\\.]*", id = "[^\\.]*", format = "[^\\.]*" }
+                );
+            }
         }
 
         protected void Application_Start()

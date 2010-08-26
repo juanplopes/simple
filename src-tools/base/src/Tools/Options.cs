@@ -11,6 +11,7 @@ using Example.Project.Config;
 using Simple;
 using Example.Project.Domain;
 using Simple.Patterns;
+using Simple.IO;
 
 namespace Example.Project.Tools
 {
@@ -46,9 +47,20 @@ namespace Example.Project.Tools
         {
             get { return new ProjectFileWriter("src/Contracts/??_Contracts.csproj"); }
         }
+
+        public string SolutionFile
+        {
+            get { return FileLocator.ByPattern("src/*.sln"); }
+        }
+
+        public string ServerDirectory
+        {
+            get { return "src/Server"; }
+        }
+
         public ProjectFileWriter ServerProject
         {
-            get { return new ProjectFileWriter("src/Server/??_Server.csproj"); }
+            get { return new ProjectFileWriter(Path.Combine(ServerDirectory, "/??_Server.csproj")); }
         }
         public ProjectFileWriter WebProject
         {

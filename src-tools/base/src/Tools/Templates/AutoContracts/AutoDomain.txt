@@ -1,0 +1,32 @@
+#foreach($ns in $service.Namespaces)
+using ${ns};
+#end
+
+namespace ${opt.Namespace}.Domain
+{
+    public partial class ${entity.Name}
+    {
+#foreach($method in $service.Methods)
+#if ($method.FirstParameterIs($entity))
+        public virtual ${method.MakeSignature(1)} 
+        {
+#if ($method.ReturnsVoid)
+			Service.${method.MakeCall('this')};
+#else
+			return Service.${method.MakeCall('this')};
+#end
+		}
+#else
+        public static ${method.MakeSignature()} 
+        {
+#if ($method.ReturnsVoid)
+			Service.${method.MakeCall()};
+#else
+			return Service.${method.MakeCall()};
+#end
+		}
+#end
+
+#end
+    }
+}

@@ -7,6 +7,7 @@ using NHibernate.Tool.hbm2ddl;
 using Simple;
 using System.ServiceProcess;
 using Example.Project.Domain;
+using Simple.Services;
 
 namespace Example.Project.Services
 {
@@ -25,6 +26,11 @@ namespace Example.Project.Services
 
 
             return new List<TaskRunner.Result>(runner.Results);
+        }
+
+        public int Test(int value)
+        {
+            return 0;
         }
     }
 }

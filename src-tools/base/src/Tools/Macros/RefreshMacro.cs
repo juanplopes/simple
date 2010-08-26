@@ -9,6 +9,7 @@ using System.Reflection;
 using Example.Project.Tools.Infra;
 using Simple.Generator.Console;
 using Example.Project.Tools.Templates;
+using Example.Project.Tools.Templates.AutoContracts;
 
 namespace Example.Project.Tools.Macros
 {

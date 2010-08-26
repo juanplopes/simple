@@ -225,9 +225,7 @@ namespace Links {
             private const string URLPATH = "~/Content/avalon";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string error_bg_png = Url("error-bg.png");
             public static readonly string http_error_png = Url("http-error.png");
-            public static readonly string success_bg_png = Url("success-bg.png");
             public static readonly string warning_png = Url("warning.png");
         }
     

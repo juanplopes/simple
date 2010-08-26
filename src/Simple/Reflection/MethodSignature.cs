@@ -25,6 +25,11 @@ namespace Simple.Reflection
             this.TypeNames = new TypeNameExtractor(namespaces);
         }
 
+        public string MakeCall()
+        {
+            return MakeCall(new string[0]);
+        }
+
 
         public string MakeCall(params string[] skipWith)
         {
@@ -52,6 +57,11 @@ namespace Simple.Reflection
             AppendTypeConstraints(str);
 
             return str.ToString();
+        }
+
+        public bool ReturnsVoid
+        {
+            get { return this.Method.ReturnType == typeof(void); }
         }
 
         public bool FirstParameterIs(Type type)

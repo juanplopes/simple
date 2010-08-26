@@ -5,7 +5,6 @@ using System.Text;
 using Simple.Generator;
 using Example.Project.Tools.Infra;
 using Example.Project.Tools.Templates.Scaffold;
-using Microsoft.Build.BuildEngine;
 
 namespace Example.Project.Tools.Macros
 {

@@ -146,6 +146,8 @@ namespace Simple.Tests.Reflection
         {
             var method = typeof(Sample1).GetMethod("TwoConstrainedRefGenericParameters");
             var sig = new MethodSignature(method);
+
+            sig.ReturnsVoid.Should().Be.True();
             sig.MakeSignature().Should().Be("void TwoConstrainedRefGenericParameters<T>(ref T a, T b) where T : struct, IConvertible");
             sig.MakeCall().Should().Be("TwoConstrainedRefGenericParameters<T>(ref a, b)");
         }
@@ -176,6 +178,7 @@ namespace Simple.Tests.Reflection
             Assert.AreEqual(
                 "A SeveralClasses<A, B, C>(B b, C c) where A : struct where B : class, ICollection, IEnumerable, IList, new() where C : List<B>, ICollection, ICollection<B>, IEnumerable, IEnumerable<B>, IList, IList<B>, new()", sig.MakeSignature());
             sig.MakeCall().Should().Be("SeveralClasses<A, B, C>(b, c)");
+            sig.ReturnsVoid.Should().Be.False();
         }
 
         [Test]

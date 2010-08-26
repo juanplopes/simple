@@ -9,12 +9,13 @@ using Simple;
 using log4net;
 using System.Reflection;
 using Simple.Generator.Console;
+using Example.Project.Tools.Templates;
+using Example.Project.Tools.Templates.AutoContracts;
 
 namespace Example.Project.Tools.Infra
 {
     public static class Program
     {
-
         static void Main(string[] args)
         {
             new Configurator().ChangeToRoot();
@@ -23,8 +24,11 @@ namespace Example.Project.Tools.Infra
             var context = new Context();
 
             if (args.Length == 0)
+            {
+                new AutoContractsTemplate().Verify();
                 for (string command; ReadCommand(out command); )
                     context.Execute(command, true);
+            }
             else
                 foreach (var command in args)
                     context.Execute(command, false);

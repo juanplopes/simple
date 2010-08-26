@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -32,7 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Build.Engine" />
+    <Reference Include="Microsoft.Build.Utilities.v3.5">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="Simple.Avalon, Version=3.0.823.0, Culture=neutral, PublicKeyToken=71e14f0ea88dd4a5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Simple.Avalon.dll</HintPath>
@@ -70,7 +72,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Scripts.resx</DependentUpon>
     </Compile>
-    <Compile Include="Templates\AutoContractsTemplate.cs" />
+    <Compile Include="Templates\AutoContracts\AutoContractsTemplate.cs" />
+    <Compile Include="Templates\AutoContracts\AutoServiceRunner.cs" />
+    <Compile Include="Templates\AutoContracts\AutoDomainRunner.cs" />
+    <Compile Include="Templates\AutoContracts\Interfaces.cs" />
     <Compile Include="Templates\NewMigrationTemplate.cs" />
     <Compile Include="Infra\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,13 +133,15 @@
     <None Include="ResetDb\DropDatabases.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Templates\AutoContracts.txt" />
+    <EmbeddedResource Include="Templates\AutoContracts\AutoService.txt" />
     <EmbeddedResource Include="Templates\Templates.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Templates.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Templates\AutoContracts\AutoDomain.txt" />
     <Content Include="Templates\View\Controller.txt" />
     <Content Include="Templates\View\ViewDetails.txt" />
     <Content Include="Templates\View\ViewEdit.txt" />

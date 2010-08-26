@@ -1,0 +1,221 @@
+Index: build.cmd
+===================================================================
+--- build.cmd	(revision 4966)
++++ build.cmd	(working copy)
+@@ -14,7 +14,7 @@
+ REM limitations under the License.
+ REM ****************************************************************************
+ 
+-IF "%1" == "" (SET Framework=NET40) ELSE (SET Framework=%1)
++IF "%1" == "" (SET Framework=NET35) ELSE (SET Framework=%1)
+ IF "%2" == "" (SET Target=RunAllTests) ELSE (SET Target=%2)
+ IF "%3" == "" (SET Configuration=Release) ELSE (SET Configuration=%3)
+ 
+Index: src/NVelocity.Tests/Test/ComponentDirectiveTestCase.cs
+===================================================================
+--- src/NVelocity.Tests/Test/ComponentDirectiveTestCase.cs	(revision 4966)
++++ src/NVelocity.Tests/Test/ComponentDirectiveTestCase.cs	(working copy)
+@@ -12,7 +12,7 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ // 
+-namespace NVelocity.Test
++namespace NVelocity.Test
+ {
+ 	using System.IO;
+ 	using App;
+@@ -20,59 +20,59 @@
+ 	using NUnit.Framework;
+ 	using Runtime;
+ 
+-	[TestFixture]
+-	public class ComponentDirectiveTestCase : BaseTestCase
+-	{
+-		private VelocityEngine velocityEngine;
+-		private ExtendedProperties testProperties;
+-
+-		[SetUp]
+-		protected void SetUp()
+-		{
+-			velocityEngine = new VelocityEngine();
+-
+-			ExtendedProperties extendedProperties = new ExtendedProperties();
+-
+-			extendedProperties.SetProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
+-			                               TemplateTest.FILE_RESOURCE_LOADER_PATH);
+-
+-			extendedProperties.SetProperty(RuntimeConstants.RUNTIME_LOG_ERROR_STACKTRACE, "true");
+-			extendedProperties.SetProperty(RuntimeConstants.RUNTIME_LOG_WARN_STACKTRACE, "true");
+-			extendedProperties.SetProperty(RuntimeConstants.RUNTIME_LOG_INFO_STACKTRACE, "true");
+-			extendedProperties.SetProperty("userdirective",
+-			                               "NVelocity.Runtime.Directive.Component;NVelocity,NVelocity.Runtime.Directive.BlockComponent;NVelocity");
+-
+-			velocityEngine.Init(extendedProperties);
+-
+-			testProperties = new ExtendedProperties();
+-			testProperties.Load(new FileStream(TemplateTest.TEST_CASE_PROPERTIES, FileMode.Open, FileAccess.Read));
+-		}
+-
+-		[Test]
+-		public void LineComponent1()
+-		{
+-			VelocityContext context = new VelocityContext();
+-
+-			Template template = velocityEngine.GetTemplate(
+-				GetFileName(null, "componentusage1", TemplateTest.TMPL_FILE_EXT));
+-
+-			StringWriter writer = new StringWriter();
+-
+-			template.Merge(context, writer);
+-
+-			System.Console.WriteLine(writer.GetStringBuilder().ToString());
+-
+-			writer = new StringWriter();
+-
+-			template.Merge(context, writer);
+-
+-			System.Console.WriteLine(writer.GetStringBuilder().ToString());
+-
+-			writer = new StringWriter();
+-
+-			template.Merge(context, writer);
+-
+-			System.Console.WriteLine(writer.GetStringBuilder().ToString());
+-		}
+-	}
++	[TestFixture]
++	public class ComponentDirectiveTestCase : BaseTestCase
++	{
++		private VelocityEngine velocityEngine;
++		private ExtendedProperties testProperties;
++
++		[SetUp]
++		protected void SetUp()
++		{
++			velocityEngine = new VelocityEngine();
++
++			ExtendedProperties extendedProperties = new ExtendedProperties();
++
++			extendedProperties.SetProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
++			                               TemplateTest.FILE_RESOURCE_LOADER_PATH);
++
++			extendedProperties.SetProperty(RuntimeConstants.RUNTIME_LOG_ERROR_STACKTRACE, "true");
++			extendedProperties.SetProperty(RuntimeConstants.RUNTIME_LOG_WARN_STACKTRACE, "true");
++			extendedProperties.SetProperty(RuntimeConstants.RUNTIME_LOG_INFO_STACKTRACE, "true");
++			extendedProperties.SetProperty("userdirective",
++			                               "NVelocity.Runtime.Directive.Component;NVelocity,NVelocity.Runtime.Directive.BlockComponent;NVelocity");
++
++			velocityEngine.Init(extendedProperties);
++
++			testProperties = new ExtendedProperties();
++			testProperties.Load(new FileStream(TemplateTest.TEST_CASE_PROPERTIES, FileMode.Open, FileAccess.Read));
++		}
++
++		[Test]
++		public void LineComponent1()
++		{
++			VelocityContext context = new VelocityContext();
++
++			Template template = velocityEngine.GetTemplate(
++				GetFileName(null, "componentusage1", TemplateTest.TMPL_FILE_EXT));
++
++			StringWriter writer = new StringWriter();
++
++			template.Merge(context, writer);
++
++			System.Console.WriteLine(writer.GetStringBuilder().ToString());
++
++			writer = new StringWriter();
++
++			template.Merge(context, writer);
++
++			System.Console.WriteLine(writer.GetStringBuilder().ToString());
++
++			writer = new StringWriter();
++
++			template.Merge(context, writer);
++
++			System.Console.WriteLine(writer.GetStringBuilder().ToString());
++		}
++	}
+ }
+\ No newline at end of file
+Index: src/NVelocity/Commons/Collections/ExtendedProperties.cs
+===================================================================
+--- src/NVelocity/Commons/Collections/ExtendedProperties.cs	(revision 4966)
++++ src/NVelocity/Commons/Collections/ExtendedProperties.cs	(working copy)
+@@ -259,7 +259,8 @@
+ 				{
+ 					while(true)
+ 					{
+-						String line = reader.ReadProperty();
++						String line = reader.ReadProperty();
++                        line = line.Replace("%%assembly%%", this.GetType().Assembly.GetName().Name);
+ 
+ 						if (line == null)
+ 						{
+Index: src/NVelocity/Runtime/Defaults/directive.properties
+===================================================================
+--- src/NVelocity/Runtime/Defaults/directive.properties	(revision 4966)
++++ src/NVelocity/Runtime/Defaults/directive.properties	(working copy)
+@@ -1,5 +1,5 @@
+-directive.1=NVelocity.Runtime.Directive.Foreach\,NVelocity
+-directive.2=NVelocity.Runtime.Directive.Include\,NVelocity
+-directive.3=NVelocity.Runtime.Directive.Parse\,NVelocity
+-directive.4=NVelocity.Runtime.Directive.Macro\,NVelocity
+-directive.5=NVelocity.Runtime.Directive.Literal\,NVelocity
+\ No newline at end of file
++directive.1=NVelocity.Runtime.Directive.Foreach\,%%assembly%%
++directive.2=NVelocity.Runtime.Directive.Include\,%%assembly%%
++directive.3=NVelocity.Runtime.Directive.Parse\,%%assembly%%
++directive.4=NVelocity.Runtime.Directive.Macro\,%%assembly%%
++directive.5=NVelocity.Runtime.Directive.Literal\,%%assembly%%
+\ No newline at end of file
+Index: src/NVelocity/Runtime/Defaults/nvelocity.properties
+===================================================================
+--- src/NVelocity/Runtime/Defaults/nvelocity.properties	(revision 4966)
++++ src/NVelocity/Runtime/Defaults/nvelocity.properties	(working copy)
+@@ -13,7 +13,7 @@
+ #  default LogSystem to use: default: SimpleLog4NetLogSystem
+ #----------------------------------------------------------------------------
+ 
+-runtime.log.logsystem.class = NVelocity.Runtime.Log.SimpleLog4NetLogSystem\,NVelocity
++runtime.log.logsystem.class = NVelocity.Runtime.Log.SimpleLog4NetLogSystem
+ 
+ #---------------------------------------------------------------------------
+ # This is the location of the NVelocity Runtime log.
+@@ -90,7 +90,7 @@
+ #----------------------------------------------------------------------------
+ 
+ directive.parse.max.depth = 10
+-directive.manager = NVelocity.Runtime.Directive.DirectiveManager\,NVelocity
++directive.manager = NVelocity.Runtime.Directive.DirectiveManager
+ 
+ #----------------------------------------------------------------------------
+ # T E M P L A T E  L O A D E R S
+@@ -102,7 +102,7 @@
+ resource.loader = file
+ 
+ file.resource.loader.description = NVelocity File Resource Loader
+-file.resource.loader.class = NVelocity.Runtime.Resource.Loader.FileResourceLoader\,NVelocity
++file.resource.loader.class = NVelocity.Runtime.Resource.Loader.FileResourceLoader\,%%assembly%%
+ file.resource.loader.path = .
+ file.resource.loader.cache = true
+ file.resource.loader.modificationCheckInterval = 2
+@@ -137,8 +137,8 @@
+ # Allows alternative ResourceManager and ResourceCache implementations
+ # to be plugged in.
+ #----------------------------------------------------------------------------
+-resource.manager.class = NVelocity.Runtime.Resource.ResourceManagerImpl\,NVelocity
+-resource.manager.cache.class = NVelocity.Runtime.Resource.ResourceCacheImpl\,NVelocity
++resource.manager.class = NVelocity.Runtime.Resource.ResourceManagerImpl\,%%assembly%%
++resource.manager.cache.class = NVelocity.Runtime.Resource.ResourceCacheImpl\,%%assembly%%
+ 
+ 
+ #----------------------------------------------------------------------------
+@@ -146,4 +146,4 @@
+ #----------------------------------------------------------------------------
+ # Allows alternative introspection and all that can of worms brings
+ #----------------------------------------------------------------------------
+-runtime.introspector.uberspect = NVelocity.Util.Introspection.UberspectImpl
++runtime.introspector.uberspect = NVelocity.Util.Introspection.UberspectImpl\,%%assembly%%
