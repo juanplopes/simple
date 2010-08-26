@@ -15,6 +15,20 @@ namespace Simple.Tests.Mvc
     public class SelectListFinderFixture
     {
         [Test]
+        public void CanFindSingleIntItemFromIntListOnlyFromModelState()
+        {
+            var view = new Mock<IViewDataContainer>();
+            view.SetupGet(x => x.ViewData).Returns(
+                GetViewData("list",
+                new ModelSelectList<int>(new[] { 1, 3, 5}, x=>x, x=>x+1), "A",
+                GetModelState(3)));
+
+            var list = view.Object.FindSelectList<Test, int>(x => x.A, "list");
+            list.Count.Should().Be(3);
+            list[1].Selected.Should().Be(true);
+        }
+
+        [Test]
         public void CanFindSingleIntItemOnlyFromModelState()
         {
             var view = new Mock<IViewDataContainer>();

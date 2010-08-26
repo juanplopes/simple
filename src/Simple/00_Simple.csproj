@@ -75,6 +75,7 @@
     <Compile Include="Common\NamedEvents.cs" />
     <Compile Include="Common\PrimeNumbers.cs" />
     <Compile Include="Common\SafeNullable.cs" />
+    <Compile Include="Common\SafeValue.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="ConfigDef.cs" />
     <Compile Include="Config\AggregateFactory.cs" />

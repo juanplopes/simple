@@ -7,12 +7,12 @@ namespace Simple.Common
 {
     public static class SafeNullable
     {
-        public static T Get<T>(Func<T> func)
+        public static SafeValue<T> Get<T>(Func<T> func)
         {
             return Get(func, default(T));
         }
 
-        public static T Get<T>(Func<T> func, T defaultValue)
+        public static SafeValue<T> Get<T>(Func<T> func, T defaultValue)
         {
             bool found = false;
 
@@ -23,7 +23,8 @@ namespace Simple.Common
                 found = true;
             }
             catch (NullReferenceException) { }
-            return found ? value : defaultValue;
+            return new SafeValue<T>(found ? value : defaultValue, found);
         }
-    }
+
+   }
 }

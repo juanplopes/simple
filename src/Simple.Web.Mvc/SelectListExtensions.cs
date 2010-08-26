@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Simple.Common;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using MvcContrib.FluentHtml;
+using MvcContrib.FluentHtml.Elements;
 
 namespace Simple.Web.Mvc
 {
@@ -17,10 +19,10 @@ namespace Simple.Web.Mvc
             var viewData = view.ViewData;
             if (list != null)
             {
-                var model = SafeNullable.Get(() => member.Compile()((T)viewData.Model));
+                var model = SafeNullable.Get(() => member.Compile()((T)viewData.Model)).ObjectValue;
                 if (model != null)
                 {
-                    list = list.Select(model);
+                    list = list.Select((P)model);
                 }
                 else
                 {
@@ -35,7 +37,7 @@ namespace Simple.Web.Mvc
             {
                 return new ModelSelectList<P>(new P[0], x => x, x => x);
             }
-            
+
         }
 
 
@@ -43,6 +45,24 @@ namespace Simple.Web.Mvc
         {
             return new ModelSelectList<T>(list, valueSelector, textSelector);
         }
-       
+
+        public static Select<T> AutoSelect<T, P>(this IViewModelContainer<T> html, Expression<Func<T, P>> member)
+            where T : class
+        {
+            return AutoSelect(html, member, member.GetMemberName());
+        }
+
+        public static Select<T> AutoSelect<T, P>(this IViewModelContainer<T> html, Expression<Func<T, P>> member, string viewDataKey)
+          where T : class
+        {
+            var expr = Expression.Lambda<Func<T, object>>(Expression.Convert(member.Body, typeof(object)), member.Parameters);
+            var list = html.FindSelectList(member, viewDataKey);
+            if (list == null) throw new ArgumentException("viewDataKey must contain a ModelSelectList<T>");
+
+            return html
+                .Select(expr)
+                .Options(list);
+        }
+
     }
 }

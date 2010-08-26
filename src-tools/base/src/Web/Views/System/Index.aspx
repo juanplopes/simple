@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Simple.Patterns.TaskRunner+Result>>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="ModelViewPage<IEnumerable<Simple.Patterns.TaskRunner+Result>>" %>
 
 <asp:Content ContentPlaceHolderID="HeaderContent" runat="server">
     <%=Html.Stylesheet("system_check.css") %>

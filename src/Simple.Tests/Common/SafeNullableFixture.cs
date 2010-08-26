@@ -20,7 +20,11 @@ namespace Simple.Tests.Common
         public void CanGetValuesWithNullableValue()
         {
             object a = null;
-            SafeNullable.Get(() => a.ToString()).Should().Be(null);
+            var safe = SafeNullable.Get(() => a.ToString());
+
+            safe.Should().Be.OfType<SafeValue<string>>().And
+                .ValueOf.Value.Should().Be.Null();
+           
         }
 
         [Test]

@@ -28,9 +28,5 @@ namespace Example.Project.Services
             return new List<TaskRunner.Result>(runner.Results);
         }
 
-        public int Test(int value)
-        {
-            return 0;
-        }
     }
 }
