@@ -88,9 +88,20 @@ namespace Simple.Launcher
                 UseShellExecute = false,
                 WorkingDirectory = dir
             };
-            p = Process.Start(info);
-            p.WaitForExit();
-            Console.WriteLine("$$$ Process ended.");
+            try
+            {
+                p = Process.Start(info);
+                p.WaitForExit();
+                Console.WriteLine("$$$ Process ended.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error starting: " + e.Message);
+                Console.WriteLine();
+                Console.WriteLine(e.StackTrace);
+                Console.WriteLine();
+                Console.WriteLine("Waiting...");
+            }
             p = null;
         }
     }
