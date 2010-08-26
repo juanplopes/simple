@@ -60,7 +60,7 @@ namespace Example.Project.Tools
 
         public ProjectFileWriter ServerProject
         {
-            get { return new ProjectFileWriter(Path.Combine(ServerDirectory, "/??_Server.csproj")); }
+            get { return new ProjectFileWriter(Path.Combine(ServerDirectory, "??_Server.csproj")); }
         }
         public ProjectFileWriter WebProject
         {
