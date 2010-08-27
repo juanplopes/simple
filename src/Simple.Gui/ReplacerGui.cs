@@ -109,16 +109,7 @@ namespace Simple.Gui
             AutoResize();
         }
 
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("http://www.livingnet.com.br");
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void btnDirectory_Click(object sender, EventArgs e)
         {

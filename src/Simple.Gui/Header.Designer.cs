@@ -50,6 +50,7 @@
             this.linkLabel1.TabIndex = 17;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "by Living Consultoria";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             this.linkLabel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseMove);
             this.linkLabel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseDown);
             this.linkLabel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Drag_MouseUp);

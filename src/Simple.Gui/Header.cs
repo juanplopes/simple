@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Simple.Gui
 {
@@ -50,12 +51,17 @@ namespace Simple.Gui
             }
         }
 
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://www.livingnet.com.br");
+        }
+
         private void pictureBox1_DoubleClick(object sender, EventArgs e)
         {
             if (ParentForm.Controls.Find("txtNamespace", true).First().Text.ToLower() == "dirtyhack")
                 new SimpleOtherGui().Show();
         }
 
-
+   
     }
 }
