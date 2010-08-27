@@ -291,7 +291,7 @@
             this.header1.Dock = System.Windows.Forms.DockStyle.Top;
             this.header1.Location = new System.Drawing.Point(0, 0);
             this.header1.Name = "header1";
-            this.header1.Size = new System.Drawing.Size(570, 99);
+            this.header1.Size = new System.Drawing.Size(570, 104);
             this.header1.TabIndex = 21;
             // 
             // ReplacerGui
