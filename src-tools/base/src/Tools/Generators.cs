@@ -1,7 +1,6 @@
 using Simple.Generator;
 using Example.Project.Tools.Templates;
 using Example.Project.Tools.Macros;
-using Example.Project.Tools.ResetDb;
 using Example.Project.Tools.Templates.Scaffold;
 using Example.Project.Tools.Templates.View;
 using Example.Project.Tools.Database;
@@ -10,7 +9,7 @@ namespace Example.Project.Tools
 {
     public static class Generators
     {
-        public static CommandResolver Define(this CommandResolver registry, bool production)
+        public static CommandResolver RegisterCommands(this CommandResolver registry, bool production)
         {
             registry.Register<MigrateTool>("migrate")
                 .WithOption("to", x => x.Version)

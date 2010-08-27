@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Simple.Generator.Misc;
 using System.IO;
+using Simple.Reflection;
 
 namespace Example.Project.Tools.Templates.AutoContracts
 {
@@ -13,8 +14,21 @@ namespace Example.Project.Tools.Templates.AutoContracts
         {
             var types = AutoServiceRunner.GetTypes();
             var files = Directory.GetFiles(Options.Do.ServerDirectory, "*.cs", SearchOption.AllDirectories);
-            var replacer = new CSharpInterfaceReplacer();
 
+            ReplaceHide(types, files);
+        }
+
+
+        public static int ShowInterfaces()
+        {
+            var files = Directory.GetFiles(Options.Do.ServerDirectory, "*.cs", SearchOption.AllDirectories);
+
+            return ReplaceShow(files);
+        }
+
+         private static void ReplaceHide(IEnumerable<ClassSignature> types, IEnumerable<string> files)
+        {
+            var replacer = new CSharpInterfaceReplacer();
             foreach (var file in files)
             {
                 var content = File.ReadAllText(file);
@@ -28,11 +42,9 @@ namespace Example.Project.Tools.Templates.AutoContracts
             }
         }
 
-        public static int ShowInterfaces()
+        private static int ReplaceShow(string[] files)
         {
             var replacer = new CSharpInterfaceReplacer();
-            var files = Directory.GetFiles(Options.Do.ServerDirectory, "*.cs", SearchOption.AllDirectories);
-
             int count = 0;
             foreach (var file in files)
             {

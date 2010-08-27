@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Example.Project.Tools.Infra;
 using Example.Project.Tools.Templates.Scaffold;
 
 namespace Example.Project.Tools.Macros

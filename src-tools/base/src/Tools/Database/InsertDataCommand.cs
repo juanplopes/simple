@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Example.Project.Tools.Infra;
 using Example.Project.Config;
 using Simple;
 using Simple.Generator.Data;

@@ -58,6 +58,7 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="Generator\Console\ConsoleCommandReader.cs" />
     <Compile Include="Generator\Console\ContextBase.cs" />
     <Compile Include="Generator\Console\DefaultConfig.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -71,6 +72,7 @@
     <Compile Include="Generator\Data\IDataList.cs" />
     <Compile Include="Generator\ITableTemplate.cs" />
     <Compile Include="Generator\Misc\CSharpInterfaceReplacer.cs" />
+    <Compile Include="Generator\Misc\MsSqlResetDbCommand.cs" />
     <Compile Include="Generator\Strings\EnglishPluralizer.cs" />
     <Compile Include="Generator\Strings\IPluralizer.cs" />
     <Compile Include="Generator\Strings\GeneratorStrings.cs" />

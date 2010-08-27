@@ -28,25 +28,23 @@ namespace Example.Project.Tools.Templates.AutoContracts
         public void Execute()
         {
             Interfaces.HideInterfaces();
-            var psi = new ProcessStartInfo("msbuild.exe", Path.GetFileName(Options.Do.SolutionFile));
+            var psi = new ProcessStartInfo("msbuilda.exe", Path.GetFileName(Options.Do.SolutionFile));
             psi.WorkingDirectory = Path.GetDirectoryName(Options.Do.SolutionFile);
             psi.UseShellExecute = false;
             var p = Process.Start(psi);
             p.WaitForExit();
         }
-       
-      
+
 
         public void Verify()
         {
-            if (Interfaces.ShowInterfaces() > 0)
-            {
-                new AutoServiceRunner().Run();
-                new AutoDomainRunner().Run();
-            }
+            Interfaces.ShowInterfaces();
+            new AutoServiceRunner().Run();
+            new AutoDomainRunner().Run();
+
         }
 
-       
+
 
         #endregion
     }

@@ -21,8 +21,6 @@ namespace Example.Project.Config
 #else
         public static bool IsProduction { get { return true; } }
 #endif
-
-
         public const string DefaultNamespace = "Example.Project";
         public const string SimpleKey = "simple.token";
 
@@ -62,11 +60,7 @@ namespace Example.Project.Config
             get { return "nhibernate.{0}.cache".AsFormat(Environment); }
         }
 
-        public override string DefaultEnvironment
-        {
-            get { return IsProduction ? "default" : base.DefaultEnvironment; }
-        } 
-         
+        
         private void ConfigureNHibernate()
         {
             var nhCache = new NHibernateCache(

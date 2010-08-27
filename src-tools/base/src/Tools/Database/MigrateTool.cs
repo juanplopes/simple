@@ -8,7 +8,6 @@ using Simple.IO;
 using Example.Project.Domain;
 using Simple.Migrator;
 using Simple.Generator;
-using Example.Project.Tools.Infra;
 using System.IO;
 using Example.Project.Database;
 

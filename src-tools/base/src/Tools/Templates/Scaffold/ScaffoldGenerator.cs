@@ -6,7 +6,6 @@ using Simple.Metadata;
 using Example.Project.Tools.Templates;
 using Simple;
 using Example.Project.Services;
-using Example.Project.Tools.Infra;
 using Simple.Generator;
 using Example.Project.Domain;
 using Simple.NVelocity;

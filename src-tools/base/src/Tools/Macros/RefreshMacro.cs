@@ -6,7 +6,6 @@ using Simple.Generator;
 using log4net;
 using Simple;
 using System.Reflection;
-using Example.Project.Tools.Infra;
 using Simple.Generator.Console;
 using Example.Project.Tools.Templates;
 using Example.Project.Tools.Templates.AutoContracts;

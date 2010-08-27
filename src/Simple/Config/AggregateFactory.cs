@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Simple.Common;
 using Simple.Patterns;
+using log4net;
 
 namespace Simple.Config
 {
@@ -34,11 +35,19 @@ namespace Simple.Config
             get { return _data.Get<object>("defaultKey"); }
             set { _data.Set("defaultKey", value); }
         }
+        
         public static IDisposable KeyContext(object newKey)
         {
+            var logger = Simply.Do.Log<THIS>();
+            
+            logger.InfoFormat("Entering: '{0}.{1}'...", typeof(THIS).Name, newKey ?? "$default");
             var oldKey = DefaultKey;
             DefaultKey = newKey;
-            return new DisposableAction(() => DefaultKey = oldKey);
+            return new DisposableAction(() =>
+            {
+                logger.InfoFormat("Exiting: '{0}.{1}'...", typeof(THIS).Name, newKey ?? "$default");
+                DefaultKey = oldKey;
+            });
         }
 
 

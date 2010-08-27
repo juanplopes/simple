@@ -7,27 +7,14 @@ using Example.Project.Config;
 using Simple.Generator.Console;
 using Simple;
 using Simple.Patterns;
-using Example.Project.Tools.Infra;
 
 namespace Example.Project.Tools
 { 
     public class Context : ContextBase
     { 
-        public static IDisposable Development { get { return Get(null); } }
-        public static IDisposable Test { get { return Get(Configurator.Test); } }
-
-        public static IDisposable Get(string name)
-        {
-            var logger = Simply.Do.Log<Context>();
-            logger.InfoFormat("Entering: '{0}'...", name);
-            var ctx = Simply.KeyContext(name);
-            return new DisposableAction(() =>
-            {
-                logger.InfoFormat("Exiting: '{0}'...", name);
-                ctx.Dispose();
-            });   
-        }
-
+        public static IDisposable Development { get { return Simply.KeyContext(null); } }
+        public static IDisposable Test { get { return Simply.KeyContext(Configurator.Test); } }
+        
         public Context()
             : base(Configurator.DefaultNamespace)
         {
@@ -35,27 +22,16 @@ namespace Example.Project.Tools
 
         protected override CommandResolver Configure()
         {
-            var resolver = new CommandResolver().WithHelp().Define(Configurator.IsProduction);
+            var resolver = new CommandResolver().WithHelp()
+                .RegisterCommands(Configurator.IsProduction);
 
-            if (Configurator.IsProduction)
-                InternalConfigure(null);
-            else
-                InternalConfigure(null, Configurator.Test);
+            InternalConfigure(null);
+
+            if (!Configurator.IsProduction)
+                InternalConfigure(Configurator.Test);
 
 
             return resolver;
-        }
-
-        protected override void OnBeforeExecute(ICommand commandObject, string command, bool interactive)
-        {
-            if (interactive && Configurator.IsProduction)
-            {
-                Console.Write("You are in production environment. Are you sure (Y/N)? ");
-                var answer = Console.ReadLine();
-                if (answer == null || answer.ToLower().Trim() != "y")
-                    throw new ParserException("User aborted.");
-            }
-            base.OnBeforeExecute(commandObject, command, interactive);
         }
 
         protected void InternalConfigure(params string[] names)
