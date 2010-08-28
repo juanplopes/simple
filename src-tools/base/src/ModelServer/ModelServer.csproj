@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Example.Project</RootNamespace>
+    <AssemblyName>Example.Project.Server</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>Example.Project.ServerStarter</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\server\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\server\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Utilities.v3.5">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Simple.Avalon, Version=3.0.823.0, Culture=neutral, PublicKeyToken=71e14f0ea88dd4a5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Simple.Avalon.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
+    <Compile Include="ServerInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ServerStarter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SystemService.cs" />
+    <Compile Include="Tools\Context.cs" />
+    <Compile Include="Tools\Conventions.cs" />
+    <Compile Include="Tools\Database\InsertDataCommand.cs" />
+    <Compile Include="Tools\Database\MigrateTool.cs" />
+    <Compile Include="Tools\Database\ResetDbCommand.cs" />
+    <Compile Include="Tools\Database\Scripts.Designer.cs">
+      <DependentUpon>Scripts.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Tools\Generators.cs" />
+    <Compile Include="Tools\Macros\MagicMacro.cs" />
+    <Compile Include="Tools\Macros\PrepareMacro.cs" />
+    <Compile Include="Tools\Macros\RefreshMacro.cs" />
+    <Compile Include="Tools\Macros\TestPrepareMacro.cs" />
+    <Compile Include="Tools\Options.cs" />
+    <Compile Include="Tools\ToolsStarter.cs" />
+    <Compile Include="Tools\Templates\AutoContracts\AutoContractsTemplate.cs" />
+    <Compile Include="Tools\Templates\AutoContracts\AutoDomainRunner.cs" />
+    <Compile Include="Tools\Templates\AutoContracts\AutoServiceRunner.cs" />
+    <Compile Include="Tools\Templates\AutoContracts\Interfaces.cs" />
+    <Compile Include="Tools\Templates\NewMigrationTemplate.cs" />
+    <Compile Include="Tools\Templates\Scaffold\ScaffoldGenerator.cs" />
+    <Compile Include="Tools\Templates\Scaffold\ScaffoldRemover.cs" />
+    <Compile Include="Tools\Templates\Scaffold\TableTemplate.cs" />
+    <Compile Include="Tools\Templates\Templates.Designer.cs">
+      <DependentUpon>Templates.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Tools\Templates\View\ViewGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\Model.csproj">
+      <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{979DA157-6C40-4B5F-9B15-72296EC9FE24}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Tools\Database\CreateDatabases.sql" />
+    <None Include="Tools\Database\DropDatabases.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\Database\Scripts.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Scripts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\Templates\AutoContracts\AutoDomain.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\Templates\AutoContracts\AutoService.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\Templates\NewMigration.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\Templates\Scaffold\Entity.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\Templates\Scaffold\IService.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\Templates\Scaffold\Mapping.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\Templates\Scaffold\Service.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\Templates\Scaffold\Validator.txt" />
+    <EmbeddedResource Include="Tools\Templates\Templates.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Templates.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tools\Templates\View\Controller.txt" />
+    <Content Include="Tools\Templates\View\ViewCreate.txt" />
+    <Content Include="Tools\Templates\View\ViewDetails.txt" />
+    <Content Include="Tools\Templates\View\ViewEdit.txt" />
+    <Content Include="Tools\Templates\View\ViewForm.txt" />
+    <Content Include="Tools\Templates\View\ViewIndex.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

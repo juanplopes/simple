@@ -1,17 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_Contracts", "Contracts\01_Contracts.csproj", "{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Contracts\Model.csproj", "{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_Server", "Server\02_Server.csproj", "{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelServer", "Server\ModelServer.csproj", "{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "99_Tests", "Tests\99_Tests.csproj", "{3F9400F2-FA85-464D-ADFC-BCA2BBE65798}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3F9400F2-FA85-464D-ADFC-BCA2BBE65798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_Web", "Web\03_Web.csproj", "{48D3123B-0725-4C12-93F6-54123FA59E28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{48D3123B-0725-4C12-93F6-54123FA59E28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "98_Tools", "Tools\98_Tools.csproj", "{DFF8F092-2E40-4F08-BE77-51954C9DBDF8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_Database", "Database\00_Database.csproj", "{979DA157-6C40-4B5F-9B15-72296EC9FE24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{979DA157-6C40-4B5F-9B15-72296EC9FE24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{48D3123B-0725-4C12-93F6-54123FA59E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48D3123B-0725-4C12-93F6-54123FA59E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48D3123B-0725-4C12-93F6-54123FA59E28}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFF8F092-2E40-4F08-BE77-51954C9DBDF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFF8F092-2E40-4F08-BE77-51954C9DBDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFF8F092-2E40-4F08-BE77-51954C9DBDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFF8F092-2E40-4F08-BE77-51954C9DBDF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{979DA157-6C40-4B5F-9B15-72296EC9FE24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{979DA157-6C40-4B5F-9B15-72296EC9FE24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{979DA157-6C40-4B5F-9B15-72296EC9FE24}.Release|Any CPU.ActiveCfg = Release|Any CPU

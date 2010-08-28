@@ -16,9 +16,9 @@ namespace Example.Project.Tools
 {
     
 
-    public static class Program
+    public static class ToolsStarter
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             new Configurator().ChangeToRoot();
             Console.WriteLine("Dir: '{0}'.", Env.CurrentDirectory);
