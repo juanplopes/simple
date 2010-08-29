@@ -23,7 +23,7 @@ namespace Example.Project.Tools.Templates
             template["timestamp"] = timestamp;
             template["opt"] = Options.Do;
 
-            using (var project = Options.Do.DatabaseProject)
+            using (var project = Options.Do.Database.Project)
             {
                 project.AddNewCompile(filename, template.ToString());
 

@@ -13,7 +13,7 @@ namespace Example.Project.Tools.Templates.AutoContracts
         public static void HideInterfaces()
         {
             var types = AutoServiceRunner.GetTypes();
-            var files = Directory.GetFiles(Options.Do.ServerDirectory, "*.cs", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(Options.Do.Server.Directory, "*.cs", SearchOption.AllDirectories);
 
             ReplaceHide(types, files);
         }
@@ -21,7 +21,7 @@ namespace Example.Project.Tools.Templates.AutoContracts
 
         public static int ShowInterfaces()
         {
-            var files = Directory.GetFiles(Options.Do.ServerDirectory, "*.cs", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(Options.Do.Server.Directory, "*.cs", SearchOption.AllDirectories);
 
             return ReplaceShow(files);
         }

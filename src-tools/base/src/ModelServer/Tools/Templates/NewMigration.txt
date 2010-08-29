@@ -6,7 +6,7 @@ using Simple.Migrator.Framework;
 using Simple.Migrator.Fluent;
 using System.Data;
 
-namespace ${opt.Namespace}.Tools.Migrations
+namespace ${opt.Namespace}.Database
 {
     [Migration(${timestamp})]
     public class Migration${timestamp} : FluentMigration

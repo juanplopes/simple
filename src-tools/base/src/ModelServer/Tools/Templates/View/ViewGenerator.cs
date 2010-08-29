@@ -17,7 +17,7 @@ namespace Example.Project.Tools.Templates.View
 
         public void Execute()
         {
-            using (var project = Options.Do.WebProject)
+            using (var project = Options.Do.Web.Project)
             {
                 foreach (var className in ClassNames)
                 {

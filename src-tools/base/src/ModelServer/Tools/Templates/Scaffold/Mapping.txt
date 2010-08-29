@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="${opt.Namespace}.Domain">
-  <class name="${opt.Namespace}.Domain.$classname, ${opt.ContractsAssembly}" table="$table.Name" schema="$table.Schema" #if (!${opt.LazyLoad}) lazy="false" #end>
+  <class name="${opt.Namespace}.Domain.$classname, ${opt.Model.Assembly}" table="$table.Name" schema="$table.Schema" #if (!${opt.LazyLoad}) lazy="false" #end>
 #if ($count.Invoke($table.PrimaryKeyColumns) > 1)
     <composite-id>
     #foreach($field in $table.PrimaryKeysExceptFk)

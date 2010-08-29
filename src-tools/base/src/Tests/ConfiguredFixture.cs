@@ -22,7 +22,7 @@ namespace Example.Project.Tests
     {
         public ConfigurationEnsurer()
         {
-            new Configurator(Configurator.Test)]
+            new Configurator(Configurator.Test)
                 .StartServer(typeof(ServerStarter).Assembly);
         }
 

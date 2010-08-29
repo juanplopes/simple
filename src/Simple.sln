@@ -1,22 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_Simple", "Simple\00_Simple.csproj", "{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple", "Simple\Simple.csproj", "{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_Simple.Data", "Simple.Data\01_Simple.Data.csproj", "{35DBC634-E490-4239-9315-4E9210647C2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Data", "Simple.Data\Simple.Data.csproj", "{35DBC634-E490-4239-9315-4E9210647C2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "99_Simple.Tests", "Simple.Tests\99_Simple.Tests.csproj", "{B244B1EF-812D-4BDC-8BB7-E5ECAD0AACB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Tests", "Simple.Tests\Simple.Tests.csproj", "{B244B1EF-812D-4BDC-8BB7-E5ECAD0AACB1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E86ABAB-B60C-43FF-9A5A-7C810F232E9A}"
 	ProjectSection(SolutionItems) = preProject
 		..\build.xml = ..\build.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10_Simple.Gui", "Simple.Gui\10_Simple.Gui.csproj", "{E45B5534-55FF-4E60-83D8-FE907F111F92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Gui", "Simple.Gui\Simple.Gui.csproj", "{E45B5534-55FF-4E60-83D8-FE907F111F92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11_Simple.Generator", "Simple.Generator\11_Simple.Generator.csproj", "{0D3A5B7E-9BA9-43B1-A500-BF89CBFC0E7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Generator", "Simple.Generator\Simple.Generator.csproj", "{0D3A5B7E-9BA9-43B1-A500-BF89CBFC0E7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_Simple.Web.Mvc", "Simple.Web.Mvc\02_Simple.Web.Mvc.csproj", "{F2EA0217-E269-4211-83B0-575E51B18906}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Web.Mvc", "Simple.Web.Mvc\Simple.Web.Mvc.csproj", "{F2EA0217-E269-4211-83B0-575E51B18906}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -17,56 +17,34 @@ namespace Example.Project.Tools
 {
     public class Options : Singleton<Options>
     {
+        public ProjectDescription Model { get { return Project("Model"); } }
+        public ProjectDescription Server { get { return Project("ModelServer"); } }
+        public ProjectDescription Database { get { return Project("Database"); } }
+        public ProjectDescription Web { get { return Project("Web"); } }
+
+        public bool LazyLoad { get { return true; } }
+
         public string Namespace
         {
             get { return Configurator.DefaultNamespace; }
         }
-        public string ContractsAssembly
+
+        private static ProjectDescription Project(string name)
         {
-            get { return Namespace + ".Contracts"; }
-        }
-        public string ServerAssembly
-        {
-            get { return Namespace + ".Server"; }
-        }
-        public bool LazyLoad
-        {
-            get { return true; }
+            return new ProjectDescription("src/{0}", "{0}.csproj", Configurator.DefaultNamespace + ".{0}").WithName(name);
         }
 
-        public Conventions Conventions
+
+        public ProjectDescription Solution
         {
-            get { return new Conventions(); }
+            get
+            {
+                return new ProjectDescription("src", "{0}.sln", "{0}")
+                    .WithName(Configurator.DefaultNamespace);
+            }
         }
 
-        public ProjectFileWriter DatabaseProject
-        {
-            get { return new ProjectFileWriter("src/Database/??_Database.csproj"); }
-        }
-        public ProjectFileWriter ContractsProject
-        {
-            get { return new ProjectFileWriter("src/Contracts/??_Contracts.csproj"); }
-        }
-
-        public string SolutionFile
-        {
-            get { return FileLocator.ByPattern("src/*.sln"); }
-        }
-
-        public string ServerDirectory
-        {
-            get { return "src/Server"; }
-        }
-
-        public ProjectFileWriter ServerProject
-        {
-            get { return new ProjectFileWriter(Path.Combine(ServerDirectory, "??_Server.csproj")); }
-        }
-        public ProjectFileWriter WebProject
-        {
-            get { return new ProjectFileWriter("src/Web/??_Web.csproj"); }
-        }
-
+        public Conventions Conventions { get { return new Conventions(); } }
 
         public IEnumerable<string> TableNames
         {

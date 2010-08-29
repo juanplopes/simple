@@ -82,9 +82,9 @@
     <Compile Include="TagBuilderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Simple\00_Simple.csproj">
+    <ProjectReference Include="..\Simple\Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
-      <Name>00_Simple</Name>
+      <Name>Simple</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

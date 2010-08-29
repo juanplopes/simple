@@ -30,7 +30,7 @@ namespace Example.Project.Tools.Templates.AutoContracts
         {
             var types = GetTypes();
 
-            using (var project = Options.Do.ContractsProject)
+            using (var project = Options.Do.Model.Project)
             {
                 foreach (var type in types)
                 {

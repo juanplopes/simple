@@ -146,16 +146,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Model.csproj">
-      <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
-      <Name>Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Server\ModelServer.csproj">
-      <Project>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</Project>
-      <Name>ModelServer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_GlobalResources\ValidationMessages.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ValidationMessages.Designer.cs</LastGenOutput>
@@ -173,6 +163,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModelServer\ModelServer.csproj">
+      <Project>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</Project>
+      <Name>ModelServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

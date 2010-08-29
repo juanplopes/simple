@@ -69,17 +69,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Model.csproj">
-      <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
-      <Name>Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Database\Database.csproj">
       <Project>{979DA157-6C40-4B5F-9B15-72296EC9FE24}</Project>
       <Name>Database</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Server\ModelServer.csproj">
+    <ProjectReference Include="..\ModelServer\ModelServer.csproj">
       <Project>{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}</Project>
       <Name>ModelServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
+      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

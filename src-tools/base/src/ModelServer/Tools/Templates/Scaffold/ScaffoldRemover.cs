@@ -14,10 +14,10 @@ namespace Example.Project.Tools.Templates.Scaffold
 
         public void Execute()
         {
-            using (var contracts = Options.Do.ContractsProject)
-            using (var server = Options.Do.ServerProject)
+            using (var model = Options.Do.Model.Project)
+            using (var server = Options.Do.Server.Project)
             {
-                var list = ScaffoldGenerator.MakeTemplateList(contracts, server);
+                var list = ScaffoldGenerator.MakeTemplateList(model, server);
                 foreach(var className in ClassNames)
                     foreach (var template in list)
                         template.Delete(className);

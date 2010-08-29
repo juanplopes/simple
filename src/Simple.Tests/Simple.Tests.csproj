@@ -149,6 +149,7 @@
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
     <Compile Include="Generator\InterfaceReplacerFixture.cs" />
+    <Compile Include="Generator\ProjectDescriptionFixture.cs" />
     <Compile Include="Gui\PathsFixture.cs" />
     <Compile Include="Mvc\ModelBinder\CollectionFixtures.cs" />
     <Compile Include="Mvc\ModelBinder\SimpleValuesFixture.cs" />
@@ -334,25 +335,25 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Simple.Generator\11_Simple.Generator.csproj">
+    <ProjectReference Include="..\Simple.Generator\Simple.Generator.csproj">
       <Project>{0D3A5B7E-9BA9-43B1-A500-BF89CBFC0E7B}</Project>
-      <Name>11_Simple.Generator</Name>
+      <Name>Simple.Generator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simple.Gui\10_Simple.Gui.csproj">
+    <ProjectReference Include="..\Simple.Gui\Simple.Gui.csproj">
       <Project>{E45B5534-55FF-4E60-83D8-FE907F111F92}</Project>
-      <Name>10_Simple.Gui</Name>
+      <Name>Simple.Gui</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simple.Web.Mvc\02_Simple.Web.Mvc.csproj">
+    <ProjectReference Include="..\Simple.Web.Mvc\Simple.Web.Mvc.csproj">
       <Project>{F2EA0217-E269-4211-83B0-575E51B18906}</Project>
-      <Name>02_Simple.Web.Mvc</Name>
+      <Name>Simple.Web.Mvc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simple\00_Simple.csproj">
+    <ProjectReference Include="..\Simple\Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
-      <Name>00_Simple</Name>
+      <Name>Simple</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simple.Data\01_Simple.Data.csproj">
+    <ProjectReference Include="..\Simple.Data\Simple.Data.csproj">
       <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
-      <Name>01_Simple.Data</Name>
+      <Name>Simple.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

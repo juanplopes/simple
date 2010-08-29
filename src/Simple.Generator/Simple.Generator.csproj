@@ -73,6 +73,7 @@
     <Compile Include="Generator\ITableTemplate.cs" />
     <Compile Include="Generator\Misc\CSharpInterfaceReplacer.cs" />
     <Compile Include="Generator\Misc\MsSqlResetDbCommand.cs" />
+    <Compile Include="Generator\ProjectDescription.cs" />
     <Compile Include="Generator\Strings\EnglishPluralizer.cs" />
     <Compile Include="Generator\Strings\IPluralizer.cs" />
     <Compile Include="Generator\Strings\GeneratorStrings.cs" />
@@ -218,9 +219,9 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Simple\00_Simple.csproj">
+    <ProjectReference Include="..\Simple\Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
-      <Name>00_Simple</Name>
+      <Name>Simple</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -20,14 +20,12 @@ namespace Example.Project
     {
         static void Main(string[] args)
         {
-            if (!Environment.UserInteractive)
+            if (Environment.UserInteractive)
+                ToolsStarter.Main(args);
+            else
             {
                 ThreadPool.QueueUserWorkItem(x => new Configurator().StartServer<ServerStarter>());
                 Simply.Do.WaitRequests();
-            }
-            else
-            {
-                ToolsStarter.Main(args);
             }
         }
     }

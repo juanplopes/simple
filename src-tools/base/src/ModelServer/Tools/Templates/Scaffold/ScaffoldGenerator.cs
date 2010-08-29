@@ -19,10 +19,10 @@ namespace Example.Project.Tools.Templates.Scaffold
 
         public void Execute()
         {
-            using (var contracts = Options.Do.ContractsProject)
-            using (var server = Options.Do.ServerProject)
+            using (var model = Options.Do.Model.Project)
+            using (var server = Options.Do.Server.Project)
             {
-                var list = MakeTemplateList(contracts, server);
+                var list = MakeTemplateList(model, server);
 
                 foreach (var table in GetTables())
                     foreach (var template in list)
@@ -30,22 +30,22 @@ namespace Example.Project.Tools.Templates.Scaffold
             }
         }
 
-        public static List<ITableTemplate> MakeTemplateList(ProjectFileWriter contracts, ProjectFileWriter server)
+        public static List<ITableTemplate> MakeTemplateList(ProjectFileWriter model, ProjectFileWriter server)
         {
             var list = new List<ITableTemplate>();
             list.Add(new TableTemplate(Templates.Entity)
-                .Target(contracts, "Domain/Generated/{0}.cs"));
+                .Target(model, "Domain/Generated/{0}.cs"));
 
             list.Add(new TableTemplate(Templates.Mapping)
-                .Target(contracts, "Domain/Generated/{0}.hbm.xml")
+                .Target(model, "Domain/Generated/{0}.hbm.xml")
                 .As(ProjectWriter.EmbeddedResource));
 
             list.Add(new TableTemplate(Templates.IService)
-                .Target(contracts, "Services/I{0}Service.cs")
+                .Target(model, "Services/I{0}Service.cs")
                 .SetOverwrite(false));
 
             list.Add(new TableTemplate(Templates.Validator)
-                .Target(contracts, "Validators/{0}Validator.cs")
+                .Target(model, "Validators/{0}Validator.cs")
                 .SetOverwrite(false));
 
             list.Add(new TableTemplate(Templates.Service)
