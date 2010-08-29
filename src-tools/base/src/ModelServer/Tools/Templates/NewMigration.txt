@@ -13,20 +13,17 @@ namespace ${opt.Namespace}.Database
     {
         public override void Up(SchemaAction schema)
         {
-            /* try
-            schema.AddTable("table_name", t =>
-            {
-                //id column is added automatically
-                t.AddString("some_column");
-            });
-            */
+            //schema.AddTable("books", t =>
+            //{
+            //    t.AddString("name");
+            //    t.AddInt32("year");
+            //});
             
         }
 
         public override void Down(SchemaAction schema)
         {
-            //just undo what you've done at Up()
-            //schema.RemoveTable("table_name");
+            //schema.RemoveTable("books");
         }
     }
 

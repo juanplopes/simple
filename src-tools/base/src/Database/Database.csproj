@@ -54,7 +54,6 @@
     </Compile>
     <Compile Include="DataLists.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="20100829014434_Untitled.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
