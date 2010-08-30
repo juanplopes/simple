@@ -102,12 +102,12 @@ namespace Simple.Generator
 
         public ProjectFileWriter CreateFile(string relativePath, string content)
         {
-            return CreateFile(relativePath, content, File.WriteAllText);
+            return CreateFile(relativePath, content, x => File.ReadAllText(x) != content, File.WriteAllText);
         }
 
         public ProjectFileWriter CreateFile(string relativePath, byte[] content)
         {
-            return CreateFile(relativePath, content, File.WriteAllBytes);
+            return CreateFile(relativePath, content, x => !File.ReadAllBytes(x).SequenceEqual(content), File.WriteAllBytes);
         }
 
         public ProjectFileWriter RemoveAndDeleteFile(string relativePath)
@@ -129,14 +129,17 @@ namespace Simple.Generator
             return File.Exists(GetFullPath(relativePath));
         }
 
-        protected ProjectFileWriter CreateFile<T>(string relativePath, T content, Action<string, T> writer)
+        protected ProjectFileWriter CreateFile<T>(string relativePath, T content, Func<string, bool> mustWrite, Action<string, T> writer)
         {
             log.DebugFormat("Creating file '{0}'...", relativePath);
 
             var fullDir = GetFullPath(relativePath);
             var dir = Path.GetDirectoryName(fullDir);
             Directory.CreateDirectory(dir);
-            writer(fullDir, content);
+
+            if (!File.Exists(fullDir) || mustWrite(fullDir))
+                writer(fullDir, content);
+            
             return this;
         }
 

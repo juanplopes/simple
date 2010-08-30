@@ -33,11 +33,11 @@ namespace Simple.Reflection
             return MakeImplementingSignature(null);
         }
 
-        public string MakeImplementingSignature(string except)
+        public string MakeImplementingSignature(params string[] except)
         {
             var builder = new StringBuilder();
             var interfaces = Type.GetInterfaces();
-            interfaces.Select(x => TypeNames.GetName(x)).Except(new[] { except }).OrderBy(x => x).EagerForeach(
+            interfaces.Select(x => TypeNames.GetName(x)).Except(except ?? new string[0]).OrderBy(x => x).EagerForeach(
                 x => builder.Append(x),
                 x => builder.Append(", "));
 

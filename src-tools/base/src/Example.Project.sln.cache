@@ -67,11 +67,11 @@
     <AspNetConfiguration>$(Configuration)</AspNetConfiguration>
   </PropertyGroup>
   <PropertyGroup>
-    <SolutionDir>D:\Projects\simpledotnet\src-tools\base\src\</SolutionDir>
+    <SolutionDir>C:\Projects\simpledotnet\src-tools\base\src\</SolutionDir>
     <SolutionExt>.sln</SolutionExt>
     <SolutionFileName>Example.Project.sln</SolutionFileName>
     <SolutionName>Example.Project</SolutionName>
-    <SolutionPath>D:\Projects\simpledotnet\src-tools\base\src\Example.Project.sln</SolutionPath>
+    <SolutionPath>C:\Projects\simpledotnet\src-tools\base\src\Example.Project.sln</SolutionPath>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' and '$(MSBuildToolsVersion)' == '2.0'">v2.0</TargetFrameworkVersion>

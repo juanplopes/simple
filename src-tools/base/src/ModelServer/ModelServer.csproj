@@ -59,7 +59,7 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
-    <Compile Include="ServerInstaller.cs">
+    <Compile Include="Tools\ServerInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ServerStarter.cs" />
