@@ -1,0 +1,160 @@
+body
+{
+    font-family: 'Trebuchet MS' , Helvetica, sans-serif;
+}
+
+.container
+{
+    background: url(background.png) repeat-x;
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.header
+{
+    height: 70px;
+    padding: 0 30px;
+}
+
+.header ul
+{
+    float: right;
+    list-style: none;
+}
+
+.header li
+{
+    float: left;
+    margin: 10px;
+}
+
+.header li a
+{
+    text-decoration: none;
+    color: #333333;
+    font-size: 14pt;
+}
+
+.header li a:hover
+{
+    text-decoration: none;
+    color: #777777;
+    font-size: 14pt;
+}
+
+.logo
+{
+    background: url(livinglogo.png);
+    width: 198px;
+    height: 47px;
+    display: block;
+    float: left;
+    margin: 10px 0px;
+}
+
+.bar
+{
+    left: 0;
+    width: 100%;
+    position: absolute;
+    height: 364px;
+    background: url(bar.png) center top no-repeat;
+}
+
+.bar .content
+{
+    width: 940px;
+    margin: auto;
+}
+
+.bar img
+{
+    margin-top: 25px;
+}
+
+
+.bar .text
+{
+    text-align: right;
+    float: right;
+}
+
+.bar h1 
+{
+    margin: 1em 0 5px 0;
+    font-size: 60px;
+    color: White;
+    text-shadow: white 0 0 4px;
+    behavior: url(ie-css3.htc);
+}
+
+.bar span.code
+{
+    font-size: 28pt;
+    font-family: Consolas;
+    color: White;
+    display: block;
+    text-shadow: white 0 0 4px;
+}
+
+.bar .download
+{
+    margin-top: 30px;
+    background: url(download.png) no-repeat left top;
+    height: 84px;
+    width: 300px;
+    display: inline-table;
+    float: right;
+}
+
+.bar .download:hover 
+{
+    background: url(download.png) no-repeat -300px top;
+}
+
+.items 
+{
+    margin-top: 380px;
+    height: 100%;
+    padding: 0 40px 40px 40px;
+}
+
+.items .item
+{
+    width: 28%;
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+    vertical-align: top;
+}
+
+.items .item h1 
+{
+    font-family: Georgia, Serif;
+    font-weight: normal;
+    font-style: italic;
+    font-size: larger;
+}
+
+.items .item p 
+{
+    font-size: small;
+}
+
+.items .with_separator 
+{
+    border-right: 1px #333333 solid;
+}
+
+.items .item a 
+{
+    font-family: Georgia, Serif;
+    font-style: italic;
+    font-size: small;
+    color: #882222;
+}
+
+.items .item a:hover
+{
+    color: #CC5555;
+}
