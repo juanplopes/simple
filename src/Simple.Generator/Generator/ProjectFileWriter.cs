@@ -112,7 +112,6 @@ namespace Simple.Generator
 
         public ProjectFileWriter RemoveAndDeleteFile(string relativePath)
         {
-
             var path = GetFullPath(relativePath);
 
             if (File.Exists(path))
