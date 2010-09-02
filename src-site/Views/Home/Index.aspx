@@ -12,9 +12,12 @@
         <div class='header'>
             <a href='http://www.livingnet.com.br' class='logo'></a>
             <ul>
-                <li><a href='contributions'>contributions</a></li>
-                <li><a href='license'>license</a></li>
-                <li><a href='download'>download</a></li>
+                <li>
+                    <%= Html.ActionLink("contributions", "Contributions", "Index") %></li>
+                <li>
+                    <%= Html.ActionLink("license", "License", "Index") %></li>
+                <li>
+                    <%= Html.ActionLink("download", "Download", "Index") %></li>
             </ul>
         </div>
         <div class='bar'>
