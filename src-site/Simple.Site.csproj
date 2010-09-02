@@ -70,32 +70,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
-    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.4.1.min-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.min-vsdoc.js" />
-    <Content Include="Scripts\MicrosoftAjax.js" />
-    <Content Include="Scripts\MicrosoftAjax.debug.js" />
-    <Content Include="Scripts\MicrosoftMvcAjax.js" />
-    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
-    <Content Include="Scripts\MicrosoftMvcValidation.js" />
-    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\custom-nivo-slider.css" />
+    <Content Include="Content\nivo\arrows.png" />
     <Content Include="Content\images\background.png" />
     <Content Include="Content\images\bar.png" />
+    <Content Include="Content\nivo\bullets.png" />
     <Content Include="Content\images\download.png" />
     <Content Include="Content\images\livinglogo.png" />
+    <Content Include="Content\nivo\loading.gif" />
     <Content Include="Content\images\picture.png" />
+    <Content Include="Content\nivo-slider.css" />
     <Content Include="Content\simple.css" />
+    <Content Include="Scripts\jquery.nivo.slider.pack.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

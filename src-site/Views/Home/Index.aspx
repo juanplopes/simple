@@ -6,6 +6,19 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=8;FF=3;OtherUA=4" />
     <%= Html.Stylesheet("simple.css") %>
+    <%= Html.Stylesheet("nivo-slider.css") %>
+    <%= Html.Stylesheet("custom-nivo-slider.css")%>
+    <%= Html.Script("jquery-1.4.1.min.js") %>
+    <%= Html.Script("jquery.nivo.slider.pack.js")%>
+
+    <script type="text/javascript">
+        $(window).load(function() {
+            $('.slider').nivoSlider({
+                effect: 'sliceDown'
+            });
+        });
+    </script>
+
 </head>
 <body>
     <div class="container">
@@ -22,7 +35,10 @@
         </div>
         <div class='bar'>
             <div class="content">
-                <%= Html.Image("picture.png", "Easy database management") %>
+                <div class="slider">
+                    <%= Html.Image("picture.png", "Easy database management") %>
+                    <%= Html.Image("picture.png", "Easy database management") %>
+                </div>
                 <div class="text">
                     <h1>
                         Simple</h1>

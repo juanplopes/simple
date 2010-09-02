@@ -106,6 +106,12 @@ body
     float: right;
 }
 
+.slider 
+{
+    margin-top: 40px;
+    float: left;
+}
+
 .bar .download:hover 
 {
     background: url(images/download.png) no-repeat -300px top;

@@ -1,5 +1,0 @@
-C:\Projects\simpledotnet\src-site\bin\Simple.Site.dll
-C:\Projects\simpledotnet\src-site\bin\Simple.Site.pdb
-C:\Projects\simpledotnet\src-site\obj\Debug\ResolveAssemblyReference.cache
-C:\Projects\simpledotnet\src-site\obj\Debug\Simple.Site.dll
-C:\Projects\simpledotnet\src-site\obj\Debug\Simple.Site.pdb
