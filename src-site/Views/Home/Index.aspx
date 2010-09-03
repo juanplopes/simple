@@ -43,8 +43,8 @@
                 <div class="text">
                     <h1>
                         Simple</h1>
-                    <span class="code">web.Dev.Made(easy)</span> <a class="download" href="http://simpledotnet.googlecode.com/files/Simple.Avalon.exe">
-                    </a>
+                    <span class="code">web.Dev.Made(easy)</span>
+                    <%= Html.ActionLink(" ", "Latest", "Download",null, new { @class = "download" }) %>
                 </div>
             </div>
         </div>
