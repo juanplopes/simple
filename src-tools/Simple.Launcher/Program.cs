@@ -12,6 +12,8 @@ namespace Simple.Launcher
     class Program
     {
         static Process p = null;
+        static bool flag = false;
+        static object lockObj = new object();
         static void Main(string[] args)
         {
             if (args.Length < 2)
@@ -32,18 +34,28 @@ namespace Simple.Launcher
             foreach (string ext in watchExt)
                 Console.WriteLine("Watching extension: " + ext);
 
-            new Thread(x => Start(dirPath, filePath)).Start();
+            Start(dirPath, filePath);
+            Console.WriteLine("Waiting...");
 
-            Thread.Sleep(2500);
             watcher.Changed += (o, p) =>
             {
+                lock (lockObj)
+                {
+                    if (flag) { Console.WriteLine("blocked..."); return; }
+                    flag = true;
+                    watcher.EnableRaisingEvents = false;
+                }
+                Console.WriteLine("not blocked...");
                 if (watchExt.Any(y => p.Name.EndsWith(y)) || watchExt.Count == 0)
                 {
                     Console.Clear();
                     Console.WriteLine("$$$" + p.FullPath);
-                    watcher.EnableRaisingEvents = false;
                     Thread.Sleep(1000);
-                    new Thread(x => Start(dirPath, filePath)).Start();
+                    Start(dirPath, filePath);
+                }
+                lock (lockObj)
+                {
+                    flag = false;
                     watcher.EnableRaisingEvents = true;
                 }
             };
@@ -76,7 +88,7 @@ namespace Simple.Launcher
             Console.WriteLine("Loading " + file + "...");
             Console.WriteLine("Current directory: " + dir);
 
-            if (p != null) p.Kill();
+            if (p != null && !p.HasExited) p.Kill();
 
             var newFile = Path.GetTempFileName();
             File.Delete(newFile);
@@ -91,8 +103,14 @@ namespace Simple.Launcher
             try
             {
                 p = Process.Start(info);
-                p.WaitForExit();
-                Console.WriteLine("$$$ Process ended.");
+                p.WaitForInputIdle();
+
+                var np = p;
+                new Thread(() =>
+                {
+                    np.WaitForExit();
+                    Console.WriteLine("$$$ Process ended.");
+                }).Start();
             }
             catch (Exception e)
             {
@@ -102,7 +120,6 @@ namespace Simple.Launcher
                 Console.WriteLine();
                 Console.WriteLine("Waiting...");
             }
-            p = null;
         }
     }
 }
