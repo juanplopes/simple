@@ -26,11 +26,11 @@
             <a href='http://www.livingnet.com.br' class='logo'></a>
             <ul>
                 <li>
-                    <%= Html.ActionLink("contributions", "Contributions", "Index") %></li>
+                    <%= Html.ActionLink("contributions", "Contributions", "Project") %></li>
                 <li>
-                    <%= Html.ActionLink("license", "License", "Index") %></li>
+                    <%= Html.ActionLink("license", "License", "Project") %></li>
                 <li>
-                    <%= Html.ActionLink("download", "Download", "Index") %></li>
+                    <%= Html.ActionLink("download", "Index", "Download")%></li>
             </ul>
         </div>
         <div class='bar'>
@@ -56,7 +56,7 @@
                     Creating a new project using Simple is as simple as a double click. With the new
                     project template fixture, you can starting using it with no work at all.
                 </p>
-                <a href="quickstart">read more</a>
+                <%= Html.ActionLink("read more", "QuickStart", "Documentation")%>
             </div>
             <div class='item with_separator'>
                 <h1>
@@ -65,7 +65,7 @@
                     Using the MVC pattern, Simple.Net combines the most powerful features that allows
                     creating and maintaining web applications to be easier than ever.
                 </p>
-                <a href="patterns">read more</a>
+                <%= Html.ActionLink("read more", "Patterns", "Documentation")%>
             </div>
             <div class='item '>
                 <h1>
@@ -74,7 +74,7 @@
                     Simple is built upon the greatest open-source libraries, providing the best support
                     from community for the core features of the framework.
                 </p>
-                <a href="libraries">read more</a>
+                <%= Html.ActionLink("read more", "Libraries", "Documentation")%>
             </div>
         </div>
     </div>
