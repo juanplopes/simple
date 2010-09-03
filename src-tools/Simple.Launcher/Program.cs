@@ -103,7 +103,12 @@ namespace Simple.Launcher
             try
             {
                 p = Process.Start(info);
-                p.WaitForInputIdle();
+
+                try
+                {
+                    p.WaitForInputIdle();
+                }
+                catch { }
 
                 var np = p;
                 new Thread(() =>
