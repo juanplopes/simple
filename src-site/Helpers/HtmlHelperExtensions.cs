@@ -8,6 +8,15 @@ namespace Simple.Site.Helpers
 {
     public static class HtmlHelperExtensions
     {
+        public class InlineTagBuilder : TagBuilder
+        {
+            public InlineTagBuilder(string tag) : base(tag) { }
+            public override string ToString()
+            {
+                return ToString(TagRenderMode.SelfClosing);
+            }
+        }
+
         public const string ScriptsPath = "Scripts";
         public const string StylesheetsPath = "Content";
         public const string ImagesPath = "Content/images";
@@ -22,7 +31,7 @@ namespace Simple.Site.Helpers
 
         public static TagBuilder Image(this HtmlHelper helper, string file, string alt)
         {
-            var tag = new TagBuilder("img");
+            var tag = new InlineTagBuilder("img");
             tag.MergeAttribute("src", helper.ResolveFullPath(ImagesPath, file));
             tag.MergeAttribute("alt", alt);
             return tag;
