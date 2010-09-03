@@ -108,8 +108,20 @@ body
 
 .slider 
 {
-    margin-top: 40px;
+    margin-top: 50px;
     float: left;
+    text-align: center;
+}
+
+.slider img
+{
+	margin: 25px;
+}
+
+
+.slider img
+{
+	margin: auto;
 }
 
 .bar .download:hover 

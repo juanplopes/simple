@@ -14,7 +14,7 @@
     <script type="text/javascript">
         $(window).load(function() {
             $('.slider').nivoSlider({
-                effect: 'sliceDown'
+                effect: 'fold'
             });
         });
     </script>
@@ -36,8 +36,9 @@
         <div class='bar'>
             <div class="content">
                 <div class="slider">
-                    <%= Html.Image("picture.png", "Easy database management") %>
-                    <%= Html.Image("picture.png", "Easy database management") %>
+                    <%= Html.Image("new-project.png", "").With("title", "Easy project setup")  %>
+                    <%= Html.Image("default-layout.png", "").With("title", "Default web interface") %>
+                    <%= Html.Image("migrations.png", "").With("title", "Active database management") %>
                 </div>
                 <div class="text">
                     <h1>

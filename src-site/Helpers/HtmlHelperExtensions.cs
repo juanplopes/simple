@@ -28,11 +28,17 @@ namespace Simple.Site.Helpers
             return tag;
         }
 
+        public static TagBuilder With(this TagBuilder tag, string attr, object value)
+        {
+            tag.MergeAttribute(attr, string.Format("{0}", value));
+            return tag;
+        }
+
         public static TagBuilder Stylesheet(this HtmlHelper helper, string file)
         {
             var tag = new TagBuilder("link");
             tag.MergeAttribute("type", "text/css");
-            tag.MergeAttribute("rel", "Stylesheet");    
+            tag.MergeAttribute("rel", "Stylesheet");
             tag.MergeAttribute("href", helper.ResolveFullPath(StylesheetsPath, file));
             return tag;
         }

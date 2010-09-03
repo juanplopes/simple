@@ -78,6 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\custom-nivo-slider.css" />
+    <Content Include="Content\images\default-layout.png" />
+    <Content Include="Content\images\migrations.png" />
+    <Content Include="Content\images\new-project.png" />
     <Content Include="Content\nivo\arrows.png" />
     <Content Include="Content\images\background.png" />
     <Content Include="Content\images\bar.png" />
@@ -85,7 +88,6 @@
     <Content Include="Content\images\download.png" />
     <Content Include="Content\images\livinglogo.png" />
     <Content Include="Content\nivo\loading.gif" />
-    <Content Include="Content\images\picture.png" />
     <Content Include="Content\nivo-slider.css" />
     <Content Include="Content\simple.css" />
     <Content Include="Scripts\jquery.nivo.slider.pack.js" />
