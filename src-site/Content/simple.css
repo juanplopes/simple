@@ -111,6 +111,9 @@ body
     margin-top: 50px;
     float: left;
     text-align: center;
+    -webkit-box-shadow: 3px 3px 5px black;
+    -moz-box-shadow: 3px 3px 5px black;
+    box-shadow: 3px 3px 5px black;
 }
 
 .slider img
