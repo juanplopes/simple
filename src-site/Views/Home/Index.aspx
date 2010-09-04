@@ -4,7 +4,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-    <title>Simple.Net Framework by Living Consultoria. Develop great web applications with
+    <title>Simple.Net framework by Living Consultoria. Develop great web applications with
         little effort.</title>
     <meta http-equiv="X-UA-Compatible" content="IE=8;FF=3;OtherUA=4" />
     <%= Html.Stylesheet("simple.css") %>
