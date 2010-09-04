@@ -7,7 +7,7 @@
     <title>Simple.Net framework by Living Consultoria. Develop great web applications with
         little effort.</title>
     <meta http-equiv="X-UA-Compatible" content="IE=8;FF=3;OtherUA=4" />
-    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
     
     <%= Html.Stylesheet("simple.css") %>
     <%= Html.Script("jquery-1.4.1.min.js") %>
