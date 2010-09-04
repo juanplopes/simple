@@ -83,6 +83,7 @@
     <Content Include="Content\images\default-layout.png" />
     <Content Include="Content\images\migrations.png" />
     <Content Include="Content\images\new-project.png" />
+    <Content Include="Content\index.css" />
     <Content Include="Content\nivo\arrows.png" />
     <Content Include="Content\images\background.png" />
     <Content Include="Content\images\bar.png" />
@@ -93,6 +94,7 @@
     <Content Include="Content\nivo-slider.css" />
     <Content Include="Content\simple.css" />
     <Content Include="Scripts\jquery.nivo.slider.pack.js" />
+    <Content Include="Views\Download\Index.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -8,9 +8,11 @@ namespace Simple.Site.Controllers
 {
     public class DownloadController : Controller
     {
-        //
-        // GET: /Download/
-
+        public ActionResult Index()
+        {
+            return View();
+        }
+        
         public ActionResult Latest()
         {
             return Redirect("http://simpledotnet.googlecode.com/files/Simple.Avalon.exe");
