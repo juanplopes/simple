@@ -11,15 +11,8 @@
     
     <%= Html.Stylesheet("simple.css") %>
     <%= Html.Script("jquery-1.4.1.min.js") %>
-    <asp:ContentPlaceHolder ID="Header" runat="server" />
-
-    <script type="text/javascript">
-        $(window).load(function() {
-            $('.slider').nivoSlider({
-                effect: 'fold'
-            });
-        });
-    </script>
+    
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 
 </head>
 <body>
@@ -36,7 +29,7 @@
             </ul>
         </div>
         <div class='content'>
-            <asp:ContentPlaceHolder ID="Content" runat="server" />
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>
     </div>
 </body>

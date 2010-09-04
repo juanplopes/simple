@@ -1,11 +1,17 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" MasterPageFile="~/Views/Shared/Site.Master" %>
 
-<asp:Content ContentPlaceHolderID="Header" runat="server">
+<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
     <%= Html.Stylesheet("index.css") %>
     <%= Html.Stylesheet("nivo-slider.css")%>
     <%= Html.Script("jquery.nivo.slider.pack.js")%>
+    
+    <script type="text/javascript">
+        $(window).load(function() {
+            $('.slider').nivoSlider({ effect: 'fold' });
+        });
+    </script>
 </asp:Content>
-<asp:Content ContentPlaceHolderID="Content" runat="server">
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <div class='bar'>
         <div class='content'>
             <div class="slider">
