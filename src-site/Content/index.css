@@ -86,9 +86,8 @@
 
 .items 
 {
-    margin-top: 380px;
     height: 100%;
-    padding: 0 40px 40px 40px;
+    padding: 380px 40px 40px 40px;
 }
 
 .items .item

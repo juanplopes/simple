@@ -7,7 +7,7 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="Content" runat="server">
     <div class='bar'>
-        <div class="content">
+        <div class='content'>
             <div class="slider">
                 <%= Html.Image("new-project.png", "").With("title", "Easy project setup")  %>
                 <%= Html.Image("default-layout.png", "").With("title", "Default web interface") %>
