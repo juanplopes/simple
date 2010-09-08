@@ -134,12 +134,16 @@
     <ItemGroup>
       <MergeItems Include="$(BuildDir)\Simple.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.Data.dll"/>
-      <MergeItems Include="$(BuildDir)\Simple.Web.Mvc.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.Generator.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.NVelocity.dll"/>
       <MergeItems Include="$(BuildDir)\Simple.NHibernate.dll"/>
       <MergeItems Include="$(BuildDir)\FluentValidation.dll"/>
       <MergeItems Include="$(BuildDir)\log4net.dll"/>
+
+      <MergeItems Include="$(BuildDir)\Simple.Web.Mvc.dll"/>
+      <MergeItems Include="$(BuildDir)\System.Web.Mvc.dll"/>
+      <MergeItems Include="$(BuildDir)\MVCContrib.*.dll"/>
+	  <MergeItems Include="$(BuildDir)\MVCContrib.dll"/>
     </ItemGroup>
 
     <MakeDir Directories="$(PackageDir)"/>
@@ -149,7 +153,8 @@
             LogFile=""
             KeyFile="$(KeyFilePath)"
              />
-  </Target>
+
+ </Target>
 
   <Target Name="Package" DependsOnTargets="Build;Merge">
     <MakeDir Directories="$(PackageDir)"/>

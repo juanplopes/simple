@@ -7,7 +7,6 @@ using System.Web.Routing;
 using Example.Project.Config;
 using Simple;
 using Example.Project.Web.Controllers;
-using MvcContrib.SimplyRestful;
 using Example.Project.Web.Helpers;
 using Simple.Entities;
 using Simple.Reflection;
