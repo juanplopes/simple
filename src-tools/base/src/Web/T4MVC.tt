@@ -463,7 +463,7 @@ void PrepareDataToRender(TextTransformation tt) {
     MvcVersion = GetMvcVersion();
 
     // Use the proper return type of render helpers
-    HtmlStringType = MvcVersion < 2 ? "string" : "MvcHtmlString";
+    HtmlStringType = "MvcHtmlString";
 
     ProcessAreas(Project);
 }
