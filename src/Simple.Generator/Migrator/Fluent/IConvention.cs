@@ -15,12 +15,12 @@ namespace Simple.Migrator.Fluent
     {
         #region IConvention Members
 
-        public string PrimaryKeyColumn(string table)
+        public virtual string PrimaryKeyColumn(string table)
         {
             return "id";
         }
         
-        public string ForeignKeyConstraint(string fkTable, string fkColumn, string pkTable, string pkColumn, string tag)
+        public virtual string ForeignKeyConstraint(string fkTable, string fkColumn, string pkTable, string pkColumn, string tag)
         {
             string res = fkTable + "_" + pkTable;
             if (!string.IsNullOrEmpty(tag)) res += "_" + tag;
