@@ -1,6 +1,6 @@
 ﻿<#
 /*
-T4MVC Version 2.6.14
+T4MVC Version 2.6.30
 Find latest version and documentation at http://mvccontrib.codeplex.com/wikipage?title=T4MVC
 Discuss on the T4MVC forum: http://forums.asp.net/1215.aspx
 
@@ -148,14 +148,64 @@ namespace System.Web.Mvc {
         }
 
         public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result) {
-            return routes.MapRoute(name, url, result, (ActionResult)null);
+            return MapRoute(routes, name, url, result, null /*namespaces*/);
         }
 
         public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults) {
-            return MapRoute(routes, name, url, result, defaults, null);
+            return MapRoute(routes, name, url, result, defaults, null /*constraints*/, null /*namespaces*/);
+        }
+
+        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, string[] namespaces) {
+            return MapRoute(routes, name, url, result, null /*defaults*/, namespaces);
         }
 
         public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults, object constraints) {
+            return MapRoute(routes, name, url, result, defaults, constraints, null /*namespaces*/);
+        }
+
+        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults, string[] namespaces) {
+            return MapRoute(routes, name, url, result, defaults, null /*constraints*/, namespaces);
+        }
+
+        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
+            // Create and add the route
+            var route = CreateRoute(url, result, defaults, constraints, namespaces);
+            routes.Add(name, route);
+            return route;
+        }
+
+<#if (MvcVersion >= 2) {#>
+        // Note: can't name the AreaRegistrationContext methods 'MapRoute', as that conflicts with the existing methods
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result) {
+            return MapRouteArea(context, name, url, result, null /*namespaces*/);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults) {
+            return MapRouteArea(context, name, url, result, defaults, null /*constraints*/, null /*namespaces*/);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, string[] namespaces) {
+            return MapRouteArea(context, name, url, result, null /*defaults*/, namespaces);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, object constraints) {
+            return MapRouteArea(context, name, url, result, defaults, constraints, null /*namespaces*/);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, string[] namespaces) {
+            return MapRouteArea(context, name, url, result, defaults, null /*constraints*/, namespaces);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
+            // Create and add the route
+            var route = CreateRoute(url, result, defaults, constraints, namespaces);
+            context.Routes.Add(name, route);
+            route.DataTokens["area"] = context.AreaName;
+            return route;
+        }
+<#} #>
+
+        private static Route CreateRoute(string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
             // Start by adding the default values from the anonymous object (if any)
             var routeValues = new RouteValueDictionary(defaults);
 
@@ -168,7 +218,13 @@ namespace System.Web.Mvc {
 
             // Create and add the route
             var route = new Route(url, routeValues, routeConstraints, new MvcRouteHandler());
-            routes.Add(name, route);
+
+            route.DataTokens = new RouteValueDictionary();
+
+            if (namespaces != null && namespaces.Length > 0) {
+                route.DataTokens["Namespaces"] = namespaces;
+            }
+
             return route;
         }
 
@@ -386,6 +442,37 @@ namespace <#=T4MVCNamespace #> {
     }
 }
 
+<# if (ExplicitHtmlHelpersForPartials) {	
+        manager.StartNewFile("T4MVC.ExplicitExtensions.cs"); #>	
+
+namespace System.Web.Mvc {
+    [<#= GeneratedCode #>]
+    public static class HtmlHelpersForExplicitPartials {
+    <#  
+        foreach(var partial in GetPartials()) {
+            string partialName = partial.Key;
+            string partialPath = partial.Value;
+            string partialRenderMethod = string.Format(ExplicitHtmlHelpersForPartialsFormat, partialName);
+    #>		 
+        ///<summary>
+        ///Render the <b><#= partialName #></b> partial.
+        ///</summary>
+        public static void <#= partialRenderMethod #>(this HtmlHelper html) {
+            html.RenderPartial("<#= partialPath #>");
+        }
+        
+        ///<summary>
+        ///Render the <b><#= partialName #></b> partial.
+        ///</summary>		
+        public static void <#= partialRenderMethod #>(this HtmlHelper html, object model) {
+            html.RenderPartial("<#= partialPath #>", model);
+        }
+    <# } #>	 
+    }
+}
+<#	manager.EndBlock(); #>	
+<#	}	#>	
+
 <#manager.StartFooter(); #>
 #endregion T4MVC
 #pragma warning restore 1591
@@ -432,6 +519,30 @@ IEnumerable<ControllerInfo> GetAbstractControllers() {
     return controllers;
 }
 
+IDictionary<string, string> GetPartials() {
+    var parts = GetControllers()
+        .Select(m => m.ViewsFolder)
+        .SelectMany(m => m.Views)
+        .Where(m => m.Value.EndsWith(".ascx"));
+
+    var partsDic = new Dictionary<string, KeyValuePair<string, string>>();
+
+    foreach(var part in parts) {
+        // Check if we already have a partial view by that name (e.g. if two Views folders have the same ascx)
+        int keyCollisionCount = partsDic.Where(m => m.Key == part.Key || m.Value.Key == part.Key).Count();
+
+        if (keyCollisionCount > 0) {
+            // Append a numbered suffix to avoid the conflict
+            partsDic.Add(part.Key + keyCollisionCount.ToString(), part);
+        }
+        else {
+            partsDic.Add(part.Key, part);
+        }
+    }
+
+    return partsDic.ToDictionary(k => k.Key, v => v.Value.Value);
+}
+
 void PrepareDataToRender(TextTransformation tt) {
     TT = tt;
     T4FileName = Path.GetFileName(Host.TemplateFile);
@@ -460,10 +571,10 @@ void PrepareDataToRender(TextTransformation tt) {
     // Get the path of the root folder of the app
     AppRoot = Path.GetDirectoryName(Project.FullName) + '\\';
 
-    MvcVersion = GetMvcVersion();
+    MvcVersion = 2; //GetMvcVersion();
 
     // Use the proper return type of render helpers
-    HtmlStringType = "MvcHtmlString";
+    HtmlStringType = MvcVersion < 2 ? "string" : "MvcHtmlString";
 
     ProcessAreas(Project);
 }
@@ -637,8 +748,14 @@ void ProcessControllerActionMethods(ControllerInfo controllerInfo, CodeClass2 cu
                 }
 
                 // Skip it if it's the current project or doesn't have a code model
-                if (prj == Project || prj.CodeModel == null)
-                    continue;
+                try {
+                   if (prj == Project || prj.CodeModel == null)
+                      continue;
+                }
+                catch (System.NotImplementedException) {
+                   // Installer project does not implement CodeModel property
+                   continue;
+                }
 
                 // If we can get a local project type, use it instead of the original
                 var codeType = prj.CodeModel.CodeTypeFromFullName(type.FullName);
@@ -721,20 +838,25 @@ void ProcessAllViews(ProjectItem viewsProjectItem, AreaInfo area) {
 }
 
 void AddViewsRecursive(ProjectItems items, ViewsFolderInfo viewsFolder) {
+  AddViewsRecursive(items, viewsFolder, false);
+}
+void AddViewsRecursive(ProjectItems items, ViewsFolderInfo viewsFolder, bool useNonQualifiedViewNames) {
     // Go through all the files in the subfolder to get the view names
     foreach (ProjectItem item in items) {
         if (item.Kind == Constants.vsProjectItemKindPhysicalFile) {
             if (Path.GetExtension(item.Name).Equals(".master", StringComparison.OrdinalIgnoreCase))
-                continue;	// ignore master files
-            viewsFolder.AddView(item);
+                continue;   // ignore master files
+            viewsFolder.AddView(item, useNonQualifiedViewNames);
         }
         else if (item.Kind == Constants.vsProjectItemKindPhysicalFolder) {
             string folderName = Path.GetFileName(item.Name);
             if (folderName.Equals("App_LocalResources", StringComparison.OrdinalIgnoreCase))
                 continue;
+            // Use simple view names if we're already in that mode, or if the folder name is in the collection
+            bool folderShouldUseNonQualifiedViewNames = useNonQualifiedViewNames || NonQualifiedViewFolders.Contains(folderName, StringComparer.OrdinalIgnoreCase);
             var subViewFolder = new ViewsFolderInfo() { Name = folderName };
             viewsFolder.SubFolders.Add(subViewFolder);
-            AddViewsRecursive(item.ProjectItems, subViewFolder);
+            AddViewsRecursive(item.ProjectItems, subViewFolder, folderShouldUseNonQualifiedViewNames);
         }
     }
 }
@@ -1038,7 +1160,7 @@ class ControllerInfo {
 
     IEnumerable<ActionMethodInfo> ActionMethodsWithNoParameters {
         get {
-            return ActionMethods.Where(m => m.Parameters.Count == 0);
+            return ActionMethods.Where(m => m.CanBeCalledWithoutParameters);
         }
     }
 
@@ -1087,15 +1209,15 @@ class ViewsFolderInfo {
         SubFolders = new List<ViewsFolderInfo>();
     }
 
-    public void AddView(ProjectItem item) {
+    public void AddView(ProjectItem item, bool useNonQualifiedViewName) {
         string viewName = Path.GetFileName(item.Name);
         string viewFieldName = Path.GetFileNameWithoutExtension(viewName);
-
+ 
         // If the simple view name is already in use, include the extension (e.g. foo_ascx instead of just foo)
         if (Views.ContainsKey(viewFieldName))
             viewFieldName = Sanitize(viewName);
-
-        Views[viewFieldName] = GetVirtualPath(item);
+ 
+        Views[viewFieldName] = useNonQualifiedViewName ? Path.GetFileNameWithoutExtension(viewName) : GetVirtualPath(item);
     }
 
     public string Name { get; set; }
@@ -1120,8 +1242,15 @@ class FunctionInfo {
         // Build a unique signature for the method, used to avoid duplication
         _signature = method.Name;
 
+        CanBeCalledWithoutParameters = true;
+
         // Process all the parameters
         foreach (var p in method.Parameters.OfType<CodeParameter2>()) {
+            // If any param is not optional, then the method can't be called without parameters
+            if (p.ParameterKind != vsCMParameterKind.vsCMParameterKindOptional) {
+                CanBeCalledWithoutParameters = false;
+            }
+
             string routeNameExpression = "\"" + p.Name + "\"";
 
             // If there is a [Bind(Prefix = "someName")] attribute, use it
@@ -1149,6 +1278,7 @@ class FunctionInfo {
     public string ReturnTypeFullName { get { return _method.Type.CodeType.FullName; } }
     public bool IsPublic { get { return _method.Access == vsCMAccess.vsCMAccessPublic; } }
     public List<MethodParamInfo> Parameters { get; private set; }
+    public bool CanBeCalledWithoutParameters { get; private set; }
 
     // Write out all the parameters as part of a method declaration
     public void WriteFormalParameters(bool first) {

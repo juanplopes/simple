@@ -29,6 +29,13 @@ const string ControllersFolder = "Controllers";
 // The folder under the project that contains the views
 const string ViewsRootFolder = "Views";
 
+// Views in DisplayTemplates and EditorTemplates folders shouldn't be fully qualifed as it breaks
+// the templated helper code
+readonly string[]  NonQualifiedViewFolders = new string[] {
+  "DisplayTemplates",
+  "EditorTemplates"
+};
+
 // The name of the interface that all T4MVC action results will implement
 const string ActionResultInterfaceName = "IT4MVCActionResult";
 
@@ -57,6 +64,15 @@ readonly string[] StaticFilesFolders = new string[] {
 readonly string[] ExcludedStaticFileExtensions = new string[] {   
     ".cs"  
 };  
+
+//---------------------------------------------------------------------------
+//	Explicit HtmlHelpers
+//---------------------------------------------------------------------------
+//create explicit HtmlHelpers for rendering partials
+const bool ExplicitHtmlHelpersForPartials = false;
+const string ExplicitHtmlHelpersForPartialsFormat = "Render{0}";
+
+//---------------------------------------------------------------------------
 
 // If true, the template marks itself as unsaved as part of its execution.
 // This way it will be saved and update itself next time the project is built.
