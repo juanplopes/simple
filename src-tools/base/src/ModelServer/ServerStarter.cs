@@ -20,7 +20,7 @@ namespace Example.Project
     {
         static void Main(string[] args)
         {
-            if (Environment.UserInteractive)
+            if (Environment.UserInteractive || (args != null && args.Length > 0))
                 ToolsStarter.Main(args);
             else
             {

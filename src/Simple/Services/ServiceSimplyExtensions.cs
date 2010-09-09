@@ -80,6 +80,11 @@ namespace Simple
             return ClientFactory(simply).BeginServiceMockContext(type, server);
         }
 
+        public static DisposableAction EnterServiceMockContext<T>(this Simply simply, T server)
+        {
+            return simply.EnterServiceMockContext(typeof(T), server);
+        }
+
         public static void StartServer(this Simply simply)
         {
             HostFactory(simply).StartServer();

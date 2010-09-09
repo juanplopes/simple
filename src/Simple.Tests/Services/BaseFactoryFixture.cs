@@ -147,6 +147,22 @@ namespace Simple.Tests.Services
         }
 
         [Test]
+        public void TestFailConnectNotFailingWithTemporaryContextUsingGenericSignature()
+        {
+            using (Simply.Do[ConfigKey].EnterServiceMockContext<IFailService>(new FailConnectService()))
+            {
+                IFailService service = Simply.Do[ConfigKey].Resolve<IFailService>();
+                service.FailInt().Should().Be(84);
+            }
+
+            Assert.That(() =>
+            {
+                IFailService service = Simply.Do[ConfigKey].Resolve<IFailService>();
+                service.FailInt().Should().Be(84);
+            }, Throws.Exception);
+        }
+
+        [Test]
         public void TestPostFailConnectState()
         {
             bool ex = false;
