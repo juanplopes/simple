@@ -46,7 +46,6 @@ namespace Simple.Services
         {
             if (tx != null)
             {
-                session.Clear();
                 if (!tx.WasCommitted) tx.Rollback();
             }
         }

@@ -78,7 +78,6 @@ namespace Simple.Data.Context
             {
                 if (!_defaultSession.IsOpen)
                     throw new InvalidOperationException("You shoudn't close the main session. Correct your code right now");
-
                 FlushSession(_defaultSession);
                 _defaultSession.Close();
             }
@@ -99,9 +98,13 @@ namespace Simple.Data.Context
             {
                 session.Flush();
             }
-            catch (AssertionFailure)
+            catch (AssertionFailure e)
             {
-                logger.Warn("Exception ocurred. Skipping AssertionFailure");
+                logger.Warn("Exception ocurred. Skipping AssertionFailure", e);
+            }
+            catch (Exception e)
+            {
+                logger.Warn(e.Message, e);
             }
         }
 
