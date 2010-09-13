@@ -13,6 +13,7 @@ namespace Simple.Generator.Data
         public Action<T> PopulateKeyAction { get; protected set; }
         public Action<T> PreSaveAction { get; protected set; }
         public Action<T> PostSaveAction { get; protected set; }
+        public Action<T> FinallyAction { get; protected set; }
 
         public DataItem()
         {
@@ -20,6 +21,7 @@ namespace Simple.Generator.Data
             this.PopulateKeyAction = x => { };
             this.PreSaveAction = x => { };
             this.PostSaveAction = x => { };
+            this.FinallyAction = x => { };
         }
 
         public DataItem(string name) : this()
@@ -45,5 +47,10 @@ namespace Simple.Generator.Data
             return this;
         }
 
+        public DataItem<T> AndAlwaysDo(Action<T> action)
+        {
+            this.FinallyAction = action;
+            return this;
+        }
     }
 }

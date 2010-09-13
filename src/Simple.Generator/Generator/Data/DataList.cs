@@ -89,13 +89,16 @@ namespace Simple.Generator.Data
             foreach (var item in items)
             {
                 var t = new T();
+                T newT = null;
                 item.PopulateKeyAction(t);
-                if (Entity<T>.Count(FindPredicate(t)) == 0)
+                if ((newT = Entity<T>.Find(FindPredicate(t))) == null)
                 {
                     item.PreSaveAction(t);
-                    OnSave(t);
+                    newT = OnSave(t);
                     item.PostSaveAction(t);
                 }
+                if (newT != null)
+                    item.FinallyAction(newT);
             }
         }
      
