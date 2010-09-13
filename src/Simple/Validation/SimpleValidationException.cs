@@ -23,7 +23,7 @@ namespace Simple.Validation
             if (first != null)
             {
                 string more = reimaing > 0 ? string.Format(" ({0} more)", reimaing) : "";
-                return string.Format("Validation: {0}{1}", first.Message, more);
+                return string.Format("{0}{1}", first.Message, more);
             }
             else
             {
