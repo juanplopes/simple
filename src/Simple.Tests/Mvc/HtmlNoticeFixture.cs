@@ -26,6 +26,23 @@ namespace Simple.Tests.Mvc
         }
 
         [Test]
+        public void GivenGenericDictionaryWithNoticeEntryCanVerifyExistence()
+        {
+            var dic = new Dictionary<string, object>();
+            dic.Notify("test");
+
+            dic.HasNotice("test").Should().Be.True();
+        }
+
+
+        [Test]
+        public void GivenGenericDictionaryWithoutNoticeEntryCanVerifyAbsence()
+        {
+            var dic = new Dictionary<string, object>();
+            dic.HasNotice("test").Should().Be.False();
+        }
+
+        [Test]
         public void GivenGenericDictionaryCreateCorrectEntryForSuccessMethod()
         {
             var dic = new Dictionary<string, object>();

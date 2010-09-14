@@ -37,7 +37,12 @@ namespace Simple.Web.Mvc
         public static string DefaultNotificationFormat = "simple-notification-{0}";
         public static string DefaultSucessClass = "success";
         public static string DefaultErrorClass = "error";
-        
+
+        public static bool HasNotice(this IDictionary<string, object> data, string key)
+        {
+            return data.ContainsKey(DefaultNotificationFormat.AsFormat(key));
+        }
+
         public static NoticeDefinition Notify(this IDictionary<string, object> data, string key)
         {
             var not = new NoticeDefinition();
