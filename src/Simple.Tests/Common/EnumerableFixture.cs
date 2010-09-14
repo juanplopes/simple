@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SharpTestsEx;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Simple.Tests.Common
 {
@@ -119,6 +120,39 @@ namespace Simple.Tests.Common
             var str = seq.StringJoin(",");
 
             str.Should().Be("1,2,3");
+        }
+
+        [Test]
+        public void CanSafeGetValueTypeDictionaryValueWhenTheValueExists()
+        {
+            var seq = new Dictionary<int, int>() { { 2, 3 }, { 4, 5 } };
+
+            seq.SafeGet(2).Should().Be(3);
+        }
+
+        [Test]
+        public void CanSafeGetValueTypeDictionaryValueWhenTheValueNotExists()
+        {
+            var seq = new Dictionary<int, int>() { { 2, 3 }, { 4, 5 } };
+
+            seq.SafeGet(3).Should().Be(0);
+        }
+
+
+        [Test]
+        public void CanSafeGetReferenceTypeDictionaryValueWhenTheValueExists()
+        {
+            var seq = new Dictionary<string, string>() { { "2", "3" }, { "4", "5" } };
+
+            seq.SafeGet("2").Should().Be("3");
+        }
+
+        [Test]
+        public void CanSafeGetReferenceTypeDictionaryValueWhenTheValueNotExists()
+        {
+            var seq = new Dictionary<string, string>() { { "2", "3" }, { "4", "5" } };
+
+            seq.SafeGet("3").Should().Be(null);
         }
     }
 }
