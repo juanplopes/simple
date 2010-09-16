@@ -84,10 +84,12 @@
     <Compile Include="Config\ConfiguratorInterface.cs" />
     <Compile Include="Config\IConfiguratorInterface.cs" />
     <Compile Include="DynamicProxy\MarshallableDynamicProxyImpl.cs" />
+    <Compile Include="Entities\IGridPage.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Entity.static.cs" />
     <Compile Include="Entities\EntityPredicates.cs" />
     <Compile Include="Entities\ExpressionExtensions.cs" />
+    <Compile Include="Entities\GridPage.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\IEntityService.cs" />
     <Compile Include="Entities\IPage.cs" />
