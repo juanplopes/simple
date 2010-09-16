@@ -4,6 +4,7 @@ using NHibernate;
 using NUnit.Framework;
 using SharpTestsEx;
 using Simple.Tests.Resources;
+using System;
 
 namespace Simple.Tests.Data
 {
@@ -95,12 +96,13 @@ namespace Simple.Tests.Data
         [Test]
         public void CanFetchInTwoLevels()
         {
-            EmployeeTerritory p;
-            using (MySimply.EnterContext())
-            {
-                p = EmployeeTerritory.Find(x => true, q => q.Fetch(x => x.Territory).ThenFetch(x => x.Region));
-            }
-            p.Territory.Region.Description.Should().Be("Eastern".PadRight(50, ' '));
+                EmployeeTerritory p;
+                using (MySimply.EnterContext())
+                {
+                    p = EmployeeTerritory.Find(x => true, q => q.Fetch(x => x.Territory).ThenFetch(x => x.Region));
+                }
+                p.Territory.Region.Description.Should().Be("Eastern".PadRight(50, ' '));
+           
         }
 
 

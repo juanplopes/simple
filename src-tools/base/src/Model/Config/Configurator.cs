@@ -8,9 +8,8 @@ using System.Reflection;
 using Simple.Services;
 using System.IO;
 using Example.Project.Domain;
-using Simple.Generator;
-using Simple.Data;
 using FluentValidation;
+using Simple.Data;
 
 namespace Example.Project.Config
 {

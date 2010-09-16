@@ -8,15 +8,14 @@
     <BuildDir2>$(MSBuildProjectDirectory)\$(BuildDir)</BuildDir2>
 
     <PackageDir>pkg\</PackageDir>
+    <PackageLibDir>$(PackageDir)lib\</PackageLibDir>
     <PackageDir2>$(MSBuildProjectDirectory)\$(PackageDir)</PackageDir2>
-
 
     <SourceDir>src\</SourceDir>
     <SourceBaseDir>src-tools\base\</SourceBaseDir>
     <SourceBaseLibDir>$(SourceBaseDir)\lib\</SourceBaseLibDir>
 
     <KeyFilePath>$(SourceDir)\Simple.snk</KeyFilePath>
-
 
     <Configuration>Release</Configuration>
     <Platform>Any CPU</Platform>
@@ -26,7 +25,6 @@
     <ProductBuildName>Avalon</ProductBuildName>
 
     <MainLibraryName>Simple.$(ProductBuildName)</MainLibraryName>
-
     <TestAssembly>$(BuildDir)\Simple.Tests.exe</TestAssembly>
   </PropertyGroup>
 
@@ -90,28 +88,15 @@
   <Target Name="MergeNH">
     <ItemGroup>
       <NHibernateItems Include="$(LibDir)\NHibernate\NHibernate.dll"/>
-      <NHibernateItems Include="$(LibDir)\NHibernate\Castle.Core.dll"/>
-      <NHibernateItems Include="$(LibDir)\NHibernate\Castle.DynamicProxy2.dll"/>
       <NHibernateItems Include="$(LibDir)\NHibernate\Antlr3.Runtime.dll"/>
-      <NHibernateItems Include="$(LibDir)\NHibernate\NHibernate.ByteCode.Castle.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\Remotion.Data.Linq.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\LinFu.DynamicProxy.dll"/>
+      <NHibernateItems Include="$(LibDir)\NHibernate\NHibernate.ByteCode.LinFu.dll"/>
       <NHibernateItems Include="$(LibDir)\NHibernate\FluentNHibernate.dll"/>
       <NHibernateItems Include="$(LibDir)\NHibernate\Iesi.Collections.dll"/>
-      <NHibernateItems Include="$(LibDir)\NHibernate\Remotion.Data.Linq.dll"/>
     </ItemGroup>
-    <ILMerge OutputFile="$(LibDir)\Simple.NHibernate.dll"
+    <ILMerge OutputFile="$(LibDir)\NHibernate.dll"
             InputAssemblies="@(NHibernateItems)"
-            ToolPath="util\ilmerge"
-            LogFile=""
-             />
-  </Target>
-
-
-  <Target Name="MergeNVelocity">
-    <ItemGroup>
-      <NVelocityItems Include="$(LibDir)\NVelocity\NVelocity.dll"/>
-    </ItemGroup>
-    <ILMerge OutputFile="$(LibDir)\Simple.NVelocity.dll"
-            InputAssemblies="@(NVelocityItems)"
             ToolPath="util\ilmerge"
             LogFile=""
              />
@@ -130,39 +115,36 @@
              />
   </Target>
 
-  <Target Name="Merge" DependsOnTargets="Build">
+  <Target Name="CopyBuildResult" DependsOnTargets="Build">
     <ItemGroup>
-      <MergeItems Include="$(BuildDir)\Simple.dll"/>
-      <MergeItems Include="$(BuildDir)\Simple.Data.dll"/>
-      <MergeItems Include="$(BuildDir)\Simple.Generator.dll"/>
-      <MergeItems Include="$(BuildDir)\Simple.NVelocity.dll"/>
-      <MergeItems Include="$(BuildDir)\Simple.NHibernate.dll"/>
-      <MergeItems Include="$(BuildDir)\FluentValidation.dll"/>
-      <MergeItems Include="$(BuildDir)\log4net.dll"/>
+      <Libraries Include="$(BuildDir)\Simple.dll"/>
+      <Libraries Include="$(BuildDir)\Simple.Data.dll"/>
+      <Libraries Include="$(BuildDir)\Simple.Generator.dll"/>
+      <Libraries Include="$(BuildDir)\Simple.Web.Mvc.dll"/>
 
-      <MergeItems Include="$(BuildDir)\Simple.Web.Mvc.dll"/>
-      <MergeItems Include="$(BuildDir)\System.Web.Mvc.dll"/>
-      <MergeItems Include="$(BuildDir)\MVCContrib.*.dll"/>
-	  <MergeItems Include="$(BuildDir)\MVCContrib.dll"/>
+      <Libraries Include="$(BuildDir)\NVelocity.dll"/>
+      <Libraries Include="$(BuildDir)\NHibernate.dll"/>
+      <Libraries Include="$(BuildDir)\FluentValidation.dll"/>
+      <Libraries Include="$(BuildDir)\log4net.dll"/>
+
+      <Libraries Include="$(BuildDir)\System.Web.Mvc.dll"/>
+      <Libraries Include="$(BuildDir)\MVCContrib.*.dll"/>
+      <Libraries Include="$(BuildDir)\MVCContrib.dll"/>
     </ItemGroup>
 
-    <MakeDir Directories="$(PackageDir)"/>
-    <ILMerge OutputFile="$(PackageDir)\$(MainLibraryName).dll"
-            InputAssemblies="@(MergeItems)"
-            ToolPath="util\ilmerge"
-            LogFile=""
-            KeyFile="$(KeyFilePath)"
-             />
-
- </Target>
-
-  <Target Name="Package" DependsOnTargets="Build;Merge">
-    <MakeDir Directories="$(PackageDir)"/>
-    <Copy SourceFiles="$(PackageDir)\$(MainLibraryName).dll" DestinationFolder="$(SourceBaseLibDir)"/>
+    <MakeDir Directories="$(PackageLibDir)"/>
+    <Copy SourceFiles ="@(Libraries)" DestinationFolder="$(PackageLibDir)" />
+    <Copy SourceFiles="@(Libraries)" DestinationFolder="$(SourceBaseLibDir)"/>
     <Copy SourceFiles="$(BuildDir)\Simple.Gui.exe" DestinationFolder="$(SourceBaseDir)"/>
+  </Target>
 
-    <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile &#39;$(PackageDir2)\$(MainLibraryName).exe&#39;&quot;"/>
-    <Zip Files="$(PackageDir)\$(MainLibraryName).dll" ZipFileName="$(PackageDir)\$(MainLibraryName).zip" WorkingDirectory="$(PackageDir)"/>
+  <Target Name="Package" DependsOnTargets="Build;CopyBuildResult">
+    <ItemGroup>
+      <ZipFiles Include="$(PackageLibDir)\*.*"/>
+    </ItemGroup>
+    
+    <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile &#39;$(PackageDir2)\$(MainLibraryName)..exe&#39;&quot;"/>
+    <Zip Files="@(ZipFiles)" ZipFileName="$(PackageDir)\$(MainLibraryName).zip" WorkingDirectory="$(PackageLibDir)"/>
   </Target>
 
   <Target Name="Publish" DependsOnTargets="Test;Package">

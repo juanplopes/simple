@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using FluentNHibernate.Cfg.Db;
-using NHibernate.ByteCode.Castle;
 using Simple.Patterns;
 using Simple.Services;
 using Simple.Tests.Resources;
+using NHibernate.ByteCode.LinFu;
 
 namespace Simple.Tests
 {
