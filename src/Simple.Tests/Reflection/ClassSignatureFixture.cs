@@ -81,6 +81,13 @@ namespace Simple.Tests.Reflection
             sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest3<Int32>, ClassSignatureFixture.ITest4<Int32>");
         }
 
+        [Test]
+        public void WillIgnoreCorrectMethods()
+        {
+            var sig = new ClassSignature(typeof(MethodInheritanceClass));
+            sig.Methods.Select(x => x.Method.Name).Should().Have.SameValuesAs("Test2", "Test3");
+        }
+
         class SingleImplementationClass : ITest1 { }
         class DoubleImplementationClass : ITest2, ITest1 { }
         class GenericImplementationClass : ITest3<int>, ITest2, ITest1 { }
@@ -95,6 +102,37 @@ namespace Simple.Tests.Reflection
             where T : struct, IConvertible
         { }
 
+        class MethodInheritanceClass : MethodBasingClass, IBaseInterface
+        {
+            public override void Test1()
+            {
+                base.Test1();
+            }
+
+            public void Test3()
+            {
+
+            }
+
+            public void Test2()
+            {
+                throw new NotImplementedException();
+            }
+            
+            protected void Test4() {
+
+            }
+        }
+
+        class MethodBasingClass
+        {
+            public virtual void Test1() {}
+            public void Test5() {}
+        }
+
+        interface IBaseInterface {
+            void Test2();
+        }
 
         interface ITest1 { }
         interface ITest2 { }

@@ -50,12 +50,17 @@ namespace Simple.Reflection
         }
 
 
-        private IEnumerable<MethodSignature> EnumerateMethods()
+        protected IEnumerable<MethodSignature> EnumerateMethods()
         {
 
             foreach (var method in Type.GetMethods(
                 BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .Where(x => !x.IsDefined(typeof(LeaveMeAloneAttribute), false)))
+                .Where(x => !x.IsDefined(typeof(LeaveMeAloneAttribute), false)).Where(x =>
+                {
+                    var b = x.GetBaseDefinition();
+                    return b == x || b.DeclaringType.IsInterface;
+                }))
+
                 yield return new MethodSignature(method, Namespaces);
 
         }
