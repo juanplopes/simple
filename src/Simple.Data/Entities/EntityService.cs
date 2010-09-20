@@ -154,10 +154,9 @@ namespace Simple.Entities
         }
 
 
-        public virtual void Delete(object id)
+        public virtual int Delete(object id)
         {
-            Session.Delete(Load(id));
-            Session.Flush();
+            return Delete((T)Load(id));
         }
 
         [RequiresTransaction]
@@ -166,10 +165,8 @@ namespace Simple.Entities
             int res = 0;
             foreach (var entity in List(map))
             {
-                Session.Delete(entity);
-                res++;
+                res += Delete((T)entity);
             }
-            Session.Flush();
             return res;
         }
 
@@ -194,17 +191,10 @@ namespace Simple.Entities
             return entity;
         }
 
-        public virtual T Persist(T entity)
-        {
-            if (ValidateOnSave) ValidateAndThrow(entity);
-            Session.Persist(entity);
-            return entity;
-        }
-
-        public virtual void Delete(T entity)
+        public virtual int Delete(T entity)
         {
             Session.Delete(entity);
-            Session.Flush();
+            return 1;
         }
 
 

@@ -14,10 +14,9 @@ namespace Simple.Entities
         T Reload();
         T Merge();
         T Evict();
-        T Persist();
         T Save();
         T Update();
-        void Delete();
+        int Delete();
         T SaveOrUpdate();
         ValidationList Validate();
         ValidationList Validate(params string[] propName);

@@ -25,8 +25,6 @@ namespace Simple.Tests.Data
             MySimply.GetSession().Clear();
             c.Executing(x => x.SaveOrUpdate()).Throws<SimpleValidationException>();
             MySimply.GetSession().Clear();
-            c.Executing(x => x.Persist()).Throws<SimpleValidationException>();
-            MySimply.GetSession().Clear();
         }
 
         [Test]

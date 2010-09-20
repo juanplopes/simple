@@ -39,14 +39,23 @@ namespace Simple.Services
 
         public override void AfterSuccess()
         {
-            if (tx != null) tx.Commit();
+            if (tx != null)
+            {
+                session.Flush();
+                tx.Commit();
+            }
         }
 
         public override void Finally()
         {
             if (tx != null)
             {
-                if (!tx.WasCommitted) tx.Rollback();
+                if (!tx.WasCommitted)
+                {
+                    try { session.Flush(); }
+                    catch { }
+                    tx.Rollback();
+                }
             }
         }
     }

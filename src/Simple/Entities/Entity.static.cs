@@ -165,14 +165,14 @@ namespace Simple.Entities
             return Service.Delete(Do.Filter(filter));
         }
 
-        public static void Delete(object id)
+        public static int Delete(object id)
         {
-            Service.Delete(id);
+            return Service.Delete(id);
         }
 
-        public static void Delete(T entity)
+        public static int Delete(T entity)
         {
-            Service.Delete(entity);
+            return Service.Delete(entity);
         }
 
 

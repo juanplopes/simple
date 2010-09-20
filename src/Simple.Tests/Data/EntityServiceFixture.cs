@@ -31,7 +31,7 @@ namespace Simple.Tests.Data
 
             result.TotalPages(take).Should().Be((int)Math.Ceiling((decimal)q.Count() / take));
             result.Count.Should().Be(comp.Count);
-            
+
             comp.Count.Should().Be.GreaterThan(0);
 
             for (int i = 0; i < comp.Count; i++)
@@ -316,7 +316,7 @@ namespace Simple.Tests.Data
         [Test]
         public void TestSaveWithReferenceAndReload()
         {
-            var c = new Product() { Name="test", Category = new Category() { Id =Session.Query<Category>().Select(x=>x.Id).First() }}.Save();
+            var c = new Product() { Name = "test", Category = new Category() { Id = Session.Query<Category>().Select(x => x.Id).First() } }.Save();
             c.Category.Name.Should().Be.Null();
             c = c.Reload();
             c.Category.Name.Should().Not.Be.Null();
@@ -328,8 +328,7 @@ namespace Simple.Tests.Data
         {
             Customer.Load("OLDWO").Delete();
 
-            "OLDWO".Executing(x => Customer.Load(x).ToString())
-                .Throws<ObjectNotFoundException>();
+            Customer.Find(y => y.Id == "OLDWO").Should().Be(null);
         }
 
 
@@ -347,8 +346,7 @@ namespace Simple.Tests.Data
         public void TestDeleteOneById()
         {
             Customer.Delete("AROUT");
-            "AROUT".Executing(x => Customer.Load(x).ToString())
-                .Throws<ObjectNotFoundException>();
+            Customer.Find(y => y.Id == "AROUT").Should().Be(null);
         }
 
         [Test]

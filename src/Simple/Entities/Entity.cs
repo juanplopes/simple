@@ -121,10 +121,6 @@ namespace Simple.Entities
             return Service.Evict(ThisAsT);
         }
 
-        public virtual T Persist()
-        {
-            return Service.Persist(ThisAsT);
-        }
 
         public virtual T Save()
         {
@@ -136,9 +132,9 @@ namespace Simple.Entities
             return Service.Update(ThisAsT);
         }
 
-        public virtual void Delete()
+        public virtual int Delete()
         {
-            Service.Delete(ThisAsT);
+            return Service.Delete(ThisAsT);
         }
 
 

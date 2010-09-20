@@ -25,14 +25,13 @@ namespace Simple.Entities
 
         IPage<T> Linq(LazyExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, LazyExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression);
 
-        void Delete(object id);
-        void Delete(T entity);
+        int Delete(object id);
+        int Delete(T entity);
         int Delete(SpecBuilder<T> map);
 
         T SaveOrUpdate(T entity);
         T Save(T entity);
         T Update(T entity);
-        T Persist(T entity);
         ValidationList Validate(T entity);
         ValidationList ValidateProperty(T entity, params string[] propName);
 
