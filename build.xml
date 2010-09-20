@@ -147,7 +147,7 @@
     <Zip Files="@(ZipFiles)" ZipFileName="$(PackageDir)\$(MainLibraryName).zip" WorkingDirectory="$(PackageLibDir)"/>
   </Target>
 
-  <Target Name="Publish" DependsOnTargets="Test;Package">
+  <Target Name="Publish" DependsOnTargets="Clean;Test;Package">
     <UploadToGoogleCode
      UserName="$(GCUsername)"
      Password="$(GCPassword)"
