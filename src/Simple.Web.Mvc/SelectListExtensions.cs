@@ -13,32 +13,45 @@ namespace Simple.Web.Mvc
 {
     public static class SelectListExtensions
     {
-        public static ModelSelectList<P> FindSelectList<T, P>(this IViewDataContainer view, Expression<Func<T, P>> member, string viewDataKey)
+        public static IModelSelectList FindSelectList<T, P>(this IViewDataContainer view, Expression<Func<T, P>> member, string viewDataKey)
         {
-            var list = view.ViewData[viewDataKey] as ModelSelectList<P>;
+            var list = view.ViewData[viewDataKey] as IModelSelectList;
             var viewData = view.ViewData;
-            if (list != null)
-            {
-                var model = SafeNullable.Get(() => member.Compile()((T)viewData.Model)).ObjectValue;
-                if (model != null)
-                {
-                    list = list.Select((P)model);
-                }
-                else
-                {
-                    ModelState modelState;
-                    viewData.ModelState.TryGetValue(member.GetMemberName(), out modelState);
-                    if (modelState != null && modelState.Value != null)
-                        list = list.SelectValue(modelState.Value.AttemptedValue);
-                }
-                return list;
-            }
-            else
-            {
+
+            if (list == null)
                 return new ModelSelectList<P>(new P[0], x => x, x => x);
-            }
+
+            var model = SafeNullable.Get(() => member.Compile()((T)viewData.Model)).ObjectValue;
+            if (model != null)
+                list = list.Select((P)model);
+            else
+                list = FromModelState(member.GetMemberName(), list, viewData);
+
+            return list;
 
         }
+
+        public static IModelSelectList FindSelectList(this IViewDataContainer view, string memberName, string viewDataKey)
+        {
+            var list = view.ViewData[viewDataKey] as IModelSelectList;
+            var viewData = view.ViewData;
+            if (list == null)
+                return new ModelSelectList<string>(new string[0], x => x, x => x);
+
+            list = FromModelState(memberName, list, viewData);
+
+            return list;
+        }
+
+        private static IModelSelectList FromModelState(string memberName, IModelSelectList list, ViewDataDictionary viewData)
+        {
+            ModelState modelState;
+            viewData.ModelState.TryGetValue(memberName, out modelState);
+            if (modelState != null && modelState.Value != null)
+                list = list.SelectValue(modelState.Value.AttemptedValue);
+            return list;
+        }
+
 
 
         public static ModelSelectList<T> ToSelectList<T>(this IEnumerable<T> list, Func<T, object> valueSelector, Func<T, object> textSelector)
@@ -63,6 +76,22 @@ namespace Simple.Web.Mvc
                 .Select(expr)
                 .Options(list);
         }
+
+        public static Select AutoSelect(this IViewDataContainer html, string name)
+        {
+            return html.AutoSelect(name, name);
+        }
+
+
+        public static Select AutoSelect(this IViewDataContainer html, string name, string viewDataKey)
+        {
+            var list = html.FindSelectList(name, viewDataKey);
+            if (list == null) throw new ArgumentException("viewDataKey must contain a ModelSelectList<T>");
+
+            return html.Select(name).Options(list);
+        }
+
+
 
     }
 }

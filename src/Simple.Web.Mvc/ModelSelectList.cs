@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace Simple.Web.Mvc
 {
-    public class ModelSelectList<T> : ReadOnlyCollection<SelectListItem>
+    public class ModelSelectList<T> : ReadOnlyCollection<SelectListItem>, IModelSelectList<T>
     {
         public Func<T, object> ValueSelector { get; protected set; }
         public Func<T, object> TextSelector { get; set; }
@@ -40,19 +40,30 @@ namespace Simple.Web.Mvc
             }
         }
 
-        public ModelSelectList<T> Sort()
+        public IModelSelectList Sort()
         {
             return new ModelSelectList<T>(this.OrderBy(x => x.Text).ToList(), ValueSelector, TextSelector);
         }
 
-        public ModelSelectList<T> Select(params T[] models)
+        public IModelSelectList<Q> Select<Q>(params Q[] models)
+        {
+            return this.As<Q>().Select(models);
+        }
+
+        public IModelSelectList<T> Select(params T[] models)
         {
             models = models ?? new T[0];
             var selectedValues = models.Select(x => SafeNullable.Get(() => ValueSelector(x))).ToArray();
-            return SelectValue(selectedValues);
+            return SelectValue(selectedValues).As<T>();
         }
 
-        public ModelSelectList<T> SelectValue(params object[] selectedValues)
+        public IModelSelectList<Q> As<Q>()
+        {
+            return (IModelSelectList<Q>)this;
+        }
+
+
+        public IModelSelectList SelectValue(params object[] selectedValues)
         {
             selectedValues = selectedValues ?? new object[0];
             var selectedStrings = new HashSet<string>(selectedValues.Select(x => string.Format("{0}", x)));
@@ -68,7 +79,7 @@ namespace Simple.Web.Mvc
             return new ModelSelectList<T>(list, ValueSelector, TextSelector);
         }
 
-        public ModelSelectList<T> ClearSelection()
+        public IModelSelectList ClearSelection()
         {
             var list = new List<SelectListItem>();
             foreach (var item in this)
