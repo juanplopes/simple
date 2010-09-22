@@ -13,17 +13,27 @@ namespace Simple.Data.Context
 
         public IDataContext EnterContext()
         {
-            var contextList = GetContextList();
-            var curContext = GetContext(false);
+            var context = GetContext(false);
 
-            Func<ISession> addCreator = () => Simply.Do[ConfigKey].OpenSession();
-            Func<ISession> defCreator =
-                (curContext == null ? addCreator : () => curContext.Session);
+            if (context == null)
+                context = new DataContext(() => Simply.Do[ConfigKey].OpenSession());
+            else
+                context = context.NewContext();
 
-            var context = new DataContext(defCreator, addCreator, curContext == null);
-            contextList.AddLast(context);
+            SetContext(context);
 
             return context;
+        }
+
+        public IEnumerable<IDataContext> GetContextList()
+        {
+            var last = GetContext(false);
+
+            while (last != null)
+            {
+                yield return last;
+                last = last.Parent;
+            }
         }
 
         public IDataContext GetContext()
@@ -31,35 +41,29 @@ namespace Simple.Data.Context
             return GetContext(true);
         }
 
-        protected IDataContext GetContext(bool throwException)
+        protected void SetContext(IDataContext context)
         {
-            var contextList = GetContextList();
+            _data.Set(_myKey, context);
+        }
 
-            IDataContext context = null;
-            while (contextList.Count > 0 && (context == null || !context.IsOpen))
-            {
-                context = contextList.Last.Value;
-                if (!context.IsOpen) contextList.RemoveLast();
-            }
+        public IDataContext GetContext(bool throwException)
+        {
+            var context = _data.Get<IDataContext>(_myKey);
 
-            if (context != null && context.IsOpen) return context;
+            while (context != null && !context.IsOpen)
+                context = context.Parent;
+
+            while (context != null && context.Child != null && context.Child.IsOpen)
+                context = context.Child;
+
+            if (context != null) return context;
             else if (throwException) throw new InvalidOperationException("There is no open DataContext");
             else return null;
         }
 
-        protected LinkedList<IDataContext> GetContextList()
-        {
-            var col = _data.Get<LinkedList<IDataContext>>(_myKey);
-            if (col == null)
-            {
-                col = new LinkedList<IDataContext>();
-                _data.Set(_myKey, col);
-            }
-            return col;
-        }
+
 
         #region IDataContextFactory Members
-
 
         public NHibernate.ISession GetSession()
         {
@@ -68,15 +72,7 @@ namespace Simple.Data.Context
 
         public NHibernate.ISession NewSession()
         {
-            var context = GetContext(false);
-            if (context == null)
-            {
-                throw new InvalidOperationException("There is no open datacontext");
-            }
-            else
-            {
-                return context.Session;
-            }
+            return GetContext(true).NewSession();
         }
 
         #endregion

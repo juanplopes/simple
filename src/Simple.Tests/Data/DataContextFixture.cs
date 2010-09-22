@@ -79,6 +79,55 @@ namespace Simple.Tests.Data
             }
         }
 
+        [Test]
+        public void ParentingWillFollowCorrectOrder()
+        {
+            using (var dx = MySimply.EnterContext())
+            {
+                dx.Parent.Should().Be(null);
+                using (var dx2 = MySimply.EnterContext())
+                {
+                    dx.Child.Should().Be(dx2);
+                    dx2.Parent.Should().Be(dx);
+
+                    using (var dx3 = MySimply.EnterContext())
+                    {
+                        dx2.Child.Should().Be(dx3);
+                        dx3.Parent.Should().Be(dx2);
+                        using (var dx4 = MySimply.EnterContext())
+                        {
+                            dx3.Child.Should().Be(dx4);
+                            dx4.Parent.Should().Be(dx3);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        [Test]
+        public void ClosingParentContextAlsoClosesChildren()
+        {
+            using (var dx = MySimply.EnterContext())
+            {
+                var dx2 = MySimply.EnterContext();
+                var dx3 = MySimply.EnterContext();
+                var dx4 = MySimply.EnterContext();
+                var dx5 = MySimply.EnterContext();
+
+                dx3.Exit();
+                dx3.IsOpen.Should().Be.False();
+                dx4.IsOpen.Should().Be.False();
+                dx5.IsOpen.Should().Be.False();
+
+                dx2.IsOpen.Should().Be.True();
+
+                MySimply.GetContext().Should().Be(dx2);
+            }
+        }
+
+
+
         [Test, ExpectedException(typeof(ObjectDisposedException))]
         public void NestedTransactions()
         {

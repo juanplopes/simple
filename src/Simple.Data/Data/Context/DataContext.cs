@@ -8,87 +8,106 @@ namespace Simple.Data.Context
 {
     public class DataContext : IDataContext
     {
+        object _lock = new object();
+
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
-        #region IDataContext Members
+        public IDataContext Parent { get; protected set; }
+        public IDataContext Child { get; protected set; }
+        protected bool HasChild { get { return Child != null && Child.IsOpen; } }
 
-        protected Func<ISession> _mainCreator = null;
-        protected Func<ISession> _addCreator = null;
-        protected bool _isMain = false;
-        protected ISession _defaultSession = null;
-        protected IList<ISession> _addSessions = new List<ISession>();
-        protected bool _isOpen = false;
-
-        internal DataContext(Func<ISession> mainSessionCreator,
-            Func<ISession> additionalSessionCreator, bool isMain)
-        {
-            _mainCreator = mainSessionCreator;
-            _addCreator = additionalSessionCreator;
-            _isMain = isMain;
-            _isOpen = true;
-        }
-
-        public bool IsOpen
-        {
-            get
-            {
-                return _isOpen;
-            }
-        }
-
+        protected ISession session = null;
         public NHibernate.ISession Session
         {
             get
             {
-                if (_defaultSession == null)
-                    _defaultSession = _mainCreator();
+                if (session == null)
+                    session = createMainSession();
 
-                return _defaultSession;
+                return session;
             }
         }
+        public bool IsOpen { get; protected set; }
 
-        public NHibernate.ISession NewSession()
+        protected bool IsMain { get { return Parent == null; } }
+        protected ICollection<ISession> AdditionalSessions { get; set; }
+
+        protected Func<ISession> createMainSession = null;
+        protected Func<ISession> createAdditionalSession = null;
+
+        public DataContext(Func<ISession> newSession) : this(null, newSession) { }
+
+        protected DataContext(IDataContext parent, Func<ISession> newSession)
         {
-            lock (this)
+            Parent = parent;
+            createMainSession = IsMain ? newSession : () => parent.Session;
+            createAdditionalSession = newSession;
+            IsOpen = true;
+            AdditionalSessions = new LinkedList<ISession>();
+        }
+
+        public ISession NewSession()
+        {
+            lock (_lock)
             {
-                ISession ret = null;
-                _addSessions.Add(ret = _addCreator());
+                ISession ret = createAdditionalSession();
+                AdditionalSessions.Add(ret);
                 return ret;
             }
         }
 
-        #endregion
+        public IDataContext NewContext()
+        {
+            lock (_lock)
+            {
+                if (!IsOpen) throw new InvalidOperationException("Cannot create child context on closed object.");
+                if (HasChild) throw new InvalidOperationException("Each context can only have one open child context at a moment");
+
+                return Child = new DataContext(this, createAdditionalSession);
+            }
+        }
 
         public void Dispose()
         {
-            if (_isOpen)
+            lock (_lock)
             {
-                _isOpen = false;
+                if (!IsOpen) return;
 
-                if (_isMain)
-                    CloseMainSession();
+                IsOpen = false;
+                
+                if (HasChild)
+                    Child.Dispose();
 
                 CloseAdditionalSessions();
+
+                if (IsMain)
+                    CloseMainSession();
             }
         }
 
         protected void CloseMainSession()
         {
-            if (_defaultSession != null)
+            lock (_lock)
             {
-                if (!_defaultSession.IsOpen)
-                    throw new InvalidOperationException("You shoudn't close the main session. Correct your code right now");
-                FlushSession(_defaultSession);
-                _defaultSession.Close();
+                if (session != null)
+                {
+                    if (!session.IsOpen)
+                        throw new InvalidOperationException("You shoudn't close the main session. Correct your code right now");
+                    FlushSession(session);
+                    session.Close();
+                }
             }
         }
 
         protected void CloseAdditionalSessions()
         {
-            foreach (ISession session in _addSessions)
+            lock (_lock)
             {
-                FlushSession(session);
-                session.Close();
+                foreach (ISession session in AdditionalSessions)
+                {
+                    FlushSession(session);
+                    session.Close();
+                }
             }
         }
 

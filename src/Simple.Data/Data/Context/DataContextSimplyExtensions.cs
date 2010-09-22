@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using NHibernate;
 using Simple.Data.Context;
+using System.Collections.Generic;
 
 namespace Simple
 {
@@ -13,6 +14,14 @@ namespace Simple
         public static IDataContext GetContext(this Simply simple)
         {
             return DataContextFactory.Do[simple.ConfigKey].GetContext();
+        }
+        public static IEnumerable<IDataContext> GetContextList(this Simply simple)
+        {
+            return DataContextFactory.Do[simple.ConfigKey].GetContextList();
+        }
+        public static IDataContext GetContext(this Simply simple, bool throwException)
+        {
+            return DataContextFactory.Do[simple.ConfigKey].GetContext(throwException);
         }
         public static ISession GetSession(this Simply simple)
         {
