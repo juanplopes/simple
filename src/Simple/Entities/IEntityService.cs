@@ -23,8 +23,6 @@ namespace Simple.Entities
         IList<T> List(SpecBuilder<T> map);
         IPage<T> List(SpecBuilder<T> map, SpecBuilder<T> reduce);
 
-        IPage<T> Linq(LazyExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, LazyExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression);
-
         int Delete(object id);
         int Delete(T entity);
         int Delete(SpecBuilder<T> map);

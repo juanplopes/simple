@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Linq;
+using Simple.Common;
 
 namespace Simple.Entities.QuerySpec
 {
@@ -10,19 +11,23 @@ namespace Simple.Entities.QuerySpec
     {
         public IEnumerable<ISpecItem<T>> Items { get; protected set; }
 
-        public SpecBuilder() : this(new LinkedList<ISpecItem<T>>()) { }
+        public SpecBuilder() : this(null) { }
         public SpecBuilder(IEnumerable<ISpecItem<T>> items)
         {
-            this.Items = new LinkedList<ISpecItem<T>>(items);
+            this.Items = new LazyEnumerable<ISpecItem<T>>(items ?? new ISpecItem<T>[0]);
         }
 
         public SpecBuilder<T> Merge(SpecBuilder<T> spec)
         {
+            if (spec == null) return this;
+
             return this.Merge(spec.Items);
         }
 
         public SpecBuilder<T> Merge(IEnumerable<ISpecItem<T>> items)
         {
+            if (items == null) return this;
+
             return new SpecBuilder<T>(this.Items.Union(items));
         }
 

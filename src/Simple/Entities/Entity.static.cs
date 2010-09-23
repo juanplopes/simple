@@ -154,10 +154,9 @@ namespace Simple.Entities
             return Service.List(map, reduce);
         }
 
-
         public static IPage<T> Linq(Expression<Func<IQueryable<T>, IQueryable<T>>> map, Expression<Func<IQueryable<T>, IQueryable<T>>> reduce)
         {
-            return Service.Linq(map.Funcletize().ToLazyExpression(), reduce.Funcletize().ToLazyExpression());
+            return Service.List(map.ToSpec(), reduce.ToSpec());
         }
 
         public static int Delete(Expression<Func<T, bool>> filter)

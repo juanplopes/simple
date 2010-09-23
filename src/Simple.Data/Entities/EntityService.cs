@@ -133,26 +133,10 @@ namespace Simple.Entities
         public virtual IPage<T> List(SpecBuilder<T> map, SpecBuilder<T> reduce)
         {
             var mapped = Query().ApplySpecs(map);
+            var reduced = mapped.ApplySpecs(reduce);
 
-            return new Page<T>(mapped.ApplySpecs(reduce).ToList(), mapped.Count());
+            return new Page<T>(reduced.ToList(), mapped.Count());
         }
-
-        public virtual IPage<T> Linq(LazyExpression<Func<IQueryable<T>, IQueryable<T>>> mapExpression, LazyExpression<Func<IQueryable<T>, IQueryable<T>>> reduceExpression)
-        {
-            var map = mapExpression.Real.Compile();
-            var reduce = reduceExpression.Real.Compile();
-
-            var linq = Query();
-
-            linq = map(linq);
-            var count = linq.Count();
-
-            linq = reduce(linq);
-            var list = linq.ToList();
-
-            return new Page<T>(list, count);
-        }
-
 
         public virtual int Delete(object id)
         {

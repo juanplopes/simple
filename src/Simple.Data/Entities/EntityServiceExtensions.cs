@@ -18,15 +18,17 @@ namespace Simple
         {
             if (specs == null) return query;
 
-            return specs.Aggregate(query, (q, x) =>
-            {
-                q = q.ApplySpec<T, IFilterResolver<T>>(x, Singleton<FilterResolver<T>>.Do);
-                q = q.ApplySpec<T, IExpressionResolver<T>>(x, Singleton<ExpressionResolver<T>>.Do);
-                q = q.ApplySpec<T, IOrderByResolver<T>>(x, Singleton<OrderByResolver<T>>.Do);
-                q = q.ApplySpec<T, IFetchResolver<T>>(x, Singleton<FetchResolver<T>>.Do);
-                q = q.ApplySpec<T, ILimitsResolver<T>>( x, Singleton<LimitsResolver<T>>.Do);
-                return q;
-            });
+            return specs.Aggregate(query, ApplySpec);
+        }
+
+        private static IQueryable<T> ApplySpec<T>(this IQueryable<T> q, ISpecItem<T> spec)
+        {
+            q = q.ApplySpec<T, IFilterResolver<T>>(spec, Singleton<FilterResolver<T>>.Do);
+            q = q.ApplySpec<T, IExpressionResolver<T>>(spec, Singleton<ExpressionResolver<T>>.Do);
+            q = q.ApplySpec<T, IOrderByResolver<T>>(spec, Singleton<OrderByResolver<T>>.Do);
+            q = q.ApplySpec<T, IFetchResolver<T>>(spec, Singleton<FetchResolver<T>>.Do);
+            q = q.ApplySpec<T, ILimitsResolver<T>>(spec, Singleton<LimitsResolver<T>>.Do);
+            return q;
         }
 
         public static IQueryable<T> ApplySpec<T, R>(this IQueryable<T> query, ISpecItem<T> spec, R resolver)
