@@ -14,7 +14,7 @@ namespace Simple
             return query.ApplySpecs(specs.Items);
         }
 
-        public static IQueryable<T> ApplySpecs<T>(this IQueryable<T> query, IList<ISpecItem<T>> specs)
+        public static IQueryable<T> ApplySpecs<T>(this IQueryable<T> query, IEnumerable<ISpecItem<T>> specs)
         {
             if (specs == null) return query;
 

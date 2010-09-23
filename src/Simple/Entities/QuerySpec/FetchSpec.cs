@@ -9,10 +9,9 @@ namespace Simple.Entities.QuerySpec
     [Serializable]
     public class FetchSpec<T, TFetched> : SpecBuilder<T>
     {
-        public FetchSpec(IList<ISpecItem<T>> items, ISpecItem<T> fetch)
-            : base(items)
+        public FetchSpec(IEnumerable<ISpecItem<T>> items, ISpecItem<T> fetch)
+            : base(items.Union(fetch))
         {
-            Items.Add(fetch);
         }
 
         public FetchSpec<T, TFetching> ThenFetch<TFetching>(Expression<Func<TFetched, TFetching>> expr)

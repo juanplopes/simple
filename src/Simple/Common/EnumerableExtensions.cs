@@ -74,5 +74,10 @@ namespace Simple
             enumerable.EagerForeach(x => builder.Append(x), x => builder.Append(separator));
             return builder.ToString();
         }
+
+        public static IEnumerable<T> Union<T>(this IEnumerable<T> enumerable, params T[] items)
+        {
+            return enumerable.Union((IEnumerable<T>)items);
+        }
     }
 }

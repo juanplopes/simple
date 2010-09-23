@@ -65,7 +65,7 @@ namespace Simple.Tests.Common
             var str = seq.StringJoin(",");
 
             str.Should().Be("um,dois,três");
-        
+
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Simple.Tests.Common
         public void CanEagerForeachWithoutBetween()
         {
             var seq = new[] { "um", "dois", "três" };
-            
+
             var builder = new StringBuilder();
             seq.EagerForeach(x => builder.Append(x));
 
@@ -108,7 +108,7 @@ namespace Simple.Tests.Common
             var seq = new[] { "um", "dois", "três" };
 
             var builder = new StringBuilder();
-            seq.EagerForeach(x => builder.Append(x), x=>builder.Append(","));
+            seq.EagerForeach(x => builder.Append(x), x => builder.Append(","));
 
             builder.ToString().Should().Be("um,dois,três");
         }
@@ -153,6 +153,28 @@ namespace Simple.Tests.Common
             var seq = new Dictionary<string, string>() { { "2", "3" }, { "4", "5" } };
 
             seq.SafeGet("3").Should().Be(null);
+        }
+
+        [Test]
+        public void CanDoUnionOnSingleItem()
+        {
+            var seq = new[] { 1, 2, 3 };
+            seq.Union(4).Should().Have.SameSequenceAs(1, 2, 3, 4);
+        }
+
+        [Test]
+        public void CanDoUnionOnTwoItems()
+        {
+            var seq = new[] { 1, 2, 3 };
+            seq.Union(4, 6).Should().Have.SameSequenceAs(1, 2, 3, 4, 6);
+        }
+
+        [Test]
+        public void CanDoUnionOnArrayOfItems()
+        {
+            var seq = new[] { 1, 2, 3 };
+            var seq2 = new[] { 4, 5, 6 };
+            seq.Union(seq2).Should().Have.SameSequenceAs(1, 2, 3, 4, 5, 6);
         }
     }
 }

@@ -9,22 +9,19 @@ namespace Simple.Entities.QuerySpec
     [Serializable]
     public class OrderBySpec<T> : SpecBuilder<T>
     {
-        public OrderBySpec(IList<ISpecItem<T>> items, ISpecItem<T> fetch)
-            : base(items)
+        public OrderBySpec(IEnumerable<ISpecItem<T>> items, ISpecItem<T> item)
+            : base(items.Union(item))
         {
-            Items.Add(fetch);
         }
 
         public OrderBySpec<T> ThenBy(Expression<Func<T, object>> expr)
         {
-            Items.Add(new OrderThenByAscItem<T>(expr));
-            return this;
+            return new OrderBySpec<T>(Items, new OrderThenByAscItem<T>(expr));
         }
 
         public OrderBySpec<T> ThenByDesc(Expression<Func<T, object>> expr)
         {
-            Items.Add(new OrderThenByDescItem<T>(expr));
-            return this;
+            return new OrderBySpec<T>(Items, new OrderThenByDescItem<T>(expr));
         }
 
         public OrderBySpec<T> None

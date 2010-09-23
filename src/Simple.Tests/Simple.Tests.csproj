@@ -137,12 +137,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.resx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\SpecBuilderFixture.cs" />
     <Compile Include="Entities\ExpressionFixture.cs" />
     <Compile Include="Entities\FilterFixture.cs" />
     <Compile Include="Entities\LimitsFixture.cs" />
     <Compile Include="Entities\FetchFixture.cs" />
     <Compile Include="Entities\OrderByFixture.cs" />
-    <Compile Include="Entities\Samples.cs" />
     <Compile Include="Expressions\EmptyQueryableFixture.cs" />
     <Compile Include="Expressions\InvocationExpanderFixture.cs" />
     <Compile Include="Expressions\LazyExpressionFixture.cs" />

@@ -8,12 +8,22 @@ namespace Simple.Entities.QuerySpec
     [Serializable]
     public class SpecBuilder<T>
     {
-        public IList<ISpecItem<T>> Items { get; protected set; }
+        public IEnumerable<ISpecItem<T>> Items { get; protected set; }
 
-        public SpecBuilder() : this(new List<ISpecItem<T>>()) { }
-        public SpecBuilder(IList<ISpecItem<T>> items)
+        public SpecBuilder() : this(new LinkedList<ISpecItem<T>>()) { }
+        public SpecBuilder(IEnumerable<ISpecItem<T>> items)
         {
-            this.Items = items;
+            this.Items = new LinkedList<ISpecItem<T>>(items);
+        }
+
+        public SpecBuilder<T> Merge(SpecBuilder<T> spec)
+        {
+            return this.Merge(spec.Items);
+        }
+
+        public SpecBuilder<T> Merge(IEnumerable<ISpecItem<T>> items)
+        {
+            return new SpecBuilder<T>(this.Items.Union(items));
         }
 
         public FetchSpec<T, TFetching> Fetch<TFetching>(Expression<Func<T, TFetching>> expr)
@@ -38,26 +48,26 @@ namespace Simple.Entities.QuerySpec
 
         public SpecBuilder<T> Skip(int value)
         {
-            Items.Add(new SkipItem<T>(value));
-            return this;
+            return new SpecBuilder<T>(
+                Items.Union(new SkipItem<T>(value)));
         }
 
         public SpecBuilder<T> Take(int value)
         {
-            Items.Add(new TakeItem<T>(value));
-            return this;
+            return new SpecBuilder<T>(
+                Items.Union(new TakeItem<T>(value)));
         }
 
         public SpecBuilder<T> Filter(Expression<Func<T, bool>> expr)
         {
-            Items.Add(new FilterItem<T>(expr));
-            return this;
+            return new SpecBuilder<T>(
+                Items.Union(new FilterItem<T>(expr)));
         }
 
         public SpecBuilder<T> Expr(Expression<Func<IQueryable<T>, IQueryable<T>>> expr)
         {
-            Items.Add(new ExpressionItem<T>(expr));
-            return this;
+            return new SpecBuilder<T>(
+                Items.Union(new ExpressionItem<T>(expr)));
         }
     }
 }
