@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
 
 namespace Simple.Entities.QuerySpec
 {
@@ -50,6 +51,12 @@ namespace Simple.Entities.QuerySpec
         public SpecBuilder<T> Filter(Expression<Func<T, bool>> expr)
         {
             Items.Add(new FilterItem<T>(expr));
+            return this;
+        }
+
+        public SpecBuilder<T> Expr(Expression<Func<IQueryable<T>, IQueryable<T>>> expr)
+        {
+            Items.Add(new ExpressionItem<T>(expr));
             return this;
         }
     }

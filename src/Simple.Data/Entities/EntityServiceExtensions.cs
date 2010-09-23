@@ -20,10 +20,11 @@ namespace Simple
 
             return specs.Aggregate(query, (q, x) =>
             {
-                q = ApplySpec<T, IFilterResolver<T>>(q, x, Singleton<FilterResolver<T>>.Do);
-                q = ApplySpec<T, IOrderByResolver<T>>(q, x, Singleton<OrderByResolver<T>>.Do);
-                q = ApplySpec<T, IFetchResolver<T>>(q, x, Singleton<FetchResolver<T>>.Do);
-                q = ApplySpec<T, ILimitsResolver<T>>(q, x, Singleton<LimitsResolver<T>>.Do);
+                q = q.ApplySpec<T, IFilterResolver<T>>(x, Singleton<FilterResolver<T>>.Do);
+                q = q.ApplySpec<T, IExpressionResolver<T>>(x, Singleton<ExpressionResolver<T>>.Do);
+                q = q.ApplySpec<T, IOrderByResolver<T>>(x, Singleton<OrderByResolver<T>>.Do);
+                q = q.ApplySpec<T, IFetchResolver<T>>(x, Singleton<FetchResolver<T>>.Do);
+                q = q.ApplySpec<T, ILimitsResolver<T>>( x, Singleton<LimitsResolver<T>>.Do);
                 return q;
             });
         }

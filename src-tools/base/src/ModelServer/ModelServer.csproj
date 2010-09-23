@@ -103,6 +103,7 @@
     <Compile Include="Tools\Macros\MagicMacro.cs" />
     <Compile Include="Tools\Macros\PrepareMacro.cs" />
     <Compile Include="Tools\Macros\RefreshMacro.cs" />
+    <Compile Include="Tools\Macros\SystemCheckMacro.cs" />
     <Compile Include="Tools\Macros\TestPrepareMacro.cs" />
     <Compile Include="Tools\Options.cs" />
     <Compile Include="Tools\ToolsStarter.cs" />

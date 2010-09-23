@@ -93,6 +93,7 @@
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\IEntityService.cs" />
     <Compile Include="Entities\IPage.cs" />
+    <Compile Include="Entities\QuerySpec\ExpressionSpec.cs" />
     <Compile Include="Entities\QuerySpec\FilterSpec.cs" />
     <Compile Include="Entities\QuerySpec\FetchSpec.cs" />
     <Compile Include="Entities\QuerySpec\ISpecItem.cs" />

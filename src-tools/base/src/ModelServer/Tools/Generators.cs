@@ -19,6 +19,7 @@ namespace Example.Project.Tools
 
             registry.Register<InsertDataCommand>("data").WithOption("testdata", x => x.ForceTestData);
             registry.Register<PrepareMacro>("prepare");
+            registry.Register<SystemCheckMacro>("check");
 
             if (production)
             {

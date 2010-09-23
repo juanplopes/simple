@@ -137,6 +137,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.resx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ExpressionFixture.cs" />
     <Compile Include="Entities\FilterFixture.cs" />
     <Compile Include="Entities\LimitsFixture.cs" />
     <Compile Include="Entities\FetchFixture.cs" />

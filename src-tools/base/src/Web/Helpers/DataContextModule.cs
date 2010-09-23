@@ -14,16 +14,21 @@ namespace Example.Project.Web.Helpers
 {
     public class DataContextModule : SimpleModule
     {
+        IDataContext context = null;
         protected override void OnBeginRequest(object sender, EventArgs e)
         {
-            Context.Context.Items["DataContext"] = Simply.Do.EnterContext();
+            context = Simply.Do.EnterContext();
         }
 
         protected override void OnEndRequest(object sender, EventArgs e)
         {
-            var context = Context.Context.Items["DataContext"] as DataContext;
             if (context != null)
                 context.Exit();
+        }
+
+        protected override void OnError(object sender, EventArgs e)
+        {
+            //base.OnError(sender, e);
         }
 
     }

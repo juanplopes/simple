@@ -101,6 +101,7 @@
     <Compile Include="Data\Extensions.cs" />
     <Compile Include="Data\TupleToDictionaryTransformer.cs" />
     <Compile Include="Data\TupleToPropertiesTransformer.cs" />
+    <Compile Include="Entities\ExpressionResolver.cs" />
     <Compile Include="Entities\EntityServiceExtensions.cs" />
     <Compile Include="Entities\FetchResolver.cs" />
     <Compile Include="Entities\FilterResolver.cs" />

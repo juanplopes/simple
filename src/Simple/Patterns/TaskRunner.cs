@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using log4net;
+using System.Reflection;
 
 namespace Simple.Patterns
 {
@@ -35,6 +37,27 @@ namespace Simple.Patterns
             public string ResultTypeTag
             {
                 get { return ResultType.ToString().ToLower(); }
+            }
+
+            public void Log()
+            {
+                Log(Simply.Do.Log(MethodBase.GetCurrentMethod()));
+            }
+
+            public void Log(ILog log)
+            {
+                string message = "{0}: {1}".AsFormat(Description, Message);
+                switch (ResultType)
+                {
+                    case Type.Success:
+                        log.Info(message); break;
+                    case Type.Warning:
+                        log.Warn(message); break;
+                    case Type.Failure:
+                        log.Error(message); break;
+                    default:
+                        log.Debug(message); break;
+                }
             }
 
             public string Description { get; set; }
