@@ -13,6 +13,8 @@ namespace Simple.Web.Mvc
     {
         HttpApplication context;
         protected HttpApplication Context { get { return context; } }
+        static bool hasStarted = false;
+        static object _lock = new object();
 
         public void Dispose()
         {
@@ -20,10 +22,18 @@ namespace Simple.Web.Mvc
 
         public void Init(HttpApplication context)
         {
-            this.context = context;
-            context.BeginRequest += OnBeginRequest;
-            context.EndRequest += OnEndRequest;
-            context.Error += OnError;
+            if (!hasStarted)
+                lock (_lock)
+                {
+                    if (!hasStarted)
+                    {
+                        this.context = context;
+                        context.BeginRequest += OnBeginRequest;
+                        context.EndRequest += OnEndRequest;
+                        context.Error += OnError;
+                        hasStarted = true;
+                    }
+                }
         }
 
         protected virtual void OnError(object sender, EventArgs e)

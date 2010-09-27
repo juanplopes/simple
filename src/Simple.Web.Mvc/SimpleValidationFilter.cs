@@ -27,7 +27,7 @@ namespace Simple.Web.Mvc
             {
                 var state = controller.ViewData.ModelState[error.Key];
 
-                if (state != null) state.Errors.Clear();
+                if (state != null && state.Errors.Count > 0) continue;
 
                 foreach (var message in error)
                 {
