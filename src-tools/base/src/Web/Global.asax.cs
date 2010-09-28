@@ -51,5 +51,16 @@ namespace Example.Project.Web
             ModelValidatorProviders.Providers.Clear();
             new Configurator().StartServer<ServerStarter>();
         }
+
+        protected void Application_BeginRequest()
+        {
+            Simply.Do.EnterContext();
+        }
+        protected void Application_EndRequest()
+        {
+            var ctx = Simply.Do.GetContext(false);
+            if (ctx != null)
+                ctx.Dispose();
+        }
     }
 }

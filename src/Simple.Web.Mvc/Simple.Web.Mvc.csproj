@@ -79,7 +79,6 @@
     <Compile Include="NullTempDataProvider.cs" />
     <Compile Include="NoticeActionResult.cs" />
     <Compile Include="SelectListExtensions.cs" />
-    <Compile Include="SimpleModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleValidationFilter.cs" />
     <Compile Include="TagBuilderExtensions.cs" />

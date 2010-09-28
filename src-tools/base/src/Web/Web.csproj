@@ -104,7 +104,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\DataContextModule.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\NoticeExtensions.cs" />
     <Compile Include="HomeController.generated.cs">
