@@ -26,10 +26,9 @@ namespace Example.Project.Config
 
         protected override void InitLocations(FileLocator paths)
         {
-            paths.Add(CodeBase(this.GetType(), "Config", Environment));
-            paths.Add(CodeBase(this.GetType(), "cfg"));
-            paths.Add(CodeBase(this.GetType(), "..", "cfg"));
-            paths.Add(CodeBase(this.GetType(), "..", "..", "cfg"));
+            ChangeToRoot();
+            paths.Add(Path.Combine("cfg", Environment));
+            paths.Add("cfg");
         }
 
         public override ConfigDef ConfigClient()
@@ -59,9 +58,15 @@ namespace Example.Project.Config
             get { return "nhibernate.{0}.cache".AsFormat(Environment); }
         }
 
-        
+
         private void ConfigureNHibernate()
         {
+            if (IsProduction)
+            {
+                ImmediateConfigureNHibernate();
+                return;
+            }
+
             var nhCache = new NHibernateCache(
                 GetRootedPath(NHibernateCacheFile), this.GetType().Assembly);
             var nhConfig = nhCache.Get();
@@ -72,10 +77,15 @@ namespace Example.Project.Config
             }
             else
             {
-                ConfigFile(x => x.NHibernate(), "NHibernate.config");
-                Config(x => x.DisableDirtyEntityUpdate());
+                ImmediateConfigureNHibernate();
                 nhCache.Set(Do.GetNHibernateConfig());
             }
+        }
+
+        private void ImmediateConfigureNHibernate()
+        {
+            ConfigFile(x => x.NHibernate(), "NHibernate.config");
+            Config(x => x.DisableDirtyEntityUpdate());
         }
 
         public Configurator() : this(null) { }

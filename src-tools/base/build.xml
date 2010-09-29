@@ -56,6 +56,11 @@
   </Target>
 
 
+  <Target Name="CopyToken">
+    <Copy SourceFiles="simple.token" DestinationFolder="$(BuildDir)"/>
+  </Target>
+
+
   <Target Name="DryBuild" DependsOnTargets="GenerateAssemblyInfo">
     <MSBuild Projects="@(SolutionFile)" Targets="Build" Properties="Configuration=$(Configuration)"/>
   </Target>
@@ -65,30 +70,26 @@
     <DeleteTree Directories="$(BuildDir)" ContinueOnError="true"/>
   </Target>
 
-  <Target Name="Test" DependsOnTargets="GenerateAssemblyInfo">
+  <Target Name="Test" DependsOnTargets="GenerateAssemblyInfo;CopyToken">
     <MSBuild Projects="@(TestProject);@(ServerProject)" Properties="OutDir=$(TestBuildDir);Configuration=$(Configuration)"/>
-    <Copy SourceFiles="simple.token" DestinationFolder="$(BuildDir)"/>
 
     <ItemGroup>
-      <TestConfigFiles Include="$(TestBuildDir)\Config\Test\*.config"/>
+      <TestConfigFiles Include="cfg\Test\*.config"/>
     </ItemGroup>
-    <Copy SourceFiles="@(TestConfigFiles)" DestinationFolder="$(TestBuildDir)\cfg"/>
+    <Copy SourceFiles="@(TestConfigFiles)" DestinationFolder="$(BuildDir)\cfg\Test"/>
 
-    <DeleteTree Directories="$(TestBuildDir)\Config" ContinueOnError="true" />
-    <Exec Command="&quot;$(TestBuildDir)\$(ServerAssembly)&quot; testprepare" WorkingDirectory="$(TestBuildDir)"/>
+    <Exec Command="&quot;$(TestBuildDir)\$(ServerAssembly)&quot; Test testprepare" WorkingDirectory="$(TestBuildDir)"/>
     <Nunit Assemblies="$(TestBuildDir)\$(TestAssembly)" ToolPath="util\nunit"/>
     <DeleteTree Directories="$(TestBuildDir)" ContinueOnError="true"/>
+    <DeleteTree Directories="$(BuildDir)\cfg\Test" ContinueOnError="true"/>
   </Target>
 
-  <Target Name="Server" DependsOnTargets="GenerateAssemblyInfo">
+  <Target Name="Server" DependsOnTargets="GenerateAssemblyInfo;MakeConfig">
     <MSBuild Projects="@(ServerProject)" Properties="OutDir=$(ServerBuildDir);Configuration=$(Configuration)"/>
-    <CallTarget Targets="MakeConfig"/>
-    <DeleteTree Directories="$(ServerBuildDir)\Config" ContinueOnError="true" />
-    <Copy SourceFiles="simple.token" DestinationFolder="$(BuildDir)"/>
-    <WriteLinesToFile  File="$(BuildDir)\simple.cmd" Lines ="$(ServerBuildDirName)\$(ServerAssembly)" Overwrite="true"/>
+    <WriteLinesToFile File="$(BuildDir)\simple.cmd" Lines ="$(ServerBuildDirName)\$(ServerAssembly)" Overwrite="true"/>
   </Target>
 
-  <Target Name="Web" DependsOnTargets="GenerateAssemblyInfo">
+  <Target Name="Web" DependsOnTargets="GenerateAssemblyInfo;MakeConfig">
     <MakeDir Directories="$(WebSourceDir)"/>
     <MSBuild Projects="@(WebProject)"
              Targets="Build;ResolveReferences;_CopyWebApplication"
@@ -96,15 +97,8 @@
 
     <DeleteTree Directories="$(WebBuildDir)" ContinueOnError="true"/>
     <AspNetCompiler Debug="False" PhysicalPath="$(WebSourceDir)" VirtualPath="$(WebVirtualPath)" TargetPath="$(WebBuildDir)"/>
-    
+
     <DeleteTree Directories="$(WebSourceDir)" ContinueOnError="true"/>
-
-    <CallTarget Targets="MakeConfig"/>
-    <DeleteTree Directories="$(WebBuildDir)\bin\Config" ContinueOnError="true" />
-
-    <FileUpdate Files="$(WebBuildDir)\web.config"
-              Regex="\&lt;compilation debug=&quot;true&quot;\&gt;"
-              ReplacementText="&lt;compilation debug=&quot;false&quot;&gt;" />
   </Target>
 
 
@@ -130,23 +124,21 @@
     <Exec Command="&quot;$(ServerBuildDir)\$(ServerAssembly)&quot; prepare" WorkingDirectory="$(ServerBuildDir)"/>
   </Target>
 
-  <Target Name="MakeConfig">
+  <Target Name="MakeConfig" DependsOnTargets="CopyToken">
     <ItemGroup>
-      <PackageConfigBase Include="$(ServerBuildDir)\Config\$(Environment)\*.*"/>
-      <PackageConfigBase Include="$(WebBuildDir)\bin\Config\$(Environment)\*.*"/>
+      <PackageConfigBase Include="cfg\$(Environment)\*.*"/>
     </ItemGroup>
 
     <MakeDir Directories="$(ConfigDir)"/>
-    <Copy SourceFiles="@(PackageConfigBase)" DestinationFolder="$(ConfigDir)"/>
-
+    <Copy SourceFiles="@(PackageConfigBase)" DestinationFolder="$(ConfigDir)" ContinueOnError="true" />
   </Target>
 
   <Target Name="CIBuild">
-    <CallTarget Targets="Test;Rebuild;Prepare;Publish"/>
+    <CallTarget Targets="Clean;Test;Build;Prepare"/>
   </Target>
-  
+
   <Target Name="Publish">
-  	<WebDirectoryDelete VirtualDirectoryName="$(WebVirtualPath)" ContinueOnError="true" />
+    <WebDirectoryDelete VirtualDirectoryName="$(WebVirtualPath)" ContinueOnError="true" />
     <WebDirectoryCreate VirtualDirectoryName="$(WebVirtualPath)"
                 VirtualDirectoryPhysicalPath="$(WebBuildDir)" />
   </Target>

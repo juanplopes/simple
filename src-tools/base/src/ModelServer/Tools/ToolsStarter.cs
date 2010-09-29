@@ -25,8 +25,9 @@ namespace Example.Project.Tools
 
             VerifyContracts(args);
 
-            new ConsoleCommandReader(new Context(), 
-                Configurator.IsProduction).Run(args);
+            var env = args.FirstOrDefault();
+            new ConsoleCommandReader(new Context(env), 
+                Configurator.IsProduction).Run(args.Skip(1));
         }
 
         private static void VerifyContracts(string[] args)

@@ -17,12 +17,15 @@ namespace Example.Project.Tools.Macros
         
         public void Execute()
         {
-            logger.Info("Migrating...");
-            new MigrateTool() { Version = 1 }.Execute();
-            new MigrateTool() { Version = null }.Execute();
-            
-            logger.Info("Executing...");
-            new InsertDataCommand { ForceTestData = true }.Execute();
+            using (Context.Test)
+            {
+                logger.Info("Migrating...");
+                new MigrateTool() { Version = 1 }.Execute();
+                new MigrateTool() { Version = null }.Execute();
+
+                logger.Info("Executing...");
+                new InsertDataCommand { ForceTestData = true }.Execute();
+            }
         }
     }
 }

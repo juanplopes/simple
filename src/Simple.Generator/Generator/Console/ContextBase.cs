@@ -15,10 +15,12 @@ namespace Simple.Generator.Console
 
         protected bool OverrideLogConfig { get { return true; } }
         protected string ProjectText { get; set; }
+        protected string DefaultEnvironment { get; set; }
 
-        protected ContextBase(string projectText)
+        protected ContextBase(string projectText, string defaultEnv)
         {
             ProjectText = projectText;
+            DefaultEnvironment = defaultEnv;
             Init();
         }
 

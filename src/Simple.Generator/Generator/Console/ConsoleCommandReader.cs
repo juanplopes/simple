@@ -16,16 +16,14 @@ namespace Simple.Generator.Console
             this.SafeMode = safe;
         }
 
-        public void Run(string[] args)
+        public void Run(IEnumerable<string> args)
         {
-            if (args.Length == 0)
-                for (string command; ReadCommand(out command); )
-                    Context.Execute(command, true);
-
-            else
+            if (args.Any())
                 foreach (var command in args)
                     Context.Execute(command, false);
-
+            else
+                for (string command; ReadCommand(out command); )
+                    Context.Execute(command, true);
         }
 
         private bool ReadCommand(out string command)

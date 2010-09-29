@@ -15,8 +15,8 @@ namespace Example.Project.Tools
         public static IDisposable Development { get { return Simply.KeyContext(null); } }
         public static IDisposable Test { get { return Simply.KeyContext(Configurator.Test); } }
         
-        public Context()
-            : base(Configurator.DefaultNamespace)
+        public Context(string defaultEnv)
+            : base(Configurator.DefaultNamespace, defaultEnv)
         {
         }
 
@@ -25,11 +25,10 @@ namespace Example.Project.Tools
             var resolver = new CommandResolver().WithHelp()
                 .RegisterCommands(Configurator.IsProduction);
 
-            InternalConfigure(null);
+            InternalConfigure(DefaultEnvironment);
 
             if (!Configurator.IsProduction)
                 InternalConfigure(Configurator.Test);
-
 
             return resolver;
         }
