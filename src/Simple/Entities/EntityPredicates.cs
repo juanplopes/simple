@@ -39,7 +39,7 @@ namespace Simple
             
             var expr = idList.Select(prop =>
             {
-                var property = prop.Property.GetPropertyExpression(param);
+                var property = prop.Property.GetMemberExpression(param);
                 return Expression.NotEqual(property, prop.Property.EvaluateConstantFor(model));
             }).AggregateJoin((expr1, expr2) => Expression.AndAlso(expr1, expr2));
 
@@ -48,7 +48,7 @@ namespace Simple
                 var prop = x.GetMemberPath();
                 if (prop.Count() > 1) throw new InvalidOperationException(NoIdentifiersFoundString);
                 
-                var property = prop.GetPropertyExpression(param);
+                var property = prop.GetMemberExpression(param);
                 return Expression.Equal(property, prop.First().EvaluateConstantFor(model));
             }).Aggregate(expr, (expr1, expr2) => Expression.AndAlso(expr1, expr2));
 

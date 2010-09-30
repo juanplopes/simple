@@ -6,22 +6,34 @@ using System.Web.UI;
 using Simple.Patterns;
 using System.Reflection;
 using System.Linq.Expressions;
+using Simple.Reflection;
 
 namespace Simple.Web.Mvc.Excel
 {
-    public class HeaderDefinition<T> : HeaderDefinition
+    public class HeaderDefinition<T> : List<HeaderItem>
     {
-        public void Register(Expression<Func<T, object>> expr, string name)
+        public Func<T> instanceCreator = () => MethodCache.Do.CreateInstance<T>();
+        public HeaderDefinition()
         {
-            Register(expr.GetMemberName().GetProperty(typeof(T)), name);
+        }
+
+        public HeaderDefinition<T> CreateInstanceWith(Func<T> instanceCreator)
+        {
+            this.instanceCreator = instanceCreator;
+            return this;
+        }
+
+        public T CreateInstance()
+        {
+            return instanceCreator();
+        }
+
+        public HeaderItem Register(Expression<Func<T, object>> expr, string name)
+        {
+            var item = new HeaderItem(expr.GetMemberList().ToSettable(), name);
+            Add(item);
+            return item;
         }
     }
 
-    public class HeaderDefinition : List<Pair<PropertyInfo, string>>
-    {
-        public void Register(PropertyInfo property, string name)
-        {
-            this.Add(Tuples.Get(property, name));
-        }
-    }
 }

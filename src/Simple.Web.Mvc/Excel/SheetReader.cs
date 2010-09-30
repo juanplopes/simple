@@ -15,13 +15,16 @@ namespace Simple.Web.Mvc.Excel
             Reader = reader;
         }
 
-        public IEnumerable<T> Read(WorksheetPart worksheet)
+        public IEnumerable<T> Read(SharedStringTable strings, WorksheetPart worksheet)
         {
             var data = worksheet.Worksheet.OfType<SheetData>().FirstOrDefault();
             if (data == null) yield break;
 
-            foreach (var row in data.Descendants<Row>())
-                yield return Reader.Read(row);
+            var rows = data.Descendants<Row>().OrderBy(x=>x.RowIndex.Value);
+
+            var indices = Reader.ReadHeader(rows.FirstOrDefault());
+            foreach (var row in rows.Skip(1))
+                yield return Reader.Read(strings, row, indices);
         }
     }
 }

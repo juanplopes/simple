@@ -34,7 +34,8 @@ namespace Simple.Web.Mvc.Excel
             {
                 var worksheet = document.WorkbookPart.GetPartById(sheet.Id) as WorksheetPart;
                 if (worksheet != null)
-                    dictionary[sheet.Name] = Reader.Read(worksheet).ToList();
+                    dictionary[sheet.Name] = Reader.Read(document.WorkbookPart.SharedStringTablePart.SharedStringTable,
+                        worksheet).ToList();
             }
             return dictionary;
             

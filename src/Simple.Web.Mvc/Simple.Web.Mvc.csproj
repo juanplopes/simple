@@ -82,6 +82,7 @@
     <Compile Include="Excel\HeaderDefinition.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Excel\HeaderItem.cs" />
     <Compile Include="Excel\RowReader.cs" />
     <Compile Include="Excel\SpreadsheetReader.cs" />
     <Compile Include="Excel\SheetReader.cs">

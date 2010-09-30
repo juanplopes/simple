@@ -51,11 +51,11 @@ namespace Simple.Tests.Expressions
             propName.Should().Be("BProp.CProp.IntProp");
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(InvalidOperationException))]
         public void TestNestedMethodName()
         {
+
             var propName = ExpressionHelper.GetMemberName((A a) => a.BProp.CProp.DProp.GetValue());
-            propName.Should().Be("BProp.CProp.DProp.GetValue");
         }
 
         [Test]
@@ -137,11 +137,11 @@ namespace Simple.Tests.Expressions
             var type = typeof(A);
             var str = "BProp.CProp.DProp";
 
-            var prop = str.GetProperty(type);
+            var prop = str.GetMember(type);
 
             Assert.That(prop.Name, Is.EqualTo("DProp"));
             Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
-            Assert.That(prop.PropertyType, Is.EqualTo(typeof(D)));
+            Assert.That(prop.Type, Is.EqualTo(typeof(D)));
         }
 
         [Test]
@@ -150,11 +150,11 @@ namespace Simple.Tests.Expressions
             var type = typeof(A);
             var str = new[] { "BProp", "CProp", "DProp" };
 
-            var prop = str.GetProperty(type);
+            var prop = str.GetMember(type);
 
             Assert.That(prop.Name, Is.EqualTo("DProp"));
             Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
-            Assert.That(prop.PropertyType, Is.EqualTo(typeof(D)));
+            Assert.That(prop.Type, Is.EqualTo(typeof(D)));
         }
 
         [Test]
@@ -162,11 +162,11 @@ namespace Simple.Tests.Expressions
         {
             var str = "BProp.CProp.DProp";
 
-            var prop = str.GetProperty<A>();
+            var prop = str.GetMember<A>();
 
             Assert.That(prop.Name, Is.EqualTo("DProp"));
             Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
-            Assert.That(prop.PropertyType, Is.EqualTo(typeof(D)));
+            Assert.That(prop.Type, Is.EqualTo(typeof(D)));
         }
 
         [Test]
@@ -174,11 +174,11 @@ namespace Simple.Tests.Expressions
         {
             var str = new[] { "BProp", "CProp", "DProp" };
 
-            var prop = str.GetProperty<A>();
+            var prop = str.GetMember<A>();
 
             Assert.That(prop.Name, Is.EqualTo("DProp"));
             Assert.That(prop.DeclaringType, Is.EqualTo(typeof(C)));
-            Assert.That(prop.PropertyType, Is.EqualTo(typeof(D)));
+            Assert.That(prop.Type, Is.EqualTo(typeof(D)));
         }
 
         [Test]
@@ -186,7 +186,7 @@ namespace Simple.Tests.Expressions
         {
             var str = "";
 
-            var prop = str.GetProperty<A>();
+            var prop = str.GetMember<A>();
 
             Assert.That(prop, Is.Null);
         }
@@ -198,7 +198,7 @@ namespace Simple.Tests.Expressions
 
             Assert.Throws<ArgumentException>(() =>
             {
-                str.GetProperty<A>();
+                str.GetMember<A>();
             });
         }
 
@@ -209,7 +209,7 @@ namespace Simple.Tests.Expressions
             var str = "BProp.CProp.DProp";
 
             var expr = Expression.Parameter(typeof(A), "x");
-            var prop = str.GetPropertyExpression(expr);
+            var prop = str.GetMemberExpression(expr);
 
             prop.ToString().Should().Be("x.BProp.CProp.DProp");
         }
@@ -220,7 +220,7 @@ namespace Simple.Tests.Expressions
             var str = new[] { "BProp", "CProp", "DProp" };
 
             var expr = Expression.Parameter(typeof(A), "x");
-            var prop = str.GetPropertyExpression(expr);
+            var prop = str.GetMemberExpression(expr);
 
             prop.ToString().Should().Be("x.BProp.CProp.DProp");
 
@@ -231,7 +231,7 @@ namespace Simple.Tests.Expressions
         {
             var str = new[] { "BProp", "CProp", "DProp" };
 
-            var prop = str.GetPropertyLambda<A>();
+            var prop = str.GetMemberExpression<A>();
 
             prop.ToString().Should().Be("x => x.BProp.CProp.DProp");
 
@@ -242,7 +242,7 @@ namespace Simple.Tests.Expressions
         {
             var str = new[] { "BProp", "CProp", "DProp" };
 
-            var prop = str.GetPropertyLambda<A, D>();
+            var prop = str.GetMemberExpression<A, D>();
 
             prop.ToString().Should().Be("x => x.BProp.CProp.DProp");
 
@@ -253,7 +253,7 @@ namespace Simple.Tests.Expressions
         {
             var str = "BProp.CProp.DProp";
 
-            var prop = str.GetPropertyLambda<A>();
+            var prop = str.GetMemberExpression<A>();
 
             prop.ToString().Should().Be("x => x.BProp.CProp.DProp");
 
@@ -264,7 +264,7 @@ namespace Simple.Tests.Expressions
         {
             var str = "BProp.CProp.DProp";
 
-            var prop = str.GetPropertyLambda<A, D>();
+            var prop = str.GetMemberExpression<A, D>();
 
             prop.ToString().Should().Be("x => x.BProp.CProp.DProp");
 
@@ -276,7 +276,7 @@ namespace Simple.Tests.Expressions
         {
             var str = "";
             var expr = Expression.Parameter(typeof(A), "x");
-            var prop = str.GetPropertyExpression(expr);
+            var prop = str.GetMemberExpression(expr);
 
             prop.ToString().Should().Be("x");
         }
@@ -289,7 +289,7 @@ namespace Simple.Tests.Expressions
 
             Assert.Throws<ArgumentException>(() =>
             {
-                str.GetPropertyExpression(expr);
+                str.GetMemberExpression(expr);
             });
         }
     }

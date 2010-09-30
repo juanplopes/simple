@@ -7,10 +7,11 @@ using Simple.Web.Mvc.Excel;
 using DocumentFormat.OpenXml.Packaging;
 using System.IO;
 using SharpTestsEx;
+using System.Globalization;
 
 namespace Simple.Tests.Mvc.Excel
 {
-    [TestFixture]
+    [TestFixture, Ignore]
     public class SpreadsheetReaderFixture
     {
         IDictionary<string, IEnumerable<FirstSampleData>> data;
@@ -23,10 +24,9 @@ namespace Simple.Tests.Mvc.Excel
                 var header = new HeaderDefinition<FirstSampleData>();
                 header.Register(x => x.ColunaA, "Coluna A");
                 header.Register(x => x.ColunaB, "Coluna B");
-                header.Register(x => x.ColunaC, "Coluna C");
+                header.Register(x => x.ColunaC, "Coluna C").Formatter("pt-BR");
                 header.Register(x => x.ColunaD, "Coluna D");
                 header.Register(x => x.ColunaE, "Coluna E");
-
 
                 data = SpreadsheetReader.Create(header)
                     .Read(SpreadsheetDocument.Open(memory, false));
@@ -40,13 +40,13 @@ namespace Simple.Tests.Mvc.Excel
             data.Keys.Should().Have.SameValuesAs("Sheet1", "Sheet2", "Sheet3");
         }
 
-        [Test, Ignore]
+        [Test]
         public void Sheet1ShouldHave4Rows()
         {
             data["Sheet1"].Should().Have.Count.EqualTo(4);
         }
 
-        [Test, Ignore]
+        [Test]
         public void CanReadFirstSample()
         {
             var sheet = data["Sheet1"].ToList();

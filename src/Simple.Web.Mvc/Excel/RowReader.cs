@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Simple.Reflection;
 
 namespace Simple.Web.Mvc.Excel
 {
@@ -14,9 +15,33 @@ namespace Simple.Web.Mvc.Excel
             this.Header = header;
         }
 
-        public T Read(Row row)
+        public int[] ReadHeader(Row row)
         {
-            return default(T);
+            return Enumerable.Range(0, Header.Count).ToArray();
+        }
+
+        public T Read(SharedStringTable strings, Row row, int[] indices)
+        {
+            var cells = row.Descendants<Cell>().Take(indices.Length);
+            var instance = Header.CreateInstance();
+
+            int idx = 0;
+            foreach (var cell in cells)
+            {
+                bool shared = cell.DataType == "s";
+                string strValue = cell.CellValue.Text;
+                if (shared)
+                {
+                    int stringIdx = Convert.ToInt32(strValue);
+                    strValue = strings.Skip(stringIdx).OfType<SharedStringItem>().FirstOrDefault().Text.Text;
+                }
+                var target = Header[idx];
+                target.Set(target, strValue);
+
+                idx++;
+            }
+
+            return (T)instance;
         }
     }
 }

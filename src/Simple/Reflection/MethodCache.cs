@@ -40,14 +40,24 @@ namespace Simple.Reflection
 
         public object CreateInstance(Type type, BindingFlags? flags, params object[] parameters)
         {
+            var method = FindConstructor(type, flags, ref parameters);
+
+            return GetInvoker(method)(null, parameters);
+        }
+
+        public InvocationDelegate GetConstructor(Type type, params Type[] argTypes)
+        {
+            return GetInvoker(type.GetConstructor(argTypes));
+        }
+
+        private static ConstructorInfo FindConstructor(Type type, BindingFlags? flags, ref object[] parameters)
+        {
             var ctors = flags != null ? type.GetConstructors(flags.Value) : type.GetConstructors();
             object state;
             var method = Type.DefaultBinder.BindToMethod(
                 flags ?? BindingFlags.Default, ctors, ref parameters,
                 null, null, null, out state) as ConstructorInfo;
-
-
-            return GetInvoker(method)(null, parameters);
+            return method;
         }
 
         public InvocationDelegate GetGetter(PropertyInfo prop)

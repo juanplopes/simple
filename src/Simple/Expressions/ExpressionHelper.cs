@@ -10,11 +10,6 @@ namespace Simple
 {
     public static class ExpressionHelper
     {
-        internal static IList<string> SplitProperty(this string propertyPath)
-        {
-            return propertyPath.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
-        }
-
 
         public static string GetMemberName<T, P>(this Expression<Func<T, P>> expr)
         {
@@ -23,7 +18,7 @@ namespace Simple
 
         public static string GetMemberName(this Expression expr)
         {
-            return string.Join(".", GetMemberPath(expr).ToArray());
+            return GetMemberPath(expr).JoinProperty();
         }
 
         public static IEnumerable<string> GetMemberPath<T, P>(this Expression<Func<T, P>> expr)
@@ -33,10 +28,15 @@ namespace Simple
 
         public static IEnumerable<string> GetMemberPath(this Expression expr)
         {
-            if (expr != null && expr.NodeType == ExpressionType.Lambda)
-                return (expr as LambdaExpression).Body.GetMemberPath();
+            return expr.GetMemberList().Select(x => x.Name);
+        }
 
-            LinkedList<string> answer = new LinkedList<string>();
+        public static IEnumerable<ISettableMemberInfo> GetMemberList(this Expression expr)
+        {
+            if (expr != null && expr.NodeType == ExpressionType.Lambda)
+                return (expr as LambdaExpression).Body.GetMemberList();
+
+            LinkedList<ISettableMemberInfo> answer = new LinkedList<ISettableMemberInfo>();
             while (expr != null &&
                   (expr.NodeType == ExpressionType.MemberAccess ||
                   expr.NodeType == ExpressionType.Call ||
@@ -44,59 +44,62 @@ namespace Simple
             {
                 if (ExpressionType.MemberAccess == expr.NodeType)
                 {
-                    answer.AddFirst((expr as MemberExpression).Member.Name);
+                    answer.AddFirst((expr as MemberExpression).Member.ToSettable());
                     expr = (expr as MemberExpression).Expression;
                 }
                 else if (ExpressionType.Convert == expr.NodeType)
                 {
                     expr = (expr as UnaryExpression).Operand;
                 }
-                else if (ExpressionType.Call == expr.NodeType)
-                {
-                    answer.AddFirst((expr as MethodCallExpression).Method.Name);
-                    expr = (expr as MethodCallExpression).Object;
-                }
+                else
+                    throw new InvalidOperationException("Invalid expression type: {0}".AsFormat(expr.NodeType));
             }
 
             return answer;
         }
 
-        public static PropertyInfo GetProperty<T>(this string propertyPath)
+        public static IEnumerable<ISettableMemberInfo> GetMemberList(this IEnumerable<string> path, Type type)
         {
-            return GetProperty(propertyPath, typeof(T));
-        }
-
-        public static PropertyInfo GetProperty<T>(this IEnumerable<string> propertyPath)
-        {
-            return GetProperty(propertyPath, typeof(T));
-        }
-
-        public static PropertyInfo GetProperty(this string propertyPath, Type type)
-        {
-            return GetProperty(propertyPath.SplitProperty(), type);
-        }
-
-        public static PropertyInfo GetProperty(this IEnumerable<string> propertyPath, Type type)
-        {
-            PropertyInfo ret = null;
-            foreach (var prop in propertyPath)
+            ISettableMemberInfo ret = null;
+            foreach (var prop in path)
             {
-                ret = type.GetProperty(prop);
-                if (ret == null) throw new ArgumentException("the specified property doesn't exist");
+                ret = type.GetMember(prop).FirstOrDefault().ToSettable();
+                if (ret == null) throw new ArgumentException("the specified property {0} doesn't exist".AsFormat(prop));
+                yield return ret;
 
-                type = ret.PropertyType;
+                type = ret.Type;
             }
-            return ret;
         }
 
-
-        public static Expression GetPropertyExpression(this string propertyPath, Expression expr)
+        public static ISettableMemberInfo GetMember<T>(this string path)
         {
-            return propertyPath.SplitProperty().GetPropertyExpression(expr);
+            return GetMember(path, typeof(T));
+        }
+
+        public static ISettableMemberInfo GetMember<T>(this IEnumerable<string> path)
+        {
+            return GetMember(path, typeof(T));
+        }
+
+        public static ISettableMemberInfo GetMember(this string path, Type type)
+        {
+            return GetMember(path.SplitProperty(), type);
+        }
+
+        public static ISettableMemberInfo GetMember(this IEnumerable<string> path, Type type)
+        {
+            return path.GetMemberList(type).LastOrDefault();
+        }
+
+        
+
+        public static Expression GetMemberExpression(this string propertyPath, Expression expr)
+        {
+            return propertyPath.SplitProperty().GetMemberExpression(expr);
         }
 
       
-        public static Expression GetPropertyExpression(this IEnumerable<string> propertyPath, Expression expr)
+        public static Expression GetMemberExpression(this IEnumerable<string> propertyPath, Expression expr)
         {
             Expression ret = expr;
 
@@ -106,56 +109,43 @@ namespace Simple
             return ret;
         }
 
-        public static Expression<Func<T, object>> GetPropertyLambda<T>(this string propertyPath)
+        public static Expression<Func<T, object>> GetMemberExpression<T>(this string propertyPath)
         {
-            return propertyPath.SplitProperty().GetPropertyLambda<T>();
+            return propertyPath.SplitProperty().GetMemberExpression<T>();
         }
 
-        public static Expression<Func<T, object>> GetPropertyLambda<T>(this IEnumerable<string> propertyPath)
+        public static Expression<Func<T, object>> GetMemberExpression<T>(this IEnumerable<string> propertyPath)
         {
-            return propertyPath.GetPropertyLambda<T, object>();
+            return propertyPath.GetMemberExpression<T, object>();
         }
 
-        public static Expression<Func<T, TProp>> GetPropertyLambda<T, TProp>(this string propertyPath)
+        public static Expression<Func<T, TProp>> GetMemberExpression<T, TProp>(this string propertyPath)
         {
-            return propertyPath.SplitProperty().GetPropertyLambda<T, TProp>();
+            return propertyPath.SplitProperty().GetMemberExpression<T, TProp>();
         }
 
-        public static Expression<Func<T, TProp>> GetPropertyLambda<T, TProp>(this IEnumerable<string> propertyPath)
+        public static Expression<Func<T, TProp>> GetMemberExpression<T, TProp>(this IEnumerable<string> propertyPath)
         {
             var parameter = Expression.Parameter(typeof(T), "x");
-            return Expression.Lambda<Func<T, TProp>>(propertyPath.GetPropertyExpression(parameter), parameter);
+            return Expression.Lambda<Func<T, TProp>>(propertyPath.GetMemberExpression(parameter), parameter);
         }
 
-        public static void SetValue(this MemberExpression expr, object target, object value)
+        public static void SetValue(this Expression expr, object target, object value)
         {
-            IEnumerable<string> path = GetMemberPath(expr);
-            PropertyInfo prop = null;
+            var list = expr.GetMemberList();
+            var prop = list.ToSettable();
 
-            if (path.Count() == 0) throw new InvalidOperationException("Invalid lambda");
-
-            foreach (var node in path)
+            if (value != null && !prop.Type.IsAssignableFrom(value.GetType()))
             {
-                if (prop != null)
-                {
-                    object temp = Activator.CreateInstance(prop.PropertyType);
-                    MethodCache.Do.GetSetter(prop)(target, temp, null);
-                    target = temp;
-                }
-
-                prop = target.GetType().GetProperty(node);
-                if (prop == null) throw new InvalidOperationException("Cannot have method on the way");
-            }
-
-            if (value != null && !prop.PropertyType.IsAssignableFrom(value.GetType()))
                 if (value.GetType().CanAssign(typeof(IConvertible)))
-                    value = Convert.ChangeType(value, prop.PropertyType.GetValueTypeIfNullable(), CultureInfo.InvariantCulture);
+                    value = Convert.ChangeType(value, prop.Type.GetValueTypeIfNullable(), CultureInfo.InvariantCulture);
                 else
                     throw new ArgumentException(string.Format("Don't know how to convert from {0} to {1}",
                         value.GetType().GetRealClassName(),
-                        prop.PropertyType.GetRealClassName()));
+                        prop.Type.GetRealClassName()));
+            }
 
-            MethodCache.Do.GetSetter(prop)(target, value, null);
+            prop.Set(target, value);
         }
     }
 }
