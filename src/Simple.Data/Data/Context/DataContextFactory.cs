@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using NHibernate;
 using Simple.Common;
 using Simple.Config;
+using Simple.Threading;
 
 namespace Simple.Data.Context
 {
     public class DataContextFactory : AggregateFactory<DataContextFactory>, IDataContextFactory
     {
-        ThreadData _data = new ThreadData();
         object _myKey = new object();
 
         public IDataContext EnterContext()
@@ -43,12 +43,12 @@ namespace Simple.Data.Context
 
         protected void SetContext(IDataContext context)
         {
-            _data.Set(_myKey, context);
+            SimpleContext.Data.Set(_myKey, context);
         }
 
         public IDataContext GetContext(bool throwException)
         {
-            var context = _data.Get<IDataContext>(_myKey);
+            var context = SimpleContext.Data.Get<IDataContext>(_myKey);
 
             while (context != null && !context.IsOpen)
                 context = context.Parent;

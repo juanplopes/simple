@@ -2,13 +2,13 @@
 
 namespace Simple.Services
 {
-    public interface ICallHeadersHandler
+    public interface IContextHandler
     {
         void InjectCallHeaders(object target, MethodBase method, object[] args);
         void RecoverCallHeaders(object target, MethodBase method, object[] args);
     }
 
-    public class NullCallHeadersHandler : ICallHeadersHandler
+    public class NullContextHandler : IContextHandler
     {
         public void InjectCallHeaders(object target, MethodBase method, object[] args)
         {

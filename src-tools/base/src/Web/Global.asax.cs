@@ -11,6 +11,7 @@ using Example.Project.Web.Helpers;
 using Simple.Entities;
 using Simple.Reflection;
 using Simple.Web.Mvc;
+using Simple.Threading;
 
 namespace Example.Project.Web
 {
@@ -49,6 +50,8 @@ namespace Example.Project.Web
             ModelBinders.Binders.DefaultBinder = new EntityModelBinder();
 
             ModelValidatorProviders.Providers.Clear();
+
+            SimpleContext.SwitchProvider(new HttpContextProvider());
             new Configurator().StartServer<ServerStarter>();
         }
 

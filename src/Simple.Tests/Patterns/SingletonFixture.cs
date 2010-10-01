@@ -11,19 +11,20 @@ namespace Simple.Tests.Patterns
         [Test]
         public void ThreadSingletonTest()
         {
-            ThreadSingletonSample.Do.Test = 2;
+            SimpleContext.Data.Singleton<ThreadSingletonSample>().Test = 2;
+           
 
             var t1 = new Thread(() =>
             {
-                ThreadSingletonSample.Do.Test.Should().Be(0);
-                ThreadSingletonSample.Do.Test = 3;
-                ThreadSingletonSample.Do.Test.Should().Be(3);
+                SimpleContext.Data.Singleton<ThreadSingletonSample>().Test.Should().Be(0);
+                SimpleContext.Data.Singleton<ThreadSingletonSample>().Test = 3;
+                SimpleContext.Data.Singleton<ThreadSingletonSample>().Test.Should().Be(3);
             });
 
             t1.Start();
             t1.Join();
 
-            ThreadSingletonSample.Do.Test.Should().Be(2);
+            SimpleContext.Data.Singleton<ThreadSingletonSample>().Test.Should().Be(2);
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace Simple.Tests.Patterns
             SingletonSample.Do.Test.Should().Be(3);
         }
 
-        class ThreadSingletonSample : ThreadSingleton<ThreadSingletonSample>
+        class ThreadSingletonSample
         {
             public int Test { get; set; }
         }

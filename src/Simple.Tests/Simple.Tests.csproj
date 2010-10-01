@@ -287,6 +287,7 @@
     <Compile Include="Config\XmlConfigSourceFixture.cs" />
     <Compile Include="Config\XmlFileConfigSourceFixture.cs" />
     <Compile Include="Expressions\UniquenessPredicateFixture.cs" />
+    <Compile Include="Threading\ContextDataFixture.cs" />
     <Compile Include="Validation\FluentValidationFixture.cs" />
     <Compile Include="Validation\ValidationResources.cs" />
   </ItemGroup>

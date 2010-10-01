@@ -34,9 +34,9 @@ namespace Simple.Services
         }
 
 
-        public ICallHeadersHandler HeaderHandler
+        public IContextHandler HeaderHandler
         {
-            get { return new NullCallHeadersHandler(); }
+            get { return new NullContextHandler(); }
         }
     }
 }

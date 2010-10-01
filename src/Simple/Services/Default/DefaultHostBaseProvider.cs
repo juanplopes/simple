@@ -11,9 +11,9 @@ namespace Simple.Services.Default
             return DynamicProxyFactory.Instance.CreateMarshallableProxy((MarshalByRefObject)obj, intercept.Intercept);
         }
 
-        public virtual ICallHeadersHandler HeaderHandler
+        public virtual IContextHandler HeaderHandler
         {
-            get { return new NullCallHeadersHandler(); }
+            get { return new NullContextHandler(); }
         }
     }
 }

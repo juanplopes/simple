@@ -2,17 +2,17 @@
 
 namespace Simple.Services.Remoting
 {
-    public class CallContextCallHeadersHandler : ICallHeadersHandler
+    public class CallContextHandler : IContextHandler
     {
         public void InjectCallHeaders(object target, System.Reflection.MethodBase method, object[] args)
         {
-            CallContext.LogicalSetData(this.GetType().GUID.ToString(), CallHeaders.Do);
+            CallContext.LogicalSetData(this.GetType().GUID.ToString(), SimpleContext.Get());
         }
 
         public void RecoverCallHeaders(object target, System.Reflection.MethodBase method, object[] args)
         {
             object obj = CallContext.LogicalGetData(this.GetType().GUID.ToString());
-            CallHeaders.Force((obj as CallHeaders) ?? new CallHeaders());
+            SimpleContext.Force((obj as SimpleContext) ?? new SimpleContext());
             CallContext.FreeNamedDataSlot(this.GetType().GUID.ToString());
         }
 

@@ -165,7 +165,6 @@
     <Compile Include="Patterns\BaseWorkingDaysProvider.cs" />
     <Compile Include="Patterns\DisposableAction.cs" />
     <Compile Include="Patterns\TaskRunner.cs" />
-    <Compile Include="Patterns\ThreadSingleton.cs" />
     <Compile Include="Patterns\TransformationList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\MathExtensions.cs" />
@@ -218,7 +217,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\CallHeaders.cs" />
     <Compile Include="Services\DefaultInterceptor.cs" />
     <Compile Include="Services\Default\DefaultClientProvider.cs" />
     <Compile Include="Services\Default\DefaultHostBaseProvider.cs" />
@@ -226,7 +224,8 @@
     <Compile Include="Services\Default\DefaultHostProvider.cs" />
     <Compile Include="Services\Default\DefaultHostSimplyExtensions.cs" />
     <Compile Include="Services\Default\ServiceLocationFactory.cs" />
-    <Compile Include="Services\ICallHeadersHandler.cs" />
+    <Compile Include="Services\HttpIdentityInjector.cs" />
+    <Compile Include="Services\IContextHandler.cs" />
     <Compile Include="Services\ICallHook.cs" />
     <Compile Include="Services\IInterceptor.cs" />
     <Compile Include="Services\IService.cs" />
@@ -234,7 +233,7 @@
     <Compile Include="Services\IServiceClientProvider.cs" />
     <Compile Include="Services\IServiceHostFactory.cs" />
     <Compile Include="Services\IServiceHostProvider.cs" />
-    <Compile Include="Services\Remoting\CallContextCallHeadersHandler.cs" />
+    <Compile Include="Services\Remoting\CallContextHandler.cs" />
     <Compile Include="Services\Remoting\ChannelSelector.cs" />
     <Compile Include="Services\Remoting\Channels\HttpChannelHandler.cs" />
     <Compile Include="Services\Remoting\Channels\IChannelHandler.cs" />
@@ -251,8 +250,9 @@
     <Compile Include="Services\ServiceConnectionException.cs" />
     <Compile Include="Services\ServiceHostFactory.cs" />
     <Compile Include="Services\ServiceSimplyExtensions.cs" />
-    <Compile Include="Services\SimpleContext.cs" />
     <Compile Include="Services\SimpleHostingExtensions.cs" />
+    <Compile Include="Services\WindowsIdentityInjector.cs" />
+    <Compile Include="SimpleContext.cs" />
     <Compile Include="Simply.cs" />
     <Compile Include="IO\XmlHelper.cs" />
     <Compile Include="Hosting\SimpleController.cs">
@@ -261,7 +261,12 @@
     <Compile Include="Hosting\SimpleInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Common\ThreadData.cs" />
+    <Compile Include="Threading\ContextData.cs" />
+    <Compile Include="Threading\ConstantDictionaryContextProvider.cs" />
+    <Compile Include="Threading\GenericContextProvider.cs" />
+    <Compile Include="Threading\HttpContextProvider.cs" />
+    <Compile Include="Threading\IContextProvider.cs" />
+    <Compile Include="Threading\ThreadDataProvider.cs" />
     <Compile Include="Validation\EmptyValidator.cs" />
     <Compile Include="Validation\SimpleCustomValidators.cs" />
     <Compile Include="Validation\SimpleValidationException.cs" />

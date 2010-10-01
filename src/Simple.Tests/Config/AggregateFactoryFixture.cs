@@ -6,6 +6,7 @@ using Simple.Config;
 using NUnit.Framework;
 using SharpTestsEx;
 using Simple.Common;
+using Simple.Threading;
 
 namespace Simple.Tests.Config
 {
@@ -59,7 +60,7 @@ namespace Simple.Tests.Config
         {
             using (TestFactory.KeyContext("qwe"))
             {
-                new ThreadData().Set("defaultKey", "asd");
+                new ContextData(new ThreadDataProvider()).Set("defaultKey", "asd");
                 var fac1 = TestFactory.Do;
                 var fac2 = TestFactory.Do["qwe"];
                 fac2.Should().Be(fac1);

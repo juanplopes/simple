@@ -9,6 +9,8 @@ namespace Simple.Data.Context
     public class DataContext : IDataContext
     {
         object _lock = new object();
+        ILog log = Simply.Do.Log(MethodBase.GetCurrentMethod());
+        Guid guid = Guid.NewGuid();
 
         ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
@@ -40,6 +42,9 @@ namespace Simple.Data.Context
         protected DataContext(IDataContext parent, Func<ISession> newSession)
         {
             Parent = parent;
+
+            log.InfoFormat("Opening data context. Is main: {0}. Guid: {1}", IsMain, guid);
+
             createMainSession = IsMain ? newSession : () => parent.Session;
             createAdditionalSession = newSession;
             IsOpen = true;
@@ -72,6 +77,8 @@ namespace Simple.Data.Context
             lock (_lock)
             {
                 if (!IsOpen) return;
+
+                log.InfoFormat("Closing data context. Guid: {0}", guid);
 
                 IsOpen = false;
                 

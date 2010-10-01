@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Simple.Common;
 using Simple.Patterns;
 using log4net;
+using Simple.Threading;
 
 namespace Simple.Config
 {
@@ -29,11 +30,11 @@ namespace Simple.Config
         }
 
         static Dictionary<object, THIS> _instances = new Dictionary<object, THIS>();
-        static ThreadData _data = new ThreadData();
+        static object contextKey = new object();
         protected static object DefaultKey
         {
-            get { return _data.Get<object>("defaultKey"); }
-            set { _data.Set("defaultKey", value); }
+            get { return SimpleContext.Data.Get<object>(contextKey); }
+            set { SimpleContext.Data.Set(contextKey, value); }
         }
         
         public static IDisposable KeyContext(object newKey)

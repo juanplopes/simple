@@ -6,7 +6,7 @@ namespace Simple.Services
     public interface IServiceCommonProvider
     {
         object ProxyObject(object obj, Type contract, IInterceptor intercept);
-        ICallHeadersHandler HeaderHandler { get; }
+        IContextHandler HeaderHandler { get; }
     }
 
     public interface IServiceClientProvider : IServiceCommonProvider
@@ -47,9 +47,9 @@ namespace Simple.Services
         #region IServiceCommonProvider Members
 
 
-        public ICallHeadersHandler HeaderHandler
+        public IContextHandler HeaderHandler
         {
-            get { return new NullCallHeadersHandler(); }
+            get { return new NullContextHandler(); }
         }
 
         #endregion

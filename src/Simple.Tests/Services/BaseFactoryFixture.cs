@@ -91,10 +91,10 @@ namespace Simple.Tests.Services
         {
             ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
 
-            CallHeaders.Do["returnMe"] = "123";
+            SimpleContext.Get().ExtendedInfo["returnMe"] = "123";
             service.TestHeaderPassing().Should().Be("123");
 
-            CallHeaders.Do["returnMe"] = "1234";
+            SimpleContext.Get().ExtendedInfo["returnMe"] = "1234";
             service.TestHeaderPassing().Should().Be("1234");
         }
 
@@ -111,13 +111,13 @@ namespace Simple.Tests.Services
         {
             ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
 
-            CallHeaders.Do["returnMe"] = 12345;
+            SimpleContext.Get().ExtendedInfo["returnMe"] = 12345;
             service.TestHeaderPassingAndReturning().Should().Be(12345);
-            CallHeaders.Do["returnMe"].Should().Be(12347);
+            SimpleContext.Get().ExtendedInfo["returnMe"].Should().Be(12347);
 
-            CallHeaders.Do["returnMe"] = 666;
+            SimpleContext.Get().ExtendedInfo["returnMe"] = 666;
             service.TestHeaderPassingAndReturning().Should().Be(666);
-            CallHeaders.Do["returnMe"].Should().Be(668);
+            SimpleContext.Get().ExtendedInfo["returnMe"].Should().Be(668);
 
         }
 
@@ -357,13 +357,13 @@ namespace Simple.Tests.Services
 
         public string TestHeaderPassing()
         {
-            return (string)CallHeaders.Do["returnMe"];
+            return (string)SimpleContext.Get().ExtendedInfo["returnMe"];
         }
 
         public int TestHeaderPassingAndReturning()
         {
-            int a = (int)CallHeaders.Do["returnMe"];
-            CallHeaders.Do["returnMe"] = a + 2;
+            int a = (int)SimpleContext.Get().ExtendedInfo["returnMe"];
+            SimpleContext.Get().ExtendedInfo["returnMe"] = a + 2;
             return a;
         }
 

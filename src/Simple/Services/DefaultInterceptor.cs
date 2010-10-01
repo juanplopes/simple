@@ -13,9 +13,9 @@ namespace Simple.Services
         MethodCache _cache = new MethodCache();
         Func<CallHookArgs, IEnumerable<ICallHook>> Hooks { get; set; }
         bool Client { get; set; }
-        ICallHeadersHandler HeaderHandler { get; set; }
+        IContextHandler HeaderHandler { get; set; }
 
-        public DefaultInterceptor(Func<CallHookArgs, IEnumerable<ICallHook>> hooks, ICallHeadersHandler headerHandler, bool client)
+        public DefaultInterceptor(Func<CallHookArgs, IEnumerable<ICallHook>> hooks, IContextHandler headerHandler, bool client)
         {
             Hooks = hooks;
             Client = client;
