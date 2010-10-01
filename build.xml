@@ -156,6 +156,7 @@
      TargetFileName="$(MainLibraryName)-$(ProductVersion).zip"
      Summary="Simple.Net Library v$(ProductVersion)"
      Labels="Nightly;Type-Package"
+     ContinueOnError="true"
       />
 
     <UploadToGoogleCode
@@ -166,6 +167,7 @@
       TargetFileName="$(MainLibraryName)-$(ProductVersion).exe"
       Summary="Simple.Net Project Starter v$(ProductVersion)"
       Labels="Nightly;Type-Executable;Featured;BetterDownloadThis"
+      ContinueOnError="true"
       />
   </Target>
 </Project>
