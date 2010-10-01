@@ -11,9 +11,15 @@ using Simple.Patterns;
 namespace Example.Project.Tools
 { 
     public class Context : ContextBase
-    { 
-        public static IDisposable Development { get { return Simply.KeyContext(null); } }
-        public static IDisposable Test { get { return Simply.KeyContext(Configurator.Test); } }
+    {
+        public static IDisposable Development
+        {
+            get { return Simply.KeyContext(null).ComposeWith(Simply.Do.EnterContext()); }
+        }
+        public static IDisposable Test
+        {
+            get { return Simply.KeyContext(Configurator.Test).ComposeWith(Simply.Do.EnterContext()); }
+        }
         
         public Context(string defaultEnv)
             : base(Configurator.DefaultNamespace, defaultEnv)

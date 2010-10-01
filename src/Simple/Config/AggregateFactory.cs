@@ -30,6 +30,7 @@ namespace Simple.Config
         }
 
         static Dictionary<object, THIS> _instances = new Dictionary<object, THIS>();
+        
         static object contextKey = new object();
         protected static object DefaultKey
         {
