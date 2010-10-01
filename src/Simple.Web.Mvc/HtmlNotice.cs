@@ -114,6 +114,11 @@ namespace Simple.Web.Mvc
         {
             key = DefaultNotificationFormat.AsFormat(key);
             var definition = data[key] as NoticeDefinition;
+            return RenderNotice(key, definition);
+        }
+
+        public static TagBuilder RenderNotice(string key, NoticeDefinition definition)
+        {
             if (definition != null)
             {
                 var notice = new TagBuilder("div").WithClasses(key);
@@ -127,7 +132,7 @@ namespace Simple.Web.Mvc
                 if (definition.Items != null && definition.Items.Count > 0)
                 {
                     var ul = new TagBuilder("ul").WithHtml(
-                      definition.Items.Aggregate(new StringBuilder(), 
+                      definition.Items.Aggregate(new StringBuilder(),
                         (str, y) => str.Append(new TagBuilder("li").WithText(y))).ToString());
 
                     notice.InnerHtml += ul.ToString();
@@ -136,6 +141,11 @@ namespace Simple.Web.Mvc
             }
             else return null; ;
         }
-        
+
+        public static TagBuilder RenderNotice(this HtmlHelper helper, string key, NoticeDefinition definition)
+        {
+            return RenderNotice(key, definition);
+        }
+
     }
 }

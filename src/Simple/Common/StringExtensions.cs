@@ -18,6 +18,11 @@ namespace Simple
             return string.Format(provider, format, arg0);
         }
 
+        public static bool IsNullOrEmpty(this string value)
+        {
+            return string.IsNullOrEmpty(value);
+        }
+
         public static string RemoveDiacritics(this string s)
         {
             String normalizedString = s.Normalize(NormalizationForm.FormD);
