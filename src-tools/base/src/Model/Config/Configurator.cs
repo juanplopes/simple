@@ -26,9 +26,9 @@ namespace Example.Project.Config
 
         protected override void InitLocations(FileLocator paths)
         {
-            ChangeToRoot();
-            paths.Add(Path.Combine("cfg", Environment));
-            paths.Add("cfg");
+            var keyFile = FindKeyFile();
+            paths.AddPath(keyFile.DirectoryName, "cfg", Environment);
+            paths.AddPath(keyFile.DirectoryName, "cfg");
         }
 
         public override ConfigDef ConfigClient()

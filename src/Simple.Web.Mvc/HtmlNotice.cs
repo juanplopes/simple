@@ -132,10 +132,10 @@ namespace Simple.Web.Mvc
 
                     notice.InnerHtml += ul.ToString();
                 }
-
                 return notice;
             }
             else return null; ;
         }
+        
     }
 }

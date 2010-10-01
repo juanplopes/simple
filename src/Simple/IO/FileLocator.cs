@@ -44,6 +44,19 @@ namespace Simple.IO
             this.Add(Path.GetDirectoryName(Uri.UnescapeDataString(new Uri(asm.CodeBase).AbsolutePath)));
         }
 
+        public void AddPath(params string[] paths)
+        {
+            if (paths == null || paths.Length == 0) return;
+            
+            string path = string.Empty;
+            foreach (var item in paths)
+            {
+                path = Path.Combine(path, item);
+            }
+
+            Add(path);
+        }
+
         public string Find(string file)
         {
             return Find(file, true);
