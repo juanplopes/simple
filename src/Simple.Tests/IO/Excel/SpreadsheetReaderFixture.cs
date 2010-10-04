@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Simple.Web.Mvc.Excel;
+using Simple.IO.Excel;
 using System.IO;
 using SharpTestsEx;
 using System.Globalization;
 using NPOI.HSSF.UserModel;
 
-namespace Simple.Tests.Mvc.Excel
+namespace Simple.Tests.IO.Excel
 {
-    [TestFixture, Ignore]
+    [TestFixture]
     public class SpreadsheetReaderFixture
     {
         IDictionary<string, IEnumerable<FirstSampleData>> data;
@@ -22,11 +22,11 @@ namespace Simple.Tests.Mvc.Excel
             using (var memory = new MemoryStream(ExcelFiles.FirstSample))
             {
                 var header = new HeaderDefinition<FirstSampleData>();
-                header.Register(x => x.ColunaA, "Coluna A");
-                header.Register(x => x.ColunaB, "Coluna B");
-                header.Register(x => x.ColunaC, "Coluna C").Formatter("pt-BR");
-                header.Register(x => x.ColunaD, "Coluna D");
-                header.Register(x => x.ColunaE, "Coluna E");
+                header.Register(x => x.ColunaA);
+                header.Register(x => x.ColunaB);
+                header.Register(x => x.ColunaC).Formatter("pt-BR");
+                header.Register(x => x.ColunaD);
+                header.Register(x => x.ColunaE);
 
                 data = SpreadsheetReader.Create(header)
                     .Read(new HSSFWorkbook(memory));
@@ -52,9 +52,9 @@ namespace Simple.Tests.Mvc.Excel
             var sheet = data["Sheet1"].ToList();
 
             sheet[0].AssertWith("asd", 123, new DateTime(1915, 04, 13), FirstSampleData.Status.Ativo, true);
-            sheet[0].AssertWith("asd2", 234, new DateTime(1915, 04, 14), FirstSampleData.Status.Ativo, false);
-            sheet[0].AssertWith("asd3", 345, new DateTime(1915, 04, 15), FirstSampleData.Status.Inativo, true);
-            sheet[0].AssertWith("asd4", 456, new DateTime(1915, 04, 16), FirstSampleData.Status.Cancelado, false);
+            sheet[1].AssertWith("asd2", 234, new DateTime(1915, 04, 14), FirstSampleData.Status.Ativo, false);
+            sheet[2].AssertWith("asd3", 345, new DateTime(1915, 04, 15), FirstSampleData.Status.Inativo, true);
+            sheet[3].AssertWith("asd4", 456, new DateTime(1915, 04, 16), FirstSampleData.Status.Cancelado, false);
         }
     }
 }

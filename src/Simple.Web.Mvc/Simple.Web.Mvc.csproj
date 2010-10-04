@@ -36,10 +36,6 @@
       <HintPath>..\..\lib\MvcContrib.FluentHtml.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI, Version=1.2.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NPOI.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -72,15 +68,6 @@
     <Compile Include="ElementalValueProvider.cs" />
     <Compile Include="EntityModelBinder.cs" />
     <Compile Include="EntityValidationExtensions.cs" />
-    <Compile Include="Excel\HeaderDefinition.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Excel\HeaderItem.cs" />
-    <Compile Include="Excel\RowReader.cs" />
-    <Compile Include="Excel\SpreadsheetReader.cs" />
-    <Compile Include="Excel\SheetReader.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="HtmlButtons.cs" />
     <Compile Include="HtmlNotice.cs" />
     <Compile Include="HtmlUrl.cs" />

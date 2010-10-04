@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Linq.Expressions;
 using Simple.Reflection;
 
-namespace Simple.Web.Mvc.Excel
+namespace Simple.IO.Excel
 {
     public class HeaderDefinition<T> : List<HeaderItem>
     {
@@ -28,9 +28,9 @@ namespace Simple.Web.Mvc.Excel
             return instanceCreator();
         }
 
-        public HeaderItem Register(Expression<Func<T, object>> expr, string name)
+        public HeaderItem Register(Expression<Func<T, object>> expr)
         {
-            var item = new HeaderItem(expr.GetMemberList().ToSettable(), name);
+            var item = new HeaderItem(expr.GetMemberList().ToSettable());
             Add(item);
             return item;
         }

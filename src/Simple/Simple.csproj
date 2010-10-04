@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI, Version=1.2.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NPOI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
@@ -147,6 +151,11 @@
     <Compile Include="Expressions\InvocationExpander.cs" />
     <Compile Include="Expressions\Editable\LazyExpression.cs" />
     <Compile Include="IO\CommandLineReader.cs" />
+    <Compile Include="IO\Excel\HeaderDefinition.cs" />
+    <Compile Include="IO\Excel\HeaderItem.cs" />
+    <Compile Include="IO\Excel\RowReader.cs" />
+    <Compile Include="IO\Excel\SheetReader.cs" />
+    <Compile Include="IO\Excel\SpreadsheetReader.cs" />
     <Compile Include="IO\FileLocator.cs" />
     <Compile Include="IO\FileSize.cs" />
     <Compile Include="IO\RootFinder.cs" />

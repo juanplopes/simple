@@ -5,7 +5,7 @@ using System.Text;
 using Simple.Reflection;
 using System.Globalization;
 
-namespace Simple.Web.Mvc.Excel
+namespace Simple.IO.Excel
 {
     public class HeaderItem
     {
@@ -14,10 +14,16 @@ namespace Simple.Web.Mvc.Excel
         private IFormatProvider formatter = CultureInfo.InvariantCulture;
 
 
-        public HeaderItem(ISettableMemberInfo member, string name)
+        public HeaderItem(ISettableMemberInfo member)
         {
             this.member = member;
+            this.name = member.Name;
+        }
+
+        public HeaderItem Named(string name)
+        {
             this.name = name;
+            return this;
         }
 
         public HeaderItem Formatter(IFormatProvider culture)
@@ -35,8 +41,6 @@ namespace Simple.Web.Mvc.Excel
         {
             if (member.Type.CanAssign(typeof(Enum)) && value is string)
                 value = Enum.Parse(member.Type, value as string, true);
-            if (member.Type == typeof(bool))
-                value = Convert.ToBoolean(Convert.ToInt32(value));
             else if (value is IConvertible)
                 value = Convert.ChangeType(value, member.Type, formatter);
 

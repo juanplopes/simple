@@ -5,7 +5,7 @@ using System.Text;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 
-namespace Simple.Web.Mvc.Excel
+namespace Simple.IO.Excel
 {
     public class SpreadsheetReader
     {

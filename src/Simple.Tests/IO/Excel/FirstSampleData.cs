@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SharpTestsEx;
 
-namespace Simple.Tests.Mvc.Excel
+namespace Simple.Tests.IO.Excel
 {
     public class FirstSampleData
     {

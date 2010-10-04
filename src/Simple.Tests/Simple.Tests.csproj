@@ -161,8 +161,8 @@
     <Compile Include="Generator\InterfaceReplacerFixture.cs" />
     <Compile Include="Generator\ProjectDescriptionFixture.cs" />
     <Compile Include="Gui\PathsFixture.cs" />
-    <Compile Include="Mvc\Excel\FirstSampleData.cs" />
-    <Compile Include="Mvc\Excel\SpreadsheetReaderFixture.cs" />
+    <Compile Include="IO\Excel\FirstSampleData.cs" />
+    <Compile Include="IO\Excel\SpreadsheetReaderFixture.cs" />
     <Compile Include="Mvc\ModelBinder\CollectionFixtures.cs" />
     <Compile Include="Mvc\ModelBinder\SimpleValuesFixture.cs" />
     <Compile Include="Mvc\ModelBinder\BaseCollectionFixture.cs" />
