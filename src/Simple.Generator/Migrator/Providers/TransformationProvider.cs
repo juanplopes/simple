@@ -804,12 +804,14 @@ namespace Simple.Migrator.Providers
             _appliedMigrations.Remove(version);
         }
 
+        bool alreadyCreatedSchema = false;
         protected void CreateSchemaInfoTable()
         {
             EnsureHasConnection();
-            if (!TableExists(_schemainfoname))
+            if (!TableExists(_schemainfoname) && !alreadyCreatedSchema)
             {
                 AddTable(_schemainfoname, new Column("Version", DbType.Int64, ColumnProperty.PrimaryKey));
+                alreadyCreatedSchema = true;
             }
         }
 

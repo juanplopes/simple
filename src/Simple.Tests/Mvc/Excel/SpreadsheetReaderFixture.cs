@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Simple.Web.Mvc.Excel;
-using DocumentFormat.OpenXml.Packaging;
 using System.IO;
 using SharpTestsEx;
 using System.Globalization;
+using NPOI.HSSF.UserModel;
 
 namespace Simple.Tests.Mvc.Excel
 {
@@ -29,7 +29,7 @@ namespace Simple.Tests.Mvc.Excel
                 header.Register(x => x.ColunaE, "Coluna E");
 
                 data = SpreadsheetReader.Create(header)
-                    .Read(SpreadsheetDocument.Open(memory, false));
+                    .Read(new HSSFWorkbook(memory));
             }
         }
 

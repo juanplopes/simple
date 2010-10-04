@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
 
 namespace Simple.Web.Mvc.Excel
 {
@@ -21,24 +21,23 @@ namespace Simple.Web.Mvc.Excel
     {
         protected SheetReader<T> Reader { get; set; }
 
-        public SpreadsheetReader(SheetReader<T> reader) 
+        public SpreadsheetReader(SheetReader<T> reader)
         {
             Reader = reader;
         }
 
-        public IDictionary<string, IEnumerable<T>> Read(SpreadsheetDocument document)
+        public IDictionary<string, IEnumerable<T>> Read(Workbook workbook)
         {
             var dictionary = new Dictionary<string, IEnumerable<T>>();
 
-            foreach (var sheet in document.WorkbookPart.Workbook.Descendants<Sheet>())
+            for (int i = 0; i < workbook.NumberOfSheets; i++)
             {
-                var worksheet = document.WorkbookPart.GetPartById(sheet.Id) as WorksheetPart;
-                if (worksheet != null)
-                    dictionary[sheet.Name] = Reader.Read(document.WorkbookPart.SharedStringTablePart.SharedStringTable,
-                        worksheet).ToList();
+                var sheet = workbook.GetSheetAt(i);
+                var sheetName = workbook.GetSheetName(i);
+                dictionary[sheetName] = Reader.Read(sheet).ToList();
             }
             return dictionary;
-            
+
         }
 
     }

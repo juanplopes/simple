@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
+using NPOI.SS.UserModel;
+using System.Collections;
 
 namespace Simple.Web.Mvc.Excel
 {
@@ -15,16 +15,14 @@ namespace Simple.Web.Mvc.Excel
             Reader = reader;
         }
 
-        public IEnumerable<T> Read(SharedStringTable strings, WorksheetPart worksheet)
+        public IEnumerable<T> Read(Sheet sheet)
         {
-            var data = worksheet.Worksheet.OfType<SheetData>().FirstOrDefault();
-            if (data == null) yield break;
-
-            var rows = data.Descendants<Row>().OrderBy(x=>x.RowIndex.Value);
-
-            var indices = Reader.ReadHeader(rows.FirstOrDefault());
-            foreach (var row in rows.Skip(1))
-                yield return Reader.Read(strings, row, indices);
+            var enumerator = sheet.GetRowEnumerator();
+            while(enumerator.MoveNext())
+            {
+                yield return Reader.Read(enumerator.Current as Row, null);
+            }
         }
+
     }
 }
