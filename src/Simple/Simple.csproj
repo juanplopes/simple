@@ -155,7 +155,9 @@
     <Compile Include="IO\Excel\HeaderItem.cs" />
     <Compile Include="IO\Excel\RowReader.cs" />
     <Compile Include="IO\Excel\SheetReader.cs" />
-    <Compile Include="IO\Excel\SpreadsheetReader.cs" />
+    <Compile Include="IO\Excel\SheetResult.cs" />
+    <Compile Include="IO\Excel\SheetResultCollection.cs" />
+    <Compile Include="IO\Excel\WorkbookReader.cs" />
     <Compile Include="IO\FileLocator.cs" />
     <Compile Include="IO\FileSize.cs" />
     <Compile Include="IO\RootFinder.cs" />

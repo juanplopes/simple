@@ -7,8 +7,10 @@ using System.Reflection;
 
 namespace Simple.Reflection
 {
+    [Serializable]
     public class CompositeSettableMember : ISettableMemberInfo
     {
+        [NonSerialized]
         protected static MethodCache Cache = new MethodCache();
 
         private IList<ISettableMemberInfo> members;

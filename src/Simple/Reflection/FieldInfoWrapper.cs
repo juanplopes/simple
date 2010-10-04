@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace Simple.Reflection
 {
+    [Serializable]
     public class FieldInfoWrapper : ISettableMemberInfo
     {
         public FieldInfo InternalMember { get; protected set; }

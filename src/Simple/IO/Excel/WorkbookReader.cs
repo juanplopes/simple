@@ -7,36 +7,39 @@ using NPOI.SS.UserModel;
 
 namespace Simple.IO.Excel
 {
-    public class SpreadsheetReader
+    public class WorkbookReader
     {
-        public static SpreadsheetReader<T> Create<T>(HeaderDefinition<T> header)
+        public static WorkbookReader<T> Create<T>(HeaderDefinition<T> header)
         {
-            return new SpreadsheetReader<T>(
+            return new WorkbookReader<T>(
                 new SheetReader<T>(
                     new RowReader<T>(header)));
         }
     }
 
-    public class SpreadsheetReader<T>
+    public class WorkbookReader<T>
     {
         protected SheetReader<T> Reader { get; set; }
 
-        public SpreadsheetReader(SheetReader<T> reader)
+        public WorkbookReader(SheetReader<T> reader)
         {
             Reader = reader;
         }
 
-        public IDictionary<string, IEnumerable<T>> Read(Workbook workbook)
+        public SheetResultCollection<T> Read(Workbook workbook)
         {
-            var dictionary = new Dictionary<string, IEnumerable<T>>();
+            return new SheetResultCollection<T>(ReadInternal(workbook));
+        }
 
+        private IEnumerable<SheetResult<T>> ReadInternal(Workbook workbook)
+        {
             for (int i = 0; i < workbook.NumberOfSheets; i++)
             {
                 var sheet = workbook.GetSheetAt(i);
                 var sheetName = workbook.GetSheetName(i);
-                dictionary[sheetName] = Reader.Read(sheet).ToList();
+
+                yield return new SheetResult<T>(sheetName, Reader.Read(sheet));
             }
-            return dictionary;
 
         }
 

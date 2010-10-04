@@ -6,8 +6,10 @@ using System.Reflection;
 
 namespace Simple.Reflection
 {
+    [Serializable]
     public class PropertyInfoWrapper : ISettableMemberInfo
     {
+        [NonSerialized]
         protected static MethodCache Cache = new MethodCache();
 
         public PropertyInfo InternalMember { get; protected set; }
