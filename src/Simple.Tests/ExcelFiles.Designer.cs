@@ -66,5 +66,12 @@ namespace Simple.Tests {
                 return ((byte[])(obj));
             }
         }
+        
+        internal static byte[] MultiSheetsSample {
+            get {
+                object obj = ResourceManager.GetObject("MultiSheetsSample", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

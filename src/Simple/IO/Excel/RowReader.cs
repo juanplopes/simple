@@ -10,6 +10,15 @@ namespace Simple.IO.Excel
 {
     public class RowReader<T>
     {
+        public class RowResult
+        {
+            public T Result { get; set; }
+            internal IList<SheetError> PrivateErrors { get; set; }
+            public IEnumerable<SheetError> Errors { get { return PrivateErrors; } }
+
+            public RowResult() { PrivateErrors = new List<SheetError>(); }
+        }
+
         protected HeaderDefinition<T> Header { get; set; }
         public RowReader(HeaderDefinition<T> header)
         {
@@ -21,19 +30,29 @@ namespace Simple.IO.Excel
             return Enumerable.Range(0, Header.Count).ToArray();
         }
 
-        public T Read(Row row, int[] indexes)
+        public RowResult Read(Row row, int[] indexes)
         {
-            var target = Header.CreateInstance();
+            var target = new RowResult { Result = Header.CreateInstance() };
+            if (row == null) return target;
+
             for (int i = 0; i < indexes.Length; i++)
             {
-                var column = Header[i];
-                column.Set(target, GetCellValue(row.GetCell(i), null));
+                try
+                {
+                    var column = Header[i];
+                    column.Set(target.Result, GetCellValue(row.GetCell(i), null));
+                }
+                catch (Exception e)
+                {
+                    target.PrivateErrors.Add(new SheetError(row.RowNum, i, e.Message));
+                }
             }
             return target;
         }
 
         public object GetCellValue(Cell cell, CellType? type)
         {
+            if (cell == null) return null;
             switch (type ?? cell.CellType)
             {
                 case CellType.BLANK:

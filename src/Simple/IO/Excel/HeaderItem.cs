@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace Simple.IO.Excel
 {
-    public class HeaderItem
+    public class HeaderItem : Simple.IO.Excel.IHeaderItem
     {
         private ISettableMemberInfo member = null;
         private string name = null;
@@ -20,31 +20,32 @@ namespace Simple.IO.Excel
             this.name = member.Name;
         }
 
-        public HeaderItem Named(string name)
+        public IHeaderItem Named(string name)
         {
             this.name = name;
             return this;
         }
 
-        public HeaderItem Formatter(IFormatProvider culture)
+        public IHeaderItem Formatter(IFormatProvider culture)
         {
             this.formatter = culture;
             return this;
         }
 
-        public HeaderItem Formatter(string culture)
+        public IHeaderItem Formatter(string culture)
         {
             return Formatter(CultureInfo.GetCultureInfo(culture));
         }
 
         public void Set(object target, object value)
         {
-            if (member.Type.CanAssign(typeof(Enum)) && value is string)
-                value = Enum.Parse(member.Type, value as string, true);
+            var type = member.Type.GetValueTypeIfNullable();
+            if (type.CanAssign(typeof(Enum)) && value is string)
+                value = Enum.Parse(type, value as string, true);
             else if (value is IConvertible)
-                value = Convert.ChangeType(value, member.Type, formatter);
+                value = Convert.ChangeType(value, type, formatter);
 
-            member.Set(target, value );
+            member.Set(target, value);
         }
     }
 }

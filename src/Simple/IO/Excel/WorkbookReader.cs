@@ -36,9 +36,8 @@ namespace Simple.IO.Excel
             for (int i = 0; i < workbook.NumberOfSheets; i++)
             {
                 var sheet = workbook.GetSheetAt(i);
-                var sheetName = workbook.GetSheetName(i);
 
-                yield return new SheetResult<T>(sheetName, Reader.Read(sheet));
+                yield return Reader.Read(sheet);
             }
 
         }

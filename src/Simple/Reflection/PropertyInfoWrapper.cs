@@ -30,7 +30,9 @@ namespace Simple.Reflection
         {
             IEnumerable<object> args = new[] { value };
             if (index != null) args = args.Union(index);
-            
+            if (target != null && !target.GetType().CanAssign(InternalMember.DeclaringType))
+                throw new TargetException("Expected {0}".AsFormat(InternalMember.DeclaringType.GetRealClassName()));
+
             Cache.GetSetter(InternalMember)(target, args.ToArray());
         }
 

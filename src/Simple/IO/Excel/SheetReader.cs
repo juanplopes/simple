@@ -9,13 +9,28 @@ namespace Simple.IO.Excel
 {
     public class SheetReader<T>
     {
-        protected RowReader<T> Reader { get; set; }
-        public SheetReader(RowReader<T> reader)
+        internal protected RowReader<T> Reader { get; set; }
+        internal SheetReader(RowReader<T> reader)
         {
             Reader = reader;
         }
 
-        public IEnumerable<T> Read(Sheet sheet)
+        public SheetResult<T> Read(Sheet sheet)
+        {
+            try
+            {
+                var results = ReadInternal(sheet);
+                return new SheetResult<T>(sheet.SheetName,
+                    results.Select(x => x.Result)
+                    , results.SelectMany(x => x.Errors));
+            }
+            catch (Exception e)
+            {
+                return new SheetResult<T>(sheet.SheetName, new T[0], new[] { new SheetError(0, e.Message) });
+            }
+        }
+
+        public IEnumerable<RowReader<T>.RowResult> ReadInternal(Sheet sheet)
         {
             var first = sheet.FirstRowNum;
             var indexes = Reader.ReadHeader(sheet.GetRow(first));

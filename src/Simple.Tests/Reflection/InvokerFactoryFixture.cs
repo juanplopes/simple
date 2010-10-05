@@ -172,6 +172,18 @@ namespace Simple.Tests.Reflection
             obj.param2.Should().Be("B");
         }
 
+        [Test, Ignore("The world is cruel, my friend")]
+        public void WillNotBeAbleToCallPropertySetToWrongType()
+        {
+            var inv = InvokerFactory.Do.Create(typeof(ClassB)
+                .GetProperty("Prop").GetSetMethod());
+            var a = new ClassA();
+
+            inv(a, "asd");
+
+            a.Prop.GetType().Should().Be(typeof(PropClass));
+        }
+
         [Test]
         public void TestCreateInstance2()
         {
@@ -184,6 +196,20 @@ namespace Simple.Tests.Reflection
             obj.param2.Should().Be(2);
         }
 
+
+        class PropClass
+        {
+
+        }
+
+        class ClassA
+        {
+            public PropClass Prop { get; set; }
+        }
+        class ClassB
+        {
+            public string Prop { get; set; }
+        }
 
         class TestClassConstructors
         {

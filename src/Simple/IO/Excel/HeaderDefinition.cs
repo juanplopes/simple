@@ -10,7 +10,7 @@ using Simple.Reflection;
 
 namespace Simple.IO.Excel
 {
-    public class HeaderDefinition<T> : List<HeaderItem>
+    public class HeaderDefinition<T> : List<IHeaderItem>
     {
         public Func<T> instanceCreator = () => MethodCache.Do.CreateInstance<T>();
         public HeaderDefinition()
@@ -28,11 +28,16 @@ namespace Simple.IO.Excel
             return instanceCreator();
         }
 
-        public HeaderItem Register(Expression<Func<T, object>> expr)
+        public IHeaderItem Register(Expression<Func<T, object>> expr)
         {
             var item = new HeaderItem(expr.GetMemberList().ToSettable());
             Add(item);
             return item;
+        }
+
+        public void Skip(int count)
+        {
+            AddRange(Enumerable.Repeat<IHeaderItem>(new SkippingHeaderItem(), count));
         }
     }
 

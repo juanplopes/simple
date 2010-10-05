@@ -161,8 +161,12 @@
     <Compile Include="Generator\InterfaceReplacerFixture.cs" />
     <Compile Include="Generator\ProjectDescriptionFixture.cs" />
     <Compile Include="Gui\PathsFixture.cs" />
+    <Compile Include="IO\Excel\FirstSampleSkippingFixture.cs" />
+    <Compile Include="IO\Excel\MultiSheetSampleFixture.cs" />
     <Compile Include="IO\Excel\FirstSampleData.cs" />
-    <Compile Include="IO\Excel\SpreadsheetReaderFixture.cs" />
+    <Compile Include="IO\Excel\NullableSampleData.cs" />
+    <Compile Include="IO\Excel\FirstSampleFixture.cs" />
+    <Compile Include="IO\Excel\SheetErrorFixture.cs" />
     <Compile Include="Mvc\ModelBinder\CollectionFixtures.cs" />
     <Compile Include="Mvc\ModelBinder\SimpleValuesFixture.cs" />
     <Compile Include="Mvc\ModelBinder\BaseCollectionFixture.cs" />
@@ -380,6 +384,7 @@
     </Content>
     <None Include="Resources\00_Simple.csproj" />
     <None Include="Resources\FirstSample.xls" />
+    <None Include="Resources\MultiSheetsSample.xls" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

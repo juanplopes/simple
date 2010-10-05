@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using SharpTestsEx;
+using System.Reflection;
 
 namespace Simple.Tests.Reflection
 {
@@ -27,6 +28,15 @@ namespace Simple.Tests.Reflection
             prop.Set(obj, 43);
 
             prop.Get(obj).Should().Be(43);
+        }
+
+        [Test, ExpectedException(typeof(TargetException))]
+        public void SetDifferentPropTypeWontEndTheWorld()
+        {
+            var prop = typeof(WrongType).GetProperty("TestInner").ToSettable();
+            var test = new Sample();
+            prop.Set(test, "asd");
+            test.TestInner.GetType().Should().Be(typeof(Inner));
         }
 
         [Test]
@@ -84,6 +94,16 @@ namespace Simple.Tests.Reflection
 
             prop.Get(obj).Should().Be(43);
         }
+
+        [Test, ExpectedException(typeof(ArgumentException))]
+        public void SetDifferentFieldTypeWontEndTheWorld()
+        {
+            var prop = typeof(WrongType).GetField("TestInnerField").ToSettable();
+            var test = new Sample();
+            prop.Set(test, "asd");
+            test.TestInnerField.GetType().Should().Be(typeof(Inner));
+        }
+
         [Test]
         public void FieldWrapperShouldReturnInformation()
         {
@@ -161,18 +181,29 @@ namespace Simple.Tests.Reflection
             obj.TestInner.TestInt.Should().Be(42);
         }
 
+        class WrongType
+        {
+            public string TestInner { get; set; }
+            public string TestInnerField;
+        }
 
         class Sample
         {
             public int this[int index] { get { return index; } }
             public int TestProp { get; set; }
             public Inner TestInner { get; set; }
+            public Inner TestInnerField;
             public int TestField = 0;
         }
 
         class Inner
         {
             public int TestInt { get; set; }
+
+            public int Whatever()
+            {
+                return 42;
+            }
         }
     }
 }

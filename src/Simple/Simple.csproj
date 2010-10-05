@@ -153,10 +153,14 @@
     <Compile Include="IO\CommandLineReader.cs" />
     <Compile Include="IO\Excel\HeaderDefinition.cs" />
     <Compile Include="IO\Excel\HeaderItem.cs" />
+    <Compile Include="IO\Excel\IHeaderItem.cs" />
     <Compile Include="IO\Excel\RowReader.cs" />
+    <Compile Include="IO\Excel\RowResult.cs" />
+    <Compile Include="IO\Excel\SheetError.cs" />
     <Compile Include="IO\Excel\SheetReader.cs" />
     <Compile Include="IO\Excel\SheetResult.cs" />
     <Compile Include="IO\Excel\SheetResultCollection.cs" />
+    <Compile Include="IO\Excel\SkippingHeaderItem.cs" />
     <Compile Include="IO\Excel\WorkbookReader.cs" />
     <Compile Include="IO\FileLocator.cs" />
     <Compile Include="IO\FileSize.cs" />
