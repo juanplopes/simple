@@ -22,7 +22,7 @@ namespace Simple.Tests.Patterns
             });
 
             t1.Start();
-            t1.Join();
+            t1.Join(1000);
 
             SimpleContext.Data.Singleton<ThreadSingletonSample>().Test.Should().Be(2);
         }
@@ -40,7 +40,7 @@ namespace Simple.Tests.Patterns
             });
 
             t1.Start();
-            t1.Join();
+            t1.Join(1000);
 
             SingletonSample.Do.Test.Should().Be(3);
         }

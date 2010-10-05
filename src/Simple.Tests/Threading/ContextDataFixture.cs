@@ -81,7 +81,7 @@ namespace Simple.Tests.Threading
             });
 
             thread.Start();
-            thread.Join();
+            thread.Join(1000);
 
             var sample2 = data.Singleton<SampleDefault>();
 
