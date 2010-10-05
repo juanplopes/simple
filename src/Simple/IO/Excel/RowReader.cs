@@ -30,10 +30,14 @@ namespace Simple.IO.Excel
             return Enumerable.Range(0, Header.Count).ToArray();
         }
 
-        public RowResult Read(Row row, int[] indexes)
+        public RowResult Read(int rowNum, Row row, int[] indexes)
         {
             var target = new RowResult { Result = Header.CreateInstance() };
-            if (row == null) return target;
+            if (row == null)
+            {
+                target.PrivateErrors.Add(new SheetError(rowNum, "Missing row"));
+                return target;
+            }
 
             for (int i = 0; i < indexes.Length; i++)
             {

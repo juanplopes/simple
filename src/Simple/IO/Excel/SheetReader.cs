@@ -36,7 +36,7 @@ namespace Simple.IO.Excel
             var indexes = Reader.ReadHeader(sheet.GetRow(first));
             for (int i = first + 1; i <= sheet.LastRowNum; i++)
             {
-                yield return Reader.Read(sheet.GetRow(i), indexes);
+                yield return Reader.Read(i, sheet.GetRow(i), indexes);
             }
         }
 

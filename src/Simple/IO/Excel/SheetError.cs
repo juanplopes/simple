@@ -23,6 +23,11 @@ namespace Simple.IO.Excel
             }
         }
 
+        public override string ToString()
+        {
+            return DisplayMessage;
+        }
+
         public SheetError(int row, string message)
         {
             this.Row = row;
