@@ -161,6 +161,7 @@
     <Compile Include="Generator\InterfaceReplacerFixture.cs" />
     <Compile Include="Generator\ProjectDescriptionFixture.cs" />
     <Compile Include="Gui\PathsFixture.cs" />
+    <Compile Include="IO\Excel\ErrorCatchingFixture.cs" />
     <Compile Include="IO\Excel\FirstSampleSkippingFixture.cs" />
     <Compile Include="IO\Excel\MultiSheetSampleFixture.cs" />
     <Compile Include="IO\Excel\FirstSampleData.cs" />
