@@ -122,6 +122,8 @@
       <Libraries Include="$(BuildDir)\Simple.Generator.dll"/>
       <Libraries Include="$(BuildDir)\Simple.Web.Mvc.dll"/>
 
+      <Libraries Include="$(BuildDir)\NPOI.dll"/>
+
       <Libraries Include="$(BuildDir)\NVelocity.dll"/>
       <Libraries Include="$(BuildDir)\NHibernate.dll"/>
       <Libraries Include="$(BuildDir)\FluentValidation.dll"/>
