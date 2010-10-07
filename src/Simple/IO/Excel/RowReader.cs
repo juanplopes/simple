@@ -33,11 +33,7 @@ namespace Simple.IO.Excel
         public RowResult Read(int rowNum, Row row, int[] indexes)
         {
             var target = new RowResult { Result = Header.CreateInstance() };
-            if (row == null)
-            {
-                target.PrivateErrors.Add(new SheetError(rowNum, "Missing row"));
-                return target;
-            }
+            if (row == null) return null;
 
             for (int i = 0; i < indexes.Length; i++)
             {

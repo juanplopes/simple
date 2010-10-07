@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using NPOI.SS.UserModel;
 using System.Collections;
+using NPOI.HSSF.UserModel;
+using System.IO;
 
 namespace Simple.IO.Excel
 {
@@ -15,11 +17,12 @@ namespace Simple.IO.Excel
             Reader = reader;
         }
 
+
         public SheetResult<T> Read(Sheet sheet)
         {
             try
             {
-                var results = ReadInternal(sheet);
+                var results = ReadInternal(sheet).Where(x=>x != null);
                 return new SheetResult<T>(sheet.SheetName,
                     results.Select(x => x.Result)
                     , results.SelectMany(x => x.Errors));

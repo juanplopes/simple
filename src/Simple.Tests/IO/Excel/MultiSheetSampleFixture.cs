@@ -58,8 +58,8 @@ namespace Simple.Tests.IO.Excel
         [Test]
         public void Sheet3ShouldHave4RowsWith3ErrorsBecauseOfMissingRows()
         {
-            data["TestD"].Records.Should().Have.Count.EqualTo(4);
-            data["TestD"].Errors.Should().Have.Count.EqualTo(3);
+            data["TestD"].Records.Should().Have.Count.EqualTo(1);
+            data["TestD"].Errors.Should().Have.Count.EqualTo(0);
         }
 
         [Test]
@@ -89,20 +89,8 @@ namespace Simple.Tests.IO.Excel
         {
             var sheet = data[2].Records.ToList();
 
-            sheet[0].AssertWith(null, null, null, null, null);
-            sheet[1].AssertWith(null, null, null, null, null);
-            sheet[2].AssertWith(null, null, null, null, null);
-            sheet[3].AssertWith("asd4", 456, new DateTime(1915, 04, 16), NullableSampleData.Status.Cancelado, false);
+            sheet[0].AssertWith("asd4", 456, new DateTime(1915, 04, 16), NullableSampleData.Status.Cancelado, false);
         }
 
-        [Test]
-        public void WillDetectNullableErrorsInSheet3()
-        {
-            var sheet = data["TestD"];
-
-            sheet.Errors.Should().Have.Count.EqualTo(3);
-            sheet.Errors.Select(x => x.Row).Should().Have.SameSequenceAs(1, 2, 3);
-            sheet.Records.Should().Have.Count.EqualTo(4);
-        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using System.IO;
 
 namespace Simple.IO.Excel
 {
@@ -24,6 +25,12 @@ namespace Simple.IO.Excel
         public WorkbookReader(SheetReader<T> reader)
         {
             Reader = reader;
+        }
+
+        public SheetResultCollection<T> Read(byte[] bytes)
+        {
+            using (var mem = new MemoryStream(bytes))
+                return Read(new HSSFWorkbook(mem));
         }
 
         public SheetResultCollection<T> Read(Workbook workbook)
