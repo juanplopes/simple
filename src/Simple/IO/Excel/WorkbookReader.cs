@@ -12,15 +12,20 @@ namespace Simple.IO.Excel
     {
         public static WorkbookReader<T> Create<T>(HeaderDefinition<T> header)
         {
+            return Create(header, 10);
+        }
+
+        public static WorkbookReader<T> Create<T>(HeaderDefinition<T> header, int maxNullLines)
+        {
             return new WorkbookReader<T>(
                 new SheetReader<T>(
-                    new RowReader<T>(header)));
+                    new RowReader<T>(header)) { MaxNullLines = maxNullLines });
         }
     }
 
     public class WorkbookReader<T>
     {
-        protected SheetReader<T> Reader { get; set; }
+        public SheetReader<T> Reader { get; protected set; }
 
         public WorkbookReader(SheetReader<T> reader)
         {

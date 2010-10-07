@@ -52,5 +52,22 @@ namespace Simple.Tests.IO.Excel
             }
 
         }
+
+        [Test]
+        public void CanStopWhenNoMoreLinesFound()
+        {
+            using (var memory = new MemoryStream(ExcelFiles.MultiSheetsSample))
+            {
+                var header = new HeaderDefinition<FirstSampleData>();
+                header.Skip(2);
+                header.Register(x => x.ColunaC).Formatter("pt-BR");
+
+                var data = WorkbookReader.Create(header, 2)
+                    .Read(new HSSFWorkbook(memory))["TestD"];
+
+                data.Records.Count.Should().Be(0);
+            }
+
+        }
     }
 }

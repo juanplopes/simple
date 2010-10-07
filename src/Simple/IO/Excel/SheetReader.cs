@@ -6,15 +6,22 @@ using NPOI.SS.UserModel;
 using System.Collections;
 using NPOI.HSSF.UserModel;
 using System.IO;
+using log4net;
+using System.Reflection;
 
 namespace Simple.IO.Excel
 {
     public class SheetReader<T>
     {
-        internal protected RowReader<T> Reader { get; set; }
-        internal SheetReader(RowReader<T> reader)
+        public int MaxNullLines { get; set; }
+
+        private static ILog log = Simply.Do.Log(MethodBase.GetCurrentMethod());
+
+        public RowReader<T> Reader { get; protected set; }
+        public SheetReader(RowReader<T> reader)
         {
             Reader = reader;
+            MaxNullLines = 10;
         }
 
 
@@ -22,7 +29,9 @@ namespace Simple.IO.Excel
         {
             try
             {
-                var results = ReadInternal(sheet).Where(x=>x != null);
+                log.DebugFormat("Reading sheet {0}", sheet.SheetName);
+
+                var results = ReadInternal(sheet);
                 return new SheetResult<T>(sheet.SheetName,
                     results.Select(x => x.Result)
                     , results.SelectMany(x => x.Errors));
@@ -37,9 +46,27 @@ namespace Simple.IO.Excel
         {
             var first = sheet.FirstRowNum;
             var indexes = Reader.ReadHeader(sheet.GetRow(first));
+            var nulls = 0;
+
+            log.DebugFormat("Its first row is {0} and last row is {1}", sheet.FirstRowNum, sheet.LastRowNum);
+
             for (int i = first + 1; i <= sheet.LastRowNum; i++)
             {
-                yield return Reader.Read(i, sheet.GetRow(i), indexes);
+                var row = Reader.Read(i, sheet.GetRow(i), indexes);
+                if (row != null)
+                {
+                    nulls = 0;
+                    yield return row;
+                }
+                else
+                {
+                    nulls++;
+                    if (nulls >= MaxNullLines)
+                    {
+                        log.DebugFormat("Max nulls achieved");
+                        break;
+                    }
+                }
             }
         }
 
