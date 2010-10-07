@@ -14,14 +14,7 @@ namespace Simple.IO.Excel
     {
         private static ILog log = Simply.Do.Log(MethodBase.GetCurrentMethod());
 
-        public class RowResult
-        {
-            public T Result { get; set; }
-            internal IList<SheetError> PrivateErrors { get; set; }
-            public IEnumerable<SheetError> Errors { get { return PrivateErrors; } }
-
-            public RowResult() { PrivateErrors = new List<SheetError>(); }
-        }
+       
 
         protected HeaderDefinition<T> Header { get; set; }
         public RowReader(HeaderDefinition<T> header)
@@ -34,16 +27,18 @@ namespace Simple.IO.Excel
             return Enumerable.Range(0, Header.Count).ToArray();
         }
 
-        public RowResult Read(int rowNum, Row row, int[] indexes)
+        public RowResult<T> Read(int rowNum, Row row, int[] indexes)
         {
             log.DebugFormat("Reading row {0}", rowNum);
 
-            var target = new RowResult { Result = Header.CreateInstance() };
+            var target = new RowResult<T>(rowNum, Header.CreateInstance());
             if (row == null)
             {
                 log.DebugFormat("Row {0} was null, skipping", rowNum);
-                return null;
+                return target;
             }
+
+            bool entirelyNull = true;
 
             for (int i = 0; i < indexes.Length; i++)
             {
@@ -51,7 +46,10 @@ namespace Simple.IO.Excel
                 try
                 {
                     var column = Header[i];
-                    column.Set(target.Result, GetCellValue(row.GetCell(i), null));
+                    var value = GetCellValue(row.GetCell(i), null);
+                    entirelyNull = entirelyNull && (value == null || (value as string) == "");
+
+                    column.Set(target.Result, value);
                 }
                 catch (Exception e)
                 {
@@ -59,6 +57,9 @@ namespace Simple.IO.Excel
                     target.PrivateErrors.Add(new SheetError(row.RowNum, i, e.Message));
                 }
             }
+
+            target.HasValue = !entirelyNull;
+
             return target;
         }
 

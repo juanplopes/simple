@@ -10,14 +10,20 @@ namespace Simple.IO.Excel
     public class SheetResult<T>
     {
         public string Name { get; protected set; }
-        public ReadOnlyCollection<T> Records { get; protected set; }
-        public ReadOnlyCollection<SheetError> Errors { get; protected set; }
 
-        public SheetResult(string name, IEnumerable<T> records, IEnumerable<SheetError> errors)
+        internal IList<SheetError> PrivateErrors { get; private set; }
+
+        public IList<RowResult<T>> Rows { get; protected set; }
+        public IEnumerable<T> Records { get { return Rows.Where(x => x.HasValue).Select(x => x.Result); } }
+        public IEnumerable<SheetError> Errors { get { return 
+            PrivateErrors.Union(
+            Rows.Where(x => x.HasValue).SelectMany(x => x.Errors)); } }
+
+        public SheetResult(string name, IEnumerable<RowResult<T>> rows)
         {
+            this.PrivateErrors = new List<SheetError>();
             this.Name = name;
-            this.Records = new ReadOnlyCollection<T>(records.ToList());
-            this.Errors = new ReadOnlyCollection<SheetError>(errors.ToList());
+            this.Rows = rows.ToList();
         }
     }
 }

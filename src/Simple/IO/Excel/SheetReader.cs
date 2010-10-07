@@ -31,18 +31,18 @@ namespace Simple.IO.Excel
             {
                 log.DebugFormat("Reading sheet {0}", sheet.SheetName);
 
-                var results = ReadInternal(sheet);
-                return new SheetResult<T>(sheet.SheetName,
-                    results.Select(x => x.Result)
-                    , results.SelectMany(x => x.Errors));
+                var results = ReadInternal(sheet).ToList();
+                return new SheetResult<T>(sheet.SheetName, results.ToList());
             }
             catch (Exception e)
             {
-                return new SheetResult<T>(sheet.SheetName, new T[0], new[] { new SheetError(0, e.Message) });
+                var results = new SheetResult<T>(sheet.SheetName, new RowResult<T>[0]);
+                results.PrivateErrors.Add(new SheetError(0, e.Message));
+                return results;
             }
         }
 
-        public IEnumerable<RowReader<T>.RowResult> ReadInternal(Sheet sheet)
+        public IEnumerable<RowResult<T>> ReadInternal(Sheet sheet)
         {
             var first = sheet.FirstRowNum;
             var indexes = Reader.ReadHeader(sheet.GetRow(first));
@@ -53,11 +53,8 @@ namespace Simple.IO.Excel
             for (int i = first + 1; i <= sheet.LastRowNum; i++)
             {
                 var row = Reader.Read(i, sheet.GetRow(i), indexes);
-                if (row != null)
-                {
+                if (row.HasValue)
                     nulls = 0;
-                    yield return row;
-                }
                 else
                 {
                     nulls++;
@@ -67,6 +64,8 @@ namespace Simple.IO.Excel
                         break;
                     }
                 }
+
+                yield return row;
             }
         }
 

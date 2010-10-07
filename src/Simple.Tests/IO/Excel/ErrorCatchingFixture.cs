@@ -25,8 +25,8 @@ namespace Simple.Tests.IO.Excel
                 var data = WorkbookReader.Create(header)
                     .Read(new HSSFWorkbook(memory))[0];
 
-                data.Records.Count.Should().Be(4);
-                data.Errors.Count.Should().Be(4);
+                data.Records.Count().Should().Be(4);
+                data.Errors.Count().Should().Be(4);
                 data.Errors.Select(x => x.Column).Should().Have.SameSequenceAs(2, 2, 2, 2);
             }
 
@@ -45,8 +45,8 @@ namespace Simple.Tests.IO.Excel
                 var data = WorkbookReader.Create(header)
                     .Read(new HSSFWorkbook(memory))[1];
 
-                data.Records.Count.Should().Be(4);
-                data.Errors.Count.Should().Be(1);
+                data.Records.Count().Should().Be(4);
+                data.Errors.Count().Should().Be(1);
                 data.Errors.Select(x => x.Column).Should().Have.SameSequenceAs(2);
                 data.Errors.Select(x => x.Row).Should().Have.SameSequenceAs(3);
             }
@@ -65,7 +65,7 @@ namespace Simple.Tests.IO.Excel
                 var data = WorkbookReader.Create(header, 2)
                     .Read(new HSSFWorkbook(memory))["TestD"];
 
-                data.Records.Count.Should().Be(0);
+                data.Records.Count().Should().Be(0);
             }
 
         }

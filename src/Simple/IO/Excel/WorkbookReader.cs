@@ -40,7 +40,7 @@ namespace Simple.IO.Excel
 
         public SheetResultCollection<T> Read(Workbook workbook)
         {
-            return new SheetResultCollection<T>(ReadInternal(workbook));
+            return new SheetResultCollection<T>(ReadInternal(workbook).ToList());
         }
 
         private IEnumerable<SheetResult<T>> ReadInternal(Workbook workbook)

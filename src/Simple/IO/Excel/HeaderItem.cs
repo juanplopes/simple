@@ -40,8 +40,11 @@ namespace Simple.IO.Excel
         public void Set(object target, object value)
         {
             var type = member.Type.GetValueTypeIfNullable();
-            if (type.CanAssign(typeof(Enum)) && value is string)
+
+            if (type.CanAssign<Enum>() && value is string)
                 value = Enum.Parse(type, value as string, true);
+            if (!type.CanAssign<string>() && (value as string) == "")
+                value = null;
             else if (value is IConvertible)
                 value = Convert.ChangeType(value, type, formatter);
 
