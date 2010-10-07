@@ -184,7 +184,7 @@ namespace Simple.Tests.Reflection
         class WrongType
         {
             public string TestInner { get; set; }
-            public string TestInnerField;
+            public string TestInnerField = null;
         }
 
         class Sample
@@ -192,7 +192,7 @@ namespace Simple.Tests.Reflection
             public int this[int index] { get { return index; } }
             public int TestProp { get; set; }
             public Inner TestInner { get; set; }
-            public Inner TestInnerField;
+            public Inner TestInnerField = null;
             public int TestField = 0;
         }
 
