@@ -121,7 +121,7 @@
   </Target>
 
   <Target Name="Prepare" DependsOnTargets="Server">
-    <Exec Command="&quot;$(ServerBuildDir)\$(ServerAssembly)&quot; prepare" WorkingDirectory="$(ServerBuildDir)"/>
+    <Exec Command="&quot;$(ServerBuildDir)\$(ServerAssembly)&quot; * prepare" WorkingDirectory="$(ServerBuildDir)"/>
   </Target>
 
   <Target Name="MakeConfig" DependsOnTargets="CopyToken">

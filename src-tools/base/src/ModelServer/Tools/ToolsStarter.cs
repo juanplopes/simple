@@ -26,6 +26,8 @@ namespace Example.Project.Tools
             VerifyContracts(args);
 
             var env = args.FirstOrDefault();
+            if (env.With(x => x.Trim()) == "*") env = null;
+
             new ConsoleCommandReader(new Context(env), 
                 Configurator.IsProduction).Run(args.Skip(1));
         }
