@@ -14,9 +14,11 @@ namespace Simple.Config
         public bool Active { get; protected set; }
         public DateTime LastModification { get; protected set; }
 
+        private object _lock = new object();
+
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            lock (this)
+            lock (_lock)
             {
                 if (Active)
                 {
@@ -53,9 +55,9 @@ namespace Simple.Config
 
         public override bool Reload()
         {
-            lock (this)
+            lock (_lock)
             {
-                if (XmlFile.Parameter == null) 
+                if (XmlFile.Parameter == null)
                     throw new InvalidOperationException("Cannot reload a non-loaded source");
 
                 Simply.Do.Log(this).DebugFormat("Reloading file {0}...", XmlFile.Parameter.Name);
@@ -74,25 +76,23 @@ namespace Simple.Config
 
         public override void Dispose()
         {
-            lock (this)
-            {
-                Simply.Do.Log(this).DebugFormat("Disposing configurator for {0}...", typeof(T));
+            Simply.Do.Log(this).DebugFormat("Disposing configurator for {0}...", typeof(T));
+            lock (_lock)
                 Active = false;
-                Watcher.Dispose();
-                base.Dispose();
-            }
+
+            Watcher.Dispose();
+            base.Dispose();
         }
 
         #region IConfigSource<T,XPathParameter<FileInfo>> Members
 
         public IConfigSource<T> Load(XPathParameter<FileInfo> input)
         {
-            lock (this)
+            lock (_lock)
             {
                 Simply.Do.Log(this).DebugFormat("Loading XMLConfig for class {0}...", typeof(T).Name);
 
                 SetXmlFileInfo(input.Parameter);
-
 
                 using (Stream s = XmlFile.Parameter.Open(FileMode.Open, FileAccess.Read, FileShare.Read))
                 {

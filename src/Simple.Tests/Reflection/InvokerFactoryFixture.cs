@@ -172,7 +172,7 @@ namespace Simple.Tests.Reflection
             obj.param2.Should().Be("B");
         }
 
-        [Test, Ignore("The world is cruel, my friend")]
+        [Test, Explicit("The world is cruel, my friend")]
         public void WillNotBeAbleToCallPropertySetToWrongType()
         {
             var inv = InvokerFactory.Do.Create(typeof(ClassB)

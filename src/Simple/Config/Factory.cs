@@ -8,6 +8,8 @@ namespace Simple.Config
     /// <typeparam name="T">The configuration type.</typeparam>
     public abstract class Factory<T> : IFactory<T>, IDisposable
     {
+        object _lcok = new object();
+
         /// <summary>
         /// Indicates whether the factory has a config source associated to it.
         /// </summary>
