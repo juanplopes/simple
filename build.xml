@@ -168,7 +168,7 @@
       LocalFile="$(PackageDir)\$(MainLibraryName).exe"
       TargetFileName="$(MainLibraryName)-$(ProductVersion).exe"
       Summary="Simple.Net Project Starter v$(ProductVersion)"
-      Labels="Nightly;Type-Executable;Featured;BetterDownloadThis"
+      Labels="Nightly;Type-Executable"
       ContinueOnError="true"
       />
   </Target>
