@@ -8,12 +8,14 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using MvcContrib.FluentHtml;
 using MvcContrib.FluentHtml.Elements;
+using MvcContrib.FluentHtml.Expressions;
 
 namespace Simple.Web.Mvc
 {
     public static class SelectListExtensions
     {
         public static IModelSelectList FindSelectList<T, P>(this IViewDataContainer view, Expression<Func<T, P>> member, string viewDataKey)
+            where T : class
         {
             var list = view.ViewData[viewDataKey] as IModelSelectList;
             var viewData = view.ViewData;

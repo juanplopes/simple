@@ -15,10 +15,15 @@ namespace Simple.Web.Mvc
             return new UrlHelper(helper.ViewContext.RequestContext);
         }
 
-        public static string ResolveFullPath(this HtmlHelper helper, string directory, string file)
+        public static string ResolveFullPath(this HtmlHelper helper, params string[] components)
         {
-            string model = "~/{0}/{1}".AsFormat(directory, file);
-            return ResolveFullPath(helper, model);
+            var sb = new StringBuilder("~");
+
+            if (components != null)
+                foreach (var component in components)
+                    sb.AppendFormat("/{0}", component);
+
+            return ResolveFullPath(helper, sb.ToString());
         }
 
         public static string ResolveFullPath(this HtmlHelper helper, string url)
