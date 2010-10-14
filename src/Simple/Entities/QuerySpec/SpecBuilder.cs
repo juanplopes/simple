@@ -74,5 +74,10 @@ namespace Simple.Entities.QuerySpec
             return new SpecBuilder<T>(
                 Items.Union(new ExpressionItem<T>(expr)));
         }
+
+        public static implicit operator SpecBuilder<T>(Expression<Func<IQueryable<T>, IQueryable<T>>> expr)
+        {
+            return expr.ToSpec();
+        }
     }
 }
