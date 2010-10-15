@@ -82,6 +82,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleValidationFilter.cs" />
     <Compile Include="TagBuilderExtensions.cs" />
+    <Compile Include="ViewPageExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simple\Simple.csproj">

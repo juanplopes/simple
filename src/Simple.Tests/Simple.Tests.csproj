@@ -179,6 +179,7 @@
     <Compile Include="Mvc\ModelBinder\Util.cs" />
     <Compile Include="Mvc\SelectListFixture.cs" />
     <Compile Include="Mvc\SelectListFinderFixture.cs" />
+    <Compile Include="Mvc\ViewPageExtensionsFixture.cs" />
     <Compile Include="Reflection\ClassSignatureFixture.cs" />
     <Compile Include="Reflection\ConversionContructorsFixture.cs" />
     <Compile Include="Reflection\DynamicInvokerFixture.cs" />
