@@ -10,6 +10,22 @@ namespace Simple.Tests.Common
     public class EnumerableFixture
     {
         [Test]
+        public void CanBatchSelectZero()
+        {
+            int count = 0;
+            var set = new int[0];
+
+            var result = set.BatchSelect(3, x =>
+            {
+                count++;
+                return x.Select(y => y * count);
+            }).ToList();
+
+            count.Should().Be(0);
+        }
+
+
+        [Test]
         public void CanBatchSelectExactItems()
         {
             int count = 0;
