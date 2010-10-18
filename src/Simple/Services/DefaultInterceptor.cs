@@ -42,41 +42,59 @@ namespace Simple.Services
         {
             if (!Client) method = CorrectMethod(target, method);
             var hookArgs = new CallHookArgs(target, method, args, Client);
-            var methodHooks = Hooks(hookArgs);
-
-            ILog logger = Simply.Do.Log(this);
-
-            var list = new List<ICallHook>(methodHooks);
-            var alternativeLogger = Simply.Do.Log(method);
+            var list = Hooks(hookArgs).ToList();
 
             try
             {
-                foreach (var hook in Enumerable.Reverse(list)) hook.Before();
-
-                logger.DebugFormat("Calling {0} in {1}...", method.Name, method.DeclaringType.Name);
-                alternativeLogger.DebugFormat("BEGIN {0} in {1}", method.Name, method.DeclaringType.Name);
-
-                if (Client) HeaderHandler.InjectCallHeaders(target, method, args);
-                else HeaderHandler.RecoverCallHeaders(target, method, args);
-
+                BeforeExecuteActions(target, method, args, list);
                 hookArgs.Return = Invoke(target, method, args);
-
-                if (Client) HeaderHandler.RecoverCallHeaders(target, method, args);
-                else HeaderHandler.InjectCallHeaders(target, method, args);
-
-                logger.DebugFormat("Returning from {0} in {1}...", method.Name, method.DeclaringType.Name);
-
-                foreach (var hook in list) hook.AfterSuccess();
+                AfterExecuteActions(target, method, args, list);
 
                 return hookArgs.Return;
             }
             finally
             {
-                logger.DebugFormat("Finalizing {0} in {1}...", method.Name, method.DeclaringType.Name);
+                FinallyExecuteActions(method, list);
+            }
+        }
+
+        private void FinallyExecuteActions(MethodBase method, List<ICallHook> list)
+        {
+            var logger = Simply.Do.Log(this);
+            var alternativeLogger = Simply.Do.Log(method);
+
+            logger.DebugFormat("Finalizing {0} in {1}...", method.Name, method.DeclaringType.Name);
+            if (!method.DeclaringType.IsInterface)
                 alternativeLogger.DebugFormat("END {0} in {1}", method.Name, method.DeclaringType.Name);
 
-                foreach (var hook in list) hook.Finally();
-            }
+            foreach (var hook in list) hook.Finally();
+        }
+
+        private void AfterExecuteActions(object target, MethodBase method, object[] args, List<ICallHook> list)
+        {
+            var logger = Simply.Do.Log(this);
+
+            if (Client) HeaderHandler.RecoverCallHeaders(target, method, args);
+            else HeaderHandler.InjectCallHeaders(target, method, args);
+
+            logger.DebugFormat("Returning from {0} in {1}...", method.Name, method.DeclaringType.Name);
+
+            foreach (var hook in list) hook.AfterSuccess();
+        }
+
+        private void BeforeExecuteActions(object target, MethodBase method, object[] args, List<ICallHook> list)
+        {
+            var logger = Simply.Do.Log(this);
+            var alternativeLogger = Simply.Do.Log(method);
+
+            foreach (var hook in Enumerable.Reverse(list)) hook.Before();
+
+            logger.DebugFormat("Calling {0} in {1}...", method.Name, method.DeclaringType.Name);
+            if (!method.DeclaringType.IsInterface)
+                alternativeLogger.DebugFormat("BEGIN {0} in {1}", method.Name, method.DeclaringType.Name);
+
+            if (Client) HeaderHandler.InjectCallHeaders(target, method, args);
+            else HeaderHandler.RecoverCallHeaders(target, method, args);
         }
 
         protected object Invoke(object target, MethodBase method, object[] args)
