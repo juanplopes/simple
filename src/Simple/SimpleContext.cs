@@ -6,6 +6,7 @@ using Simple.Threading;
 using System.Collections;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization;
+using Simple.Patterns;
 
 namespace Simple
 {
@@ -16,14 +17,14 @@ namespace Simple
         {
             SwitchProvider(null);
         }
-    
+
         public static IContextProvider Provider { get; protected set; }
         public static ContextData Data { get { return new ContextData(() => Provider); } }
 
         public static void SwitchProvider(IContextProvider newProvider)
         {
             newProvider = newProvider ?? new ThreadDataProvider();
-            
+
             if (Provider != null)
                 newProvider.SetStorage(Provider.GetStorage());
 
@@ -43,6 +44,13 @@ namespace Simple
         public SimpleContext()
         {
             ExtendedInfo = new Hashtable();
+        }
+
+        public IDisposable WithUsername(string username)
+        {
+            var oldUser = Username;
+            Username = username;
+            return new DisposableAction(() => Username = oldUser);
         }
 
         public string Username { get; set; }
