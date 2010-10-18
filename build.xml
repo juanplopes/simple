@@ -24,7 +24,6 @@
     <ProductMinorVersion>1</ProductMinorVersion>
     <ProductBuildName>Avalon</ProductBuildName>
 
-    <MainLibraryName>Simple.$(ProductBuildName)</MainLibraryName>
     <TestAssembly>$(BuildDir)\Simple.Tests.exe</TestAssembly>
   </PropertyGroup>
 
@@ -43,12 +42,21 @@
   </Target>
 
   <Target Name="GenerateTag">
-
+    <DaysSince StartDate='2008-10-17'>
+		<Output TaskParameter="Output" PropertyName="NumberOfDays"/>
+	</DaysSince>
+  
     <CreateProperty
-        Value="$(ProductMajorVersion).$(ProductMinorVersion)">
+        Value="$(ProductMajorVersion).$(ProductMinorVersion).$(NumberOfDays)">
       <Output TaskParameter="Value" PropertyName="ProductVersion" />
     </CreateProperty>
 
+    <CreateProperty
+        Value="simple-$(ProductVersion)">
+      <Output TaskParameter="Value" PropertyName="MainLibraryName" />
+    </CreateProperty>
+
+	
     <Message Text="Product version: "/>
 	<Message Text="##teamcity[buildNumber '$(ProductVersion)']"/>
   </Target>
@@ -140,8 +148,8 @@
       <ZipFiles Include="$(PackageLibDir)\*.*"/>
     </ItemGroup>
     
-    <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile &#39;$(PackageDir2)\$(MainLibraryName).exe&#39;&quot;"/>
-    <Zip Files="@(ZipFiles)" ZipFileName="$(PackageDir)\$(MainLibraryName).zip" WorkingDirectory="$(PackageLibDir)"/>
+    <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile &#39;$(PackageDir2)\$(MainLibraryName)-scaffold.exe&#39;&quot;"/>
+    <Zip Files="@(ZipFiles)" ZipFileName="$(PackageDir)\$(MainLibraryName)-lib.zip" WorkingDirectory="$(PackageLibDir)"/>
   </Target>
 
   <Target Name="Publish" DependsOnTargets="Clean;Test;Package">
