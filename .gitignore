@@ -7,3 +7,4 @@ src/Version.cs
 src/Simple.sln.cache
 src-tools/base/Simple.Gui.exe
 src-tools/base/lib/*.*
+TestResult.xml

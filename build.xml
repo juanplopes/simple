@@ -1,4 +1,4 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Test">
   <PropertyGroup>
     <GCProjectName>simpledotnet</GCProjectName>
 
@@ -21,7 +21,7 @@
     <Platform>Any CPU</Platform>
 
     <ProductMajorVersion>3</ProductMajorVersion>
-    <ProductMinorVersion>0</ProductMinorVersion>
+    <ProductMinorVersion>1</ProductMinorVersion>
     <ProductBuildName>Avalon</ProductBuildName>
 
     <MainLibraryName>Simple.$(ProductBuildName)</MainLibraryName>
