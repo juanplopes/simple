@@ -47,12 +47,14 @@ namespace Simple.Services
             ILog logger = Simply.Do.Log(this);
 
             var list = new List<ICallHook>(methodHooks);
+            var alternativeLogger = Simply.Do.Log(method);
 
             try
             {
                 foreach (var hook in Enumerable.Reverse(list)) hook.Before();
 
                 logger.DebugFormat("Calling {0} in {1}...", method.Name, method.DeclaringType.Name);
+                alternativeLogger.DebugFormat("BEGIN {0} in {1}", method.Name, method.DeclaringType.Name);
 
                 if (Client) HeaderHandler.InjectCallHeaders(target, method, args);
                 else HeaderHandler.RecoverCallHeaders(target, method, args);
@@ -71,6 +73,7 @@ namespace Simple.Services
             finally
             {
                 logger.DebugFormat("Finalizing {0} in {1}...", method.Name, method.DeclaringType.Name);
+                alternativeLogger.DebugFormat("END {0} in {1}", method.Name, method.DeclaringType.Name);
 
                 foreach (var hook in list) hook.Finally();
             }
