@@ -43,14 +43,9 @@
   </Target>
 
   <Target Name="GenerateTag">
-    <SvnVersion LocalPath="." ToolPath="util\svn">
-      <Output TaskParameter="Revision" PropertyName="Revision" />
-    </SvnVersion>
-    <Message Text="Revision: $(Revision)"/>
-
 
     <CreateProperty
-        Value="$(ProductMajorVersion).$(ProductMinorVersion).$(Revision)">
+        Value="$(ProductMajorVersion).$(ProductMinorVersion)">
       <Output TaskParameter="Value" PropertyName="ProductVersion" />
     </CreateProperty>
 

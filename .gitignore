@@ -1,0 +1,7 @@
+bin/
+build/
+pkg/
+src/GlobalInfo.cs
+src/*/obj/
+src/Version.cs
+src/Simple.sln.cache
