@@ -3,11 +3,73 @@ using NUnit.Framework;
 using SharpTestsEx;
 using System.Text;
 using System.Collections.Generic;
+using System;
 
 namespace Simple.Tests.Common
 {
     public class EnumerableFixture
     {
+        [Test]
+        public void CanBatchSelectExactItems()
+        {
+            int count = 0;
+            var set = Enumerable.Range(1, 9);
+
+            var result = set.BatchSelect(3, x =>
+            {
+                count++;
+                return x.Select(y => y * count);
+            }).ToList();
+
+            count.Should().Be(3);
+            result.Should().Have.SameSequenceAs(1, 2, 3, 8, 10, 12, 21, 24, 27);
+        }
+
+        [Test]
+        public void CanBatchSelectNonExactItems()
+        {
+            int count = 0;
+            var set = Enumerable.Range(1, 10);
+
+            var result = set.BatchSelect(3, x =>
+            {
+                count++;
+                return x.Select(y => y * count);
+            }).ToList();
+
+            count.Should().Be(4);
+            result.Should().Have.SameSequenceAs(1, 2, 3, 8, 10, 12, 21, 24, 27, 40);
+        }
+
+        private IEnumerable<int> CountEnumerable(IEnumerable<int> baseEnum, Action count)
+        {
+            count();
+            foreach (var item in baseEnum)
+                yield return item;
+        }
+
+        [Test]
+        public void BatchSelectUsesEnumerableOnlyOnce()
+        {
+            int count = 0;
+            var enumerable = CountEnumerable(Enumerable.Range(1, 10), ()=>count++);
+
+            count.Should().Be(0);
+            enumerable.ToList();
+            count.Should().Be(1);
+            enumerable.ToList();
+            count.Should().Be(2);
+            
+
+            var result = enumerable.BatchSelect(3, x =>
+            {
+                return x.Select(y => y + 1);
+            }).ToList();
+
+            count.Should().Be(3);
+            result.Should().Have.SameSequenceAs(2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+        }
+
         [Test]
         public void CanZipTwoSameLengthSequences()
         {

@@ -40,6 +40,28 @@ namespace Simple
             return result;
         }
 
+        public static IEnumerable<Q> BatchSelect<T, Q>(this IEnumerable<T> source, int batchSize, Func<IEnumerable<T>, IEnumerable<Q>> func)
+        {
+            var list = new List<T>(batchSize);
+            var enumerator = source.GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                list.Add(enumerator.Current);
+                if (list.Count == batchSize)
+                {
+                    foreach (var item in func(list))
+                        yield return item;
+
+                    list.Clear();
+                }
+            }
+
+            if (list.Any())
+                foreach (var item in func(list))
+                    yield return item;
+        }
+
         public static IEnumerable<T> EagerForeach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
             return enumerable.EagerForeach(action, null);
