@@ -5,3 +5,5 @@ src/GlobalInfo.cs
 src/*/obj/
 src/Version.cs
 src/Simple.sln.cache
+src-tools/base/Simple.Gui.exe
+src-tools/base/lib/*.*
