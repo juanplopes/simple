@@ -74,6 +74,17 @@ namespace ${opt.Namespace}.Domain
             Initialize();
         }
         
+#if ($opt.LazyLoad)
+        public override $classname Clone()
+        {
+            var cloned = base.Clone();
+#foreach($field in $table.OneToManyRelations)
+            cloned.$re.NameFor($field) = null;
+#end
+            return cloned;
+        }
+#end 
+
         public $classname($idlist.Invoke($table)) : this()
         {  
 #foreach($field in $table.PrimaryKeysExceptFk)
