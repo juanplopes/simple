@@ -34,4 +34,4 @@ You can find the build status "here":http://teamcity.codebetter.com/project.html
 
 h3. Living Consultoria internal builds (2)
 
-The numbers from 2~10 are reserved for Living Consultoria to publish their own builds.
+The number 2 is reserved for Living Consultoria to publish their own builds.
