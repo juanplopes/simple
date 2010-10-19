@@ -52,7 +52,7 @@
     </CreateProperty>
 
     <CreateProperty
-        Value="simple-$(ProductVersion)">
+        Value="simple-$(ProductMajorVersion).$(ProductMinorVersion)">
       <Output TaskParameter="Value" PropertyName="MainLibraryName" />
     </CreateProperty>
 
@@ -150,29 +150,5 @@
     
     <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile &#39;$(PackageDir2)\$(MainLibraryName)-scaffold.exe&#39;&quot;"/>
     <Zip Files="@(ZipFiles)" ZipFileName="$(PackageDir)\$(MainLibraryName)-lib.zip" WorkingDirectory="$(PackageLibDir)"/>
-  </Target>
-
-  <Target Name="Publish" DependsOnTargets="Clean;Test;Package">
-    <UploadToGoogleCode
-     UserName="$(GCUsername)"
-     Password="$(GCPassword)"
-     ProjectName="$(GCProjectName)"
-     LocalFile="$(PackageDir)\$(MainLibraryName).zip"
-     TargetFileName="$(MainLibraryName)-$(ProductVersion).zip"
-     Summary="Simple.Net Library v$(ProductVersion)"
-     Labels="Nightly;Type-Package"
-     ContinueOnError="true"
-      />
-
-    <UploadToGoogleCode
-      UserName="$(GCUsername)"
-      Password="$(GCPassword)"
-      ProjectName="$(GCProjectName)"
-      LocalFile="$(PackageDir)\$(MainLibraryName).exe"
-      TargetFileName="$(MainLibraryName)-$(ProductVersion).exe"
-      Summary="Simple.Net Project Starter v$(ProductVersion)"
-      Labels="Nightly;Type-Executable"
-      ContinueOnError="true"
-      />
   </Target>
 </Project>
