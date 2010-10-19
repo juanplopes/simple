@@ -15,6 +15,13 @@ h3. Running Tests
 
 Alternatively, you may run "msbuild build.xml" at command line. Same result.
 
+h3. Packaging modifications
+* Run build.cmd
+* Type 'Package'
+* Press ENTER
+
+The redistributable packages will be located at the 'pkg' folder.
+
 h2. Versioning Conventions
 
 Every version is composed of two main parts:
