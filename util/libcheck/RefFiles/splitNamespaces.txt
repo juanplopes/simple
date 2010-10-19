@@ -1,5 +1,0 @@
-System
-System.Web
-System.Web.UI.WebControls
-System.Windows.Forms
-System.WinForms
