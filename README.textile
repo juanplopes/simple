@@ -1,3 +1,31 @@
-CodeBetter's TeamCity direct link:
+h1. Simple.Net Framework
 
-http://teamcity.codebetter.com/project.html?projectId=project87&tab=projectOverview&guest=1
+This repository contains the source code for Simple.Net Framework project.
+
+h2. Development environemnt
+
+h3. Requirements
+* .NET Framework 3.5
+* Windows SDK 6.0A or greater (comes with Visual Studio, but you can download separately)
+* Have .NET framework 3.5 folder on path (because of MSBuild)
+
+h3. Running Tests
+* Run build.cmd
+* Press ENTER
+
+h2. Versioning Conventions
+
+Every version is composed of two main parts:
+
+# The Simple version (major.minor)
+# The build version (runner.build)
+
+Every known runner will have one ID. We assume your private builds will have ID equals to zero. So, every build you do in your own PC will be labelled like 3.1.0.XXX (where XXX is the number of days from the first Simple.Net commit - hard coded).
+
+Other runners will have their own logic of filling the XXX part. The known runners are:
+
+h3. codebetter.teamcity.com (1)
+
+The main Simple.Net build agent. Will have a build labelled like 3.1.1.XXX where XXX is the unique build counter it assigns to every build.
+
+You can find the build status "here":http://teamcity.codebetter.com/project.html?projectId=project87&tab=projectOverview&guest=1.
