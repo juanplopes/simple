@@ -20,8 +20,7 @@
     <Configuration>Release</Configuration>
     <Platform>Any CPU</Platform>
 
-    <ProductMajorVersion>3</ProductMajorVersion>
-    <ProductMinorVersion>1</ProductMinorVersion>
+    <ProductVersionBase>3.1</ProductVersionBase>
     <ProductBuildName>Avalon</ProductBuildName>
 
     <TestAssembly>$(BuildDir)\Simple.Tests.exe</TestAssembly>
@@ -47,12 +46,12 @@
 	</DaysSince>
   
     <CreateProperty
-        Value="$(ProductMajorVersion).$(ProductMinorVersion).$(NumberOfDays)">
+        Value="$(ProductVersionBase).0.$(NumberOfDays)">
       <Output TaskParameter="Value" PropertyName="ProductVersion" />
     </CreateProperty>
 
     <CreateProperty
-        Value="simple-$(ProductMajorVersion).$(ProductMinorVersion)">
+        Value="simple-$(ProductVersionBase)">
       <Output TaskParameter="Value" PropertyName="MainLibraryName" />
     </CreateProperty>
 
