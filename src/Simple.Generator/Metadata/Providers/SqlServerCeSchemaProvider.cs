@@ -52,6 +52,7 @@ namespace Simple.Metadata
                 while (results.Read())
                 {
                     DataRow valuesRow = tbl.NewRow();
+
                     if (results[0] != DBNull.Value)
                         valuesRow[0] = results.GetString(0);
                     if (results[1] != DBNull.Value)

@@ -17,7 +17,7 @@ namespace Simple.Reflection
         {
             try
             {
-                EnumTypeAttribute[] attributes = (EnumTypeAttribute[])enumValue.GetType().GetField(Enum.GetName(enumValue.GetType(), enumValue)).GetCustomAttributes(typeof(EnumTypeAttribute), true);
+                var attributes = GetAttributesFromValue(enumValue);
                 IList values = new ArrayList();
                 foreach (EnumTypeAttribute attribute in attributes)
                 {
@@ -31,11 +31,17 @@ namespace Simple.Reflection
             }
         }
 
+        private static EnumTypeAttribute[] GetAttributesFromValue(object enumValue)
+        {
+            EnumTypeAttribute[] attributes = (EnumTypeAttribute[])enumValue.GetType().GetField(Enum.GetName(enumValue.GetType(), enumValue)).GetCustomAttributes(typeof(EnumTypeAttribute), true);
+            return attributes;
+        }
+
         public static bool IsDefined(object enumValue, object targetAttribute)
         {
             try
             {
-                EnumTypeAttribute[] attributes = (EnumTypeAttribute[])enumValue.GetType().GetField(Enum.GetName(enumValue.GetType(), enumValue)).GetCustomAttributes(typeof(EnumTypeAttribute), true);
+                var attributes = GetAttributesFromValue(enumValue);
                 IList values = new ArrayList();
                 foreach (EnumTypeAttribute attribute in attributes)
                 {
