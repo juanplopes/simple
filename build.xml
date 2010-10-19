@@ -21,8 +21,11 @@
     <Platform>Any CPU</Platform>
 
     <ProductVersionBase>3.1</ProductVersionBase>
+    <ProductVersionBuild></ProductVersionBuild>
     <ProductBuildName>Avalon</ProductBuildName>
 
+    <MainLibraryName>simple-$(ProductVersionBase)</MainLibraryName>
+    
     <TestAssembly>$(BuildDir)\Simple.Tests.exe</TestAssembly>
   </PropertyGroup>
 
@@ -40,28 +43,22 @@
     <RemoveDir Directories="$(PackageDir)" ContinueOnError="true"/>
   </Target>
 
-  <Target Name="GenerateTag">
+  <Target Name="GenerateTag" Condition="'$(ProductVersionBuild)'==''">
     <DaysSince StartDate='2008-10-17'>
-		<Output TaskParameter="Output" PropertyName="NumberOfDays"/>
-	</DaysSince>
-  
-    <CreateProperty
-        Value="$(ProductVersionBase).0.$(NumberOfDays)">
-      <Output TaskParameter="Value" PropertyName="ProductVersion" />
-    </CreateProperty>
+      <Output TaskParameter="Output" PropertyName="NumberOfDays"/>
+    </DaysSince>
 
     <CreateProperty
-        Value="simple-$(ProductVersionBase)">
-      <Output TaskParameter="Value" PropertyName="MainLibraryName" />
+        Value="0.$(NumberOfDays)">
+      <Output TaskParameter="Value" PropertyName="ProductVersionBuild" />
     </CreateProperty>
-
-	
-    <Message Text="Product version: "/>
-	<Message Text="##teamcity[buildNumber '$(ProductVersion)']"/>
   </Target>
 
   <Target Name="GenerateAssemblyInfo" DependsOnTargets="GenerateTag">
-    <WriteLinesToFile File="$(SourceDir)\Version.cs" 
+    <Message Text="Product version: "/>
+    <Message Text="##teamcity[buildNumber '$(ProductVersionBase).$(ProductVersionBuild)']"/>
+
+    <WriteLinesToFile File="$(SourceDir)\Version.cs"
                       Lines="namespace Simple { class VersionName { public const string Text = &quot;$(ProductBuildName)&quot;%3B } }" Overwrite="true" />
     <AssemblyInfo CodeLanguage="CS"
                OutputFile="$(SourceDir)\GlobalInfo.cs"
@@ -71,8 +68,8 @@
                AssemblyTrademark=""
                ComVisible="false"
                CLSCompliant="false"
-               AssemblyVersion="$(ProductVersion)"
-               AssemblyFileVersion="$(ProductVersion)" />
+               AssemblyVersion="$(ProductVersionBase).$(ProductVersionBuild)"
+               AssemblyFileVersion="$(ProductVersionBase).$(ProductVersionBuild)" />
   </Target>
 
   <Target Name="Build" DependsOnTargets ="GenerateAssemblyInfo">
@@ -146,7 +143,7 @@
     <ItemGroup>
       <ZipFiles Include="$(PackageLibDir)\*.*"/>
     </ItemGroup>
-    
+
     <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile &#39;$(PackageDir2)\$(MainLibraryName)-scaffold.exe&#39;&quot;"/>
     <Zip Files="@(ZipFiles)" ZipFileName="$(PackageDir)\$(MainLibraryName)-lib.zip" WorkingDirectory="$(PackageLibDir)"/>
   </Target>

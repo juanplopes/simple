@@ -15,7 +15,7 @@ namespace Simple.Gui
         public Header()
         {
             InitializeComponent();
-            Version.Text = string.Format("v{0} (build {1})", this.GetType().Assembly.GetName().Version.ToString(3), VersionName.Text);
+            Version.Text = string.Format("v{0} (build {1})", this.GetType().Assembly.GetName().Version, VersionName.Text);
             RunningAs.Text = ProgramLogic.IsAdmin() ? "Administrator" : "Standard user";
         }
         
