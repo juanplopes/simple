@@ -13,6 +13,8 @@ h3. Running Tests
 * Run build.cmd
 * Press ENTER
 
+Alternatively, you may run "msbuild build.xml" at command line. Same result.
+
 h2. Versioning Conventions
 
 Every version is composed of two main parts:
@@ -29,3 +31,7 @@ h3. codebetter.teamcity.com (1)
 The main Simple.Net build agent. Will have a build labelled like 3.1.1.XXX where XXX is the unique build counter it assigns to every build.
 
 You can find the build status "here":http://teamcity.codebetter.com/project.html?projectId=project87&tab=projectOverview&guest=1.
+
+h3. Living Consultoria internal builds (2)
+
+The numbers from 2~10 are reserved for Living Consultoria to publish their own builds.
