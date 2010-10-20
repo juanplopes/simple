@@ -77,8 +77,8 @@ namespace Simple.Reflection
                 {
                     temp = Cache.CreateInstance(member.Type);
                     member.Set(target, temp);
-                    target = temp;
                 }
+                target = temp;
             }
             Last().Set(target, value, index);
         }

@@ -181,6 +181,21 @@ namespace Simple.Tests.Reflection
             obj.TestInner.TestInt.Should().Be(42);
         }
 
+        [Test]
+        public void CanSetValueFromCompositeSetterWithPropertyChainWhenTheFirstAlreadyHasValue()
+        {
+            var outer = typeof(Sample).GetProperty("TestInner");
+            var inner = typeof(Inner).GetProperty("TestInt");
+            var props = new[] { outer, inner }.Select(x => x.ToSettable());
+
+            var set = props.ToSettable();
+
+            var obj = new Sample() { TestInner = new Inner() };
+            set.Set(obj, 42);
+
+            obj.TestInner.TestInt.Should().Be(42);
+        }
+
         class WrongType
         {
             public string TestInner { get; set; }
