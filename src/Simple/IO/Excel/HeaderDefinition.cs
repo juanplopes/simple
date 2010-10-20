@@ -12,9 +12,14 @@ namespace Simple.IO.Excel
 {
     public class HeaderDefinition<T> : List<IHeaderItem>
     {
-        public Func<T> instanceCreator = () => MethodCache.Do.CreateInstance<T>();
+        protected Func<T> instanceCreator = () => MethodCache.Do.CreateInstance<T>();
+        public int SkipRows { get; set;}
+        public int MaxNullRows { get; set; }
+
         public HeaderDefinition()
         {
+            SkipRows = 1;
+            MaxNullRows = 10;
         }
 
         public HeaderDefinition<T> CreateInstanceWith(Func<T> instanceCreator)
@@ -38,6 +43,19 @@ namespace Simple.IO.Excel
         public void Skip(int count)
         {
             AddRange(Enumerable.Repeat<IHeaderItem>(new SkippingHeaderItem(), count));
+        }
+
+
+        public HeaderDefinition<T> SkippingRows(int rows)
+        {
+            SkipRows = rows;
+            return this;
+        }
+
+        public HeaderDefinition<T> WithMaxNullRows(int rows)
+        {
+            MaxNullRows = rows;
+            return this;
         }
     }
 

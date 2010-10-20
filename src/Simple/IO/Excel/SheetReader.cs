@@ -13,15 +13,15 @@ namespace Simple.IO.Excel
 {
     public class SheetReader<T>
     {
-        public int MaxNullLines { get; set; }
-
         private static ILog log = Simply.Do.Log(MethodBase.GetCurrentMethod());
 
         public RowReader<T> Reader { get; protected set; }
-        public SheetReader(RowReader<T> reader)
+        public HeaderDefinition<T> Header { get; protected set; }
+
+        public SheetReader(HeaderDefinition<T> header)
         {
-            Reader = reader;
-            MaxNullLines = 10;
+            Header = header;
+            Reader = new RowReader<T>(header);
         }
 
 
@@ -50,7 +50,7 @@ namespace Simple.IO.Excel
 
             log.DebugFormat("Its first row is {0} and last row is {1}", sheet.FirstRowNum, sheet.LastRowNum);
 
-            for (int i = first + 1; i <= sheet.LastRowNum; i++)
+            for (int i = first + Header.SkipRows; i <= sheet.LastRowNum; i++)
             {
                 var row = Reader.Read(i, sheet.GetRow(i), indexes);
                 if (row.HasValue)
@@ -58,7 +58,7 @@ namespace Simple.IO.Excel
                 else
                 {
                     nulls++;
-                    if (nulls >= MaxNullLines)
+                    if (nulls >= Header.MaxNullRows)
                     {
                         log.DebugFormat("Max nulls achieved");
                         break;

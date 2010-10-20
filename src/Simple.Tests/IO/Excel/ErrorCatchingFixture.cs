@@ -61,8 +61,9 @@ namespace Simple.Tests.IO.Excel
                 var header = new HeaderDefinition<FirstSampleData>();
                 header.Skip(2);
                 header.Register(x => x.ColunaC).Formatter("pt-BR");
+                header.WithMaxNullRows(2);
 
-                var data = WorkbookReader.Create(header, 2)
+                var data = WorkbookReader.Create(header)
                     .Read(new HSSFWorkbook(memory))["TestD"];
 
                 data.Records.Count().Should().Be(0);
