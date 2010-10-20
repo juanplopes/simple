@@ -12,12 +12,31 @@ namespace Simple.IO.Excel
         public int? Column { get; set; }
         public string Message { get; protected set; }
 
+        public string ColumnName
+        {
+            get
+            {
+                var column = Column.Value;
+                var list = new LinkedList<char>();
+
+                bool first = true;
+                while (column != 0)
+                {
+                    list.AddFirst((char)(column % 26 + 'A' - (first ? 0 : 1)));
+                    column = column / 26;
+                    first = false;
+                }
+                return new string(list.ToArray());
+            }
+        }
+
+
         public string DisplayMessage
         {
             get
             {
                 if (Column != null)
-                    return string.Format("Cell {0}{1}: {2}", (char)(Column + 'A'), Row + 1, Message);
+                    return string.Format("Cell {0}{1}: {2}", ColumnName, Row + 1, Message);
                 else
                     return string.Format("Row {0}: {1}", Row + 1, Message);
             }

@@ -19,6 +19,13 @@ namespace Simple.Tests.IO.Excel
         }
 
         [Test]
+        public void CanShowMessageWithRowAndColumnWhenColumnNameExceeds26()
+        {
+            var error = new SheetError(1, 30, "test");
+            error.DisplayMessage.Should().Be("Cell AE2: test");
+        }
+
+        [Test]
         public void CanShowMessageWithRowOnly()
         {
             var error = new SheetError(1, "test");
