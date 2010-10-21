@@ -32,6 +32,15 @@ namespace Simple
             }
         }
 
+        public string VersionId
+        {
+            get
+            {
+                return Simple.VersionName.LastCommit;
+            }
+        }
+
+
         public SimplyConfigure Configure
         {
             get { return SimplyConfigure.Do[ConfigKey]; }

@@ -68,7 +68,7 @@
                OutputFile="$(SourceDir)\GlobalInfo.cs"
                AssemblyCompany="Living Consultoria"
                AssemblyProduct="Simple.Net ($(ProductBuildName))"
-               AssemblyCopyright="Copyright (c) Living Consultoria 2009"
+               AssemblyCopyright="Copyright (c) Living Consultoria 2010"
                AssemblyTrademark=""
                ComVisible="false"
                CLSCompliant="false"
