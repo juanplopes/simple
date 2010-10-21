@@ -172,7 +172,10 @@
     <Compile Include="IO\Excel\NullableData.cs" />
     <Compile Include="IO\Excel\Reader\BasicDataFixture.cs" />
     <Compile Include="IO\Excel\Reader\SheetErrorFixture.cs" />
-    <Compile Include="IO\Excel\Writer\WriteFileFromScratchFixture.cs" />
+    <Compile Include="IO\Excel\Writer\NullableFixture.cs" />
+    <Compile Include="IO\Excel\Writer\BasicWriteFixture.cs" />
+    <Compile Include="IO\StreamExtensions.cs" />
+    <Compile Include="IO\StreamExtensionsFixture.cs" />
     <Compile Include="Mvc\ModelBinder\CollectionFixtures.cs" />
     <Compile Include="Mvc\ModelBinder\SimpleValuesFixture.cs" />
     <Compile Include="Mvc\ModelBinder\BaseCollectionFixture.cs" />
