@@ -14,28 +14,36 @@ namespace Simple
 
         public static string GetMemberName<T, P>(this Expression<Func<T, P>> expr)
         {
-            return GetMemberName(expr.Body);
+            return GetMemberName((LambdaExpression)expr);
         }
 
-        public static string GetMemberName(this Expression expr)
+        public static string GetMemberName(this LambdaExpression expr)
         {
             return GetMemberPath(expr).JoinProperty();
         }
 
         public static IEnumerable<string> GetMemberPath<T, P>(this Expression<Func<T, P>> expr)
         {
-            return GetMemberPath(expr.Body);
+            return GetMemberPath(expr);
         }
 
-        public static IEnumerable<string> GetMemberPath(this Expression expr)
+        public static IEnumerable<string> GetMemberPath(this LambdaExpression expr)
         {
             return expr.GetMemberList().Select(x => x.Name);
         }
 
-        public static IEnumerable<ISettableMemberInfo> GetMemberList(this Expression expr)
+
+        public static IEnumerable<ISettableMemberInfo> GetMemberList(this LambdaExpression expr)
         {
-            if (expr != null && expr.NodeType == ExpressionType.Lambda)
-                return (expr as LambdaExpression).Body.GetMemberList();
+            if (expr != null)
+                return expr.Body.GetMemberList(expr.Parameters);
+            else
+                return new ISettableMemberInfo[0];
+
+        }
+
+        public static IEnumerable<ISettableMemberInfo> GetMemberList(this Expression expr, IEnumerable<ParameterExpression> args)
+        {
 
             LinkedList<ISettableMemberInfo> answer = new LinkedList<ISettableMemberInfo>();
             while (expr != null &&
@@ -45,25 +53,21 @@ namespace Simple
             {
                 if (ExpressionType.MemberAccess == expr.NodeType)
                 {
-                    answer.AddFirst((expr as MemberExpression).Member.ToSettable());
-                    expr = (expr as MemberExpression).Expression;
+                    var memberExpr = expr as MemberExpression;
+                    answer.AddFirst(memberExpr.Member.ToSettable());
+                    expr = memberExpr.Expression;
                 }
                 else if (ExpressionType.Convert == expr.NodeType)
                 {
                     expr = (expr as UnaryExpression).Operand;
                 }
-                else if (ExpressionType.Call == expr.NodeType)
-                {
-                    var callExpr = expr as MethodCallExpression;
-
-                    var args = callExpr.Arguments
-                        .Select(x => ((ConstantExpression)Funcletizer.PartialEval(x)).Value).ToArray();
-
-                    answer.AddFirst(callExpr.Method.ToSettable(args));
-                    expr = callExpr.Object;
-                }
                 else
-                    throw new InvalidOperationException("Invalid expression type: {0}".AsFormat(expr.NodeType));
+                {
+                    var method = Expression.Lambda(expr, args.ToArray()).Compile();
+                    InvocationDelegate del = (obj, pars) => method.DynamicInvoke(pars);
+                    answer.AddFirst(new InvocationWrapper(del));
+                    expr = null;
+                }
             }
 
             return answer;
@@ -141,7 +145,7 @@ namespace Simple
             return Expression.Lambda<Func<T, TProp>>(propertyPath.GetMemberExpression(parameter), parameter);
         }
 
-        public static void SetValue(this Expression expr, object target, object value)
+        public static void SetValue(this LambdaExpression expr, object target, object value)
         {
             var list = expr.GetMemberList();
             var prop = list.ToSettable();

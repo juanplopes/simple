@@ -16,7 +16,7 @@ namespace Simple.Generator.Parsers
                 throw new InvalidArgumentCountException(match, 1, values.Count);
 
             if (values.Count == 1)
-                ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator, ConvertValue<P>(values.First()));
+                ExpressionHelper.SetValue(Expression, generator, ConvertValue<P>(values.First()));
         }
     }
 }

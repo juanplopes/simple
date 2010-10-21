@@ -101,7 +101,7 @@ namespace Simple.Reflection
         private static DynamicMethod CreateDynamicMethod(MethodBase methodBase)
         {
             DynamicMethod dynamicMethod = new DynamicMethod(string.Empty, typeof(object),
-                new Type[] { typeof(object), typeof(object[]) }, methodBase.DeclaringType.Module, true);
+                new Type[] { typeof(object), typeof(object[]) }, MethodBase.GetCurrentMethod().Module, true);
             return dynamicMethod;
         }
 

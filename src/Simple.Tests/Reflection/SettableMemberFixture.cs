@@ -31,31 +31,7 @@ namespace Simple.Tests.Reflection
             prop.Get(obj).Should().Be(43);
         }
 
-        [Test]
-        public void CanGetUsingTestMethod()
-        {
-            var obj = new Sample();
-            var prop = typeof(Sample).GetMethod("TestMethod").ToSettable();
-            prop.Get(obj).Should().Be(42);
-        }
-
-        [Test]
-        public void CannotSetUsingTestMethod()
-        {
-            var obj = new Sample();
-            var prop = typeof(Sample).GetMethod("TestMethod").ToSettable();
-            prop.CanWrite.Should().Be.False();
-            prop.CanRead.Should().Be.True();
-            prop.Executing(x => x.Set(obj, null)).Throws<NotSupportedException>();
-        }
-
-        [Test]
-        public void CanGetUsingTestInnerMethod()
-        {
-            var obj = new Sample();
-            var prop = typeof(Sample).GetMethod("TestInnerMethod").ToSettable();
-            prop.Get(obj, 10).Should().Be.OfType<Inner>().And.ValueOf.TestInt.Should().Be(10);
-        }
+    
 
         [Test, ExpectedException(typeof(TargetException))]
         public void SetDifferentPropTypeWontEndTheWorld()
@@ -208,20 +184,7 @@ namespace Simple.Tests.Reflection
             obj.TestInner.TestInt.Should().Be(42);
         }
 
-
-        [Test]
-        public void CannotSetValueFromCompositeSetterContainingMethod()
-        {
-            var outer = typeof(Sample).GetMethod("TestInnerMethod").ToSettable(42);
-            var inner = typeof(Inner).GetProperty("TestInt").ToSettable();
-            var props = new ISettableMemberInfo[] { outer, inner };
-
-            var set = props.ToSettable();
-
-            var obj = new Sample();
-            set.Set(obj, 42);
-        }
-        
+       
     
         [Test]
         public void CanSetValueFromCompositeSetterWithPropertyChainWhenTheFirstAlreadyHasValue()
@@ -248,10 +211,8 @@ namespace Simple.Tests.Reflection
         {
             public int this[int index] { get { return index; } }
             public int TestProp { get; set; }
-            public int TestMethod() { return 42; }
             public Inner TestInner { get; set; }
             public Inner TestInnerField = null;
-            public Inner TestInnerMethod(int value) { return new Inner { TestInt = value }; }
             public int TestField = 0;
         }
 

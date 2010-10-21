@@ -9,24 +9,22 @@ namespace Simple.Reflection
 
 
     [Serializable]
-    public class MethodInfoWrapper : ISettableMemberInfo
+    public class InvocationWrapper : ISettableMemberInfo
     {
         [NonSerialized]
         protected static MethodCache Cache = new MethodCache();
 
-        public MethodInfo InternalMember { get; protected set; }
-        public MemberInfo Member { get { return InternalMember; } }
-        public object[] Arguments { get; set; }
+        public InvocationDelegate Function { get; protected set; }
+        public MemberInfo Member { get { return Function.Method; } }
 
-        public MethodInfoWrapper(MethodInfo method, params object[] args)
+        public InvocationWrapper(InvocationDelegate func)
         {
-            this.InternalMember = method;
-            this.Arguments = args ?? new object[0];
+            this.Function = func;
         }
 
         public string Name
         {
-            get { return InternalMember.Name; }
+            get { return "(Invocation)"; }
         }
 
         public void Set(object target, object value, params object[] index)
@@ -41,8 +39,7 @@ namespace Simple.Reflection
 
         public object Get(object target, params object[] index)
         {
-            index = Arguments.Union(index ?? new object[0]).ToArray();
-            return Cache.GetInvoker(InternalMember)(target, index);
+            return Function(target, index);
         }
 
         public object Get(object target)
@@ -52,12 +49,12 @@ namespace Simple.Reflection
 
         public Type Type
         {
-            get { return InternalMember.ReturnType; }
+            get { return Function.Method.ReturnType; }
         }
 
         public Type DeclaringType
         {
-            get { return InternalMember.DeclaringType; }
+            get { return Function.Method.DeclaringType; }
         }
 
         public bool CanRead

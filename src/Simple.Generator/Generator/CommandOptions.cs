@@ -35,12 +35,7 @@ namespace Simple.Generator
 
 
 
-        private void ApplyEnumerable(ICommand generator, IList<string> values, MemberExpression memberExpression, Type innerType)
-        {
-            memberExpression.SetValue(generator, values.Select(x => Convert.ChangeType(x, innerType)).ToArray());
-        }
-
-
+       
         public ICommand Parse(string parameters, bool ignoreExceedingArgs)
         {
             var result = _generator();

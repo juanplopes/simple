@@ -12,7 +12,7 @@ namespace Simple.Generator.Parsers
         public ListParser(bool mustBeExplicit, string name, Expression<Func<T, IEnumerable<P>>> expression) : base(mustBeExplicit, name, expression) { }
         protected override void ParseInternal(string match, IList<string> values, ICommand generator)
         {
-            ExpressionHelper.SetValue((MemberExpression)Expression.Body, generator,
+            ExpressionHelper.SetValue(Expression, generator,
                 values.Select(x => ConvertValue<P>(x)).ToList());
         }
     }

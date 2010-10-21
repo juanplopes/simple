@@ -88,7 +88,7 @@ namespace Simple.Tests.Expressions
             Expression<Func<A, B>> lambda = x => x.BProp;
 
             A a = new A();
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new B() { Diff = 42 });
+            ExpressionHelper.SetValue(lambda, a, new B() { Diff = 42 });
 
 
             a.BProp.Should().Not.Be.Null();
@@ -101,7 +101,7 @@ namespace Simple.Tests.Expressions
             Expression<Func<A, IList<D>>> lambda = x => x.BProp.CProp.DList;
 
             A a = new A();
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new[] { new D(1), new D(2) });
+            ExpressionHelper.SetValue(lambda, a, new[] { new D(1), new D(2) });
 
             a.BProp.CProp.DList.Should().Not.Be.Null();
         }
@@ -114,7 +114,7 @@ namespace Simple.Tests.Expressions
 
             A a = new A();
 
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 50);
+            ExpressionHelper.SetValue(lambda, a, 50);
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace Simple.Tests.Expressions
             Expression<Func<A, B>> lambda = x => x.BProp;
 
             A a = new A();
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, new B());
+            ExpressionHelper.SetValue(lambda, a, new B());
 
 
             a.BProp.Should().Not.Be.Null();
@@ -187,7 +187,7 @@ namespace Simple.Tests.Expressions
             Expression<Func<A, int>> lambda = x => x.BProp.CProp.IntProp;
 
             A a = new A();
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 42);
+            ExpressionHelper.SetValue(lambda, a, 42);
 
             a.BProp.Should().Not.Be.Null();
             a.BProp.Diff.Should().Be(0);
@@ -201,7 +201,7 @@ namespace Simple.Tests.Expressions
             Expression<Func<A, int>> lambda = x => x.BProp.CProp.DProp.Value;
 
             A a = new A();
-            ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 42);
+            ExpressionHelper.SetValue(lambda, a, 42);
 
         }
 

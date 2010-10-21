@@ -44,16 +44,9 @@ namespace Simple
             if (member is FieldInfo)
                 return new FieldInfoWrapper(member as FieldInfo);
 
-            if (member is MethodInfo)
-                return new MethodInfoWrapper(member as MethodInfo);
-
             return null;
         }
 
-        public static ISettableMemberInfo ToSettable(this MethodInfo method, params object[] args)
-        {
-            return new MethodInfoWrapper(method, args);
-        }
 
         public static object GetBoxedDefaultInstance(this Type type)
         {
