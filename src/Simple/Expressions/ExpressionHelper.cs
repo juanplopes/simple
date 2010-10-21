@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Simple.Reflection;
 using System.Globalization;
+using Simple.Expressions;
 
 namespace Simple
 {
@@ -51,6 +52,16 @@ namespace Simple
                 {
                     expr = (expr as UnaryExpression).Operand;
                 }
+                else if (ExpressionType.Call == expr.NodeType)
+                {
+                    var callExpr = expr as MethodCallExpression;
+
+                    var args = callExpr.Arguments
+                        .Select(x => ((ConstantExpression)Funcletizer.PartialEval(x)).Value).ToArray();
+
+                    answer.AddFirst(callExpr.Method.ToSettable(args));
+                    expr = callExpr.Object;
+                }
                 else
                     throw new InvalidOperationException("Invalid expression type: {0}".AsFormat(expr.NodeType));
             }
@@ -91,14 +102,14 @@ namespace Simple
             return path.GetMemberList(type).LastOrDefault();
         }
 
-        
+
 
         public static Expression GetMemberExpression(this string propertyPath, Expression expr)
         {
             return propertyPath.SplitProperty().GetMemberExpression(expr);
         }
 
-      
+
         public static Expression GetMemberExpression(this IEnumerable<string> propertyPath, Expression expr)
         {
             Expression ret = expr;

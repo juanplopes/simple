@@ -212,6 +212,7 @@
     <Compile Include="Patterns\WorkingDays.cs" />
     <Compile Include="Reflection\CompositeSettableMember.cs" />
     <Compile Include="Reflection\ConversionConstructors.cs" />
+    <Compile Include="Reflection\MethodInfoWrapper.cs" />
     <Compile Include="Reflection\DictionaryHelper.cs" />
     <Compile Include="Reflection\DynamicInvoker.cs" />
     <Compile Include="Reflection\EasyEquatable.cs" />

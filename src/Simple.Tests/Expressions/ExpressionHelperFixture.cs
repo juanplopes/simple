@@ -17,6 +17,12 @@ namespace Simple.Tests.Expressions
         class B
         {
             public C CProp { get; set; }
+            public C CMethod() { return CProp; }
+            public C CMethod2(object val)
+            {
+                val.Should().Be.OfType<int>();
+                return CProp;
+            }
             public int Diff { get; set; }
         }
 
@@ -34,8 +40,12 @@ namespace Simple.Tests.Expressions
             public int GetValue() { return this.Value; }
         }
 
-
-
+        [Test]
+        public void TestSimpleMethodCallName()
+        {
+            var propName = ExpressionHelper.GetMemberName((B b) => b.CMethod());
+            propName.Should().Be("CMethod");
+        }
 
         [Test]
         public void TestSimplePropertyName()
@@ -51,11 +61,25 @@ namespace Simple.Tests.Expressions
             propName.Should().Be("BProp.CProp.IntProp");
         }
 
-        [Test, ExpectedException(typeof(InvalidOperationException))]
+        [Test]
+        public void TestNestedPropertyNameWithMethodCall()
+        {
+            var propName = ExpressionHelper.GetMemberName((A a) => a.BProp.CMethod().IntProp);
+            propName.Should().Be("BProp.CMethod.IntProp");
+        }
+
+        [Test]
+        public void TestNestedPropertyNameWithMethodCallAndArgs()
+        {
+            var propName = ExpressionHelper.GetMemberName((A a) => a.BProp.CMethod().IntProp);
+            propName.Should().Be("BProp.CMethod.IntProp");
+        }
+
+        [Test]
         public void TestNestedMethodName()
         {
-
             var propName = ExpressionHelper.GetMemberName((A a) => a.BProp.CProp.DProp.GetValue());
+            propName.Should().Be("BProp.CProp.DProp.GetValue");
         }
 
         [Test]
@@ -91,6 +115,56 @@ namespace Simple.Tests.Expressions
             A a = new A();
 
             ExpressionHelper.SetValue(lambda.Body as MemberExpression, a, 50);
+        }
+
+        [Test]
+        public void TestGettingMethod()
+        {
+            Expression<Func<A, int>> lambda = x => x.BProp.CProp.DProp.GetValue();
+
+            A a = new A() { BProp = new B() { CProp = new C() { DProp = new D(2) } } };
+
+            var settable = lambda.GetMemberList().ToSettable();
+
+            settable.Get(a).Should().Be(2);
+        }
+
+        [Test]
+        public void TestGettingMethodWithArgs()
+        {
+            Expression<Func<A, int>> lambda = x => x.BProp.CMethod2(10).DProp.GetValue();
+
+            A a = new A() { BProp = new B() { CProp = new C() { DProp = new D(2) } } };
+
+            var settable = lambda.GetMemberList().ToSettable();
+
+            settable.Get(a).Should().Be(2);
+        }
+
+        [Test]
+        public void TestSettingPropWithMethodOnPath()
+        {
+            Expression<Func<A, int>> lambda = x => x.BProp.CMethod().DProp.Value;
+
+            A a = new A() { BProp = new B() { CProp = new C() { DProp = new D(2) } } };
+
+            var settable = lambda.GetMemberList().ToSettable();
+
+            settable.Set(a, 40);
+            a.BProp.CProp.DProp.Value.Should().Be(40);
+        }
+
+        [Test]
+        public void TestSettingPropWithMethodOnPathWithArgs()
+        {
+            Expression<Func<A, int>> lambda = x => x.BProp.CMethod2(10).DProp.Value;
+
+            A a = new A() { BProp = new B() { CProp = new C() { DProp = new D(2) } } };
+
+            var settable = lambda.GetMemberList().ToSettable();
+
+            settable.Set(a, 40);
+            a.BProp.CProp.DProp.Value.Should().Be(40);
         }
 
 
