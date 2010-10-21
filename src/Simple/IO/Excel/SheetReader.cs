@@ -37,7 +37,7 @@ namespace Simple.IO.Excel
             catch (Exception e)
             {
                 var results = new SheetResult<T>(sheet.SheetName, new RowResult<T>[0]);
-                results.PrivateErrors.Add(new SheetError(0, e.Message));
+                results.SheetErrors.Add(new SheetError(0, e.Message));
                 return results;
             }
         }
@@ -50,7 +50,9 @@ namespace Simple.IO.Excel
 
             log.DebugFormat("Its first row is {0} and last row is {1}", sheet.FirstRowNum, sheet.LastRowNum);
 
-            for (int i = first + Header.SkipRows; i <= sheet.LastRowNum; i++)
+            var skip = Header.SkipRows + (Header.HeaderRow ? 1 : 0);
+
+            for (int i = first + skip; i <= sheet.LastRowNum; i++)
             {
                 var row = Reader.Read(i, sheet.GetRow(i), indexes);
                 if (row.HasValue)

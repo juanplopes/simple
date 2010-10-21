@@ -10,19 +10,20 @@ namespace Simple.IO.Excel
     public class HeaderItem : Simple.IO.Excel.IHeaderItem
     {
         private ISettableMemberInfo member = null;
-        private string name = null;
         private IFormatProvider formatter = CultureInfo.InvariantCulture;
-
+        
+        public bool Exportable { get { return true; } }
+        public string Name { get; set; }
 
         public HeaderItem(ISettableMemberInfo member)
         {
             this.member = member;
-            this.name = member.Name;
+            this.Name = member.Name;
         }
 
         public IHeaderItem Named(string name)
         {
-            this.name = name;
+            this.Name = name;
             return this;
         }
 
@@ -64,6 +65,18 @@ namespace Simple.IO.Excel
             return date;
         }
 
+
+        public object Get(object target)
+        {
+            try
+            {
+                return member.Get(target);
+            }
+            catch (NullReferenceException)
+            {
+                return member.Type.GetBoxedDefaultInstance();
+            }
+        }
 
     }
 }

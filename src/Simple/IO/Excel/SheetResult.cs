@@ -11,17 +11,29 @@ namespace Simple.IO.Excel
     {
         public string Name { get; protected set; }
 
-        internal IList<SheetError> PrivateErrors { get; private set; }
+        public IList<SheetError> SheetErrors { get; private set; }
 
         public IList<RowResult<T>> Rows { get; protected set; }
         public IEnumerable<T> Records { get { return Rows.Where(x => x.HasValue).Select(x => x.Result); } }
-        public IEnumerable<SheetError> Errors { get { return 
-            PrivateErrors.Union(
-            Rows.Where(x => x.HasValue).SelectMany(x => x.Errors)); } }
+        
+        public IEnumerable<SheetError> Errors
+        {
+            get
+            {
+                return
+                    SheetErrors.Union(
+                    Rows.Where(x => x.HasValue).SelectMany(x => x.Errors));
+            }
+        }
+
+        public SheetResult()
+        {
+            this.SheetErrors = new List<SheetError>();
+        }
 
         public SheetResult(string name, IEnumerable<RowResult<T>> rows)
+            : this()
         {
-            this.PrivateErrors = new List<SheetError>();
             this.Name = name;
             this.Rows = rows.ToList();
         }

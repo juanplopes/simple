@@ -7,6 +7,9 @@ namespace Simple.IO.Excel
 {
     public class SkippingHeaderItem : IHeaderItem
     {
+        public bool Exportable { get { return false; } }
+        public string Name { get; set; }
+
         public IHeaderItem Formatter(string culture)
         {
             return this;
@@ -24,6 +27,11 @@ namespace Simple.IO.Excel
 
         public void Set(object target, object value)
         {
+        }
+
+        public object Get(object target)
+        {
+            return null;
         }
 
     }

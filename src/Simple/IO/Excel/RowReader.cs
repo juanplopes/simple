@@ -14,8 +14,6 @@ namespace Simple.IO.Excel
     {
         private static ILog log = Simply.Do.Log(MethodBase.GetCurrentMethod());
 
-       
-
         protected HeaderDefinition<T> Header { get; set; }
         public RowReader(HeaderDefinition<T> header)
         {
@@ -38,29 +36,41 @@ namespace Simple.IO.Excel
                 return target;
             }
 
-            bool entirelyNull = true;
+            SetRowInto(row, indexes, target);
+
+            return target;
+        }
+
+        private bool SetRowInto(Row row, int[] indexes, RowResult<T> target)
+        {
+            bool hasValue = false;
 
             for (int i = 0; i < indexes.Length; i++)
             {
                 log.DebugFormat("Reading cell {0}", i);
                 try
                 {
-                    var column = Header[i];
-                    var value = GetCellValue(row.GetCell(i), null);
-                    entirelyNull = entirelyNull && (value == null || (value as string) == "");
-
-                    column.Set(target.Result, value);
+                    hasValue = SetValueInto(row, i, target) || hasValue;
                 }
                 catch (Exception e)
                 {
                     log.Debug("There was an error, recording", e);
-                    target.PrivateErrors.Add(new SheetError(row.RowNum, i, e.Message));
+                    target.Errors.Add(new SheetError(row.RowNum, i, e.Message));
                 }
             }
 
-            target.HasValue = !entirelyNull;
+            target.HasValue = hasValue;
 
-            return target;
+            return hasValue;
+        }
+
+        private bool SetValueInto(Row row, int i, RowResult<T> target)
+        {
+            var column = Header[i];
+            var value = GetCellValue(row.GetCell(i), null);
+            bool isNull = (value == null || (value as string) == "");
+            column.Set(target.Result, value);
+            return !isNull;
         }
 
         public object GetCellValue(Cell cell, CellType? type)

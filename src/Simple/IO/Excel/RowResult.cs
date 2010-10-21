@@ -9,14 +9,16 @@ namespace Simple.IO.Excel
     [Serializable]
     public class RowResult<T>
     {
-        public bool HasValue { get; internal set; }
+        public bool HasValue { get; set; }
 
         public T Result { get; protected set; }
         public int Row { get; protected set; }
-        internal IList<SheetError> PrivateErrors { get; private set; }
-        public IEnumerable<SheetError> Errors { get { return HasValue ? PrivateErrors : new SheetError[0]; } }
+        public IList<SheetError> Errors { get; protected set; }
 
-        public RowResult() { PrivateErrors = new List<SheetError>(); }
+        public RowResult()
+        {
+            this.Errors = new List<SheetError>();
+        }
 
         public RowResult(int row, T target)
             : this()

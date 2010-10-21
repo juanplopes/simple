@@ -81,5 +81,31 @@ namespace Simple
         {
             return propertyPath.StringJoin(".");
         }
+
+        public static bool IsNumericType(this Type type)
+        {
+            return type.IsNumericType(true);
+        }
+
+        public static bool IsNumericType(this Type type, bool allowEnums)
+        {
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Byte:
+                case TypeCode.SByte:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Single:
+                    return !type.IsEnum;
+                default:
+                    return false;
+            }
+        }
     }
 }

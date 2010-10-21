@@ -15,11 +15,13 @@ namespace Simple.IO.Excel
         protected Func<T> instanceCreator = () => MethodCache.Do.CreateInstance<T>();
         public int SkipRows { get; set;}
         public int MaxNullRows { get; set; }
+        public bool HeaderRow { get; set; }
 
         public HeaderDefinition()
         {
-            SkipRows = 1;
+            SkipRows = 0;
             MaxNullRows = 10;
+            HeaderRow = true;
         }
 
         public HeaderDefinition<T> CreateInstanceWith(Func<T> instanceCreator)
@@ -55,6 +57,12 @@ namespace Simple.IO.Excel
         public HeaderDefinition<T> WithMaxNullRows(int rows)
         {
             MaxNullRows = rows;
+            return this;
+        }
+
+        public HeaderDefinition<T> HasHeaderRow(bool value)
+        {
+            HeaderRow = value;
             return this;
         }
     }

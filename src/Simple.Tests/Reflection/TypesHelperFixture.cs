@@ -109,6 +109,29 @@ namespace Simple.Tests.Reflection
         }
 
         [Test]
+        public void CanKnowWheaterATypeIsANumberType()
+        {
+            typeof(int).IsNumericType().Should().Be(true);
+            typeof(uint).IsNumericType().Should().Be(true);
+            typeof(long).IsNumericType().Should().Be(true);
+            typeof(ulong).IsNumericType().Should().Be(true);
+            typeof(byte).IsNumericType().Should().Be(true);
+            typeof(sbyte).IsNumericType().Should().Be(true);
+            typeof(short).IsNumericType().Should().Be(true);
+            typeof(ushort).IsNumericType().Should().Be(true);
+            typeof(float).IsNumericType().Should().Be(true);
+            typeof(double).IsNumericType().Should().Be(true);
+            typeof(decimal).IsNumericType().Should().Be(true);
+
+            typeof(DateTime).IsNumericType().Should().Be(false);
+            typeof(string).IsNumericType().Should().Be(false);
+            typeof(char).IsNumericType().Should().Be(false);
+            typeof(bool).IsNumericType().Should().Be(false);
+            typeof(object).IsNumericType().Should().Be(false);
+        }
+
+
+        [Test]
         public void CanGetDictionaryGenericArgumentsByInterface()
         {
             typeof(Dictionary<DateTime, int>).GetTypeArgumentsFor(typeof(ICollection<>))
