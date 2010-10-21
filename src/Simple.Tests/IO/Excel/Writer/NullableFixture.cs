@@ -40,9 +40,8 @@ namespace Simple.Tests.IO.Excel.Writer
             var header = CreateHeader();
             var writer = WorkbookWriter.Create(header);
 
-            data = new HSSFWorkbook();
-            writer.Write(data, "test123", EnumerateData());
-            writer.RemoveTemplate(data);
+            var bytes = writer.WriteBytes("test123", EnumerateData());
+            data = new HSSFWorkbook(new MemoryStream(bytes));
         }
 
 

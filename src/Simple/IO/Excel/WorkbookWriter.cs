@@ -28,8 +28,29 @@ namespace Simple.IO.Excel
             Writer = new SheetWriter<T>(header);
         }
 
+        public byte[] WriteBytes(string sheetName, IEnumerable<T> items)
+        {
+            return WriteBytes(null, sheetName, items);
+        }
 
-        public void Write(Workbook workbook, string sheetName, IEnumerable<T> enumerable)
+        public byte[] WriteBytes(byte[] template, string sheetName, IEnumerable<T> items)
+        {
+            Workbook workbook;
+            if (template != null)
+                using (var stream = new MemoryStream(template))
+                    workbook = new HSSFWorkbook(stream);
+            else
+                workbook = new HSSFWorkbook();
+
+            Write(workbook, sheetName, items);
+            RemoveTemplate(workbook);
+
+            var mem = new MemoryStream();
+            workbook.Write(mem);
+            return mem.ToArray();
+        }
+
+        public void Write(Workbook workbook, string sheetName, IEnumerable<T> items)
         {
             workbook = CheckWorkbook(workbook);
             Sheet sheet = null;
@@ -40,7 +61,7 @@ namespace Simple.IO.Excel
             if (workbook is HSSFWorkbook)
                 (workbook as HSSFWorkbook).SetSheetName(workbook.GetSheetIndex(sheet), sheetName);
 
-            Writer.Write(sheet, enumerable);
+            Writer.Write(sheet, items);
         }
 
         public void RemoveTemplate(Workbook workbook)
