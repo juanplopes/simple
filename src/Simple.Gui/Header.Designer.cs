@@ -44,7 +44,7 @@
             this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
             this.linkLabel1.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.LinkColor = System.Drawing.Color.White;
-            this.linkLabel1.Location = new System.Drawing.Point(578, 68);
+            this.linkLabel1.Location = new System.Drawing.Point(578, 69);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(138, 18);
             this.linkLabel1.TabIndex = 17;
@@ -78,7 +78,7 @@
             this.RunningAs.BackColor = System.Drawing.Color.Transparent;
             this.RunningAs.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RunningAs.ForeColor = System.Drawing.Color.White;
-            this.RunningAs.Location = new System.Drawing.Point(490, 28);
+            this.RunningAs.Location = new System.Drawing.Point(490, 49);
             this.RunningAs.Margin = new System.Windows.Forms.Padding(0);
             this.RunningAs.Name = "RunningAs";
             this.RunningAs.Size = new System.Drawing.Size(226, 20);
@@ -95,10 +95,10 @@
             this.Version.BackColor = System.Drawing.Color.Transparent;
             this.Version.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Version.ForeColor = System.Drawing.Color.White;
-            this.Version.Location = new System.Drawing.Point(490, 48);
+            this.Version.Location = new System.Drawing.Point(425, 29);
             this.Version.Margin = new System.Windows.Forms.Padding(0);
             this.Version.Name = "Version";
-            this.Version.Size = new System.Drawing.Size(226, 20);
+            this.Version.Size = new System.Drawing.Size(291, 20);
             this.Version.TabIndex = 16;
             this.Version.Text = "version";
             this.Version.TextAlign = System.Drawing.ContentAlignment.TopRight;

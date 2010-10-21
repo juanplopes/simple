@@ -48,6 +48,7 @@
             this.btnDirectory = new System.Windows.Forms.Button();
             this.txtDirectory = new System.Windows.Forms.TextBox();
             this.header1 = new Simple.Gui.Header();
+            this.btnAbout = new System.Windows.Forms.Button();
             this.AdvancedGroup.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -294,6 +295,21 @@
             this.header1.Size = new System.Drawing.Size(570, 104);
             this.header1.TabIndex = 21;
             // 
+            // btnAbout
+            // 
+            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAbout.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
+            this.btnAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
+            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAbout.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAbout.Location = new System.Drawing.Point(14, 483);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(65, 28);
+            this.btnAbout.TabIndex = 23;
+            this.btnAbout.Text = "About";
+            this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
+            // 
             // ReplacerGui
             // 
             this.AcceptButton = this.btnOk;
@@ -303,6 +319,7 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(570, 523);
             this.ControlBox = false;
+            this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.txtDirectory);
             this.Controls.Add(this.header1);
             this.Controls.Add(this.btnDirectory);
@@ -346,6 +363,7 @@
         private System.Windows.Forms.CheckBox chkSetup;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtDirectory;
+        private System.Windows.Forms.Button btnAbout;
     }
 }
 

@@ -122,6 +122,13 @@ namespace Simple.Gui
                 : Path.Combine(folderBrowser.SelectedPath, instDir);
         }
 
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(this,
+                string.Format("Simple.Net v{0} build {1}\n\nBuild identifier: {2}", this.GetType().Assembly.GetName().Version, VersionName.Text, VersionName.LastCommit),
+                "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
 
 
 

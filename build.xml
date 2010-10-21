@@ -58,8 +58,12 @@
     <Message Text="Product version: "/>
     <Message Text="##teamcity[buildNumber '$(ProductVersionBase).$(ProductVersionBuild)']"/>
 
+	<GitLastCommit Path=".">
+		<Output TaskParameter="CommitHash" PropertyName="LastCommitHash" />
+	</GitLastCommit>
+	
     <WriteLinesToFile File="$(SourceDir)\Version.cs"
-                      Lines="namespace Simple { class VersionName { public const string Text = &quot;$(ProductBuildName)&quot;%3B } }" Overwrite="true" />
+                      Lines="namespace Simple { class VersionName { public const string Text = &quot;$(ProductBuildName)&quot;%3B public const string LastCommit = &quot;$(LastCommitHash)&quot;%3B } }" Overwrite="true" />
     <AssemblyInfo CodeLanguage="CS"
                OutputFile="$(SourceDir)\GlobalInfo.cs"
                AssemblyCompany="Living Consultoria"
@@ -69,7 +73,9 @@
                ComVisible="false"
                CLSCompliant="false"
                AssemblyVersion="$(ProductVersionBase).$(ProductVersionBuild)"
-               AssemblyFileVersion="$(ProductVersionBase).$(ProductVersionBuild)" />
+               AssemblyFileVersion="$(ProductVersionBase).$(ProductVersionBuild)" 
+			   AssemblyDescription="Built from: $(LastCommitHash)"
+			   />
   </Target>
 
   <Target Name="Build" DependsOnTargets ="GenerateAssemblyInfo">
