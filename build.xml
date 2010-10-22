@@ -7,11 +7,11 @@
     <PackageDir>$(RootDir)\pkg\</PackageDir>
     <PackageLibDir>$(PackageDir)\lib\</PackageLibDir>
 
-    <SiteSourceDir>$(RootDir)\src-tools\Simple.Site</SiteSourceDir>
-    <SitePublishDir>$(RootDir)\src-tools\base\</SitePublishDir>
+    <SiteSourceDir>$(RootDir)\src-tools\Simple.Site\</SiteSourceDir>
+    <SitePublishDir>$(RootDir)\site\</SitePublishDir>
 
     <SourceDir>$(RootDir)\src\</SourceDir>
-    <SourceBaseDir>$(RootDir)\src-tools\base\</SourceBaseDir>
+    <SourceBaseDir>$(RootDir)\site\</SourceBaseDir>
     <SourceBaseLibDir>$(SourceBaseDir)\lib\</SourceBaseLibDir>
 
     <KeyFilePath>$(SourceDir)\Simple.snk</KeyFilePath>
