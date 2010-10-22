@@ -26,7 +26,8 @@ namespace Simple.IO.Excel
         public void Write(Sheet sheet, IEnumerable<T> items)
         {
             var current = Header.SkipRows;
-            var row =  sheet.CreateRow(current);
+            var row = sheet.GetRow(current);
+            if (row == null) row = sheet.CreateRow(current);
             Writer.WriteHeader(row);
 
             foreach (var item in items)

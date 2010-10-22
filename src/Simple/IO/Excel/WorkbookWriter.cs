@@ -36,11 +36,9 @@ namespace Simple.IO.Excel
         public byte[] WriteBytes(byte[] template, string sheetName, IEnumerable<T> items)
         {
             Workbook workbook;
-            if (template != null)
-                using (var stream = new MemoryStream(template))
-                    workbook = new HSSFWorkbook(stream);
-            else
-                workbook = new HSSFWorkbook();
+            template = template ?? Templates.Default;
+            using (var stream = new MemoryStream(template))
+                workbook = new HSSFWorkbook(stream);
 
             Write(workbook, sheetName, items);
             RemoveTemplate(workbook);

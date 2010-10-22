@@ -164,6 +164,11 @@
     <Compile Include="IO\Excel\SheetResultCollection.cs" />
     <Compile Include="IO\Excel\SheetWriter.cs" />
     <Compile Include="IO\Excel\SkippingHeaderItem.cs" />
+    <Compile Include="IO\Excel\Templates.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Templates.resx</DependentUpon>
+    </Compile>
     <Compile Include="IO\Excel\WorkbookReader.cs" />
     <Compile Include="IO\Excel\WorkbookWriter.cs" />
     <Compile Include="IO\FileLocator.cs" />
@@ -309,6 +314,10 @@
     <None Include="Resources\Primes.bin" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="IO\Excel\Templates.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Templates.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -320,6 +329,7 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="IO\Excel\Template.xls" />
     <None Include="Resources\RemotingConfig.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
