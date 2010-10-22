@@ -22,6 +22,11 @@ namespace Simple.Tests.IO.Excel
 
         public NullableData() { }
 
+        public IDictionary<int, object> GetWhatever()
+        {
+            return new Dictionary<int, object> { { 1, ColunaA }, { 3, ColunaD } };
+        }
+
         public void AssertWith(string a, int? b, DateTime? c, Status? d, bool? e)
         {
             this.ColunaA.Should().Be(a);

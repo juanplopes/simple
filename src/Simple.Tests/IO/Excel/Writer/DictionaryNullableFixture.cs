@@ -12,7 +12,7 @@ using SharpTestsEx;
 namespace Simple.Tests.IO.Excel.Writer
 {
     [TestFixture]
-    public class NullableFixture
+    public class DictionaryNullableFixture
     {
         Workbook data;
 
@@ -27,10 +27,9 @@ namespace Simple.Tests.IO.Excel.Writer
         {
             var header = new HeaderDefinition<NullableData>();
             header.Register(x => x.ColunaA).Named("A");
-            header.Register(x => x.ColunaB).Named("B");
-            header.Register(x => x.ColunaC).Formatter("pt-BR");
             header.Register(x => x.ColunaD).Named("D");
-            header.Register(x => x.ColunaE);
+            header.Register(x => x.GetWhatever()[1].ToString()).Named("H");
+            header.Register(x => x.GetWhatever()[3].ToString()).Named("I");
             return header;
         }
 
@@ -59,10 +58,9 @@ namespace Simple.Tests.IO.Excel.Writer
             var sheet = data.GetSheetAt(0);
             var row = sheet.GetRow(0);
             row.GetCell(0).StringCellValue.Should().Be("A");
-            row.GetCell(1).StringCellValue.Should().Be("B");
-            row.GetCell(2).StringCellValue.Should().Be("Convert(x.ColunaC)");
-            row.GetCell(3).StringCellValue.Should().Be("D");
-            row.GetCell(4).StringCellValue.Should().Be("Convert(x.ColunaE)");
+            row.GetCell(1).StringCellValue.Should().Be("D");
+            row.GetCell(2).StringCellValue.Should().Be("H");
+            row.GetCell(3).StringCellValue.Should().Be("I");
         }
 
         [Test]
@@ -71,10 +69,9 @@ namespace Simple.Tests.IO.Excel.Writer
             var sheet = data.GetSheetAt(0);
             var row = sheet.GetRow(1);
             row.GetCell(0).StringCellValue.Should().Be("asd");
-            row.GetCell(1).NumericCellValue.Should().Be(123);
-            row.GetCell(2).Should().Be.Null();
+            row.GetCell(1).StringCellValue.Should().Be("Cancelado");
+            row.GetCell(2).StringCellValue.Should().Be("asd");
             row.GetCell(3).StringCellValue.Should().Be("Cancelado");
-            row.GetCell(4).BooleanCellValue.Should().Be(true);
         }
 
         [Test]
@@ -83,10 +80,9 @@ namespace Simple.Tests.IO.Excel.Writer
             var sheet = data.GetSheetAt(0);
             var row = sheet.GetRow(2);
             row.GetCell(0).Should().Be.Null();
-            row.GetCell(1).NumericCellValue.Should().Be(234);
-            row.GetCell(2).DateCellValue.Should().Be(new DateTime(2010, 5, 13));
+            row.GetCell(1).StringCellValue.Should().Be("Inativo");
+            row.GetCell(2).Should().Be.Null();
             row.GetCell(3).StringCellValue.Should().Be("Inativo");
-            row.GetCell(4).BooleanCellValue.Should().Be(false);
         }
 
         [Test]
@@ -96,33 +92,9 @@ namespace Simple.Tests.IO.Excel.Writer
             var row = sheet.GetRow(3);
             row.GetCell(0).StringCellValue.Should().Be("asd3");
             row.GetCell(1).Should().Be.Null();
-            row.GetCell(2).DateCellValue.Should().Be(new DateTime(2011, 12, 31));
+            row.GetCell(2).StringCellValue.Should().Be("asd3");
             row.GetCell(3).Should().Be.Null();
-            row.GetCell(4).Should().Be.Null();
         }
 
-        [Test]
-        public void CanReParseWorkbook()
-        {
-            var result = WorkbookReader.Create(CreateHeader()).Read(data);
-            result.Sheets.Count.Should().Be(1);
-
-            var sheet = result["test123"];
-            sheet.Errors.Should().Have.Count.EqualTo(0);
-            var records = sheet.Records.ToList();
-            records.Count.Should().Be(3);
-            records[0].AssertWith("asd", 123, null, NullableData.Status.Cancelado, true);
-            records[1].AssertWith(null, 234, new DateTime(2010, 5, 13), NullableData.Status.Inativo, false);
-            records[2].AssertWith("asd3", null, new DateTime(2011, 12, 31), null, null);
-
-        }
-
-        [Test]
-        public void FifthRowMustBeNull()
-        {
-            var sheet = data.GetSheetAt(0);
-            var row = sheet.GetRow(4);
-            row.Should().Be.Null();
-        }
     }
 }

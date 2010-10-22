@@ -61,9 +61,9 @@ namespace Simple.Tests.IO.Excel.Writer
             var row = sheet.GetRow(0);
             row.GetCell(0).StringCellValue.Should().Be("A");
             row.GetCell(1).StringCellValue.Should().Be("B");
-            row.GetCell(2).StringCellValue.Should().Be("ColunaC");
+            row.GetCell(2).StringCellValue.Should().Be("Convert(x.ColunaC)");
             row.GetCell(3).StringCellValue.Should().Be("D");
-            row.GetCell(4).StringCellValue.Should().Be("ColunaE");
+            row.GetCell(4).StringCellValue.Should().Be("Convert(x.ColunaE)");
         }
 
         [Test]

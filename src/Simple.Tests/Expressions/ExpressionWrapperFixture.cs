@@ -28,6 +28,21 @@ namespace Simple.Tests.Expressions
         }
 
         [Test]
+        public void CanGetExpressionFromSinglePropertyNonTyped()
+        {
+            var expr = Expr(x => x.TestProp).ToSettable();
+            expr.CanRead.Should().Be.True();
+            expr.CanWrite.Should().Be.True();
+            expr.Type.Should().Be<int>();
+            expr.Name.Should().Be("Convert(x.TestProp)");
+
+            var obj = new Sample();
+            expr.Set(obj, 42);
+            obj.TestProp.Should().Be(42);
+            expr.Get(obj).Should().Be(42);
+        }
+
+        [Test]
         public void CanGetExpressionFromCompositeProperty()
         {
             var expr = ExprTyped(x => x.TestInner.TestInt).ToSettable();
@@ -41,6 +56,22 @@ namespace Simple.Tests.Expressions
             obj.TestInner.TestInt.Should().Be(42);
             expr.Get(obj).Should().Be(42);
         }
+
+        [Test]
+        public void CanGetExpressionFromCompositePropertyNonTyped()
+        {
+            var expr = Expr(x => x.TestInner.TestInt).ToSettable();
+            expr.CanRead.Should().Be.True();
+            expr.CanWrite.Should().Be.True();
+            expr.Type.Should().Be<int>();
+            expr.Name.Should().Be("Convert(x.TestInner.TestInt)");
+
+            var obj = new Sample();
+            expr.Set(obj, 42);
+            obj.TestInner.TestInt.Should().Be(42);
+            expr.Get(obj).Should().Be(42);
+        }
+
 
         [Test]
         public void CanGetExpressionFromCompositePropertyWithMethodCall()
@@ -76,6 +107,23 @@ namespace Simple.Tests.Expressions
         }
 
         [Test]
+        public void CanGetCrazyExpressionsNonTyped()
+        {
+            var expr = Expr(x => 2 + 2.0f).ToSettable();
+            expr.CanRead.Should().Be.True();
+            expr.CanWrite.Should().Be.False();
+            expr.Type.Should().Be<object>();
+            expr.Name.Should().Be("Convert(4)");
+
+
+            var obj = new Sample();
+            expr.Executing(x => x.Set(obj, 42)).Throws<NotSupportedException>();
+
+            expr.Get(obj).Should().Be(4.0f);
+        }
+
+
+        [Test]
         public void ShouldBeSerializable()
         {
             var expr = ExprTyped(x => x.TestProp).ToSettable();
@@ -86,6 +134,11 @@ namespace Simple.Tests.Expressions
 
 
         private Expression<Func<Sample, T>> ExprTyped<T>(Expression<Func<Sample, T>> expr)
+        {
+            return expr;
+        }
+
+        private Expression<Func<Sample, object>> Expr(Expression<Func<Sample, object>> expr)
         {
             return expr;
         }

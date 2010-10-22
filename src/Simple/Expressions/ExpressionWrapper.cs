@@ -56,7 +56,13 @@ namespace Simple.Expressions
 
         public Type Type
         {
-            get { return Expression.Body.Type; }
+            get
+            {
+                if (SettableMember.CanWrite)
+                    return SettableMember.Type;
+                else
+                    return Expression.Body.Type;
+            }
         }
 
         public bool CanRead
