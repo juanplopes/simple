@@ -7,6 +7,9 @@
     <PackageDir>$(RootDir)\pkg\</PackageDir>
     <PackageLibDir>$(PackageDir)\lib\</PackageLibDir>
 
+    <SiteSourceDir>$(RootDir)\src-tools\Simple.Site</SiteSourceDir>
+    <SitePublishDir>$(RootDir)\src-tools\base\</SitePublishDir>
+
     <SourceDir>$(RootDir)\src\</SourceDir>
     <SourceBaseDir>$(RootDir)\src-tools\base\</SourceBaseDir>
     <SourceBaseLibDir>$(SourceBaseDir)\lib\</SourceBaseLibDir>
@@ -27,6 +30,7 @@
 
   <ItemGroup>
     <SolutionFile Include="$(SourceDir)\Simple.sln" />
+    <SiteProject Include="$(SiteSourceDir)\*.csproj" />
   </ItemGroup>
 
   <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
@@ -148,5 +152,12 @@
 
     <Exec Command="util\nsis\makensis $(SourceBaseDir)\Extractor.nsi &quot;/XOutFile &#39;$(PackageDir)\$(MainLibraryName)-scaffold.exe&#39;&quot;"/>
     <Zip Files="@(ZipFiles)" ZipFileName="$(PackageDir)\$(MainLibraryName)-lib.zip" WorkingDirectory="$(PackageLibDir)"/>
+  </Target>
+
+  <Target Name="Site">
+    <MakeDir Directories="$(SitePublishDir)"/>
+    <MSBuild Projects="@(SiteProject)"
+             Targets="Build;ResolveReferences;_CopyWebApplication"
+             Properties="OutDir=$(SitePublishDir)\bin\;WebProjectOutputDir=$(SitePublishDir);Configuration=$(Configuration)"/>
   </Target>
 </Project>
