@@ -212,7 +212,7 @@
     <Compile Include="Patterns\WorkingDays.cs" />
     <Compile Include="Reflection\CompositeSettableMember.cs" />
     <Compile Include="Reflection\ConversionConstructors.cs" />
-    <Compile Include="Reflection\InvocationWrapper.cs" />
+    <Compile Include="Expressions\ExpressionWrapper.cs" />
     <Compile Include="Reflection\DictionaryHelper.cs" />
     <Compile Include="Reflection\DynamicInvoker.cs" />
     <Compile Include="Reflection\EasyEquatable.cs" />
@@ -225,6 +225,7 @@
     <Compile Include="Reflection\AttributeCache.cs" />
     <Compile Include="Reflection\EqualityHelper.cs" />
     <Compile Include="Expressions\PredicateBuilder.cs" />
+    <Compile Include="Reflection\IProperty.cs" />
     <Compile Include="Reflection\LeaveMeAloneAttribute.cs" />
     <Compile Include="Reflection\MethodCache.cs" />
     <Compile Include="Reflection\MethodSignature.cs" />

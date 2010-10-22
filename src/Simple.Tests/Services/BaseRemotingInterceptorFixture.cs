@@ -62,7 +62,7 @@ namespace Simple.Tests.Services
                 Arguments = string.Join(" ", new string[] {
                     ExecutionKey,
                     Uri.ToString()}),
-                WindowStyle = ProcessWindowStyle.Minimized
+                WindowStyle = ProcessWindowStyle.Hidden
             });
             NamedEvents.OpenOrWait(ExecutionKey).WaitOne();
         }

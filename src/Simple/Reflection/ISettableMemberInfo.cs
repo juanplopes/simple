@@ -6,20 +6,11 @@ using System.Reflection;
 
 namespace Simple.Reflection
 {
-    public interface ISettableMemberInfo
+    public interface ISettableMemberInfo : IProperty
     {
         MemberInfo Member { get; }
         string Name { get; }
-        Type Type { get; }
         Type DeclaringType { get; }
-        bool CanRead { get; }
-        bool CanWrite { get; }
 
-
-        void Set(object target, object value, params object[] index);
-        void Set(object target, object value);
-
-        object Get(object target, params object[] index);
-        object Get(object target);
     }
 }

@@ -33,10 +33,11 @@ namespace Simple
         }
 
 
+
         public static IEnumerable<ISettableMemberInfo> GetMemberList(this LambdaExpression expr)
         {
             if (expr != null)
-                return expr.Body.GetMemberList(expr.Parameters);
+                return GetMemberList(expr.Body, expr.Parameters);
             else
                 return new ISettableMemberInfo[0];
 
@@ -44,7 +45,6 @@ namespace Simple
 
         public static IEnumerable<ISettableMemberInfo> GetMemberList(this Expression expr, IEnumerable<ParameterExpression> args)
         {
-
             LinkedList<ISettableMemberInfo> answer = new LinkedList<ISettableMemberInfo>();
             while (expr != null &&
                   (expr.NodeType == ExpressionType.MemberAccess ||
@@ -62,12 +62,7 @@ namespace Simple
                     expr = (expr as UnaryExpression).Operand;
                 }
                 else
-                {
-                    var method = Expression.Lambda(expr, args.ToArray()).Compile();
-                    InvocationDelegate del = (obj, pars) => method.DynamicInvoke(pars);
-                    answer.AddFirst(new InvocationWrapper(del));
-                    expr = null;
-                }
+                    throw new NotSupportedException("Not supported node type: {0}".AsFormat(expr.NodeType));
             }
 
             return answer;

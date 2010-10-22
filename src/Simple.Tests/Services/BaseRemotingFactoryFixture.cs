@@ -38,7 +38,7 @@ namespace Simple.Tests.Services
                 Arguments = string.Join(" ", new string[] {
                     Server.RemotingTest,
                     Uri.ToString()}),
-                WindowStyle = ProcessWindowStyle.Minimized
+                WindowStyle = ProcessWindowStyle.Hidden
             });
             NamedEvents.OpenOrWait(Server.RemotingTest).WaitOne();
         }
