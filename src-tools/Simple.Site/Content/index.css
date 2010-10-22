@@ -37,6 +37,9 @@ hr.bar
 
 .bar h1 
 {
+    font-family: 'Trebuchet MS' , Helvetica, sans-serif;
+    font-style:normal;
+    font-weight: bold;
     margin: 1em 0 5px 0;
     font-size: 60px;
     color: White;
