@@ -11,7 +11,7 @@
     <SitePublishDir>$(RootDir)\site\</SitePublishDir>
 
     <SourceDir>$(RootDir)\src\</SourceDir>
-    <SourceBaseDir>$(RootDir)\site\</SourceBaseDir>
+    <SourceBaseDir>$(RootDir)\src-tools\base\</SourceBaseDir>
     <SourceBaseLibDir>$(SourceBaseDir)\lib\</SourceBaseLibDir>
 
     <KeyFilePath>$(SourceDir)\Simple.snk</KeyFilePath>
