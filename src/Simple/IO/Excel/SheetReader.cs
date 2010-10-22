@@ -44,15 +44,13 @@ namespace Simple.IO.Excel
 
         public IEnumerable<RowResult<T>> ReadInternal(Sheet sheet)
         {
-            var first = sheet.FirstRowNum;
+            var first = Header.SkipRows + (Header.HeaderRow ? 1 : 0);
             var indexes = Reader.ReadHeader(sheet.GetRow(first));
             var nulls = 0;
 
             log.DebugFormat("Its first row is {0} and last row is {1}", sheet.FirstRowNum, sheet.LastRowNum);
 
-            var skip = Header.SkipRows + (Header.HeaderRow ? 1 : 0);
-
-            for (int i = first + skip; i <= sheet.LastRowNum; i++)
+            for (int i = first; i <= sheet.LastRowNum; i++)
             {
                 var row = Reader.Read(i, sheet.GetRow(i), indexes);
                 if (row.HasValue)

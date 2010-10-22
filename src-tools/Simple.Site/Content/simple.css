@@ -15,6 +15,16 @@ body
     list-style: none;
 }
 
+hr.bar
+{
+    left: 0;
+    width: 100%;
+    position: absolute;
+    border: 3px solid #791B1B;
+    border-left: 0px;
+    border-right: 0px;
+}
+
 .header li
 {
     float: left;
@@ -49,4 +59,27 @@ body
 {
     width: 1000px;
     margin: 0 auto;
+}
+
+.content
+{
+    padding: 20px 30px;
+}
+
+h1, h2, h3, h4
+{
+    font-family: Georgia, Serif;
+    font-weight: normal;
+    font-style: italic;
+    text-shadow: 1px 1px #CCC;
+}
+
+h1
+{
+    font-size: xx-large;
+}
+
+h2 
+{
+    font-size: larger;
 }

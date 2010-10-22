@@ -8,6 +8,7 @@ obj/
 
 /build/
 /pkg/
+/site/
 /src/GlobalInfo.cs
 /src/Version.cs
 

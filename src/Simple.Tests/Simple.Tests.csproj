@@ -173,6 +173,7 @@
     <Compile Include="IO\Excel\NullableData.cs" />
     <Compile Include="IO\Excel\Reader\BasicDataFixture.cs" />
     <Compile Include="IO\Excel\Reader\SheetErrorFixture.cs" />
+    <Compile Include="IO\Excel\Writer\SkippingFixture.cs" />
     <Compile Include="IO\Excel\Writer\DictionaryNullableFixture.cs" />
     <Compile Include="IO\Excel\Writer\NullableFixture.cs" />
     <Compile Include="IO\Excel\Writer\BasicWriteFixture.cs" />

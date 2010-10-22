@@ -35,7 +35,7 @@
                 Creating a new project using Simple is as simple as a double click. With the new
                 project template fixture, you can starting using it with no work at all.
             </p>
-            <%= Html.ActionLink("read more", "QuickStart", "Documentation")%>
+            <%--<%= Html.ActionLink("read more", "QuickStart", "Documentation")%>--%>
         </div>
         <div class='item with_separator'>
             <h1>
@@ -44,7 +44,7 @@
                 Using the MVC pattern, Simple.Net combines the most powerful features that allows
                 creating and maintaining web applications to be easier than ever.
             </p>
-            <%= Html.ActionLink("read more", "Patterns", "Documentation")%>
+            <%--<%= Html.ActionLink("read more", "Patterns", "Documentation")%>--%>
         </div>
         <div class='item '>
             <h1>
@@ -53,7 +53,7 @@
                 Simple is built upon the greatest open-source libraries, providing the best support
                 from community for the core features of the framework.
             </p>
-            <%= Html.ActionLink("read more", "Libraries", "Documentation")%>
+            <%--<%= Html.ActionLink("read more", "Libraries", "Documentation")%>--%>
         </div>
     </div>
 </asp:Content>

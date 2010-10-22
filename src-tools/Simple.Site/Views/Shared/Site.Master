@@ -35,11 +35,12 @@
                 <li>
                     <%= Html.ActionLink("home", "Index", "Home") %></li>
                 <li>
-                    <%= Html.ActionLink("development", "Development", "Project") %></li>
+                    <a href="http://github.com/juanplopes/simple">github</a>
                 <li>
                     <%= Html.ActionLink("download", "Index", "Download")%></li>
             </ul>
         </div>
+        <hr class="bar" />
         <div class='content'>
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>

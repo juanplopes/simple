@@ -12,6 +12,11 @@
     background: url(images/bar.png) center top no-repeat;
 }
 
+hr.bar 
+{
+    display:none;
+}
+
 .bar .content
 {
     width: 940px;
