@@ -146,6 +146,7 @@
     <Compile Include="Expressions\Editable\EditableMemberListBinding.cs" />
     <Compile Include="Expressions\Editable\EditableMemberMemberBinding.cs" />
     <Compile Include="Expressions\EmptyQueryable.cs" />
+    <Compile Include="Expressions\ExpressionWrapperExtensions.cs" />
     <Compile Include="Expressions\Funcletizer.cs" />
     <Compile Include="Expressions\ExpressionVisitor.cs" />
     <Compile Include="Expressions\InvocationExpander.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Reflection\DictionaryHelper.cs" />
     <Compile Include="Reflection\DynamicInvoker.cs" />
     <Compile Include="Reflection\EasyEquatable.cs" />
+    <Compile Include="Reflection\EmptySettableMember.cs" />
     <Compile Include="Reflection\EnumTypeAttribute.cs" />
     <Compile Include="Patterns\IWorkingDaysProvider.cs" />
     <Compile Include="Expressions\ExpressionHelper.cs" />

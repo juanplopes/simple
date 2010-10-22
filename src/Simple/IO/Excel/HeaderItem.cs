@@ -9,13 +9,13 @@ namespace Simple.IO.Excel
 {
     public class HeaderItem : Simple.IO.Excel.IHeaderItem
     {
-        private ISettableMemberInfo member = null;
+        private IProperty member = null;
         private IFormatProvider formatter = CultureInfo.InvariantCulture;
         
         public bool Exportable { get { return true; } }
         public string Name { get; set; }
 
-        public HeaderItem(ISettableMemberInfo member)
+        public HeaderItem(IProperty member)
         {
             this.member = member;
             this.Name = member.Name;

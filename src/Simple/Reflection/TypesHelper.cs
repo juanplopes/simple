@@ -39,12 +39,23 @@ namespace Simple
         public static ISettableMemberInfo ToSettable(this MemberInfo member)
         {
             if (member is PropertyInfo)
-                return new PropertyInfoWrapper(member as PropertyInfo);
+                return (member as PropertyInfo).ToSettable();
 
             if (member is FieldInfo)
-                return new FieldInfoWrapper(member as FieldInfo);
+                return (member as FieldInfo).ToSettable();
 
             return null;
+        }
+
+
+        public static ISettableMemberInfo ToSettable(this FieldInfo member)
+        {
+            return new FieldInfoWrapper(member);
+        }
+
+        public static ISettableMemberInfo ToSettable(this PropertyInfo member)
+        {
+            return new PropertyInfoWrapper(member);
         }
 
 

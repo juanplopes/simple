@@ -4,20 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
 using Simple.Reflection;
+using Simple.Expressions.Editable;
 
 namespace Simple.Expressions
 {
+    [Serializable]
     public class ExpressionWrapper<T, P> : IProperty
     {
-        public Expression<Func<T, P>> Expression { get; protected set; }
+        public Expression<Func<T, P>> Expression { get { return PrivateExpression.Real; } }
+        protected LazyExpression<Func<T, P>> PrivateExpression { get; set; }
 
-        private CompositeSettableMember _settableMember = null;
+        public string Name { get { return Expression.Body.ToString(); } }
+
+        public ExpressionWrapper() { }
+        public ExpressionWrapper(Expression<Func<T, P>> expression)
+        {
+            PrivateExpression = expression.ToLazyExpression();
+        }
+
+        private ISettableMemberInfo _settableMember = null;
         protected ISettableMemberInfo SettableMember
         {
             get
             {
                 if (_settableMember == null)
-                    _settableMember = new CompositeSettableMember(Expression.GetMemberList());
+                {
+                    try
+                    {
+                        _settableMember = new CompositeSettableMember(PrivateExpression.Real.GetMemberList());
+                    }
+                    catch (NotSupportedException) { _settableMember = new EmptySettableMember(); }
+                    catch (InvalidOperationException) { _settableMember = new EmptySettableMember(); }
+                }
 
                 return _settableMember;
             }
@@ -38,7 +56,7 @@ namespace Simple.Expressions
 
         public Type Type
         {
-            get { return Expression.Type; }
+            get { return Expression.Body.Type; }
         }
 
         public bool CanRead
@@ -50,14 +68,8 @@ namespace Simple.Expressions
         {
             get
             {
-                try
-                {
-                    return SettableMember.CanWrite;
-                }
-                catch (NotSupportedException)
-                {
-                    return false;
-                }
+
+                return SettableMember.CanWrite;
             }
         }
 

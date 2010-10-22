@@ -6,12 +6,46 @@ using NUnit.Framework;
 using SharpTestsEx;
 using System.Reflection;
 using Simple.Reflection;
+using Simple.IO.Serialization;
 
 namespace Simple.Tests.Reflection
 {
     [TestFixture]
     public class SettableMemberFixture
     {
+        [Test]
+        public void PropertyWrapperIsSerializable()
+        {
+            var prop = typeof(Sample).GetProperty("TestProp").ToSettable();
+
+            var result = SimpleSerializer.Binary().RoundTrip(prop);
+            result.Name.Should().Be.Equals(prop.Name);
+        }
+
+        [Test]
+        public void FieldWrapperIsSerializable()
+        {
+            var prop = typeof(Sample).GetField("TestField").ToSettable();
+
+            var result = SimpleSerializer.Binary().RoundTrip(prop);
+            result.Name.Should().Be.Equals(prop.Name);
+        }
+
+
+        [Test]
+        public void CompositeWrapperIsSerializable()
+        {
+            var outer = typeof(Sample).GetProperty("TestInner");
+            var inner = typeof(Inner).GetProperty("TestInt");
+            var props = new[] { outer, inner }.Select(x => x.ToSettable());
+
+            var set = props.ToSettable();
+
+            var result = SimpleSerializer.Binary().RoundTrip(set);
+            result.Name.Should().Be.Equals(set.Name);
+
+        }
+
         [Test]
         public void CanGetUsingTestProperty()
         {

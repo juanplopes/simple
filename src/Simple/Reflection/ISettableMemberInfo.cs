@@ -9,7 +9,6 @@ namespace Simple.Reflection
     public interface ISettableMemberInfo : IProperty
     {
         MemberInfo Member { get; }
-        string Name { get; }
         Type DeclaringType { get; }
 
     }

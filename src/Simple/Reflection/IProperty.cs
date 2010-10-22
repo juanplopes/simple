@@ -7,6 +7,7 @@ namespace Simple.Reflection
 {
     public interface IProperty
     {
+        string Name { get; }
         Type Type { get; }
 
         bool CanRead { get; }

@@ -153,6 +153,7 @@
       <DependentUpon>ExcelFiles.resx</DependentUpon>
     </Compile>
     <Compile Include="Expressions\EmptyQueryableFixture.cs" />
+    <Compile Include="Expressions\ExpressionWrapperFixture.cs" />
     <Compile Include="Expressions\InvocationExpanderFixture.cs" />
     <Compile Include="Expressions\LazyExpressionFixture.cs" />
     <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
