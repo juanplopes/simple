@@ -23,7 +23,9 @@ hr.bar
     border: 3px solid #791B1B;
     border-left: 0px;
     border-right: 0px;
+    margin: 0;
 }
+
 
 .header li
 {
@@ -63,7 +65,7 @@ hr.bar
 
 .content
 {
-    padding: 20px 30px;
+    padding: 0 30px;
 }
 
 h1, h2, h3, h4
