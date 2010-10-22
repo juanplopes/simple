@@ -37,7 +37,7 @@ namespace Simple.IO.Excel
 
         public IHeaderItem Register(Expression<Func<T, object>> expr)
         {
-            var item = new HeaderItem(expr.GetMemberList().ToSettable());
+            var item = new HeaderItem(expr.ToSettable());
             Add(item);
             return item;
         }
