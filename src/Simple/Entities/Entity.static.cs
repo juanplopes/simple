@@ -36,6 +36,11 @@ namespace Simple.Entities
             return Service.Load(id);
         }
 
+        public static T Load(object id, bool upgradeLock)
+        {
+            return Service.Load(id, upgradeLock);
+        }
+
 
         public static int Count()
         {

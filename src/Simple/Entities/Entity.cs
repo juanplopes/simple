@@ -111,6 +111,12 @@ namespace Simple.Entities
             return Service.Reload(ThisAsT);
         }
 
+        public virtual T Reload(bool upgradeLock)
+        {
+            return Service.Reload(ThisAsT, upgradeLock);
+        }
+
+
         public virtual T Merge()
         {
             return Service.Merge(ThisAsT);
@@ -121,10 +127,6 @@ namespace Simple.Entities
             return Service.Evict(ThisAsT);
         }
 
-        public virtual T Lock()
-        {
-            return Service.Lock(ThisAsT);
-        }
 
         public virtual T Save()
         {

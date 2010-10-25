@@ -17,14 +17,11 @@ namespace Simple.Entities
     [KnownType(typeof(Page<>))]
     public class EntityService<T> : MarshalByRefObject, IEntityService<T>
     {
-        private ILog _logger = null;
         protected virtual ILog Logger
         {
             get
             {
-                if (_logger == null)
-                    _logger = Simply.Do.Log(this);
-                return _logger;
+                return Simply.Do.Log(this);
             }
         }
 
@@ -86,7 +83,15 @@ namespace Simple.Entities
 
         public virtual T Load(object id)
         {
-            return Session.Load<T>(id);
+            return Load(id, false);
+        }
+
+        public virtual T Load(object id, bool upgradeLock)
+        {
+            if (upgradeLock)
+                return Session.Load<T>(id, LockMode.Upgrade);
+            else
+                return Session.Load<T>(id);
         }
 
         public virtual T Refresh(T entity)
@@ -97,16 +102,15 @@ namespace Simple.Entities
 
         public virtual T Reload(T entity)
         {
+            return Reload(entity, false);
+        }
+
+        public virtual T Reload(T entity, bool upgradeLock)
+        {
             Session.Flush();
             Session.Evict(entity);
             var id = NHMetadata.GetIdentifier(entity, Session.GetSessionImplementation().EntityMode);
-            return Refresh(Load(id));
-        }
-
-        public virtual T Lock(T entity)
-        {
-            Session.Lock(entity, LockMode.Upgrade);
-            return entity;
+            return Refresh(Load(id, upgradeLock));
         }
 
         public virtual T Merge(T entity)
