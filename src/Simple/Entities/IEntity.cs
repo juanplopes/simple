@@ -16,6 +16,7 @@ namespace Simple.Entities
         T Evict();
         T Save();
         T Update();
+        T Lock();
         int Delete();
         T SaveOrUpdate();
         ValidationList Validate();

@@ -121,6 +121,10 @@ namespace Simple.Entities
             return Service.Evict(ThisAsT);
         }
 
+        public virtual T Lock()
+        {
+            return Service.Lock(ThisAsT);
+        }
 
         public virtual T Save()
         {

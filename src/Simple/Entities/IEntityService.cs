@@ -13,6 +13,7 @@ namespace Simple.Entities
     public interface IEntityService<T> : IService
     {
         T Load(object id);
+        T Lock(T entity);
         T Refresh(T entity);
         T Reload(T entity);
         T Merge(T entity);

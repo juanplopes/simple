@@ -103,6 +103,12 @@ namespace Simple.Entities
             return Refresh(Load(id));
         }
 
+        public virtual T Lock(T entity)
+        {
+            Session.Lock(entity, LockMode.Upgrade);
+            return entity;
+        }
+
         public virtual T Merge(T entity)
         {
             return (T)Session.Merge(entity);
