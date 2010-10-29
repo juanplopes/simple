@@ -41,6 +41,10 @@ namespace Simple.Entities
             return Service.Load(id, upgradeLock);
         }
 
+        public static IList<T> LoadMany(params object[] ids)
+        {
+            return Service.LoadMany(ids);
+        }
 
         public static int Count()
         {

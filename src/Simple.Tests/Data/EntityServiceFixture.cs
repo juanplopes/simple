@@ -61,6 +61,26 @@ namespace Simple.Tests.Data
         }
 
         [Test]
+        public void TestLoadMany()
+        {
+            var custs = Customer.LoadMany("BERGS", "NOTFOUND", "ANTON");
+            custs.Should().Have.SameSequenceAs(
+                Customer.Load("BERGS"),
+                null,
+                Customer.Load("ANTON"));
+        }
+
+        [Test]
+        public void TestLoadManyWithWrongType()
+        {
+            var custs = Customer.LoadMany("BERGS", 125.8m, "ANTON");
+            custs.Should().Have.SameSequenceAs(
+                Customer.Load("BERGS"),
+                null,
+                Customer.Load("ANTON"));
+        }
+
+        [Test]
         public void TestReloadById()
         {
             new Customer() { Id = "BERGS" }.Reload().Phone.Should().Not.Be.Null();

@@ -11,6 +11,8 @@ using Simple.Entities.QuerySpec;
 using Simple.Expressions.Editable;
 using Simple.Services;
 using Simple.Validation;
+using NHibernate.Criterion;
+using System.Collections;
 
 namespace Simple.Entities
 {
@@ -84,6 +86,34 @@ namespace Simple.Entities
         public virtual T Load(object id)
         {
             return Load(id, false);
+        }
+
+        public virtual IList<T> LoadMany(params object[] ids)
+        {
+            return ids
+               .BatchSelect(1000, list => BatchLoad(list.ToArray())).ToList();
+        }
+
+        private IList<T> BatchLoad(object[] ids)
+        {
+            var idName = NHMetadata.IdentifierPropertyName;
+            if (idName == null) throw new NotSupportedException("Must have only one identifier property to call this method");
+
+            var crit = Session.CreateCriteria(typeof(T));
+            crit.Add(Expression.In(Projections.Id(), ids));
+            var dic = crit.List<T>().ToDictionary(x => NHMetadata.GetIdentifier(x, EntityMode.Poco));
+
+            return ids.Select(x =>
+            {
+                try
+                {
+                    return dic[x];
+                }
+                catch (KeyNotFoundException)
+                {
+                    return default(T);
+                }
+            }).ToList();
         }
 
         public virtual T Load(object id, bool upgradeLock)
