@@ -81,6 +81,16 @@ namespace Simple.Tests.Data
         }
 
         [Test]
+        public void TestLoadManyWithNullInMiddle()
+        {
+            var custs = Customer.LoadMany(new object[] { "BERGS", null, "ANTON" });
+            custs.Should().Have.SameSequenceAs(
+                Customer.Load("BERGS"),
+                null,
+                Customer.Load("ANTON"));
+        }
+
+        [Test]
         public void TestReloadById()
         {
             new Customer() { Id = "BERGS" }.Reload().Phone.Should().Not.Be.Null();

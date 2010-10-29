@@ -107,6 +107,7 @@ namespace Simple.Entities
             {
                 try
                 {
+                    if (null == x) return default(T);
                     return dic[x];
                 }
                 catch (KeyNotFoundException)
