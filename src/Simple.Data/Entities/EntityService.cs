@@ -88,7 +88,7 @@ namespace Simple.Entities
             return Load(id, false);
         }
 
-        public virtual IList<T> LoadMany(params object[] ids)
+        public virtual IList<T> LoadMany(object[] ids)
         {
             return ids
                .BatchSelect(1000, list => BatchLoad(list.ToArray())).ToList();

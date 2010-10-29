@@ -63,7 +63,7 @@ namespace Simple.Tests.Data
         [Test]
         public void TestLoadMany()
         {
-            var custs = Customer.LoadMany("BERGS", "NOTFOUND", "ANTON");
+            var custs = Customer.LoadMany(new[] { "BERGS", "NOTFOUND", "ANTON" });
             custs.Should().Have.SameSequenceAs(
                 Customer.Load("BERGS"),
                 null,
@@ -73,7 +73,7 @@ namespace Simple.Tests.Data
         [Test]
         public void TestLoadManyWithWrongType()
         {
-            var custs = Customer.LoadMany("BERGS", 125.8m, "ANTON");
+            var custs = Customer.LoadMany(new object [] {"BERGS", 125.8m, "ANTON"});
             custs.Should().Have.SameSequenceAs(
                 Customer.Load("BERGS"),
                 null,

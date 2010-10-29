@@ -14,7 +14,7 @@ namespace Simple.Entities
     {
         T Load(object id);
         T Load(object id, bool upgradeLock);
-        IList<T> LoadMany(params object[] ids);
+        IList<T> LoadMany(object[] ids);
         T Refresh(T entity);
         T Reload(T entity);
         T Reload(T entity, bool upgradeLock);
