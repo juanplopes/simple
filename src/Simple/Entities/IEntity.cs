@@ -12,6 +12,7 @@ namespace Simple.Entities
         T Clone();
         T Refresh();
         T Reload();
+        T Reload(bool upgradeLock);
         T Merge();
         T Evict();
         T Save();

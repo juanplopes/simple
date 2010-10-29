@@ -36,25 +36,11 @@ namespace Simple.Entities
             return Service.Load(id);
         }
 
-        public static T Refresh(T entity)
+        public static T Load(object id, bool upgradeLock)
         {
-            return Service.Refresh(entity);
+            return Service.Load(id, upgradeLock);
         }
 
-        public static T Reload(T entity)
-        {
-            return Service.Reload(entity);
-        }
-
-        public static T Merge(T entity)
-        {
-            return Service.Merge(entity);
-        }
-
-        public static T Evict(T entity)
-        {
-            return Service.Evict(entity);
-        }
 
         public static int Count()
         {

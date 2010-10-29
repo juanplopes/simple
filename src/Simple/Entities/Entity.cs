@@ -111,6 +111,12 @@ namespace Simple.Entities
             return Service.Reload(ThisAsT);
         }
 
+        public virtual T Reload(bool upgradeLock)
+        {
+            return Service.Reload(ThisAsT, upgradeLock);
+        }
+
+
         public virtual T Merge()
         {
             return Service.Merge(ThisAsT);
