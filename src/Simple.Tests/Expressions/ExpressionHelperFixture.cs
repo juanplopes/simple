@@ -252,6 +252,18 @@ namespace Simple.Tests.Expressions
 
         }
 
+        [Test, Ignore("Lembrar disso")]
+        public void TestGetPropertyLambdaWithObjectReturnTypeFromStringUsingIntProperty()
+        {
+            var str = "BProp.CProp.DProp.Value";
+
+            var prop = str.GetMemberExpression<A>();
+
+            prop.ToString().Should().Be("x => x.BProp.CProp.DProp.Value");
+
+        }
+
+
         [Test]
         public void TestGetPropertyLambdaWithDReturnTypeFromString()
         {
