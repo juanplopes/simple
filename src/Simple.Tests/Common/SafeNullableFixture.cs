@@ -47,5 +47,19 @@ namespace Simple.Tests.Common
             object a = null;
             SafeNullable.Get(() => a.ToString(), "42").Should().Be("42");
         }
+
+        [Test]
+        public void CanCallWithNullableOnIntTypesThatCanBeNull()
+        {
+            IList<int> list = null;
+            list.WithNullable(x => x.Count).Should().Be(null);
+        }
+
+        [Test]
+        public void CanCallWithNullableOnIntTypesThatCanBeNullWithDefault()
+        {
+            IList<int> list = null;
+            list.WithNullable(x => x.Count, null).Should().Be(null);
+        }
     }
 }

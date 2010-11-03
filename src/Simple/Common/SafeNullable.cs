@@ -37,6 +37,18 @@ namespace Simple
             return Get(() => func(value), defaultValue);
         }
 
+        public static Nullable<T> WithNullable<Q, T>(this Q value, Func<Q, T> func)
+            where T:struct
+        {
+            return Get(() => func(value), default(T?));
+        }
+
+        public static Nullable<T> WithNullable<Q, T>(this Q value, Func<Q, T> func, Nullable<T> defaultValue)
+            where T : struct
+        {
+            return Get(() => func(value), defaultValue);
+        }
+
         public static SafeValue<T> WithSafe<Q, T>(this Q value, Func<Q, T> func)
         {
             return Get(() => func(value));
