@@ -34,6 +34,15 @@ namespace Simple.Tests.Data
         }
 
         [Test]
+        public void SafeSumEmptyTableWithDefaultValueAndFilter()
+        {
+            var mapping = Session.Query<EmployeeTerritory>().Where(x => x.Employee == null);
+
+            mapping.SafeAggregate(q => q.Sum(x => x.Employee.Id), 42).Should().Be(42);
+        }
+
+
+        [Test]
         public void SafeSumEmptyTableWithDefaultValue()
         {
             EmployeeTerritory.Delete(x => true);

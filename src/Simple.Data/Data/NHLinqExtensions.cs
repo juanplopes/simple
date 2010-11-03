@@ -14,7 +14,7 @@ namespace Simple
 
         public static TResult SafeAggregate<TSource, TResult>(this IQueryable<TSource> source, Func<IQueryable<TSource>, TResult> selector, TResult defaultValue)
         {
-            if (source.Any())
+            if (source.Count() > 0)
                 return selector(source);
             else
                 return defaultValue;
