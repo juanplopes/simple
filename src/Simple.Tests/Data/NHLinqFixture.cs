@@ -3,6 +3,7 @@ using NHibernate.Linq;
 using NUnit.Framework;
 using SharpTestsEx;
 using Simple.Tests.Resources;
+using Simple.Data;
 
 namespace Simple.Tests.Data
 {
@@ -32,6 +33,25 @@ namespace Simple.Tests.Data
             list[9].Count.Should().Be(7);
         }
 
-      
+        [Test]
+        public void SafeSumEmptyTableWithDefaultValue()
+        {
+            EmployeeTerritory.Delete(x => true);
+
+            var mapping = Session.Query<EmployeeTerritory>();
+
+            mapping.SafeAggregate(q => q.Sum(x => x.Employee.Id), 10).Should().Be(10);
+        }
+
+        [Test]
+        public void SafeSumEmptyTableWithoutDefaultValue()
+        {
+            EmployeeTerritory.Delete(x => true);
+
+            var mapping = Session.Query<EmployeeTerritory>();
+
+            mapping.SafeAggregate(q => q.Sum(x => x.Employee.Id)).Should().Be(0);
+        }
+
     }
 }

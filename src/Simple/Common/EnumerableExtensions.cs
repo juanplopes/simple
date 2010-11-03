@@ -101,5 +101,16 @@ namespace Simple
         {
             return enumerable.Union((IEnumerable<T>)items);
         }
+
+        public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource> source) { return source.MaxOrDefault<TSource, TSource>(s => s); }
+        public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource> source, TSource defaultValue) { return source.MaxOrDefault<TSource, TSource>(s => s, defaultValue); }
+        public static TResult MaxOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector) { return source.MaxOrDefault(selector, default(TResult)); }
+        public static TResult MaxOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector, TResult defaultValue) { return source.Any() ? source.Max(selector) : defaultValue; }
+
+        public static TSource MinOrDefault<TSource>(this IEnumerable<TSource> source) { return source.MinOrDefault<TSource, TSource>(s => s); }
+        public static TSource MinOrDefault<TSource>(this IEnumerable<TSource> source, TSource defaultValue) { return source.MinOrDefault<TSource, TSource>(s => s, defaultValue); }
+        public static TResult MinOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector) { return source.MinOrDefault(selector, default(TResult)); }
+        public static TResult MinOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector, TResult defaultValue) { return source.Any() ? source.Min(selector) : defaultValue; }
+   
     }
 }
