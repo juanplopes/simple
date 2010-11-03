@@ -31,6 +31,22 @@ namespace Simple.Tests.Patterns
         }
 
         [Test]
+        public void CanToStringFiveSizedTuples()
+        {
+            var tuple1 = new Tuple<string>("1", "2", "3", "4", "5");
+
+            tuple1.ToString().Should().Be("1, 2, 3, 4, 5");
+        }
+
+        [Test]
+        public void CanToStringFiveSizedTuplesWithNullsInMiddle()
+        {
+            var tuple1 = new Tuple<string>("1", null, "3",null , "5");
+
+            tuple1.ToString().Should().Be("1, , 3, , 5");
+        }
+
+        [Test]
         public void CanHashCodeTwoFiveSizedTuples()
         {
             var tuple1 = new Tuple<int>(1, 2, 3, 4, 5);
@@ -93,6 +109,14 @@ namespace Simple.Tests.Patterns
         }
 
         [Test]
+        public void CanToStringNullablePair()
+        {
+            var pair1 = new Pair<int?>(1, null);
+            pair1.ToString().Should().Be("1, ");
+        }
+
+
+        [Test]
         public void CanCompareTwoNullableDifferentTypePairs()
         {
             var pair1 = new Pair<string, int?>("1", 2);
@@ -134,6 +158,13 @@ namespace Simple.Tests.Patterns
 
             pair2.Should().Be(pair1);
             pair3.Should().Not.Be(pair1);
+        }
+
+        [Test]
+        public void CanToStringNullableTriplet()
+        {
+            var pair1 = new Triplet<int?>(1, null, 42);
+            pair1.ToString().Should().Be("1, , 42");
         }
 
         [Test]

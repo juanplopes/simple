@@ -93,7 +93,7 @@ namespace Simple
         public static string StringJoin<T>(this IEnumerable<T> enumerable, string separator)
         {
             var builder = new StringBuilder();
-            enumerable.EagerForeach(x => builder.Append(x), x => builder.Append(separator));
+            enumerable.EagerForeach(x => builder.AppendFormat("{0}", x), x => builder.Append(separator));
             return builder.ToString();
         }
 

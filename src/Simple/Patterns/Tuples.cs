@@ -32,6 +32,12 @@ namespace Simple.Patterns
 
             return res;
         }
+
+        public override string ToString()
+        {
+            return Values.StringJoin(", ");
+        }
+
     }
 
     public static class Tuples
@@ -86,6 +92,11 @@ namespace Simple.Patterns
                EqualityComparer<T>.Default.GetHashCode(First) ^
                EqualityComparer<Q>.Default.GetHashCode(Second);
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}", First, Second);
+        }
     }
 
     [Serializable]
@@ -126,6 +137,11 @@ namespace Simple.Patterns
                 EqualityComparer<T>.Default.GetHashCode(First) ^
                 EqualityComparer<Q>.Default.GetHashCode(Second) ^
                 EqualityComparer<P>.Default.GetHashCode(Third);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}, {2}", First, Second, Third);
         }
     }
 
