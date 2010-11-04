@@ -254,5 +254,29 @@ namespace Simple.Tests.Common
             var seq2 = new[] { 4, 5, 6 };
             seq.Union(seq2).Should().Have.SameSequenceAs(1, 2, 3, 4, 5, 6);
         }
+
+        [Test]
+        public void CanSafeMaxWithManyTypesOfCollections()
+        {
+            new int[] { 1, 2, 3, 2, 1 }.SafeAggregate(x => x.Max()).Should().Be(3);
+            new int[] { }.SafeAggregate(x => x.Max()).Should().Be(0);
+            new int[] { }.SafeAggregate(x => x.Max(), 42).Should().Be(42);
+        }
+
+        [Test]
+        public void CanSafeMinWithManyTypesOfCollections()
+        {
+            new int[] { 1, 2, 3, 2, 1 }.SafeAggregate(x => x.Min()).Should().Be(1);
+            new int[] { }.SafeAggregate(x => x.Min()).Should().Be(0);
+            new int[] { }.SafeAggregate(x => x.Min(), 42).Should().Be(42);
+        }
+
+        [Test]
+        public void CanSafeSumWithManyTypesOfCollections()
+        {
+            new int[] { 1, 2, 3, 2, 1 }.SafeAggregate(x => x.Sum()).Should().Be(9);
+            new int[] { }.SafeAggregate(x => x.Sum()).Should().Be(0);
+            new int[] { }.SafeAggregate(x => x.Sum(), 42).Should().Be(42);
+        }
     }
 }

@@ -95,7 +95,6 @@
     <Compile Include="Data\NHibernateConfigSource.cs" />
     <Compile Include="Data\NHibernateFactory.cs" />
     <Compile Include="Data\NHibernateSimplyExtensions.cs" />
-    <Compile Include="Data\NHLinqExtensions.cs" />
     <Compile Include="Data\SimpleTransformers.cs" />
     <Compile Include="Data\TimestampType.cs" />
     <Compile Include="Data\TupleToConstructorTransformer.cs" />

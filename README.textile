@@ -42,3 +42,9 @@ You can find the build status "here":http://teamcity.codebetter.com/project.html
 h3. Living Consultoria internal builds (2)
 
 The number 2 is reserved for Living Consultoria to publish their own builds.
+
+h2. NHibernate version
+
+To change Simple.Net NHibernate, please use the NHibernate fork located at
+
+https://github.com/juanplopes/nhibernate

@@ -30,17 +30,17 @@ namespace Simple.Tests
             File.WriteAllBytes(temp, Database.Northwind);
 
             simply.Configure
-                .NHibernteFluently(x=>
+                .NHibernteFluently(x =>
                     x.Database(SQLiteConfiguration.Standard.UsingFile(temp)
                      .ProxyFactoryFactory<ProxyFactoryFactory>()))
                .MappingFromAssemblyOf<Category.Map>()
                .Validator(typeof(Category.Map).Assembly)
                .DefaultHost();
+               //.Log4netToConsole();
 
             simply.AddServerHook(x => new TransactionCallHook(x, key));
             simply.AddServerHook(x => new DefaultCallHook(x, key));
             simply.HostAssemblyOf(typeof(NHConfig1));
-            
 
         }
     }

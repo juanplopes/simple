@@ -36,9 +36,12 @@ namespace Simple.Tests.Data
         [Test]
         public void SafeSumEmptyTableWithDefaultValueAndFilter()
         {
-            var mapping = Session.Query<EmployeeTerritory>().Where(x => x.Employee == null);
-
-            mapping.SafeAggregate(q => q.Sum(x => x.Employee.Id), 42).Should().Be(42);
+            Employee emp = null;
+            var mapping = Session.Query<EmployeeTerritory>().Where(x => x.Employee == emp);
+            mapping.SafeAggregate(q => q.Max(x => x.Employee.Id), 42).Should().Be(42);
+            
+            emp = EmployeeTerritory.Find(x => true).Employee;
+            mapping.SafeAggregate(q => q.Max(x => x.Employee.Id), 42).Should().Be(emp.Id);
         }
 
 
