@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using Simple.Migrator.Framework;
+using System.Globalization;
 
 namespace Simple.Migrator.Providers.SqlServer
 {
@@ -63,7 +64,7 @@ namespace Simple.Migrator.Providers.SqlServer
             {
                 defaultValue = ((bool) defaultValue) ? 1 : 0;
             }
-            return String.Format("DEFAULT {0}", defaultValue);
+            return String.Format(CultureInfo.InvariantCulture, "DEFAULT {0}", defaultValue);
         }
     }
 }
