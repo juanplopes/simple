@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Simple.Migrator.Framework;
+using System.Globalization;
 
 namespace Simple.Migrator.Providers
 {
@@ -156,7 +157,7 @@ namespace Simple.Migrator.Providers
         
         public virtual string Quote(string value)
         {
-            return String.Format(QuoteTemplate, value);
+            return String.Format(CultureInfo.InvariantCulture, QuoteTemplate, value);
         }
         
         public virtual string QuoteTemplate
@@ -166,7 +167,7 @@ namespace Simple.Migrator.Providers
         
         public virtual string Default(object defaultValue)
         {
-            return String.Format("DEFAULT {0}", defaultValue);
+            return String.Format(CultureInfo.InvariantCulture, "DEFAULT {0}", defaultValue);
         }
         
         public ColumnPropertiesMapper GetAndMapColumnProperties(Column column)
