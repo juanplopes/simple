@@ -15,15 +15,15 @@ div.container
 div.header
 {
     height: 60px;
-    background: #9C1200;
-    border-bottom: solid 4px #CD6A5C;
+    background: #9C1200 url(avalon/header.png) repeat-x;
+    border-bottom: solid 4px #994433;
 }
 
 div.header span.logo
 {
     color: white;
-    font-size: 2em;
-    margin: 10px 0;
+    font-size: 1.75em;
+    margin: 12px 0;
     font-weight: bold;
     float: left;
     text-shadow: 2px 2px 4px black;

@@ -12,8 +12,10 @@ obj/
 /src/GlobalInfo.cs
 /src/Version.cs
 
+/src-tools/base/src/GlobalInfo.cs
 /src-tools/base/Simple.Gui.exe
 /src-tools/base/lib/*.*
+/src-tools/base/*.cache
 /TestResult.xml
 
 /lib/NHibernate
