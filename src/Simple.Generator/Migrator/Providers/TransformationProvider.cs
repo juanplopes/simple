@@ -869,6 +869,8 @@ namespace Simple.Migrator.Providers
             _schemainfoname = schemainfoname;
         }
 
+
+
         #region IDisposable Members
 
         public void Dispose()
@@ -882,6 +884,16 @@ namespace Simple.Migrator.Providers
 
 
         public Action<string> Writer { get; set; }
+
+        public void AddIndex(string name, string table, params string[] columns)
+        {
+            ExecuteNonQuery(String.Format("CREATE INDEX {0} ON {1} ({2})", name, table, string.Join(", ", columns)));
+        }
+
+        public void RemoveIndex(string name, string table)
+        {
+            ExecuteNonQuery(String.Format("DROP INDEX {0} ON {1}", name, table));
+        }
 
         #endregion
     }
