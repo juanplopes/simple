@@ -67,5 +67,19 @@ namespace Simple.Migrator.Fluent
                 action.Execute(provider);
             }
         }
+
+        public IndexAddAction AddIndex(string name, params string[] columns)
+        {
+            var action = new IndexAddAction(this, Database.Convention.IndexKey(this.Name, name), columns);
+            Actions.Add(action);
+            return action;
+        }
+
+        public IndexRemoveAction RemoveIndex(string name)
+        {
+            var action = new IndexRemoveAction(this, Database.Convention.IndexKey(this.Name, name));
+            Actions.Add(action);
+            return action;
+        }
     }
 }

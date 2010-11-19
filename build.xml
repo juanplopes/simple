@@ -90,6 +90,10 @@
     <Nunit Assemblies="$(TestAssembly)" ToolPath="util\nunit"/>
   </Target>
 
+  <Target Name="Integrate">
+	<CallTarget Targets="Rebuild;Test;Package"></CallTarget>
+  </Target>
+  
   <Target Name="MergeNH">
     <ItemGroup>
       <NHibernateItems Include="$(LibDir)\NHibernate\NHibernate.dll"/>

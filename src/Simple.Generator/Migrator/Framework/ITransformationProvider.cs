@@ -470,5 +470,9 @@ namespace Simple.Migrator.Framework
         IDbCommand GetCommand();
 
         void SchemaInfoName(string schemainfoname);
+
+        void AddIndex(string name, string table, params string[] columns);
+
+        void RemoveIndex(string name, string table);
     }
 }

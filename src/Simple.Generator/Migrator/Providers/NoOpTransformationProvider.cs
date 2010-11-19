@@ -362,6 +362,16 @@ namespace Simple.Migrator.Providers
             set { }
         }
 
+        public void AddIndex(string name, string table, params string[] columns)
+        {
+            //no op
+        }
+
+        public void RemoveIndex(string name, string table)
+        {
+            //no op
+        }
+
         #endregion
     }
 }
