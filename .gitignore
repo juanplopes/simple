@@ -5,9 +5,11 @@ obj/
 
 *.cache 
 *.sln.cache
+TestResult.xml
 
-/build/
-/pkg/
+build/
+pkg/
+
 /site/
 /src/GlobalInfo.cs
 /src/Version.cs
@@ -16,6 +18,6 @@ obj/
 /src-tools/base/Simple.Gui.exe
 /src-tools/base/lib/*.*
 /src-tools/base/*.cache
-/TestResult.xml
+
 
 /lib/NHibernate
