@@ -16,7 +16,7 @@ namespace Simple.Patterns
         }
 
 
-        public DisposableAction(Action whatToDo) : this(whatToDo, false)
+        public DisposableAction(Action whatToDo) : this(whatToDo, true)
         {
         }
 

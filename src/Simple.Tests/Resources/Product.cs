@@ -2,6 +2,7 @@
 using FluentNHibernate.Mapping;
 using Simple.Config;
 using Simple.Entities;
+using System.Collections.Generic;
 
 namespace Simple.Tests.Resources
 {

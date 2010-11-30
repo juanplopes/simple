@@ -2,6 +2,7 @@ bin/
 obj/
 *.suo
 *.user
+*.log
 
 *.cache 
 *.sln.cache

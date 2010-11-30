@@ -49,15 +49,7 @@ namespace Simple
         private delegate ILog GetLoggerDelegate(Log4netFactory factory);
         private static ILog TryGetLogger(GetLoggerDelegate @delegate)
         {
-            Log4netFactory factory = Factory;
-            if (factory != null)
-            {
-                return @delegate.Invoke(Factory);
-            }
-            else
-            {
-                return Singleton<NullLog>.Instance;
-            }
+            return @delegate.Invoke(Factory);
         }
         #endregion
         #region Configure

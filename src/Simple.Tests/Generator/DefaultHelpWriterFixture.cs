@@ -154,7 +154,7 @@ Available options:
 
         public CommandResolver Sample(TextWriter writer)
         {
-            var r = new CommandResolver().WithHelp(writer, Console.Out);
+            var r = new CommandResolver().WithHelp(writer);
 
             r.Register<Sample1>("cmd1 a", "cmd1 b")
                 .WithArgumentList("cmd1_arguments", x => x.Arguments)

@@ -66,6 +66,49 @@ namespace Simple.Tests.Expressions
         }
 
         [Test]
+        public void GetMemberPathReturnPropertyNames()
+        {
+            Expression<Func<A, int>> lambda = x => x.BProp.CProp.DProp.Value;
+            lambda.GetMemberPath().Should().Have.SameSequenceAs("BProp", "CProp", "DProp", "Value");
+        }
+
+
+
+        [Test]
+        public void GetMemberListWithoutMembersReturnAnEmptyList()
+        {
+            Expression<Func<A, A>> lambda = x => x;
+            lambda.GetMemberList().Should().Be.Empty();
+        }
+
+        [Test]
+        public void GetMemberListWithNullExpressionShouldReturnEmptyList()
+        {
+            ExpressionHelper.GetMemberList(null).Should().Be.Empty();
+        }
+
+        [Test]
+        public void TestSimplePropertySetUsingIConvertible()
+        {
+            Expression<Func<A, int>> lambda = x => x.BProp.CProp.IntProp;
+
+            A a = new A();
+            ExpressionHelper.SetValue(lambda, a, "42");
+
+            a.BProp.CProp.IntProp.Should().Be(42);
+        }
+
+        [Test]
+        public void TestSimplePropertySetUsingNonConvertibleTypeFails()
+        {
+            Expression<Func<A, int>> lambda = x => x.BProp.CProp.IntProp;
+
+            A a = new A();
+            a.Executing(x=> ExpressionHelper.SetValue(lambda, x, new C()))
+                .Throws<ArgumentException>();
+        }
+
+        [Test]
         public void TestSimplePropertySetList()
         {
             Expression<Func<A, IList<D>>> lambda = x => x.BProp.CProp.DList;

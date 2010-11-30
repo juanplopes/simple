@@ -28,6 +28,14 @@ namespace Simple.Tests.IO
         }
 
         [Test]
+        public void CanReadTwoByteStreamWithoutInitialLimit()
+        {
+            var stream = new MemoryStream(new byte[] { 0x30, 143 });
+            var bytes = stream.ToByteArray(-1);
+            bytes.Should().Have.SameSequenceAs<byte>(0x30, 143);
+        }
+
+        [Test]
         public void CanReadMoreBytesThanTheBuffer()
         {
             var stream = new MemoryStream(Enumerable.Range(0, 256).Select(x => Convert.ToByte(x)).ToArray());

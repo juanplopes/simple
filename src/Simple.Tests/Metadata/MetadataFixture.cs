@@ -10,7 +10,9 @@ using System.IO;
 namespace Simple.Tests.Metadata
 {
     [Explicit]
+    [TestFixture("System.Data.SQLite")]
     [TestFixture("System.Data.SqlClient")]
+    [TestFixture("System.Data.SqlServerCe")]
     [TestFixture("System.Data.OracleClient")]
     [TestFixture("Oracle.DataAccess.Client")]
     public class MetadataFixture

@@ -24,7 +24,7 @@ namespace Simple
 
         public static IEnumerable<string> GetMemberPath<T, P>(this Expression<Func<T, P>> expr)
         {
-            return GetMemberPath(expr);
+            return GetMemberPath((LambdaExpression)expr);
         }
 
         public static IEnumerable<string> GetMemberPath(this LambdaExpression expr)

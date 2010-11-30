@@ -152,6 +152,7 @@
     <Compile Include="Expressions\InvocationExpander.cs" />
     <Compile Include="Expressions\Editable\LazyExpression.cs" />
     <Compile Include="IO\CommandLineReader.cs" />
+    <Compile Include="IO\ConsoleRedirection.cs" />
     <Compile Include="IO\Excel\HeaderDefinition.cs" />
     <Compile Include="IO\Excel\HeaderItem.cs" />
     <Compile Include="IO\Excel\IHeaderItem.cs" />
@@ -213,7 +214,6 @@
     <Compile Include="DynamicProxy\InterfaceDynamicProxyImpl.cs" />
     <Compile Include="DynamicProxy\IDynamicProxy.cs" />
     <Compile Include="Logging\Log4netFactory.cs" />
-    <Compile Include="Logging\NullLog.cs" />
     <Compile Include="Logging\Log4netSimplyExtensions.cs" />
     <Compile Include="Patterns\WorkingDays.cs" />
     <Compile Include="Reflection\CompositeSettableMember.cs" />

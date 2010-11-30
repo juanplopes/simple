@@ -39,7 +39,7 @@ namespace Simple.Tests.Patterns
         {
             int x = 20;
 
-            using (var d = new DisposableAction(() => x++))
+            using (var d = new DisposableAction(() => x++, false))
             {
                 using (d)
                     x.Should().Be(20);
@@ -62,7 +62,20 @@ namespace Simple.Tests.Patterns
             x.Should().Be(21);
         }
 
-       
+        [Test]
+        public void TestDisposeOnlyOneTimeByDefault()
+        {
+            int x = 20;
+
+            using (var d = new DisposableAction(() => x++))
+            {
+                using (d)
+                    x.Should().Be(20);
+            }
+
+            x.Should().Be(21);
+        }
+
 
     }
 

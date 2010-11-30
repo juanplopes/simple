@@ -24,7 +24,29 @@ namespace Simple.Tests.Common
 
             safe.Should().Be.OfType<SafeValue<string>>().And
                 .ValueOf.Value.Should().Be.Null();
-           
+
+        }
+
+        [Test]
+        public void CanGetValuesWithSafe()
+        {
+            object a = null;
+            var safe = a.WithSafe(x => x.ToString());
+
+            safe.Should().Be.OfType<SafeValue<string>>().And
+                .ValueOf.Value.Should().Be.Null();
+
+        }
+
+        [Test]
+        public void CanGetValuesWithSafeAndDefault()
+        {
+            object a = null;
+            var safe = a.WithSafe(x => x.ToString(), "asd");
+
+            safe.Should().Be.OfType<SafeValue<string>>().And
+                .ValueOf.Value.Should().Be("asd");
+
         }
 
         [Test]
@@ -46,6 +68,20 @@ namespace Simple.Tests.Common
         {
             object a = null;
             SafeNullable.Get(() => a.ToString(), "42").Should().Be("42");
+        }
+
+        [Test]
+        public void CanCallWithOnIntTypesAndReturnsZero()
+        {
+            IList<int> list = null;
+            list.With(x => x.Count).Should().Be(0);
+        }
+
+        [Test]
+        public void CanCallWithOnIntTypesAndReturnsDefaultValue()
+        {
+            IList<int> list = null;
+            list.With(x => x.Count, 42).Should().Be(42);
         }
 
         [Test]
