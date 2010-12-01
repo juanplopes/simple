@@ -12,7 +12,6 @@ using System.Reflection;
 using Example.Project.Config;
 using System.Threading;
 using Example.Project.Services;
-using Example.Project.Tools;
 
 namespace Example.Project
 {
@@ -20,13 +19,10 @@ namespace Example.Project
     {
         static void Main(string[] args)
         {
-            if (Environment.UserInteractive || (args != null && args.Length > 0))
-                ToolsStarter.Main(args);
-            else
-            {
-                ThreadPool.QueueUserWorkItem(x => new Configurator().StartServer<ServerStarter>());
-                Simply.Do.WaitRequests();
-            }
+
+            ThreadPool.QueueUserWorkItem(x => new Configurator().StartServer<ServerStarter>());
+            Simply.Do.WaitRequests();
+
         }
     }
 }

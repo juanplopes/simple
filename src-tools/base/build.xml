@@ -13,6 +13,7 @@
 
     <TestAssembly>Example.Project.Tests.dll</TestAssembly>
     <ServerAssembly>Example.Project.ModelServer.exe</ServerAssembly>
+    <ToolsAssembly>Example.Project.Tools.exe</ToolsAssembly>
 
     <TestBuildDir>$(BuildDir)test\</TestBuildDir>
     <ServerBuildDirName>server</ServerBuildDirName>
@@ -29,6 +30,7 @@
   <ItemGroup>
     <TestProject Include="$(SourceDir)\Tests\*.csproj"/>
     <ServerProject Include="$(SourceDir)\ModelServer\*.csproj"/>
+    <ToolsProject Include="$(SourceDir)\Tools\*.csproj"/>
     <WebProject Include="$(SourceDir)\Web\*.csproj"/>
     <SolutionFile Include="$(SourceDir)\*.sln" />
   </ItemGroup>
@@ -72,22 +74,22 @@
   </Target>
 
   <Target Name="Test" DependsOnTargets="GenerateAssemblyInfo;CopyToken">
-    <MSBuild Projects="@(TestProject);@(ServerProject)" Properties="OutDir=$(TestBuildDir);Configuration=$(Configuration)"/>
+    <MSBuild Projects="@(TestProject);@(ToolsProject)" Properties="OutDir=$(TestBuildDir);Configuration=$(Configuration)"/>
 
     <ItemGroup>
       <TestConfigFiles Include="cfg\Test\*.config"/>
     </ItemGroup>
     <Copy SourceFiles="@(TestConfigFiles)" DestinationFolder="$(BuildDir)\cfg\Test"/>
 
-    <Exec Command="&quot;$(TestBuildDir)\$(ServerAssembly)&quot; Test testprepare" WorkingDirectory="$(TestBuildDir)"/>
+    <Exec Command="&quot;$(TestBuildDir)\$(ToolsAssembly)&quot; Test testprepare" WorkingDirectory="$(TestBuildDir)"/>
     <Nunit Assemblies="$(TestBuildDir)\$(TestAssembly)" ToolPath="util\nunit"/>
     <DeleteTree Directories="$(TestBuildDir)" ContinueOnError="true"/>
     <DeleteTree Directories="$(BuildDir)\cfg\Test" ContinueOnError="true"/>
   </Target>
 
   <Target Name="Server" DependsOnTargets="GenerateAssemblyInfo;MakeConfig">
-    <MSBuild Projects="@(ServerProject)" Properties="OutDir=$(ServerBuildDir);Configuration=$(Configuration)"/>
-    <WriteLinesToFile File="$(BuildDir)\simple.cmd" Lines ="$(ServerBuildDirName)\$(ServerAssembly)" Overwrite="true"/>
+    <MSBuild Projects="@(ServerProject);@(ToolsProject)" Properties="OutDir=$(ServerBuildDir);Configuration=$(Configuration)"/>
+    <WriteLinesToFile File="$(BuildDir)\simple.cmd" Lines="$(ServerBuildDirName)\$(ToolsAssembly)" Overwrite="true"/>
   </Target>
 
   <Target Name="Web" DependsOnTargets="GenerateAssemblyInfo;MakeConfig">
@@ -122,7 +124,7 @@
   </Target>
 
   <Target Name="Prepare" DependsOnTargets="Server">
-    <Exec Command="&quot;$(ServerBuildDir)\$(ServerAssembly)&quot; * prepare" WorkingDirectory="$(ServerBuildDir)"/>
+    <Exec Command="&quot;$(ServerBuildDir)\$(ToolsAssembly)&quot; * prepare" WorkingDirectory="$(ServerBuildDir)"/>
   </Target>
 
   <Target Name="MakeConfig" DependsOnTargets="CopyToken">
@@ -134,7 +136,7 @@
     <Copy SourceFiles="@(PackageConfigBase)" DestinationFolder="$(ConfigDir)" ContinueOnError="true" />
   </Target>
 
- <Target Name="Deploy" DependsOnTargets="Build">
+  <Target Name="Deploy" DependsOnTargets="Build">
     <ItemGroup>
       <CopyDir Include="$(BuildDir)\**\*"/>
     </ItemGroup>
