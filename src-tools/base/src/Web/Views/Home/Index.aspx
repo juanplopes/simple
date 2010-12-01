@@ -1,6 +1,10 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ContentPlaceHolderID="HeaderContent" runat="server">
+    <%= Html.Script("clickable.js") %>
+    <script type="text/javascript">
+        $(function() { $('.jsClickable').clickable(); });
+    </script>
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <%= Html.PageTitle("Welcome", "Select an option below.") %>
