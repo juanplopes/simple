@@ -15,7 +15,7 @@ namespace Simple.Site.Controllers
         
         public ActionResult Latest()
         {
-            return Redirect("http://teamcity.codebetter.com/repository/download/bt219/.lastSuccessful/simple-3.1-scaffold.exe");
+            return Redirect("http://teamcity.codebetter.com/repository/download/bt219/.lastSuccessful/simple-3.1-scaffold.exe?guest=1");
         }
 
     }

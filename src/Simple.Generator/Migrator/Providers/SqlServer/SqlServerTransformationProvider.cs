@@ -107,5 +107,7 @@ namespace Simple.Migrator.Providers.SqlServer
                 + "AND col.name = '{1}' AND col.id = object_id('{0}')",
                 table, column);
         }
+
+
     }
 }

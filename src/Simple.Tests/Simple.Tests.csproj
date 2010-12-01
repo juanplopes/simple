@@ -123,6 +123,8 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
+    <Compile Include="IO\ConsoleRedirectionFixture.cs" />
+    <Compile Include="Patterns\DisposableExtensionsFixture.cs" />
     <Compile Include="Common\EnumerableFixture.cs" />
     <Compile Include="Common\SafeNullableFixture.cs" />
     <Compile Include="Common\SafeValueFixture.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Expressions\ExpressionWrapperFixture.cs" />
     <Compile Include="Expressions\InvocationExpanderFixture.cs" />
     <Compile Include="Expressions\LazyExpressionFixture.cs" />
+    <Compile Include="Expressions\PredicateBuilderFixture.cs" />
     <Compile Include="Generator\GeneratorResolverOptionsFixture.cs" />
     <Compile Include="Generator\GeneratorResolverFixture.cs" />
     <Compile Include="Generator\GeneratorResolverArgumentFixture.cs" />
@@ -394,6 +397,10 @@
     <Content Include="..\..\databases.xml">
       <Link>databases.xml</Link>
     </Content>
+    <Content Include="Migrator.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="App.config" />
     <None Include="Resources\00_Simple.csproj" />
     <None Include="Resources\FirstSample.xls" />
     <None Include="Resources\MultiSheetsSample.xls" />

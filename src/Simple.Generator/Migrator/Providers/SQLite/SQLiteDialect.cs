@@ -24,6 +24,7 @@ namespace Simple.Migrator.Providers.SQLite
             RegisterColumnType(DbType.Single, "NUMERIC");
             RegisterColumnType(DbType.VarNumeric, "NUMERIC");
             RegisterColumnType(DbType.String, "TEXT");
+            RegisterColumnType(DbType.AnsiString, "TEXT");
             RegisterColumnType(DbType.AnsiStringFixedLength, "TEXT");
             RegisterColumnType(DbType.StringFixedLength, "TEXT");
             RegisterColumnType(DbType.DateTime, "DATETIME");

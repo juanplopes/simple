@@ -133,6 +133,16 @@ namespace Simple.Tests.Common
             MathExtensions.FloatEq(10.099m, 10m, 0.1m).Should().Be.True();
             MathExtensions.FloatEq(10.1m, 10m, 0.1m).Should().Be.False();
             MathExtensions.FloatEq(10.099, 10, 0.1).Should().Be.True();
+            MathExtensions.FloatEq(10.099f, 10f, 0.1f).Should().Be.True();
+        }
+
+        [Test]
+        public void TestSwapVariables()
+        {
+            string a = "a", b = "b";
+            MathExtensions.Swap(ref a, ref b);
+            a.Should().Be("b");
+            b.Should().Be("a");
         }
     }
 }

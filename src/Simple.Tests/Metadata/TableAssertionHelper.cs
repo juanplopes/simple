@@ -27,7 +27,7 @@ namespace Simple.Tests.Metadata
         public void AssertTables(IEnumerable<TableAddAction> tables)
         {
             var defTables = tables.ToList();
-            
+
             var actualTables = Schema.GetTables(defTables.Select(x => x.Name).ToArray())
                 .ToDictionary(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
 
@@ -41,7 +41,7 @@ namespace Simple.Tests.Metadata
 
         protected void AssertSingleTable(TableAddAction table, IList<ForeignKeyAddAction> oneToManyList, DbTable actualTable)
         {
-            var expectedColumns = table.Actions.OfType<ColumnAddAction>().ToList();
+            var expectedColumns = table.Actions.OfType<ColumnAddAction>().OrderBy(x => x.Name).ToList();
             var expectedPrimaryKeys = expectedColumns.Where(x => (x.Properties & ColumnProperty.PrimaryKey) != 0).ToList();
             var expectedForeignKeys = table.Actions.OfType<ForeignKeyAddAction>().ToList();
 
@@ -54,8 +54,8 @@ namespace Simple.Tests.Metadata
             actualTable.ForeignKeyColumns.Count().Should().Be(fkColumnCount);
             actualTable.PrimaryKeysExceptFk.Count().Should().Be(pkColumnCount - fkPkColumnCount);
 
-            var actualColumns = actualTable.AllColumns.OrderBy(x => x.ColumnOrdinal).ToList();
-            var actualPrimaryKeys = actualTable.PrimaryKeyColumns.OrderBy(x => x.ColumnOrdinal).ToList();
+            var actualColumns = actualTable.AllColumns.OrderBy(x => x.Name).ToList();
+            var actualPrimaryKeys = actualTable.PrimaryKeyColumns.OrderBy(x => x.Name).ToList();
             var actualForeignKeys = actualTable.ManyToOneRelations.ToList();
             var actualOneToMany = actualTable.OneToManyRelations.ToList();
 
@@ -81,7 +81,7 @@ namespace Simple.Tests.Metadata
             StringAssert.StartsWith(actualColumn.DataTypeName.ToUpper(), type.ToUpper());
             //Assert.AreEqual(column.Type, actualColumn.GetDbColumnType(), "column type for {0}", columnId);
             if (column.Size != null)
-                actualColumn.ColumnSize.Should("column size for {0}".AsFormat(columnId)).Be(column.Size);
+                actualColumn.ColumnSize.Should("column size for {0}".AsFormat(columnId)).Be.GreaterThanOrEqualTo(column.Size);
         }
 
         protected void AssertSingleRelation(ForeignKeyAddAction fk, DbForeignKey actualForeignKey)

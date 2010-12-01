@@ -151,6 +151,23 @@ namespace Simple.Tests.Validation
         }
 
         [Test]
+        public void FieldIsGreaterThanOrEqualUsingPropertyName()
+        {
+            var validator = new Validator<User>();
+            var date = new DateTime(1920, 1, 1);
+            validator.RuleFor(x => x.BirthDate).GreaterThanOrEqualTo(date);
+
+            var model = new User() { BirthDate = new DateTime(1919, 1, 1) };
+
+            validator.Validate(model, x => x.BirthDate).IsValid.Should().Be.False();
+            Messages.GreaterThanOrEqualTo("Birth Date", date.ToString()).Should().Be(validator.Validate(model).Errors[0].ErrorMessage);
+
+            model = new User() { BirthDate = date };
+
+            validator.Validate(model).IsValid.Should().Be.True();
+        }
+
+        [Test]
         public void FieldIsLessThan()
         {
             var validator = new Validator<User>();
@@ -204,7 +221,7 @@ namespace Simple.Tests.Validation
             validator.Validate(model).IsValid.Should().Be.True();
         }
 
-        [Test]        
+        [Test]
         public void FieldIsAnEntity()
         {
             var userValidator = new Validator<User>();

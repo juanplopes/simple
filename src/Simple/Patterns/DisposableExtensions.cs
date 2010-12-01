@@ -24,7 +24,11 @@ namespace Simple
         private static void TryToDispose(IDisposable disposable)
         {
             try { disposable.Dispose(); }
-            catch { Simply.Do.Log(MethodBase.GetCurrentMethod()).WarnFormat("Error disposing {0}", disposable); }
+            catch (Exception e)
+            {
+                Simply.Do.Log(MethodBase.GetCurrentMethod())
+                    .Warn("Error disposing {0}".AsFormat(disposable), e);
+            }
         }
     }
 }

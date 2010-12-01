@@ -6,6 +6,7 @@
     <PackageDir>$(BuildBase)pkg\</PackageDir>
     <SourceDir>$(BuildBase)src\</SourceDir>
     <Configdir>$(BuildDir)cfg\</Configdir>
+    <DeployDir>$(PackageDir)\files</DeployDir>
 
     <Configuration>Release</Configuration>
     <ProductVersion>1.0</ProductVersion>
@@ -133,13 +134,17 @@
     <Copy SourceFiles="@(PackageConfigBase)" DestinationFolder="$(ConfigDir)" ContinueOnError="true" />
   </Target>
 
-  <Target Name="CIBuild">
-    <CallTarget Targets="Clean;Test;Build;Prepare"/>
+ <Target Name="Deploy" DependsOnTargets="Build">
+    <ItemGroup>
+      <CopyDir Include="$(BuildDir)\**\*"/>
+    </ItemGroup>
+
+    <MakeDir Directories="$(DeployDir)"/>
+    <Copy SourceFiles="@(CopyDir)" DestinationFiles="@(CopyDir->'$(DeployDir)\%(RecursiveDir)%(Filename)%(Extension)')" ContinueOnError="true" />
   </Target>
 
-  <Target Name="Publish">
-    <WebDirectoryDelete VirtualDirectoryName="$(WebVirtualPath)" ContinueOnError="true" />
-    <WebDirectoryCreate VirtualDirectoryName="$(WebVirtualPath)"
-                VirtualDirectoryPhysicalPath="$(WebBuildDir)" />
+  <Target Name="Integrate">
+    <CallTarget Targets="Clean;Test;Build;Prepare;Deploy"/>
   </Target>
+
 </Project>

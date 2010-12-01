@@ -51,6 +51,7 @@ namespace Simple.Tests.Entities
                 queryable.Expression.ToString());
         }
 
+
         [Test]
         public void CanSerializeFetchAllNormal()
         {

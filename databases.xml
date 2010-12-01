@@ -10,4 +10,10 @@
   <Entry Provider="System.Data.OracleClient"
          ConnectionString="Data Source=xe;User Id=simple;Password=simple"/>
 
+  <Entry Provider="System.Data.SQLite"
+         ConnectionString="Data Source=migrator.db"/>
+
+  <Entry Provider="System.Data.SqlServerCe" 
+         ConnectionString="Data Source=Migrator.sdf;Persist Security Info=False;" />
+
 </Databases>

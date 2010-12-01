@@ -26,6 +26,16 @@ namespace Simple.Migrator.Providers.SQLite
             // NOOP Because SQLite doesn't support foreign keys
         }
 
+        public override void AddPrimaryKey(string name, string table, params string[] columns)
+        {
+            // NOOP Because SQLite doesn't support altering primary keys
+        }
+
+        public override void AddUniqueConstraint(string name, string table, params string[] columns)
+        {
+            // NOOP Because SQLite doesn't support altering unique constraints
+        }
+
         public override void RemoveColumn(string table, string column)
         {
             if (!(TableExists(table) && ColumnExists(table, column)))

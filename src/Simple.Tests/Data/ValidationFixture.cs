@@ -121,6 +121,7 @@ namespace Simple.Tests.Data
             c.CompanyName = "CompanyName";
 
             c.Validate().Count.Should().Be(0);
+            c.UniqueProperties(x => x.CompanyName).Should().Be.True();
         }
 
         [Test]
@@ -130,6 +131,7 @@ namespace Simple.Tests.Data
             c.CompanyName = "Alfreds Futterkiste";
 
             c.Validate().Count.Should().Be(1);
+            c.UniqueProperties(x => x.CompanyName).Should().Be.False();
         }
     }
 }
