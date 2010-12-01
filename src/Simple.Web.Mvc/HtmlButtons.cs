@@ -18,7 +18,7 @@ namespace Simple.Web.Mvc
             return builder;
         }
 
-        public static TagBuilder BackLink(this HtmlHelper helper, string defaultUrl, string text)
+        public static TagBuilder BackLink(this HtmlHelper helper, string text, string defaultUrl)
         {
             string str = SafeNullable.Get(() => helper.ViewContext.HttpContext.Request.UrlReferrer.ToString());
             if (str != null && str.EndsWith(helper.ViewContext.HttpContext.Request.RawUrl)) str = null;
