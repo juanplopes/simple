@@ -61,20 +61,12 @@ namespace Simple.Migrator.Providers.SqlServer
 
         public override void RenameColumn(string tableName, string oldColumnName, string newColumnName)
         {
-            if (ColumnExists(tableName, newColumnName))
-                throw new MigrationException(String.Format("Table '{0}' has column named '{1}' already", tableName, newColumnName));
-
-            if (ColumnExists(tableName, oldColumnName))
-                ExecuteNonQuery(String.Format("EXEC sp_rename '{0}.{1}', '{2}', 'COLUMN'", tableName, oldColumnName, newColumnName));
+            ExecuteNonQuery(String.Format("EXEC sp_rename '{0}.{1}', '{2}', 'COLUMN'", tableName, oldColumnName, newColumnName));
         }
 
         public override void RenameTable(string oldName, string newName)
         {
-            if (TableExists(newName))
-                throw new MigrationException(String.Format("Table with name '{0}' already exists", newName));
-
-            if (TableExists(oldName))
-                ExecuteNonQuery(String.Format("EXEC sp_rename {0}, {1}", oldName, newName));
+            ExecuteNonQuery(String.Format("EXEC sp_rename {0}, {1}", oldName, newName));
         }
 
         // Deletes all constraints linked to a column. Sql Server

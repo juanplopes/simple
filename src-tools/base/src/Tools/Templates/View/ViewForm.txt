@@ -6,7 +6,7 @@
        <%-- <%= this.TextBox(x => x.Name).Label("Name:") %> --%>
     </p>
     <p>
-        <%= Html.BackLink(Url.Action("Index"), "back") %>
+        <%= Html.BackLink("back", Url.Action("Index")) %>
         <%= Html.Submit("send") %>
     </p>
 </fieldset>
