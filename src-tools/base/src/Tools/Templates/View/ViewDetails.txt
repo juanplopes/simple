@@ -8,7 +8,7 @@
             <%-- <%= this.Literal(x => x.Name).Label("Name:") %> --%>
         </p>
         <p>
-            <%= Html.BackLink("back", Url.Action("Index")) %>
+            <%= Html.BackLink(Url.Action("Index"), "back") %>
             <%= Html.ActionLink("edit", "Edit", new { id = Model.Id }, new { @class = "button" }) %>
         </p>
     </fieldset>
