@@ -544,26 +544,22 @@ namespace Simple.Migrator.Providers
         {
             Logger.Trace(sql);
             Logger.ApplyingDBChange(sql);
-            if (Writer == null)
+            if (Writer != null)
+                Writer(sql);
+            using (IDbCommand cmd = BuildCommand(sql))
             {
-                using (IDbCommand cmd = BuildCommand(sql))
+                try
                 {
-                    try
-                    {
-                        return cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Warn(ex.Message);
-                        throw;
-                    }
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex.Message);
+                    throw;
                 }
             }
-            else
-            {
-                Writer(sql);
-                return 0;
-            }
+
+            return 0;
         }
 
         private IDbCommand BuildCommand(string sql)

@@ -17,7 +17,6 @@ namespace Example.Project.Tools.Database
     {
         public long? Version { get; set; }
         public string FilePath { get; set; }
-        public bool DryRun { get; set; }
         public string Environment { get; set; }
 
         #region ICommand Members
@@ -29,7 +28,7 @@ namespace Example.Project.Tools.Database
 
         public void Execute()
         {
-            
+
             if (!Configurator.IsProduction)
             {
                 if (Is(Configurator.Development))
@@ -51,8 +50,8 @@ namespace Example.Project.Tools.Database
         {
             Action<string> action = null;
             var builder = new StringBuilder();
-            if (FilePath != null || DryRun) 
-               action = x=>builder.AppendLine(x);
+            if (FilePath != null)
+                action = x => builder.AppendLine(x);
 
 
             var config = Simply.Do.GetConfig<ApplicationConfig>();
@@ -67,7 +66,7 @@ namespace Example.Project.Tools.Database
             if (FilePath != null)
                 File.WriteAllText(FilePath, builder.ToString());
         }
-       
+
 
         #endregion
     }
