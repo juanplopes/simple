@@ -119,9 +119,12 @@ namespace Simple.Migrator.Providers
 
         public virtual void RemoveConstraint(string table, string name)
         {
-            table = _dialect.TableNameNeedsQuote ? _dialect.Quote(table) : table;
-            name = _dialect.ConstraintNameNeedsQuote ? _dialect.Quote(name) : name;
-            ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP CONSTRAINT {1}", table, name));
+            if (TableExists(table) && ConstraintExists(table, name))
+            {
+                table = _dialect.TableNameNeedsQuote ? _dialect.Quote(table) : table;
+                name = _dialect.ConstraintNameNeedsQuote ? _dialect.Quote(name) : name;
+                ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP CONSTRAINT {1}", table, name));
+            }
         }
 
         public virtual void AddTable(string table, string engine, string columns)
@@ -168,6 +171,13 @@ namespace Simple.Migrator.Providers
         /// </example>
         public virtual void AddTable(string name, string engine, params Column[] columns)
         {
+
+            if (TableExists(name))
+            {
+                Logger.Warn("Table {0} already exists", name);
+                return;
+            }
+
             List<string> pks = GetPrimaryKeys(columns);
             bool compoundPrimaryKey = pks.Count > 1;
 
@@ -204,17 +214,26 @@ namespace Simple.Migrator.Providers
 
         public virtual void RemoveTable(string name)
         {
-            ExecuteNonQuery(String.Format("DROP TABLE {0}", name));
+            if (TableExists(name))
+                ExecuteNonQuery(String.Format("DROP TABLE {0}", name));
         }
 
         public virtual void RenameTable(string oldName, string newName)
         {
-            ExecuteNonQuery(String.Format("ALTER TABLE {0} RENAME TO {1}", oldName, newName));
+            if (TableExists(newName))
+                throw new MigrationException(String.Format("Table with name '{0}' already exists", newName));
+
+            if (TableExists(oldName))
+                ExecuteNonQuery(String.Format("ALTER TABLE {0} RENAME TO {1}", oldName, newName));
         }
 
         public virtual void RenameColumn(string tableName, string oldColumnName, string newColumnName)
         {
-            ExecuteNonQuery(String.Format("ALTER TABLE {0} RENAME COLUMN {1} TO {2}", tableName, oldColumnName, newColumnName));
+            if (ColumnExists(tableName, newColumnName))
+                throw new MigrationException(String.Format("Table '{0}' has column named '{1}' already", tableName, newColumnName));
+
+            if (ColumnExists(tableName, oldColumnName))
+                ExecuteNonQuery(String.Format("ALTER TABLE {0} RENAME COLUMN {1} TO {2}", tableName, oldColumnName, newColumnName));
         }
 
         public virtual void AddColumn(string table, string sqlColumn)
@@ -224,7 +243,10 @@ namespace Simple.Migrator.Providers
 
         public virtual void RemoveColumn(string table, string column)
         {
-            ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP COLUMN {1} ", table, column));
+            if (ColumnExists(table, column))
+            {
+                ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP COLUMN {1} ", table, column));
+            }
         }
 
         public virtual bool ColumnExists(string table, string column)
@@ -242,6 +264,12 @@ namespace Simple.Migrator.Providers
 
         public virtual void ChangeColumn(string table, Column column)
         {
+            if (!ColumnExists(table, column.Name))
+            {
+                Logger.Warn("Column {0}.{1} does not exist", table, column.Name);
+                return;
+            }
+
             ColumnPropertiesMapper mapper = _dialect.GetAndMapColumnProperties(column);
             ChangeColumn(table, mapper.ColumnSql);
         }
@@ -307,6 +335,12 @@ namespace Simple.Migrator.Providers
         public virtual void AddColumn(string table, string column, DbType type, int size, ColumnProperty property,
                                       object defaultValue)
         {
+            if (ColumnExists(table, column))
+            {
+                Logger.Warn("Column {0}.{1} already exists", table, column);
+                return;
+            }
+
             ColumnPropertiesMapper mapper =
                 _dialect.GetAndMapColumnProperties(new Column(column, type, size, property, defaultValue));
 
@@ -335,6 +369,12 @@ namespace Simple.Migrator.Providers
 
         public void AddColumn(string table, string column, DbType type, object defaultValue)
         {
+            if (ColumnExists(table, column))
+            {
+                Logger.Warn("Column {0}.{1} already exists", table, column);
+                return;
+            }
+
             ColumnPropertiesMapper mapper =
                 _dialect.GetAndMapColumnProperties(new Column(column, type, defaultValue));
 
@@ -370,6 +410,11 @@ namespace Simple.Migrator.Providers
         /// <param name="columns">Primary column names</param>
         public virtual void AddPrimaryKey(string name, string table, params string[] columns)
         {
+            if (ConstraintExists(table, name))
+            {
+                Logger.Warn("Primary key {0} already exists", name);
+                return;
+            }
             ExecuteNonQuery(
                 String.Format("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2}) ", table, name,
                               String.Join(",", columns)));
@@ -377,11 +422,21 @@ namespace Simple.Migrator.Providers
 
         public virtual void AddUniqueConstraint(string name, string table, params string[] columns)
         {
+            if (ConstraintExists(table, name))
+            {
+                Logger.Warn("Constraint {0} already exists", name);
+                return;
+            }
             ExecuteNonQuery(String.Format("ALTER TABLE {0} ADD CONSTRAINT {1} UNIQUE({2}) ", table, name, string.Join(", ", columns)));
         }
 
         public virtual void AddCheckConstraint(string name, string table, string checkSql)
         {
+            if (ConstraintExists(table, name))
+            {
+                Logger.Warn("Constraint {0} already exists", name);
+                return;
+            }
             ExecuteNonQuery(String.Format("ALTER TABLE {0} ADD CONSTRAINT {1} CHECK ({2}) ", table, name, checkSql));
         }
 
@@ -458,6 +513,12 @@ namespace Simple.Migrator.Providers
         public virtual void AddForeignKey(string name, string primaryTable, string[] primaryColumns, string refTable,
                                           string[] refColumns, ForeignKeyConstraint constraint)
         {
+            if (ConstraintExists(primaryTable, name))
+            {
+                Logger.Warn("Constraint {0} already exists", name);
+                return;
+            }
+
             string constraintResolved = constraintMapper.SqlForConstraint(constraint);
             ExecuteNonQuery(
                 String.Format(

@@ -53,6 +53,12 @@ namespace Simple.Migrator.Providers.PostgreSQL
 
         public override void ChangeColumn(string table, Column column)
         {
+            if (!ColumnExists(table, column.Name))
+            {
+                Logger.Warn("Column {0}.{1} does not exist", table, column.Name);
+                return;
+            }
+
             string tempColumn = "temp_" + column.Name;
             RenameColumn(table, column.Name, tempColumn);
             AddColumn(table, column);

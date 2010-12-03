@@ -18,6 +18,12 @@ namespace Simple.Migrator.Providers.Oracle
         public override void AddForeignKey(string name, string primaryTable, string[] primaryColumns, string refTable,
                                           string[] refColumns, ForeignKeyConstraint constraint)
         {
+            if (ConstraintExists(primaryTable, name))
+            {
+                Logger.Warn("Constraint {0} already exists", name);
+                return;
+            }
+
             ExecuteNonQuery(
                 String.Format(
                     "ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3} ({4})",

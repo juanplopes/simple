@@ -38,6 +38,9 @@ namespace Simple.Migrator.Providers.SQLite
 
         public override void RemoveColumn(string table, string column)
         {
+            if (!(TableExists(table) && ColumnExists(table, column)))
+                return;
+
             string[] origColDefs = GetColumnDefs(table);
             List<string> colDefs = new List<string>();
 
@@ -61,18 +64,30 @@ namespace Simple.Migrator.Providers.SQLite
 
         public override void RenameColumn(string tableName, string oldColumnName, string newColumnName)
         {
-            string[] columnDefs = GetColumnDefs(tableName);
-            string columnDef = Array.Find(columnDefs, delegate(string col) { return ColumnMatch(oldColumnName, col); });
+            if (ColumnExists(tableName, newColumnName))
+                throw new MigrationException(String.Format("Table '{0}' has column named '{1}' already", tableName, newColumnName));
 
-            string newColumnDef = columnDef.Replace(oldColumnName, newColumnName);
+            if (ColumnExists(tableName, oldColumnName))
+            {
+                string[] columnDefs = GetColumnDefs(tableName);
+                string columnDef = Array.Find(columnDefs, delegate(string col) { return ColumnMatch(oldColumnName, col); });
 
-            AddColumn(tableName, newColumnDef);
-            ExecuteQuery(String.Format("UPDATE {0} SET {1}={2}", tableName, newColumnName, oldColumnName));
-            RemoveColumn(tableName, oldColumnName);
+                string newColumnDef = columnDef.Replace(oldColumnName, newColumnName);
+
+                AddColumn(tableName, newColumnDef);
+                ExecuteQuery(String.Format("UPDATE {0} SET {1}={2}", tableName, newColumnName, oldColumnName));
+                RemoveColumn(tableName, oldColumnName);
+            }
         }
 
         public override void ChangeColumn(string table, Column column)
         {
+            if (!ColumnExists(table, column.Name))
+            {
+                Logger.Warn("Column {0}.{1} does not exist", table, column.Name);
+                return;
+            }
+
             string tempColumn = "temp_" + column.Name;
             RenameColumn(table, column.Name, tempColumn);
             AddColumn(table, column);
