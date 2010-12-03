@@ -80,6 +80,7 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="ServerInstaller.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ServerStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
