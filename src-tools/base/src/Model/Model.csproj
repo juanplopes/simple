@@ -69,7 +69,7 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
-    <Compile Include="Config\Configurator.cs" />
+    <Compile Include="Configurator.cs" />
     <Compile Include="Domain\ApplicationConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ISystemService.cs" />
