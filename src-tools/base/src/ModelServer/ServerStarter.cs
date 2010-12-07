@@ -18,10 +18,8 @@ namespace Example.Project
     {
         static void Main(string[] args)
         {
-
             ThreadPool.QueueUserWorkItem(x => new Configurator().StartServer<ServerStarter>());
             Simply.Do.WaitRequests();
-
         }
     }
 }
