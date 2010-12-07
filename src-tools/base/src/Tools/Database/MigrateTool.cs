@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Example.Project.Config;
 using Simple;
 using Simple.IO;
 using Example.Project.Domain;
@@ -56,12 +55,10 @@ namespace Example.Project.Tools.Database
 
             var config = Simply.Do.GetConfig<ApplicationConfig>();
 
-            var options = new MigratorOptions(config.ADOProvider, Simply.Do.GetConnectionString())
-                .FromAssembly(typeof(DataLists).Assembly)
-                .WithSchemaTable(config.SchemaInfoTable)
-                .WriteWith(action);
+            var migrator = new Migrator(config.ADOProvider, Simply.Do.GetConnectionString(),
+                o => o.WithSchemaTable(config.SchemaInfoTable).WriteWith(action));
 
-            new DbMigrator(options).Migrate(version);
+            migrator.Migrate(Version);
 
             if (FilePath != null)
                 File.WriteAllText(FilePath, builder.ToString());

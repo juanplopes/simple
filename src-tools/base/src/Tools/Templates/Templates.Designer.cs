@@ -65,36 +65,6 @@ namespace Example.Project.Tools.Templates {
         ///using ${ns};
         ///#end
         ///
-        ///namespace ${opt.Namespace}.Domain
-        ///{
-        ///    public partial class ${entity.Name}
-        ///    {
-        ///#foreach($method in $service.Methods)
-        ///#if ($method.FirstParameterIs($entity))
-        ///        public virtual ${method.MakeSignature(1)} 
-        ///        {
-        ///#if ($method.ReturnsVoid)
-        ///			Service.${method.MakeCall(&apos;this&apos;)};
-        ///#else
-        ///			return Service.${method.MakeCall(&apos;this&apos;)};
-        ///#end
-        ///		}
-        ///#else
-        ///        public static ${method.MakeSignature()} 
-        ///        {
-        ///#if ($method.ReturnsVoi [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string AutoDomain {
-            get {
-                return ResourceManager.GetString("AutoDomain", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to #foreach($ns in $service.Namespaces)
-        ///using ${ns};
-        ///#end
-        ///
         ///namespace ${opt.Namespace}.Services
         ///{
         ///    public partial interface ${interface} : ${service.MakeImplementingSignature(${interface}, &quot;IService&lt;$interface&gt;&quot;)}
@@ -308,7 +278,7 @@ namespace Example.Project.Tools.Templates {
         ///            &lt;%-- &lt;%= this.Literal(x =&gt; x.Name).Label(&quot;Name:&quot;) %&gt; --%&gt;
         ///        &lt;/p&gt;
         ///        &lt;p&gt;
-        ///            &lt;%= Html.BackLink(Url.Action(&quot;Index&quot;), &quot;back&quot;) %&gt;
+        ///            &lt;%= Html.BackLink(&quot;back&quot;, Url.Action(&quot;Index&quot;)) %&gt;
         ///            &lt;%= [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ViewDetails {
@@ -343,7 +313,7 @@ namespace Example.Project.Tools.Templates {
         ///       &lt;%-- &lt;%= this.TextBox(x =&gt; x.Name).Label(&quot;Name:&quot;) %&gt; --%&gt;
         ///    &lt;/p&gt;
         ///    &lt;p&gt;
-        ///        &lt;%= Html.BackLink(Url.Action(&quot;Index&quot;), &quot;back&quot;) %&gt;
+        ///        &lt;%= Html.BackLink(&quot;back&quot;, Url.Action(&quot;Index&quot;)) %&gt;
         ///        &lt;%= Html.Submit(&quot;send&quot;) %&gt;
         ///    &lt;/p&gt;
         ///&lt;/fieldset&gt;

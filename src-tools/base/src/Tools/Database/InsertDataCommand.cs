@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simple.Generator;
-using Example.Project.Config;
 using Simple;
 using Simple.Generator.Data;
 using Simple.Patterns;
-using Example.Project.Database;
+using Example.Project.Tests.Fixtures;
 
 namespace Example.Project.Tools.Database
 {
@@ -21,22 +20,22 @@ namespace Example.Project.Tools.Database
         {
             if (Configurator.IsProduction)
             {
-                DataLists.All();
+                FixtureList.All();
                 if (ForceTestData)
-                    DataLists.Test();
+                    FixtureList.Test();
             }
             else
             {
                 using (Context.Development)
                 {
-                    DataLists.All();
-                    DataLists.Development();
+                    FixtureList.All();
+                    FixtureList.Development();
                 }
 
                 using (Context.Test)
                 {
-                    DataLists.All();
-                    DataLists.Test();
+                    FixtureList.All();
+                    FixtureList.Test();
                 }
             }
         }

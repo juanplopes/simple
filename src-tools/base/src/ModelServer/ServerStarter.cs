@@ -9,7 +9,6 @@ using NHibernate.Tool.hbm2ddl;
 using System.Xml.Linq;
 using System.Xml;
 using System.Reflection;
-using Example.Project.Config;
 using System.Threading;
 using Example.Project.Services;
 

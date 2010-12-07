@@ -558,8 +558,6 @@ namespace Simple.Migrator.Providers
                     throw;
                 }
             }
-
-            return 0;
         }
 
         private IDbCommand BuildCommand(string sql)

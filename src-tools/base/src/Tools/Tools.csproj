@@ -96,7 +96,6 @@
     <Compile Include="Options.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates\AutoContracts\AutoContractsTemplate.cs" />
-    <Compile Include="Templates\AutoContracts\AutoDomainRunner.cs" />
     <Compile Include="Templates\AutoContracts\AutoServiceRunner.cs" />
     <Compile Include="Templates\AutoContracts\Interfaces.cs" />
     <Compile Include="Templates\NewMigrationTemplate.cs" />
@@ -120,9 +119,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Scripts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Templates\AutoContracts\AutoDomain.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Templates\AutoContracts\AutoService.txt" />
@@ -170,6 +166,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests\Tests.csproj">
+      <Project>{3F9400F2-FA85-464D-ADFC-BCA2BBE65798}</Project>
+      <Name>Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

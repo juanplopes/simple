@@ -40,7 +40,6 @@ namespace Example.Project.Tools.Templates.AutoContracts
         {
             Interfaces.ShowInterfaces();
             new AutoServiceRunner().Run();
-            new AutoDomainRunner().Run();
 
         }
 

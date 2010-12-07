@@ -14,8 +14,6 @@ namespace Example.Project.Tools.Macros
 {
     public class RefreshMacro : ICommand
     {
-        ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
-        
         public void Execute()
         {
             new AutoContractsTemplate().Execute();

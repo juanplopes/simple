@@ -26,7 +26,7 @@ namespace Example.Project.Tools.Templates.AutoContracts
             return ReplaceShow(files);
         }
 
-         private static void ReplaceHide(IEnumerable<ClassSignature> types, IEnumerable<string> files)
+        private static void ReplaceHide(IEnumerable<ClassSignature> types, IEnumerable<string> files)
         {
             var replacer = new CSharpInterfaceReplacer();
             foreach (var file in files)

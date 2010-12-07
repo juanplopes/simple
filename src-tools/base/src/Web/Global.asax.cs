@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Example.Project.Config;
 using Simple;
 using Example.Project.Web.Controllers;
 using Example.Project.Web.Helpers;
