@@ -59,6 +59,20 @@ namespace Simple.Tests.Reflection
         }
 
         [Test]
+        public void DoubleUnresolvedGenericImplementation()
+        {
+            var sig = new ClassSignature(typeof(DoubleChainedGenericClass<>));
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest3<ClassSignatureFixture.ITest4<T>> where T : struct, IConvertible");
+        }
+
+        [Test]
+        public void DoubleResolvedGenericImplementation()
+        {
+            var sig = new ClassSignature(typeof(DoubleChainedGenericClass<int>));
+            sig.MakeImplementingSignature().Should().Be("ClassSignatureFixture.ITest3<ClassSignatureFixture.ITest4<Int32>>");
+        }
+
+        [Test]
         public void ConstrainedGenericImplementationExcept3()
         {
             var sig = new ClassSignature(typeof(ConstrainedGenericClass<>));
@@ -101,6 +115,11 @@ namespace Simple.Tests.Reflection
         class DoubleConstrainedGenericClass<T> : ITest3<T>, ITest4<T>
             where T : struct, IConvertible
         { }
+
+        class DoubleChainedGenericClass<T> : ITest3<ITest4<T>>
+            where T : struct, IConvertible
+        { }
+
 
         class MethodInheritanceClass : MethodBasingClass, IBaseInterface
         {

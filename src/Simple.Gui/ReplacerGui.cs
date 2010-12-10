@@ -67,6 +67,7 @@ namespace Simple.Gui
                     };
                     logic.OnProgress += (text, subText) => progress.InvokeControlAction(x => x.SetProgress(text, subText));
                     logic.OnFinish += (success, url) => progress.InvokeControlAction(x => x.ShowFinished(success, url));
+                    logic.OnAsk = text => progress.InvokeControlAction(x => MessageBox.Show(text, "Simple.Net", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
 
                     logic.Execute();
                 });
@@ -109,7 +110,7 @@ namespace Simple.Gui
             AutoResize();
         }
 
-        
+
 
         private void btnDirectory_Click(object sender, EventArgs e)
         {

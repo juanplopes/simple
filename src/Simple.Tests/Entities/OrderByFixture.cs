@@ -11,7 +11,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanOrderByFirstColumn()
         {
-            var spec = Customer.Do.OrderBy(x => x.Address);
+            var spec = Customer.Query.OrderBy(x => x.Address);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             queryable.Expression.ToString().Should().Be("q.OrderBy(x => x.Address)");
         }
@@ -19,7 +19,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanOrderByTwoColumns()
         {
-            var spec = Customer.Do.OrderBy(x => x.Address).ThenBy(x => x.ContactName);
+            var spec = Customer.Query.OrderBy(x => x.Address).ThenBy(x => x.ContactName);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             Assert.AreEqual("q.OrderBy(x => x.Address).ThenBy(x => x.ContactName)",
                 queryable.Expression.ToString());
@@ -28,7 +28,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanOrderByFirstColumnDesc()
         {
-            var spec = Customer.Do.OrderByDesc(x => x.Address);
+            var spec = Customer.Query.OrderByDesc(x => x.Address);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             queryable.Expression.ToString().Should().Be("q.OrderByDescending(x => x.Address)");
         }
@@ -36,7 +36,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanOrderByTwoColumnsWithSecondDescending()
         {
-            var spec = Customer.Do.OrderBy(x => x.Address).ThenByDesc(x => x.ContactName);
+            var spec = Customer.Query.OrderBy(x => x.Address).ThenByDesc(x => x.ContactName);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             Assert.AreEqual("q.OrderBy(x => x.Address).ThenByDescending(x => x.ContactName)",
                 queryable.Expression.ToString());
@@ -45,7 +45,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanSerializeOrderByWithAllAsc()
         {
-            var spec = Customer.Do.OrderBy(x => x.Address).ThenBy(x => x.ContactName);
+            var spec = Customer.Query.OrderBy(x => x.Address).ThenBy(x => x.ContactName);
             var spec2 = SimpleSerializer.Binary().RoundTrip(spec);
 
             Assert.AreNotSame(spec, spec2);
@@ -54,7 +54,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanSerializeOrderByWithAllDesc()
         {
-            var spec = Customer.Do.OrderByDesc(x => x.Address).ThenByDesc(x => x.ContactName);
+            var spec = Customer.Query.OrderByDesc(x => x.Address).ThenByDesc(x => x.ContactName);
             var spec2 = SimpleSerializer.Binary().RoundTrip(spec);
 
             Assert.AreNotSame(spec, spec2);

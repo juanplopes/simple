@@ -11,7 +11,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanOnlySkip()
         {
-            var spec = Customer.Do.Skip(10);
+            var spec = Customer.Query.Skip(10);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             queryable.Expression.ToString().Should().Be("q.Skip(10)");
         }
@@ -19,7 +19,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanOnlyTake()
         {
-            var spec = Customer.Do.Take(10);
+            var spec = Customer.Query.Take(10);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             queryable.Expression.ToString().Should().Be("q.Take(10)");
 
@@ -28,7 +28,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanSkipAndTake()
         {
-            var spec = Customer.Do.Skip(10).Take(11);
+            var spec = Customer.Query.Skip(10).Take(11);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             queryable.Expression.ToString().Should().Be("q.Skip(10).Take(11)");
         }
@@ -36,7 +36,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanTakeAndSkip()
         {
-            var spec = Customer.Do.Take(10).Skip(11);
+            var spec = Customer.Query.Take(10).Skip(11);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             queryable.Expression.ToString().Should().Be("q.Take(10).Skip(11)");
 
@@ -45,7 +45,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanSerializeLimits()
         {
-            var spec = Customer.Do.Take(10).Skip(11);
+            var spec = Customer.Query.Take(10).Skip(11);
             var spec2 = SimpleSerializer.Binary().RoundTrip(spec);
 
             Assert.AreNotSame(spec, spec2);

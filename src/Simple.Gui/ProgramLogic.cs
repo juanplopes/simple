@@ -10,6 +10,7 @@ using System.Security.Principal;
 using System.Net;
 using System.Windows.Forms;
 using System.Security.AccessControl;
+using System.Reflection;
 
 namespace Simple.Gui
 {
@@ -24,11 +25,22 @@ namespace Simple.Gui
         public bool SetupEnv { get; set; }
 
         public event Action<string, string> OnProgress;
+        public Func<string, bool> OnAsk { get; set; }
+
         protected void ReportProgress(string text, string subText)
         {
             if (OnProgress != null)
                 OnProgress(text, subText);
         }
+
+        protected bool Ask(string text)
+        {
+            if (OnAsk != null)
+                return OnAsk(text);
+
+            return true;
+        }
+
 
         public event Action<string, string> OnFinish;
         protected void ReportFinish(string success, string url)
@@ -43,6 +55,10 @@ namespace Simple.Gui
             {
                 DoReplace();
 
+                if (!HasMVC() &&
+                    Ask("You seem to not have ASP.NET MVC 2 installed.\n\nWeb Project may not open. Do you want me to fix project files so they'll open?"))
+                        MVCReplace();
+
                 ReportProgress("Copying files", "<starting>");
                 CopyItem(null, ReplacePath, InstallPath);
                 SetPermissions(InstallPath);
@@ -56,6 +72,7 @@ namespace Simple.Gui
 
                     if (msbuild == 0)
                     {
+
                         var url = string.Format("http://localhost/{0}", IISUrl);
 
                         PrecacheResults(url);
@@ -72,6 +89,18 @@ namespace Simple.Gui
             catch (Exception e)
             {
                 ReportFinish(string.Format("Fatal error: {0}", e.Message), null);
+            }
+        }
+
+        private bool HasMVC()
+        {
+            try
+            {
+                return Assembly.ReflectionOnlyLoad("System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35").GlobalAssemblyCache;
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -99,6 +128,13 @@ namespace Simple.Gui
             ReportProgress(null, "Step 4 of 4");
             ReplacerLogic.DefaultExecute(ReplacePath, "exampleprojectsvc", ServiceName, false);
         }
+
+        private void MVCReplace()
+        {
+            ReportProgress("Replacing MVC projects", "Step 1 of 1");
+            ReplacerLogic.DefaultExecute(ReplacePath, "{F85E285D-A4E0-4152-9332-AB1D724D3325};", "", false);
+        }
+
 
         private void PrecacheResults(string url)
         {

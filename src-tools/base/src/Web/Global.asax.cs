@@ -45,7 +45,7 @@ namespace Example.Project.Web
         protected void Application_Start()
         {
             RegisterRoutes(RouteTable.Routes);
-            DefaultModelBinder.ResourceClassKey = "ValidationMessages";
+            DefaultModelBinder.ResourceClassKey = typeof(ValidationMessages).Name;
             ModelBinders.Binders.DefaultBinder = new EntityModelBinder();
 
             ModelValidatorProviders.Providers.Clear();
