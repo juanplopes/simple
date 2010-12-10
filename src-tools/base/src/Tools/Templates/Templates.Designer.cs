@@ -65,6 +65,36 @@ namespace Example.Project.Tools.Templates {
         ///using ${ns};
         ///#end
         ///
+        ///namespace ${opt.Namespace}.Domain
+        ///{
+        ///    public partial class ${entity.Name}
+        ///    {
+        ///#foreach($method in $service.Methods)
+        ///#if ($method.FirstParameterIs($entity))
+        ///        public virtual ${method.MakeSignature(1)} 
+        ///        {
+        ///#if ($method.ReturnsVoid)
+        ///			Service.${method.MakeCall(&apos;this&apos;)};
+        ///#else
+        ///			return Service.${method.MakeCall(&apos;this&apos;)};
+        ///#end
+        ///		}
+        ///#else
+        ///        public static ${method.MakeSignature()} 
+        ///        {
+        ///#if ($method.ReturnsVoi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AutoDomain {
+            get {
+                return ResourceManager.GetString("AutoDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #foreach($ns in $service.Namespaces)
+        ///using ${ns};
+        ///#end
+        ///
         ///namespace ${opt.Namespace}.Services
         ///{
         ///    public partial interface ${interface} : ${service.MakeImplementingSignature(${interface}, &quot;IService&lt;$interface&gt;&quot;)}

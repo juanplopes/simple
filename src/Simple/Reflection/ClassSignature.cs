@@ -41,14 +41,13 @@ namespace Simple.Reflection
                 x => builder.Append(x),
                 x => builder.Append(", "));
 
-            var types = interfaces.SelectMany(x => x.GetGenericArguments().Where(y => y.IsGenericParameter)).Distinct();
+            var types = Type.GetGenericArguments().Where(x => x.IsGenericParameter);
 
             types.EagerForeach(x =>
                 builder.Append(new GenericSignature(x, Namespaces).MakeConstraints()));
 
             return builder.ToString();
         }
-
 
         protected IEnumerable<MethodSignature> EnumerateMethods()
         {

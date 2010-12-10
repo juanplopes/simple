@@ -12,7 +12,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanSimpleFilter()
         {
-            var spec = Customer.Do.Expr(q => q.Where(x => x.CompanyName == "asd").Skip(2).Take(10));
+            var spec = Customer.Query.Expr(q => q.Where(x => x.CompanyName == "asd").Skip(2).Take(10));
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName = \"asd\")).Skip(2).Take(10)");
         }
@@ -22,7 +22,7 @@ namespace Simple.Tests.Entities
         {
             string value = "asd";
             int a = 2, b = 10;
-            var spec = Customer.Do.Expr(q => q.Where(x => x.CompanyName == value).Skip(a).Take(b));
+            var spec = Customer.Query.Expr(q => q.Where(x => x.CompanyName == value).Skip(a).Take(b));
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName = \"asd\")).Skip(2).Take(10)");
         }
@@ -30,7 +30,7 @@ namespace Simple.Tests.Entities
         [Test]
         public void CanSerializeFilter()
         {
-            var spec = Customer.Do.Expr(q => q.Where(x => x.CompanyName == "asd"));
+            var spec = Customer.Query.Expr(q => q.Where(x => x.CompanyName == "asd"));
             var spec2 = SimpleSerializer.Binary().RoundTrip(spec);
 
             Assert.AreNotSame(spec, spec2);
@@ -45,7 +45,7 @@ namespace Simple.Tests.Entities
         public void CanSerializeFilterWithStackReference()
         {
             string value = "asd";
-            var spec = Customer.Do.Expr(q => q.Where(x => x.CompanyName == value));
+            var spec = Customer.Query.Expr(q => q.Where(x => x.CompanyName == value));
             var spec2 = SimpleSerializer.Binary().RoundTrip(spec);
 
             Assert.AreNotSame(spec, spec2);
