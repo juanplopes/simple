@@ -53,6 +53,13 @@ namespace Simple.Tests.Metadata
         }
 
         [Test]
+        public void SimpleForeignKeyTest()
+        {
+            new SimpleForeignKeyTest.Run(Entry).ExecuteAll();
+        }
+
+
+        [Test]
         public void SimpleTableTest()
         {
             new SimpleTableTest.Run(Entry).ExecuteAll();

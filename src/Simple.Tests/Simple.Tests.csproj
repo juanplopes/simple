@@ -124,6 +124,8 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="IO\ConsoleRedirectionFixture.cs" />
+    <Compile Include="Metadata\SimpleForeignKeyTest\Migration1.cs" />
+    <Compile Include="Metadata\SimpleForeignKeyTest\Run.cs" />
     <Compile Include="Patterns\DisposableExtensionsFixture.cs" />
     <Compile Include="Common\EnumerableFixture.cs" />
     <Compile Include="Common\SafeNullableFixture.cs" />
