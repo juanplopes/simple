@@ -72,8 +72,6 @@ END
 CLOSE NAME_CURSOR
 DEALLOCATE NAME_CURSOR", table, column, varName));
 
-
-           //DeleteColumnConstraints(table, column);
             base.RemoveColumn(table, column);
         }
 
