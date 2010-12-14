@@ -55,7 +55,28 @@ namespace Simple.Migrator.Providers.SqlServer
 
         public override void RemoveColumn(string table, string column)
         {
-           DeleteColumnConstraints(table, column);
+            var varName = "n" + Guid.NewGuid().ToString("N");
+            ExecuteNonQuery(string.Format(
+@"declare @{2} varchar(1000);
+declare name_cursor CURSOR FOR
+SELECT cont.name FROM SYSOBJECTS cont, SYSCOLUMNS col, SYSCONSTRAINTS cnt 
+WHERE cont.parent_obj = col.id AND cnt.constid = cont.id AND cnt.colid=col.colid
+AND col.name = '{1}' AND col.id = object_id('{0}');
+
+OPEN name_cursor
+
+FETCH NEXT FROM name_cursor into @{2}; 
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    exec ('alter table {0} drop constraint ' + @{2})
+FETCH NEXT FROM name_cursor into @{2}; 
+END
+
+close name_cursor
+deallocate name_cursor", table, column, varName));
+
+
+           //DeleteColumnConstraints(table, column);
             base.RemoveColumn(table, column);
         }
 
@@ -69,37 +90,7 @@ namespace Simple.Migrator.Providers.SqlServer
             ExecuteNonQuery(String.Format("EXEC sp_rename {0}, {1}", oldName, newName));
         }
 
-        // Deletes all constraints linked to a column. Sql Server
-        // doesn't seems to do this.
-        private void DeleteColumnConstraints(string table, string column)
-        {
-            string sqlContrainte = FindConstraints(table, column);
-            List<string> constraints = new List<string>();
-            using (IDataReader reader = ExecuteQuery(sqlContrainte))
-            {
-                while (reader.Read())
-                {
-                    constraints.Add(reader.GetString(0));
-                }
-            }
-            // Can't share the connection so two phase modif
-            foreach (string constraint in constraints)
-            {
-                RemoveForeignKey(table, constraint);
-            }
-        }
-
-        // FIXME: We should look into implementing this with INFORMATION_SCHEMA if possible
-        // so that it would be usable by all the SQL Server implementations
-        protected virtual string FindConstraints(string table, string column)
-        {
-            return string.Format(
-                "SELECT cont.name FROM SYSOBJECTS cont, SYSCOLUMNS col, SYSCONSTRAINTS cnt  "
-                + "WHERE cont.parent_obj = col.id AND cnt.constid = cont.id AND cnt.colid=col.colid "
-                + "AND col.name = '{1}' AND col.id = object_id('{0}')",
-                table, column);
-        }
-
+     
 
     }
 }

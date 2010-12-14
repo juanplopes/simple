@@ -43,12 +43,5 @@ namespace Simple.Migrator.Providers.SqlServer
             //    ExecuteNonQuery(String.Format("EXEC sp_rename {0}, {1}", oldName, newName));
         }
 
-        protected override string FindConstraints(string table, string column)
-        {
-            return
-                string.Format("SELECT cont.constraint_name FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE cont "
-                    + "WHERE cont.Table_Name='{0}' AND cont.column_name = '{1}'",
-                    table, column);
-        }
     }
 }
