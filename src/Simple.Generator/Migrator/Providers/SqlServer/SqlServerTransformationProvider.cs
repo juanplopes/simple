@@ -57,23 +57,20 @@ namespace Simple.Migrator.Providers.SqlServer
         {
             var varName = "n" + Guid.NewGuid().ToString("N");
             ExecuteNonQuery(string.Format(
-@"declare @{2} varchar(1000);
-declare name_cursor CURSOR FOR
-SELECT cont.name FROM SYSOBJECTS cont, SYSCOLUMNS col, SYSCONSTRAINTS cnt 
-WHERE cont.parent_obj = col.id AND cnt.constid = cont.id AND cnt.colid=col.colid
-AND col.name = '{1}' AND col.id = object_id('{0}');
-
-OPEN name_cursor
-
-FETCH NEXT FROM name_cursor into @{2}; 
+@"DECLARE @{2} VARCHAR(1000);
+DECLARE NAME_CURSOR CURSOR FOR
+SELECT CONT.NAME FROM SYSOBJECTS CONT, SYSCOLUMNS COL, SYSCONSTRAINTS CNT 
+WHERE CONT.PARENT_OBJ = COL.ID AND CNT.CONSTID = CONT.ID AND CNT.COLID=COL.COLID
+AND COL.NAME = '{1}' AND COL.ID = OBJECT_ID('{0}');
+OPEN NAME_CURSOR
+FETCH NEXT FROM NAME_CURSOR INTO @{2}; 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-    exec ('alter table {0} drop constraint ' + @{2})
-FETCH NEXT FROM name_cursor into @{2}; 
+    EXEC ('ALTER TABLE {0} DROP CONSTRAINT ' + @{2})
+FETCH NEXT FROM NAME_CURSOR INTO @{2}; 
 END
-
-close name_cursor
-deallocate name_cursor", table, column, varName));
+CLOSE NAME_CURSOR
+DEALLOCATE NAME_CURSOR", table, column, varName));
 
 
            //DeleteColumnConstraints(table, column);
