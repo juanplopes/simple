@@ -17,19 +17,13 @@ namespace Simple.Migrator.Providers.Mysql
 
         public override void RemoveForeignKey(string table, string name)
         {
-            if (ConstraintExists(table, name))
-            {
-                ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP FOREIGN KEY {1}", table, _dialect.Quote(name)));
-                ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP KEY {1}", table, _dialect.Quote(name)));
-            }
+            ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP FOREIGN KEY {1}", table, _dialect.Quote(name)));
+            ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP KEY {1}", table, _dialect.Quote(name)));
         }
 
         public override void RemoveConstraint(string table, string name)
         {
-            if (ConstraintExists(table, name))
-            {
-                ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP KEY {1}", table, _dialect.Quote(name)));
-            }
+            ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP KEY {1}", table, _dialect.Quote(name)));
         }
 
         public override bool ConstraintExists(string table, string name)
@@ -113,40 +107,34 @@ namespace Simple.Migrator.Providers.Mysql
 
         public override void RenameColumn(string tableName, string oldColumnName, string newColumnName)
         {
-            if (ColumnExists(tableName, newColumnName))
-                throw new MigrationException(String.Format("Table '{0}' has column named '{0}' already", tableName, newColumnName));
-
-            if (ColumnExists(tableName, oldColumnName))
+            string definition = null;
+            using (IDataReader reader = ExecuteQuery(String.Format("SHOW COLUMNS FROM {0} WHERE Field='{1}'", tableName, oldColumnName)))
             {
-                string definition = null;
-                using (IDataReader reader = ExecuteQuery(String.Format("SHOW COLUMNS FROM {0} WHERE Field='{1}'", tableName, oldColumnName)))
+                if (reader.Read())
                 {
-                    if (reader.Read())
+                    // TODO: Could use something similar to construct the columns in GetColumns
+                    definition = reader["Type"].ToString();
+                    if ("NO" == reader["Null"].ToString())
                     {
-                        // TODO: Could use something similar to construct the columns in GetColumns
-                        definition = reader["Type"].ToString();
-                        if ("NO" == reader["Null"].ToString())
-                        {
-                            definition += " " + "NOT NULL";
-                        }
+                        definition += " " + "NOT NULL";
+                    }
 
-                        if (!reader.IsDBNull(reader.GetOrdinal("Key")))
+                    if (!reader.IsDBNull(reader.GetOrdinal("Key")))
+                    {
+                        string key = reader["Key"].ToString();
+                        if ("PRI" == key)
                         {
-                            string key = reader["Key"].ToString();
-                            if ("PRI" == key)
-                            {
-                                definition += " " + "PRIMARY KEY";
-                            }
-                            else if ("UNI" == key)
-                            {
-                                definition += " " + "UNIQUE";
-                            }
+                            definition += " " + "PRIMARY KEY";
                         }
+                        else if ("UNI" == key)
+                        {
+                            definition += " " + "UNIQUE";
+                        }
+                    }
 
-                        if (!reader.IsDBNull(reader.GetOrdinal("Extra")))
-                        {
-                            definition += " " + reader["Extra"].ToString();
-                        }
+                    if (!reader.IsDBNull(reader.GetOrdinal("Extra")))
+                    {
+                        definition += " " + reader["Extra"].ToString();
                     }
                 }
 

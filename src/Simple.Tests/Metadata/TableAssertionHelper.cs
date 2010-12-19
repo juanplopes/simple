@@ -47,7 +47,7 @@ namespace Simple.Tests.Metadata
 
             var fkColumnCount = expectedForeignKeys.Sum(x => x.FkColumns.Count);
             var pkColumnCount = expectedPrimaryKeys.Count;
-            var fkPkColumnCount = expectedColumns.Count(x => (x.Properties & ColumnProperty.ForeignKey) != 0);
+            var fkPkColumnCount = expectedPrimaryKeys.Count(x => (x.Properties & ColumnProperty.ForeignKey) != 0);
             var columnCount = expectedColumns.Count;
 
             actualTable.OrdinaryFields.Count().Should().Be(columnCount - fkColumnCount - pkColumnCount + fkPkColumnCount);

@@ -137,7 +137,11 @@ namespace Simple
         public static Expression<Func<T, TProp>> GetMemberExpression<T, TProp>(this IEnumerable<string> propertyPath)
         {
             var parameter = Expression.Parameter(typeof(T), "x");
-            return Expression.Lambda<Func<T, TProp>>(propertyPath.GetMemberExpression(parameter), parameter);
+            var expr = propertyPath.GetMemberExpression(parameter);
+            if (!typeof(TProp).IsValueType && expr.Type.IsValueType)
+                expr = Expression.Convert(expr, typeof(TProp));
+
+            return Expression.Lambda<Func<T, TProp>>(expr, parameter);
         }
 
         public static void SetValue(this LambdaExpression expr, object target, object value)
