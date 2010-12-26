@@ -48,6 +48,22 @@ namespace Simple.Tests.Data
         }
 
         [Test]
+        public void CheckIsConnectedWorksForBothMainAndChild()
+        {
+            using (var dx = MySimply.EnterContext())
+            {
+                dx.IsConnected.Should().Be.False();
+                using (var dx2 = MySimply.EnterContext())
+                {
+                    dx2.IsConnected.Should().Be.False();
+                    dx2.Session.GetHashCode();
+                    dx2.IsConnected.Should().Be.True();
+                    dx.IsConnected.Should().Be.True();
+                }
+            }
+        }
+
+        [Test]
         public void TestReopenDataContext()
         {
             try

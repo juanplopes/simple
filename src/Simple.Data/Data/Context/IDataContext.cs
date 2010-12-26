@@ -13,6 +13,7 @@ namespace Simple.Data.Context
         IDataContext NewContext();
 
         bool IsOpen { get; }
+        bool IsConnected { get; }
         void Exit();
     }
 }

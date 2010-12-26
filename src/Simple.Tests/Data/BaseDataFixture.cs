@@ -19,6 +19,7 @@ namespace Simple.Tests.Data
             {
                 dx = MySimply.EnterContext();
                 tx = MySimply.GetSession().BeginTransaction();
+                dx.Session.SessionFactory.Statistics.Clear();
             }
         }
 

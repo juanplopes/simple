@@ -7,6 +7,7 @@ using NHibernate;
 using Simple.Data.Context;
 using Simple;
 using Simple.Patterns;
+using NHibernate.Stat;
 
 namespace Example.Project.Tests
 {
@@ -16,12 +17,14 @@ namespace Example.Project.Tests
         IDataContext dx = null;
 
         public ISession Session { get { return Simply.Do.GetSession(); } }
+        public IStatistics GlobalStats { get { return Session.SessionFactory.Statistics; } }
 
         [SetUp]
         public void Setup()
         {
             dx = Simply.Do.EnterContext();
             tx = Session.BeginTransaction();
+            GlobalStats.Clear();
         }
 
         [TearDown]

@@ -31,6 +31,8 @@ namespace Simple.Tests.Data
             list[7].Count.Should().Be(10);
             list[8].Count.Should().Be(4);
             list[9].Count.Should().Be(7);
+
+            Session.SessionFactory.Statistics.QueryExecutionCount.Should().Be(1);
         }
 
         [Test]

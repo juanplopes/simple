@@ -30,6 +30,7 @@ namespace Simple.Data.Context
             }
         }
         public bool IsOpen { get; protected set; }
+        public bool IsConnected { get { return IsMain ? (session != null) : Parent.IsConnected; } }
 
         protected bool IsMain { get { return Parent == null; } }
         protected ICollection<ISession> AdditionalSessions { get; set; }

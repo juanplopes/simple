@@ -32,7 +32,9 @@ namespace Simple.Tests
             simply.Configure
                 .NHibernteFluently(x =>
                     x.Database(SQLiteConfiguration.Standard.UsingFile(temp)
-                     .ProxyFactoryFactory<ProxyFactoryFactory>()))
+                    .Raw("generate_statistics", "true")
+                    .ProxyFactoryFactory<ProxyFactoryFactory>()
+                    ))
                .MappingFromAssemblyOf<Category.Map>()
                .Validator(typeof(Category.Map).Assembly)
                .DefaultHost();
