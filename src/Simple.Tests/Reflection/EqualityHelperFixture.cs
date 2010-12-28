@@ -4,6 +4,8 @@ using Simple.Entities;
 using Simple.Reflection;
 using System.Linq;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Simple.Tests.Reflection
 {
@@ -58,6 +60,38 @@ namespace Simple.Tests.Reflection
             obj1.StringProp = "B";
             helper.ObjectEquals(obj2).Should().Be.True();
             helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode());
+        }
+
+        [Test]
+        public void ShouldServeAsNonGenericIEqualityComparer()
+        {
+            Sample1 obj1 = new Sample1();
+
+            EqualityHelper<Sample1> helper = new EqualityHelper<Sample1>();
+            helper.Add(x => x.IntProp);
+            helper.Add(x => x.StringProp);
+
+            var hash = new Hashtable(helper);
+            hash.Add(new Sample1() { IntProp = 2, StringProp = "asd" }, "doesn't matter");
+            
+            hash.ContainsKey(new Sample1() { IntProp = 2, StringProp = "asd" }).Should().Be.True();
+            hash.ContainsKey(new Sample1() { IntProp = 3, StringProp = "asd" }).Should().Be.False();
+        }
+
+        [Test]
+        public void ShouldServeAsGenericIEqualityComparer()
+        {
+            Sample1 obj1 = new Sample1();
+
+            EqualityHelper<Sample1> helper = new EqualityHelper<Sample1>();
+            helper.Add(x => x.IntProp);
+            helper.Add(x => x.StringProp);
+
+            var hash = new Dictionary<Sample1, string>(helper);
+            hash.Add(new Sample1() { IntProp = 2, StringProp = "asd" }, "doesn't matter");
+
+            hash.ContainsKey(new Sample1() { IntProp = 2, StringProp = "asd" }).Should().Be.True();
+            hash.ContainsKey(new Sample1() { IntProp = 3, StringProp = "asd" }).Should().Be.False();
         }
 
         [Test]

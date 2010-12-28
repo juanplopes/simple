@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Simple.Reflection
 {
-    public class EqualityHelper<T> : EqualityHelper
+    public class EqualityHelper<T> : EqualityHelper, IEqualityComparer<T>
     {
         public EqualityHelper()
             : this(new Expression<Func<T, object>>[0])
@@ -33,9 +33,23 @@ namespace Simple.Reflection
             this.Add<T>(expr, comparer);
             return this;
         }
+
+        #region IEqualityComparer<T> Members
+
+        bool IEqualityComparer<T>.Equals(T x, T y)
+        {
+            return this.ObjectEquals(x, y);
+        }
+
+        int IEqualityComparer<T>.GetHashCode(T obj)
+        {
+            return this.ObjectGetHashCode(obj);
+        }
+
+        #endregion
     }
 
-    public class EqualityHelper
+    public class EqualityHelper : IEqualityComparer
     {
         public class Entry
         {
@@ -238,5 +252,20 @@ namespace Simple.Reflection
         {
             return ObjectToString(_obj, toIgnore);
         }
+
+        #region IEqualityComparer Members
+
+        int IEqualityComparer.GetHashCode(object obj)
+        {
+            return this.ObjectGetHashCode(obj);
+        }
+
+        bool IEqualityComparer.Equals(object x, object y)
+        {
+            return this.ObjectEquals(x, y);
+        }
+
+        #endregion
+        
     }
 }
