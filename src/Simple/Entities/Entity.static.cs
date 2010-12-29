@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using Simple.Config;
 using Simple.Entities.QuerySpec;
 using Simple.Expressions.Editable;
+using System.Collections;
+using Simple.Common;
 
 namespace Simple.Entities
 {
@@ -46,9 +48,9 @@ namespace Simple.Entities
             return Service.Load(id, upgradeLock);
         }
 
-        public static IList<T> LoadMany(object[] ids)
+        public static IList<T> LoadMany(IEnumerable ids)
         {
-            return Service.LoadMany(ids);
+            return Service.LoadMany(new LazyEnumerable(ids));
         }
 
         public static int Count()

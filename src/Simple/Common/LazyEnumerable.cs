@@ -4,9 +4,17 @@ using System.Linq;
 using System.Text;
 using Simple.IO.Serialization;
 using System.Runtime.Serialization;
+using System.Collections;
 
 namespace Simple.Common
 {
+    [Serializable]
+    public class LazyEnumerable : LazyEnumerable<object>
+    {
+        public LazyEnumerable(IEnumerable real) : base(real.Cast<object>()) { }
+        protected LazyEnumerable(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    }
+
     [Serializable]
     public class LazyEnumerable<T> : LazySerializer<IEnumerable<T>, T[]>, IEnumerable<T>
     {

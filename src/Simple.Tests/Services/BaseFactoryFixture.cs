@@ -7,6 +7,10 @@ using SharpTestsEx;
 using Simple.Expressions;
 using Simple.Expressions.Editable;
 using Simple.Services;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Simple.Common;
 
 namespace Simple.Tests.Services
 {
@@ -70,6 +74,35 @@ namespace Simple.Tests.Services
             service.GetOverloadedMethod(10).Should().Be(10);
             service.GetOverloadedMethod(10, 5).Should().Be(15);
         }
+
+        [Test]
+        public void CanReturnEnumerable()
+        {
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
+            service.ReturnsEnumerable(3).Cast<object>().Should().Have.SameSequenceAs(0m, 0m, 0m);
+        }
+
+        [Test]
+        public void CanReturnEnumerableGeneric()
+        {
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
+            service.ReturnsEnumerableGeneric<double>(3).Cast<object>().Should().Have.SameSequenceAs(0.0, 0.0, 0.0);
+        }
+
+        [Test]
+        public void CanPassEnumerable()
+        {
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
+            service.ReceivesEnumerable(new LazyEnumerable(Enumerable.Repeat(4, 4))).Should().Be(4);
+        }
+
+        [Test]
+        public void CanPassEnumerableGeneric()
+        {
+            ISimpleService service = Simply.Do[ConfigKey].Resolve<ISimpleService>();
+            service.ReceivesEnumerableGeneric(new[] { "1", "2", "4" }).Should().Be(3);
+        }
+
 
         [Test]
         public void SimplePropertyTest()
@@ -280,6 +313,11 @@ namespace Simple.Tests.Services
         bool TestExpression(EditableExpression expr, int value);
         bool TestSelfType(SelfType selfObject);
         bool CheckSameThread(int id);
+
+        IEnumerable ReturnsEnumerable(int a);
+        int ReceivesEnumerable(IEnumerable e);
+        IEnumerable<T> ReturnsEnumerableGeneric<T>(int a);
+        int ReceivesEnumerableGeneric<T>(IEnumerable<T> e);
     }
 
     public interface IFailService : IService
@@ -455,6 +493,31 @@ namespace Simple.Tests.Services
         public T Execute<T>(Expression<Func<int, T>> expr, int a)
         {
             return expr.Compile()(a);
+        }
+
+        #endregion
+
+        #region ISimpleService Members
+
+
+        public IEnumerable ReturnsEnumerable(int a)
+        {
+            return new LazyEnumerable(ReturnsEnumerableGeneric<decimal>(a));
+        }
+
+        public int ReceivesEnumerable(IEnumerable e)
+        {
+            return ReceivesEnumerableGeneric(e.OfType<object>());
+        }
+
+        public IEnumerable<T> ReturnsEnumerableGeneric<T>(int a)
+        {
+            return new LazyEnumerable<T>(Enumerable.Repeat<T>(default(T), a));
+        }
+
+        public int ReceivesEnumerableGeneric<T>(IEnumerable<T> e)
+        {
+            return e.Count();
         }
 
         #endregion

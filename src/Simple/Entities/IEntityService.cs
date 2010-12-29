@@ -6,6 +6,7 @@ using Simple.Entities.QuerySpec;
 using Simple.Expressions.Editable;
 using Simple.Services;
 using Simple.Validation;
+using System.Collections;
 
 namespace Simple.Entities
 {
@@ -14,7 +15,7 @@ namespace Simple.Entities
     {
         T Load(object id);
         T Load(object id, bool upgradeLock);
-        IList<T> LoadMany(object[] ids);
+        IList<T> LoadMany(IEnumerable ids);
         T Refresh(T entity);
         T Reload(T entity);
         T Reload(T entity, bool upgradeLock);
