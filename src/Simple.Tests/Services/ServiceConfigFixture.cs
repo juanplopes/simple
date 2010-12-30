@@ -10,7 +10,7 @@ namespace Simple.Tests.Services
     [TestFixture]
     public class ServiceConfigFixture
     {
-        [Test, ExpectedException(typeof(NotImplementedException))]
+        [Test, ExpectedException(typeof(ServiceConnectionException))]
         public void TestNullServiceCreation()
         {
             SourceManager.Do.Remove<IServiceClientProvider>(this);
@@ -57,7 +57,7 @@ namespace Simple.Tests.Services
             });
         }
 
-        [Test, ExpectedException(typeof(NotImplementedException))]
+        [Test, ExpectedException(typeof(ServiceConnectionException))]
         public void TestVoidCall()
         {
             SourceManager.Do.Remove<IServiceClientProvider>(this);
@@ -65,7 +65,7 @@ namespace Simple.Tests.Services
             svc.TestVoid();
         }
 
-        [Test, ExpectedException(typeof(NotImplementedException))]
+        [Test, ExpectedException(typeof(ServiceConnectionException))]
         public void TestRefCall()
         {
             SourceManager.Do.Remove<IServiceClientProvider>(this);
@@ -77,7 +77,7 @@ namespace Simple.Tests.Services
         }
 
 
-        [Test, ExpectedException(typeof(NotImplementedException))]
+        [Test, ExpectedException(typeof(ServiceConnectionException))]
         public void TestOutCall()
         {
             SourceManager.Do.Remove<IServiceClientProvider>(this);

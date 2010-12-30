@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simple.Config;
 using Simple.Patterns;
+using Simple.Services.Default;
 
 namespace Simple.Services
 {
@@ -16,7 +17,7 @@ namespace Simple.Services
         }
         protected override void OnClearConfig()
         {
-            ConfigCache = new NullServiceClientProvider();
+            ConfigCache = new DefaultClientProvider();
         }
 
         public T Resolve<T>()

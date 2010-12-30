@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using log4net;
 using Simple.Config;
+using Simple.Services.Default;
 
 namespace Simple.Services
 {
@@ -30,7 +31,7 @@ namespace Simple.Services
 
         protected override void OnClearConfig()
         {
-            ConfigCache = new NullServiceHostProvider();
+            ConfigCache = new DefaultHostProvider();
         }
 
         public void Host(Type type)
