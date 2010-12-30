@@ -10,14 +10,14 @@ namespace Simple.Logging
     {
         protected override void OnConfig(Log4netConfig config)
         {
-            LogManager.ResetConfiguration();
+           // LogManager.ResetConfiguration();
             if (config != null)
                 XmlConfigurator.Configure(config.Element);
         }
 
         protected override void OnClearConfig()
         {
-            LogManager.ResetConfiguration();
+            //LogManager.ResetConfiguration();
         }
 
         public ILog Log(string name)

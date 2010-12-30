@@ -13,7 +13,13 @@ namespace Simple.Services.Remoting
 
         public virtual IContextHandler HeaderHandler
         {
-            get { return new CallContextHandler(); }
+            get
+            {
+                if (ConfigCache.LocalOnly)
+                    return new NullContextHandler();
+                else
+                    return new CallContextHandler();
+            }
         }
 
     }
