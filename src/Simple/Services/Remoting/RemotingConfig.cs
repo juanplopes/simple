@@ -4,6 +4,8 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Xml;
 using System.Xml.Serialization;
+using log4net;
+using System.Reflection;
 
 namespace Simple.Services.Remoting
 {
@@ -35,17 +37,18 @@ namespace Simple.Services.Remoting
             return new Uri(BaseAddress, UriKind.Absolute);
         }
 
+        static ILog logger = Simply.Do.Log(MethodBase.GetCurrentMethod());
         public IChannelReceiver GetChannel()
         {
             Uri uri = GetUriFromAddressBase();
-            Simply.Do.Log(this).DebugFormat("Creating channel for URI {0}...", uri);
+            logger.DebugFormat("Creating channel for URI {0}...", uri);
             return ChannelSelector.Do.GetHandler(uri).CreateServerChannel(null, uri);
         }
 
         public void TryRegisterClientChannel()
         {
             Uri uri = GetUriFromAddressBase();
-            Simply.Do.Log(this).DebugFormat("Creating client channel for URI {0}...", uri);
+            logger.DebugFormat("Creating client channel for URI {0}...", uri);
             var handler = ChannelSelector.Do.GetHandler(uri);
             if (ChannelServices.GetChannel(handler.DefaultName) == null)
                 ChannelServices.RegisterChannel(handler.CreateClientChannel(), false);

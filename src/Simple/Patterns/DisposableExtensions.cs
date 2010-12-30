@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using Simple.Patterns;
 using System.Reflection;
+using log4net;
 
 namespace Simple
 {
     public static class DisposableExtensions
     {
+        static ILog logger = Simply.Do.Log(MethodBase.GetCurrentMethod());
         public static IDisposable ComposeWith(this IDisposable first, params IDisposable[] disposables)
         {
             return new DisposableAction(() =>
@@ -26,7 +28,7 @@ namespace Simple
             try { disposable.Dispose(); }
             catch (Exception e)
             {
-                Simply.Do.Log(MethodBase.GetCurrentMethod())
+                logger
                     .Warn("Error disposing {0}".AsFormat(disposable), e);
             }
         }

@@ -10,7 +10,7 @@ namespace Simple.Services.Remoting
 {
     public class RemotingHostProvider : RemotingBaseProvider, IServiceHostProvider
     {
-        ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
+        static ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
         IList<object> services = new List<object>();
         bool started = false;
         bool wasStared = false;

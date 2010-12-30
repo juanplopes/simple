@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using log4net;
+using System.Reflection;
 
 namespace Simple.Config
 {
@@ -8,6 +10,8 @@ namespace Simple.Config
         IXmlFileConfigSource<T>,
         IConfigSource<T, XPathParameter<FileInfo>>
     {
+        static ILog logger = Simply.Do.Log(MethodBase.GetCurrentMethod());
+
         public XPathParameter<FileInfo> XmlFile { get; set; }
         protected FileSystemWatcher Watcher { get; set; }
 
@@ -22,7 +26,7 @@ namespace Simple.Config
             {
                 if (Active)
                 {
-                    Simply.Do.Log(this).DebugFormat("The watch in file {0} has raised.", XmlFile.Parameter.Name);
+                    logger.DebugFormat("The watch in file {0} has raised.", XmlFile.Parameter.Name);
                     InvokeReload();
                 }
             }
@@ -60,7 +64,7 @@ namespace Simple.Config
                 if (XmlFile.Parameter == null)
                     throw new InvalidOperationException("Cannot reload a non-loaded source");
 
-                Simply.Do.Log(this).DebugFormat("Reloading file {0}...", XmlFile.Parameter.Name);
+                logger.DebugFormat("Reloading file {0}...", XmlFile.Parameter.Name);
 
                 try
                 {
@@ -76,7 +80,7 @@ namespace Simple.Config
 
         public override void Dispose()
         {
-            Simply.Do.Log(this).DebugFormat("Disposing configurator for {0}...", typeof(T));
+            logger.DebugFormat("Disposing configurator for {0}...", typeof(T));
             lock (_lock)
                 Active = false;
 
@@ -90,7 +94,7 @@ namespace Simple.Config
         {
             lock (_lock)
             {
-                Simply.Do.Log(this).DebugFormat("Loading XMLConfig for class {0}...", typeof(T).Name);
+                logger.DebugFormat("Loading XMLConfig for class {0}...", typeof(T).Name);
 
                 SetXmlFileInfo(input.Parameter);
 

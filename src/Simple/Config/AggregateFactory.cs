@@ -37,11 +37,10 @@ namespace Simple.Config
             get { return SimpleContext.Data.Get<object>(contextKey); }
             set { SimpleContext.Data.Set(contextKey, value); }
         }
-        
+
         public static IDisposable KeyContext(object newKey)
         {
-            var logger = Simply.Do.Log<THIS>();
-            
+            ILog logger = Simply.Do.Log<THIS>();
             logger.InfoFormat("Entering: '{0}.{1}'...", typeof(THIS).Name, newKey ?? "$default");
             var oldKey = DefaultKey;
             DefaultKey = newKey;

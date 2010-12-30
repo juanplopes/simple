@@ -1,5 +1,7 @@
 ﻿using System;
 using Simple.Patterns;
+using log4net;
+using System.Reflection;
 
 namespace Simple.Config
 {
@@ -9,6 +11,7 @@ namespace Simple.Config
     /// <typeparam name="T">The configuration type.</typeparam>
     public abstract class ConfigSource<T> : IConfigSource<T>
     {
+        static ILog logger = Simply.Do.Log(MethodBase.GetCurrentMethod());
         private T _cache = default(T);
         protected T Cache
         {
@@ -55,7 +58,7 @@ namespace Simple.Config
         {
             if (this.Reload())
             {
-                Simply.Do.Log(this)
+                logger
                     .DebugFormat("Reload was invoked for {0}...", typeof(T));
 
                 if (Reloaded != null)

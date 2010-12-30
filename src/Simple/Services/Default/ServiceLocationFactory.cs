@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Simple.Config;
+using log4net;
+using System.Reflection;
 
 namespace Simple.Services.Default
 {
@@ -15,12 +17,12 @@ namespace Simple.Services.Default
     public class ServiceLocationFactory : AggregateFactory<ServiceLocationFactory>, IServiceLocationFactory
     {
         Dictionary<Type, object> _classes = new Dictionary<Type, object>();
-
+        static ILog logger = Simply.Do.Log(MethodBase.GetCurrentMethod());
         public void Set(object server, Type contract)
         {
             lock (_classes)
             {
-                Simply.Do.Log(this).InfoFormat("Setting server object for contract {0}...", contract.GetRealClassName());
+                logger.InfoFormat("Setting server object for contract {0}...", contract.GetRealClassName());
                 _classes[contract] = server;
             }
         }
@@ -30,7 +32,7 @@ namespace Simple.Services.Default
             lock (_classes)
             {
                 object obj = null;
-                Simply.Do.Log(this).DebugFormat("Trying to retrieving server object for contract {0}...", contract.Name);
+                logger.DebugFormat("Trying to retrieving server object for contract {0}...", contract.Name);
                 _classes.TryGetValue(contract, out obj);
                 return obj;
             }
@@ -42,7 +44,7 @@ namespace Simple.Services.Default
             {
                 lock (_classes)
                 {
-                    Simply.Do.Log(this).DebugFormat("Retrieving server object for contract {0}...", contract.Name);
+                    logger.DebugFormat("Retrieving server object for contract {0}...", contract.Name);
                     return _classes[contract];
                 }
             }
@@ -59,7 +61,7 @@ namespace Simple.Services.Default
         {
             lock (_classes)
             {
-                Simply.Do.Log(this).InfoFormat("Clearing server objects...");
+                logger.InfoFormat("Clearing server objects...");
                 _classes.Clear();
             }
         }

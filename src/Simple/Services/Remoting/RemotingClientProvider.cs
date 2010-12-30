@@ -9,7 +9,7 @@ namespace Simple.Services.Remoting
 {
     public class RemotingClientProvider : RemotingBaseProvider, IServiceClientProvider
     {
-        ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
+        static ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
         protected override void OnConfig(RemotingConfig config)
         {

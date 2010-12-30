@@ -10,7 +10,10 @@ namespace Simple.Services
 {
     public class DefaultInterceptor : IInterceptor
     {
-        MethodCache _cache = new MethodCache();
+        static MethodCache _cache = new MethodCache();
+        static InterfaceMapCache _ifaceCache = new InterfaceMapCache();
+        static ILog logger = Simply.Do.Log(MethodBase.GetCurrentMethod());
+
         Func<CallHookArgs, IEnumerable<ICallHook>> Hooks { get; set; }
         bool Client { get; set; }
         IContextHandler HeaderHandler { get; set; }
@@ -31,7 +34,7 @@ namespace Simple.Services
             Type declaringType = method.DeclaringType;
             if (targetType != declaringType && declaringType.IsInterface)
             {
-                var map = targetType.GetInterfaceMap(method.DeclaringType);
+                var map = _ifaceCache.GetMap(targetType, method.DeclaringType);
                 for (int i = 0; i < map.InterfaceMethods.Length; i++)
                     if (map.InterfaceMethods[i] == method) return map.TargetMethods[i];
             }
@@ -60,20 +63,13 @@ namespace Simple.Services
 
         private void FinallyExecuteActions(MethodBase method, List<ICallHook> list)
         {
-            var logger = Simply.Do.Log(this);
-            var alternativeLogger = Simply.Do.Log(method);
-
             logger.DebugFormat("Finalizing {0} in {1}...", method.Name, method.DeclaringType.Name);
-            if (!method.DeclaringType.IsInterface)
-                alternativeLogger.DebugFormat("END {0} in {1}", method.Name, method.DeclaringType.Name);
 
             foreach (var hook in list) hook.Finally();
         }
 
         private void AfterExecuteActions(object target, MethodBase method, object[] args, List<ICallHook> list)
         {
-            var logger = Simply.Do.Log(this);
-
             if (Client) HeaderHandler.RecoverCallHeaders(target, method, args);
             else HeaderHandler.InjectCallHeaders(target, method, args);
 
@@ -84,14 +80,9 @@ namespace Simple.Services
 
         private void BeforeExecuteActions(object target, MethodBase method, object[] args, List<ICallHook> list)
         {
-            var logger = Simply.Do.Log(this);
-            var alternativeLogger = Simply.Do.Log(method);
-
             foreach (var hook in Enumerable.Reverse(list)) hook.Before();
 
             logger.DebugFormat("Calling {0} in {1}...", method.Name, method.DeclaringType.Name);
-            if (!method.DeclaringType.IsInterface)
-                alternativeLogger.DebugFormat("BEGIN {0} in {1}", method.Name, method.DeclaringType.Name);
 
             if (Client) HeaderHandler.InjectCallHeaders(target, method, args);
             else HeaderHandler.RecoverCallHeaders(target, method, args);

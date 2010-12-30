@@ -9,10 +9,8 @@ namespace Simple.Data.Context
     public class DataContext : IDataContext
     {
         object _lock = new object();
-        ILog log = Simply.Do.Log(MethodBase.GetCurrentMethod());
+        static ILog log = Simply.Do.Log(MethodBase.GetCurrentMethod());
         Guid guid = Guid.NewGuid();
-
-        ILog logger = Simply.Do.Log(MethodInfo.GetCurrentMethod());
 
         public IDataContext Parent { get; protected set; }
         public IDataContext Child { get; protected set; }
@@ -127,11 +125,11 @@ namespace Simple.Data.Context
             }
             catch (AssertionFailure e)
             {
-                logger.Warn("Exception ocurred. Skipping AssertionFailure", e);
+                log.Warn("Exception ocurred. Skipping AssertionFailure", e);
             }
             catch (Exception e)
             {
-                logger.Warn(e.Message, e);
+                log.Warn(e.Message, e);
             }
         }
 

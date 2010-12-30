@@ -9,18 +9,14 @@ namespace Simple.Services
     public class WindowsIdentityInjector : BaseCallHook
     {
         public WindowsIdentityInjector(CallHookArgs args) : base(args) { }
+
         public override void Before()
         {
-            try
-            {
-                var ident = WindowsIdentity.GetCurrent();
-                SimpleContext.Get().Username = ident.IsAuthenticated ?
-                    ident.Name : null;
-            }
-            catch (NullReferenceException)
-            {
-                Simply.Do.Log("NullReference skipped");
-            }
+            var ident = WindowsIdentity.GetCurrent();
+            if (ident == null) return;
+
+            SimpleContext.Get().Username = ident.IsAuthenticated ?
+                ident.Name : null;
         }
     }
 }
