@@ -44,11 +44,13 @@ namespace Simple.ProfilingSessions
 
     public interface ITestService : IBaseService, IService
     {
-
+        void A30();
     }
 
     public class TestService : MarshalByRefObject, ITestService
     {
+        public void A30() { }
+
         #region IBaseService Members
 
         public void A00()

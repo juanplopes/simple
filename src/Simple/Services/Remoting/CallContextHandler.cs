@@ -16,7 +16,7 @@ namespace Simple.Services.Remoting
         {
             object obj = CallContext.LogicalGetData(guid);
             SimpleContext.Force((obj as SimpleContext) ?? new SimpleContext());
-            CallContext.FreeNamedDataSlot(guid);
+            //CallContext.FreeNamedDataSlot(guid);
         }
 
     }
