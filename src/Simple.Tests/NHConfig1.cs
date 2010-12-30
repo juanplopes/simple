@@ -30,7 +30,7 @@ namespace Simple.Tests
             File.WriteAllBytes(temp, Database.Northwind);
 
             simply.Configure
-                .NHibernteFluently(x =>
+                .NHibernateFluently(x =>
                     x.Database(SQLiteConfiguration.Standard.UsingFile(temp)
                     .Raw("generate_statistics", "true")
                     .ProxyFactoryFactory<ProxyFactoryFactory>()

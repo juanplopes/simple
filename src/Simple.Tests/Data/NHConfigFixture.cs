@@ -14,7 +14,7 @@ namespace Simple.Tests.Data
         [Test]
         public void TestLoadDialect()
         {
-            Simply.Do[this].Configure.NHibernteFluently(x =>
+            Simply.Do[this].Configure.NHibernateFluently(x =>
                x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")));
 
 
@@ -42,7 +42,7 @@ namespace Simple.Tests.Data
         [Test]
         public void TestGetConnectionString()
         {
-            Simply.Do[this].Configure.NHibernteFluently(x =>
+            Simply.Do[this].Configure.NHibernateFluently(x =>
                x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")));
             var cs = Simply.Do[this].GetConnectionString();
 
@@ -53,7 +53,7 @@ namespace Simple.Tests.Data
         [Test]
         public void TestMapEntities()
         {
-            Simply.Do[this].Configure.NHibernteFluently(x =>
+            Simply.Do[this].Configure.NHibernateFluently(x =>
                     x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")))
                 .Mapping<Category.Map>();
 
@@ -65,7 +65,7 @@ namespace Simple.Tests.Data
         [Test]
         public void TestMapEntityAssembly()
         {
-            Simply.Do[this].Configure.NHibernteFluently(x =>
+            Simply.Do[this].Configure.NHibernateFluently(x =>
                x.Database(SQLiteConfiguration.Standard.UsingFile("Northwind.sl3")))
             .MappingFromAssemblyOf<Category.Map>();
 

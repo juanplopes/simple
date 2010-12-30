@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NHibernate, Version=3.0.0.3001, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -50,6 +54,10 @@
     <Compile Include="TestService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Simple.Data\Simple.Data.csproj">
+      <Project>{35DBC634-E490-4239-9315-4E9210647C2A}</Project>
+      <Name>Simple.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simple\Simple.csproj">
       <Project>{0ABBB6E3-A9A3-41FB-A46E-C96B83470BD2}</Project>
       <Name>Simple</Name>

@@ -8,6 +8,8 @@ using Simple.Config;
 using Simple.Data;
 using NH = NHibernate;
 using Simple.Data.DirtyCheck;
+using FluentNHibernate.Cfg.Db;
+using NHibernate.ByteCode.LinFu;
 
 namespace Simple
 {
@@ -63,9 +65,23 @@ namespace Simple
             return new ConfiguratorInterface<NHibernateConfig, SimplyConfigure>(x => NHibernate(config, x));
         }
 
-        public static SimplyConfigure NHibernteFluently(this SimplyConfigure config, Func<FluentConfiguration, FluentConfiguration> func)
+        public static SimplyConfigure NHibernateFluently(this SimplyConfigure config, Func<FluentConfiguration, FluentConfiguration> func)
         {
             return NHibernate(config, x => func(Fluently.Configure(x)).BuildConfiguration());
+        }
+
+        public static SimplyConfigure NHibernateQuickly(this SimplyConfigure config, string server, string database, Assembly assembly)
+        {
+            config.NHibernateFluently(db =>
+                db.Mappings(m =>
+                {
+                    m.FluentMappings.AddFromAssembly(assembly);
+                    m.HbmMappings.AddFromAssembly(assembly);
+                })
+                  .Database(MsSqlConfiguration.MsSql2005.ConnectionString(cs =>
+                    cs.Server(server).Database(database).TrustedConnection())
+                    .ProxyFactoryFactory<ProxyFactoryFactory>()));
+            return config;
         }
 
         public static SimplyConfigure NHibernate(this SimplyConfigure config, Func<Configuration, Configuration> configurator)
