@@ -65,15 +65,20 @@ namespace Simple.Threading
             return Singleton(() => new T());
         }
 
+        class GuidCache<T>
+        {
+            public static Guid Guid = typeof(T).GUID;
+        }
+
         public void SetSingleton<T>(T obj)
         {
-            var key = typeof(T).GUID;
+            var key = GuidCache<T>.Guid;
             Set(key, obj);
         }
 
         public T Singleton<T>(Func<T> creator)
         {
-            var key = typeof(T).GUID;
+            var key = GuidCache<T>.Guid;
             var obj = Get<T>(key);
             if (obj == null)
             {

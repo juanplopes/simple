@@ -13,7 +13,8 @@ namespace Simple.Threading
     /// </summary>
     public class ThreadDataProvider : IContextProvider
     {
-        string key = Guid.NewGuid().ToString();
+        [ThreadStatic]
+        static IDictionary internalStorage;
         
 
         /// <summary>
@@ -22,20 +23,15 @@ namespace Simple.Threading
         /// <returns>The thread storage.</returns>
         public IDictionary GetStorage()
         {
-            LocalDataStoreSlot store = Thread.GetNamedDataSlot(key);
-            var dic = (IDictionary)Thread.GetData(store);
-            if (dic == null)
-            {
-                dic = new Dictionary<object, object>();
-                Thread.SetData(store, dic);
-            }
-            return dic;
+            if (internalStorage == null)
+                internalStorage = new Hashtable();
+
+            return internalStorage;
         }
 
         public void SetStorage(IDictionary storage)
         {
-            LocalDataStoreSlot store = Thread.GetNamedDataSlot(key);
-            Thread.SetData(store, storage);
+            internalStorage = storage;
         }
     }
 }
