@@ -9,26 +9,26 @@ namespace Simple.Web.Mvc
 {
     public static class HtmlNotice
     {
-        public static string PageTitle(this HtmlHelper helper, string title, string description, Action<StringBuilder> overrides)
+        public static MvcHtmlString PageTitle(this HtmlHelper helper, string title, string description, Action<StringBuilder> overrides)
         {
-            var builder = new TagBuilder("div").WithClasses("form-title");
+            var builder = new HtmlTagBuilder("div").WithClasses("form-title");
             builder.InnerHtml = string.Format("{0}{1}",
-                new TagBuilder("h2").FluentlyDo(x => x.SetInnerText(title)),
-                new TagBuilder("p").FluentlyDo(x => x.SetInnerText(description)));
+                new HtmlTagBuilder("h2").FluentlyDo(x => x.SetInnerText(title)),
+                new HtmlTagBuilder("p").FluentlyDo(x => x.SetInnerText(description)));
 
             var str = new StringBuilder();
             str.Append(builder);
             overrides(str);
 
-            return str.ToString();
+            return new MvcHtmlString(str.ToString());
         }
 
-        public static TagBuilder SimpleValidationSummary(this HtmlHelper helper, string message)
+        public static HtmlTagBuilder SimpleValidationSummary(this HtmlHelper helper, string message)
         {
             var contents = helper.ValidationSummary(message);
             if (contents == null) return null;
 
-            TagBuilder builder = new TagBuilder("div");
+            HtmlTagBuilder builder = new HtmlTagBuilder("div");
             builder.AddCssClass("simple-notification-error");
             builder.InnerHtml = contents.ToString();
             return builder;
@@ -90,7 +90,7 @@ namespace Simple.Web.Mvc
             return new NoticeActionResult(result, x => x.Controller.TempData.NotifyError(text));
         }
 
-        public static string NoticeAll(this HtmlHelper helper, Func<TagBuilder, TagBuilder> func)
+        public static string NoticeAll(this HtmlHelper helper, Func<HtmlTagBuilder, HtmlTagBuilder> func)
         {
             var builder = new StringBuilder();
             builder.Append(func(helper.ViewData.NoticeSuccess()));
@@ -100,40 +100,40 @@ namespace Simple.Web.Mvc
             return builder.ToString();
         }
 
-        public static TagBuilder NoticeSuccess(this IDictionary<string, object> data)
+        public static HtmlTagBuilder NoticeSuccess(this IDictionary<string, object> data)
         {
             return data.Notice(DefaultSucessClass);
         }
 
-        public static TagBuilder NoticeError(this IDictionary<string, object> data)
+        public static HtmlTagBuilder NoticeError(this IDictionary<string, object> data)
         {
             return data.Notice(DefaultErrorClass);
         }
 
-        public static TagBuilder Notice(this IDictionary<string, object> data, string key)
+        public static HtmlTagBuilder Notice(this IDictionary<string, object> data, string key)
         {
             key = DefaultNotificationFormat.AsFormat(key);
             var definition = data[key] as NoticeDefinition;
             return RenderNotice(key, definition);
         }
 
-        public static TagBuilder RenderNotice(string key, NoticeDefinition definition)
+        public static HtmlTagBuilder RenderNotice(string key, NoticeDefinition definition)
         {
             if (definition != null)
             {
-                var notice = new TagBuilder("div").WithClasses(key);
+                var notice = new HtmlTagBuilder("div").WithClasses(key);
 
                 if (definition.Title != null)
                 {
-                    var span = new TagBuilder("span").WithText(definition.Title);
+                    var span = new HtmlTagBuilder("span").WithText(definition.Title);
                     notice.InnerHtml += span.ToString();
                 }
 
                 if (definition.Items != null && definition.Items.Count > 0)
                 {
-                    var ul = new TagBuilder("ul").WithHtml(
+                    var ul = new HtmlTagBuilder("ul").WithHtml(
                       definition.Items.Aggregate(new StringBuilder(),
-                        (str, y) => str.Append(new TagBuilder("li").WithText(y))).ToString());
+                        (str, y) => str.Append(new HtmlTagBuilder("li").WithText(y))).ToString());
 
                     notice.InnerHtml += ul.ToString();
                 }
@@ -142,7 +142,7 @@ namespace Simple.Web.Mvc
             else return null; ;
         }
 
-        public static TagBuilder RenderNotice(this HtmlHelper helper, string key, NoticeDefinition definition)
+        public static HtmlTagBuilder RenderNotice(this HtmlHelper helper, string key, NoticeDefinition definition)
         {
             return RenderNotice(key, definition);
         }

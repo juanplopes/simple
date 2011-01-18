@@ -138,7 +138,8 @@
       <Libraries Include="$(BuildDir)\FluentValidation.dll"/>
       <Libraries Include="$(BuildDir)\log4net.dll"/>
 
-      <Libraries Include="$(BuildDir)\System.Web.Mvc.dll"/>
+      <Libraries Include="$(BuildDir)\Microsoft.Web.*.dll"/>
+      <Libraries Include="$(BuildDir)\System.Web.*.dll"/>
       <Libraries Include="$(BuildDir)\MVCContrib.*.dll"/>
       <Libraries Include="$(BuildDir)\MVCContrib.dll"/>
     </ItemGroup>

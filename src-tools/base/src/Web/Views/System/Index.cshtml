@@ -1,5 +1,6 @@
 @model IEnumerable<Simple.Patterns.TaskRunner.Result>
-
+@{Layout = "~/Views/Shared/_Layout.cshtml";}
+ 
 @section header {
     @Html.Stylesheet("system_check.css")
 }
@@ -7,7 +8,7 @@
 @Html.PageTitle("System check", "System functions status")
 @foreach (var item in Model)
 {
-    <div class="system_check_<%=item.ResultTypeTag%>">
+    <div class="system_check_@(item.ResultTypeTag)">
         <span><strong>
             @item.Description</strong></span>
         <div>

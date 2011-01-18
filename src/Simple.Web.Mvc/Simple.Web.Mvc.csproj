@@ -103,8 +103,8 @@
     <Compile Include="ElementalValueProvider.cs" />
     <Compile Include="EntityModelBinder.cs" />
     <Compile Include="EntityValidationExtensions.cs" />
-    <Compile Include="HtmlButtons.cs" />
     <Compile Include="HtmlNotice.cs" />
+    <Compile Include="HtmlTagBuilder.cs" />
     <Compile Include="HtmlUrl.cs" />
     <Compile Include="IFormController.cs" />
     <Compile Include="IModelSelectList.cs" />

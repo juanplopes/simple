@@ -10,7 +10,7 @@ namespace Simple.Web.Mvc
 {
     public static class TagBuilderExtensions
     {
-        public static TagBuilder WithAttrs(this TagBuilder builder, object attrs)
+        public static HtmlTagBuilder WithAttrs(this HtmlTagBuilder builder, object attrs)
         {
             if (builder == null) return builder;
 
@@ -20,7 +20,7 @@ namespace Simple.Web.Mvc
         }
 
 
-        public static TagBuilder WithAttrs(this TagBuilder builder, params Expression<Func<object, object>>[] attrs)
+        public static HtmlTagBuilder WithAttrs(this HtmlTagBuilder builder, params Expression<Func<object, object>>[] attrs)
         {
             if (builder == null) return builder;
 
@@ -29,14 +29,14 @@ namespace Simple.Web.Mvc
             return builder;
         }
 
-        public static TagBuilder WithClasses(this TagBuilder builder, params string[] classes)
+        public static HtmlTagBuilder WithClasses(this HtmlTagBuilder builder, params string[] classes)
         {
             if (builder == null) return builder;
 
             return builder.WithAttrs(@class => string.Join(" ", classes));
         }
 
-        public static TagBuilder AddClasses(this TagBuilder builder, params string[] classes)
+        public static HtmlTagBuilder AddClasses(this HtmlTagBuilder builder, params string[] classes)
         {
             if (builder == null) return builder;
 
@@ -45,20 +45,20 @@ namespace Simple.Web.Mvc
             return builder;
         }
 
-        public static TagBuilder WithId(this TagBuilder builder, string newId)
+        public static HtmlTagBuilder WithId(this HtmlTagBuilder builder, string newId)
         {
             if (builder == null) return builder;
 
             return builder.WithAttrs(id => newId);
         }
 
-        public static TagBuilder WithText(this TagBuilder builder, string text)
+        public static HtmlTagBuilder WithText(this HtmlTagBuilder builder, string text)
         {
             if (builder == null) return builder;
             builder.SetInnerText(text);
             return builder;
         }
-        public static TagBuilder WithHtml(this TagBuilder builder, string html)
+        public static HtmlTagBuilder WithHtml(this HtmlTagBuilder builder, string html)
         {
             if (builder == null) return builder;
             builder.InnerHtml = html;

@@ -23,7 +23,7 @@ namespace Example.Project.Web.Helpers
 
         public static TagBuilder Script(this HtmlHelper helper, string file)
         {
-            return new TagBuilder("script").WithAttrs(new
+            return new HtmlTagBuilder("script").WithAttrs(new
             {
                 type = "text/javascript",
                 src = helper.ResolveFullPath(ScriptsPath, file)
@@ -32,7 +32,7 @@ namespace Example.Project.Web.Helpers
 
         public static TagBuilder Image(this HtmlHelper helper, string file, string alt)
         {
-            return new TagBuilder("img").WithAttrs(new
+            return new HtmlTagBuilder("img").WithAttrs(new
             {
                 src = helper.ResolveFullPath(ImagesPath, file),
                 alt = alt
@@ -42,7 +42,7 @@ namespace Example.Project.Web.Helpers
 
         public static TagBuilder Stylesheet(this HtmlHelper helper, string file)
         {
-            return new TagBuilder("link").WithAttrs(new
+            return new HtmlTagBuilder("link").WithAttrs(new
             {
                 type = "text/css",
                 rel = "Stylesheet",
@@ -51,9 +51,9 @@ namespace Example.Project.Web.Helpers
         }
 
 
-        public static string ButtonLink(this HtmlHelper helper, string text, ActionResult action)
+        public static MvcHtmlString ButtonLink(this HtmlHelper helper, string text, ActionResult action)
         {
-            return helper.ActionLink(text, action, new { @class = "button" }).ToString();
+            return helper.ActionLink(text, action, new { @class = "button" });
         }
 
         public static ViewResult DeleteView(this Controller controller, object itemName, params object[] objs)
@@ -64,7 +64,7 @@ namespace Example.Project.Web.Helpers
         public static ViewResult ConfirmView(this Controller controller, object text, params object[] objs)
         {
             var view = new ViewResult() { ViewName = "Confirm", ViewData = controller.ViewData, TempData = controller.TempData };
-            view.ViewData["ConfirmMessage"] = (text ?? "").ToString().AsFormat(objs);
+            view.ViewBag.ConfirmMessage = (text ?? "").ToString().AsFormat(objs);
             return view;
         }
 

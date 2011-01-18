@@ -15,12 +15,12 @@ namespace Example.Project.Web.Controllers
         {
             try
             {
-                ViewData["Urls"] =
+                ViewBag.Urls = 
                     this.GetType().Assembly.GetTypes()
                         .Where(x => typeof(IController).IsAssignableFrom(x) && !Attribute.IsDefined(x, typeof(GeneratedCodeAttribute)))
                         .Select(x => x.Name.Remove(x.Name.Length - "Controller".Length)).ToArray();
             }
-            catch { ViewData["Urls"] = new string[0]; };
+            catch { ViewBag.Urls = new string[0]; };
 
             return View();
         }

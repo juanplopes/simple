@@ -10,7 +10,7 @@ namespace Example.Project.Web.Helpers
 {
     public static class NoticeExtensions
     {
-        public static string PageTitle(this HtmlHelper helper, string title, string description)
+        public static MvcHtmlString PageTitle(this HtmlHelper helper, string title, string description)
         {
          
             return helper.PageTitle(title, description,
