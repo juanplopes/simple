@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Simple
-{
-
-
+namespace Simple {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -63,15 +63,15 @@ namespace Simple
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;log4net&gt;
-        ///  &lt;appender name=&quot;NUnit&quot; type=&quot;log4net.Appender.ConsoleAppender, log4net&quot;&gt;
-        ///    &lt;layout type=&quot;log4net.Layout.PatternLayout,log4net&quot;&gt;
+        ///  &lt;appender name=&quot;Console&quot; type=&quot;log4net.Appender.ConsoleAppender&quot;&gt;
+        ///    &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;
         ///      &lt;param name=&quot;ConversionPattern&quot; value=&quot;%-5p - %m%n&quot; /&gt;
         ///    &lt;/layout&gt;
         ///  &lt;/appender&gt;
         ///
         ///  &lt;root&gt;
         ///    &lt;level value=&quot;ALL&quot;/&gt;
-        ///    &lt;appender-ref ref=&quot;NUnit&quot;/&gt;
+        ///    &lt;appender-ref ref=&quot;Console&quot;/&gt;
         ///  &lt;/root&gt;
         ///&lt;/log4net&gt;.
         /// </summary>

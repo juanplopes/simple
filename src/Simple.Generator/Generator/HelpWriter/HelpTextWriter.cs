@@ -38,12 +38,12 @@ namespace Simple.Generator.HelpWriter
             foreach (var command in resolver.GetMeta())
             {
                 Blank(); 
-                WriteCommandName(command.First, command.Second);
-                Writer.WriteLine("> Generator: {0}", command.Second.GeneratorType);
+                WriteCommandName(command.Item1, command.Item2);
+                Writer.WriteLine("> Generator: {0}", command.Item2.GeneratorType);
             }
         }
 
-        public void Write(IEnumerable<Pair<string, ICommandOptions>> commands)
+        public void Write(IEnumerable<Tuple<string, ICommandOptions>> commands)
         {
             var list = commands.ToList();
 
@@ -54,14 +54,14 @@ namespace Simple.Generator.HelpWriter
                 Blank();
 
                 Writer.Write("Command: ");
-                WriteCommandName(cmd.First, cmd.Second);
+                WriteCommandName(cmd.Item1, cmd.Item2);
 
-                var options = cmd.Second.Options.ToList();
+                var options = cmd.Item2.Options.ToList();
 
                 if (options.Count > 0)
                 {
                     Writer.WriteLine("Available options:");
-                    foreach (var option in cmd.Second.Options)
+                    foreach (var option in cmd.Item2.Options)
                         Writer.WriteLine("> {0} [{1}]", option.Name, option.Member.Type.GetRealClassName());
                 }
                 else

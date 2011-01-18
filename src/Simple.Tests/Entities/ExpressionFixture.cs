@@ -14,7 +14,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Query.Expr(q => q.Where(x => x.CompanyName == "asd").Skip(2).Take(10));
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName = \"asd\")).Skip(2).Take(10)");
+            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName == \"asd\")).Skip(2).Take(10)");
         }
 
         [Test]
@@ -24,7 +24,7 @@ namespace Simple.Tests.Entities
             int a = 2, b = 10;
             var spec = Customer.Query.Expr(q => q.Where(x => x.CompanyName == value).Skip(a).Take(b));
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName = \"asd\")).Skip(2).Take(10)");
+            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName == \"asd\")).Skip(2).Take(10)");
         }
 
         [Test]
@@ -37,6 +37,7 @@ namespace Simple.Tests.Entities
 
             var queryable1 = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
             var queryable2 = new EmptyQueryable<Customer>("q").ApplySpecs(spec2);
+
 
             queryable2.Expression.ToString().Should().Be(queryable1.Expression.ToString());
         }

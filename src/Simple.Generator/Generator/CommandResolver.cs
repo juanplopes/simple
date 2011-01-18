@@ -11,10 +11,10 @@ namespace Simple.Generator
 {
     public class CommandResolver
     {
-        protected List<Pair<string, ICommandOptions>> Parsers =
-            new List<Pair<string, ICommandOptions>>();
+        protected List<Tuple<string, ICommandOptions>> Parsers =
+            new List<Tuple<string, ICommandOptions>>();
 
-        public IEnumerable<Pair<string, ICommandOptions>> GetMeta()
+        public IEnumerable<Tuple<string, ICommandOptions>> GetMeta()
         {
             return Parsers;
         }
@@ -34,7 +34,7 @@ namespace Simple.Generator
             cmds = cmds.Select(x => x.CorrectInput()).ToArray();
 
             foreach (var cmd in cmds)
-                Parsers.Add(new Pair<string, ICommandOptions>(cmd, opts));
+                Parsers.Add(new Tuple<string, ICommandOptions>(cmd, opts));
 
             return opts;
         }
@@ -66,18 +66,18 @@ namespace Simple.Generator
             cmdLine = cmdLine.CorrectInput();
 
             var parser = FindParser(cmdLine);
-            cmdLine = cmdLine.Remove(cmdLine.IndexOf(parser.First), parser.First.Length);
-            var generator = parser.Second.Parse(cmdLine, ignoreExceedingArgs);
+            cmdLine = cmdLine.Remove(cmdLine.IndexOf(parser.Item1), parser.Item1.Length);
+            var generator = parser.Item2.Parse(cmdLine, ignoreExceedingArgs);
 
             return generator;
         }
 
-        private Pair<string, ICommandOptions> FindParser(string cmdLine)
+        private Tuple<string, ICommandOptions> FindParser(string cmdLine)
         {
-            var parsers = Parsers.Where(x => Regex.IsMatch(cmdLine, x.First.ToRegexFormat(true))).ToList();
+            var parsers = Parsers.Where(x => Regex.IsMatch(cmdLine, x.Item1.ToRegexFormat(true))).ToList();
 
             if (parsers.Count > 1)
-                throw new AmbiguousCommandException(cmdLine, parsers.Select(x => x.Second));
+                throw new AmbiguousCommandException(cmdLine, parsers.Select(x => x.Item2));
 
             if (parsers.Count == 0)
                 throw new InvalidCommandException(cmdLine);

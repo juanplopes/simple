@@ -24,7 +24,7 @@ namespace Simple.Tests.Entities
             queryable = queryable.ApplySpecs(spec);
 
             queryable.Expression.ToString().Should().Be(
-                "h.Where(x => ((x % 2) = 0)).Reverse()");
+                "h.Where(x => ((x % 2) == 0)).Reverse()");
 
         }
 

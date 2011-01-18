@@ -1,22 +1,10 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3F9400F2-FA85-464D-ADFC-BCA2BBE65798}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{48D3123B-0725-4C12-93F6-54123FA59E28}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{979DA157-6C40-4B5F-9B15-72296EC9FE24}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelServer", "ModelServer\ModelServer.csproj", "{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{047D5608-F466-4143-B4D2-FE1FCB339A2F}"
 	ProjectSection(SolutionItems) = preProject
 		..\build.xml = ..\build.xml
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{3006618B-33DE-4C1C-8E5F-9D248EDE5A23}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Development", "Development", "{437928BE-93AC-4B08-AA12-6A6925838FBE}"
 	ProjectSection(SolutionItems) = preProject
@@ -33,6 +21,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{511DC40E-0
 		..\cfg\Test\NHibernate.config = ..\cfg\Test\NHibernate.config
 		..\cfg\Test\Remoting.config = ..\cfg\Test\Remoting.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3F9400F2-FA85-464D-ADFC-BCA2BBE65798}"
+EndProject
+Project("{00000000-0000-0000-0000-000000000000}") = "Web", "Web\Web.csproj", "{48D3123B-0725-4C12-93F6-54123FA59E28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{979DA157-6C40-4B5F-9B15-72296EC9FE24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelServer", "ModelServer\ModelServer.csproj", "{03C2108D-6536-45C6-B1C3-5D506B4A4CA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{F091CA1A-9E22-4AEC-9156-D37DB7DE001C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{3006618B-33DE-4C1C-8E5F-9D248EDE5A23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,8 +69,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{3006618B-33DE-4C1C-8E5F-9D248EDE5A23} = {047D5608-F466-4143-B4D2-FE1FCB339A2F}
 		{437928BE-93AC-4B08-AA12-6A6925838FBE} = {047D5608-F466-4143-B4D2-FE1FCB339A2F}
 		{511DC40E-00F1-4028-A728-7A6C6468D2F4} = {047D5608-F466-4143-B4D2-FE1FCB339A2F}
+		{3006618B-33DE-4C1C-8E5F-9D248EDE5A23} = {047D5608-F466-4143-B4D2-FE1FCB339A2F}
 	EndGlobalSection
 EndGlobal

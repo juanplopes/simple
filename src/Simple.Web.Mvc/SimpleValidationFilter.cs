@@ -20,9 +20,9 @@ namespace Simple.Web.Mvc
             this.ViewName = view;
         }
 
-        public void AddValidationErrors(ControllerBase controller, IList<Pair<string>> errors)
+        public void AddValidationErrors(ControllerBase controller, IList<Tuple<string, string>> errors)
         {
-            var groupedErrors = errors.GroupBy(x => x.First ?? string.Empty);
+            var groupedErrors = errors.GroupBy(x => x.Item1 ?? string.Empty);
             foreach (var error in groupedErrors)
             {
                 var state = controller.ViewData.ModelState[error.Key];
@@ -33,7 +33,7 @@ namespace Simple.Web.Mvc
                 {
                     controller.ViewData.ModelState.AddModelError(
                         error.Key,
-                        message.Second);
+                        message.Item2);
                 }
             }
         }
@@ -46,14 +46,14 @@ namespace Simple.Web.Mvc
             var controller = filterContext.Controller;
             if (controller == null) return;
 
-            List<Pair<string>> errors = new List<Pair<string>>();
+            List<Tuple<string, string>> errors = new List<Tuple<string, string>>();
             if (Clear)
                 controller.ViewData.ModelState.Where(x => x.Value.Errors.Any()).ToList().ForEach(x => x.Value.Errors.Clear());
 
             if (ex is SimpleValidationException)
             {
                 var ex2 = ex as SimpleValidationException;
-                errors.AddRange(ex2.Errors.Select(x => new Pair<string>(x.PropertyName, x.Message)));
+                errors.AddRange(ex2.Errors.Select(x => Tuple.Create(x.PropertyName, x.Message)));
                 AddValidationErrors(controller, errors);
 
                 filterContext.Result = GetResult(filterContext, controller);

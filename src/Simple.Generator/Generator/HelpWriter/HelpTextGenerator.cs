@@ -28,7 +28,7 @@ namespace Simple.Generator.HelpWriter
                     writer.Write(
                         OptionNames.SelectMany(name =>
                             Resolver.GetMeta().Where(
-                            x => x.First.IndexOf(name, StringComparison.InvariantCultureIgnoreCase) != -1)));
+                            x => x.Item1.IndexOf(name, StringComparison.InvariantCultureIgnoreCase) != -1)));
         }
 
 

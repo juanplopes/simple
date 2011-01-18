@@ -29,7 +29,7 @@ namespace Simple.Tests.Mvc.ModelBinder
                 .Returns(col);
 
             var provider = ModelMetadataProviders.Current.GetMetadataForType(() => new T(), typeof(T));
-            binding = new ModelBindingContext() { ModelMetadata = provider, ValueProvider = new FormValueProvider(context.Object) };
+            binding = new ModelBindingContext() { ModelMetadata = provider, ValueProvider = new FormValueProvider(context.Object)  };
 
             var obj = binder.BindModel(context.Object, binding);
             return obj;

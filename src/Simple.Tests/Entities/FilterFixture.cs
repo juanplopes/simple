@@ -13,7 +13,7 @@ namespace Simple.Tests.Entities
         {
             var spec = Customer.Query.Filter(x => x.CompanyName == "asd");
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName = \"asd\"))");
+            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName == \"asd\"))");
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace Simple.Tests.Entities
             string value = "asd";
             var spec = Customer.Query.Filter(x => x.CompanyName == value);
             var queryable = new EmptyQueryable<Customer>("q").ApplySpecs(spec);
-            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName = \"asd\"))");
+            queryable.Expression.ToString().Should().Be("q.Where(x => (x.CompanyName == \"asd\"))");
         }
 
         [Test]

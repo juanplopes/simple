@@ -89,14 +89,62 @@ namespace System.Web.Mvc {
         }
 
         public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result) {
-            return routes.MapRoute(name, url, result, (ActionResult)null);
+            return MapRoute(routes, name, url, result, null /*namespaces*/);
         }
 
         public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults) {
-            return MapRoute(routes, name, url, result, defaults, null);
+            return MapRoute(routes, name, url, result, defaults, null /*constraints*/, null /*namespaces*/);
+        }
+
+        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, string[] namespaces) {
+            return MapRoute(routes, name, url, result, null /*defaults*/, namespaces);
         }
 
         public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults, object constraints) {
+            return MapRoute(routes, name, url, result, defaults, constraints, null /*namespaces*/);
+        }
+
+        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults, string[] namespaces) {
+            return MapRoute(routes, name, url, result, defaults, null /*constraints*/, namespaces);
+        }
+
+        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
+            // Create and add the route
+            var route = CreateRoute(url, result, defaults, constraints, namespaces);
+            routes.Add(name, route);
+            return route;
+        }
+
+        // Note: can't name the AreaRegistrationContext methods 'MapRoute', as that conflicts with the existing methods
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result) {
+            return MapRouteArea(context, name, url, result, null /*namespaces*/);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults) {
+            return MapRouteArea(context, name, url, result, defaults, null /*constraints*/, null /*namespaces*/);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, string[] namespaces) {
+            return MapRouteArea(context, name, url, result, null /*defaults*/, namespaces);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, object constraints) {
+            return MapRouteArea(context, name, url, result, defaults, constraints, null /*namespaces*/);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, string[] namespaces) {
+            return MapRouteArea(context, name, url, result, defaults, null /*constraints*/, namespaces);
+        }
+
+        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
+            // Create and add the route
+            var route = CreateRoute(url, result, defaults, constraints, namespaces);
+            context.Routes.Add(name, route);
+            route.DataTokens["area"] = context.AreaName;
+            return route;
+        }
+
+        private static Route CreateRoute(string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
             // Start by adding the default values from the anonymous object (if any)
             var routeValues = new RouteValueDictionary(defaults);
 
@@ -109,7 +157,13 @@ namespace System.Web.Mvc {
 
             // Create and add the route
             var route = new Route(url, routeValues, routeConstraints, new MvcRouteHandler());
-            routes.Add(name, route);
+
+            route.DataTokens = new RouteValueDictionary();
+
+            if (namespaces != null && namespaces.Length > 0) {
+                route.DataTokens["Namespaces"] = namespaces;
+            }
+
             return route;
         }
 
@@ -209,7 +263,7 @@ namespace Links {
         public static readonly string clickable_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/clickable.min.js") ? Url("clickable.min.js") : Url("clickable.js");
                       
         public static readonly string jquery_1_4_2_min_js = Url("jquery-1.4.2.min.js");
-        public static readonly string jquery_fancybox_1_3_1_pack_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.fancybox-1.3.1.pack.min.js") ? Url("jquery.fancybox-1.3.1.pack.min.js") : Url("jquery.fancybox-1.3.1.pack.js");
+        public static readonly string jquery_fancybox_1_3_1_mod_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.fancybox-1.3.1.mod.min.js") ? Url("jquery.fancybox-1.3.1.mod.min.js") : Url("jquery.fancybox-1.3.1.mod.js");
                       
         public static readonly string master_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/master.min.js") ? Url("master.min.js") : Url("master.js");
                       
@@ -225,6 +279,7 @@ namespace Links {
             private const string URLPATH = "~/Content/avalon";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string header_png = Url("header.png");
             public static readonly string http_error_png = Url("http-error.png");
             public static readonly string warning_png = Url("warning.png");
         }
@@ -295,6 +350,8 @@ namespace T4MVC {
         public static Dummy Instance = new Dummy();
     }
 }
+
+	
 
 #endregion T4MVC
 #pragma warning restore 1591

@@ -58,21 +58,21 @@ namespace Example.Project.Web.Helpers
 
         public static ViewResult DeleteView(this Controller controller, object itemName, params object[] objs)
         {
-            return ConfirmView(controller, "Do you want to remove '{0}'?", (itemName??"").ToString().AsFormat(objs));
+            return ConfirmView(controller, "Do you want to remove '{0}'?", (itemName ?? "").ToString().AsFormat(objs));
         }
 
         public static ViewResult ConfirmView(this Controller controller, object text, params object[] objs)
         {
-            var view = new ViewResult() { ViewName = "Confirm", ViewData = controller.ViewData, TempData = controller.TempData }; 
-            view.ViewData["confirm-message"] = (text??"").ToString().AsFormat(objs);
+            var view = new ViewResult() { ViewName = "Confirm", ViewData = controller.ViewData, TempData = controller.TempData };
+            view.ViewData["ConfirmMessage"] = (text ?? "").ToString().AsFormat(objs);
             return view;
         }
 
-       
 
-     
 
-     
+
+
+
 
     }
 }
