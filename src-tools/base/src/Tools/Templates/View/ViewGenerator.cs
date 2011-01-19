@@ -22,11 +22,11 @@ namespace Example.Project.Tools.Templates.View
                 foreach (var className in ClassNames)
                 {
                     Execute(project, ProjectFileWriter.Compile, "Controllers/{1}Controller.cs", className, Templates.Controller);
-                    Execute(project, ProjectFileWriter.Content, "Views/{1}/Create.aspx", className, Templates.ViewCreate);
-                    Execute(project, ProjectFileWriter.Content, "Views/{1}/Edit.aspx", className, Templates.ViewEdit);
-                    Execute(project, ProjectFileWriter.Content, "Views/{1}/Details.aspx", className, Templates.ViewDetails);
-                    Execute(project, ProjectFileWriter.Content, "Views/{1}/Index.aspx", className, Templates.ViewIndex);
-                    Execute(project, ProjectFileWriter.Content, "Views/{1}/_Form.ascx", className, Templates.ViewForm);
+                    Execute(project, ProjectFileWriter.Content, "Views/{1}/Create.cshtml", className, Templates.ViewCreate);
+                    Execute(project, ProjectFileWriter.Content, "Views/{1}/Edit.cshtml", className, Templates.ViewEdit);
+                    Execute(project, ProjectFileWriter.Content, "Views/{1}/Details.cshtml", className, Templates.ViewDetails);
+                    Execute(project, ProjectFileWriter.Content, "Views/{1}/Index.cshtml", className, Templates.ViewIndex);
+                    Execute(project, ProjectFileWriter.Content, "Views/{1}/_Form.cshtml", className, Templates.ViewForm);
                 }
             }
         }

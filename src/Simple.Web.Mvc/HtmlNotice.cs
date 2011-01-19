@@ -9,20 +9,6 @@ namespace Simple.Web.Mvc
 {
     public static class HtmlNotice
     {
-        public static MvcHtmlString PageTitle(this HtmlHelper helper, string title, string description, Action<StringBuilder> overrides)
-        {
-            var builder = new HtmlTagBuilder("div").WithClasses("form-title");
-            builder.InnerHtml = string.Format("{0}{1}",
-                new HtmlTagBuilder("h2").FluentlyDo(x => x.SetInnerText(title)),
-                new HtmlTagBuilder("p").FluentlyDo(x => x.SetInnerText(description)));
-
-            var str = new StringBuilder();
-            str.Append(builder);
-            overrides(str);
-
-            return new MvcHtmlString(str.ToString());
-        }
-
         public static HtmlTagBuilder SimpleValidationSummary(this HtmlHelper helper, string message)
         {
             var contents = helper.ValidationSummary(message);
@@ -90,16 +76,7 @@ namespace Simple.Web.Mvc
             return new NoticeActionResult(result, x => x.Controller.TempData.NotifyError(text));
         }
 
-        public static string NoticeAll(this HtmlHelper helper, Func<HtmlTagBuilder, HtmlTagBuilder> func)
-        {
-            var builder = new StringBuilder();
-            builder.Append(func(helper.ViewData.NoticeSuccess()));
-            builder.Append(func(helper.ViewData.NoticeError()));
-            builder.Append(func(helper.ViewContext.TempData.NoticeSuccess()));
-            builder.Append(func(helper.ViewContext.TempData.NoticeError()));
-            return builder.ToString();
-        }
-
+    
         public static HtmlTagBuilder NoticeSuccess(this IDictionary<string, object> data)
         {
             return data.Notice(DefaultSucessClass);

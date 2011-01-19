@@ -1,4 +1,4 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="GenerateAssemblyInfo">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="GenerateAssemblyInfo">
   <PropertyGroup>
     <BuildBase>$(MSBuildProjectDirectory)\</BuildBase>
 

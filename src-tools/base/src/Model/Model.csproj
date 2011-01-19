@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -98,6 +98,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationMessages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Domain\Generated\Book.cs" />
+    <Compile Include="Services\IBookService.cs" />
+    <Compile Include="Validators\BookValidator.cs" />
+    <Compile Include="Domain\Generated\Book.contracts.cs" />
+    <Compile Include="Domain\Generated\Author.cs" />
+    <Compile Include="Services\IAuthorService.cs" />
+    <Compile Include="Validators\AuthorValidator.cs" />
+    <Compile Include="Domain\Generated\Author.contracts.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
@@ -119,6 +127,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ValidationMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Domain\Generated\Book.hbm.xml" />
+    <EmbeddedResource Include="Domain\Generated\Author.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

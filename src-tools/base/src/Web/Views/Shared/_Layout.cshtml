@@ -2,14 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>@(ViewBag.Title ?? "Example.Project")</title>
-
-    @Html.Stylesheet("avalon.css")
-    @Html.Stylesheet("fancybox/jquery.fancybox-1.3.1.css")
-    @Html.Script("jquery-1.4.2.min.js") 
-    @Html.Script("jquery.fancybox-1.3.1.mod.js")
-    @Html.Script("master.js") 
-    
-    @RenderSection("header")
+    @H.Stylesheet("avalon.css")
+    @H.Stylesheet("fancybox/jquery.fancybox-1.3.1.css")
+    @H.Script("jquery-1.4.2.min.js")
+    @H.Script("jquery.fancybox-1.3.1.mod.js")
+    @H.Script("master.js")
+    @RenderSection("header", required: false)
 </head>
 <body>
     <div class="header">
@@ -20,8 +18,8 @@
                 <ul>
                     <li>
                         @Html.ActionLink("Home", MVC.Home.Index())
-                    <li>
-                        @Html.ActionLink("About",MVC.Home.About())
+                        <li>
+                    @Html.ActionLink("About", MVC.Home.About())
                 </ul>
             </div>
         </div>

@@ -56,8 +56,8 @@ namespace Example.Project.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string About = "~/Views/Home/About.aspx";
-            public readonly string Index = "~/Views/Home/Index.aspx";
+            public readonly string About = "~/Views/Home/About.cshtml";
+            public readonly string Index = "~/Views/Home/Index.cshtml";
         }
     }
 

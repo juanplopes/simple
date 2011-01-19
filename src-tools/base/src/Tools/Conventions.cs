@@ -52,12 +52,12 @@ namespace Example.Project.Tools
 
         public string TypeFor(DbOneToMany fk)
         {
-            return "ISet<" + NameFor(fk.FkTableRef) + ">";
+            return "ICollection<" + NameFor(fk.FkTableRef) + ">";
         }
 
         public string ConcreteTypeFor(DbOneToMany fk)
         {
-            return "HashedSet<" + NameFor(fk.FkTableRef) + ">";
+            return "HashSet<" + NameFor(fk.FkTableRef) + ">";
         }
 
 

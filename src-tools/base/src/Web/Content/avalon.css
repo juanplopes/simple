@@ -187,7 +187,7 @@ input[type=text]:hover, input[type=password]:hover, select:hover, textarea:hover
     border: 2px solid #9C1200 !important;
 }
 
-input[type=submit], input[type=button], a.button, a.backlink
+input[type=submit], input[type=button], .buttons a
 {
     font-size: 0.9em;
     cursor: pointer;
@@ -216,12 +216,12 @@ input[type=submit], input[type=button]
 }
 
 
-input[type=submit]:hover, input[type=button]:hover, a.button:hover, a.backlink:hover
+input[type=submit]:hover, input[type=button]:hover, .buttons a:hover
 {
     background-color: #9C1200;
 }
 
-input[type=submit]:active, input[type=button]:active, a.button:active, a.backlink:active
+input[type=submit]:active, input[type=button]:active,  .buttons a:active
 {
     background-color: #CE6A5C;
 }
@@ -265,66 +265,6 @@ div.simple-notification-success span, div.simple-notification-error span
 div.simple-notification-success ul, div.simple-notification-error ul
 {
     font-size: 0.9em;
-}
-
-div.http_error
-{
-    border: 2px solid red;
-    width: 870px;
-    height: 306px;
-    background: url(avalon/http-error.png) no-repeat;
-    margin: auto;
-    text-align: right;
-    margin-top: 50px;
-    padding-right: 30px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-}
-
-div.http_error > div.default
-{
-    margin-top: 50px;
-    width: 580px;
-    float: right;
-}
-
-div.http_error > div.stacktrace
-{
-    clear:both;
-}
-div.http_error span
-{
-    font-size: 15pt;
-    text-align: right;
-    word-wrap: break-word;
-    clear: both;
-}
-
-div.http_error h1
-{
-    margin: 0;
-    font-weight: normal;
-    text-shadow: 1px 1px 1px gray;
-    font-size: 30pt;
-    text-align: right;
-    word-wrap: break-word;
-}
-
-div.http_error pre
-{
-    text-align: left;
-    overflow: auto;
-    float: right;
-    width: 600px;
-    height: 230px;
-}
-
-div.http_error a
-{
-    display: block;
-    clear: both;
-    float: right;
 }
 
 hr

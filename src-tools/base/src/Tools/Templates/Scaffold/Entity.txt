@@ -5,7 +5,6 @@ using System.Text;
 using Simple.Reflection;
 using Simple.Entities;
 using ${opt.Namespace}.Services;
-using Iesi.Collections.Generic;
 
 namespace ${opt.Namespace}.Domain
 {

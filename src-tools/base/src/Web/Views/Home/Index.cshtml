@@ -1,11 +1,14 @@
 ﻿@{Layout = "~/Views/Shared/_Layout.cshtml";}
+
 @section header {
     @Html.Script("clickable.js")
     <script type="text/javascript">
         $(function () { $('.jsClickable').clickable(); });
     </script>
 }
-@Html.PageTitle("Welcome", "Select an option below.")
+
+
+
 <div class="home_actions">
     <div class="jsClickable home_action">
         <a href='http://simpledotnet.googlecode.com' class="home_action"></a>

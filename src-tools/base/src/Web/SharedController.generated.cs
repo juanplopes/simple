@@ -27,7 +27,9 @@ namespace T4MVC {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string Confirm = "~/Views/Shared/Confirm.ascx";
+            public readonly string _Confirm = "~/Views/Shared/_Confirm.cshtml";
+            public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
+            public readonly string Error = "~/Views/Shared/Error.cshtml";
         }
     }
 
