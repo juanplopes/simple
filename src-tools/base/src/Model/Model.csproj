@@ -98,13 +98,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Generated\Book.cs" />
-    <Compile Include="Services\IBookService.cs" />
-    <Compile Include="Validators\BookValidator.cs" />
     <Compile Include="Domain\Generated\Book.contracts.cs" />
-    <Compile Include="Domain\Generated\Author.cs" />
-    <Compile Include="Services\IAuthorService.cs" />
-    <Compile Include="Validators\AuthorValidator.cs" />
     <Compile Include="Domain\Generated\Author.contracts.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -127,8 +121,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ValidationMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Domain\Generated\Book.hbm.xml" />
-    <EmbeddedResource Include="Domain\Generated\Author.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

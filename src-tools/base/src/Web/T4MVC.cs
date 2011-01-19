@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Hosting;
@@ -43,6 +44,10 @@ namespace System.Web.Mvc {
 
         public static MvcHtmlString ActionLink(this HtmlHelper htmlHelper, string linkText, ActionResult result, IDictionary<string, object> htmlAttributes) {
             return htmlHelper.RouteLink(linkText, result.GetRouteValueDictionary(), htmlAttributes);
+        }
+
+        public static MvcForm BeginForm(this HtmlHelper htmlHelper, ActionResult result) {
+            return htmlHelper.BeginForm(result, FormMethod.Post);
         }
 
         public static MvcForm BeginForm(this HtmlHelper htmlHelper, ActionResult result, FormMethod formMethod) {
@@ -138,9 +143,14 @@ namespace System.Web.Mvc {
 
         public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
             // Create and add the route
+            if ((namespaces == null) && (context.Namespaces != null)) {
+                 namespaces = context.Namespaces.ToArray();
+            }
             var route = CreateRoute(url, result, defaults, constraints, namespaces);
             context.Routes.Add(name, route);
             route.DataTokens["area"] = context.AreaName;
+            bool useNamespaceFallback = (namespaces == null) || (namespaces.Length == 0);
+            route.DataTokens["UseNamespaceFallback"] = useNamespaceFallback;
             return route;
         }
 
@@ -170,7 +180,7 @@ namespace System.Web.Mvc {
         public static IT4MVCActionResult GetT4MVCResult(this ActionResult result) {
             var t4MVCResult = result as IT4MVCActionResult;
             if (t4MVCResult == null) {
-                throw new InvalidOperationException("T4MVC methods can only be passed pseudo-action calls (e.g. MVC.Home.About()), and not real action calls.");
+                throw new InvalidOperationException("T4MVC was called incorrectly. You may need to force it to regenerate by right clicking on T4MVC.tt and choosing Run Custom Tool");
             }
             return t4MVCResult;
         }
@@ -280,7 +290,6 @@ namespace Links {
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string header_png = Url("header.png");
-            public static readonly string http_error_png = Url("http-error.png");
             public static readonly string warning_png = Url("warning.png");
         }
     
