@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Collections.Specialized;
 using Simple.Web.Mvc;
 using Moq;
+using Simple.Tests.Mvc.Mocks;
+using System.Globalization;
 
 namespace Simple.Tests.Mvc.ModelBinder
 {
@@ -22,16 +24,14 @@ namespace Simple.Tests.Mvc.ModelBinder
             where T : new()
         {
             var binder = new EntityModelBinder(new ModelBinderDictionary());
+            var values = new NameValueCollectionValueProvider(col, CultureInfo.InvariantCulture);
+            var context = new Mock<ControllerContext>().Object;
 
-            var context = new Mock<ControllerContext>();
-            context
-                .SetupGet(x => x.HttpContext.Request.Form)
-                .Returns(col);
 
             var provider = ModelMetadataProviders.Current.GetMetadataForType(() => new T(), typeof(T));
-            binding = new ModelBindingContext() { ModelMetadata = provider, ValueProvider = new FormValueProvider(context.Object)  };
+            binding = new ModelBindingContext() { ModelMetadata = provider, ValueProvider = values };
 
-            var obj = binder.BindModel(context.Object, binding);
+            var obj = binder.BindModel(context, binding);
             return obj;
         }
     }

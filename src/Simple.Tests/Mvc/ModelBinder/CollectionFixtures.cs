@@ -7,12 +7,17 @@ using NUnit.Framework;
 namespace Simple.Tests.Mvc.ModelBinder
 {
     [TestFixture]
-    public class ISetCollectionFixture : BaseCollectionFixture<CompanyISet, ISet<Address>>
+    public class IesiSetCollectionFixture : BaseCollectionFixture<CompanyIesiSet, Iesi.Collections.Generic.ISet<Address>>
     {
         protected override bool AllowNulls
         {
             get { return false; }
         }
+    }
+
+    [TestFixture]
+    public class ISetCollectionFixture : BaseCollectionFixture<CompanyISet, ISet<Address>>
+    {
     }
 
     [TestFixture]

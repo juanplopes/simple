@@ -58,6 +58,10 @@ namespace Simple.Tests.Mvc.ModelBinder
         public CompanyISet() { Places = new HashSet<Address>(); }
     }
 
+    public class CompanyIesiSet : Company<Iesi.Collections.Generic.ISet<Address>>
+    {
+        public CompanyIesiSet() { Places = new Iesi.Collections.Generic.HashedSet<Address>(); }
+    }
 
     public class CompanyLinkedList : Company<LinkedList<Address>>
     {
