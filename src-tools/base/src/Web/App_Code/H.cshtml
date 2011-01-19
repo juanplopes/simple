@@ -1,0 +1,21 @@
+﻿@using Simple.Web.Mvc
+@inherits SimpleHelper
+@helper Script(string file)
+    {   <script type="text/javascript" src="@Url.Content("~/Scripts/" + file)"></script>}
+@helper Stylesheet(string file)
+    {   <link rel="Stylesheet" type="text/css" href="@Url.Content("~/Content/" + file)"></link>}
+@helper PageTitle(string title, string description)
+    {
+    <div class="form-title">
+        <h2>@title</h2>
+        <p>@description</p>
+    </div>
+    @Html.SimpleValidationSummary("Error during processing.")
+    
+    <div class="auto-hide">
+        @Page.ViewData.NoticeSuccess()
+        @Page.ViewData.NoticeError()
+        @Page.TempData.NoticeSuccess()
+        @Page.TempData.NoticeError()
+    </div>
+}

@@ -1,0 +1,13 @@
+@model Author
+@using (Html.BeginForm())
+{
+	<fieldset>
+		<p>
+		   @this.TextBox(x => x.Name).Label("Name:")
+		</p>
+		<p class="buttons">
+			@Html.ActionLink("back", "Index")
+			@this.SubmitButton("send")
+		</p>
+	</fieldset>
+}

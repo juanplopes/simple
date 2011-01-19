@@ -1,0 +1,16 @@
+@model Book
+@using (Html.BeginForm())
+{
+	<fieldset>
+		<p>
+		   @this.TextBox(x => x.Name).Label("Name:")
+		</p>
+        <p>
+            @this.AutoSelect(x => x.Author, "Authors")
+        </p>
+		<p class="buttons">
+			@Html.ActionLink("back", "Index")
+			@this.SubmitButton("send")
+		</p>
+	</fieldset>
+}
