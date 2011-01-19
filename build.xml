@@ -19,7 +19,7 @@
     <Configuration>Release</Configuration>
     <Platform>Any CPU</Platform>
 
-    <ProductVersionBase>3.1</ProductVersionBase>
+    <ProductVersionBase>3.5</ProductVersionBase>
     <ProductVersionBuild></ProductVersionBuild>
     <ProductBuildName>Avalon</ProductBuildName>
 
