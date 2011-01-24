@@ -62,11 +62,10 @@ namespace Simple.Gui
                         InstallPath = txtDirectory.Text.Trim(),
                         Namespace = txtNamespace.Text.Trim(),
                         ServiceName = txtSvcName.Text.Trim(),
-                        SetupEnv = chkSetup.Checked,
                         ReplacePath = path,
                     };
                     logic.OnProgress += (text, subText) => progress.InvokeControlAction(x => x.SetProgress(text, subText));
-                    logic.OnFinish += (success, url) => progress.InvokeControlAction(x => x.ShowFinished(success, url));
+                    logic.OnFinish += (success) => progress.InvokeControlAction(x => x.ShowFinished(success));
                     logic.OnAsk = text => progress.InvokeControlAction(x => MessageBox.Show(text, "Simple.Net", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
 
                     logic.Execute();

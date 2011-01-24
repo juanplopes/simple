@@ -34,8 +34,6 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.AdvancedGroup = new System.Windows.Forms.GroupBox();
-            this.chkSetup = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtCatalog = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -74,7 +72,7 @@
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(366, 483);
+            this.btnCancel.Location = new System.Drawing.Point(366, 440);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 28);
             this.btnCancel.TabIndex = 5;
@@ -89,7 +87,7 @@
             this.btnOk.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOk.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOk.Location = new System.Drawing.Point(304, 483);
+            this.btnOk.Location = new System.Drawing.Point(304, 440);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(56, 28);
             this.btnOk.TabIndex = 4;
@@ -114,8 +112,6 @@
             // 
             this.AdvancedGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.AdvancedGroup.Controls.Add(this.chkSetup);
-            this.AdvancedGroup.Controls.Add(this.label6);
             this.AdvancedGroup.Controls.Add(this.label3);
             this.AdvancedGroup.Controls.Add(this.txtCatalog);
             this.AdvancedGroup.Controls.Add(this.label2);
@@ -125,34 +121,9 @@
             this.AdvancedGroup.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AdvancedGroup.Location = new System.Drawing.Point(14, 284);
             this.AdvancedGroup.Name = "AdvancedGroup";
-            this.AdvancedGroup.Size = new System.Drawing.Size(544, 187);
+            this.AdvancedGroup.Size = new System.Drawing.Size(544, 145);
             this.AdvancedGroup.TabIndex = 15;
             this.AdvancedGroup.TabStop = false;
-            // 
-            // chkSetup
-            // 
-            this.chkSetup.AutoSize = true;
-            this.chkSetup.Checked = true;
-            this.chkSetup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSetup.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkSetup.Location = new System.Drawing.Point(215, 140);
-            this.chkSetup.Name = "chkSetup";
-            this.chkSetup.Size = new System.Drawing.Size(93, 33);
-            this.chkSetup.TabIndex = 22;
-            this.chkSetup.Text = "Setup";
-            this.chkSetup.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Trebuchet MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(6, 140);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(195, 30);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "Environment:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
             // 
@@ -233,7 +204,7 @@
             this.btnMore.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnMore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMore.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMore.Location = new System.Drawing.Point(460, 483);
+            this.btnMore.Location = new System.Drawing.Point(460, 440);
             this.btnMore.Name = "btnMore";
             this.btnMore.Size = new System.Drawing.Size(98, 28);
             this.btnMore.TabIndex = 6;
@@ -302,7 +273,7 @@
             this.btnAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAbout.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAbout.Location = new System.Drawing.Point(14, 483);
+            this.btnAbout.Location = new System.Drawing.Point(14, 440);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(65, 28);
             this.btnAbout.TabIndex = 23;
@@ -317,7 +288,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(570, 523);
+            this.ClientSize = new System.Drawing.Size(570, 480);
             this.ControlBox = false;
             this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.txtDirectory);
@@ -360,8 +331,6 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         private System.Windows.Forms.Button btnDirectory;
         private Header header1;
-        private System.Windows.Forms.CheckBox chkSetup;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtDirectory;
         private System.Windows.Forms.Button btnAbout;
     }

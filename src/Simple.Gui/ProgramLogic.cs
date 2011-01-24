@@ -22,7 +22,6 @@ namespace Simple.Gui
         public string ServiceName { get; set; }
         public string ReplacePath { get; set; }
         public string InstallPath { get; set; }
-        public bool SetupEnv { get; set; }
 
         public event Action<string, string> OnProgress;
         public Func<string, bool> OnAsk { get; set; }
@@ -42,11 +41,11 @@ namespace Simple.Gui
         }
 
 
-        public event Action<string, string> OnFinish;
-        protected void ReportFinish(string success, string url)
+        public event Action<string> OnFinish;
+        protected void ReportFinish(string success)
         {
             if (OnFinish != null)
-                OnFinish(success, url);
+                OnFinish(success);
         }
 
         public void Execute()
@@ -55,52 +54,16 @@ namespace Simple.Gui
             {
                 DoReplace();
 
-                if (!HasMVC() &&
-                    Ask("You seem to not have ASP.NET MVC 2 installed.\n\nWeb Project may not open. Do you want me to fix project files so they'll open?"))
-                        MVCReplace();
-
                 ReportProgress("Copying files", "<starting>");
                 CopyItem(null, ReplacePath, InstallPath);
                 SetPermissions(InstallPath);
 
-                if (SetupEnv)
-                {
-                    ReportProgress("Setting up development environment", "Ensuring .Net framework is on path");
-                    EnsureNetFxPath();
-
-                    int msbuild = RunMsBuild();
-
-                    if (msbuild == 0)
-                    {
-
-                        var url = string.Format("http://localhost/{0}", IISUrl);
-
-                        PrecacheResults(url);
-                        ReportFinish("Done", url);
-                    }
-                    else
-                        ReportFinish("Done, with errors", null);
-                }
-                else
-                {
-                    ReportFinish("Done", null);
-                }
+                ReportFinish("Done!");
+             
             }
             catch (Exception e)
             {
-                ReportFinish(string.Format("Fatal error: {0}", e.Message), null);
-            }
-        }
-
-        private bool HasMVC()
-        {
-            try
-            {
-                return Assembly.ReflectionOnlyLoad("System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35").GlobalAssemblyCache;
-            }
-            catch
-            {
-                return false;
+                ReportFinish(string.Format("Fatal error: {0}", e.Message));
             }
         }
 
@@ -129,57 +92,7 @@ namespace Simple.Gui
             ReplacerLogic.DefaultExecute(ReplacePath, "exampleprojectsvc", ServiceName, false);
         }
 
-        private void MVCReplace()
-        {
-            ReportProgress("Replacing MVC projects", "Step 1 of 1");
-            ReplacerLogic.DefaultExecute(ReplacePath, "{F85E285D-A4E0-4152-9332-AB1D724D3325};", "", false);
-        }
-
-
-        private void PrecacheResults(string url)
-        {
-            int retries = 0;
-            ReportProgress("Precaching results", "starting");
-            while (retries++ < 3)
-            {
-                ReportProgress(null,
-                    string.Format("{0} ({1})", url, retries));
-                try
-                {
-                    WebRequest.Create(url).GetResponse().GetResponseStream().ReadByte();
-                    break;
-                }
-                catch
-                {
-                    Thread.Sleep(1000);
-                }
-            }
-        }
-
-        private void EnsureNetFxPath()
-        {
-            var dotnetPath = GetNetFxPath();
-
-            var paths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine));
-            var userPaths = new Paths(Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User));
-
-            if (!paths.Contains(dotnetPath) && !userPaths.Contains(dotnetPath))
-            {
-                userPaths.Add(dotnetPath);
-                Environment.SetEnvironmentVariable("PATH",
-                    userPaths.ToString(), EnvironmentVariableTarget.User);
-                Environment.SetEnvironmentVariable("PATH",
-                    userPaths.ToString(), EnvironmentVariableTarget.Process);
-            }
-        }
-
-        private string GetNetFxPath()
-        {
-            var dotnetPath = ToolLocationHelper.GetPathToDotNetFramework(
-                TargetDotNetFrameworkVersion.VersionLatest);
-            return dotnetPath;
-        }
-
+     
         private void CopyItem(string baseDir, string source, string destination)
         {
             baseDir = baseDir ?? source;
@@ -208,29 +121,5 @@ namespace Simple.Gui
                 .IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-
-        public int RunMsBuild()
-        {
-
-            ReportProgress("Building project", "msbuild first-build.xml");
-
-            var psi = new ProcessStartInfo();
-            psi.FileName = "msbuild";
-            psi.Arguments = "first-build.xml";
-            psi.WorkingDirectory = InstallPath;
-            psi.WindowStyle = ProcessWindowStyle.Hidden;
-
-            if (!IsAdmin())
-                psi.Verb = "runas";
-
-            var p = Process.Start(psi);
-
-            p.WaitForExit();
-            if (p.ExitCode == 0)
-                File.Delete(Path.Combine(InstallPath, "first-build.xml"));
-
-            return p.ExitCode;
-
-        }
     }
 }

@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgressGui));
             this.ProgressText = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
-            this.btnStart = new System.Windows.Forms.Button();
             this.ProgressSubText = new System.Windows.Forms.Label();
             this.header1 = new Simple.Gui.Header();
             this.SuspendLayout();
@@ -55,7 +54,7 @@
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.Location = new System.Drawing.Point(288, 161);
+            this.btnClose.Location = new System.Drawing.Point(460, 161);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(98, 28);
             this.btnClose.TabIndex = 23;
@@ -63,23 +62,6 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Visible = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // btnStart
-            // 
-            this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStart.Enabled = false;
-            this.btnStart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkRed;
-            this.btnStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
-            this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStart.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.Location = new System.Drawing.Point(184, 161);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(98, 28);
-            this.btnStart.TabIndex = 24;
-            this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Visible = false;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // ProgressSubText
             // 
@@ -106,7 +88,6 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(570, 201);
             this.ControlBox = false;
-            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.header1);
             this.Controls.Add(this.ProgressSubText);
@@ -125,7 +106,6 @@
         private Header header1;
         private System.Windows.Forms.Label ProgressText;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label ProgressSubText;
     }
 }
