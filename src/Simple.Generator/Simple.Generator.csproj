@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Simple</RootNamespace>
     <AssemblyName>Simple.Generator</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Simple.snk</AssemblyOriginatorKeyFile>
@@ -63,28 +63,126 @@
     <Compile Include="..\GlobalInfo.cs">
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
-    <Compile Include="Generator\Console\ConsoleCommandReader.cs" />
-    <Compile Include="Generator\Console\ContextBase.cs" />
-    <Compile Include="Generator\Console\DefaultConfig.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DefaultConfig.resx</DependentUpon>
+    <Compile Include="Generator\AmbiguousCommandException.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generator\Console\IUnsafeCommand.cs" />
-    <Compile Include="Generator\Data\DataManager.cs" />
-    <Compile Include="Generator\Data\DataItem.cs" />
-    <Compile Include="Generator\Data\DataList.cs" />
-    <Compile Include="Generator\Data\IDataList.cs" />
-    <Compile Include="Generator\ITableTemplate.cs" />
-    <Compile Include="Generator\Misc\CSharpInterfaceReplacer.cs" />
-    <Compile Include="Generator\Misc\MsSqlResetDbCommand.cs" />
-    <Compile Include="Generator\ProjectDescription.cs" />
-    <Compile Include="Generator\Strings\EnglishPluralizer.cs" />
-    <Compile Include="Generator\Strings\IPluralizer.cs" />
-    <Compile Include="Generator\Strings\GeneratorStrings.cs" />
-    <Compile Include="Generator\TableNameTransformer.cs" />
-    <Compile Include="Generator\ITableConventions.cs" />
-    <Compile Include="Generator\TableTemplateBase.cs" />
+    <Compile Include="Generator\CommandOptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\CommandRegistry.cs" />
+    <Compile Include="Generator\CommandResolver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Console\ConsoleCommandReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Console\ContextBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Console\DefaultConfig.Designer.cs">
+      <DependentUpon>DefaultConfig.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Generator\Console\IUnsafeCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Data\DataItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Data\DataList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Data\DataManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Data\IDataList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\HelpWriter\HelpTextGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\HelpWriter\HelpTextWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\HelpWriter\IHelpWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\ICommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\ICommandOptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\InitialCommandOptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\InvalidArgumentCountException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\InvalidCommandException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\ITableConventions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\ITableTemplate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Misc\CSharpInterfaceReplacer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Misc\MsSqlResetDbCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\ParserException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Parsers\GeneratorParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Parsers\ICommandParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Parsers\ListParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Parsers\Regexes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Parsers\ValueParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\ProjectDescription.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\ProjectFileWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\ProjectWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\RegexHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Strings\EnglishPluralizer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Strings\GeneratorStrings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\Strings\IPluralizer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\TableNameTransformer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\TableTemplateBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generator\UnrecognizedOptionsException.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrator\Fluent\FreeAction.cs" />
     <Compile Include="Migrator\Fluent\Index\IndexAction.cs" />
     <Compile Include="Migrator\Fluent\Index\IndexAddAction.cs" />
@@ -92,27 +190,6 @@
     <Compile Include="Migrator\MigratorOptions.cs" />
     <Compile Include="NVelocity\EngineWrapper.cs" />
     <Compile Include="NVelocity\NVelocityMemoryEngine.cs" />
-    <Compile Include="Generator\AmbiguousCommandException.cs" />
-    <Compile Include="Generator\ParserException.cs" />
-    <Compile Include="Generator\HelpWriter\IHelpWriter.cs" />
-    <Compile Include="Generator\HelpWriter\HelpTextWriter.cs" />
-    <Compile Include="Generator\HelpWriter\HelpTextGenerator.cs" />
-    <Compile Include="Generator\Parsers\ListParser.cs" />
-    <Compile Include="Generator\Parsers\ValueParser.cs" />
-    <Compile Include="Generator\Parsers\ICommandParser.cs" />
-    <Compile Include="Generator\Parsers\Regexes.cs" />
-    <Compile Include="Generator\ProjectFileWriter.cs" />
-    <Compile Include="Generator\UnrecognizedOptionsException.cs" />
-    <Compile Include="Generator\InvalidArgumentCountException.cs" />
-    <Compile Include="Generator\InvalidCommandException.cs" />
-    <Compile Include="Generator\CommandOptions.cs" />
-    <Compile Include="Generator\Parsers\GeneratorParser.cs" />
-    <Compile Include="Generator\CommandResolver.cs" />
-    <Compile Include="Generator\ICommand.cs" />
-    <Compile Include="Generator\ICommandOptions.cs" />
-    <Compile Include="Generator\InitialCommandOptions.cs" />
-    <Compile Include="Generator\ProjectWriter.cs" />
-    <Compile Include="Generator\RegexHelper.cs" />
     <Compile Include="Metadata\ContextualizedObject.cs" />
     <Compile Include="Metadata\DataRowExtensions.cs" />
     <Compile Include="Metadata\MetaContext.cs" />
@@ -235,9 +312,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Generator\Console\DefaultConfig.resx">
+      <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DefaultConfig.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -9,14 +9,20 @@ namespace Simple.Reflection
 {
     public class InterfaceMapCache : Singleton<InterfaceMapCache>
     {
-        Dictionary<Tuple<Type, Type>, InterfaceMapping> _maps = new Dictionary<Tuple<Type, Type>, InterfaceMapping>();
+        struct Map
+        {
+            public Type From { get; set; }
+            public Type To { get; set; }
+        }
+
+        Dictionary<Map, InterfaceMapping> _maps = new Dictionary<Map, InterfaceMapping>();
 
         public InterfaceMapping GetMap(Type from, Type to)
         {
             lock (_maps)
             {
                 InterfaceMapping res;
-                var key = new Tuple<Type, Type>(from, to);
+                var key = new Map { From = from, To = to };
                 if (!_maps.TryGetValue(key, out res))
                     _maps[key] = res = from.GetInterfaceMap(to);
 

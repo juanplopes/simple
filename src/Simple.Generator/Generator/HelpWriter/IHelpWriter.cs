@@ -5,7 +5,7 @@ namespace Simple.Generator.HelpWriter
 {
     public interface IHelpWriter
     {
-        void Write(IEnumerable<Tuple<string, ICommandOptions>> commands);
+        void Write(IEnumerable<CommandRegistry> commands);
         void Write(CommandResolver resolver);
     }
 }

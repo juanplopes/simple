@@ -11,10 +11,10 @@ namespace Simple.Generator
 {
     public class CommandResolver
     {
-        protected List<Tuple<string, ICommandOptions>> Parsers =
-            new List<Tuple<string, ICommandOptions>>();
+        protected List<CommandRegistry> Parsers =
+            new List<CommandRegistry>();
 
-        public IEnumerable<Tuple<string, ICommandOptions>> GetMeta()
+        public IEnumerable<CommandRegistry> GetMeta()
         {
             return Parsers;
         }
@@ -34,7 +34,7 @@ namespace Simple.Generator
             cmds = cmds.Select(x => x.CorrectInput()).ToArray();
 
             foreach (var cmd in cmds)
-                Parsers.Add(new Tuple<string, ICommandOptions>(cmd, opts));
+                Parsers.Add(new CommandRegistry(cmd, opts));
 
             return opts;
         }
@@ -66,18 +66,18 @@ namespace Simple.Generator
             cmdLine = cmdLine.CorrectInput();
 
             var parser = FindParser(cmdLine);
-            cmdLine = cmdLine.Remove(cmdLine.IndexOf(parser.Item1), parser.Item1.Length);
-            var generator = parser.Item2.Parse(cmdLine, ignoreExceedingArgs);
+            cmdLine = cmdLine.Remove(cmdLine.IndexOf(parser.Command), parser.Command.Length);
+            var generator = parser.Parser.Parse(cmdLine, ignoreExceedingArgs);
 
             return generator;
         }
 
-        private Tuple<string, ICommandOptions> FindParser(string cmdLine)
+        private CommandRegistry FindParser(string cmdLine)
         {
-            var parsers = Parsers.Where(x => Regex.IsMatch(cmdLine, x.Item1.ToRegexFormat(true))).ToList();
+            var parsers = Parsers.Where(x => Regex.IsMatch(cmdLine, x.Command.ToRegexFormat(true))).ToList();
 
             if (parsers.Count > 1)
-                throw new AmbiguousCommandException(cmdLine, parsers.Select(x => x.Item2));
+                throw new AmbiguousCommandException(cmdLine, parsers.Select(x => x.Parser));
 
             if (parsers.Count == 0)
                 throw new InvalidCommandException(cmdLine);
