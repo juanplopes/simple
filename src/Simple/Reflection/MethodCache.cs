@@ -41,7 +41,7 @@ namespace Simple.Reflection
         public object CreateInstance(Type type, BindingFlags? flags, params object[] parameters)
         {
             var method = FindConstructor(type, flags, ref parameters);
-
+            if (method == null) throw new ArgumentException("the type '{0}' doesn't have the appropriate constructor");
             return GetInvoker(method)(null, parameters);
         }
 
