@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Collections;
 using System.Linq;
+using System.Text;
 
 
 namespace Simple.Reflection
@@ -162,18 +163,14 @@ namespace Simple.Reflection
             if (!_entityType.IsAssignableFrom(obj1.GetType())) return false;
             if (!_entityType.IsAssignableFrom(obj2.GetType())) return false;
 
+            return EnumerateEntries(toIgnore).All(x => x.Equals(obj1, obj2));
+        }
+
+        private IEnumerable<EqualityHelperEntry> EnumerateEntries(string[] toIgnore)
+        {
             var ignore = ToHashSet(toIgnore);
-            foreach (var idProp in _ids)
-            {
-                if (ignore.Contains(idProp.Property.Name)) continue;
-
-                object value1 = idProp.Property.Get(obj1);
-                object value2 = idProp.Property.Get(obj2);
-
-                if (!idProp.Comparer.Equals(value1, value2)) return false;
-            }
-
-            return true;
+            var props = _ids.Where(x => !ignore.Contains(x.Property.Name));
+            return props;
         }
 
         public bool ObjectEquals(object obj2, params string[] toIgnore)
@@ -189,20 +186,7 @@ namespace Simple.Reflection
             if (obj == null) return 1;
             if (!_entityType.IsAssignableFrom(obj.GetType())) return -1;
 
-            int res = 1;
-
-            var ignore = ToHashSet(toIgnore);
-            foreach (var idProp in _ids)
-            {
-                if (ignore.Contains(idProp.Property.Name)) continue;
-
-                object value = idProp.Property.Get(obj);
-                if (value != null)
-                {
-                    res ^= idProp.Comparer.GetHashCode(value);
-                }
-            }
-            return res;
+            return EnumerateEntries(toIgnore).Aggregate(1, (a, e) => a ^ e.GetHashCode(obj));
         }
 
         public int ObjectGetHashCode(params string[] toIgnore)
@@ -221,12 +205,11 @@ namespace Simple.Reflection
             if (obj == null) return "<null>";
             if (!_entityType.IsAssignableFrom(obj.GetType())) throw new InvalidOperationException("Invalid object type");
 
-            var ignore = ToHashSet(toIgnore);
+            var s = new StringBuilder();
+            var response = EnumerateEntries(toIgnore).EagerForeach(e =>
+                s.Append(e.Property.Name).Append("=").Append(e.Property.Get(obj) ?? "<null>"), e => s.Append(" | "));
 
-            var response = _ids.Where(x => !ignore.Contains(x.Property.Name))
-                .Select(x => x.Property.Name + "=" + (x.Property.Get(obj) ?? "<null>")).ToArray();
-
-            return "(" + string.Join(" | ", response) + ")";
+            return "(" + s.ToString() + ")";
         }
 
         public string ObjectToString(params string[] toIgnore)
