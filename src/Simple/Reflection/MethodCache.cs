@@ -62,12 +62,12 @@ namespace Simple.Reflection
 
         public InvocationDelegate GetGetter(PropertyInfo prop)
         {
-            return GetInvoker(prop.GetGetMethod());
+            return GetInvoker(prop.GetGetMethod(true));
         }
 
         public InvocationDelegate GetSetter(PropertyInfo prop)
         {
-            return GetInvoker(prop.GetSetMethod());
+            return GetInvoker(prop.GetSetMethod(true));
         }
     }
 }

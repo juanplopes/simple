@@ -35,6 +35,20 @@ namespace Simple.Tests.Reflection
             public string Other { get; set; }
         }
 
+        struct Sample4
+        {
+            private int IntProp { get; set; }
+            private string StringProp { get; set; }
+            public Sample4(int a, string b) : this() { this.IntProp = a; this.StringProp = b; }
+        }
+
+        struct Sample5
+        {
+            private int IntProp;
+            private string StringProp;
+            public Sample5(int a, string b) : this() { this.IntProp = a; this.StringProp = b; }
+        }
+
         [Test]
         public void TestBasicTypesEqualityInner()
         {
@@ -119,6 +133,31 @@ namespace Simple.Tests.Reflection
             helper.ObjectEquals(obj1, obj2).Should().Be.True();
             helper.ObjectGetHashCode(obj2).Should().Be(helper.ObjectGetHashCode(obj1));
         }
+
+        [Test]
+        public void TestBasicTypesEqualityOuterUsingPrivateProperties()
+        {
+            Sample4 obj1 = new Sample4();
+            Sample4 obj2 = new Sample4();
+
+            EqualityHelper helper = new EqualityHelper<Sample4>();
+            helper.Add("IntProp").Add("StringProp");
+
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
+        }
+
+        [Test]
+        public void TestBasicTypesEqualityOuterUsingPrivateFields()
+        {
+            Sample5 obj1 = new Sample5();
+            Sample5 obj2 = new Sample5();
+
+            EqualityHelper helper = new EqualityHelper(typeof(Sample5));
+            helper.Add("IntProp").Add("StringProp");
+
+            helper.ObjectEquals(obj1, obj2).Should().Be.True();
+        }
+
 
         [Test]
         public void TestBasicTypesEqualityOuterWithCustomComparer()

@@ -73,8 +73,8 @@ namespace Simple
             ISettableMemberInfo ret = null;
             foreach (var prop in path)
             {
-                ret = type.GetMember(prop).FirstOrDefault().ToSettable();
-                if (ret == null) throw new ArgumentException("the specified property {0} doesn't exist".AsFormat(prop));
+                ret = type.GetMember(prop, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).FirstOrDefault().ToSettable();
+                if (ret == null) throw new ArgumentException("the specified member {0} doesn't exist".AsFormat(prop));
                 yield return ret;
 
                 type = ret.Type;
