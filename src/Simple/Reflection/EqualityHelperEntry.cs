@@ -26,7 +26,7 @@ namespace Simple.Reflection
         }
 
 
-        public bool Equals(object x, object y)
+        public new bool Equals(object x, object y)
         {
             object value1 = Property.Get(x);
             object value2 = Property.Get(y);
