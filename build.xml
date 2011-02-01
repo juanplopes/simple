@@ -79,7 +79,7 @@
   </Target>
 
   <Target Name="Build" DependsOnTargets ="GenerateAssemblyInfo">
-    <MSBuild Projects="@(SolutionFile)" Properties="Configuration=$(Configuration);Platform=$(Platform);OutDir=$(BuildDir)"/>
+    <MSBuild Projects="@(SolutionFile)" Properties="Configuration=$(Configuration);Platform=$(Platform);OutDir=$(BuildDir);TrackFileAccess=false"/>
   </Target>
 
   <Target Name="Rebuild">
