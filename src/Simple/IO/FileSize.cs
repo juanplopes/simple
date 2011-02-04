@@ -15,7 +15,7 @@ namespace Simple.IO
     }
 
     [Serializable]
-    public struct FileSize
+    public struct FileSize : IFormattable
     {
         private const string DefaultFormat = "0.##";
         private const long StopSearchingFactor = 1000;
