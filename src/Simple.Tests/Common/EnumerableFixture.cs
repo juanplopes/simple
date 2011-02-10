@@ -10,6 +10,35 @@ namespace Simple.Tests.Common
     public class EnumerableFixture
     {
         [Test]
+        public void CanBatchAggregateZeroItemsList()
+        {
+            var set = new int[0];
+            set.BatchAggregate(3).Should().Be.Empty();
+        }
+
+        [Test]
+        public void CanBatchAggregateExactTwiceTheBatchSize()
+        {
+            var set = new[] { 1, 2, 3, 4, 5, 6 };
+            var list = set.BatchAggregate(3).ToList();
+            list.Count.Should().Be(2);
+            list[0].Should().Have.SameSequenceAs(1, 2, 3);
+            list[1].Should().Have.SameSequenceAs(4, 5, 6);
+        }
+
+        [Test]
+        public void CanBatchAggregateA7LengthListWithBatchSizeEquals3()
+        {
+            var set = new[] { 1, 2, 3, 4, 5, 6, 7 };
+            var list = set.BatchAggregate(3).ToList();
+            list.Count.Should().Be(3);
+            list[0].Should().Have.SameSequenceAs(1, 2, 3);
+            list[1].Should().Have.SameSequenceAs(4, 5, 6);
+            list[2].Should().Have.SameSequenceAs(7);
+
+        }
+
+        [Test]
         public void CanBatchSelectZero()
         {
             int count = 0;
@@ -68,14 +97,14 @@ namespace Simple.Tests.Common
         public void BatchSelectUsesEnumerableOnlyOnce()
         {
             int count = 0;
-            var enumerable = CountEnumerable(Enumerable.Range(1, 10), ()=>count++);
+            var enumerable = CountEnumerable(Enumerable.Range(1, 10), () => count++);
 
             count.Should().Be(0);
             enumerable.ToList();
             count.Should().Be(1);
             enumerable.ToList();
             count.Should().Be(2);
-            
+
 
             var result = enumerable.BatchSelect(3, x =>
             {

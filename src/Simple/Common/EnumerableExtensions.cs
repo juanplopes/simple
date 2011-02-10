@@ -40,7 +40,7 @@ namespace Simple
             return result;
         }
 
-        public static IEnumerable<Q> BatchSelect<T, Q>(this IEnumerable<T> source, int batchSize, Func<IEnumerable<T>, IEnumerable<Q>> func)
+        public static IEnumerable<IList<T>> BatchAggregate<T>(this IEnumerable<T> source, int batchSize)
         {
             var list = new List<T>(batchSize);
             var enumerator = source.GetEnumerator();
@@ -50,16 +50,18 @@ namespace Simple
                 list.Add(enumerator.Current);
                 if (list.Count == batchSize)
                 {
-                    foreach (var item in func(list))
-                        yield return item;
-
-                    list.Clear();
+                    yield return list;
+                    list = new List<T>(batchSize);
                 }
             }
 
             if (list.Any())
-                foreach (var item in func(list))
-                    yield return item;
+                yield return list;
+        }
+
+        public static IEnumerable<Q> BatchSelect<T, Q>(this IEnumerable<T> source, int batchSize, Func<IEnumerable<T>, IEnumerable<Q>> func)
+        {
+            return source.BatchAggregate(batchSize).SelectMany(x => func(x));
         }
 
         public static IEnumerable<T> EagerForeach<T>(this IEnumerable<T> enumerable, Action<T> action)
