@@ -35,7 +35,7 @@ namespace Simple.Generator.Console
             catch (Exception e)
             {
                 ConfigureLogging();
-                logger.Warn("Failed to configure: {0}".AsFormat(e.Message) , e);
+                logger.Warn("Failed to configure: {0}".AsFormatFor(e.Message) , e);
             }
             logger.InfoFormat("Simple.Net v{0} [{1}]", Simply.Do.Version, ProjectText);
             logger.InfoFormat("Version Identifier: {0}", Simply.Do.VersionId);

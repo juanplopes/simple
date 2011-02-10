@@ -81,7 +81,7 @@ namespace Simple.Tests.Metadata
             StringAssert.StartsWith(actualColumn.DataTypeName.ToUpper(), type.ToUpper());
             //Assert.AreEqual(column.Type, actualColumn.GetDbColumnType(), "column type for {0}", columnId);
             if (column.Size != null)
-                actualColumn.ColumnSize.Should("column size for {0}".AsFormat(columnId)).Be.GreaterThanOrEqualTo(column.Size);
+                actualColumn.ColumnSize.Should("column size for {0}".AsFormatFor(columnId)).Be.GreaterThanOrEqualTo(column.Size);
         }
 
         protected void AssertSingleRelation(ForeignKeyAddAction fk, DbForeignKey actualForeignKey)

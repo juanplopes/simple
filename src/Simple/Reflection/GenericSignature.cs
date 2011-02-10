@@ -27,7 +27,7 @@ namespace Simple.Reflection
         {
             var constraints = EnumerateConstraints(Type).ToList();
             if (constraints.Count == 0) return string.Empty;
-            else return " where {0} : {1}".AsFormat(TypeNames.GetName(Type), constraints.StringJoin(", "));
+            else return " where {0} : {1}".AsFormatFor(TypeNames.GetName(Type), constraints.StringJoin(", "));
         }
 
         protected IEnumerable<string> EnumerateConstraints(Type type)

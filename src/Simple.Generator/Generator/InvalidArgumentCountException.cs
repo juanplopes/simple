@@ -10,7 +10,7 @@ namespace Simple.Generator
     {
         public InvalidArgumentCountException() { }
         public InvalidArgumentCountException(string command, int expected, int actual)
-            : base("Invalid argument count in '{0}'. Expected: {1}. Found: {2}".AsFormat(
+            : base("Invalid argument count in '{0}'. Expected: {1}. Found: {2}".AsFormatFor(
                 command, expected, actual)) { }
 
 

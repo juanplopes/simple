@@ -15,7 +15,7 @@ namespace Simple.Tests.Metadata
     {
         public override string ToString()
         {
-            return "{0} ({1})".AsFormat(this.Database.Provider, 
+            return "{0} ({1})".AsFormatFor(this.Database.Provider, 
                 this.GetType().Namespace.Replace(typeof(BaseTest).Namespace + ".", ""));
         }
 

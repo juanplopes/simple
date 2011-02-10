@@ -59,7 +59,7 @@ namespace Simple.Generator
             if (node != null) return this;
 
             file = CorrectPaths(file);
-            XmlNode nodeItemGroup = _doc.SelectSingleNode("//p:ItemGroup[p:{0}]".AsFormat(type), _names);
+            XmlNode nodeItemGroup = _doc.SelectSingleNode("//p:ItemGroup[p:{0}]".AsFormatFor(type), _names);
 
             if (nodeItemGroup == null)
             {
@@ -103,7 +103,7 @@ namespace Simple.Generator
         private XmlNode GetFileNode(string file)
         {
             file = file.Replace(@"/", @"\");
-            return _doc.SelectSingleNode("//p:ItemGroup/p:*[@Include=\"{0}\"]".AsFormat(file), _names);
+            return _doc.SelectSingleNode("//p:ItemGroup/p:*[@Include=\"{0}\"]".AsFormatFor(file), _names);
         }
 
 

@@ -36,7 +36,7 @@ namespace Simple.Generator
         public void Create(DbTable table)
         {
             var conventions = GetConventions();
-            var fileName = FileTemplate.AsFormat(conventions.NameFor(table));
+            var fileName = FileTemplate.AsFormatFor(conventions.NameFor(table));
             SetTemplate(table);
             if (Overwrite || !Project.ExistsFile(fileName))
                 Project.AddNewFile(fileName, FileType, this.ToString());
@@ -44,7 +44,7 @@ namespace Simple.Generator
 
         public void Delete(string className)
         {
-            var fileName = FileTemplate.AsFormat(className);
+            var fileName = FileTemplate.AsFormatFor(className);
             Project.RemoveAndDeleteFile(fileName);
         }
 

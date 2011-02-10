@@ -62,7 +62,7 @@ namespace Simple
                     expr = (expr as UnaryExpression).Operand;
                 }
                 else
-                    throw new NotSupportedException("Not supported node type: {0}".AsFormat(expr.NodeType));
+                    throw new NotSupportedException("Not supported node type: {0}".AsFormatFor(expr.NodeType));
             }
 
             return answer;
@@ -74,7 +74,7 @@ namespace Simple
             foreach (var prop in path)
             {
                 ret = type.GetMember(prop, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).FirstOrDefault().ToSettable();
-                if (ret == null) throw new ArgumentException("the specified member {0} doesn't exist".AsFormat(prop));
+                if (ret == null) throw new ArgumentException("the specified member {0} doesn't exist".AsFormatFor(prop));
                 yield return ret;
 
                 type = ret.Type;

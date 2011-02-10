@@ -11,7 +11,7 @@ namespace Simple.Generator
     {
         public UnrecognizedOptionsException() { }
         public UnrecognizedOptionsException(string options)
-            : base("Unrecognized options: '{0}'.".AsFormat(options)) { }
+            : base("Unrecognized options: '{0}'.".AsFormatFor(options)) { }
 
 
         protected UnrecognizedOptionsException(

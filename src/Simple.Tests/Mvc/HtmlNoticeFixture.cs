@@ -19,7 +19,7 @@ namespace Simple.Tests.Mvc
             var dic = new Dictionary<string, object>();
             dic.Notify("test");
 
-            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat("test")] as NoticeDefinition;
+            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormatFor("test")] as NoticeDefinition;
             item.Should().Not.Be.Null();
             item.Title.Should().Be(null);
             item.Items.Should().Be.Empty();
@@ -48,7 +48,7 @@ namespace Simple.Tests.Mvc
             var dic = new Dictionary<string, object>();
             dic.NotifySuccess("some text");
 
-            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultSucessClass)] as NoticeDefinition;
+            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormatFor(HtmlNotice.DefaultSucessClass)] as NoticeDefinition;
             item.Should().Not.Be.Null();
             item.Title.Should().Be("some text");
             item.Items.Should().Be.Empty();
@@ -61,7 +61,7 @@ namespace Simple.Tests.Mvc
             var dic = new Dictionary<string, object>();
             dic.NotifyError("some text");
 
-            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultErrorClass)] as NoticeDefinition;
+            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormatFor(HtmlNotice.DefaultErrorClass)] as NoticeDefinition;
             item.Should().Not.Be.Null();
             item.Title.Should().Be("some text");
             item.Items.Should().Be.Empty();
@@ -74,7 +74,7 @@ namespace Simple.Tests.Mvc
             var dic = new Dictionary<string, object>();
             dic.Notify("test").WithTitle("some title");
 
-            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat("test")] as NoticeDefinition;
+            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormatFor("test")] as NoticeDefinition;
             item.Title.Should().Be("some title");
         }
 
@@ -84,7 +84,7 @@ namespace Simple.Tests.Mvc
             var dic = new Dictionary<string, object>();
             dic.Notify("test").AddItems("item1").AddItems("item2");
 
-            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat("test")] as NoticeDefinition;
+            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormatFor("test")] as NoticeDefinition;
             item.Items.Should().Have.SameSequenceAs("item1", "item2");
         }
 
@@ -94,7 +94,7 @@ namespace Simple.Tests.Mvc
             var dic = new Dictionary<string, object>();
             dic.Notify("test").AddItems("item1", "item2");
 
-            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormat("test")] as NoticeDefinition;
+            var item = dic[HtmlNotice.DefaultNotificationFormat.AsFormatFor("test")] as NoticeDefinition;
             item.Items.Should().Have.SameSequenceAs("item1", "item2");
         }
 
@@ -111,7 +111,7 @@ namespace Simple.Tests.Mvc
 
             action.Verify(x => x.ExecuteResult(context.Object), Times.Exactly(1));
 
-            var item = controller.Object.ViewData[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultErrorClass)] as NoticeDefinition;
+            var item = controller.Object.ViewData[HtmlNotice.DefaultNotificationFormat.AsFormatFor(HtmlNotice.DefaultErrorClass)] as NoticeDefinition;
             item.Title.Should().Be("test");
         }
 
@@ -130,7 +130,7 @@ namespace Simple.Tests.Mvc
 
             action.Verify(x => x.ExecuteResult(context.Object), Times.Exactly(1));
 
-            var item = controller.Object.TempData[HtmlNotice.DefaultNotificationFormat.AsFormat(HtmlNotice.DefaultSucessClass)] as NoticeDefinition;
+            var item = controller.Object.TempData[HtmlNotice.DefaultNotificationFormat.AsFormatFor(HtmlNotice.DefaultSucessClass)] as NoticeDefinition;
             item.Title.Should().Be("test");
             item.Items.Should().Have.SameSequenceAs("test1", "test2");
         }
@@ -150,7 +150,7 @@ namespace Simple.Tests.Mvc
             data.Notify("test");
 
             var html = data.Notice("test").ToString();
-            html.Should().Contain("class=\"{0}\"".AsFormat(HtmlNotice.DefaultNotificationFormat.AsFormat("test")));
+            html.Should().Contain("class=\"{0}\"".AsFormatFor(HtmlNotice.DefaultNotificationFormat.AsFormatFor("test")));
         }
 
         [Test]
@@ -160,8 +160,8 @@ namespace Simple.Tests.Mvc
             data.NotifySuccess("test");
 
             var html = data.NoticeSuccess().ToString();
-            html.Should().Contain("class=\"{0}\"".AsFormat(
-                HtmlNotice.DefaultNotificationFormat.AsFormat("success")));
+            html.Should().Contain("class=\"{0}\"".AsFormatFor(
+                HtmlNotice.DefaultNotificationFormat.AsFormatFor("success")));
             html.Should().Contain("<span>test</span>");
         }
 
@@ -172,7 +172,7 @@ namespace Simple.Tests.Mvc
             data.Notify("test").AddItems("a<sd");
 
             var html = data.Notice("test").ToString();
-            html.Should().Contain("class=\"{0}\"".AsFormat(HtmlNotice.DefaultNotificationFormat.AsFormat("test")));
+            html.Should().Contain("class=\"{0}\"".AsFormatFor(HtmlNotice.DefaultNotificationFormat.AsFormatFor("test")));
             html.Should().Contain("<ul><li>a&lt;sd</li></ul>");
         }
 

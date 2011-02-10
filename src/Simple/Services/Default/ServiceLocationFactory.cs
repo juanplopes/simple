@@ -52,7 +52,7 @@ namespace Simple.Services.Default
             {
                 lock (_classes)
                 {
-                    throw new ServiceConnectionException("Service not found: {0}".AsFormat(contract.GetRealClassName()), e);
+                    throw new ServiceConnectionException("Service not found: {0}".AsFormatFor(contract.GetRealClassName()), e);
                 }
             }
         }

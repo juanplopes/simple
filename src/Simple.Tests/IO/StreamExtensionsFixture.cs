@@ -42,5 +42,20 @@ namespace Simple.Tests.IO
             var bytes = stream.ToByteArray(2);
             bytes.Should().Have.UniqueValues().And.Have.Count.EqualTo(256);
         }
+
+        [Test]
+        public void CanTransformStringToStream()
+        {
+            var stream = "abcdef".ToStream();
+            stream.ToByteArray(10).Should().Have.SameSequenceAs(Encoding.Default.GetBytes("abcdef"));
+        }
+
+        [Test]
+        public void CanTransformStringToStreamWithCustomEncoding()
+        {
+            var stream = "abcdef".ToStream(Encoding.UTF32);
+            stream.ToByteArray(10).Should().Have.SameSequenceAs(Encoding.UTF32.GetBytes("abcdef"));
+            stream.ToByteArray(10).Should().Not.Have.SameSequenceAs(Encoding.ASCII.GetBytes("abcdef"));
+        }
     }
 }

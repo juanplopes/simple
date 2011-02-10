@@ -11,7 +11,7 @@ namespace Simple.Generator
     {
         public AmbiguousCommandException() { }
         public AmbiguousCommandException(string command, IEnumerable<ICommandOptions> generators)
-            : base("Multiple commands found for input '{0}': {1}".AsFormat(
+            : base("Multiple commands found for input '{0}': {1}".AsFormatFor(
                 command, GetParserListString(generators))) { }
 
         private static string GetParserListString(IEnumerable<ICommandOptions> parsers)

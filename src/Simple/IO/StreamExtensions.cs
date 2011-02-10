@@ -8,6 +8,16 @@ namespace Simple
 {
     public static class StreamExtensions
     {
+        public static MemoryStream ToStream(this string str)
+        {
+            return str.ToStream(Encoding.Default);
+        }
+
+        public static MemoryStream ToStream(this string str, Encoding encoding)
+        {
+            return new MemoryStream(encoding.GetBytes(str));
+        }
+
         /// <summary>
         /// Reads data from a stream until the end is reached. The
         /// data is returned as a byte array. An IOException is

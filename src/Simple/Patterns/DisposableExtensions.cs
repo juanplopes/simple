@@ -29,7 +29,7 @@ namespace Simple
             catch (Exception e)
             {
                 logger
-                    .Warn("Error disposing {0}".AsFormat(disposable), e);
+                    .Warn("Error disposing {0}".AsFormatFor(disposable), e);
             }
         }
     }

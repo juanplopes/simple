@@ -31,9 +31,9 @@ namespace Simple.Generator
         public ProjectDescription WithName(string name)
         {
             var newProject = new ProjectDescription(
-                Directory.AsFormat(name),
-                ProjectFile.AsFormat(name),
-                Assembly.AsFormat(name));
+                Directory.AsFormatFor(name),
+                ProjectFile.AsFormatFor(name),
+                Assembly.AsFormatFor(name));
             newProject.Name = name;
 
             return newProject;

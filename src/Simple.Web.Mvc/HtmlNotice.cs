@@ -26,13 +26,13 @@ namespace Simple.Web.Mvc
 
         public static bool HasNotice(this IDictionary<string, object> data, string key)
         {
-            return data.ContainsKey(DefaultNotificationFormat.AsFormat(key));
+            return data.ContainsKey(DefaultNotificationFormat.AsFormatFor(key));
         }
 
         public static NoticeDefinition Notify(this IDictionary<string, object> data, string key)
         {
             var not = new NoticeDefinition();
-            data[DefaultNotificationFormat.AsFormat(key)] = not;
+            data[DefaultNotificationFormat.AsFormatFor(key)] = not;
             return not;
         }
 
@@ -89,7 +89,7 @@ namespace Simple.Web.Mvc
 
         public static HtmlTagBuilder Notice(this IDictionary<string, object> data, string key)
         {
-            key = DefaultNotificationFormat.AsFormat(key);
+            key = DefaultNotificationFormat.AsFormatFor(key);
             var definition = data[key] as NoticeDefinition;
             return RenderNotice(key, definition);
         }

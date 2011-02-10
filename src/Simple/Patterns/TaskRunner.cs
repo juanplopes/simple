@@ -46,7 +46,7 @@ namespace Simple.Patterns
 
             public void Log(ILog log)
             {
-                string message = "{0}: {1}".AsFormat(Description, Message);
+                string message = "{0}: {1}".AsFormatFor(Description, Message);
                 switch (ResultType)
                 {
                     case Type.Success:
