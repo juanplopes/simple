@@ -38,8 +38,8 @@ namespace Example.Project.Tools.Templates.Scaffold
         {
             var re = Options.Do.Conventions;
             return string.Join(", ",
-                table.PrimaryKeysExceptFk.Select(x => "{0} {1}".AsFormat(re.TypeFor(x), re.NameFor(x))).Union(
-                table.KeyManyToOneRelations.Select(x => "{0} {1}".AsFormat(re.TypeFor(x), re.NameFor(x)))).ToArray());
+                table.PrimaryKeysExceptFk.Select(x => "{0} {1}".AsFormatFor(re.TypeFor(x), re.NameFor(x))).Union(
+                table.KeyManyToOneRelations.Select(x => "{0} {1}".AsFormatFor(re.TypeFor(x), re.NameFor(x)))).ToArray());
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Example.Project.Tools.Templates.AutoContracts
 
         public static string FilePath(string entity)
         {
-            return "Domain/Generated/{0}.contracts.cs".AsFormat(entity);
+            return "Domain/Generated/{0}.contracts.cs".AsFormatFor(entity);
         }
 
         public void Run()

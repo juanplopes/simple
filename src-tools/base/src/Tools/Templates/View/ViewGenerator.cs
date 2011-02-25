@@ -34,7 +34,7 @@ namespace Example.Project.Tools.Templates.View
         protected void Execute(ProjectFileWriter project, string type, string fileFormat, string className, string template)
         {
             var className2 = Options.Do.Conventions.Pluralize(className);
-            var file = fileFormat.AsFormat(className, className2);
+            var file = fileFormat.AsFormatFor(className, className2);
             if (!project.ExistsFile(file))
                 project.AddNewFile(file, type, GetTemplate(template, className).ToString());
         }

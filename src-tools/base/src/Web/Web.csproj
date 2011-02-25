@@ -180,13 +180,13 @@
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\master.js" />
     <Content Include="App_Code\H.cshtml" />
-    <None Include="Views\System\Index.cshtml">
+    <Content Include="Views\System\Index.cshtml">
       <SubType>ASPXCodeBehind</SubType>
-    </None>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>

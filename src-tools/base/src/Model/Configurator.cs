@@ -55,7 +55,7 @@ namespace Example.Project
 
         private string NHibernateCacheFile
         {
-            get { return "nhibernate.{0}.cache".AsFormat(Environment); }
+            get { return "nhibernate.{0}.cache".AsFormatFor(Environment); }
         }
 
 

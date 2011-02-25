@@ -19,13 +19,13 @@ namespace Example.Project.Web.Helpers
     {
         public static ViewResult DeleteView(this Controller controller, object itemName, params object[] objs)
         {
-            return ConfirmView(controller, "Do you want to remove '{0}'?", (itemName ?? "").ToString().AsFormat(objs));
+            return ConfirmView(controller, "Do you want to remove '{0}'?", (itemName ?? "").ToString().AsFormatFor(objs));
         }
 
         public static ViewResult ConfirmView(this Controller controller, object text, params object[] objs)
         {
             var view = new ViewResult() { ViewName = "_Confirm", ViewData = controller.ViewData, TempData = controller.TempData };
-            view.ViewBag.ConfirmMessage = (text ?? "").ToString().AsFormat(objs);
+            view.ViewBag.ConfirmMessage = (text ?? "").ToString().AsFormatFor(objs);
             return view;
         }
     }

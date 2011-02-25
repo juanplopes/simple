@@ -21,7 +21,7 @@ namespace Example.Project.Tools.Templates.AutoContracts
 
         public static string FilePath(string service)
         {
-            return "Services/I{0}.cs".AsFormat(service);
+            return "Services/I{0}.cs".AsFormatFor(service);
         }
 
         public void Run()
