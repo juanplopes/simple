@@ -45,25 +45,22 @@ namespace Simple.Web.Mvc
             return new ModelSelectList<T>(this.OrderBy(x => x.Text).ToList(), ValueSelector, TextSelector);
         }
 
-        public IModelSelectList<Q> Select<Q>(params Q[] models)
-        {
-            return this.As<Q>().Select(models);
-        }
-
+      
         public IModelSelectList<T> Select(params T[] models)
         {
             models = models ?? new T[0];
             var selectedValues = models.Select(x => SafeNullable.Get(() => ValueSelector(x))).ToArray();
-            return SelectValue(selectedValues).As<T>();
+            return SelectValues(selectedValues) as IModelSelectList<T>;
         }
 
-        public IModelSelectList<Q> As<Q>()
+        public IModelSelectList Select(params object[] models)
         {
-            return (IModelSelectList<Q>)this;
+            return Select(models.OfType<T>().ToArray());
         }
 
 
-        public IModelSelectList SelectValue(params object[] selectedValues)
+
+        public IModelSelectList SelectValues(params object[] selectedValues)
         {
             selectedValues = selectedValues ?? new object[0];
             var selectedStrings = new HashSet<string>(selectedValues.Select(x => string.Format("{0}", x)));

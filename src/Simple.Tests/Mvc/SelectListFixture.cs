@@ -53,7 +53,7 @@ namespace Simple.Tests.Mvc
         public void CanCreateFromIntegerListAndSelectTwoItemsByObject()
         {
             var items = new[] { 1, 3, 5 };
-            var list = items.ToSelectList(x => x, x => x + 1).SelectValue("1", 3);
+            var list = items.ToSelectList(x => x, x => x + 1).SelectValues("1", 3);
             AssertItem("1", "2", true, list[0]);
             AssertItem("3", "4", true, list[1]);
             AssertItem("5", "6", false, list[2]);
@@ -63,7 +63,7 @@ namespace Simple.Tests.Mvc
         public void CanCreateFromIntegerListAndSelectNoneFullOfItems()
         {
             var items = new[] { 1, 3, 5 };
-            var list = items.ToSelectList(x => x, x => x + 1).SelectValue(null, null, null);
+            var list = items.ToSelectList(x => x, x => x + 1).Select(null, null, null);
             AssertItem("1", "2", false, list[0]);
             AssertItem("3", "4", false, list[1]);
             AssertItem("5", "6", false, list[2]);
@@ -84,7 +84,7 @@ namespace Simple.Tests.Mvc
         public void CanCreateFromNullableIntegerListAndSelectNull()
         {
             var items = new int?[] { 1, 3, 5 };
-            var list = items.ToSelectList(x => x, x => x + 1).Select(null);
+            var list = items.ToSelectList(x => x, x => x + 1).Select(new int?[] { null });
             AssertItem("1", "2", false, list[0]);
             AssertItem("3", "4", false, list[1]);
             AssertItem("5", "6", false, list[2]);
@@ -107,6 +107,22 @@ namespace Simple.Tests.Mvc
             selectedItem.Should().Be("3");
         }
 
+        [Test]
+        public void CanCreateSelectControlFromIntListAndSelectFromExistingNullableModel()
+        {
+            var dic = new ViewDataDictionary();
+            dic.Add("Items", new[] { 1, 3, 5 }.ToSelectList(x => x, x => x + 1));
+            dic.Model = new SampleModel() { ItemNullable = 3 };
+
+            var view = new Mock<IViewModelContainer<SampleModel>>();
+            view.SetupGet(x => x.ViewData).Returns(dic);
+
+            var select = view.Object.AutoSelect(x => x.ItemNullable, "Items");
+
+            var selectedItem = select.SelectedValues.Cast<string>().Single();
+            selectedItem.Should().Be("3");
+        }
+
 
         [Test]
         public void CanCreateSelectControlFromSampleListAndSelectFromExistingModel()
@@ -124,6 +140,8 @@ namespace Simple.Tests.Mvc
             selectedItem.Should().Be("3");
 
         }
+
+
 
         [Test]
         public void CanCreateSelectControlFromSampleListAndSelectFromExistingModelWithAutoFind()
@@ -150,6 +168,7 @@ namespace Simple.Tests.Mvc
         public class SampleModel
         {
             public int Item { get; set; }
+            public int? ItemNullable { get; set; }
         }
 
 

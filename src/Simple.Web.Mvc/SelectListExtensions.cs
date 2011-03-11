@@ -50,7 +50,7 @@ namespace Simple.Web.Mvc
             ModelState modelState;
             viewData.ModelState.TryGetValue(memberName, out modelState);
             if (modelState != null && modelState.Value != null)
-                list = list.SelectValue(modelState.Value.AttemptedValue);
+                list = list.SelectValues(modelState.Value.AttemptedValue);
             return list;
         }
 

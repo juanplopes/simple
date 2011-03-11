@@ -6,10 +6,9 @@ namespace Simple.Web.Mvc
     public interface IModelSelectList : IList<SelectListItem>
     {
         IModelSelectList ClearSelection();
-        IModelSelectList SelectValue(params object[] selectedValues);
+        IModelSelectList SelectValues(params object[] selectedValues);
         IModelSelectList Sort();
-        IModelSelectList<T> Select<T>(params T[] models);
-        IModelSelectList<T> As<T>();
+        IModelSelectList Select(params object[] models);
     }
 
     public interface IModelSelectList<T> : IModelSelectList
