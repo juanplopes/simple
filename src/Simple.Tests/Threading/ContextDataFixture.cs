@@ -65,6 +65,16 @@ namespace Simple.Tests.Threading
         }
 
         [Test]
+        public void CanCheckForSingletonExistence()
+        {
+            var data = new ContextData(new DictionaryContextProvider());
+
+            data.ContainsSingleton<Sample>().Should().Be(false);
+            var sample1 = data.Singleton<Sample>(() => new Sample(1));
+            data.ContainsSingleton<Sample>().Should().Be(true);
+        }
+
+        [Test]
         public void CanEnsureSingletonUsingThreadProvider()
         {
             var data = new ContextData(new ThreadDataProvider());
@@ -104,6 +114,17 @@ namespace Simple.Tests.Threading
 
             dic = new Dictionary<object, object>();
             data.Get("test").Should().Be(null);
+        }
+
+        [Test]
+        public void CanCheckForKeyExistance()
+        {
+            var dic = new Dictionary<object, object>();
+            var data = new ContextData(new GenericContextProvider(() => dic));
+
+            data.Contains("test").Should().Be.False();
+            data.Set("test", 123);
+            data.Contains("test").Should().Be.True();
         }
 
         [Test]

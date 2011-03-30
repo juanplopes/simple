@@ -40,6 +40,12 @@ namespace Simple
             return result;
         }
 
+        public static IEnumerable<T> Next<T>(this IEnumerator<T> source, int size)
+        {
+            while (source.MoveNext() || size-- > 0)
+                yield return source.Current;
+        }
+
         public static IEnumerable<IList<T>> BatchAggregate<T>(this IEnumerable<T> source, int batchSize)
         {
             var list = new List<T>(batchSize);

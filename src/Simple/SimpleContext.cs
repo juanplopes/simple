@@ -31,6 +31,11 @@ namespace Simple
             Provider = newProvider;
         }
 
+        public static bool Exists()
+        {
+            return Data.ContainsSingleton<SimpleContext>();
+        }
+
         public static SimpleContext Get()
         {
             return Data.Singleton<SimpleContext>();

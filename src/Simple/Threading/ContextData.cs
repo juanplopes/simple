@@ -59,6 +59,11 @@ namespace Simple.Threading
             Provider().GetStorage().Remove(key);
         }
 
+        public bool Contains(object key)
+        {
+            return Provider().GetStorage().Contains(key);
+        }
+
         public T Singleton<T>()
             where T : new()
         {
@@ -70,11 +75,18 @@ namespace Simple.Threading
             public static Guid Guid = typeof(T).GUID;
         }
 
+        public bool ContainsSingleton<T>()
+        {
+            var key = GuidCache<T>.Guid;
+            return Contains(key);
+        }
+
         public void SetSingleton<T>(T obj)
         {
             var key = GuidCache<T>.Guid;
             Set(key, obj);
         }
+
 
         public T Singleton<T>(Func<T> creator)
         {

@@ -9,13 +9,15 @@ namespace Simple.Services.Remoting
 
         public void InjectCallHeaders(object target, System.Reflection.MethodBase method, object[] args)
         {
-            CallContext.LogicalSetData(guid, SimpleContext.Get());
+            if (SimpleContext.Exists())
+                CallContext.LogicalSetData(guid, SimpleContext.Get());
         }
 
         public void RecoverCallHeaders(object target, System.Reflection.MethodBase method, object[] args)
         {
             object obj = CallContext.LogicalGetData(guid);
-            SimpleContext.Force((obj as SimpleContext) ?? new SimpleContext());
+            if (obj != null)
+                SimpleContext.Force(obj as SimpleContext);
             //CallContext.FreeNamedDataSlot(guid);
         }
 
