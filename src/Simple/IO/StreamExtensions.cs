@@ -10,7 +10,7 @@ namespace Simple
     {
         public static MemoryStream ToStream(this string str)
         {
-            return str.ToStream(Encoding.Default);
+            return str.ToStream(Encoding.UTF8);
         }
 
         public static MemoryStream ToStream(this string str, Encoding encoding)
