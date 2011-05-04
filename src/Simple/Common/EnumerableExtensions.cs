@@ -110,8 +110,6 @@ namespace Simple
             return enumerable.Union((IEnumerable<T>)items);
         }
 
-       
-
         public static TResult SafeAggregate<TSource, TResult>(this IQueryable<TSource> source, Func<IQueryable<TSource>, TResult> selector)
         {
             return source.SafeAggregate(selector, default(TResult));

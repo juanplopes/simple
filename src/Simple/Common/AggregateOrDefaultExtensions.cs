@@ -17,7 +17,7 @@ namespace Simple
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
-                if (seed * current.CompareTo(max) > 0)
+                if (current != null && seed * current.CompareTo(max) > 0)
                     max = current;
             }
             return max;

@@ -11,6 +11,20 @@ namespace Simple.Tests.Common
     public class AggregateOrDefaultFixture
     {
         [Test]
+        public void CanMaxOrDefaultStringValuesWithNullsInTheMiddle()
+        {
+            var array = new string[] { "1", null, "3", "2" };
+            array.MaxOrDefault("a").Should().Be("3");
+        }
+
+        [Test]
+        public void CanMinOrDefaultStringValuesWithNullsInTheMiddle()
+        {
+            var array = new string[] { "1", null, "3", "2" };
+            array.MinOrDefault("a").Should().Be("1");
+        }
+
+        [Test]
         public void CanMaxOrDefaultIntegerValues()
         {
             var array = new int[] { 1, 2, 3, 2 };
