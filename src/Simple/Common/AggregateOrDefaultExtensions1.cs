@@ -308,5 +308,89 @@ namespace Simple
         {
             return source.Where(x => x != null).Select(x => x ?? default(decimal)).SumOrDefault(defaultValue);
         }
+		public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource> source)
+           where TSource : IComparable
+        {
+            return source.MaxOrDefault(default(TSource));
+        }
+
+        public static TResult MaxOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> resultSelector)
+            where TResult : IComparable
+        {
+            return source.Select(resultSelector).MaxOrDefault();
+        }
+
+        public static TResult MaxOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> resultSelector, TResult defaultValue)
+           where TResult : IComparable
+        {
+            return source.Select(resultSelector).MaxOrDefault(defaultValue);
+        }
+
+        public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource?> source)
+            where TSource : struct, IComparable
+        {
+            return source.MaxOrDefault(default(TSource));
+        }
+
+        public static TResult MaxOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult?> resultSelector)
+          where TResult : struct, IComparable
+        {
+            return source.Select(resultSelector).MaxOrDefault();
+        }
+
+        public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource?> source, TSource defaultValue)
+            where TSource : struct, IComparable
+        {
+            return source.Where(x => x != null).Select(x => x ?? default(TSource)).MaxOrDefault(defaultValue);
+        }
+
+        public static TResult MaxOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult?> resultSelector, TResult defaultValue)
+         where TResult : struct, IComparable
+        {
+            return source.Select(resultSelector).MaxOrDefault(defaultValue);
+        }
+
+		public static TSource MinOrDefault<TSource>(this IEnumerable<TSource> source)
+           where TSource : IComparable
+        {
+            return source.MinOrDefault(default(TSource));
+        }
+
+        public static TResult MinOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> resultSelector)
+            where TResult : IComparable
+        {
+            return source.Select(resultSelector).MinOrDefault();
+        }
+
+        public static TResult MinOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> resultSelector, TResult defaultValue)
+           where TResult : IComparable
+        {
+            return source.Select(resultSelector).MinOrDefault(defaultValue);
+        }
+
+        public static TSource MinOrDefault<TSource>(this IEnumerable<TSource?> source)
+            where TSource : struct, IComparable
+        {
+            return source.MinOrDefault(default(TSource));
+        }
+
+        public static TResult MinOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult?> resultSelector)
+          where TResult : struct, IComparable
+        {
+            return source.Select(resultSelector).MinOrDefault();
+        }
+
+        public static TSource MinOrDefault<TSource>(this IEnumerable<TSource?> source, TSource defaultValue)
+            where TSource : struct, IComparable
+        {
+            return source.Where(x => x != null).Select(x => x ?? default(TSource)).MinOrDefault(defaultValue);
+        }
+
+        public static TResult MinOrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult?> resultSelector, TResult defaultValue)
+         where TResult : struct, IComparable
+        {
+            return source.Select(resultSelector).MinOrDefault(defaultValue);
+        }
+
 	}
 }

@@ -40,5 +40,49 @@ namespace Simple
             return source.Where(x => x != null).Select(x => x ?? default(<#= type #>)).SumOrDefault(defaultValue);
         }
 <# } #>
+<# foreach(var type in new[] { "Max", "Min" }) { #>
+		public static TSource <#= type #>OrDefault<TSource>(this IEnumerable<TSource> source)
+           where TSource : IComparable
+        {
+            return source.<#= type #>OrDefault(default(TSource));
+        }
+
+        public static TResult <#= type #>OrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> resultSelector)
+            where TResult : IComparable
+        {
+            return source.Select(resultSelector).<#= type #>OrDefault();
+        }
+
+        public static TResult <#= type #>OrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> resultSelector, TResult defaultValue)
+           where TResult : IComparable
+        {
+            return source.Select(resultSelector).<#= type #>OrDefault(defaultValue);
+        }
+
+        public static TSource <#= type #>OrDefault<TSource>(this IEnumerable<TSource?> source)
+            where TSource : struct, IComparable
+        {
+            return source.<#= type #>OrDefault(default(TSource));
+        }
+
+        public static TResult <#= type #>OrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult?> resultSelector)
+          where TResult : struct, IComparable
+        {
+            return source.Select(resultSelector).<#= type #>OrDefault();
+        }
+
+        public static TSource <#= type #>OrDefault<TSource>(this IEnumerable<TSource?> source, TSource defaultValue)
+            where TSource : struct, IComparable
+        {
+            return source.Where(x => x != null).Select(x => x ?? default(TSource)).<#= type #>OrDefault(defaultValue);
+        }
+
+        public static TResult <#= type #>OrDefault<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult?> resultSelector, TResult defaultValue)
+         where TResult : struct, IComparable
+        {
+            return source.Select(resultSelector).<#= type #>OrDefault(defaultValue);
+        }
+
+<# } #>
 	}
 }

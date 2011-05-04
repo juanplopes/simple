@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net.Mail;
 
 namespace Simple
 {
@@ -23,52 +24,16 @@ namespace Simple
             return max;
         }
 
-        public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource> source)
-           where TSource : IComparable
-        {
-            return source.MaxOrDefault(default(TSource));
-        }
-
         public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource> source, TSource defaultValue)
-            where TSource : IComparable
+             where TSource : IComparable
         {
             return source.SomethingOrDefault(defaultValue, 1);
-        }
-
-        public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource?> source)
-            where TSource : struct, IComparable
-        {
-            return source.MaxOrDefault(default(TSource));
-        }
-
-        public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource?> source, TSource defaultValue)
-            where TSource : struct, IComparable
-        {
-            return source.Where(x => x != null).Select(x => x ?? default(TSource)).MaxOrDefault(defaultValue);
-        }
-
-        public static TSource MinOrDefault<TSource>(this IEnumerable<TSource> source)
-          where TSource : IComparable
-        {
-            return source.MinOrDefault(default(TSource));
         }
 
         public static TSource MinOrDefault<TSource>(this IEnumerable<TSource> source, TSource defaultValue)
             where TSource : IComparable
         {
             return source.SomethingOrDefault(defaultValue, -1);
-        }
-
-        public static TSource MinOrDefault<TSource>(this IEnumerable<TSource?> source)
-            where TSource : struct, IComparable
-        {
-            return source.MinOrDefault(default(TSource));
-        }
-
-        public static TSource MinOrDefault<TSource>(this IEnumerable<TSource?> source, TSource defaultValue)
-            where TSource : struct, IComparable
-        {
-            return source.Where(x => x != null).Select(x => x ?? default(TSource)).MinOrDefault(defaultValue);
         }
     }
 }

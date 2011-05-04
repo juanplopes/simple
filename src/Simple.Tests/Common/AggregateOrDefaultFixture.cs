@@ -25,6 +25,48 @@ namespace Simple.Tests.Common
         }
 
         [Test]
+        public void CanMaxOrDefaultIntegerValuesWithSelector()
+        {
+            var array = new int[] { 1, 2, 3, 2 };
+            array.MaxOrDefault(x => x * 2, 50).Should().Be(6);
+        }
+
+        [Test]
+        public void CanMaxOrDefaultNullableIntegerValuesWithSelector()
+        {
+            var array = new int?[] { 1, 2, 3, 2 };
+            array.MaxOrDefault(x => x * 2, 50).Should().Be(6);
+        }
+
+        [Test]
+        public void CanMaxOrDefaultEmptyIntegerValuesWithSelector()
+        {
+            var array = new int[] { };
+            array.MaxOrDefault(x => x * 2, 50).Should().Be(50);
+        }
+
+        [Test]
+        public void CanMaxOrDefaultEmptyNullableIntegerValuesWithSelector()
+        {
+            var array = new int?[] { };
+            array.MaxOrDefault(x => x * 2, 50).Should().Be(50);
+        }
+
+        [Test]
+        public void CanMaxOrDefaultEmptyIntegerValuesWithoutParametersWithSelector()
+        {
+            var array = new int[] { };
+            array.MaxOrDefault(x => x * 2).Should().Be(0);
+        }
+
+        [Test]
+        public void CanMaxOrDefaultEmptyNullableIntegerValuessWithoutParametersWithSelector()
+        {
+            var array = new int?[] { };
+            array.MaxOrDefault(x => x * 2).Should().Be(0);
+        }
+
+        [Test]
         public void CanMaxOrDefaultIntegerValues()
         {
             var array = new int[] { 1, 2, 3, 2 };
@@ -64,6 +106,48 @@ namespace Simple.Tests.Common
         {
             var array = new int?[] { };
             array.MaxOrDefault().Should().Be(0);
+        }
+
+        [Test]
+        public void CanMinOrDefaultIntegerValuesWithSelector()
+        {
+            var array = new int[] { 1, 2, 3, 2 };
+            array.MinOrDefault(x => x * 2, 50).Should().Be(2);
+        }
+
+        [Test]
+        public void CanMinOrDefaultNullableIntegerValuesWithSelector()
+        {
+            var array = new int?[] { 1, 2, 3, 2 };
+            array.MinOrDefault(x => x * 2, 50).Should().Be(2);
+        }
+
+        [Test]
+        public void CanMinOrDefaultEmptyIntegerValuesWithSelector()
+        {
+            var array = new int[] { };
+            array.MinOrDefault(x => x * 2, 50).Should().Be(50);
+        }
+
+        [Test]
+        public void CanMinOrDefaultEmptyNullableIntegerValuesWithSelector()
+        {
+            var array = new int?[] { };
+            array.MinOrDefault(x => x * 2, 50).Should().Be(50);
+        }
+
+        [Test]
+        public void CanMinOrDefaultEmptyIntegerValuesWithoutParametersWithSelector()
+        {
+            var array = new int[] { };
+            array.MinOrDefault(x => x * 2).Should().Be(0);
+        }
+
+        [Test]
+        public void CanMinOrDefaultEmptyNullableIntegerValuessWithoutParametersWithSelector()
+        {
+            var array = new int?[] { };
+            array.MinOrDefault(x => x * 2).Should().Be(0);
         }
 
         [Test]
