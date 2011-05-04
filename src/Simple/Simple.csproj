@@ -79,6 +79,12 @@
     <Compile Include="..\Version.cs">
       <Link>Version.cs</Link>
     </Compile>
+    <Compile Include="Common\AggregateOrDefaultExtensions.cs" />
+    <Compile Include="Common\AggregateOrDefaultExtensions1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AggregateOrDefaultExtensions.tt</DependentUpon>
+    </Compile>
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="Common\LazyEnumerable.cs" />
     <Compile Include="Common\NamedEvents.cs" />
@@ -112,6 +118,10 @@
     <Compile Include="Entities\QuerySpec\SpecBuilder.cs" />
     <Compile Include="Entities\QuerySpec\SpecBuilderExtensions.cs" />
     <Compile Include="Expressions\Editable\EditableElementInitCollection.cs" />
+    <None Include="Common\AggregateOrDefaultExtensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AggregateOrDefaultExtensions1.cs</LastGenOutput>
+    </None>
     <None Include="Expressions\Editable\EditableExpressionsExtensions.static.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EditableExpressionsExtensions.static.cs</LastGenOutput>

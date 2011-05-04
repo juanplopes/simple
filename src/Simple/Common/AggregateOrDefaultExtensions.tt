@@ -1,0 +1,44 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Simple
+{
+	public static partial class AggregateOrDefaultExtensions 
+	{
+<# foreach(var type in new[] { 
+	"sbyte", "byte", "char", "short", "ushort", "int", "uint", "long", "ulong",
+	"float", "double", "decimal"
+}) { #>
+		public static <#= type #> SumOrDefault(this IEnumerable<<#= type #>> source)
+        {
+            return source.SumOrDefault(default(<#= type #>));
+        }
+
+        public static <#= type #> SumOrDefault(this IEnumerable<<#= type #>> source, <#= type #> defaultValue)
+        {
+            var enumerator = source.GetEnumerator();
+            if (!enumerator.MoveNext()) return defaultValue;
+
+            <#= type #> sum = enumerator.Current;
+            while (enumerator.MoveNext())
+                sum += enumerator.Current;
+            return sum;
+        }
+
+        public static <#= type #> SumOrDefault(this IEnumerable<<#= type #>?> source)
+        {
+            return source.SumOrDefault(default(<#= type #>));
+        }
+
+        public static <#= type #> SumOrDefault(this IEnumerable<<#= type #>?> source, <#= type #> defaultValue)
+        {
+            return source.Where(x => x != null).Select(x => x ?? default(<#= type #>)).SumOrDefault(defaultValue);
+        }
+<# } #>
+	}
+}
