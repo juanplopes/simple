@@ -10,12 +10,12 @@ namespace Simple
     {
         public static IEnumerable<T3> Zip<T1, T2, T3>(this IEnumerable<T1> enum1, IEnumerable<T2> enum2, Func<T1, T2, T3> func)
         {
-            var i = enum1.GetEnumerator();
-            var j = enum2.GetEnumerator();
-            while (i.MoveNext() && j.MoveNext())
-            {
-                yield return func(i.Current, j.Current);
-            }
+            using (var i = enum1.GetEnumerator())
+            using (var j = enum2.GetEnumerator())
+                while (i.MoveNext() && j.MoveNext())
+                {
+                    yield return func(i.Current, j.Current);
+                }
         }
 
         public static TValue SafeGet<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
@@ -40,29 +40,25 @@ namespace Simple
             return result;
         }
 
-        public static IEnumerable<T> Next<T>(this IEnumerator<T> source, int size)
-        {
-            while (source.MoveNext() || size-- > 0)
-                yield return source.Current;
-        }
-
         public static IEnumerable<IList<T>> BatchAggregate<T>(this IEnumerable<T> source, int batchSize)
         {
             var list = new List<T>(batchSize);
-            var enumerator = source.GetEnumerator();
 
-            while (enumerator.MoveNext())
+            using (var enumerator = source.GetEnumerator())
             {
-                list.Add(enumerator.Current);
-                if (list.Count == batchSize)
+                while (enumerator.MoveNext())
                 {
-                    yield return list;
-                    list = new List<T>(batchSize);
+                    list.Add(enumerator.Current);
+                    if (list.Count == batchSize)
+                    {
+                        yield return list;
+                        list = new List<T>(batchSize);
+                    }
                 }
-            }
 
-            if (list.Any())
-                yield return list;
+                if (list.Any())
+                    yield return list;
+            }
         }
 
         public static IEnumerable<Q> BatchSelect<T, Q>(this IEnumerable<T> source, int batchSize, Func<IEnumerable<T>, IEnumerable<Q>> func)
@@ -76,21 +72,23 @@ namespace Simple
         }
         public static IEnumerable<T> EagerForeach<T>(this IEnumerable<T> enumerable, Action<T> action, Action<T> between)
         {
-            var enumerator = enumerable.GetEnumerator();
-            if (!enumerator.MoveNext())
-                return enumerable;
-
-            action(enumerator.Current);
-
-            while (enumerator.MoveNext())
+            using (var enumerator = enumerable.GetEnumerator())
             {
-                if (between != null)
-                    between(enumerator.Current);
-                if (action != null)
-                    action(enumerator.Current);
-            }
+                if (!enumerator.MoveNext())
+                    return enumerable;
 
-            return enumerable;
+                action(enumerator.Current);
+
+                while (enumerator.MoveNext())
+                {
+                    if (between != null)
+                        between(enumerator.Current);
+                    if (action != null)
+                        action(enumerator.Current);
+                }
+
+                return enumerable;
+            }
         }
 
         public static string StringJoin<T>(this IEnumerable<T> enumerable)

@@ -129,7 +129,12 @@ namespace Simple.Tests.Reflection
             typeof(bool).IsNumericType().Should().Be(false);
             typeof(object).IsNumericType().Should().Be(false);
         }
-
+        [Test]
+        public void EnumIsNotNumericTypeUnlessItIsSpecified()
+        {
+            typeof(Base64FormattingOptions).IsNumericType().Should().Be(false);
+            typeof(Base64FormattingOptions).IsNumericType(true).Should().Be(true);
+        }
 
         [Test]
         public void CanGetDictionaryGenericArgumentsByInterface()

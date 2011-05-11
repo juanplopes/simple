@@ -15,13 +15,15 @@ namespace Simple
 
         public static sbyte SumOrDefault(this IEnumerable<sbyte> source, sbyte defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            sbyte sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				sbyte sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static sbyte SumOrDefault(this IEnumerable<sbyte?> source)
@@ -40,13 +42,15 @@ namespace Simple
 
         public static byte SumOrDefault(this IEnumerable<byte> source, byte defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            byte sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				byte sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static byte SumOrDefault(this IEnumerable<byte?> source)
@@ -65,13 +69,15 @@ namespace Simple
 
         public static char SumOrDefault(this IEnumerable<char> source, char defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            char sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				char sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static char SumOrDefault(this IEnumerable<char?> source)
@@ -90,13 +96,15 @@ namespace Simple
 
         public static short SumOrDefault(this IEnumerable<short> source, short defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            short sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				short sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static short SumOrDefault(this IEnumerable<short?> source)
@@ -115,13 +123,15 @@ namespace Simple
 
         public static ushort SumOrDefault(this IEnumerable<ushort> source, ushort defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            ushort sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				ushort sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static ushort SumOrDefault(this IEnumerable<ushort?> source)
@@ -140,13 +150,15 @@ namespace Simple
 
         public static int SumOrDefault(this IEnumerable<int> source, int defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            int sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				int sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static int SumOrDefault(this IEnumerable<int?> source)
@@ -165,13 +177,15 @@ namespace Simple
 
         public static uint SumOrDefault(this IEnumerable<uint> source, uint defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            uint sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				uint sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static uint SumOrDefault(this IEnumerable<uint?> source)
@@ -190,13 +204,15 @@ namespace Simple
 
         public static long SumOrDefault(this IEnumerable<long> source, long defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            long sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				long sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static long SumOrDefault(this IEnumerable<long?> source)
@@ -215,13 +231,15 @@ namespace Simple
 
         public static ulong SumOrDefault(this IEnumerable<ulong> source, ulong defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            ulong sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				ulong sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static ulong SumOrDefault(this IEnumerable<ulong?> source)
@@ -240,13 +258,15 @@ namespace Simple
 
         public static float SumOrDefault(this IEnumerable<float> source, float defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            float sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				float sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static float SumOrDefault(this IEnumerable<float?> source)
@@ -265,13 +285,15 @@ namespace Simple
 
         public static double SumOrDefault(this IEnumerable<double> source, double defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            double sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				double sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static double SumOrDefault(this IEnumerable<double?> source)
@@ -290,13 +312,15 @@ namespace Simple
 
         public static decimal SumOrDefault(this IEnumerable<decimal> source, decimal defaultValue)
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
+            using(var enumerator = source.GetEnumerator()) 
+			{
+				if (!enumerator.MoveNext()) return defaultValue;
 
-            decimal sum = enumerator.Current;
-            while (enumerator.MoveNext())
-                sum += enumerator.Current;
-            return sum;
+				decimal sum = enumerator.Current;
+				while (enumerator.MoveNext())
+					sum += enumerator.Current;
+				return sum;
+			}
         }
 
         public static decimal SumOrDefault(this IEnumerable<decimal?> source)

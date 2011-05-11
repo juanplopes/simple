@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Simple.IO;
 
 namespace Simple
 {
     public static class StreamExtensions
     {
-        public static MemoryStream ToStream(this string str)
+        public static StringStream ToStream(this string str)
         {
-            return str.ToStream(Encoding.UTF8);
+            return new StringStream(str);
         }
 
-        public static MemoryStream ToStream(this string str, Encoding encoding)
+        public static StringStream ToStream(this string str, Encoding encoding)
         {
-            return new MemoryStream(encoding.GetBytes(str));
+            return new StringStream(str, encoding);
         }
 
         /// <summary>

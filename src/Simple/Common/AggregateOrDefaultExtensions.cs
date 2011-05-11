@@ -11,17 +11,19 @@ namespace Simple
         private static TSource SomethingOrDefault<TSource>(this IEnumerable<TSource> source, TSource defaultValue, int seed)
            where TSource : IComparable
         {
-            var enumerator = source.GetEnumerator();
-            if (!enumerator.MoveNext()) return defaultValue;
-
-            TSource max = enumerator.Current;
-            while (enumerator.MoveNext())
+            using (var enumerator = source.GetEnumerator())
             {
-                var current = enumerator.Current;
-                if (current != null && seed * current.CompareTo(max) > 0)
-                    max = current;
+                if (!enumerator.MoveNext()) return defaultValue;
+
+                TSource max = enumerator.Current;
+                while (enumerator.MoveNext())
+                {
+                    var current = enumerator.Current;
+                    if (current != null && seed * current.CompareTo(max) > 0)
+                        max = current;
+                }
+                return max;
             }
-            return max;
         }
 
         public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource> source, TSource defaultValue)

@@ -96,7 +96,7 @@ namespace Simple
 
         public static bool IsNumericType(this Type type)
         {
-            return type.IsNumericType(true);
+            return type.IsNumericType(false);
         }
 
         public static bool IsNumericType(this Type type, bool allowEnums)
@@ -114,7 +114,7 @@ namespace Simple
                 case TypeCode.Decimal:
                 case TypeCode.Double:
                 case TypeCode.Single:
-                    return !type.IsEnum;
+                    return !type.IsEnum || allowEnums;
                 default:
                     return false;
             }

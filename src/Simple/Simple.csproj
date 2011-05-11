@@ -199,6 +199,7 @@
     <Compile Include="IO\Serialization\StreamHelper.cs" />
     <Compile Include="IO\Serialization\XmlSimpleSerializer.cs" />
     <Compile Include="IO\StreamExtensions.cs" />
+    <Compile Include="IO\StringStream.cs" />
     <Compile Include="Logging\ILog4netFactory.cs" />
     <Compile Include="Logging\Log4netConfig.cs" />
     <Compile Include="Config\FactoryManager.cs" />
