@@ -44,7 +44,7 @@ namespace Simple.Common
         /// <returns>A lazy enumerable of primes.</returns>
         public IEnumerable<int> Limit(int maxPrime)
         {
-            return this.TakeWhile(x => x < maxPrime);
+            return this.TakeWhile(x => x <= maxPrime);
         }
 
         /// <summary>
